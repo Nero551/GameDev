@@ -1,0 +1,41 @@
+newmtl Cidsword1Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ke 0 0 0
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Cidsword1_diff.png
+map_Kd Cidsword1_diff.png
+map_d Cidsword1_diff.png
+
+newmtl DefaultRig1Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ke 0 0 0
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka DefaultRig1_diff.png
+map_Kd DefaultRig1_diff.png
+map_d DefaultRig1_diff.png
+
+newmtl Meta1q1pmrhmzlsonuw63rchirdclrreiwce4tjm5hgc3lfei5ceq11Mtl
+Material Color
+Ka 0.373615 0.368591 0.383775
+Kd 0.373615 0.368591 0.383775
+Ke 0 0 0
+Ks 0.0234425 0.0231273 0.02408 
+
+d 1
+
+Ns 0
+
