@@ -2,8 +2,8 @@ local repstor = game:GetService("ReplicatedStorage")
 
 local DataService = require(script.Parent.Parent.ServerModules.DataService)
 local statService = require(script.Parent.StatService)
-local itemDataBase = require(repstor.Modules.ItemDataBase)
-local titleDataBase = require(repstor.Modules.TitleData)
+local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
+local titleDataBase = require(repstor.Modules.Data.TitleData)
 
 local BuffService = {}
 

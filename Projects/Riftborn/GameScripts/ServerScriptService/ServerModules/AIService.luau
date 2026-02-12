@@ -3,7 +3,7 @@ local PathFindingService = game:GetService("PathfindingService")
 local StateService = require(game.ReplicatedStorage.Modules.StateService)
 local CombatService = require(script.Parent.Parent.ServerModules.CombatService)
 local animationsFolder = game.ReplicatedStorage.Assets.Animations
-local abilityDataModule = require(game.ReplicatedStorage.Modules.AbilityData)
+local abilityDataModule = require(game.ReplicatedStorage.Modules.Data.AbilityData)
 local AbilityService = require(script.Parent.Parent.ServerModules.AbilityService)
 local MovementService = require(script.Parent.Parent.ServerModules.MovementService)
 local StateHandler = require(game.ReplicatedStorage.Modules.StateHandler)
@@ -261,7 +261,6 @@ function AIService:UpdateState()
 		action(self)
 	end
 	StateHandler:HandleStates(self.NPC)
-	print(self.Humanoid.WalkSpeed)
 end
 
 

@@ -1,6 +1,6 @@
 local RarityService = require(script.Parent.RarityService)
 local GameEvents = require(game.ReplicatedStorage.Modules.GameEvents)
-local itemDataBase = require(game.ReplicatedStorage.Modules.ItemDataBase)
+local itemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 
 local RewardsService = {}
 function RewardsService:GiveRewards(player, Rewards, quest:boolean)

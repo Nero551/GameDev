@@ -1,12 +1,12 @@
 local runService = game:GetService("RunService")
-local weaponData = require(game.ReplicatedStorage.Modules.ItemDataBase.WeaponData)
+local itemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local character = script.Parent.Parent
 local stateService = require(game.ReplicatedStorage.Modules.StateService)
 
 local stepConnection = runService.RenderStepped:Connect(function()
 	---Trails---
 	local weapon = character:FindFirstChildWhichIsA("Tool")
-	if weapon and weaponData.Weapons[weapon.Name] then
+	if weapon and itemDataBase:GetItemData(weapon.Name) then
 		---SprintTrails---
 		if stateService.checkState(character, "Sprinting")  then
 			for _, model:Model? in character:GetChildren() do 

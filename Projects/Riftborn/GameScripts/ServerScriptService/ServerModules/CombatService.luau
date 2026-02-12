@@ -8,11 +8,12 @@ local modules = replicatedStorage.Modules
 local remotes = replicatedStorage.Remotes
 
 local animationsFolder = assets.Animations
-local itemDataBase = require(replicatedStorage.Modules.ItemDataBase)
+local itemDataBase = require(replicatedStorage.Modules.Data.ItemDataBase)
 
 local ActionVerifier = require(modules.ActionVerifier)
 local stateService = require(modules.StateService)
 local DataService = require(script.Parent.Parent.ServerModules.DataService)
+local HitApplier = require(modules.HitApplier)
 
 
 local CombatService = {
@@ -134,7 +135,7 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 		
 		
 		--Setting Hitbox
-		hitboxClone = assets.HItboxTemplate:Clone()
+		local hitboxClone = assets.HItboxTemplate:Clone()
 		hitboxClone.Name = "M1 Hitbox"
 		hitboxClone.Parent = workspace.World.Hitboxes
 		local weld = Instance.new("Weld")
@@ -164,58 +165,17 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 
 						if stateService.checkState(targetHit, "Invulnerable") then return end
 						
-						local playerDamageStat
-						local playerCriticalDamageStat
-						local playerCriticalRateStat
-						local targetDefenseStat = 0
-						if player then
-							local playerStats = DataService:GetTable(player,"Stats")
-							playerDamageStat = playerStats[weaponData.Type].Final
-							playerCriticalDamageStat = playerStats.CriticalDamage.Percent + weaponData.CriticalDamage + 1
-							playerCriticalRateStat = (playerStats.CriticalRate.Percent + weaponData.CriticalRate) * 100
-						end
-
-						if players:GetPlayerFromCharacter(targetHit) then
-							targetDefenseStat = DataService:GetTable(players:GetPlayerFromCharacter(targetHit), "Stats").Defense.Final 
-						end
 						
-						---BlockBreakCounter---
-						local status = targetHit:FindFirstChild("Status")
-						if not status then return end
-						local blockCounter = status:WaitForChild("BlockCounter")
-
-						local isBlocking = stateService.checkState(targetHit, "Blocking")
-
-						if isBlocking then
-							---BlockBreak---
-							if blockCounter.Value == 4 then
-								blockCounter.Value = 0
-								blockCounter.Value = math.clamp(blockCounter.Value, 0 , 4)
-								CombatService.hitTypes["BlockBreak"](character , targetHit , tool)	
-
-							else
-								---Do Blocked HitType----
-								blockCounter.Value += 1
-								blockCounter.Value = math.clamp(blockCounter.Value, 0 , 4)
-								CombatService.hitTypes["Blocked"](character , targetHit ,
-									tool, playerDamageStat, targetDefenseStat, player , nil, npcDamage)
-							end
-						else
-							---Critical HitType---
-							if playerCriticalDamageStat and playerCriticalRateStat then
-								if math.random(0 , 100) <= playerCriticalRateStat then
-									CombatService.hitTypes["Critical"](character , targetHit , tool ,trueSwingNumber,
-										(trueSwingNumber == 5 and true or false),  playerDamageStat , playerCriticalDamageStat,
-										targetDefenseStat, player, nil	, npcDamage)
-								end	
-							else
-								-----Defualt HitType---
-								print(tool, tool.Parent)
-								CombatService.hitTypes["Default"](character , targetHit, tool, trueSwingNumber,
-									(trueSwingNumber == 5 and true or false), playerDamageStat, targetDefenseStat,
-									player ,nil, npcDamage)
-							end
-						end
+						HitApplier:ApplyHit({
+							["Player"] = player,
+							["WeaponData"] = weaponData,
+							["TargetHit"] = targetHit,
+							["Tool"] = tool,
+							["TrueSwingNumber"] = trueSwingNumber,
+							["NPCDamage"] = npcDamage,
+							["HitTypes"] = CombatService.hitTypes,
+							["Character"] = character,							
+						})
 					end
 				end
 				task.wait()

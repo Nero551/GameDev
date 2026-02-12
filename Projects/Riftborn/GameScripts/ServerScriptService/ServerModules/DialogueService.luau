@@ -1,6 +1,6 @@
 local repstor = game:GetService("ReplicatedStorage")
 
-local dialogueDataBase = require(repstor.Modules.DialogueDataBase)
+local dialogueDataBase = require(repstor.Modules.Data.DialogueDataBase)
 local GameEvents = require(game.ReplicatedStorage.Modules.GameEvents)
 
 local DialogueService = {}

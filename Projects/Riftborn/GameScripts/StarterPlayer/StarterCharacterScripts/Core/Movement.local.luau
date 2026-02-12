@@ -13,7 +13,7 @@ local assets = replicatedStorage.Assets
 
 local stateService = require(modules.StateService)
 local ActionVerifier = require(modules.ActionVerifier)
-local MovementConfig = require(modules.MovementConfig)
+local MovementConfig = require(modules.Configs.MovementConfig)
 
 local DashConfig = MovementConfig.DashConfig
 local camera = workspace.CurrentCamera

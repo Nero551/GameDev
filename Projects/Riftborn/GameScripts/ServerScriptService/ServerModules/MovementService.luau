@@ -6,7 +6,7 @@ local assets = repstor.Assets
 local animationsFolder = assets.Animations
 local stateService = require(repstor.Modules.StateService)
 local ActionVerifier =  require(repstor.Modules.ActionVerifier)
-local MovementConfig = require(repstor.Modules.MovementConfig)
+local MovementConfig = require(repstor.Modules.Configs.MovementConfig)
 
 local DashConfig = MovementConfig.DashConfig
 local wallJumpConfig = MovementConfig.WallRunConfig

@@ -4,9 +4,14 @@ local replicatedStorage = game:GetService("ReplicatedStorage")
 local assets = replicatedStorage.Assets
 local modules = (replicatedStorage.Modules)
 local stateService = require(modules.StateService)
-local itemDataBase = require(modules.ItemDataBase)
+local itemDataBase = require(modules.Data.ItemDataBase)
 
-return function(attacker:Model , targetHit:Model , weaponUsed:Tool?)
+return function(argumentData)
+	
+	local targetHit = argumentData.TargetHit
+	local weaponUsed = argumentData.WeaponUsed
+	local attacker = argumentData.Attacker
+	
 	if stateService.checkState(targetHit, "Invulnerable") then return end
 
 	local foundWeaponData = itemDataBase:GetItemData(weaponUsed:GetAttribute("ID"))

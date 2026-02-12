@@ -1,7 +1,7 @@
 local repstor = game:GetService("ReplicatedStorage")
 local runService = game:GetService("RunService")
 
-local itemDataBase = require(repstor.Modules.ItemDataBase)
+local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
 
 
 local character = script.Parent.Parent
