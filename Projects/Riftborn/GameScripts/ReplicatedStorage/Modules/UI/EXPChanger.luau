@@ -1,4 +1,4 @@
-return function(expBG)
+return function(expBG, levelFrame)
 	local repstor = game:GetService("ReplicatedStorage")
 	local tweenService = game:GetService("TweenService")
 	local remotes = repstor.Remotes
@@ -14,7 +14,7 @@ return function(expBG)
 
 		tweenService:Create(EXPFill, info , {Size = UDim2.fromScale(ratio,1)}):Play()
 		EXPNumber.Text = math.round(playerLevel.CurrentEXP).." / "..math.round(playerLevel.RequiredEXP)
-		expBG.Parent.Parent.Parent.Level.LevelNumber.Text = playerLevel.CurrentLevel
+		levelFrame.LevelNumber.Text = playerLevel.CurrentLevel
 
 	end)
 end
