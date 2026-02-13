@@ -1,18 +1,25 @@
 local repstor = game:GetService("ReplicatedStorage")
 local titleDataBase = require(repstor.Modules.Data.TitleData)
 local GameEvents = require(repstor.Modules.GameEvents)
-local DataService = require(script.Parent.Parent.ServerModules.DataService)
+local DataService = require(script.Parent.Parent.Services.DataService)
 
 local TitleService = {}
 
 function TitleService:SetupTitle(player)
-	local playerTitles = Instance.new("Folder")
-	playerTitles.Parent = player
-	playerTitles.Name = "PlayerTitles"
 	
-	local activeTitle = Instance.new("StringValue")
-	activeTitle.Parent = playerTitles
-	activeTitle.Name = "ActiveTitle"
+	local TitlesFolder = player:FindFirstChild("PlayerTitles")
+	
+	if not TitlesFolder then
+		TitlesFolder = Instance.new("Folder")
+		TitlesFolder.Parent = player
+		TitlesFolder.Name = "PlayerTitles"
+
+		local activeTitle = Instance.new("StringValue")
+		activeTitle.Parent = TitlesFolder
+		activeTitle.Name = "ActiveTitle"
+	end
+	
+	
 end
 
 function TitleService:GetTitle(player, titleID)

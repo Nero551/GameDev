@@ -1,8 +1,8 @@
 local sss = game:GetService("ServerScriptService")
 local players = game:GetService("Players")
 
-local stateService = require(script.Parent.StateService)
-local DataService = require(sss.ServerModules.DataService)
+local stateService = require(game.ReplicatedStorage.Modules.StateService)
+local DataService = require(sss.Services.DataService)
 
 local HitApplier = {}
 

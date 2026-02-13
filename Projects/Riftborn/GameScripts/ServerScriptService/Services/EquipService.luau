@@ -3,7 +3,7 @@ local repstor = game:GetService("ReplicatedStorage")
 local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
 local GameEvents = require(repstor.Modules.GameEvents)
 
-local DataService = require(script.Parent.Parent.ServerModules.DataService)
+local DataService = require(script.Parent.Parent.Services.DataService)
 
 local EquipUnEquipService = {}
 
@@ -29,6 +29,7 @@ function  EquipUnEquipService:EquipItem(player:Player , itemID)
 				for _,anotherTool:Tool? in char:GetChildren() do
 					if anotherTool:IsA("Tool") then
 						local anotherWeaponData = itemDataBase:GetItemData(anotherTool:GetAttribute("ID"))
+						if not anotherWeaponData then return end
 						if anotherWeaponData.Type == itemType then
 							local anotherWeaponEquippedModel = char:FindFirstChild(anotherTool.Name.."_Equipped")
 							local anotherWeaponUnEquippedModel = char:FindFirstChild(anotherTool.Name.."_UnEquipped")
@@ -192,6 +193,11 @@ function EquipUnEquipService:LoadEquippedItems(player:Player)
 			end
 		end
 	end
+	
+	repstor.Remotes.UpdateInventory:FireClient(player, inventory, equippedItems)
+	repstor.Remotes.UpdateInventoryInfo:FireClient(player, inventory, equippedItems)
+	repstor.Remotes.UpdateEquippedItems:FireClient(player, inventory, equippedItems)
+	
 	GameEvents.UpdateMana:Fire(player)
 end
 

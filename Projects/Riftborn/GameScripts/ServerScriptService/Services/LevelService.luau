@@ -1,30 +1,35 @@
 local repstor = game:GetService("ReplicatedStorage")
 local remotes = repstor.Remotes
-local DataService = require(script.Parent.Parent.ServerModules.DataService)
+local DataService = require(script.Parent.Parent.Services.DataService)
 
 
 local LevelService = {}
 
 function LevelService:SetupLevel(player)
-	local LevelFolder = Instance.new("Folder")
-	LevelFolder.Parent = player
-	LevelFolder.Name = "PlayerLevel"
+	local LevelFolder = player:FindFirstChild("PlayerLevel")
 	
-	local LevelValue = Instance.new("IntValue")
-	LevelValue.Parent = LevelFolder
-	LevelValue.Name = "CurrentLevel"
+	if not LevelFolder then
+		LevelFolder = Instance.new("Folder")
+		LevelFolder.Parent = player
+		LevelFolder.Name = "PlayerLevel"
+
+		local LevelValue = Instance.new("IntValue")
+		LevelValue.Parent = LevelFolder
+		LevelValue.Name = "CurrentLevel"
+
+		local CurrentEXPValue = Instance.new("IntValue")
+		CurrentEXPValue.Parent = LevelFolder
+		CurrentEXPValue.Name = "CurrentEXP"
+
+		local RequiredEXPValue = Instance.new("IntValue")
+		RequiredEXPValue.Parent = LevelFolder
+		RequiredEXPValue.Name = "RequiredEXP"
+
+		local StatPointsValue = Instance.new("IntValue")
+		StatPointsValue.Parent = LevelFolder
+		StatPointsValue.Name = "StatPoints"
+	end
 	
-	local CurrentEXPValue = Instance.new("IntValue")
-	CurrentEXPValue.Parent = LevelFolder
-	CurrentEXPValue.Name = "CurrentEXP"
-	
-	local RequiredEXPValue = Instance.new("IntValue")
-	RequiredEXPValue.Parent = LevelFolder
-	RequiredEXPValue.Name = "RequiredEXP"
-	
-	local StatPointsValue = Instance.new("IntValue")
-	StatPointsValue.Parent = LevelFolder
-	StatPointsValue.Name = "StatPoints"
 end
 
 function LevelService:IncreaseEXP(player , EXP)

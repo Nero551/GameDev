@@ -2,11 +2,52 @@ local repstor = game:GetService("ReplicatedStorage")
 local remotes = repstor.Remotes
 
 local GameEvents = require(game.ReplicatedStorage.Modules.GameEvents)
-local DataService = require(script.Parent.Parent.ServerModules.DataService)
+local DataService = require(script.Parent.Parent.Services.DataService)
 
 
 local StatService = {}
- 
+
+
+---Create StatsFolder---
+local function CreateStatsFolder(parent , name , base)
+	
+	local folder = parent:FindFirstChild(name)
+	
+	if not folder then
+		folder = Instance.new("Folder")
+		folder.Name = name
+		folder.Parent = parent
+
+		local baseVal = Instance.new("NumberValue")
+		baseVal.Name = "Base"
+		baseVal.Value = base
+		baseVal.Parent = folder
+
+		local flatStatPointVal = Instance.new("NumberValue")
+		flatStatPointVal.Name = "FlatStatPoint"
+		flatStatPointVal.Value = 0
+		flatStatPointVal.Parent = folder
+
+		local flatBuffVal = Instance.new("NumberValue")
+		flatBuffVal.Name = "FlatBuff"
+		flatBuffVal.Value = 0
+		flatBuffVal.Parent = folder
+
+		local percentVal = Instance.new("NumberValue")
+		percentVal.Name = "Percent"
+		percentVal.Value = 0 -- 0.1 = 10%
+		percentVal.Parent = folder
+
+		local finalVal = Instance.new("NumberValue")
+		finalVal.Name = "Final"
+		finalVal.Value = baseVal.Value + flatStatPointVal.Value + flatBuffVal.Value * (percentVal.Value + 1)
+		finalVal.Parent = folder
+	end
+	
+	
+end
+
+
 local function ApplyHealth(player:Player)
 	local playerStats = DataService:GetTable(player, "Stats")
 	local playerHealthStats = playerStats.Health
@@ -32,46 +73,20 @@ local function CalculateFinal(stat)
 end
 
 
----Create StatsFolder---
-local function CreateStatsFolder(parent , name , base)
-	local folder = Instance.new("Folder")
-	folder.Name = name
-	folder.Parent = parent
-
-	local baseVal = Instance.new("NumberValue")
-	baseVal.Name = "Base"
-	baseVal.Value = base
-	baseVal.Parent = folder
-
-	local flatStatPointVal = Instance.new("NumberValue")
-	flatStatPointVal.Name = "FlatStatPoint"
-	flatStatPointVal.Value = 0
-	flatStatPointVal.Parent = folder
-	
-	local flatBuffVal = Instance.new("NumberValue")
-	flatBuffVal.Name = "FlatBuff"
-	flatBuffVal.Value = 0
-	flatBuffVal.Parent = folder
-
-	local percentVal = Instance.new("NumberValue")
-	percentVal.Name = "Percent"
-	percentVal.Value = 0 -- 0.1 = 10%
-	percentVal.Parent = folder
-	
-	local finalVal = Instance.new("NumberValue")
-	finalVal.Name = "Final"
-	finalVal.Value = baseVal.Value + flatStatPointVal.Value + flatBuffVal.Value * (percentVal.Value + 1)
-	finalVal.Parent = folder
-end
-
 ---Setup Stats---
 function StatService:SetupStats(player:Player)
 	local playerStats = DataService:GetTable(player, "Stats")
 	local char = player.Character or player.CharacterAdded:Wait()
 	local humanoid: Humanoid = char:WaitForChild("Humanoid")
-	local statsFolder = Instance.new("Folder")
-	statsFolder.Name = "PlayerStats"
-	statsFolder.Parent = player
+	
+	local statsFolder = player:FindFirstChild("PlayerStats")
+	
+	if not statsFolder then
+		statsFolder = Instance.new("Folder")
+		statsFolder.Name = "PlayerStats"
+		statsFolder.Parent = player
+	end
+
 	for statType, stat in pairs(playerStats) do
 		CreateStatsFolder(statsFolder, statType, stat.Base)
 		

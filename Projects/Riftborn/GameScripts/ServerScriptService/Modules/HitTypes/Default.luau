@@ -7,7 +7,7 @@ local assets = replicatedStorage.Assets
 local modules = (replicatedStorage.Modules)
 local stateService = require(modules.StateService)
 local itemDataBase = require(modules.Data.ItemDataBase)
-local knockbackPull = require(modules.KnockbackPull)
+local knockbackPull = require(script.Parent.Parent.Utilities.KnockbackPull)
 local formulaApplier = require(modules.FormulaApplier)
 
 return function(argumentData)

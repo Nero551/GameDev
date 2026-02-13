@@ -9,7 +9,7 @@ function NPCHandler:HandleNPC(npc)
 	local StateService = require(repstor.Modules.StateService)
 
 
-	local AIModule = require(ServerScriptService.ServerModules.AIService)
+	local AIModule = require(ServerScriptService.Services.AIService)
 	local GameEvents = require(repstor.Modules.GameEvents)
 	local MobData = require(repstor.Modules.Data.MobData)
 

@@ -1,3 +1,3 @@
 
 local players = game:GetService("Players")
-local BuffService = require(script.Parent.Parent.ServerModules.BuffService)
+local BuffService = require(script.Parent.Parent.Services.BuffService)

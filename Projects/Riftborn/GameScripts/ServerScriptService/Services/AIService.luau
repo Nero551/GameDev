@@ -1,12 +1,14 @@
 local PathFindingService = game:GetService("PathfindingService")
 
 local StateService = require(game.ReplicatedStorage.Modules.StateService)
-local CombatService = require(script.Parent.Parent.ServerModules.CombatService)
+local StateHandler = require(game.ReplicatedStorage.Modules.StateHandler)
+
+local CombatService = require(script.Parent.Parent.Services.CombatService)
+local AbilityService = require(script.Parent.Parent.Services.AbilityService)
+local MovementService = require(script.Parent.Parent.Services.MovementService)
+
 local animationsFolder = game.ReplicatedStorage.Assets.Animations
 local abilityDataModule = require(game.ReplicatedStorage.Modules.Data.AbilityData)
-local AbilityService = require(script.Parent.Parent.ServerModules.AbilityService)
-local MovementService = require(script.Parent.Parent.ServerModules.MovementService)
-local StateHandler = require(game.ReplicatedStorage.Modules.StateHandler)
 
 local AIService = {}
 AIService.__index = AIService

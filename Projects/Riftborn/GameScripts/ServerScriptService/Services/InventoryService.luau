@@ -3,7 +3,7 @@ local modules = repstor.Modules
 local GameEvents = require(modules.GameEvents)
 local itemDataBase = require(modules.Data.ItemDataBase)
 
-local DataService = require(script.Parent.Parent.ServerModules.DataService)
+local DataService = require(script.Parent.Parent.Services.DataService)
 
 local InventoryService = {}
 

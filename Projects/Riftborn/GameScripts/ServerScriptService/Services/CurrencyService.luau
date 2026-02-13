@@ -1,5 +1,5 @@
 local repstor = game:GetService("ReplicatedStorage")
-local DataService = require(script.Parent.Parent.ServerModules.DataService)
+local DataService = require(script.Parent.Parent.Services.DataService)
 
 local CurrencyService = {}
 

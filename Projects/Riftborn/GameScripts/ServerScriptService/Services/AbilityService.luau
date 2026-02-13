@@ -17,13 +17,13 @@ local abilityDataModule = require(modules.Data.AbilityData)
 local stateService = require(modules.StateService)
 local ManaService = require(script.Parent.ManaService)
 local ActionVerifier = require(modules.ActionVerifier)
-local HitApplier = require(modules.HitApplier)
+local HitApplier = require(script.Parent.Parent.Modules.Utilities.HitApplier)
 
 local AbilityService = {
 	hitTypes = {}
 }
 
-for _,module  in script.Parent.Parent.ServerModules.HitTypes:GetChildren() do
+for _,module  in script.Parent.Parent.Modules.HitTypes:GetChildren() do
 	if module:IsA("ModuleScript") then
 		AbilityService.hitTypes[module.Name] = require(module)
 	end

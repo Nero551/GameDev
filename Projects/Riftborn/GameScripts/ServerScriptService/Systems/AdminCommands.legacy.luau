@@ -4,10 +4,10 @@ local modules =  repstor.Modules
 local remotes = repstor.Remotes
 local itemDataBase = require(modules.Data.ItemDataBase)
 local titleData = require(modules.Data.TitleData)
-local DataService = require(script.Parent.Parent.ServerModules.DataService)
-local InventoryService = require(script.Parent.Parent.ServerModules.InventoryService)
-local TitleService = require(script.Parent.Parent.ServerModules.TitleService)
-local LevelService = require(script.Parent.Parent.ServerModules.LevelService)
+local DataService = require(script.Parent.Parent.Services.DataService)
+local InventoryService = require(script.Parent.Parent.Services.InventoryService)
+local TitleService = require(script.Parent.Parent.Services.TitleService)
+local LevelService = require(script.Parent.Parent.Services.LevelService)
 
 local function CapitalizeWords(str)
 	return (str:gsub("(%a)([%w_']*)", function(first, rest)

@@ -1,7 +1,7 @@
 local repstor = game:GetService("ReplicatedStorage")
 local players = game:GetService("Players")
 local remotes = repstor.Remotes
-local TitleService = require(script.Parent.Parent.ServerModules.TitleService)
+local TitleService = require(script.Parent.Parent.Services.TitleService)
 
 
 remotes.EquipTitle.OnServerEvent:Connect(function(player, titleID)

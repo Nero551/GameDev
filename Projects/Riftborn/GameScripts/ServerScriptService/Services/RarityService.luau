@@ -1,5 +1,5 @@
 local itemDataBase  = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
-local DataService = require(script.Parent.Parent.ServerModules.DataService)
+local DataService = require(script.Parent.Parent.Services.DataService)
 
 local RarityService = {}
 RarityService.Rarities = {

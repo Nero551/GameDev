@@ -2,7 +2,7 @@ local replicatedStorage = game:GetService("ReplicatedStorage")
 local modules  = replicatedStorage.Modules
 local stateService = require(modules.StateService)
 local remotes = replicatedStorage.Remotes
-local AbilityService = require(script.Parent.Parent.ServerModules.AbilityService)
+local AbilityService = require(script.Parent.Parent.Services.AbilityService)
 
 remotes.Ability.OnServerEvent:Connect(function(player:Player, mouse , input)
 	local char = player.Character or player.CharacterAdded:Wait()

@@ -1,21 +1,22 @@
 local repstor = game:GetService("ReplicatedStorage")
 local players = game:GetService("Players")
 local remotes = repstor.Remotes
-local DataService = require(script.Parent.Parent.ServerModules.DataService)
-local statService = require(script.Parent.Parent.ServerModules.StatService)
-local ManaService = require(script.Parent.Parent.ServerModules.ManaService)
-local LevelService = require(script.Parent.Parent.ServerModules.LevelService)
-local EquipService = require(script.Parent.Parent.ServerModules.EquipService)
-local InventoryService = require(script.Parent.Parent.ServerModules.InventoryService)
-local QuestService = require(script.Parent.Parent.ServerModules.QuestService)
-local TitleService = require(script.Parent.Parent.ServerModules.TitleService)
-local BuffService = require(script.Parent.Parent.ServerModules.BuffService)
+local DataService = require(script.Parent.Parent.Services.DataService)
+local statService = require(script.Parent.Parent.Services.StatService)
+local ManaService = require(script.Parent.Parent.Services.ManaService)
+local LevelService = require(script.Parent.Parent.Services.LevelService)
+local EquipService = require(script.Parent.Parent.Services.EquipService)
+local InventoryService = require(script.Parent.Parent.Services.InventoryService)
+local QuestService = require(script.Parent.Parent.Services.QuestService)
+local TitleService = require(script.Parent.Parent.Services.TitleService)
+local BuffService = require(script.Parent.Parent.Services.BuffService)
 
 
 local clientReady = {}
 remotes.ClientReady.OnServerEvent:Connect(function(player)
 	clientReady[player] = true
 end)
+
 
 local function SetupPlayer(player:Player)
 	---Setup Tables And Folders---
@@ -69,6 +70,10 @@ local function SendSetupRemotes(player:Player)
 end
 
 local function SetupCharacter(player:Player, character)
+	wait()
+	SetupPlayer(player)
+	SendSetupRemotes(player)
+	
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 	local manaFolder =  player:WaitForChild("PlayerMana")
 	local playerMana = DataService:GetTable(player,"Mana")
@@ -77,24 +82,24 @@ local function SetupCharacter(player:Player, character)
 	manaFolder.CurrentMana.Value = playerMana.CurrentMana
 	humanoid.Health = humanoid.MaxHealth
 	
-	SendSetupRemotes(player)
 end
 
 ---Load Data---
 players.PlayerAdded:Connect(function(player)
 	
 	local playerData = DataService:Load(player)	
-	print(playerData)
 	
 	SetupPlayer(player)	
 	
 	---SetupCharacter---
 	if player.Character then
-		SetupPlayer(player)	
+		print(playerData)
 		SetupCharacter(player, player.Character)
 	end
 	
-	player.CharacterAdded:Connect(function(character)
+	player.CharacterAdded:Connect(function(character)		
+		print(playerData)
+		
 		SetupCharacter(player, character)
 	end)
 end)
@@ -104,6 +109,7 @@ end)
 players.PlayerRemoving:Connect(function(player)
 
 	local data = DataService:Save(player)
+	clientReady[player] = nil
 	DataService.PlayerDatas[player] = nil
 	
 end)

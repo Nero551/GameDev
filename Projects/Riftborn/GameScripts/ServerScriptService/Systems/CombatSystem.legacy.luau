@@ -2,7 +2,7 @@
 local players = game:GetService("Players")
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local remotes = replicatedStorage.Remotes
-local CombatService = require(script.Parent.Parent.ServerModules.CombatService)
+local CombatService = require(script.Parent.Parent.Services.CombatService)
 
 players.PlayerAdded:Connect(function(player)
 	player.CharacterAdded:Connect(function(character)

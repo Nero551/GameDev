@@ -12,8 +12,8 @@ local itemDataBase = require(replicatedStorage.Modules.Data.ItemDataBase)
 
 local ActionVerifier = require(modules.ActionVerifier)
 local stateService = require(modules.StateService)
-local DataService = require(script.Parent.Parent.ServerModules.DataService)
-local HitApplier = require(modules.HitApplier)
+local DataService = require(script.Parent.Parent.Services.DataService)
+local HitApplier = require(script.Parent.Parent.Modules.Utilities.HitApplier)
 
 
 local CombatService = {
@@ -33,7 +33,7 @@ local function GetValidTool(tool, character)
 end
 
 ---------requiring HitTypes
-for _,module  in script.Parent.Parent.ServerModules.HitTypes:GetChildren() do
+for _,module  in script.Parent.Parent.Modules.HitTypes:GetChildren() do
 	if module:IsA("ModuleScript") then
 		CombatService.hitTypes[module.Name] = require(module)
 	end

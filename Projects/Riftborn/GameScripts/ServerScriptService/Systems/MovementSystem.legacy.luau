@@ -1,6 +1,6 @@
 local repstor = game:GetService("ReplicatedStorage")
 local remotes = repstor.Remotes
-local MovementService = require(script.Parent.Parent.ServerModules.MovementService)
+local MovementService = require(script.Parent.Parent.Services.MovementService)
 
 
 

@@ -1,8 +1,8 @@
 local players = game:GetService("Players")
 local repstor = game:GetService("ReplicatedStorage")
 local remotes = repstor.Remotes
-local StatService = require(script.Parent.Parent.ServerModules.StatService)
-local ManaService = require(script.Parent.Parent.ServerModules.ManaService)
+local StatService = require(script.Parent.Parent.Services.StatService)
+local ManaService = require(script.Parent.Parent.Services.ManaService)
 
 
 

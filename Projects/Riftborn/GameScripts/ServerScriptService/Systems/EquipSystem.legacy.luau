@@ -1,8 +1,8 @@
 local repstor = game:GetService("ReplicatedStorage")
 local players = game:GetService("Players")
 local remotes = repstor.Remotes
-local EquipService = require(script.Parent.Parent.ServerModules.EquipService)
-local DataService = require(script.Parent.Parent.ServerModules.DataService)
+local EquipService = require(script.Parent.Parent.Services.EquipService)
+local DataService = require(script.Parent.Parent.Services.DataService)
 
 
 ---Client Requests to Equip Item---

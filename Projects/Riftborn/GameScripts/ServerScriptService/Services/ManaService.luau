@@ -1,20 +1,27 @@
-local DataService = require(script.Parent.Parent.ServerModules.DataService)
+local DataService = require(script.Parent.Parent.Services.DataService)
 
 local ManaService = {}
 ---Create StatsFolder---
 local function CreateManaValues(parent:Player?)
-	local folder = Instance.new("Folder")
-	folder.Parent = parent
-	folder.Name = "PlayerMana"
 	
-	local currentMana = Instance.new("NumberValue")
-	currentMana.Name = "CurrentMana"
-	currentMana.Value = 0 -- 0.1 = 10%
-	currentMana.Parent = folder
+	local ManaFolder = parent:FindFirstChild("PlayerMana")
 	
-	local maxMana = Instance.new("NumberValue")
-	maxMana.Name = "MaxMana"
-	maxMana.Parent = folder
+	if not ManaFolder then
+
+		ManaFolder = Instance.new("Folder")
+		ManaFolder.Parent = parent
+		ManaFolder.Name = "PlayerMana"
+
+		local currentMana = Instance.new("NumberValue")
+		currentMana.Name = "CurrentMana"
+		currentMana.Value = 0 -- 0.1 = 10%
+		currentMana.Parent = ManaFolder
+
+		local maxMana = Instance.new("NumberValue")
+		maxMana.Name = "MaxMana"
+		maxMana.Parent = ManaFolder
+	end
+
 end
 
 function ManaService:SetupMana(player:Player)
