@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="256mm"
+   height="297mm"
+   viewBox="0 0 256 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="Shard.svg"
+   inkscape:export-batch-path="../InkScape"
+   inkscape:export-batch-name="batch"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.76791528"
+     inkscape:cx="289.74551"
+     inkscape:cy="515.68189"
+     inkscape:window-width="1920"
+     inkscape:window-height="1093"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g10" />
+  <defs
+     id="defs1">
+    <filter
+       style="color-interpolation-filters:sRGB"
+       inkscape:label="Torn Edges"
+       id="filter14"
+       x="0"
+       y="0"
+       width="1"
+       height="1"
+       inkscape:menu="Distort"
+       inkscape:menu-tooltip="Displace the outside of shapes and pictures without altering their content">
+      <feColorMatrix
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
+         id="feColorMatrix14"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix23" />
+      <feTurbulence
+         id="feTurbulence23"
+         baseFrequency="0.05"
+         numOctaves="5"
+         type="fractalNoise"
+         result="result91" />
+      <feDisplacementMap
+         id="feDisplacementMap23"
+         scale="25"
+         result="result5"
+         xChannelSelector="R"
+         in="fbSourceGraphic"
+         in2="result91"
+         yChannelSelector="A" />
+      <feComposite
+         id="feComposite23"
+         in="fbSourceGraphic"
+         operator="atop"
+         in2="result5" />
+    </filter>
+    <filter
+       inkscape:label="Torn Edges"
+       inkscape:menu="Distort"
+       inkscape:menu-tooltip="Displace the outside of shapes and pictures without altering their content"
+       height="1"
+       y="0"
+       width="1"
+       x="0"
+       style="color-interpolation-filters:sRGB"
+       id="filter24">
+      <feTurbulence
+         baseFrequency="0.05"
+         numOctaves="5"
+         type="fractalNoise"
+         result="result91"
+         id="feTurbulence24" />
+      <feDisplacementMap
+         scale="25"
+         result="result5"
+         xChannelSelector="R"
+         in="SourceGraphic"
+         in2="result91"
+         id="feDisplacementMap24"
+         yChannelSelector="A" />
+      <feComposite
+         in="SourceGraphic"
+         operator="atop"
+         in2="result5"
+         id="feComposite24" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:none">
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linejoin:round;filter:url(#filter24)"
+       id="path1"
+       inkscape:flatsided="true"
+       sodipodi:sides="4"
+       sodipodi:cx="104.27446"
+       sodipodi:cy="80.885796"
+       sodipodi:r1="56.20668"
+       sodipodi:r2="39.744125"
+       sodipodi:arg1="1.5707963"
+       sodipodi:arg2="2.3561945"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 104.27446,137.09248 48.06778,80.885797 104.27446,24.679115 160.48114,80.885794 Z"
+       transform="translate(0.72554016,67.614204)"
+       inkscape:export-filename="../../VFX Textures/ShardAllWhite.png"
+       inkscape:export-xdpi="500"
+       inkscape:export-ydpi="500" />
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linejoin:round;filter:url(#filter14)"
+       id="path2"
+       inkscape:flatsided="true"
+       sodipodi:sides="4"
+       sodipodi:cx="104.27446"
+       sodipodi:cy="80.885796"
+       sodipodi:r1="56.20668"
+       sodipodi:r2="39.744125"
+       sodipodi:arg1="1.5707963"
+       sodipodi:arg2="2.3561945"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 104.27446,137.09248 48.06778,80.885797 104.27446,24.679115 160.48114,80.885794 Z"
+       transform="matrix(0.63589593,0,0,0.63589593,38.692296,97.065052)"
+       inkscape:export-filename="path2.png"
+       inkscape:export-xdpi="500"
+       inkscape:export-ydpi="500" />
+  </g>
+  <g
+     inkscape:label="Layer 2"
+     inkscape:groupmode="layer"
+     id="g6"
+     style="display:none">
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linejoin:round;filter:url(#filter24)"
+       id="path5"
+       inkscape:flatsided="false"
+       sodipodi:sides="8"
+       sodipodi:cx="104.27446"
+       sodipodi:cy="80.885796"
+       sodipodi:r1="56.20668"
+       sodipodi:r2="30.165012"
+       sodipodi:arg1="1.5707963"
+       sodipodi:arg2="2.0349551"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 104.27446,137.09248 90.770467,107.8593 64.530336,120.62992 75.652544,90.410181 48.06778,80.885797 77.300952,67.381802 64.530334,41.141672 94.750075,52.26388 l 9.524385,-27.584765 13.50399,29.233173 26.24013,-12.770618 -11.1222,30.21974 27.58476,9.524384 -29.23317,13.503995 12.77062,26.240131 -30.21974,-11.12221 z"
+       transform="translate(0.72554016,67.614204)"
+       inkscape:export-filename="../../VFX Textures/ShardAllWhite.png"
+       inkscape:export-xdpi="500"
+       inkscape:export-ydpi="500" />
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linejoin:round;filter:url(#filter14)"
+       id="path6"
+       inkscape:flatsided="true"
+       sodipodi:sides="4"
+       sodipodi:cx="104.27446"
+       sodipodi:cy="80.885796"
+       sodipodi:r1="56.20668"
+       sodipodi:r2="39.744125"
+       sodipodi:arg1="1.5707963"
+       sodipodi:arg2="2.3561945"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 104.27446,137.09248 48.06778,80.885797 104.27446,24.679115 160.48114,80.885794 Z"
+       transform="matrix(0.63589593,0,0,0.63589593,38.692296,97.065052)"
+       inkscape:export-filename="path2.png"
+       inkscape:export-xdpi="500"
+       inkscape:export-ydpi="500" />
+  </g>
+  <g
+     inkscape:label="Layer 3"
+     inkscape:groupmode="layer"
+     id="g8"
+     style="display:none">
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linejoin:round;filter:url(#filter24)"
+       id="path7"
+       inkscape:flatsided="false"
+       sodipodi:sides="8"
+       sodipodi:cx="104.27446"
+       sodipodi:cy="80.885796"
+       sodipodi:r1="56.20668"
+       sodipodi:r2="35.567432"
+       sodipodi:arg1="1.5707963"
+       sodipodi:arg2="2.879101"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 104.27446,137.09248 69.925339,90.115105 64.530336,120.62992 73.459856,63.123407 48.06778,80.885797 95.04515,46.536675 64.530334,41.141672 l 57.506516,8.92952 -17.76239,-25.392077 34.34912,46.977371 5.395,-30.514816 -8.92952,57.506514 25.39208,-17.76239 -46.97737,34.349126 30.51482,5.395 -57.506519,-8.92952 z"
+       transform="translate(0.72554016,67.614204)"
+       inkscape:export-filename="../../VFX Textures/ShardAllWhite.png"
+       inkscape:export-xdpi="500"
+       inkscape:export-ydpi="500" />
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linejoin:round;filter:url(#filter14)"
+       id="path8"
+       inkscape:flatsided="true"
+       sodipodi:sides="4"
+       sodipodi:cx="104.27446"
+       sodipodi:cy="80.885796"
+       sodipodi:r1="40.106712"
+       sodipodi:r2="39.744125"
+       sodipodi:arg1="1.4828699"
+       sodipodi:arg2="2.2682681"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 107.79636,120.83757 64.322681,84.407693 100.75256,40.934017 144.22624,77.363898 Z"
+       transform="matrix(0.63589593,0,0,0.63589593,38.692296,97.065052)"
+       inkscape:export-filename="path2.png"
+       inkscape:export-xdpi="500"
+       inkscape:export-ydpi="500" />
+  </g>
+  <g
+     inkscape:label="Layer 4"
+     inkscape:groupmode="layer"
+     id="g10"
+     style="display:inline">
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linejoin:round;filter:url(#filter24)"
+       id="path9"
+       inkscape:flatsided="false"
+       sodipodi:sides="8"
+       sodipodi:cx="104.27446"
+       sodipodi:cy="80.885796"
+       sodipodi:r1="15.858433"
+       sodipodi:r2="35.567432"
+       sodipodi:arg1="-2.0940585"
+       sodipodi:arg2="-0.78575375"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 96.349867,67.149322 33.065623,-11.42244 -21.03141,9.842226 31.45781,15.30404 -21.83096,-7.911946 11.42244,33.065618 -9.84222,-21.031404 -15.30404,31.457814 7.91194,-21.830961 -33.065618,11.422441 21.031408,-9.842227 -31.45781,-15.30404 21.830956,7.911946 -11.42244,-33.065621 9.842227,21.031407 15.304037,-31.45781 z"
+       transform="translate(0.72554016,67.614204)"
+       inkscape:export-filename="../../VFX Textures/ShardAllWhite.png"
+       inkscape:export-xdpi="500"
+       inkscape:export-ydpi="500" />
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linejoin:round;filter:url(#filter14)"
+       id="path10"
+       inkscape:flatsided="false"
+       sodipodi:sides="4"
+       sodipodi:cx="104.27446"
+       sodipodi:cy="80.885796"
+       sodipodi:r1="2.8459427"
+       sodipodi:r2="39.744125"
+       sodipodi:arg1="-0.44882867"
+       sodipodi:arg2="0.33656953"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 106.83853,79.650911 141.78867,94.011335 105.50934,83.449865 91.148921,118.4 101.71039,82.12068 66.760253,67.760257 103.03958,78.321726 117.4,43.371589 Z"
+       transform="matrix(0.63589593,0,0,0.63589593,38.692296,97.065052)"
+       inkscape:export-filename="path2.png"
+       inkscape:export-xdpi="500"
+       inkscape:export-ydpi="500" />
+  </g>
+</svg>
