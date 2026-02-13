@@ -4,13 +4,12 @@ local debris = game:GetService("Debris")
 local replicatedStorage = game:GetService("ReplicatedStorage")
 
 local assets = replicatedStorage:WaitForChild("Assets")
-local effects = assets.Effects
 
 local cachedSounds = {}
-for _,sound in assets.Sounds:GetDescendants() do
+for _,sound in assets:GetDescendants() do
 	if  sound:IsA("Sound") then
 		local fullName = sound:GetFullName()
-		fullName = fullName:split("ReplicatedStorage.Assets.Sounds.")[2]
+		fullName = fullName:split("ReplicatedStorage.Assets.")[2]
 		cachedSounds[fullName] = sound
 	end
 end

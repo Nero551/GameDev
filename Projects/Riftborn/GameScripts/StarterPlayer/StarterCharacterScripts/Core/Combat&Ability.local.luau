@@ -5,18 +5,13 @@ local runService = game:GetService("RunService")
 local remotes = replicatedStorage.Remotes
 local player = game:GetService("Players").LocalPlayer
 local modules =  replicatedStorage.Modules
-local assets = replicatedStorage.Assets
 local stateService = require(modules.StateService)
 local character = script.Parent.Parent
-local animationsFolder = assets.Animations
 
 local statusFolder = character:WaitForChild("Status", math.huge)
 local humanoid:Humanoid = character:WaitForChild("Humanoid")
 
 local actionVerifier = require(modules.ActionVerifier)
-
-local animsModule = require(character.Core:WaitForChild("Animations", math.huge))
-animsModule.loadAnims(humanoid.Animator ,  animationsFolder.Client)
 
 
 local proc = false

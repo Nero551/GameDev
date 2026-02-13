@@ -7,7 +7,9 @@ local CombatService = require(script.Parent.Parent.Services.CombatService)
 local AbilityService = require(script.Parent.Parent.Services.AbilityService)
 local MovementService = require(script.Parent.Parent.Services.MovementService)
 
-local animationsFolder = game.ReplicatedStorage.Assets.Animations
+local animationsFolder = game.ReplicatedStorage.Assets.Shared.Animations
+local animationsModule = require(game.ReplicatedStorage.Modules.Animations)
+
 local abilityDataModule = require(game.ReplicatedStorage.Modules.Data.AbilityData)
 
 local AIService = {}
@@ -202,11 +204,10 @@ function AIService:CreateAI(npc ,config, animations, Abilties)
 	self.Alive = true
 	self.CurrentState = "Idle"
 	self.FlashStepCharge = npc.Status.FlashStepCharge
-	self.AnimationsModule = require(npc.Core.Animations)
-	self.AnimationsModule.loadAnims(self.Animator , animationsFolder)
-	self.IdleAnimation = self.AnimationsModule.loadedAnimations[animations.Idle]
-	self.WalkAnimation = self.AnimationsModule.loadedAnimations[animations.Walk]
-	self.RunAnimation  = self.AnimationsModule.loadedAnimations[animations.Run]
+	animationsModule:loadAnims(self.Animator , animationsFolder)
+	self.IdleAnimation = animationsModule.loadedAnimations[self.NPC][animations.Idle]
+	self.WalkAnimation = animationsModule.loadedAnimations[self.NPC][animations.Walk]
+	self.RunAnimation  = animationsModule.loadedAnimations[self.NPC][animations.Run]
 	self.Humanoid.WalkSpeed = config.WalkSpeed
 	self.LastAttackSeenTime = 0
 	self.Abilities = Abilties

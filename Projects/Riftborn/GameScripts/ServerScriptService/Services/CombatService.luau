@@ -7,7 +7,6 @@ local assets = replicatedStorage.Assets
 local modules = replicatedStorage.Modules
 local remotes = replicatedStorage.Remotes
 
-local animationsFolder = assets.Animations
 local itemDataBase = require(replicatedStorage.Modules.Data.ItemDataBase)
 
 local ActionVerifier = require(modules.ActionVerifier)
@@ -51,11 +50,6 @@ function CombatService:Died(character)
 	local statusFolder = character:WaitForChild("Status", math.huge)
 	local humanoid:Humanoid = character:WaitForChild("Humanoid" , math.huge)
 
-	task.spawn(function()
-		local coreFolder = character:WaitForChild("Core", math.huge)
-		local animationModule = require(coreFolder.Animations)
-		animationModule.loadAnims(humanoid.Animator ,assets.Animations.Character)
-	end)
 	humanoid.Died:Once(function()
 		stateService.addState(character , "Dead")
 	end)	
@@ -77,7 +71,9 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 	end
 	local configurationFolder = character:FindFirstChild("Configuration")
 	if not configurationFolder then return end
-
+	
+	local animationsFolder = assets.Weapons[tool.Name].Animations
+	
 	--Playing Animations
 	local coreFolder = character.Core
 	local animationsModule = require(coreFolder.Animations)

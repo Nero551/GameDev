@@ -20,8 +20,8 @@ return function  (scrollingFrame, infoFrame)
 	local unequipButton = equipIcon["UnEquipButton(ClickSoundSizeChange)"]
 	local baseStatsButton = infoFrame["BaseStatsButton(HoverClickSoundSizeChange)"] 
 
-	local clickSound = repstor.Assets.Sounds.MenuSounds.Click
-	local hoverSound = repstor.Assets.Sounds.MenuSounds.Hover
+	local clickSound = repstor.Assets.Shared.Sounds.MenuSounds.Click
+	local hoverSound = repstor.Assets.Shared.Sounds.MenuSounds.Hover
 
 	local abilityModule = require(repstor.Modules.Data.AbilityData)
 	local abilitiesFrame = infoFrame.Abilties

@@ -6,8 +6,6 @@ local modules = replicatedStorage.Modules
 local assets = replicatedStorage.Assets
 local DataService = require(script.Parent.DataService)
 
-local animsFolder = assets.Animations
-local sounds = assets.Sounds
 local remotes = replicatedStorage.Remotes
 
 local itemDataBase = require(modules.Data.ItemDataBase)
@@ -48,7 +46,10 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, a
 	if not abilityData then return end
 	
 	local weaponData = itemDataBase:GetItemData(tool:GetAttribute("ID"))
-
+	
+	local animsFolder = assets.Weapons[tool.Name].Animations
+	local sounds = assets.Shared.Sounds
+	
 	if player then
 		playerStats = DataService:GetTable(player,"Stats")
 		local playerMana = DataService:GetTable(player, "Mana")
@@ -76,9 +77,9 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, a
 	local cooldownTime  = abilityData.AbilityCooldown
 
 	---Animation---
-	local animsModule = require(character:WaitForChild("Core").Animations)
-	animsModule.loadAnims(humanoid.Animator, animsFolder)
-	local animation:AnimationTrack = animsModule.loadedAnimations[abilityData.Animation]
+	local animsModule = require(modules.Animations)
+	animsModule:loadAnims(humanoid.Animator, animsFolder)
+	local animation:AnimationTrack = animsModule.loadedAnimations[character.Name][abilityData.Animation]
 	if not animation then warn("Animation Not Found") return end
 	animation:Play()
 	

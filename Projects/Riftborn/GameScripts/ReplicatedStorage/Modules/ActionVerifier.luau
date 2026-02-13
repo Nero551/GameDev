@@ -2,6 +2,27 @@ local StateService = require(script.Parent.StateService)
 
 local ActionVerifier = {}
 
+function ActionVerifier:CanSprint(character)
+	local humanoid = character:WaitForChild("Humanoid")
+	if humanoid.MoveDirection.Magnitude >  0 then
+		if not StateService.checkState(character, "Attacking", "Blocking", "NoMove", "Stunned", "NoSprint" ) then
+			return true
+		end
+	end
+	return false
+end
+
+
+function ActionVerifier:CanWalk(character)
+	local humanoid = character:WaitForChild("Humanoid")
+	if humanoid.MoveDirection.Magnitude >  0 then
+		if not StateService.checkState(character, "Attacking", "Blocking", "NoMove", "Stunned", "NoSprint", "Sprinting") then
+			return true
+		end
+	end
+	return false
+end
+
 function ActionVerifier:CanAttack(character)
 	if StateService.checkState(character , "Attacking" , "Blocking", "Stunned", "NoPunch"
 		, "Dashing", "FlashStep", "FlashStepEndLag" ,"DashEndLag", "Casting") then

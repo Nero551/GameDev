@@ -5,7 +5,7 @@ local char = script.Parent.Parent
 local root:Part? =  char:WaitForChild("HumanoidRootPart")
 
 local humanoid:Humanoid = char:WaitForChild("Humanoid")
-local materialSounds = game.ReplicatedStorage.Assets.Sounds.LandingSounds
+local materialSounds = game.ReplicatedStorage.Assets.Shared.Sounds.LandingSounds
 
 local elapsed = 0
 local minFalltime = 2

@@ -4,7 +4,6 @@ local debris = game:GetService("Debris")
 local replicatedStorage = game:GetService("ReplicatedStorage")
 
 local assets = replicatedStorage:WaitForChild("Assets")
-local effects = assets.Effects
 
 
 
@@ -15,7 +14,7 @@ return function(arguementData:any)
 	if target and weaponUsed then
 		local rootPart = target:FindFirstChild("HumanoidRootPart")
 		if rootPart then
-			local clone =  effects.BlockEffects["Block"..tostring(BlockCounter.Value)]:Clone()
+			local clone =  assets.Shared.Effects.BlockEffects["Block"..tostring(BlockCounter.Value)]:Clone()
 			clone.Parent = rootPart
 			for _,v in clone:GetDescendants() do
 				if v:IsA("ParticleEmitter") then

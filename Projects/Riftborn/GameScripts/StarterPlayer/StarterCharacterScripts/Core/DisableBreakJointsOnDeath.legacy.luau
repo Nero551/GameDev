@@ -7,7 +7,7 @@ local root:Part? = char:WaitForChild("HumanoidRootPart")
 local debris = game:GetService("Debris")
 
 local animator:Animator = humanoid.Animator
-local deathAnimation = animator:LoadAnimation(game.ReplicatedStorage.Assets.Animations.Character.Death)
+local deathAnimation = animator:LoadAnimation(game.ReplicatedStorage.Assets.Shared.Character.Death)
 
 humanoid.BreakJointsOnDeath = false
 humanoid.Died:Connect(function()

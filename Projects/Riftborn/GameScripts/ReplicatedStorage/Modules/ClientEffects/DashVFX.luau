@@ -4,7 +4,7 @@ local debris = game:GetService("Debris")
 local replicatedStorage = game:GetService("ReplicatedStorage")
 
 local assets = replicatedStorage:WaitForChild("Assets")
-local effects = assets.Effects
+local effects = assets.Shared.Effects
 
 return function(arguementData:any)
 	local direction = arguementData.Direction

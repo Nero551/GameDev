@@ -61,11 +61,14 @@ function NPCHandler:HandleNPC(npc)
 	end)
 
 
-	local animations = {	
-		Idle = "Client.Idle."..toolName,
-		Walk = "Client.Walk."..toolName,
-		Run  = "Client.Run."..toolName,
-	}
+	local animations = {}
+	if toolName then
+		animations = {
+			Idle = "Weapons"..toolName..".Animations.Idle",
+			Walk = "Weapons"..toolName..".Animations.Walk",
+			Run  = "Weapons"..toolName..".Animations.Run",
+		}
+	end
 
 	local Abilities = {
 		Z = toolName.."Z",
@@ -106,7 +109,7 @@ function NPCHandler:HandleNPC(npc)
 
 	---When NPC Die---
 	local animator:Animator = npcHumanoid.Animator
-	local deathAnimation = animator:LoadAnimation(game.ReplicatedStorage.Assets.Animations.Character.Death)
+	local deathAnimation = animator:LoadAnimation(game.ReplicatedStorage.Assets.Shared.Character.Death)
 
 	npc.Humanoid.Died:Connect(function()
 		deathAnimation:Play()

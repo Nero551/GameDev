@@ -86,13 +86,7 @@ UserInputService.InputBegan:Connect(function(input)
 	
 	------Sprinting------
 	if input.KeyCode == Enum.KeyCode.LeftShift then
-		---Start Sprinting---
-		if not stateService.checkState(character, "Sprinting") then
-			stateService.addState(character, "Sprinting")
-			---Stop Sprinting---
-		else
-			stateService.removeState(character, "Sprinting")
-		end   	
+		remotes.Sprint:FireServer(character)  	
 	end
 	
 	------Dashing & FlashStep------
