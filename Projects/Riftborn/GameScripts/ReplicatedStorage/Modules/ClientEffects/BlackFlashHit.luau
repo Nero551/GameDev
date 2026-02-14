@@ -7,22 +7,21 @@ local assets = replicatedStorage:WaitForChild("Assets")
 
 return function(arguementData:any)
 	local target:Model = arguementData.Target
-	local weaponUsed:string = arguementData.WeaponUsed
 	
-	if target and weaponUsed then
+	if target  then
 		local rootPart = target:FindFirstChild("HumanoidRootPart")
 		if rootPart then
-			local clone =  assets.Weapons[weaponUsed].Effects.HitEffect:Clone()
+			local clone =  assets.Shared.Effects.BlackFlashEffect:Clone()
 			clone.Parent = rootPart
+			local weld = Instance.new("Weld")
+			weld.Part0 = clone
+			weld.Part1 = rootPart
+			weld.Parent = clone
+			
+			
 			for _,v in clone:GetDescendants() do
 				if v:IsA("ParticleEmitter") then
-					if v:GetAttribute("EmitDelay") and v:GetAttribute("EmitDelay") > 0 then
-						task.delay(v:GetAttribute("EmitDelay"), function()
-							v:Emit(v:GetAttribute("EmitCount"))
-						end)
-					else
-						v:Emit(v:GetAttribute("EmitCount"))
-					end
+					v.Enabled = true
 				end
 			end
 			debris:AddItem(clone, 1.5)

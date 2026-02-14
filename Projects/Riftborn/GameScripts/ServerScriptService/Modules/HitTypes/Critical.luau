@@ -48,9 +48,9 @@ return function(argumentData)
 	killerHit.Name = "KillerHit"	
 	debris:AddItem(killerHit, 30)
 	
-	replicatedStorage.Remotes.ClientEffects:FireAllClients("DefualtHit" , {
+	replicatedStorage.Remotes.ClientEffects:FireAllClients("DefaultHit" , {
 		["Target"] = targetHit ,
-		["weaponUsed"] = weaponUsed.Name,
+		["WeaponUsed"] = weaponUsed.Name,
 	})
 	
 	if abilityData then
@@ -66,7 +66,7 @@ return function(argumentData)
 
 		
 		animationsModule:GetAnimation(
-			animator, "Weapons."..weaponUsed.Name..".Character.AbilityHitReactions."..abilityData.HitReaction
+			animator, "Shared.Character.AbilityHitReactions."..abilityData.HitReaction
 		):Play()
 
 	else
@@ -83,13 +83,13 @@ return function(argumentData)
 			})			targetHumanoid:TakeDamage(M1Damage)
 
 			replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
-				["SoundName"] = "Weapons."..weaponUsed.Name..".Hit."..tostring(comboStringNumber) ,
+				["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Hit."..tostring(comboStringNumber) ,
 				["Parent"] = targetHRP
 			})
 
 
 			local hitReactionAnim = animationsModule:GetAnimation(
-				animator, "Weapons."..weaponUsed.Name..".Character.HitReactions."..tostring(comboStringNumber)
+				animator, "Shared.Character.HitReactions."..tostring(comboStringNumber)
 			)
 			hitReactionAnim:Play()
 			stateService.addState(targetHit , "Stunned" , hitReactionAnim.Length + 0.1)

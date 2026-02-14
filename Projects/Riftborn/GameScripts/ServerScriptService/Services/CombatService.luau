@@ -124,7 +124,7 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 		end
 		
 		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
-			["SoundName"] = "Weapons."..tool.Name..".Swings."..tostring(trueSwingNumber) ,
+			["SoundName"] = "Weapons."..tool.Name..".Sounds.Swings."..tostring(trueSwingNumber) ,
 			["Parent"] = character.HumanoidRootPart
 		})
 		

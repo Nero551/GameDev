@@ -4,24 +4,27 @@ return function(damageFrame)
 	local damageText = damageFrame.DamageNumber
 	local comboDuration = damageFrame.ComboDuration
 	local remotes = repstor.Remotes
-	local criticalText = damageFrame.CriticalHit
+	local ExtraText = damageFrame.ExtraText
 
 	damageFrame.Visible = false
 	damageText.Text = ""
 	comboDuration.Visible = false
-	criticalText.Visible = false
+	ExtraText.Visible = false
 
 	local BASE_SIZE = damageText.Size
-	local BASE_CRIT_SIZE = criticalText.Size
+	local BASE_ExtraText_SIZE = ExtraText.Size
 
 	local function DefualtTween()
-		criticalText.Visible = false
+		ExtraText.Visible = false
 		local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		TweenService:Create(comboDuration, info , {BackgroundColor3 = Color3.fromRGB(176, 176, 176)}):Play()
+		
+		local color = Color3.fromRGB(176,176,176)
+		
+		TweenService:Create(comboDuration, info , {BackgroundColor3 = color}):Play()
 
 
 		TweenService:Create(damageText, info, {
-			TextColor3 = Color3.fromRGB(176, 176, 176),
+			TextColor3 = color,
 			Size = BASE_SIZE + UDim2.fromScale(0.05,0.05)}):Play()
 
 		task.delay(0.25, function()
@@ -33,13 +36,18 @@ return function(damageFrame)
 	end
 
 	local function BlockedTween()
-		criticalText.Visible = false
+		ExtraText.Text = "BLOCKED"
+		ExtraText.Visible = true
 		local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		TweenService:Create(comboDuration, info , {BackgroundColor3 = Color3.fromRGB(41, 41, 255)}):Play()
-
-
+		
+		local color = Color3.fromRGB(41,41,255)
+		
+		TweenService:Create(ExtraText, info, {TextColor3 = color}):Play()
+		
+		TweenService:Create(comboDuration, info , {BackgroundColor3 = color}):Play()
+		
 		TweenService:Create(damageText, info, {
-			TextColor3 = Color3.fromRGB(41, 41, 255),
+			TextColor3 = color,
 			Size = BASE_SIZE + UDim2.fromScale(0.05,0.05)}):Play()
 
 
@@ -51,19 +59,24 @@ return function(damageFrame)
 		end)
 
 	end
-
-	local function CriticalTween()
-		criticalText.Visible = true
+	
+	local function BlackFlashTween()
+		ExtraText.Text = "BLACK FLASH"
+		ExtraText.Visible = true
 		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		TweenService:Create(comboDuration, info , {BackgroundColor3 = Color3.fromRGB(255, 24, 28)}):Play()
-
-
-		TweenService:Create(criticalText, info, {
-			Size = BASE_CRIT_SIZE + UDim2.fromScale(0.1,0.1),
+		
+		local color = Color3.fromRGB(255, 24, 28)
+		
+		TweenService:Create(ExtraText, info, {TextColor3 = color}):Play()
+		
+		TweenService:Create(comboDuration, info , {BackgroundColor3 = color}):Play()
+		
+		TweenService:Create(ExtraText, info, {
+			Size = BASE_ExtraText_SIZE + UDim2.fromScale(0.1,0.1),
 			Rotation = 5}):Play()
 
 		TweenService:Create(damageText, info, {
-			TextColor3 = Color3.fromRGB(255, 24, 28),
+			TextColor3 = color,
 			Size = BASE_SIZE + UDim2.fromScale(0.1,0.1),
 			Rotation = 5}):Play()
 
@@ -71,8 +84,42 @@ return function(damageFrame)
 			local shrinkTween = TweenService:Create(damageText, TweenInfo.new(0.5, Enum.EasingStyle.Sine , Enum.EasingDirection.InOut), {
 				Size = BASE_SIZE - UDim2.fromScale(0.1,0.1), Rotation = 0
 			})
-			local shrinkCriticalTween = TweenService:Create(criticalText, TweenInfo.new(0.5, Enum.EasingStyle.Sine , Enum.EasingDirection.InOut), {
-				Size = BASE_CRIT_SIZE - UDim2.fromScale(0.1,0.1), Rotation = 0
+			local shrinkCriticalTween = TweenService:Create(ExtraText, TweenInfo.new(0.5, Enum.EasingStyle.Sine , Enum.EasingDirection.InOut), {
+				Size = BASE_ExtraText_SIZE - UDim2.fromScale(0.1,0.1), Rotation = 0
+			})
+			shrinkTween:Play()
+			shrinkCriticalTween:Play()
+		end)
+		
+	end
+
+	local function CriticalTween()
+		ExtraText.Text = "CRITICAL"
+		ExtraText.Visible = true
+			
+		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+		
+		local color = Color3.fromRGB(214,89,6)
+		
+		TweenService:Create(ExtraText, info, {TextColor3 = color}):Play()
+
+		TweenService:Create(comboDuration, info , {BackgroundColor3 = color}):Play()
+		
+		TweenService:Create(ExtraText, info, {
+			Size = BASE_ExtraText_SIZE + UDim2.fromScale(0.1,0.1),
+			Rotation = 5}):Play()
+
+		TweenService:Create(damageText, info, {
+			TextColor3 = color,
+			Size = BASE_SIZE + UDim2.fromScale(0.1,0.1),
+			Rotation = 5}):Play()
+
+		task.delay(0.25, function()
+			local shrinkTween = TweenService:Create(damageText, TweenInfo.new(0.5, Enum.EasingStyle.Sine , Enum.EasingDirection.InOut), {
+				Size = BASE_SIZE - UDim2.fromScale(0.1,0.1), Rotation = 0
+			})
+			local shrinkCriticalTween = TweenService:Create(ExtraText, TweenInfo.new(0.5, Enum.EasingStyle.Sine , Enum.EasingDirection.InOut), {
+				Size = BASE_ExtraText_SIZE - UDim2.fromScale(0.1,0.1), Rotation = 0
 			})
 			shrinkTween:Play()
 			shrinkCriticalTween:Play()
@@ -80,7 +127,7 @@ return function(damageFrame)
 	end
 
 
-	remotes.ShowDamage.OnClientEvent:Connect(function(damage, critical, blocked)
+	remotes.ShowDamage.OnClientEvent:Connect(function(damage, critical, blocked, blackFlash)
 		damageFrame.Visible = true
 
 		---ComboDuration---
@@ -98,7 +145,9 @@ return function(damageFrame)
 		end)
 
 		---Text---
-		if critical == true then
+		if blackFlash == true then
+			BlackFlashTween()
+		elseif critical == true then
 			CriticalTween()
 		elseif blocked ==  true then
 			BlockedTween()
@@ -113,6 +162,4 @@ return function(damageFrame)
 			damageText.Text = damage
 		end
 	end)
-
-
 end

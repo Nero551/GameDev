@@ -112,7 +112,6 @@ function NPCHandler:HandleNPC(npc)
 	end)
 
 
-
 	---When NPC Die---
 	local animator:Animator = npcHumanoid.Animator
 	local deathAnimation = animator:LoadAnimation(game.ReplicatedStorage.Assets.Shared.Character.Death)

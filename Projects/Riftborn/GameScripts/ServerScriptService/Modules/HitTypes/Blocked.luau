@@ -58,7 +58,7 @@ return function(argumentData)
 
 			local randomNumber =  math.random(1,4)
 			replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
-				["SoundName"] = "Weapons."..weaponUsed.Name..".Blocked."..tostring(randomNumber) ,
+				["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Blocked."..tostring(randomNumber) ,
 				["Parent"] = targetHit.HumanoidRootPart
 			})
 		end	
@@ -71,14 +71,14 @@ return function(argumentData)
 	
 	task.spawn(function()
 		local randomShrug = math.random(1,2)
-		animationsModule:GetAnimation(animator, "Weapons."..weaponUsed.Name..".Character.BlockReactions.BlockShrug"..tostring(randomShrug)):Play()
+		animationsModule:GetAnimation(animator, "Shared.Character.BlockReactions.BlockShrug"..tostring(randomShrug)):Play()
 	end)
 	
 	if player then
 		if AbilityDamage then
-			replicatedStorage.Remotes.ShowDamage:FireClient(player ,AbilityDamage, false, false)
+			replicatedStorage.Remotes.ShowDamage:FireClient(player ,AbilityDamage, false, true)
 		else
-			replicatedStorage.Remotes.ShowDamage:FireClient(player ,M1Damage, false, false)
+			replicatedStorage.Remotes.ShowDamage:FireClient(player ,M1Damage, false, true)
 		end
 	end
 	

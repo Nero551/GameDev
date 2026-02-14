@@ -71,22 +71,42 @@ function HitApplier:ApplyHit(argumentData)
 		end
 	else
 		
-		---Critical HitType---
 		if playerCriticalDamageStat and playerCriticalRateStat and math.random(0,100) <= playerCriticalRateStat then
-
-			hitTypes["Critical"]({
-				["Attacker"] = character,
-				["TargetHit"] = targetHit,
-				["WeaponUsed"] = tool,
-				["ComboStringNumber"] = trueSwingNumber,
-				["LastHit"] = (trueSwingNumber == 5 and true or false),
-				["PlayerDamageStat"] = playerDamageStat,
-				["TargetDefenseStat"] = targetDefenseStat,
-				["PlayerCriticalDamageStat"] = playerCriticalDamageStat,
-				["Player"] = player,
-				["AbilityData"] = abilityData,
-				["NPCDamage"] = npcDamage,
-			})
+			
+			---BlackFlash HitType---
+			if  playerCriticalRateStat >= 150 and math.random(0, 500) <= playerCriticalRateStat - 150  and not abilityData then
+				hitTypes["BlackFlash"]({
+					["Attacker"] = character,
+					["TargetHit"] = targetHit,
+					["WeaponUsed"] = tool,
+					["ComboStringNumber"] = trueSwingNumber,
+					["LastHit"] = (trueSwingNumber == 5 and true or false),
+					["PlayerDamageStat"] = playerDamageStat,
+					["TargetDefenseStat"] = targetDefenseStat,
+					["PlayerCriticalDamageStat"] = playerCriticalDamageStat,
+					["Player"] = player,
+					["AbilityData"] = abilityData,
+					["NPCDamage"] = npcDamage, 
+					
+				})
+			else
+				---Critical HitType---
+				hitTypes["Critical"]({
+					["Attacker"] = character,
+					["TargetHit"] = targetHit,
+					["WeaponUsed"] = tool,
+					["ComboStringNumber"] = trueSwingNumber,
+					["LastHit"] = (trueSwingNumber == 5 and true or false),
+					["PlayerDamageStat"] = playerDamageStat,
+					["TargetDefenseStat"] = targetDefenseStat,
+					["PlayerCriticalDamageStat"] = playerCriticalDamageStat,
+					["Player"] = player,
+					["AbilityData"] = abilityData,
+					["NPCDamage"] = npcDamage,
+				})
+			end
+			
+			
 		else
 			-----Defualt HitType---		
 			hitTypes["Default"]({
