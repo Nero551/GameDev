@@ -78,8 +78,7 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, a
 
 	---Animation---
 	local animsModule = require(modules.Animations)
-	animsModule:loadAnims(humanoid.Animator, animsFolder)
-	local animation:AnimationTrack = animsModule.loadedAnimations[character.Name][abilityData.Animation]
+	local animation:AnimationTrack = animsModule:GetAnimation(humanoid.Animator, abilityData.Animation)
 	if not animation then warn("Animation Not Found") return end
 	animation:Play()
 	

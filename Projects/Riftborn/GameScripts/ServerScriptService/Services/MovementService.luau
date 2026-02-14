@@ -3,7 +3,6 @@ local debris = game:GetService("Debris")
 local runService = game:GetService("RunService")
 
 local assets = repstor.Assets
-local animationsFolder = assets.Shared.Animations
 local stateService = require(repstor.Modules.StateService)
 local ActionVerifier =  require(repstor.Modules.ActionVerifier)
 local MovementConfig = require(repstor.Modules.Configs.MovementConfig)
@@ -17,125 +16,15 @@ local flashStepConfig = MovementConfig.FlashstepConfig
 
 local MovementService = {}
 
-local function StopMainStateAnimations(current, Type, character)
-	for animName,anim in pairs(animsModule.loadedAnimations[character]) do
-		if string.find(animName, "Animations."..Type)  then
-			if anim ~= current and anim.IsPlaying then
-				anim:Stop(0.2)
-			end	
-		end
-	end
-end
-
----MainStateAnimations---
-
-function MovementService:MainStates()
+function MovementService:LoadSharedAnimations()
 	game.Players.PlayerAdded:Connect(function(player)
-		
-		local currentIdle:Animation?
-		local currentRun:Animation?
-		local currentWalk:Animation?
-		
-		local conn:RBXScriptConnection?
-		
-		conn = runService.Heartbeat:Connect(function(dt)
-			local char = player.Character or player.CharacterAdded:Wait()
-
-			if stateService.checkState(char, "Dead") then
-				conn:Disconnect()
-				conn = nil
-			end
-			
-	
-			local humanoid = char:WaitForChild("Humanoid")
+		player.CharacterAdded:Connect(function(character)
+			local humanoid = character:WaitForChild("Humanoid")
 			local animator = humanoid.Animator
-			
-			local tool = char:FindFirstChildWhichIsA("Tool")
-			
-			if tool then
-				local weaponData = itemDataBase:GetItemData(tool:GetAttribute("ID"))
-				if weaponData then
-					
-					currentIdle = animsModule:GetAnimation(animator, "Weapons."..tool.Name..".Animations.Idle")
-					currentRun = animsModule:GetAnimation(animator, "Weapons."..tool.Name..".Animations.Run")
-					currentWalk = animsModule:GetAnimation(animator, "Weapons."..tool.Name..".Animations.Walk")
-				end
-				
-			else
-					
-				currentIdle = animsModule:GetAnimation(animator, "Shared.Animations.Idle.Default")
-				currentRun = animsModule:GetAnimation(animator, "Shared.Animations.Run.Default")
-				currentWalk = animsModule:GetAnimation(animator, "Shared.Animations.Walk.Default")
-			end
-			
-			
-			---Jump Animation---
-			if humanoid:GetState() == Enum.HumanoidStateType.Jumping then
-				animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Jump.Jump"):Play()
-			else
-				animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Jump.Jump"):Stop()
-			end
-
-			---Falling Animation---
-			if humanoid:GetState() == Enum.HumanoidStateType.Freefall then
-				animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Fall.Fall"):Play()
-			else
-				animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Fall.Fall"):Stop()
-			end
-
-			---Landing Animation---
-			if humanoid:GetState() == Enum.HumanoidStateType.Landed then
-			end
-			
-			
-			if humanoid:GetState() == Enum.HumanoidStateType.Jumping or  humanoid:GetState() == Enum.HumanoidStateType.Freefall or 
-				humanoid:GetState() == Enum.HumanoidStateType.Landed then
-
-				for name, anim in animsModule.loadedAnimations[char] do
-					if string.find(name, "Animations.Run") or string.find(name , "Animations.Idle") or string.find(name, "Animations.Walk") then
-						if anim.IsPlaying then
-							anim:Stop(0.2)
-						end
-					end
-				end
-				return
-			end
-			
-			---Idle--
-			if  humanoid.MoveDirection.Magnitude <=  0 then
-				StopMainStateAnimations(currentIdle, "Idle", char)
-				
-				if not currentIdle.IsPlaying  then					
-					currentIdle:Play(0.2)
-					currentWalk:Stop(0.2)
-					currentRun:Stop(0.2)
-				end
-				
-				---Sprint---
-			elseif	stateService.checkState(char,"Sprinting") and ActionVerifier:CanSprint(char) then				
-				StopMainStateAnimations(currentRun, "Run", char)
-				
-				if not currentRun.IsPlaying then
-					currentRun:Play(0.2)
-					currentWalk:Stop(0.2)
-					currentIdle:Stop(0.2)
-				end
-				
-				
-				---Walk---
-			elseif	ActionVerifier:CanWalk(char) then	
-				StopMainStateAnimations(currentWalk, "Walk", char)
-			
-				if not currentWalk.IsPlaying then
-					currentWalk:Play(0.2)
-					currentRun:Stop(0.2)
-					currentIdle:Stop(0.2)
-				end
-			end
+			animsModule:loadAnims(animator, assets.Shared)
 		end)
 	end)
 end
-
 
 function MovementService:Sprint(character)
 	if not stateService.checkState(character, "Sprinting") then
@@ -156,44 +45,42 @@ function MovementService:Dash(player:Player, direction , IsShiftLockOff, npcTarg
 	
 	local core = character:WaitForChild("Core")
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
-	local animsModule = require(repstor.Modules.Animations)
 	local statusFolder = character:WaitForChild("Status")
 	
 	
-	animsModule:loadAnims(humanoid.Animator ,  animationsFolder.Client)
 	
 	if  npcTarget then
 		direction = "Forward"
 	end
 	
 	if IsShiftLockOff then
-		local dashTime = animsModule.loadedAnimations[character]["Client.Dashes.Forward"].Length
+		local dashAnim:AnimationTrack? = animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Dashes.Forward")
 		
-		local dashing = stateService.addState(character, "Dashing", dashTime)
+		local dashing = stateService.addState(character, "Dashing", dashAnim.Length)
 		---Animation---
-		animsModule.loadedAnimations[character]["Client.Dashes.Forward"]:Play()
+		dashAnim:Play()
 
 		---VFX---
 		repstor.Remotes.ClientEffects:FireAllClients("DashVFX",
 			{
 				["Direction"] = "Forward",
 				["Character"] = character,
-				["DashTime"] = dashTime,
+				["DashTime"] = dashAnim.Length,
 			}
 		)
 	else
-		local dashTime = animsModule.loadedAnimations["Client.Dashes."..direction].Length
-		
-		local dashing = stateService.addState(character, "Dashing", dashTime)
+		local dashAnim:AnimationTrack? = animsModule:GetAnimation(humanoid.Animator,"Shared.Animations.Dashes."..direction)
+				
+		local dashing = stateService.addState(character, "Dashing", dashAnim.Length)
 		---Animation---
-		animsModule.loadedAnimations["Client.Dashes."..direction]:Play()
+		dashAnim:Play()
 
 		---VFX---
 		repstor.Remotes.ClientEffects:FireAllClients("DashVFX",
 			{
 				["Direction"] = direction,
 				["Character"] = character,
-				["DashTime"] = dashTime,
+				["DashTime"] = dashAnim.Length,
 			}
 		)
 	end
@@ -205,6 +92,7 @@ function MovementService:Dash(player:Player, direction , IsShiftLockOff, npcTarg
 			["Parent"] = humanoid,	
 		}
 	)
+	
 	
 	---If NPC---
 	if npcTarget then
@@ -346,7 +234,7 @@ function MovementService:AirJump(character, AirJumpCharges:number)
 		
 		local AirJump = stateService.addState(character, "AirJump", 0.25)
 		
-		local AirJumpSound = assets.Sounds.AirJump:Play()
+		local AirJumpSound = assets.Shared.Sounds.AirJump:Play()
 
 		local attachment = Instance.new("Attachment")
 		attachment.Name = "Attachment"

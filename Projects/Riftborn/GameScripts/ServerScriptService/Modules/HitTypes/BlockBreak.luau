@@ -5,6 +5,7 @@ local assets = replicatedStorage.Assets
 local modules = (replicatedStorage.Modules)
 local stateService = require(modules.StateService)
 local itemDataBase = require(modules.Data.ItemDataBase)
+local animationsModule = require(modules.Animations)
 
 return function(argumentData)
 	
@@ -18,6 +19,8 @@ return function(argumentData)
 	if  foundWeaponData then
 		local targetHumanoid:Humanoid = targetHit:FindFirstChild("Humanoid")
 		if not targetHumanoid then return end
+		local animator = targetHumanoid:FindFirstChild("Animator")
+		
 		stateService.addState(targetHit , "Stunned" , 1.5)
 		stateService.addState(targetHit , "BlockBroken", 1.5)
 		stateService.addState(targetHit , "NoBlock" , 5)
@@ -36,20 +39,7 @@ return function(argumentData)
 			["Duration"] = 1.5,
 		})
 		
-		
-		
-		if targetHit:FindFirstChild("Core") then
-			local animationsModule = require(targetHit.Core.Animations)
-			animationsModule.loadedAnimations["Character.BlockBreak"]:Play()
-		else
-			local animator: Animator = targetHumanoid:FindFirstChild("Animator")
-			if animator then
-				local blockBreakAnim  = animator:LoadAnimation(assets.Animations.Character.BlockBreak)
-				blockBreakAnim:Play()
-			end
-		end
-
-		
+		animationsModule:GetAnimation(animator, "Shared.Character.BlockBreak"):Play()	
 		--print("[BlockBreak] HitType Reached","From",attacker ,"To",targetHit ,"With", weaponUsed)
 	end
 

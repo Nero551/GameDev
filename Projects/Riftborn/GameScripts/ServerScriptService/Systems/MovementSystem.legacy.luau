@@ -2,7 +2,7 @@ local repstor = game:GetService("ReplicatedStorage")
 local remotes = repstor.Remotes
 local MovementService = require(script.Parent.Parent.Services.MovementService)
 
-MovementService:MainStates()
+MovementService:LoadSharedAnimations()
 
 remotes.Sprint.OnServerEvent:Connect(function(player:Player, character)
 	MovementService:Sprint(character)

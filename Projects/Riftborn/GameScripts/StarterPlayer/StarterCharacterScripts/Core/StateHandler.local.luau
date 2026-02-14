@@ -33,8 +33,3 @@ stepConnection = runService.RenderStepped:Connect(function()
 	
 	StateHandler:HandleStates(character)
 end)
-
-humanoid.Changed:Connect(function()
-	--print(humanoid.WalkSpeed)
-end)
-

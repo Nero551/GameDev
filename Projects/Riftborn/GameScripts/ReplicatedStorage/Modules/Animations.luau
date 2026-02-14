@@ -14,14 +14,11 @@ end
 
 local Animations = {}
 
-Animations.connections = {}
-
 Animations.loadedAnimations = {}
 
 function Animations:loadAnims( animator:Animator , folder :Folder)
 	local character = animator.Parent:FindFirstAncestorOfClass("Model")
 
-	
 	Animations.loadedAnimations[character] = Animations.loadedAnimations[character] or {}
 
 	for _,anim in folder:GetDescendants() do
@@ -36,16 +33,17 @@ end
 function Animations:GetAnimation(animator:Animator, animation)
 	local character = animator.Parent:FindFirstAncestorOfClass("Model")
 
-	
 	Animations.loadedAnimations[character] = Animations.loadedAnimations[character] or {}
 	
-	if Animations.loadedAnimations[character][animation] then		
+	if Animations.loadedAnimations[character][animation] then
 	else
 		local animInstance = GetInstanceFromPath("ReplicatedStorage.Assets."..animation)
---		print(animInstance," || " ,animation)
 		
-		if animInstance:IsA("Animation") then
-			Animations.loadedAnimations[character][animation] = animator:LoadAnimation(animInstance)
+		if  animInstance then 
+			if animInstance:IsA("Animation") then
+				Animations.loadedAnimations[character][animation] = animator:LoadAnimation(animInstance)
+				
+			end
 		end
 	end
 	return Animations.loadedAnimations[character][animation]

@@ -25,17 +25,6 @@ return function(arguementData:any)
 		end
 	end
 	
-	---Smoke---
-	local smoke = effects.CoreEffects.FlashStepSmoke:Clone()
-	smoke.Parent = workspace.World.Effects
-	smoke.Position = character["Left Leg"].Position
-	for _, particle in  ipairs(smoke:GetDescendants()) do
-		if particle:IsA("ParticleEmitter") then
-			particle.Enabled = true
-		end	
-	end	
-	debris:AddItem(smoke, 0.1)
-
 	---VFX--- 
 	local rootPart = character:FindFirstChild("HumanoidRootPart")
 	if rootPart then
@@ -48,7 +37,19 @@ return function(arguementData:any)
 
 		end	
 		debris:AddItem(clone, 1)
+	end
+	
+	---Smoke---
+	local smoke = effects.CoreEffects.FlashStepSmoke:Clone()
+	smoke.Parent = workspace.World.Effects
+	smoke.Position = character["Left Leg"].Position
+	for _, particle in  ipairs(smoke:GetDescendants()) do
+		if particle:IsA("ParticleEmitter") then
+			particle.Enabled = true
+		end	
 	end	
+	debris:AddItem(smoke, 0.1)
+	
 	Transparency(1)
 	task.delay(1, function()
 		Transparency(0)

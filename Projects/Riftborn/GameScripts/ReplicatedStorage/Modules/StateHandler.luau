@@ -5,21 +5,22 @@ local StateHandler = {}
 
 local statePriority = {
 	-- Highest priority: prevents all movement
-	{Name = "Dead", WalkSpeed = 0, JumpPower = 0},
-	{Name = "Stunned", WalkSpeed = 0, JumpPower = 0},
-	{Name = "NoMove", WalkSpeed = 0, JumpPower = 0},
-	{Name = "BlockBroken", WalkSpeed = 0, JumpPower = 0},
-	{Name = "Dashing", WalkSpeed = 0, JumpPower = 0},
-	{Name = "FlashStepEndLag", WalkSpeed = 0, JumpPower = 0},
+	{Name = "Dead", WS = 0, JP = 0},
+	{Name = "Stunned", WS = 0, JP = 0},
+	{Name = "NoMove", WS = 0, JP = 0},
+	{Name = "BlockBroken", WS = 0, JP = 0},
+	{Name = "Dashing", WS = 0, JP = 0},
+	{Name = "FlashStepEndLag", WS = 0, JP = 0},
 
 	-- Combat-related movement limitations
-	{Name = "Attacking", WalkSpeed = 10, JumpPower = 0},
-	{Name = "Blocking", WalkSpeed = 7, JumpPower = 0},
-	{Name = "NoSprint", WalkSpeed = 10, JumpPower = 0},   
+	{Name = "Casting", WS = 10, JP = 0},
+	{Name = "Attacking", WS = 10, JP = 0},
+	{Name = "Blocking", WS = 7, JP = 0},
+	{Name = "NoSprint", WS = 10, JP = 0},   
 
 	-- Special movement states
-	{Name = "FlashStep", WalkSpeed = 64, JumpPower = 50},   
-	{Name = "Sprinting", WalkSpeed = 32, JumpPower = 50}, 
+	{Name = "FlashStep", WS = 64, JP = 50},   
+	{Name = "Sprinting", WS = 32, JP = 50}, 
 
 }
 
@@ -32,8 +33,8 @@ function StateHandler:HandleStates(character:Model?)
 
 	for _, stateInfo in ipairs(statePriority) do
 		if stateService.checkState(character, stateInfo.Name) then
-			finalWalkSpeed = stateInfo.WalkSpeed
-			finalJumpPower = stateInfo.JumpPower
+			finalWalkSpeed = stateInfo.WS
+			finalJumpPower = stateInfo.JP
 			break 
 		end
 	end

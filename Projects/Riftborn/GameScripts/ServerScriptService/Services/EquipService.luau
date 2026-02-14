@@ -24,12 +24,10 @@ function  EquipUnEquipService:EquipItem(player:Player , itemID)
 			itemType = itemData.Type
 			local tool:Tool? = serverStorage.Tools[itemType]:FindFirstChild(itemData.Name):Clone()
 			if tool then
-
-				--Check For Another Tool With Same Type--
-				for _,anotherTool:Tool? in char:GetChildren() do
+				
+				local function DeleteOtherTool(anotherTool)
 					if anotherTool:IsA("Tool") then
 						local anotherWeaponData = itemDataBase:GetItemData(anotherTool:GetAttribute("ID"))
-						if not anotherWeaponData then return end
 						if anotherWeaponData.Type == itemType then
 							local anotherWeaponEquippedModel = char:FindFirstChild(anotherTool.Name.."_Equipped")
 							local anotherWeaponUnEquippedModel = char:FindFirstChild(anotherTool.Name.."_UnEquipped")
@@ -37,26 +35,24 @@ function  EquipUnEquipService:EquipItem(player:Player , itemID)
 								GameEvents.RemoveBuff:Fire(player ,  anotherWeaponData,anotherTool:GetAttribute("ID"))
 							end
 							anotherTool:Destroy()
-							anotherWeaponEquippedModel:Destroy()
-							anotherWeaponUnEquippedModel:Destroy()
+							if anotherWeaponEquippedModel then
+								anotherWeaponEquippedModel:Destroy()
+							end
+
+							if anotherWeaponUnEquippedModel then
+								anotherWeaponUnEquippedModel:Destroy()
+							end
 						end
 					end
 				end
 
+				--Check For Another Tool With Same Type--
+				for _,anotherTool:Tool? in char:GetChildren() do
+			--		DeleteOtherTool(anotherTool)
+				end
+
 				for _,anotherTool:Tool? in player.Backpack:GetChildren() do
-					if anotherTool:IsA("Tool") then
-						local anotherWeaponData = itemDataBase:GetItemData(anotherTool:GetAttribute("ID"))
-						if anotherWeaponData.Type == itemType then
-							local anotherWeaponEquippedModel = char:FindFirstChild(anotherTool.Name.."_Equipped")
-							local anotherWeaponUnEquippedModel = char:FindFirstChild(anotherTool.Name.."_UnEquipped")
-							if anotherWeaponData.Buffs then
-								GameEvents.RemoveBuff:Fire(player ,  anotherWeaponData,anotherTool:GetAttribute("ID"))
-							end
-							anotherTool:Destroy()
-							anotherWeaponEquippedModel:Destroy()
-							anotherWeaponUnEquippedModel:Destroy()
-						end
-					end
+			--		DeleteOtherTool(anotherTool)
 				end
 
 				tool.Parent = player.Backpack
@@ -148,9 +144,10 @@ end
 
 ---Load Equipped Items---
 function EquipUnEquipService:LoadEquippedItems(player:Player)
+	
 	local inventory = DataService:GetTable(player, "Inventory")
 	local equippedItems = DataService:GetTable(player, "Equipped")
-
+	
 	for  itemType, itemID in equippedItems do
 		
 		---Must own the Item---
@@ -166,7 +163,6 @@ function EquipUnEquipService:LoadEquippedItems(player:Player)
 				end
 
 				itemType = itemData.Type
-				local tool:Tool? = serverStorage.Tools[itemType]:FindFirstChild(itemData.Name):Clone()
 
 				--Check For Another Tool With Same Type--
 				for _,anotherTool:Tool? in char:GetChildren() or player.Backpack:GetChildren() do
@@ -174,22 +170,33 @@ function EquipUnEquipService:LoadEquippedItems(player:Player)
 						anotherTool:Destroy()
 					end
 				end
-				tool.Parent = player.Backpack
+				
+				---Cloning Equipped Tools---
+				local tool = player.Backpack:FindFirstChild(itemData.Name)
+				if not tool then
+					tool = serverStorage.Tools[itemType]:FindFirstChild(itemData.Name):Clone()
+					tool.Parent = player.Backpack
+				end
 				
 			elseif itemData.Type == "Helmet" or itemData.Type == "ChestPlate" or itemData.Type == "Leggings" or itemData.Type == "Boots" then
 				if itemData.Buffs then
 					GameEvents.AddBuff:Fire(player,  itemData,itemID)
 				end
 				itemType = itemData.Type
-				local armor:Model? = serverStorage.Armors[itemType]:FindFirstChild(itemData.Name):Clone()
-
+				
 				--Check For Another Armor With Same Type--
 				for _,anotherArmor:Accessory? in char:GetChildren() do
 					if anotherArmor:GetAttribute("Type") == itemType then
 						anotherArmor:Destroy()
 					end
 				end
-				armor.Parent = char
+				
+				---Cloning Equipped Armor---
+				local armor = char:FindFirstChild(itemData.Name)
+				if not armor then
+					armor = serverStorage.Armors[itemType]:FindFirstChild(itemData.Name):Clone()
+					armor.Parent = char
+				end
 			end
 		end
 	end

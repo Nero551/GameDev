@@ -9,6 +9,7 @@ local stateService = require(modules.StateService)
 local itemDataBase = require(modules.Data.ItemDataBase)
 local knockbackPull = require(script.Parent.Parent.Utilities.KnockbackPull)
 local formulaApplier = require(modules.FormulaApplier)
+local animationsModule = require(modules.Animations)
 
 return function(argumentData)
 		
@@ -24,6 +25,8 @@ return function(argumentData)
 	local lastHit = argumentData.LastHit
 		
 	local targetHumanoid:Humanoid = targetHit:WaitForChild("Humanoid")
+	local animator = targetHumanoid:FindFirstChild("Animator")
+	
 	local targetHRP = targetHit:WaitForChild("HumanoidRootPart")
 	local attackerHRP = attacker:WaitForChild("HumanoidRootPart")
 	if not  targetHumanoid then return end
@@ -45,7 +48,12 @@ return function(argumentData)
 	killerHit.Value = player
 	killerHit.Name = "KillerHit"	
 	debris:AddItem(killerHit, 30)
-
+	
+	replicatedStorage.Remotes.ClientEffects:FireAllClients("DefualtHit" , {
+		["Target"] = targetHit ,
+		["weaponUsed"] = weaponUsed.Name,
+	})
+	
 	if abilityData then		
 		AbilityDamage = formulaApplier:AbilityDamage({
 			["AbilityData"] = abilityData,
@@ -54,27 +62,11 @@ return function(argumentData)
 			["NPCDamage"] = npcDamage,	
 		})
 
-		
 		targetHumanoid:TakeDamage(AbilityDamage)
 		
-
-		replicatedStorage.Remotes.ClientEffects:FireAllClients("DefualtHit" , {
-			["Target"] = targetHit ,
-			["weaponUsed"] = weaponUsed.Name,
-		})
-
-
-		if targetHit:FindFirstChild("Core") then
-			local animationsModule = require(targetHit.Core.Animations)
-			animationsModule.loadedAnimations["Character.HitReactions.AbilityHitReactions."..abilityData.HitReaction]:Play()
-		else
-			local animator: Animator = targetHumanoid:FindFirstChild("Animator")
-			if animator then
-				local HitReactionAnim  = animator:LoadAnimation(assets.Animations.Character.HitReactions.AbilityHitReactions[abilityData.HitReaction])
-				HitReactionAnim:Play()
-			end
-		end
-
+		animationsModule:GetAnimation(
+			animator, "Weapons."..weaponUsed.Name..".Character.AbilityHitReactions."..abilityData.HitReaction
+		):Play()
 	else				
 		local foundWeaponData = itemDataBase:GetItemData(weaponUsed:GetAttribute("ID")) 
 		if foundWeaponData then
@@ -93,24 +85,11 @@ return function(argumentData)
 				["Parent"] = targetHRP
 			})
 
-
-			replicatedStorage.Remotes.ClientEffects:FireAllClients("DefualtHit" , {
-				["Target"] = targetHit ,
-				["weaponUsed"] = weaponUsed.Name,
-			})
-			if targetHit:FindFirstChild("Core") then
-				local animationsModule = require(targetHit.Core.Animations)
-				local hitReactionAnim:AnimationTrack? = animationsModule.loadedAnimations["Character.HitReactions."..weaponUsed.Name.."."..tostring(comboStringNumber)]
-				hitReactionAnim:Play()
-				stateService.addState(targetHit , "Stunned" , hitReactionAnim.Length + 0.1)
-			else
-				local animator: Animator = targetHumanoid:FindFirstChild("Animator")
-				if animator then
-					local HitReactionAnim:AnimationTrack?  = animator:LoadAnimation(assets.Animations.Character["HitReactions"][weaponUsed.Name][tostring(comboStringNumber)])
-					HitReactionAnim:Play()
-					stateService.addState(targetHit , "Stunned" , HitReactionAnim.Length + 0.1)
-				end
-			end
+			local hitReactionAnim = animationsModule:GetAnimation(
+				animator, "Weapons."..weaponUsed.Name..".Character.HitReactions."..tostring(comboStringNumber)
+			)
+			hitReactionAnim:Play()
+			stateService.addState(targetHit , "Stunned" , hitReactionAnim.Length + 0.1)
 		end	
 
 		------Control KnockBack------

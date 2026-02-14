@@ -8,6 +8,8 @@ local stateService = require(modules.StateService)
 local itemDataBase = require(modules.Data.ItemDataBase)
 
 local formulaApplier = require(modules.FormulaApplier)
+local animationsModule = require(modules.Animations)
+
 
 return function(argumentData)
 	
@@ -21,10 +23,12 @@ return function(argumentData)
 	
 	local targetHumanoid:Humanoid = targetHit:FindFirstChild("Humanoid")
 	if not targetHumanoid then return end
+	local animator = targetHumanoid:FindFirstChild("Animator")
+	
 	if stateService.checkState(targetHit, "Invulnerable") then return end
 	local M1Damage
 	local AbilityDamage
-
+	
 	if abilityData then
 		AbilityDamage = formulaApplier:AbilityDamage({
 			["AbilityData"] = abilityData,
@@ -35,27 +39,10 @@ return function(argumentData)
 		})
 		targetHumanoid:TakeDamage(AbilityDamage)
 
-
-		replicatedStorage.Remotes.ClientEffects:FireAllClients("BlockedHit" , {
-			["Target"] = targetHit ,
-			["weaponUsed"] = weaponUsed.Name,
-		})
-
 		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
 			["SoundName"] = "AbilityBlock",
 			["Parent"] = targetHit.HumanoidRootPart
 		})
-
-		if targetHit:FindFirstChild("Core") then
-			local animationsModule = require(targetHit.Core.Animations)
-			animationsModule.loadedAnimations["Character.HitReactions.AbilityHitReactions."..abilityData.HitReaction]:Play()
-		else
-			local animator: Animator = targetHumanoid:FindFirstChild("Animator")
-			if animator then
-				local HitReactionAnim  = animator:LoadAnimation(assets.Animations.Character.HitReactions.AbilityHitReactions[abilityData.HitReaction])
-				HitReactionAnim:Play()
-			end
-		end
 	else
 		local foundWeaponData = itemDataBase:GetItemData(weaponUsed:GetAttribute("ID"))
 		if  foundWeaponData then
@@ -74,28 +61,18 @@ return function(argumentData)
 				["SoundName"] = "Weapons."..weaponUsed.Name..".Blocked."..tostring(randomNumber) ,
 				["Parent"] = targetHit.HumanoidRootPart
 			})
-
-			replicatedStorage.Remotes.ClientEffects:FireAllClients("BlockedHit" , {
-				["Target"] = targetHit ,
-				["weaponUsed"] = weaponUsed.Name,
-			})
-
-			task.spawn(function()
-				local randomShrug = math.random(1,2)
-				if targetHit:FindFirstChild("Core") then
-					local animationsModule = require(targetHit.Core.Animations)
-					animationsModule.loadedAnimations["Character.BlockReactions."..weaponUsed.Name..".BlockShrug"..tostring(randomShrug)]:Play()
-
-				else
-					local animator: Animator = targetHumanoid:FindFirstChild("Animator")
-					if animator then
-						local blockBreakAnim  = animator:LoadAnimation(assets.Animations.Character[weaponUsed]["BlockShrug"..tostring(randomShrug)])
-						blockBreakAnim:Play()
-					end
-				end
-			end)
 		end	
 	end
+	
+	replicatedStorage.Remotes.ClientEffects:FireAllClients("BlockedHit" , {
+		["Target"] = targetHit ,
+		["weaponUsed"] = weaponUsed.Name,
+	})
+	
+	task.spawn(function()
+		local randomShrug = math.random(1,2)
+		animationsModule:GetAnimation(animator, "Weapons."..weaponUsed.Name..".Character.BlockReactions.BlockShrug"..tostring(randomShrug)):Play()
+	end)
 	
 	if player then
 		if AbilityDamage then

@@ -34,6 +34,12 @@ function NPCHandler:HandleNPC(npc)
 
 	npcHumanoid.MaxHealth = config.Health
 	npcHumanoid.Health = config.Health
+	
+	local toolModel:Model? = repstor.Assets.Weapons[toolName].Model[toolName.."_Equipped"]:Clone()
+	toolModel.Parent = npc
+	local weld:Motor6D = toolModel:FindFirstChildWhichIsA("Motor6D")
+	weld.Part0 = npc:FindFirstChild("Right Arm")
+
 
 
 	---StatusFolder---
@@ -64,9 +70,9 @@ function NPCHandler:HandleNPC(npc)
 	local animations = {}
 	if toolName then
 		animations = {
-			Idle = "Weapons"..toolName..".Animations.Idle",
-			Walk = "Weapons"..toolName..".Animations.Walk",
-			Run  = "Weapons"..toolName..".Animations.Run",
+			Idle = "Weapons."..toolName..".Animations.Idle",
+			Walk = "Weapons."..toolName..".Animations.Walk",
+			Run  = "Weapons."..toolName..".Animations.Run",
 		}
 	end
 

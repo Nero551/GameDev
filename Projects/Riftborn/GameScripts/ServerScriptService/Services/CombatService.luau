@@ -13,6 +13,7 @@ local ActionVerifier = require(modules.ActionVerifier)
 local stateService = require(modules.StateService)
 local DataService = require(script.Parent.Parent.Services.DataService)
 local HitApplier = require(script.Parent.Parent.Modules.Utilities.HitApplier)
+local animationsModule = require(modules.Animations)
 
 
 local CombatService = {
@@ -57,7 +58,7 @@ end
 
 function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 	
-	
+	local humanoid = character:WaitForChild("Humanoid")
 	
 	if not ActionVerifier:CanAttack(character) then return end
 	
@@ -76,7 +77,6 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 	
 	--Playing Animations
 	local coreFolder = character.Core
-	local animationsModule = require(coreFolder.Animations)
 
 	local lastSwing = configurationFolder.LastSwing
 	local lastCombo = configurationFolder.LastCombo
@@ -89,12 +89,12 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 	if (os.clock()-lastSwing.Value) >= weaponData.ComboResetTime then
 		swingNumber.Value = 0
 	end
-	for  connectionName , connection in animationsModule.connections do
-		if string.find(connectionName, tool.Name..".Swings") then
-			animationsModule.connections[connectionName]:Disconnect()
-			animationsModule.connections[connectionName] = nil
-		end
-	end
+	--  connectionName , connection in animationsModule.connections do
+	--	if string.find(connectionName, tool.Name..".Swings") then
+		--	animationsModule.connections[connectionName]:Disconnect()
+		--	animationsModule.connections[connectionName] = nil
+		--end
+--	end
 	local trueSwingNumber =  nil
 	swingNumber.Value += 1
 	trueSwingNumber = swingNumber.Value
@@ -104,8 +104,8 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 		lastCombo.Value = os.clock()
 	end
 	lastSwing.Value = os.clock()
-	local swingName = "Weapons."..tool.Name..".Swings.L"..tostring(trueSwingNumber)
-	local animationToPlay:AnimationTrack = animationsModule.loadedAnimations[swingName]
+	local swingName = "Weapons."..tool.Name..".Animations.Swings.L"..tostring(trueSwingNumber)
+	local animationToPlay:AnimationTrack? = animationsModule:GetAnimation(humanoid.Animator, swingName)
 	
 	---Attack States---
 	stateService.addState(character , "Attacking", animationToPlay.Length)
@@ -115,7 +115,7 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 
 	animationToPlay:Play()
 
-	animationsModule.connections[swingName] = animationToPlay:GetMarkerReachedSignal("Hit"):Once(function()	
+	animationToPlay:GetMarkerReachedSignal("Hit"):Once(function()	
 		
 		if not stateService.checkState(character,"Attacking") then return end
 		
@@ -190,12 +190,7 @@ function CombatService:Block(character, boolean, tool:Tool)
 
 		local coreFolder = character:FindFirstChild("Core")
 		if not coreFolder then return end
-		
-		local animationsModule = coreFolder:FindFirstChild("Animations")
-		if not animationsModule then return end
-		
-		local loadedAnimations = require(animationsModule).loadedAnimations
-		
+				
 		local function StartBlocking()
 			if not ActionVerifier:CanBlock(character) then return end
 			if not tool then return end
@@ -206,7 +201,7 @@ function CombatService:Block(character, boolean, tool:Tool)
 				stateService.addState(character, "Blocking", nil,{["weaponName"] = tool.Name})
 
 				------Block Animations------
-				local blockAnim:AnimationTrack = loadedAnimations["Weapons."..tool.Name..".Block.Idle"]
+				local blockAnim:AnimationTrack = animationsModule:GetAnimation(humanoid.Animator,"Weapons."..tool.Name..".Animations.Block.Idle") 
 				blockAnim:Play()
 
 			end
@@ -217,7 +212,7 @@ function CombatService:Block(character, boolean, tool:Tool)
 			if blockingInstance then
 				local weaponName = blockingInstance:GetAttribute("weaponName")
 				if weaponName then
-					loadedAnimations["Weapons."..weaponName..".Block.Idle"]:Stop(0.1)
+					animationsModule:GetAnimation(humanoid.Animator, "Weapons."..weaponName..".Animations.Block.Idle"):Stop(0.1)
 
 				end
 				blockingInstance:Destroy()

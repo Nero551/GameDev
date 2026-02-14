@@ -28,7 +28,7 @@ return function(DialogueFrame)
 		while i < length do
 			i += 1
 			DialogueText.Text = string.sub(line, 1, i)
-			repstor.Assets.Sounds.DialogueSound:Play()
+			repstor.Assets.Shared.Sounds.DialogueSound:Play()
 			if skipLine then
 				DialogueText.Text = line
 				break

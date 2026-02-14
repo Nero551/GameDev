@@ -204,10 +204,9 @@ function AIService:CreateAI(npc ,config, animations, Abilties)
 	self.Alive = true
 	self.CurrentState = "Idle"
 	self.FlashStepCharge = npc.Status.FlashStepCharge
-	animationsModule:loadAnims(self.Animator , animationsFolder)
-	self.IdleAnimation = animationsModule.loadedAnimations[self.NPC][animations.Idle]
-	self.WalkAnimation = animationsModule.loadedAnimations[self.NPC][animations.Walk]
-	self.RunAnimation  = animationsModule.loadedAnimations[self.NPC][animations.Run]
+	self.IdleAnimation = animationsModule:GetAnimation(self.Animator, animations.Idle)
+	self.WalkAnimation = animationsModule:GetAnimation(self.Animator, animations.Walk)
+	self.RunAnimation  = animationsModule:GetAnimation(self.Animator, animations.Run)
 	self.Humanoid.WalkSpeed = config.WalkSpeed
 	self.LastAttackSeenTime = 0
 	self.Abilities = Abilties

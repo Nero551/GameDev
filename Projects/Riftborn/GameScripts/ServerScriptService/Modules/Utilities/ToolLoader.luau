@@ -1,33 +1,46 @@
-return function(tool)
+return function(tool:Tool?)
 	--toolloader
+	if tool:GetAttribute("ToolLoaded", true) then
+		return
+	end
+	
 	local replicatedStorage = game:GetService("ReplicatedStorage")
 	local debris = game:GetService("Debris")
 	local assets = replicatedStorage.Assets
 	local weaponModels = assets.Weapons[tool.Name].Model
 	local player :Player = tool.Parent.Parent
 
-
-
 	local character = player.Character or player.CharacterAdded:Wait()
 	local humanoid: Humanoid = character:WaitForChild("Humanoid", math.huge)
-	local  animator:Animator = humanoid.Animator
+	local animator:Animator = humanoid.Animator
 
-	local coreFolder = character:WaitForChild("Core" , math.huge)
 	local animsModule = require(replicatedStorage.Modules.Animations)
 	local animsFolder = assets.Weapons[tool.Name].Animations
 	animsModule:loadAnims(animator , animsFolder)
 	
-	if weaponModels:FindFirstChild(tool.Name.."_Equipped") or weaponModels:FindFirstChild(tool.Name.."_UnEquipped")  then
+	if weaponModels:FindFirstChild(tool.Name.."_Equipped")  then
 		
-		local unEquippedModel = weaponModels:WaitForChild(tool.Name):WaitForChild(tool.Name.."_UnEquipped"):Clone()
-		unEquippedModel.Weld.Part1 = character.Torso
-		unEquippedModel.Parent = character
-
-		local equipedModel:Model = weaponModels:WaitForChild(tool.Name):WaitForChild(tool.Name.."_Equipped"):Clone()
-		equipedModel.Parent = character
-		local weld:Motor6D = equipedModel.HandleWeld
-		weld.Part0 = character:FindFirstChild("Right Arm")
-
+		local unEquippedModel = character:FindFirstChild(tool.Name.."_UnEquipped")
+		if not unEquippedModel then
+			
+			unEquippedModel = weaponModels:FindFirstChild(tool.Name.."_UnEquipped"):Clone()
+			unEquippedModel.Parent = character
+			
+			local  weld = unEquippedModel:FindFirstChildWhichIsA("Motor6D")
+			weld.Part1 = character.Torso
+		end
+		
+		
+		local equipedModel = character:FindFirstChild(tool.Name.."_Equipped")
+		if not equipedModel then
+			
+			equipedModel = weaponModels:FindFirstChild(tool.Name.."_Equipped"):Clone()
+			equipedModel.Parent = character
+			
+			local weld:Motor6D = equipedModel:FindFirstChildWhichIsA("Motor6D")
+			weld.Part0 = character:FindFirstChild("Right Arm")
+		end
+		
 		equipedModel:SetAttribute("EquipState", false) 
 		unEquippedModel:SetAttribute("EquipState", false) 
 
@@ -67,10 +80,7 @@ return function(tool)
 						end
 					end	
 				end
-
-
 			end
-
 		end
 
 		toggleEquipped(false)
