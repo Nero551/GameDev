@@ -10,7 +10,7 @@ ArmorData.Armors = {
 		Icon = "rbxassetid://70381584984142",
 		Type = "Helmet",
 		Rarity = "Uncommon",
-		Description = "A friendly slime to keep you safe",
+		Description = "A friendly slime to keep you safe",	
 		Buffs = {
 			Defense = { Percent = 0.5},
 			Health = { Percent = 0.25},

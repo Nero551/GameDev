@@ -12,7 +12,6 @@ return function(arguementData:any)
 	local weaponUsed :string = arguementData.weaponUsed
 	local blockCounter = arguementData.BlockCounter
 	
-	print(blockCounter)
 	
 	if target and weaponUsed then
 		local rootPart = target:FindFirstChild("HumanoidRootPart")

@@ -125,9 +125,42 @@ return function(damageFrame)
 			shrinkCriticalTween:Play()
 		end)
 	end
+	
+	local function AilmentTween(ailmentName, ailmentData)
+		print(ailmentData, ailmentName)
+		ExtraText.Text = ailmentName
+		ExtraText.Visible = true
 
+		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-	remotes.ShowDamage.OnClientEvent:Connect(function(damage, critical, blocked, blackFlash)
+		local color = Color3.fromHex(ailmentData.Color)
+
+		TweenService:Create(ExtraText, info, {TextColor3 = color}):Play()
+
+		TweenService:Create(comboDuration, info , {BackgroundColor3 = color}):Play()
+
+		TweenService:Create(ExtraText, info, {
+			Size = BASE_ExtraText_SIZE + UDim2.fromScale(0.1,0.1),
+			Rotation = 5}):Play()
+
+		TweenService:Create(damageText, info, {
+			TextColor3 = color,
+			Size = BASE_SIZE + UDim2.fromScale(0.1,0.1),
+			Rotation = 5}):Play()
+
+		task.delay(0.25, function()
+			local shrinkTween = TweenService:Create(damageText, TweenInfo.new(0.5, Enum.EasingStyle.Sine , Enum.EasingDirection.InOut), {
+				Size = BASE_SIZE - UDim2.fromScale(0.1,0.1), Rotation = 0
+			})
+			local shrinkCriticalTween = TweenService:Create(ExtraText, TweenInfo.new(0.5, Enum.EasingStyle.Sine , Enum.EasingDirection.InOut), {
+				Size = BASE_ExtraText_SIZE - UDim2.fromScale(0.1,0.1), Rotation = 0
+			})
+			shrinkTween:Play()
+			shrinkCriticalTween:Play()
+		end)
+	end
+	
+	remotes.ShowDamage.OnClientEvent:Connect(function(damage, critical, blocked, blackFlash, ailmentName, ailmentData)
 		damageFrame.Visible = true
 
 		---ComboDuration---
@@ -151,6 +184,10 @@ return function(damageFrame)
 			CriticalTween()
 		elseif blocked ==  true then
 			BlockedTween()
+			
+		elseif ailmentName and ailmentData then
+			AilmentTween(ailmentName, ailmentData)
+		
 		else
 			DefualtTween()
 		end

@@ -7,6 +7,9 @@ local titleDataBase = require(repstor.Modules.Data.TitleData)
 
 local BuffService = {}
 
+local elapsed = {}
+
+
 function BuffService:UpdateBuffs(player)
 	statService:ResetBuffs(player)
 	local playerBuffs = DataService:GetTable(player, "Buffs")
@@ -20,7 +23,7 @@ function BuffService:UpdateBuffs(player)
 			buffInfo.Type = data.Type or nil
 			
 		else
-			_G.playerBuffs[player][buffID] = nil
+			playerBuffs[buffID] = nil
 		end		
 		
 		statService:ApplyBuffs(player, buffInfo.Buffs)
@@ -33,7 +36,8 @@ function BuffService:AddBuff(player:Player, data, ID)
 	if  playerBuffs[ID] then return end
 	playerBuffs[ID] = {
 		Type = data.Type,
-		Buffs = data.Buffs
+		Buffs = data.Buffs,
+		Duration = data.Duration or nil
 	}
 	BuffService:UpdateBuffs(player)
 end

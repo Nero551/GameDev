@@ -7,7 +7,9 @@ local CharacterVitalsService = {}
 CharacterVitalsService.CharacterVitals = {}
 CharacterVitalsService.cachedModules = {}
 
-for _,module in ipairs(script:GetChildren()) do
+local characterVitalsScripts = script.Parent.Parent.Modules.Utilities.CharacterVitalsScripts
+
+for _,module in ipairs(characterVitalsScripts:GetChildren()) do
 	if module:IsA("ModuleScript") then
 		CharacterVitalsService.cachedModules[module.Name] = require(module)
 	end
@@ -49,7 +51,11 @@ function CharacterVitalsService:Create(character)
 			MaxFlashStep = 3,
 			
 		},
-		AirJump = 3,
+		AirJump = {
+			CurentAirJump = 3,
+			MaxAirJump = 3
+			
+		},
 		
 		CamVectors = {
 			CamLook = 0,
@@ -66,6 +72,13 @@ function CharacterVitalsService:Create(character)
 	humanoid.Died:Connect(function()
 		CharacterVitalsService:Cleanup(character) -- remove old character vitals
 	end)
+	
+	character.AncestryChanged:Connect(function(_, parent)
+		if not parent then
+			CharacterVitalsService:Cleanup(character)
+		end
+	end)
+
 	
 	CreateFolder(character, CharacterVitalsService.CharacterVitals[character])
 	
@@ -103,7 +116,12 @@ function CharacterVitalsService:ModifyVital(character,vital, funcName , argument
 	local vitalModule = CharacterVitalsService.cachedModules[vital]
 	
 	if vitalModule then
-		vitalModule[funcName](vitalModule ,character, argumentData)
+		local func =  vitalModule[funcName]
+		if typeof(func) == "function" then
+			func(vitalModule, character, argumentData)
+		else
+			warn("Invalid vital modification:", vital, funcName)
+		end
 	end
 	
 	CreateFolder(character, CharacterVitalsService.CharacterVitals[character])

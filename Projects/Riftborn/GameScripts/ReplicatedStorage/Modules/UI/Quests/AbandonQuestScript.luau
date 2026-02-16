@@ -7,15 +7,15 @@ return function(questMenu, abandonQuestButton)
 
 	local confirmPopup
 	local confirmConnection
+	
+	local cloneConfirmPopup = require(script.Parent.Parent.CloneConfirmPopup)
 
 	local function GetConfirmPopup()
 		if confirmPopup and confirmPopup.Parent then
 			return confirmPopup
 		end
 
-		confirmPopup = repstor.Assets.GUI.ConfirmPopUp:Clone()
-		confirmPopup.Parent = questMenu
-		confirmPopup.Visible = false
+		confirmPopup = cloneConfirmPopup()
 
 		confirmPopup:GetPropertyChangedSignal("Visible"):Connect(function()
 			if confirmPopup.Visible then

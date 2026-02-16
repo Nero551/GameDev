@@ -1,7 +1,8 @@
---Defualt HitType
+--StatusAilment HitType
 
 local debris = game:GetService("Debris")
 local replicatedStorage = game:GetService("ReplicatedStorage")
+local runService = game:GetService("RunService")
 local assets = replicatedStorage.Assets
 
 local modules = (replicatedStorage.Modules)
@@ -10,8 +11,11 @@ local itemDataBase = require(modules.Data.ItemDataBase)
 local knockbackPull = require(script.Parent.Parent.Utilities.KnockbackPull)
 local formulaApplier = require(modules.FormulaApplier)
 local animationsModule = require(modules.Animations)
+local statusAilmentsData = require(modules.Data.StatusAilmentsData)
 
 local CharacterVitalsService = require(script.Parent.Parent.Parent.Services.CharacterVitalsService)
+
+local elapsed = {} -- per-target per-ailment
 
 return function(argumentData)
 		
@@ -25,6 +29,7 @@ return function(argumentData)
 	local npcDamage = argumentData.NPCDamage
 	local comboStringNumber = argumentData.ComboStringNumber
 	local lastHit = argumentData.LastHit
+	local statusAilments = argumentData.StatusAilments
 		
 	local targetHumanoid:Humanoid = targetHit:WaitForChild("Humanoid")
 	local animator = targetHumanoid:FindFirstChild("Animator")
@@ -33,10 +38,11 @@ return function(argumentData)
 	local attackerHRP = attacker:WaitForChild("HumanoidRootPart")
 	if not  targetHumanoid then return end
 	if stateService.checkState(targetHit, "Invulnerable") then return end
-	
-
 	local M1Damage
 	local AbilityDamage
+	local ailmentDamage
+	local ailmentName
+	local ailmentData
 	
 	stateService.addState(attacker, "In Combat", 20)
 	stateService.addState(targetHit, "In Combat", 20)
@@ -56,6 +62,7 @@ return function(argumentData)
 		["WeaponUsed"] = weaponUsed.Name,
 	})
 	
+	
 	if abilityData then		
 		AbilityDamage = formulaApplier:AbilityDamage({
 			["AbilityData"] = abilityData,
@@ -64,6 +71,7 @@ return function(argumentData)
 			["NPCDamage"] = npcDamage,	
 		})
 		
+		print(AbilityDamage, -AbilityDamage)
 		
 		CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 			["HealthChange"] = -AbilityDamage
@@ -101,7 +109,7 @@ return function(argumentData)
 			hitReactionAnim:Play()
 			stateService.addState(targetHit , "Stunned" , hitReactionAnim.Length + 0.1)
 		end	
-
+		
 		------Control KnockBack------
 		if lastHit then
 
@@ -118,11 +126,59 @@ return function(argumentData)
 		end
 	end	
 	
+	if statusAilments then
+		elapsed[targetHit] = elapsed[targetHit] or {}
+		local randomAilment = math.random(1, #statusAilments)
+		ailmentName = statusAilments[randomAilment]
+		ailmentData = statusAilmentsData.Ailments[ailmentName]
+		
+		if stateService.checkState(targetHit, ailmentData.State) then
+			stateService.removeState(targetHit, ailmentData.State)
+		end
+		stateService.addState(targetHit, ailmentData.State, ailmentData.BaseDuration)
+		ailmentDamage = (M1Damage  or AbilityDamage) * ailmentData.DamagePercent
+		
+		replicatedStorage.Remotes.ClientEffects:FireAllClients("AilmentHit",{
+			["Target"] = targetHit,
+			["Ailment"] = ailmentName,
+			["Duration"] = ailmentData.BaseDuration,
+			
+		})
+		
+		elapsed[targetHit] = elapsed[targetHit] or {}
+		local elapsedTime = elapsed[targetHit]
+
+		if not elapsedTime[ailmentName] then
+			elapsedTime[ailmentName] = 0
+			local conn
+			conn = runService.Heartbeat:Connect(function(dt)
+				if not stateService.checkState(targetHit, ailmentData.State) then
+					conn:Disconnect()
+					elapsedTime[ailmentName] = nil
+					return
+				end
+
+				elapsedTime[ailmentName] = elapsedTime[ailmentName] + dt
+				if elapsedTime[ailmentName] >= ailmentData.ProcEvery then
+					-- apply damage
+					CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+						HealthChange = -ailmentDamage
+					})
+					if player then
+						replicatedStorage.Remotes.ShowDamage:FireClient(player, ailmentDamage, false,false,false, ailmentName, ailmentData)
+					end
+					elapsedTime[ailmentName] = 0
+				end
+			end)
+		end
+	end
+
+	
 	if player then
 		if AbilityDamage then
-			replicatedStorage.Remotes.ShowDamage:FireClient(player ,AbilityDamage, false, false)
+			replicatedStorage.Remotes.ShowDamage:FireClient(player ,AbilityDamage, false,false, false, ailmentName, ailmentData)
 		else
-			replicatedStorage.Remotes.ShowDamage:FireClient(player ,M1Damage, false, false)
+			replicatedStorage.Remotes.ShowDamage:FireClient(player ,M1Damage, false,false, false, ailmentName, ailmentData)
 		end
 	end
 

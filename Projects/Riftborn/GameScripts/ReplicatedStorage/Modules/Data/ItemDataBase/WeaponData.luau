@@ -11,6 +11,13 @@ WeaponData.Weapons = {
 		Type = "Melee",
 		Rarity = "Rare",
 		Description = "Can't even hit your target barebones? noob.",
+		StatusAilments = {
+			ProcChance = 1,
+			Effects = {
+				"Burn",
+			},
+			
+		},
 		Damage = 5,
 		ComboCooldown = 2,
 		ComboResetTime = 2,

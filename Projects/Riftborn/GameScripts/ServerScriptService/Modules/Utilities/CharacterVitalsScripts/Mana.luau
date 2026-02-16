@@ -3,7 +3,7 @@ local Mana = {}
 
 
 function Mana:ModifyMana(character:Model?, argumentData)
-	local CharacterVitalsService = require(script.Parent)
+	local CharacterVitalsService = require(script.Parent.Parent.Parent.Parent.Services.CharacterVitalsService)
 	local manaData = CharacterVitalsService:GetVital(character, "Mana")
 	local ManaChange = argumentData.ManaChange
 	
@@ -11,7 +11,7 @@ function Mana:ModifyMana(character:Model?, argumentData)
 end
 
 function Mana:ModifyMaxMana(character:Model?, argumentData)
-	local CharacterVitalsService = require(script.Parent)
+	local CharacterVitalsService = require(script.Parent.Parent.Parent.Parent.Services.CharacterVitalsService)
 	local manaData = CharacterVitalsService:GetVital(character, "Mana")
 	local maxMana = argumentData.MaxMana
 	

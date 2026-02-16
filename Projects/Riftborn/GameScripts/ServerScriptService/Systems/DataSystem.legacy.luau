@@ -132,6 +132,3 @@ spawn(function()
 		task.wait(300) -- 5 min
 	end
 end)
-
-
-

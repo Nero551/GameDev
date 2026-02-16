@@ -5,7 +5,9 @@ return function(resetButton ,statsMenu)
 	local remotes = repstor.Remotes
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-
+	
+	local cloneConfirmPopup = require(script.Parent.Parent.CloneConfirmPopup)
+	
 	local confirmPopUp
 	local confirmConnection
 
@@ -14,9 +16,7 @@ return function(resetButton ,statsMenu)
 			return confirmPopUp
 		end
 
-		confirmPopUp = repstor.Assets.GUI.ConfirmPopUp:Clone()
-		confirmPopUp.Parent = statsMenu
-		confirmPopUp.Visible = false
+		confirmPopUp = cloneConfirmPopup()
 
 		confirmPopUp:GetPropertyChangedSignal("Visible"):Connect(function()
 			if confirmPopUp.Visible then

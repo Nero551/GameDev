@@ -106,19 +106,53 @@ function HitApplier:ApplyHit(argumentData)
 			
 			
 		else
-			-----Defualt HitType---		
-			hitTypes["Default"]({
-				["Attacker"] = character,
-				["TargetHit"] = targetHit,
-				["WeaponUsed"] = tool,
-				["ComboStringNumber"] = trueSwingNumber,
-				["LastHit"] = (trueSwingNumber == 5 and true or false),
-				["PlayerDamageStat"] = playerDamageStat,
-				["TargetDefenseStat"] = targetDefenseStat,
-				["Player"] = player,
-				["AbilityData"] = abilityData,
-				["NPCDamage"] = npcDamage,
-			})
+			---Status Ailment HitType---
+			if weaponData.StatusAilments and math.random(0,100) <= (weaponData.StatusAilments.ProcChance * 100) and not abilityData then
+				hitTypes["StatusAilment"]({
+					["Attacker"] = character,
+					["TargetHit"] = targetHit,
+					["WeaponUsed"] = tool,
+					["ComboStringNumber"] = trueSwingNumber,
+					["LastHit"] = (trueSwingNumber == 5 and true or false),
+					["PlayerDamageStat"] = playerDamageStat,
+					["TargetDefenseStat"] = targetDefenseStat,
+					["Player"] = player,
+					["AbilityData"] = abilityData,
+					["NPCDamage"] = npcDamage,
+					["StatusAilments"] = weaponData.StatusAilments.Effects
+				})
+				
+			elseif abilityData.StatusAilments and math.random(0,100) <= (abilityData.StatusAilments.ProcChance * 100) then
+				
+				hitTypes["StatusAilment"]({
+					["Attacker"] = character,
+					["TargetHit"] = targetHit,
+					["WeaponUsed"] = tool,
+					["ComboStringNumber"] = trueSwingNumber,
+					["LastHit"] = (trueSwingNumber == 5 and true or false),
+					["PlayerDamageStat"] = playerDamageStat,
+					["TargetDefenseStat"] = targetDefenseStat,
+					["Player"] = player,
+					["AbilityData"] = abilityData,
+					["NPCDamage"] = npcDamage,
+					["StatusAilments"] = abilityData.StatusAilments.Effects
+				})
+				
+			else
+				-----Defualt HitType---		
+				hitTypes["Default"]({
+					["Attacker"] = character,
+					["TargetHit"] = targetHit,
+					["WeaponUsed"] = tool,
+					["ComboStringNumber"] = trueSwingNumber,
+					["LastHit"] = (trueSwingNumber == 5 and true or false),
+					["PlayerDamageStat"] = playerDamageStat,
+					["TargetDefenseStat"] = targetDefenseStat,
+					["Player"] = player,
+					["AbilityData"] = abilityData,
+					["NPCDamage"] = npcDamage,
+				})
+			end
 		end
 	end
 end

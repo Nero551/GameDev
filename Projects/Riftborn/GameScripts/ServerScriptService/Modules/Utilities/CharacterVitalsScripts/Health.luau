@@ -1,7 +1,7 @@
 local Health = {}
 
 function Health:ModifyHealth(character:Model?, argumentData)
-	local CharacterVitalsService = require(script.Parent)
+	local CharacterVitalsService = require(script.Parent.Parent.Parent.Parent.Services.CharacterVitalsService)
 	local healthData = CharacterVitalsService:GetVital(character, "Health")
 	local healthChange = argumentData.HealthChange
 	
@@ -11,7 +11,7 @@ function Health:ModifyHealth(character:Model?, argumentData)
 end
 
 function Health:ModifyMaxHealth(character:Model?, argumentData)
-	local CharacterVitalsService = require(script.Parent)
+	local CharacterVitalsService = require(script.Parent.Parent.Parent.Parent.Services.CharacterVitalsService)
 	local healthData = CharacterVitalsService:GetVital(character, "Health")
 	
 	local maxHealth = argumentData.MaxHealth
@@ -30,7 +30,7 @@ end
 
 
 function Health:Apply(character)
-	local CharacterVitalsService = require(script.Parent)
+	local CharacterVitalsService = require(script.Parent.Parent.Parent.Parent.Services.CharacterVitalsService)
 	local healthData = CharacterVitalsService:GetVital(character, "Health")
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 	
