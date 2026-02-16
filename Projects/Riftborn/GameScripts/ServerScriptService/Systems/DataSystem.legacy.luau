@@ -3,14 +3,13 @@ local players = game:GetService("Players")
 local remotes = repstor.Remotes
 local DataService = require(script.Parent.Parent.Services.DataService)
 local statService = require(script.Parent.Parent.Services.StatService)
-local ManaService = require(script.Parent.Parent.Services.ManaService)
 local LevelService = require(script.Parent.Parent.Services.LevelService)
 local EquipService = require(script.Parent.Parent.Services.EquipService)
 local InventoryService = require(script.Parent.Parent.Services.InventoryService)
 local QuestService = require(script.Parent.Parent.Services.QuestService)
 local TitleService = require(script.Parent.Parent.Services.TitleService)
 local BuffService = require(script.Parent.Parent.Services.BuffService)
-
+local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVitalsService)
 
 local clientReady = {}
 remotes.ClientReady.OnServerEvent:Connect(function(player)
@@ -21,9 +20,7 @@ end)
 local function SetupPlayer(player:Player)
 	---Setup Tables And Folders---
 	statService:SetupStats(player)
-	
-	ManaService:SetupMana(player)
-	
+		
 	InventoryService:SyncInventoryWithDatabase(player)
 	
 	EquipService:LoadEquippedItems(player)
@@ -53,9 +50,7 @@ local function SendSetupRemotes(player:Player)
 	end
 	---Send Remotes
 	remotes.UpdateEXP:FireClient(player ,playerLevel)
-	
-	remotes.UpdateStats:FireClient(player , playerStats, playerInventory, playerEquipped)
-	
+		
 	remotes.UpdateInventory:FireClient(player, playerInventory,  playerEquipped)
 	remotes.UpdateInventoryInfo:FireClient(player, playerInventory,  playerEquipped)
 	
@@ -72,16 +67,21 @@ end
 local function SetupCharacter(player:Player, character)
 	wait()
 	SetupPlayer(player)
+	
+	CharacterVitalsService:Create(character)
+	
 	SendSetupRemotes(player)
 	
-	local humanoid:Humanoid = character:WaitForChild("Humanoid")
-	local manaFolder =  player:WaitForChild("PlayerMana")
-	local playerMana = DataService:GetTable(player,"Mana")
-	playerMana.CurrentMana = playerMana.MaxMana
-	manaFolder.MaxMana.Value = playerMana.MaxMana
-	manaFolder.CurrentMana.Value = playerMana.CurrentMana
-	humanoid.Health = humanoid.MaxHealth
+	CharacterVitalsService:ModifyVital(character, "Health", "ModifyHealth", {
+		["HealthChange"] = CharacterVitalsService.CharacterVitals[character].Health.MaxHealth - 
+			CharacterVitalsService.CharacterVitals[character].Health.CurrentHealth
+		
+	})
 	
+	CharacterVitalsService:ModifyVital(character, "Mana", "ModifyMana",{
+		["ManaChange"] = CharacterVitalsService.CharacterVitals[character].Mana.MaxMana -
+			CharacterVitalsService.CharacterVitals[character].Mana.CurrentMana
+	})
 end
 
 ---Load Data---

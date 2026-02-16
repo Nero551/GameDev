@@ -9,6 +9,7 @@ local MovementConfig = require(repstor.Modules.Configs.MovementConfig)
 local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
 
 local animsModule = require(repstor.Modules.Animations)
+local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
 
 local DashConfig = MovementConfig.DashConfig
 local wallJumpConfig = MovementConfig.WallRunConfig
@@ -43,7 +44,6 @@ function MovementService:Dash(player:Player, direction , IsShiftLockOff, npcTarg
 		
 	if not ActionVerifier:CanDash(character) then return end
 	
-	local core = character:WaitForChild("Core")
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 	local statusFolder = character:WaitForChild("Status")
 	
@@ -88,7 +88,7 @@ function MovementService:Dash(player:Player, direction , IsShiftLockOff, npcTarg
 	---Sound---
 	repstor.Remotes.ClientEffects:FireAllClients("Sound",
 		{
-			["SoundName"] = "Dash",
+			["SoundName"] = "Shared.Sounds.Dash",
 			["Parent"] = humanoid,	
 		}
 	)
@@ -132,17 +132,22 @@ function MovementService:Dash(player:Player, direction , IsShiftLockOff, npcTarg
 	end
 end
 
-function MovementService:FlashStep(character, flashstepCharge:number)
-	
+function MovementService:FlashStep(character)
+	local playerFlashStep = CharacterVitalsService:GetVital(character, "FlashStep")
+	local flashstepCharge = playerFlashStep.CurrentFlashStep
+	local maxFlashstepCharge = playerFlashStep.MaxFlashStep
 	if not ActionVerifier:CanFlashstep(character, flashstepCharge) then return end
 
-
-	
 	local statusFolder = character:WaitForChild("Status")
 	local humanoid = character:WaitForChild("Humanoid")
-	
+		
 	stateService.addState(character, "Invulnerable", flashStepConfig.FlashstepDuration)
 	stateService.addState(character, "FlashStep", flashStepConfig.FlashstepDuration)
+	
+	
+	CharacterVitalsService:ModifyVital(character, "Movement", "ModifyFlashStep", {
+		["FlashStepChange"] = -1
+	})
 	
 	if statusFolder:FindFirstChild("FlashStep") then
 		task.delay(flashStepConfig.FlashstepDuration, function()
@@ -159,7 +164,7 @@ function MovementService:FlashStep(character, flashstepCharge:number)
 		---Sound---
 		repstor.Remotes.ClientEffects:FireAllClients("Sound",
 			{
-				["SoundName"] = "FlashStep",
+				["SoundName"] = "Shared.Sounds.FlashStep",
 				["Parent"] = humanoid,
 			}
 		)

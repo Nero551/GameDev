@@ -1,28 +1,30 @@
-return function(manaBG)
-	local player = game:GetService("Players").LocalPlayer
-	local char = player.Character or player.CharacterAdded:Wait()
+return function(manaBG, char:Model?)
 	local tween = game:GetService("TweenService")
 	local runService = game:GetService("RunService")
 	local humanoid:Humanoid = char:WaitForChild("Humanoid")
-	local  playerMana = player:WaitForChild("PlayerMana")
 	local ManaBar = manaBG.ManaFill
 	local ManaText = manaBG.ManaNumber
 
-
-
-	local function ManaChanger()
-		local MaxMana = playerMana.MaxMana.Value
-		local CurrentMana = playerMana.CurrentMana.Value
+	local function ManaChanger(MaxMana, CurrentMana)
 		local info = TweenInfo.new(0.04, Enum.EasingStyle.Exponential, Enum.EasingDirection.InOut)
 		tween:Create(ManaBar, info , {Size = UDim2.fromScale(CurrentMana/MaxMana,1)}):Play()
 		ManaText.Text = math.round(CurrentMana).."/"..math.round(MaxMana)
+	end	
+	
+	local function UpdateManaUI()
+		local currentMana = char:GetAttribute("Mana_CurrentMana")
+		local maxMana = char:GetAttribute("Mana_MaxMana")
+		if currentMana and maxMana then
+
+
+			ManaChanger(maxMana, currentMana)
+		end
 	end
 
-	ManaChanger()
-	playerMana.CurrentMana.Changed:Connect(function()
-		ManaChanger()
-	end)
-	playerMana.MaxMana.Changed:Connect(function()
-		ManaChanger()
-	end)
+	char:GetAttributeChangedSignal("Mana_CurrentMana"):Connect(UpdateManaUI)
+	char:GetAttributeChangedSignal("Mana_MaxMana"):Connect(UpdateManaUI)
+
+	-- Initialize once
+	UpdateManaUI()
+
 end

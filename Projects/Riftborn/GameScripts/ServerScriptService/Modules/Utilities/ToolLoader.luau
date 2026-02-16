@@ -18,7 +18,7 @@ return function(tool:Tool?)
 	local animsFolder = assets.Weapons[tool.Name].Animations
 	animsModule:loadAnims(animator , animsFolder)
 	
-	if weaponModels:FindFirstChild(tool.Name.."_Equipped")  then
+	if weaponModels:FindFirstChild(tool.Name.."_Equipped") and weaponModels:FindFirstChild(tool.Name.."_UnEquipped") then
 		
 		local unEquippedModel = character:FindFirstChild(tool.Name.."_UnEquipped")
 		if not unEquippedModel then
@@ -40,6 +40,13 @@ return function(tool:Tool?)
 			local weld:Motor6D = equipedModel:FindFirstChildWhichIsA("Motor6D")
 			weld.Part0 = character:FindFirstChild("Right Arm")
 		end
+		
+		equipedModel.Changed:Connect(function()
+			
+			print(debug.traceback())
+			
+			equipedModel:FindFirstChild(tool.Name)
+		end)
 		
 		equipedModel:SetAttribute("EquipState", false) 
 		unEquippedModel:SetAttribute("EquipState", false) 

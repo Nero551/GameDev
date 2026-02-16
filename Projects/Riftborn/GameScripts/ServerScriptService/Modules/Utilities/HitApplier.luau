@@ -3,6 +3,7 @@ local players = game:GetService("Players")
 
 local stateService = require(game.ReplicatedStorage.Modules.StateService)
 local DataService = require(sss.Services.DataService)
+local CharacterVitalsService = require(sss.Services.CharacterVitalsService)
 
 local HitApplier = {}
 
@@ -37,16 +38,14 @@ function HitApplier:ApplyHit(argumentData)
 	---BlockBreakCounter---
 	local status = targetHit:FindFirstChild("Status")
 	if not status then return end
-	local blockCounter = status:WaitForChild("BlockCounter")
-
 	local isBlocking = stateService.checkState(targetHit, "Blocking")
 
 	if isBlocking then
 		---BlockBreak---
-		if blockCounter.Value == 4 then
-			blockCounter.Value = 0
-			blockCounter.Value = math.clamp(blockCounter.Value, 0 , 4)
-			
+		local blockCounter = CharacterVitalsService:GetVital(targetHit, "BlockCounter")
+		
+		if blockCounter == 4 then
+			CharacterVitalsService:ModifyVital(targetHit, "Combat", "ModifyBlockCounter", {["BlockCounterChange"] = 0})			
 			hitTypes["BlockBreak"]({
 				["Attacker"] = character,
 				["TargetHit"] = targetHit,
@@ -55,8 +54,7 @@ function HitApplier:ApplyHit(argumentData)
 
 		else
 			---Do Blocked HitType----
-			blockCounter.Value += 1
-			blockCounter.Value = math.clamp(blockCounter.Value, 0 , 4)
+			CharacterVitalsService:ModifyVital(targetHit, "Combat", "ModifyBlockCounter", {["BlockCounterChange"] = 1})			
 			
 			hitTypes["Blocked"]({
 				["Attacker"] = character,

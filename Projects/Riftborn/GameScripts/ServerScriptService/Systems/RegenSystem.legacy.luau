@@ -3,12 +3,13 @@ local  players = game:GetService("Players")
 local runService = game:GetService("RunService")
 local repstor = game:GetService("ReplicatedStorage")
 local remotes =   repstor.Remotes
-local ManaService = require(script.Parent.Parent.Services.ManaService)
 
+local RegenService = require(script.Parent.Parent.Services.RegenService)
 
-runService.Heartbeat:Connect(function(dt)
-	ManaService:ManaRegen(dt)
-end)
+RegenService:ManaRegen()
 
+RegenService:HealthRegen()
 
+RegenService:FlashStepRegen()
 
+RegenService:BlockCounterRegen()

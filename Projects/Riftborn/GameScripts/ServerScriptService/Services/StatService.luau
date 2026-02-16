@@ -3,6 +3,7 @@ local remotes = repstor.Remotes
 
 local GameEvents = require(game.ReplicatedStorage.Modules.GameEvents)
 local DataService = require(script.Parent.Parent.Services.DataService)
+local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVitalsService)
 
 
 local StatService = {}
@@ -52,20 +53,36 @@ local function ApplyHealth(player:Player)
 	local playerStats = DataService:GetTable(player, "Stats")
 	local playerHealthStats = playerStats.Health
 	local char = player.Character or player.CharacterAdded:Wait()
-	local humanoid: Humanoid = char:WaitForChild("Humanoid")
 
 	local finalHealth = playerHealthStats.Final
 	local HEALTH_PER_POINT = 5
 	local MIN_HEALTH = playerHealthStats.Base * HEALTH_PER_POINT
 
 	local maxHealth = math.max(MIN_HEALTH, finalHealth * HEALTH_PER_POINT)
-
-	humanoid.MaxHealth = maxHealth
-	if humanoid.Health > humanoid.MaxHealth then
-		humanoid.Health = humanoid.MaxHealth
-	end
-
+	
+	CharacterVitalsService:ModifyVital(char, "Health" ,"ModifyMaxHealth", {
+		["MaxHealth"] = maxHealth	
+	})
+	
 end
+
+local function ApplyMana(player:Player)
+	local playerStats = DataService:GetTable(player,"Stats")
+	local char = player.Character or player.CharacterAdded:Wait()
+	local playerManaStats = playerStats.Mana
+	
+	local finalMana = playerManaStats.Final
+	local MANA_PER_POINT = 5
+	local MIN_MANA = playerManaStats.Base * MANA_PER_POINT
+
+	local maxMana = math.max(MIN_MANA,finalMana * MANA_PER_POINT)
+
+	CharacterVitalsService:ModifyVital(char, "Mana", "ModifyMaxMana", {
+		["MaxMana"] = maxMana,
+	})
+	
+end
+
 ---Calculate Final Stat---
 local function CalculateFinal(stat)
 	local percent = math.clamp(stat.Percent, -0.9, 10)
@@ -92,7 +109,9 @@ function StatService:SetupStats(player:Player)
 		
 		stat.Final = CalculateFinal(stat)
 	end
-	ApplyHealth(player )
+	StatService:UpdateStats(player)
+	ApplyHealth(player)
+	ApplyMana(player)
 end
 
 ---Update Stats---
@@ -109,6 +128,7 @@ function StatService:UpdateStats(player:Player)
 		statFolder.Final.Value = stat.Final
 	end
 	ApplyHealth(player)
+	ApplyMana(player)
 end
 
 ---Allocate Statpoint---
@@ -130,7 +150,6 @@ function StatService:AllocateStatPoint(player:Player, statType, amount)
 	playerStats[statType].FlatStatPoint = playerStats[statType].FlatStatPoint + amount
 	StatService:UpdateStats(player)
 	GameEvents.UpdateMana:Fire(player)
-	remotes.UpdateStats:FireClient(player ,playerStats, playerInventory, playerEquipped)
 	remotes.UpdateEXP:FireClient(player ,playerLevel)
 end
 
@@ -151,7 +170,6 @@ function StatService:ResetStats(player:Player)
 	StatService:UpdateStats(player)
 	GameEvents.UpdateMana:Fire(player)
 	
-	remotes.UpdateStats:FireClient(player , playerStats, playerInventory, playerEquipped)
 	remotes.UpdateEXP:FireClient(player ,playerLevel)
 end
 

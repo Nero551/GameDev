@@ -11,6 +11,8 @@ local knockbackPull = require(script.Parent.Parent.Utilities.KnockbackPull)
 local formulaApplier = require(modules.FormulaApplier)
 local animationsModule = require(modules.Animations)
 
+local CharacterVitalsService = require(script.Parent.Parent.Parent.Services.CharacterVitalsService)
+
 return function(argumentData)
 		
 	local targetHit = argumentData.TargetHit
@@ -61,8 +63,13 @@ return function(argumentData)
 			["PlayerDamageStat"] = playerDamageStat,
 			["NPCDamage"] = npcDamage,	
 		})
+		
+		print(AbilityDamage, -AbilityDamage)
+		
+		CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+			["HealthChange"] = -AbilityDamage
 
-		targetHumanoid:TakeDamage(AbilityDamage)
+		})
 		
 		animationsModule:GetAnimation(
 			animator, "Shared.Character.AbilityHitReactions."..abilityData.HitReaction
@@ -78,7 +85,12 @@ return function(argumentData)
 				
 			})
 			
-			targetHumanoid:TakeDamage(M1Damage)
+			CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+				["HealthChange"] = -M1Damage
+
+			})
+			
+			print("nice")
 
 			replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
 				["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Hit."..tostring(comboStringNumber) ,

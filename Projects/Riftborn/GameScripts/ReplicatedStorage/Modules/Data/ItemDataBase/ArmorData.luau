@@ -14,7 +14,7 @@ ArmorData.Armors = {
 		Buffs = {
 			Defense = { Percent = 0.5},
 			Health = { Percent = 0.25},
-			CriticalRate =  {Percent = 0.25},
+			CriticalRate =  {Percent = 2},
 			CriticalDamage = {Percent = 1},
 		},
 		

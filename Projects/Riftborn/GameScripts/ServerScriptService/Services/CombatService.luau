@@ -15,6 +15,8 @@ local DataService = require(script.Parent.Parent.Services.DataService)
 local HitApplier = require(script.Parent.Parent.Modules.Utilities.HitApplier)
 local animationsModule = require(modules.Animations)
 
+local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
+
 
 local CombatService = {
 	hitTypes = {}
@@ -70,51 +72,52 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 	if tool.Name ~= weaponData.Name then
  		return
 	end
-	local configurationFolder = character:FindFirstChild("Configuration")
-	if not configurationFolder then return end
 	
 	local animationsFolder = assets.Weapons[tool.Name].Animations
 	
 	--Playing Animations
-	local coreFolder = character.Core
+	local lastSwing = CharacterVitalsService:GetVital(character, "LastSwing")
+	local lastCombo = CharacterVitalsService:GetVital(character, "LastCombo")
+	local swingNumber = CharacterVitalsService:GetVital(character, "SwingNumber")
 
-	local lastSwing = configurationFolder.LastSwing
-	local lastCombo = configurationFolder.LastCombo
-	local swingNumber = configurationFolder.SwingNumber
-
-	if (os.clock()-lastCombo.Value) < weaponData.ComboCooldown then
-		
+	if (os.clock()-lastCombo) < weaponData.ComboCooldown then
 		return
 	end
-	if (os.clock()-lastSwing.Value) >= weaponData.ComboResetTime then
-		swingNumber.Value = 0
+	-- Reset swing if combo window expired
+	if (os.clock() - lastSwing) >= weaponData.ComboResetTime then
+		CharacterVitalsService:ModifyVital(character, "Combat", "ModifySwingNumber", {
+			SwingNumberChange = 0
+		})
 	end
-	--  connectionName , connection in animationsModule.connections do
-	--	if string.find(connectionName, tool.Name..".Swings") then
-		--	animationsModule.connections[connectionName]:Disconnect()
-		--	animationsModule.connections[connectionName] = nil
-		--end
---	end
-	local trueSwingNumber =  nil
-	swingNumber.Value += 1
-	trueSwingNumber = swingNumber.Value
-	if swingNumber.Value >= 5 then
-		swingNumber.Value = 0
+
+	CharacterVitalsService:ModifyVital(character, "Combat", "ModifySwingNumber", {
+		SwingNumberChange = 1
+	})
+
+	local trueSwingNumber = CharacterVitalsService:GetVital(character, "SwingNumber")
+
+	if trueSwingNumber > 5 then
+		
+		CharacterVitalsService:ModifyVital(character, "Combat", "ModifySwingNumber", {SwingNumberChange = 0})
 		trueSwingNumber = 5
-		lastCombo.Value = os.clock()
+		
+		CharacterVitalsService:ModifyVital(character, "Combat", "ModifyLastCombo", {LastComboChange = os.clock()})
 	end
-	lastSwing.Value = os.clock()
+
+	CharacterVitalsService:ModifyVital(character, "Combat", "ModifyLastSwing", {LastSwingChange = os.clock()})
+
 	local swingName = "Weapons."..tool.Name..".Animations.Swings.L"..tostring(trueSwingNumber)
-	local animationToPlay:AnimationTrack? = animationsModule:GetAnimation(humanoid.Animator, swingName)
 	
+	local animationToPlay:AnimationTrack? = animationsModule:GetAnimation(humanoid.Animator, swingName)
+				
 	---Attack States---
-	stateService.addState(character , "Attacking", animationToPlay.Length)
-	stateService.addState(character, "NoBlock", animationToPlay.Length+.3)
-	stateService.addState(character , "NoJump", animationToPlay.Length+.5)
-	stateService.addState(character , "NoSprint", animationToPlay.Length+0.35)
+	stateService.addState(character , "Attacking", (animationToPlay.Speed * animationToPlay.Length))
+	stateService.addState(character, "NoBlock", (animationToPlay.Speed * animationToPlay.Length)+.3)
+	stateService.addState(character , "NoJump", (animationToPlay.Speed * animationToPlay.Length)+.5)
+	stateService.addState(character , "NoSprint", (animationToPlay.Speed * animationToPlay.Length)+0.35)
 
 	animationToPlay:Play()
-
+	
 	animationToPlay:GetMarkerReachedSignal("Hit"):Once(function()	
 		
 		if not stateService.checkState(character,"Attacking") then return end
@@ -159,7 +162,7 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 						end
 						alreadyHit[targetHit] = true
 
-						if stateService.checkState(targetHit, "Invulnerable") then return end
+						if stateService.checkState(targetHit, "Invulnerable") then continue end
 						
 						
 						HitApplier:ApplyHit({
@@ -187,9 +190,6 @@ function CombatService:Block(character, boolean, tool:Tool)
 	if humanoid then
 		
 		tool = GetValidTool(tool, character)
-
-		local coreFolder = character:FindFirstChild("Core")
-		if not coreFolder then return end
 				
 		local function StartBlocking()
 			if not ActionVerifier:CanBlock(character) then return end

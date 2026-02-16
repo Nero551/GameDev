@@ -11,7 +11,6 @@ local CurrencyService =  require(Services.CurrencyService)
 local LevelService = require(Services.LevelService)
 local RarityService = require(Services.RarityService)
 local StatsService =  require(Services.StatService)
-local ManaService = require(Services.ManaService)
 local RewardsService = require(Services.RewardsService)
 local EquipService = require(Services.EquipService)
 local BuffService = require(Services.BuffService)
@@ -27,10 +26,6 @@ end)
 
 GameEvents.ResetBuffs.Event:Connect(function(player)
 	StatsService:ResetBuffs(player)
-end)
-
-GameEvents.UpdateMana.Event:Connect(function(player)
-	ManaService:UpdateMana(player)
 end)
 
 GameEvents.ItemChanged.Event:Connect(function(player)

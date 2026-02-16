@@ -1,11 +1,10 @@
---DefualtHit
 
 local debris = game:GetService("Debris")
 local replicatedStorage = game:GetService("ReplicatedStorage")
-
 local assets = replicatedStorage:WaitForChild("Assets")
 
 local cachedSounds = {}
+
 for _,sound in assets:GetDescendants() do
 	if  sound:IsA("Sound") then
 		local fullName = sound:GetFullName()
@@ -14,10 +13,10 @@ for _,sound in assets:GetDescendants() do
 	end
 end
 
-
 return function(arguementData:any)
 	local  soundName:string = arguementData.SoundName
 	local parent:BasePart? = arguementData.Parent
+	local Volume:number? = arguementData.Volume
 	
 	
 	if soundName and parent then
@@ -25,7 +24,9 @@ return function(arguementData:any)
 		if foundSound then
 			local clone:Sound? = foundSound:Clone()
 			clone.Parent = parent
-			if not clone then
+			
+			if Volume then
+				clone.Volume = Volume
 			end
 			clone:Play()
 			task.delay(foundSound.TimeLength, function()

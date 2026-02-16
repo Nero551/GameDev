@@ -57,11 +57,6 @@ local function getDefaultData()
 
 			CriticalRate   = { Base = 0 ,   FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
 		},
-		Mana = {
-			MaxMana = 100,
-			CurrentMana =  100,
-			ManaRegen = 1,
-		},
 		Level = {
 			CurrentLevel = 1,
 			RequiredEXP = 100,
@@ -115,6 +110,18 @@ local function ValidateData(playerData)
 			for nestedKey, nestedValue in pairs(defaultValue) do
 				if playerData[key][nestedKey] == nil then
 					playerData[key][nestedKey] = nestedValue
+				end
+			end
+		end
+	end
+	
+	for key in pairs(playerData) do
+		if defaultData[key] == nil then
+			playerData[key] = nil
+		elseif type(defaultData[key]) == "table" and type(playerData[key]) == "table" then
+			for nestedKey in pairs(playerData[key]) do
+				if defaultData[key][nestedKey] == nil then
+					playerData[key][nestedKey] = nil
 				end
 			end
 		end

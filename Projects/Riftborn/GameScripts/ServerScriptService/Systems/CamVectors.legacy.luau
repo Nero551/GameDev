@@ -1,15 +1,10 @@
-local players = game:GetService("Players")
-local repstor = game:GetService("ReplicatedStorage")
+local CharacterVitalsSerice = require(script.Parent.Parent.Services.CharacterVitalsService)
 
 
-local CamVectors = {}
-_G.CamVectors = CamVectors
-
-players.PlayerAdded:Connect(function(player:Player)
-	CamVectors[player] = {}
-end)
-
-repstor.Remotes.UpdateCamVectors.OnServerEvent:Connect(function(player:Player, camLookVector, camRightVector)
-	CamVectors[player].LookVector = camLookVector
-	CamVectors[player].RightVector = camRightVector
+game.ReplicatedStorage.Remotes.UpdateCamVectors.OnServerEvent:Connect(function(player,camLookVector, camRightVector)
+	local char = player.Character or player.CharacterAdded:Wait()
+	CharacterVitalsSerice:ModifyVital(char, "CamVectors", "UpdateCamVectors", {
+		["CamRightVector"] = camRightVector,
+		["CamLookVector"] = camLookVector,	
+	})
 end)

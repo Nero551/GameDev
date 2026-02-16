@@ -29,7 +29,7 @@ return function(argumentData)
 		stateService.addState(targetHit, "In Combat", 20)
 		
 		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
-			["SoundName"] = "BlockBreak" , 
+			["SoundName"] = "Shared.Sounds.BlockBreak" , 
 			["Parent"] = targetHit.HumanoidRootPart
 		})
 		

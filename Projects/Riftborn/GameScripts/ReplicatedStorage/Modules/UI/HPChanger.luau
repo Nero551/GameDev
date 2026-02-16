@@ -1,22 +1,18 @@
-return function(hpBG)
-	local player = game:GetService("Players").LocalPlayer
-	local char = player.Character or player.CharacterAdded:Wait()
+return function(hpBG, char:Model?)
 	local tween = game:GetService("TweenService")
 	local humanoid:Humanoid = char:WaitForChild("Humanoid")
 	local hpBar = hpBG.HealthFill
 	local hpText = hpBG.HealthNumber
 
-	local function HpChanger()
+	local function HpChanger(currentHealth, maxHealth)
 		local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		tween:Create(hpBar, info , {Size = UDim2.fromScale(humanoid.Health/humanoid.MaxHealth,1)}):Play()
-		hpText.Text = math.round(humanoid.Health).."/"..math.round(humanoid.MaxHealth)
+		tween:Create(hpBar, info , {Size = UDim2.fromScale(currentHealth/maxHealth,1)}):Play()
+		hpText.Text = math.round(currentHealth).."/"..math.round(maxHealth)
 	end
 
-	HpChanger()
-
-	local function ThirtyPercentHp()
+	local function ThirtyPercentHp(currentHealth, maxHealth)
 		local info =  TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		if humanoid.MaxHealth / 3 > humanoid.Health then
+		if maxHealth / 3 > currentHealth then
 			tween:Create(hpText, info, {TextColor3 = Color3.fromRGB(255, 140, 150)}):Play()
 			tween:Create(hpBG.HealthText, info, {TextColor3 = Color3.fromRGB(255, 140, 150)}):Play()
 
@@ -25,9 +21,20 @@ return function(hpBG)
 			tween:Create(hpBG.HealthText, info, {TextColor3 = Color3.fromRGB(255, 255,255)}):Play()
 		end
 	end
+	
+	local function UpdateHealthUI()
+		local currentHealth = char:GetAttribute("Health_CurrentHealth")
+		local maxHealth = char:GetAttribute("Health_MaxHealth")
+		if currentHealth and maxHealth then
+			
+			HpChanger(currentHealth, maxHealth)
+			ThirtyPercentHp(currentHealth, maxHealth)
+		end
+	end
+	
+	UpdateHealthUI()
+	
+	char:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(UpdateHealthUI)
+	char:GetAttributeChangedSignal("Health_MaxHealth"):Connect(UpdateHealthUI)
 
-	humanoid.HealthChanged:Connect(function()
-		HpChanger()
-		ThirtyPercentHp()
-	end)
 end

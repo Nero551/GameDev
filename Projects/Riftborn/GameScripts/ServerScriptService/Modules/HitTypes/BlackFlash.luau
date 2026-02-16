@@ -9,6 +9,7 @@ local itemDataBase = require(modules.Data.ItemDataBase)
 local knockbackPull = require(script.Parent.Parent.Utilities.KnockbackPull)
 local formulaApplier = require(modules.FormulaApplier)
 local animationsModule = require(modules.Animations)
+local CharacterVitalsService = require(script.Parent.Parent.Parent.Services.CharacterVitalsService)
 
 return function(argumentData)
 	
@@ -72,7 +73,11 @@ return function(argumentData)
 			["PlayerCriticalDamageStat"] = playerCriticalDamageStat,
 			["BlackFlash"] = true,
 		})
-		targetHumanoid:TakeDamage(AbilityDamage)
+		
+		CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+			["HealthChange"] = -AbilityDamage
+
+		})
 
 		
 		animationsModule:GetAnimation(
@@ -92,8 +97,12 @@ return function(argumentData)
 				["AbilityData"] = abilityData,
 				["BlackFlash"] = true,
 
-			})			
-			targetHumanoid:TakeDamage(M1Damage)
+			})	
+			
+			CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+				["HealthChange"] = -M1Damage
+
+			})
 
 
 			local hitReactionAnim = animationsModule:GetAnimation(
@@ -106,9 +115,6 @@ return function(argumentData)
 		------Control KnockBack------
 		if lastHit then
 
-			------EndLag Setup------
-			stateService.addState(attacker , "NoMove", .5)
-			stateService.addState(attacker , "NoPunch", 1)
 			------EndLag Setup------
 			stateService.addState(attacker , "NoMove", .5)
 			stateService.addState(attacker , "NoPunch", 1)

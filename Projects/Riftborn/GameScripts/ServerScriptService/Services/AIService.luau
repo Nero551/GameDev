@@ -6,6 +6,7 @@ local StateHandler = require(game.ReplicatedStorage.Modules.StateHandler)
 local CombatService = require(script.Parent.Parent.Services.CombatService)
 local AbilityService = require(script.Parent.Parent.Services.AbilityService)
 local MovementService = require(script.Parent.Parent.Services.MovementService)
+local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVitalsService)
 
 local animationsFolder = game.ReplicatedStorage.Assets.Shared.Animations
 local animationsModule = require(game.ReplicatedStorage.Modules.Animations)
@@ -95,7 +96,7 @@ function AIService:CanFollow()
 end
 
 function AIService:CanRetreat()
-	if self.Humanoid.Health / self.Humanoid.MaxHealth <= 0.1 then
+	if self.npcVitals.Health.CurrentHealth / self.npcVitals.Health.MaxHealth <= 0.1 then
 		
 		return true
 	else
@@ -106,7 +107,7 @@ end
 --------------------------------------------------------------------------------------------------------------------------------------
 function AIService:EnemyBrain()
 	
-	if not self.Alive or self.Humanoid.Health <= 0 then
+	if not self.Alive or self.npcVitals.Health.CurrentHealth <= 0 then
 		self:SetState("Dead")
 		return
 	end
@@ -212,6 +213,7 @@ function AIService:CreateAI(npc ,config, animations, Abilties)
 	self.Abilities = Abilties
 	self.Moving = false
 	self.LastTargetPos = nil
+	self.npcVitals = CharacterVitalsService.CharacterVitals[npc]
 	
 	self.Humanoid.Died:Connect(function()
 		self.Alive = false
@@ -274,7 +276,7 @@ function AIService:IsTargetValid()
 	if not character then return false end
 
 	local humanoid = character:FindFirstChild("Humanoid")
-	if not humanoid or humanoid.Health <= 0 then
+	if not humanoid or self.npcVitals.Health.CurrentHealth <= 0 then
 		return false
 	end
 

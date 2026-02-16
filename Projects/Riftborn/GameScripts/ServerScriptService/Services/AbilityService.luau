@@ -13,7 +13,8 @@ local abilityDataModule = require(modules.Data.AbilityData)
 
 
 local stateService = require(modules.StateService)
-local ManaService = require(script.Parent.ManaService)
+local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
+
 local ActionVerifier = require(modules.ActionVerifier)
 local HitApplier = require(script.Parent.Parent.Modules.Utilities.HitApplier)
 
@@ -52,7 +53,7 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, a
 	
 	if player then
 		playerStats = DataService:GetTable(player,"Stats")
-		local playerMana = DataService:GetTable(player, "Mana")
+		local playerMana = CharacterVitalsService:GetVital(character , "Mana")
 		if playerMana.CurrentMana < abilityData.Mana  then
 			sounds.Error:Play()
 			remotes.PopUp:FireClient(player,
@@ -64,7 +65,6 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, a
 			return
 		end
 		playerMana.CurrentMana = playerMana.CurrentMana - abilityData.Mana
-		ManaService:UpdateMana(player, playerMana,playerStats)
 	end
 
 
@@ -87,8 +87,6 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, a
 	stateService.addState(character,"Ability"..abilityletter.." Cooldown", cooldownTime)
 	stateService.addState(character, "Invulnerable", animation.Length)
 	stateService.addState(character, "Casting", animation.Length)
-	stateService.addState(character , "Stunned", animation.Length)
-
 
 	animation:GetMarkerReachedSignal("Hit"):Connect(function()
 		local hrp:Part? = character:WaitForChild("HumanoidRootPart")

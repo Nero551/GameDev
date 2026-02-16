@@ -10,11 +10,14 @@ local assets = replicatedStorage:WaitForChild("Assets")
 return function(arguementData:any)
 	local target:Model = arguementData.Target
 	local weaponUsed :string = arguementData.weaponUsed
-	local BlockCounter:IntValue = target:FindFirstChild("Status"):FindFirstChild("BlockCounter")
+	local blockCounter = arguementData.BlockCounter
+	
+	print(blockCounter)
+	
 	if target and weaponUsed then
 		local rootPart = target:FindFirstChild("HumanoidRootPart")
 		if rootPart then
-			local clone =  assets.Shared.Effects.BlockEffects["Block"..tostring(BlockCounter.Value)]:Clone()
+			local clone =  assets.Shared.Effects.BlockEffects["Block"..tostring(blockCounter)]:Clone()
 			clone.Parent = rootPart
 			for _,v in clone:GetDescendants() do
 				if v:IsA("ParticleEmitter") then

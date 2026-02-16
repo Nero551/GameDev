@@ -7,40 +7,37 @@ function NPCHandler:HandleNPC(npc)
 	local tween = game:GetService("TweenService")
 
 	local StateService = require(repstor.Modules.StateService)
+	local animations = require(repstor.Modules.Animations)
+	local uiModules = repstor.Modules.UI
 
 
 	local AIModule = require(ServerScriptService.Services.AIService)
+	local CharacterVitalsService = require(ServerScriptService.Services.CharacterVitalsService)
+	
 	local GameEvents = require(repstor.Modules.GameEvents)
 	local MobData = require(repstor.Modules.Data.MobData)
 
 	local npcHumanoid = npc:WaitForChild("Humanoid")
-
-	task.spawn(function()
-
-		local REGEN_RATE = 1/100 -- Regenerate this fraction of MaxHealth per second.
-		local REGEN_STEP = 1 -- Wait this long between each regeneration step.
-
-		while npc and npcHumanoid do
-			if not StateService.checkState(npc, "In Combat") and npcHumanoid.Health < npcHumanoid.MaxHealth then
-				local dh = REGEN_STEP * REGEN_RATE * npcHumanoid.MaxHealth
-				npcHumanoid.Health = math.min(npcHumanoid.Health + dh, npcHumanoid.MaxHealth)
-			end
-			task.wait(REGEN_STEP)
-		end
-	end)
-
+	local animator:Animator = npcHumanoid.Animator
+	
 	local config = MobData.Mobs[npc.Name]
 	local toolName = config.Tool.Name
-
-	npcHumanoid.MaxHealth = config.Health
-	npcHumanoid.Health = config.Health
 	
-	local toolModel:Model? = repstor.Assets.Weapons[toolName].Model[toolName.."_Equipped"]:Clone()
-	toolModel.Parent = npc
-	local weld:Motor6D = toolModel:FindFirstChildWhichIsA("Motor6D")
-	weld.Part0 = npc:FindFirstChild("Right Arm")
-
-
+	local toolAnims = repstor.Assets.Weapons[toolName].Animations
+	animations:loadAnims(animator, toolAnims)
+	
+	local npcVitals = CharacterVitalsService:Create(npc)		
+	npcVitals.Health.MaxHealth = config.Health
+	npcVitals.Health.CurrentHealth = config.Health
+	
+	
+	if repstor.Assets.Weapons[toolName].Model:FindFirstChild(toolName.."_Equipped") then
+		local toolModel:Model? = repstor.Assets.Weapons[toolName].Model[toolName.."_Equipped"]:Clone()
+		toolModel.Parent = npc
+		local weld:Motor6D = toolModel:FindFirstChildWhichIsA("Motor6D")
+		weld.Part0 = npc:FindFirstChild("Right Arm")
+	end
+	
 
 	---StatusFolder---
 	local statusFolder =  Instance.new("Folder")
@@ -100,7 +97,7 @@ function NPCHandler:HandleNPC(npc)
 	end
 
 	task.spawn(function()
-		while npcHumanoid.Health > 0 do
+		while not StateService.checkState(npc, "Dead") do
 			if isNearPlayer(npc) then
 				wait(0.1) 
 				npcAI:EnemyBrain()
@@ -113,7 +110,6 @@ function NPCHandler:HandleNPC(npc)
 
 
 	---When NPC Die---
-	local animator:Animator = npcHumanoid.Animator
 	local deathAnimation = animator:LoadAnimation(game.ReplicatedStorage.Assets.Shared.Character.Death)
 
 	npc.Humanoid.Died:Connect(function()
@@ -135,22 +131,17 @@ function NPCHandler:HandleNPC(npc)
 
 	---NPC Info GUI---
 	local npcInfo = npc.NPCInfo
-	local hpBar = npcInfo.NPCHealth.HealthFill
+	local hpBG = npcInfo.NPCHealth
 	local hpText = npcInfo.NPCHealth.HealthNumber
 
 	npcInfo.Adornee = npc.Head
-
-	local function HpChanger()
-		local info = TweenInfo.new(0.04, Enum.EasingStyle.Exponential, Enum.EasingDirection.InOut)
-		tween:Create(hpBar, info , {Size = UDim2.fromScale(npcHumanoid.Health/npcHumanoid.MaxHealth,1)}):Play()
-		hpText.Text = math.round(npcHumanoid.Health).."/"..math.round(npcHumanoid.MaxHealth)
+	
+	if npcVitals then
+		local hpChanger = require(uiModules.HPChanger)
+		hpChanger(hpBG, npc)
 	end
+	
 
-	npcHumanoid:GetPropertyChangedSignal("Health"):Connect(function()
-		HpChanger()
-	end)
-
-	HpChanger()
 
 	npcInfo.NPCLevel.LevelText.Text = config.Level
 	npcInfo.NPCName.Text = npc.Name

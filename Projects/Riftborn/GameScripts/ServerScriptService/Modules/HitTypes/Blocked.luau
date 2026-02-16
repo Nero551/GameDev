@@ -9,6 +9,7 @@ local itemDataBase = require(modules.Data.ItemDataBase)
 
 local formulaApplier = require(modules.FormulaApplier)
 local animationsModule = require(modules.Animations)
+local CharacterVitalsService = require(script.Parent.Parent.Parent.Services.CharacterVitalsService)
 
 
 return function(argumentData)
@@ -37,10 +38,14 @@ return function(argumentData)
 			["NPCDamage"] = npcDamage,	
 			["Blocked"] = true
 		})
-		targetHumanoid:TakeDamage(AbilityDamage)
+		
+		CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+			["HealthChange"] = -AbilityDamage
+
+		})
 
 		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
-			["SoundName"] = "AbilityBlock",
+			["SoundName"] = "Shared.Sounds.AbilityBlock",
 			["Parent"] = targetHit.HumanoidRootPart
 		})
 	else
@@ -54,7 +59,12 @@ return function(argumentData)
 				["FoundWeaponData"] = foundWeaponData,
 				["Blocked"] = true,
 
-			})			targetHumanoid:TakeDamage(M1Damage)
+			})
+			
+			CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+				["HealthChange"] = -M1Damage
+
+			})
 
 			local randomNumber =  math.random(1,4)
 			replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
@@ -67,6 +77,7 @@ return function(argumentData)
 	replicatedStorage.Remotes.ClientEffects:FireAllClients("BlockedHit" , {
 		["Target"] = targetHit ,
 		["weaponUsed"] = weaponUsed.Name,
+		["BlockCounter"] = CharacterVitalsService:GetVital(targetHit, "BlockCounter")
 	})
 	
 	task.spawn(function()
