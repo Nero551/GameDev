@@ -100,7 +100,7 @@ return function()
 		end
 
 		---Idle--
-		if  humanoid.MoveDirection.Magnitude <=  0 then
+		if  humanoid.MoveDirection.Magnitude <=  0 or char:GetAttribute("WalkSpeed") == 0 then
 			local previousTime = StopPreviousAnimation(currentIdle, "Idle", char)
 
 			if not currentIdle.IsPlaying  then					

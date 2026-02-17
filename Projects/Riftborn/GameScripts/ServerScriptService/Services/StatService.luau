@@ -129,6 +129,7 @@ function StatService:UpdateStats(player:Player)
 	end
 	ApplyHealth(player)
 	ApplyMana(player)
+	GameEvents.UpdateMana:Fire(player)
 end
 
 ---Allocate Statpoint---
@@ -149,7 +150,6 @@ function StatService:AllocateStatPoint(player:Player, statType, amount)
 	playerLevel.StatPoints -= amount
 	playerStats[statType].FlatStatPoint = playerStats[statType].FlatStatPoint + amount
 	StatService:UpdateStats(player)
-	GameEvents.UpdateMana:Fire(player)
 	remotes.UpdateEXP:FireClient(player ,playerLevel)
 end
 
@@ -168,8 +168,6 @@ function StatService:ResetStats(player:Player)
 	playerStats.Mana.FlatStatPoint = 0
 	playerStats.RiftBorn.FlatStatPoint = 0
 	StatService:UpdateStats(player)
-	GameEvents.UpdateMana:Fire(player)
-	
 	remotes.UpdateEXP:FireClient(player ,playerLevel)
 end
 

@@ -16,18 +16,30 @@ for _,module in ipairs(characterVitalsScripts:GetChildren()) do
 	
 end
 
-local function CreateFolder(character, vitalsTable)
+local function SyncAttributes(character: Model?, vitalsTable)
+	if not character then return end
 
-	for vitalName, data in pairs(vitalsTable) do
-		if typeof(data) == "table" then
-			for key, value in pairs(data) do
-				character:SetAttribute(vitalName .. "_" .. key, value)
+	-- Clear all old attributes
+	for attrName, _ in pairs(character:GetAttributes()) do
+		character:SetAttribute(attrName, nil)
+	end
+
+	-- Recursive function to flatten tables
+	local function FlattenAndSet(prefix, tbl)
+		for key, value in pairs(tbl) do
+			local newKey = prefix and (prefix .. "_" .. key) or key
+
+			if typeof(value) == "table" then
+				FlattenAndSet(newKey, value)
+			else
+				character:SetAttribute(newKey, value)
 			end
-		else
-			character:SetAttribute(vitalName, data)
 		end
 	end
+
+	FlattenAndSet(nil, vitalsTable)
 end
+
 
 function CharacterVitalsService:Create(character)	
 	if CharacterVitalsService.CharacterVitals[character] then
@@ -57,6 +69,11 @@ function CharacterVitalsService:Create(character)
 			
 		},
 		
+		StatusAilments = {},
+		
+		WalkSpeed = 10,
+		JumpPower = 50,
+		
 		CamVectors = {
 			CamLook = 0,
 			CamRight = 0,
@@ -80,7 +97,7 @@ function CharacterVitalsService:Create(character)
 	end)
 
 	
-	CreateFolder(character, CharacterVitalsService.CharacterVitals[character])
+	SyncAttributes(character, CharacterVitalsService.CharacterVitals[character])
 	
 	local player = players:GetPlayerFromCharacter(character)
 	if player then
@@ -124,7 +141,7 @@ function CharacterVitalsService:ModifyVital(character,vital, funcName , argument
 		end
 	end
 	
-	CreateFolder(character, CharacterVitalsService.CharacterVitals[character])
+	SyncAttributes(character, CharacterVitalsService.CharacterVitals[character])
 	
 	local player = players:GetPlayerFromCharacter(character)
 	if player then

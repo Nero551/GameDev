@@ -9,7 +9,7 @@ function ActionVerifier:CanSprint(character)
 			return true
 		end
 	end
-	return false
+	return 
 end
 
 
@@ -20,13 +20,13 @@ function ActionVerifier:CanWalk(character)
 			return true
 		end
 	end
-	return false
+	return 
 end
 
 function ActionVerifier:CanAttack(character)
 	if StateService.checkState(character , "Attacking" , "Blocking", "Stunned", "NoPunch"
 		, "Dashing", "FlashStep", "FlashStepEndLag" ,"DashEndLag", "Casting") then
-		return false
+		return 
 	end
 	return true
 end
@@ -35,7 +35,7 @@ end
 function ActionVerifier:CanBlock(character)
 	if StateService.checkState(character, "Stunned", "Attacking", "Blocking", "NoBlock", "Flashstep", "Dashing",
 		"FlashStepEndLag" ,"DashEndLag") then
-		return false
+		return 
 	end
 	return true
 end
@@ -43,17 +43,22 @@ end
 
 function ActionVerifier:CanAbility(character, abilityLetter)
 	if StateService.checkState(character, "Stunned", "Attacking", "Dashing",
-		"Flashstep", "Blocking", "Ability"..abilityLetter.." Cooldown") then
-		return false
+		"Flashstep", "Blocking") then
+		return 
 	end
+	
+	if abilityLetter and StateService.checkState(character, "Ability"..abilityLetter.. " Cooldown") then
+		return
+	end
+	
 	return true
 end
 
 
 function ActionVerifier:CanDash(character)
 	if StateService.checkState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-		"DashCoolDown", "FlashStep") then
-		return false
+		"DashCoolDown", "FlashStep", "Frozen") then
+		return 
 	end
 	return true
 end
@@ -61,9 +66,14 @@ end
 
 function ActionVerifier:CanFlashstep(character, flashstepCharge)
 	if StateService.checkState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-		"FlashStepEndLag", "FlashStep") or flashstepCharge == 0 then
-		return false
+		"FlashStepEndLag", "FlashStep", "Frozen") then
+		return 
 	end
+	
+	if flashstepCharge and flashstepCharge == 0  then
+		return
+	end
+	
 	return true
 end
 
@@ -97,7 +107,7 @@ end
 function ActionVerifier:CanAirJump(character, AirJumpCharges)
 	if StateService.checkState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
 		"FlashStepEndLag", "FlashStep", "AirJump") or AirJumpCharges == 0 then
-		 return false
+		 return 
 	end
 	return true
 end

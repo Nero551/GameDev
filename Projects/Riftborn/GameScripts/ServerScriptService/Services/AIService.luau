@@ -8,6 +8,8 @@ local AbilityService = require(script.Parent.Parent.Services.AbilityService)
 local MovementService = require(script.Parent.Parent.Services.MovementService)
 local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVitalsService)
 
+local ActionVerifier = require(game.ReplicatedStorage.Modules.ActionVerifier)
+
 local animationsFolder = game.ReplicatedStorage.Assets.Shared.Animations
 local animationsModule = require(game.ReplicatedStorage.Modules.Animations)
 
@@ -20,9 +22,7 @@ function AIService:CanDash()
 	if not self.Target then return false end
 	if  self:IsDashPathClear(self.Target.Position) ~= true then return false end
 	local distance = (self.Root.Position - self.Target.Position).Magnitude
-	if  distance <= self.Config.DetectionRange  and distance >= self.Config.DetectionRange/2 and not
-		StateService.checkState(self.NPC,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-			"DashCoolDown", "DashEndLag", "FlashStep") then
+	if  distance <= self.Config.DetectionRange  and distance >= self.Config.DetectionRange/2 and ActionVerifier:CanDash(self.NPC) then
 		return true
 	else
 		return false
@@ -32,7 +32,8 @@ end
 function AIService:CanBlock()
 	if not self.Target then return false end
 	local distance = (self.Root.Position - self.Target.Position).Magnitude
-	if StateService.checkState(self.Target.Parent, "Attacking") and distance <= self.Config.AttackRange then
+	if StateService.checkState(self.Target.Parent, "Attacking") and distance <= self.Config.AttackRange
+		and ActionVerifier:CanBlock(self.NPC) then
 		return true
 	else
 		return false
@@ -54,7 +55,7 @@ end
 function AIService:CanAttack()
 	if not self.Target then return false end
 	local distance = (self.Root.Position - self.Target.Position).Magnitude
-	if distance <= self.Config.AttackRange then
+	if distance <= self.Config.AttackRange and ActionVerifier:CanAttack(self.NPC) then
 		return true
 	else
 		return false
@@ -63,7 +64,7 @@ end
 
 function AIService:CanAbility()
 	if not self.Target then return false end
-	if not StateService.checkState(self.Target.Parent, "Attacking") then
+	if not StateService.checkState(self.Target.Parent, "Attacking") and ActionVerifier:CanAbility(self.NPC) then
 		return  true
 	else
 		return false
@@ -75,9 +76,7 @@ function AIService:CanFlashStep()
 	local distance = (self.Root.Position - self.Target.Position).Magnitude
 	if distance <= self.Config.DetectionRange 
 		and distance >= self.Config.DetectionRange/2 
-		and (not StateService.checkState(self.NPC,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-			"FlashStepEndLag", "FlashStep"))
-			and self.FlashStepCharge.Value > 0 then
+		and ActionVerifier:CanFlashstep(self.NPC) and self.FlashStepCharge.Value > 0 then
 		return true
 	else
 		return false
@@ -88,7 +87,7 @@ function AIService:CanFollow()
 	if not self.Target then return false end
 	if self.Moving then return false end
 	local distance = (self.Root.Position - self.Target.Position).Magnitude
-	if distance <= self.Config.DetectionRange then
+	if distance <= self.Config.DetectionRange and self.Humanoid.WalkSpeed > 0 then
 		return true
 	else
 		return false

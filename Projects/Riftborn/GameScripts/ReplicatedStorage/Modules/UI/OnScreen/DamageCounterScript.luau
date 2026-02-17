@@ -127,7 +127,6 @@ return function(damageFrame)
 	end
 	
 	local function AilmentTween(ailmentName, ailmentData)
-		print(ailmentData, ailmentName)
 		ExtraText.Text = ailmentName
 		ExtraText.Visible = true
 

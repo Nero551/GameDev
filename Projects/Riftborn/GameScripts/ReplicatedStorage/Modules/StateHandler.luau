@@ -1,5 +1,6 @@
 local starterGui = game:GetService("StarterGui")
 local stateService = require(script.Parent.StateService)
+local CharacterVitalsService = require(game.ServerScriptService.Services.CharacterVitalsService)
 
 local StateHandler = {}
 
@@ -11,7 +12,10 @@ local statePriority = {
 	{Name = "BlockBroken", WS = 0, JP = 0},
 	{Name = "Dashing", WS = 0, JP = 0},
 	{Name = "FlashStepEndLag", WS = 0, JP = 0},
-
+	
+	---Status Ailments--
+	{Name = "Frozen", WS = 0, JP = 0},
+	
 	-- Combat-related movement limitations
 	{Name = "Casting", WS = 10, JP = 0},
 	{Name = "Attacking", WS = 10, JP = 0},
@@ -23,6 +27,7 @@ local statePriority = {
 	{Name = "Sprinting", WS = 32, JP = 50}, 
 
 }
+
 
 function StateHandler:HandleStates(character:Model?)
 	local humanoid = character:WaitForChild("Humanoid")
@@ -39,24 +44,22 @@ function StateHandler:HandleStates(character:Model?)
 		end
 	end
 	
-	if stateService.checkState(character,"FlashStep") then
-		for _, trail:Trail? in character:GetDescendants() do
-			if trail:IsA("Trail") and trail.Name == "SprintTrail" then
-				trail.Enabled = false
-			end
-		end
-	end
-
-
 	---Applying---
-	if humanoid.WalkSpeed ~= finalWalkSpeed then
-		humanoid.WalkSpeed = finalWalkSpeed
+	if CharacterVitalsService:GetVital(character , "WalkSpeed") ~= finalWalkSpeed then
+		
+		CharacterVitalsService:ModifyVital(character, "Movement", "ModifyWalkSpeed", {
+			["WalkSpeed"] = finalWalkSpeed
+			
+		})		
 	end
 
-	if humanoid.JumpPower ~= finalJumpPower then
-		humanoid.JumpPower = finalJumpPower
-	end
+	if CharacterVitalsService:GetVital(character , "JumpPower") ~= finalJumpPower then
+		CharacterVitalsService:ModifyVital(character, "Movement", "ModifyJumpPower", {
+			["JumpPower"] = finalJumpPower
 
+		})	
+	end
+	
 	if finalJumpPower == 0 or stateService.checkState(character,"NoJump")  then
 		humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, false)
 	else

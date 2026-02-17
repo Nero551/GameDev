@@ -14,7 +14,7 @@ WeaponData.Weapons = {
 		StatusAilments = {
 			ProcChance = 1,
 			Effects = {
-				"Burn",
+				"Bleed",
 			},
 			
 		},

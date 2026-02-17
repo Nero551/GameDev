@@ -122,7 +122,7 @@ function HitApplier:ApplyHit(argumentData)
 					["StatusAilments"] = weaponData.StatusAilments.Effects
 				})
 				
-			elseif abilityData.StatusAilments and math.random(0,100) <= (abilityData.StatusAilments.ProcChance * 100) then
+			elseif abilityData and abilityData.StatusAilments and math.random(0,100) <= (abilityData.StatusAilments.ProcChance * 100) then
 				
 				hitTypes["StatusAilment"]({
 					["Attacker"] = character,

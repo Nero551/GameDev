@@ -13,9 +13,9 @@ local formulaApplier = require(modules.FormulaApplier)
 local animationsModule = require(modules.Animations)
 local statusAilmentsData = require(modules.Data.StatusAilmentsData)
 
+local sideEffectsApplier = require(script.Parent.Parent.Parent.Services.SideEffectService)
 local CharacterVitalsService = require(script.Parent.Parent.Parent.Services.CharacterVitalsService)
 
-local elapsed = {} -- per-target per-ailment
 
 return function(argumentData)
 		
@@ -127,12 +127,20 @@ return function(argumentData)
 	end	
 	
 	if statusAilments then
-		elapsed[targetHit] = elapsed[targetHit] or {}
 		local randomAilment = math.random(1, #statusAilments)
 		ailmentName = statusAilments[randomAilment]
 		ailmentData = statusAilmentsData.Ailments[ailmentName]
 		
+		local characterAilments = CharacterVitalsService:GetVital(targetHit, "StatusAilments")
+		
 		if stateService.checkState(targetHit, ailmentData.State) then
+			
+			CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "AddAilment", {
+				["AilmentName"] = ailmentData.State,
+				["AilmentDuration"] = ailmentData.BaseDuration,
+				["AilmentTime"] = characterAilments[ailmentData.State].LastProc or 0
+			})
+			
 			stateService.removeState(targetHit, ailmentData.State)
 		end
 		stateService.addState(targetHit, ailmentData.State, ailmentData.BaseDuration)
@@ -142,34 +150,58 @@ return function(argumentData)
 			["Target"] = targetHit,
 			["Ailment"] = ailmentName,
 			["Duration"] = ailmentData.BaseDuration,
+			["State"] = ailmentData.State
 			
 		})
 		
-		elapsed[targetHit] = elapsed[targetHit] or {}
-		local elapsedTime = elapsed[targetHit]
+		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound",{
+			["Parent"] = targetHRP,
+			["SoundName"] = "Shared.Sounds.AilmentSounds."..ailmentName
+			
+		})
+		
+		if not characterAilments[ailmentData.State] then
+			CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "AddAilment", {
+				["AilmentName"] = ailmentData.State,
+				["AilmentTime"] = 0	,
+			})			
+			sideEffectsApplier[ailmentName.."SideEffects"](sideEffectsApplier, targetHit, {
+				["Attacker"] = attacker
 
-		if not elapsedTime[ailmentName] then
-			elapsedTime[ailmentName] = 0
+			})
 			local conn
 			conn = runService.Heartbeat:Connect(function(dt)
 				if not stateService.checkState(targetHit, ailmentData.State) then
+					CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "RemoveAilment", {
+						["AilmentName"] = ailmentData.State,
+					})
 					conn:Disconnect()
-					elapsedTime[ailmentName] = nil
+					conn = nil
 					return
 				end
-
-				elapsedTime[ailmentName] = elapsedTime[ailmentName] + dt
-				if elapsedTime[ailmentName] >= ailmentData.ProcEvery then
-					-- apply damage
+				
+				CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "AddAilment", {
+					["AilmentName"] = ailmentData.State,
+					["AilmentTime"] = (characterAilments[ailmentData.State].LastProc or 0 ) + dt,
+					["AilmentDuration"] = (characterAilments[ailmentData.State].Duration or  ailmentData.BaseDuration) - dt,
+				})
+				if characterAilments[ailmentData.State].LastProc >= ailmentData.ProcEvery then
+					
 					CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 						HealthChange = -ailmentDamage
 					})
 					if player then
 						replicatedStorage.Remotes.ShowDamage:FireClient(player, ailmentDamage, false,false,false, ailmentName, ailmentData)
 					end
-					elapsedTime[ailmentName] = 0
+					CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "AddAilment", {
+						["AilmentName"] = ailmentData.State,
+						["AilmentTime"] = 0	,
+						["AilmentDuration"] = (characterAilments[ailmentData.State].Duration or  ailmentData.BaseDuration)  - dt,
+
+					})	
 				end
 			end)
+
 		end
 	end
 
