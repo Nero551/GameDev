@@ -12,11 +12,10 @@ WeaponData.Weapons = {
 		Rarity = "Rare",
 		Description = "Can't even hit your target berarebones? noob.",
 		StatusAilments = {
-			ProcChance = 1,
+			ProcChance = 0.1,
 			Effects = {
 				"Bleed",
 			},
-			
 		},
 		Damage = 5,
 		ComboCooldown = 2,

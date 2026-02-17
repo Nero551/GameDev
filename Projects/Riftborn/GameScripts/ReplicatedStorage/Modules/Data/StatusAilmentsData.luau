@@ -4,9 +4,9 @@ StatusAilmentsData.Ailments = {
 	["Burn"] = {
 		State = "Burning",
 		Color = "#ff7a46",
-		BaseDuration = 10,
+		BaseDuration = 15,
 		DamagePercent = 0.25,
-		ProcEvery = 5,
+		ProcEvery = 2.5,
 		
 	},
 	["Poison"] = {

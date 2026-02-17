@@ -12,7 +12,8 @@ local AilmentService = {}
 
 function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 	
-	local player = players:GetPlayerFromCharacter(attacker)
+	local playerTarget = players:GetPlayerFromCharacter(targetHit)
+	local playerAttacker = players:GetPlayerFromCharacter(attacker)
 	local ailmentData = statusAilmentsData.Ailments[ailmentName]
 	local characterAilments = CharacterVitalsService:GetVital(targetHit, "StatusAilments")	
 	
@@ -35,8 +36,8 @@ function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 			["AilmentTime"] = 0	,
 		})
 		
-		if player then
-			StatService:ApplyBuffs(player, {["Defense"] = {Percent = -0.5}})
+		if playerTarget then
+			StatService:ApplyBuffs(playerTarget, {["Defense"] = {Percent = -0.5}})
 		end
 		local conn		
 		conn = runService.Heartbeat:Connect(function(dt)
@@ -45,9 +46,8 @@ function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 					["AilmentName"] = ailmentData.State,
 				})
 				
-				if player then
-					StatService:ApplyBuffs(player, { ["Defense"] = {Percent = 0.5}})
-
+				if playerTarget then
+					StatService:ApplyBuffs(playerTarget, {["Defense"] = {Percent = 0.5}})
 				end
 				conn:Disconnect()
 				conn = nil
@@ -64,8 +64,8 @@ function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 				CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 					HealthChange = -ailmentDamage
 				})
-				if player then
-					replicatedStorage.Remotes.ShowDamage:FireClient(player, ailmentDamage, false,false,false, ailmentName, ailmentData)
+				if playerAttacker then
+					replicatedStorage.Remotes.ShowDamage:FireClient(playerAttacker, ailmentDamage, false,false,false, ailmentName, ailmentData)
 				end
 				CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "AddAilment", {
 					["AilmentName"] = ailmentData.State,
@@ -80,7 +80,8 @@ end
 
 function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 	
-	local player = players:GetPlayerFromCharacter(attacker)
+	local playerTarget = players:GetPlayerFromCharacter(targetHit)
+	local playerAttacker = players:GetPlayerFromCharacter(attacker)
 	
 	local ailmentData = statusAilmentsData.Ailments[ailmentName]
 	local characterAilments = CharacterVitalsService:GetVital(targetHit, "StatusAilments")	
@@ -132,8 +133,8 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 					["HealthChange"] = targetHealth.MaxHealth / 200
 				})
 				
-				if player then
-					replicatedStorage.Remotes.ShowDamage:FireClient(player, ailmentDamage, false,false,false, ailmentName, ailmentData)
+				if playerAttacker then
+					replicatedStorage.Remotes.ShowDamage:FireClient(playerAttacker, ailmentDamage, false,false,false, ailmentName, ailmentData)
 				end
 				CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "AddAilment", {
 					["AilmentName"] = ailmentData.State,
@@ -147,7 +148,8 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 end
 
 function AilmentService:Freeze(attacker, targetHit, ailmentName, normalDamage)
-	local player = players:GetPlayerFromCharacter(attacker)
+	local playerTarget = players:GetPlayerFromCharacter(targetHit)
+	local playerAttacker = players:GetPlayerFromCharacter(attacker)
 	local ailmentData = statusAilmentsData.Ailments[ailmentName]
 	local characterAilments = CharacterVitalsService:GetVital(targetHit, "StatusAilments")	
 	
@@ -190,10 +192,15 @@ function AilmentService:Freeze(attacker, targetHit, ailmentName, normalDamage)
 			["AilmentDuration"] = (characterAilments[ailmentData.State].Duration or  ailmentData.BaseDuration) - dt,
 		})
 	end)
+	if playerAttacker then
+		replicatedStorage.Remotes.ShowDamage:FireClient(playerAttacker, ailmentDamage, false,false,false, ailmentName, ailmentData)
+	end
 end
 
 function AilmentService:Poison(attacker,targetHit,ailmentName,normalDamage)
-	local player = players:GetPlayerFromCharacter(attacker)
+	
+	local playerTarget = players:GetPlayerFromCharacter(targetHit)
+	local playerAttacker = players:GetPlayerFromCharacter(attacker)	
 	
 	local ailmentData = statusAilmentsData.Ailments[ailmentName]
 	local characterAilments = CharacterVitalsService:GetVital(targetHit, "StatusAilments")	
@@ -239,8 +246,8 @@ function AilmentService:Poison(attacker,targetHit,ailmentName,normalDamage)
 				CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 					HealthChange = -ailmentDamage
 				})
-				if player then
-					replicatedStorage.Remotes.ShowDamage:FireClient(player, ailmentDamage, false,false,false, ailmentName, ailmentData)
+				if playerAttacker then
+					replicatedStorage.Remotes.ShowDamage:FireClient(playerAttacker, ailmentDamage, false,false,false, ailmentName, ailmentData)
 				end
 				CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "AddAilment", {
 					["AilmentName"] = ailmentData.State,
