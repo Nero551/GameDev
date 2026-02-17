@@ -5,7 +5,7 @@ local ActionVerifier = {}
 function ActionVerifier:CanSprint(character)
 	local humanoid = character:WaitForChild("Humanoid")
 	if humanoid.MoveDirection.Magnitude >  0 then
-		if not StateService.checkState(character, "Attacking", "Blocking", "NoMove", "Stunned", "NoSprint" ) then
+		if not StateService.checkState(character, "Attacking", "Blocking", "NoMove", "Stunned", "NoSprint") then
 			return true
 		end
 	end
@@ -25,7 +25,7 @@ end
 
 function ActionVerifier:CanAttack(character)
 	if StateService.checkState(character , "Attacking" , "Blocking", "Stunned", "NoPunch"
-		, "Dashing", "FlashStep", "FlashStepEndLag" ,"DashEndLag", "Casting") then
+		, "Dashing", "FlashStep", "FlashStepEndLag" ,"DashEndLag", "Casting", "Frozen") then
 		return 
 	end
 	return true
@@ -34,7 +34,7 @@ end
 
 function ActionVerifier:CanBlock(character)
 	if StateService.checkState(character, "Stunned", "Attacking", "Blocking", "NoBlock", "Flashstep", "Dashing",
-		"FlashStepEndLag" ,"DashEndLag") then
+		"FlashStepEndLag" ,"DashEndLag", "Frozen") then
 		return 
 	end
 	return true
@@ -43,7 +43,7 @@ end
 
 function ActionVerifier:CanAbility(character, abilityLetter)
 	if StateService.checkState(character, "Stunned", "Attacking", "Dashing",
-		"Flashstep", "Blocking") then
+		"Flashstep", "Blocking", "Frozen") then
 		return 
 	end
 	
@@ -85,7 +85,7 @@ function ActionVerifier:CanWallRun(character:Model)
 	Left = Vector3.new(Left.X, 0 , Left.Z)
 	Right = Vector3.new(Right.X, 0 , Right.Z)
 	if not StateService.checkState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-		 "WallJump","WallRunning", "FlashStep", "FlashStepEndLag") then	
+		 "WallJump","WallRunning", "FlashStep", "FlashStepEndLag", "Frozen") then	
 		
 		local rayparams = RaycastParams.new()
 		rayparams.FilterType = Enum.RaycastFilterType.Exclude
@@ -106,7 +106,7 @@ end
 
 function ActionVerifier:CanAirJump(character, AirJumpCharges)
 	if StateService.checkState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-		"FlashStepEndLag", "FlashStep", "AirJump") or AirJumpCharges == 0 then
+		"FlashStepEndLag", "FlashStep", "AirJump", "Frozen") or AirJumpCharges == 0 then
 		 return 
 	end
 	return true

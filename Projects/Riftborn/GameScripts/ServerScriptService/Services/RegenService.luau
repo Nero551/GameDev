@@ -59,8 +59,9 @@ function RegenService:BlockCounterRegen(dt)
 			elapsedBlock[character] = 0
 		end
 
-		if (elapsedBlock[character] or 0) >= cooldown then
-			CharacterVitalsService:ModifyVital(character , "Combat", "ModifyBlockCounter", { BlockCounterChange = 1 })
+		if elapsedBlock[character] >= cooldown then
+			print("nice")
+			CharacterVitalsService:ModifyVital(character , "Combat", "ModifyBlockCounter", { ["BlockCounterChange"] = 0 })
 			elapsedBlock[character] = 0
 		end
 	end

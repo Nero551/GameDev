@@ -13,15 +13,14 @@ StatusAilmentsData.Ailments = {
 		State = "Poisoned",
 		Color = "9b37ff",
 		BaseDuration = 10, -- duration
-		DamagePercent = 0.1, -- percent per proc
+		DamagePercent = 0.2, -- percent per proc
 		ProcEvery = 2, -- seconds
 	},
 	["Freeze"] = {
 		State = "Frozen",
 		Color = "#27ffed",
-		BaseDuration = 10,
+		BaseDuration = 3,
 		DamagePercent = 0.5,
-		ProcEvery = 2.5,
 		
 	},	
 	["Bleed"] = {
