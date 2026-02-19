@@ -32,7 +32,7 @@ local ability = {
 	
 }
 
-function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, abilityData, letter, npcDamage)
+function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, letter, npcDamage)
 	
 	
 	local abilityletter = input or letter
@@ -42,9 +42,12 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, a
 	local playerStats
 	
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
-	local abilityData = abilityDataModule.getAbilityData(tool.Name..abilityletter)
+	local abilityData = abilityDataModule.getAbilityData(tool.Name,abilityletter)
 	
-	if not abilityData then return end
+	if not abilityData then
+		print("Ability data not found for:", tool.Name..abilityletter)
+		return
+	end	
 	
 	local weaponData = itemDataBase:GetItemData(tool:GetAttribute("ID"))
 	
@@ -67,19 +70,13 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, a
 		playerMana.CurrentMana = playerMana.CurrentMana - abilityData.Mana
 	end
 
-
-	if not abilityData then
-		print("Ability data not found for:", tool.Name..abilityletter)
-		return
-	end
-
 	---CoolDown---
 	local cooldownTime  = abilityData.AbilityCooldown
 
 	---Animation---
 	local animsModule = require(modules.Animations)
-	local animation:AnimationTrack = animsModule:GetAnimation(humanoid.Animator, abilityData.Animation)
-	if not animation then warn("Animation Not Found") return end
+	local animation:AnimationTrack = animsModule:GetAnimation(humanoid.Animator, "Weapons."..tool.Name..".Animations.Abilities."..abilityletter)
+	if not animation then warn("Animation Not Found") print(animsModule.loadedAnimations) return end
 	animation:Play()
 	
 	
@@ -88,12 +85,12 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, a
 	stateService.addState(character, "Invulnerable", animation.Length)
 	stateService.addState(character, "Casting", animation.Length)
 
-	animation:GetMarkerReachedSignal("Hit"):Connect(function()
+	animation:GetMarkerReachedSignal("Hit"):Once(function()
 		local hrp:Part? = character:WaitForChild("HumanoidRootPart")
 
 		---HitBox---
-		local hitboxClone = assets.HItboxTemplate:Clone()
-		if abilityData.OnMouse == true then
+		local hitboxClone = assets.HitboxTemplate:Clone()
+		if abilityData.OnMouse and mouse then
 
 			hitboxClone.Name = abilityData.AbilityName.." Hitbox"
 			hitboxClone.Size = abilityData.HitBoxSize
@@ -108,27 +105,17 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, a
 
 		end
 
-		---VFX---
-		local vfx:Attachment = abilityData.VFX:Clone() 
-		vfx.Parent = workspace.World.Effects
-		vfx.CFrame = hitboxClone.CFrame
-		for _,child:ParticleEmitter? in vfx:GetDescendants() do
-			if child:IsA("ParticleEmitter") then
-				local emitCount = child:GetAttribute("EmitCount")
-				child:Emit(emitCount)
-			end
-		end
-		debris:AddItem(vfx, 5)
-
+		---VFX---	
+		remotes.ClientEffects:FireAllClients("AbilityVFX", {
+			["VFX"] = assets.Weapons[tool.Name].Effects.Abilities[abilityletter],
+			["HitBoxName"] = hitboxClone.Name,
+		})
+		
 		---Sound---
-		local sound:Sound? = abilityData.Sound:Clone()
-		sound.Parent = workspace.World.Effects
-		sound.RollOffMaxDistance = 50
-		sound.RollOffMode = Enum.RollOffMode.Linear
-		if sound then
-			sound:Play()
-			debris:AddItem(sound, sound.TimeLength)
-		end
+		remotes.ClientEffects:FireAllClients("AbilitySound", {
+			["SoundName"] = "Weapons."..tool.Name..".Sounds.Abilities."..abilityletter,	
+			["HitBoxName"] = hitboxClone.Name,
+		})
 
 		---Damage---
 		task.spawn(function()
@@ -142,7 +129,7 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, a
 				if part.Parent and part.Parent:FindFirstChild("Humanoid") then
 					local targetHit = part.Parent
 
-					if stateService.checkState(targetHit, "Invulnerable") then return end
+					if stateService.checkState(targetHit, "Invulnerable") then continue end
 
 
 					local targetHumanoid:Humanoid = targetHit:FindFirstChild("Humanoid")

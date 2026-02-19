@@ -65,9 +65,7 @@ local function SendSetupRemotes(player:Player)
 end
 
 local function SetupCharacter(player:Player, character)
-	wait()
 	SetupPlayer(player)
-	
 	CharacterVitalsService:Create(character)
 	
 	SendSetupRemotes(player)
@@ -110,7 +108,7 @@ players.PlayerRemoving:Connect(function(player)
 
 	local data = DataService:Save(player)
 	clientReady[player] = nil
-	DataService.PlayerDatas[player] = nil
+	data = nil
 	
 end)
 
@@ -118,7 +116,7 @@ end)
 game:BindToClose(function()
 	for _, player in ipairs(players:GetPlayers()) do
 		local data = DataService:Save(player)
-		DataService.PlayerData[player] = nil
+		data = nil
 	end
 	task.wait(2)
 end)

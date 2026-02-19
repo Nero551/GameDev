@@ -543,7 +543,7 @@ function AIService:Ability()
 		local abilityData = abilityDataModule.getAbilityData(ability)
 		if abilityData then
 			if distance <= abilityData.AbilityRange and not StateService.checkState(self.NPC, "Ability"..letter.." Cooldown") then
-				AbilityService.AbilityUse(nil, self.NPC, self.Config.Tool,nil,nil, abilityData, letter, self.Config.Damage)
+				AbilityService.AbilityUse(nil, self.NPC, self.Config.Tool,nil,nil, letter, self.Config.Damage)
 			end
 		end
     end	

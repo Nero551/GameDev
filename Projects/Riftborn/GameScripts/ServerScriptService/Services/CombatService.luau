@@ -96,7 +96,7 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 
 	local trueSwingNumber = CharacterVitalsService:GetVital(character, "SwingNumber")
 
-	if trueSwingNumber > 5 then
+	if trueSwingNumber >= 5 then
 		
 		CharacterVitalsService:ModifyVital(character, "Combat", "ModifySwingNumber", {SwingNumberChange = 0})
 		trueSwingNumber = 5
@@ -126,15 +126,11 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 			return
 		end
 		
-		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
-			["SoundName"] = "Weapons."..tool.Name..".Sounds.Swings."..tostring(trueSwingNumber) ,
-			["Parent"] = character.HumanoidRootPart
-		})
-		
+
 		
 		
 		--Setting Hitbox
-		local hitboxClone = assets.HItboxTemplate:Clone()
+		local hitboxClone = assets.HitboxTemplate:Clone()
 		hitboxClone.Name = "M1 Hitbox"
 		hitboxClone.Parent = workspace.World.Hitboxes
 		local weld = Instance.new("Weld")
@@ -142,6 +138,11 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 		weld.Part0 = character.HumanoidRootPart
 		weld.Part1 = hitboxClone
 		weld.C0 = CFrame.new(0 , 0 , -3)
+		
+		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
+			["SoundName"] = "Weapons."..tool.Name..".Sounds.Swings."..tostring(trueSwingNumber) ,
+			["Parent"] = character.HumanoidRootPart
+		})
 		
 		task.spawn(function()
 			local params = OverlapParams.new()

@@ -44,7 +44,7 @@ return function(abilityUI)
 		end
 
 		for abilityKey, data in pairs(bars) do
-			local abilityData = abilityDataModule.getAbilityData(tool.Name .. abilityKey)
+			local abilityData = abilityDataModule.getAbilityData(tool.Name , abilityKey)
 			local weaponData = itemDataBase:GetItemData(tool.Name, "Weapon")
 			if not abilityData then
 				data.bar.Visible = false

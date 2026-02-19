@@ -114,19 +114,6 @@ local function ValidateData(playerData)
 			end
 		end
 	end
-	
-	for key in pairs(playerData) do
-		if defaultData[key] == nil then
-			playerData[key] = nil
-		elseif type(defaultData[key]) == "table" and type(playerData[key]) == "table" then
-			for nestedKey in pairs(playerData[key]) do
-				if defaultData[key][nestedKey] == nil then
-					playerData[key][nestedKey] = nil
-				end
-			end
-		end
-	end
-
 	return playerData
 end
 

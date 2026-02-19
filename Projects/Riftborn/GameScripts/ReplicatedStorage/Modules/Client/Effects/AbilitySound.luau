@@ -15,8 +15,10 @@ end
 
 return function(arguementData:any)
 	local  soundName:string = arguementData.SoundName
-	local parent:BasePart? = arguementData.Parent
+	local hitboxName = arguementData.HitBoxName
 	local Volume:number? = arguementData.Volume
+	
+	local parent = workspace.World.Hitboxes:FindFirstChild(hitboxName)
 	
 	if soundName and parent then
 		local foundSound:Sound? = cachedSounds[soundName]

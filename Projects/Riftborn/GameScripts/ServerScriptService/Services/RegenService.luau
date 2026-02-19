@@ -53,17 +53,22 @@ end
 function RegenService:BlockCounterRegen(dt)
 	local cooldown = 5
 	for character, data in pairs(CharacterVitalsService.CharacterVitals) do
-		if not StateService.checkState(character,"Blocking") then
-			elapsedBlock[character] = (elapsedBlock[character] or 0) + dt
+		
+		if CharacterVitalsService:GetVital(character, "BlockCounter") > 0 then
+			if not StateService.checkState(character,"Blocking") then
+				elapsedBlock[character] = (elapsedBlock[character] or 0) + dt
+			else
+				elapsedBlock[character] = 0
+			end
+
+			if elapsedBlock[character] >= cooldown then
+				CharacterVitalsService:ModifyVital(character , "Combat", "ModifyBlockCounter", { ["BlockCounterChange"] = 0 })
+				elapsedBlock[character] = 0
+			end
+			
 		else
 			elapsedBlock[character] = 0
-		end
-
-		if elapsedBlock[character] >= cooldown then
-			print("nice")
-			CharacterVitalsService:ModifyVital(character , "Combat", "ModifyBlockCounter", { ["BlockCounterChange"] = 0 })
-			elapsedBlock[character] = 0
-		end
+		end	
 	end
 end
 
