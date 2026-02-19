@@ -15,6 +15,7 @@ return function()
 	local stateService = require(modules.StateService)
 	local ActionVerifier = require(modules.ActionVerifier)
 	local MovementConfig = require(modules.Configs.MovementConfig)
+	local Connections = require(modules.Connections)
 
 	local DashConfig = MovementConfig.DashConfig
 	local camera = workspace.CurrentCamera
@@ -31,15 +32,6 @@ return function()
 
 
 	------------------------------------------------------MovementAbilties-------------------------------------------------------
-	---AirJumpCharges---
-	local airJumpMaxCharge = 3
-	local airJumpCharge = 3
-
-	runService.Heartbeat:Connect(function()
-		if humanoid.FloorMaterial ~= Enum.Material.Air then
-			airJumpCharge = airJumpMaxCharge
-		end
-	end)
 
 	local function getDashDirection()
 		local keysPressed = UserInputService:GetKeysPressed()
@@ -106,8 +98,7 @@ return function()
 
 
 	---Dash Movement---
-	local dashConnection
-	remotes.Dash.OnClientEvent:Connect(function(direction)
+	Connections:AddConnection(player, "Character", "DashRemote",remotes.Dash.OnClientEvent:Connect(function(direction)
 		---Dash Movement---	
 		local maxDashDistance = DashConfig.MaxDashDistance
 		local root:Part? = character:FindFirstChild("HumanoidRootPart")
@@ -116,15 +107,10 @@ return function()
 		rayParams.FilterType = Enum.RaycastFilterType.Exclude
 		rayParams.FilterDescendantsInstances = {character}
 
-		if dashConnection then
-			dashConnection:Disconnect()
-			dashConnection = nil
-		end
-		dashConnection = runService.Heartbeat:Connect(function(dt)
+		Connections:AddConnection(player, "Character", "DashPhysics", runService.Heartbeat:Connect(function(dt)
 			if not stateService.checkState(character, "Dashing") then
 				stateService.addState(character, "DashCoolDown", DashConfig.DashCooldown)
-				dashConnection:Disconnect()
-				dashConnection = nil
+				Connections:RemoveConnection(player, "Character", "DashPhysics")
 				return
 			end
 			local directionVector:Vector3
@@ -147,8 +133,6 @@ return function()
 				stateService.removeState(character, "Dashing")
 			end
 			root.CFrame = root.CFrame + (directionVector * maxDashDistance * dt)
-		end)
-	end)
-
-
+		end))
+	end))
 end

@@ -19,26 +19,23 @@ end
 local function SyncAttributes(character: Model?, vitalsTable)
 	if not character then return end
 
-	-- Clear all old attributes
-	for attrName, _ in pairs(character:GetAttributes()) do
-		character:SetAttribute(attrName, nil)
-	end
-
-	-- Recursive function to flatten tables
+	-- Recursive function to flatten tables and set attributes
 	local function FlattenAndSet(prefix, tbl)
 		for key, value in pairs(tbl) do
-			local newKey = prefix and (prefix .. "_" .. key) or key
+			local attrName = prefix and (prefix .. "_" .. key) or key
 
 			if typeof(value) == "table" then
-				FlattenAndSet(newKey, value)
+				-- recurse into the table
+				FlattenAndSet(attrName, value)
 			else
-				character:SetAttribute(newKey, value)
+				character:SetAttribute(attrName, value)
 			end
 		end
 	end
-
+	
 	FlattenAndSet(nil, vitalsTable)
 end
+
 
 
 function CharacterVitalsService:Create(character)	

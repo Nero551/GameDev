@@ -103,14 +103,14 @@ function MovementService:Dash(player:Player, direction , IsShiftLockOff, npcTarg
 		local rayParams = RaycastParams.new()
 		rayParams.FilterType = Enum.RaycastFilterType.Exclude
 		rayParams.FilterDescendantsInstances = {character}
-
-
-		local dashConnection
+		
+		local dashConnection = nil
 		dashConnection = runService.Heartbeat:Connect(function(dt)
 
 			if not stateService.checkState(character, "Dashing") then
 				stateService.addState(character, "DashCoolDown", DashConfig.DashCooldown)
 				dashConnection:Disconnect()
+				dashConnection = nil
 				return
 			end
 			local directionVector:Vector3

@@ -11,6 +11,8 @@ local TitleService = require(script.Parent.Parent.Services.TitleService)
 local BuffService = require(script.Parent.Parent.Services.BuffService)
 local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVitalsService)
 
+local connections = require(game.ReplicatedStorage.Modules.Connections)
+
 local clientReady = {}
 remotes.ClientReady.OnServerEvent:Connect(function(player)
 	clientReady[player] = true
@@ -109,7 +111,7 @@ players.PlayerRemoving:Connect(function(player)
 	local data = DataService:Save(player)
 	clientReady[player] = nil
 	data = nil
-	
+	connections:CleanupConnections(player)
 end)
 
 ---Save Data If Server Shuts Down---
@@ -117,16 +119,17 @@ game:BindToClose(function()
 	for _, player in ipairs(players:GetPlayers()) do
 		local data = DataService:Save(player)
 		data = nil
+		connections:CleanupConnections(player)
 	end
+	
 	task.wait(2)
 end)
 
 ---AutoSave---
 spawn(function()
-	while true do
+	while task.wait(300) do
 		for _, player in pairs(players:GetPlayers()) do
 			DataService:Save(player)
 		end
-		task.wait(300) -- 5 min
 	end
 end)

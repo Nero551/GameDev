@@ -7,6 +7,7 @@ local statusAilmentsData = require(replicatedStorage.Modules.Data.StatusAilments
 local StatService = require(script.Parent.StatService)
 local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
 
+local Connections = require(replicatedStorage.Modules.Connections)
 
 local AilmentService = {}
 
@@ -39,18 +40,17 @@ function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 		if playerTarget then
 			StatService:ApplyBuffs(playerTarget, {["Defense"] = {Percent = -0.5}})
 		end
-		local conn		
-		conn = runService.Heartbeat:Connect(function(dt)
+		
+		Connections:AddConnection(playerTarget, "Character", "Burning", runService.Heartbeat:Connect(function(dt)
 			if not stateService.checkState(targetHit, ailmentData.State) then
 				CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "RemoveAilment", {
 					["AilmentName"] = ailmentData.State,
 				})
-				
+
 				if playerTarget then
 					StatService:ApplyBuffs(playerTarget, {["Defense"] = {Percent = 0.5}})
 				end
-				conn:Disconnect()
-				conn = nil
+				Connections:RemoveConnection(playerTarget , "Character", "Burning")
 				return
 			end
 
@@ -74,7 +74,7 @@ function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 
 				})
 			end	
-		end)
+		end))
 	end
 end
 
@@ -106,15 +106,13 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 			["AilmentName"] = ailmentData.State,
 			["AilmentTime"] = 0	,
 		})
-
-		local conn		
-		conn = runService.Heartbeat:Connect(function(dt)
+		
+		Connections:AddConnection(playerTarget, "Character", "Bleeding", runService.Heartbeat:Connect(function(dt)
 			if not stateService.checkState(targetHit, ailmentData.State) then
 				CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "RemoveAilment", {
 					["AilmentName"] = ailmentData.State,
 				})
-				conn:Disconnect()
-				conn = nil
+				Connections:RemoveConnection(playerTarget , "Character", "Bleeding")
 				return
 			end
 
@@ -128,11 +126,11 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 				CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 					HealthChange = -ailmentDamage
 				})
-				
+
 				CharacterVitalsService:ModifyVital(attacker, "Health", "ModifyHealth", {
 					["HealthChange"] = targetHealth.MaxHealth / 200
 				})
-				
+
 				if playerAttacker then
 					replicatedStorage.Remotes.ShowDamage:FireClient(playerAttacker, ailmentDamage, false,false,false, ailmentName, ailmentData)
 				end
@@ -143,7 +141,7 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 
 				})
 			end	
-		end)
+		end))
 	end
 end
 
@@ -177,21 +175,20 @@ function AilmentService:Freeze(attacker, targetHit, ailmentName, normalDamage)
 		HealthChange = -ailmentDamage
 	})
 	
-	local conn		
-	conn = runService.Heartbeat:Connect(function(dt)
+	Connections:AddConnection(playerTarget, "Character", "Freezing",runService.Heartbeat:Connect(function(dt)
 		if not stateService.checkState(targetHit, ailmentData.State) then
 			CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "RemoveAilment", {
 				["AilmentName"] = ailmentData.State,
 			})
-			conn:Disconnect()
-			conn = nil
+			Connections:RemoveConnection(playerTarget , "Character", "Freezing")
 			return
 		end
 		CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "AddAilment", {
 			["AilmentName"] = ailmentData.State,
 			["AilmentDuration"] = (characterAilments[ailmentData.State].Duration or  ailmentData.BaseDuration) - dt,
 		})
-	end)
+	end))
+	
 	if playerAttacker then
 		replicatedStorage.Remotes.ShowDamage:FireClient(playerAttacker, ailmentDamage, false,false,false, ailmentName, ailmentData)
 	end
@@ -223,16 +220,14 @@ function AilmentService:Poison(attacker,targetHit,ailmentName,normalDamage)
 			["AilmentName"] = ailmentData.State,
 			["AilmentTime"] = 0	,
 		})
-
-		local conn		
-		conn = runService.Heartbeat:Connect(function(dt)
+		
+		Connections:AddConnection(playerTarget, "Character", "Poisoned", runService.Heartbeat:Connect(function(dt)
 			if not stateService.checkState(targetHit, ailmentData.State) then
 				CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "RemoveAilment", {
 					["AilmentName"] = ailmentData.State,
 				})
-
-				conn:Disconnect()
-				conn = nil
+				
+				Connections:RemoveConnection(playerTarget , "Character", "Poisoned")
 				return
 			end
 
@@ -256,7 +251,7 @@ function AilmentService:Poison(attacker,targetHit,ailmentName,normalDamage)
 
 				})
 			end	
-		end)
+		end))
 	end
 end
 

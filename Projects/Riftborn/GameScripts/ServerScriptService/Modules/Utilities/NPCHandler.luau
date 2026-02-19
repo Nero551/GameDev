@@ -13,31 +13,31 @@ function NPCHandler:HandleNPC(npc)
 
 	local AIModule = require(ServerScriptService.Services.AIService)
 	local CharacterVitalsService = require(ServerScriptService.Services.CharacterVitalsService)
-	
+
 	local GameEvents = require(repstor.Modules.GameEvents)
 	local MobData = require(repstor.Modules.Data.MobData)
 
 	local npcHumanoid = npc:WaitForChild("Humanoid")
 	local animator:Animator = npcHumanoid.Animator
-	
+
 	local config = MobData.Mobs[npc.Name]
 	local toolName = config.Tool.Name
-	
+
 	local toolAnims = repstor.Assets.Weapons[toolName].Animations
 	animations:loadAnims(animator, toolAnims)
-	
+
 	local npcVitals = CharacterVitalsService:Create(npc)		
 	npcVitals.Health.MaxHealth = config.Health
 	npcVitals.Health.CurrentHealth = config.Health
-	
-	
+
+
 	if repstor.Assets.Weapons[toolName].Model:FindFirstChild(toolName.."_Equipped") then
 		local toolModel:Model? = repstor.Assets.Weapons[toolName].Model[toolName.."_Equipped"]:Clone()
 		toolModel.Parent = npc
 		local weld:Motor6D = toolModel:FindFirstChildWhichIsA("Motor6D")
 		weld.Part0 = npc:FindFirstChild("Right Arm")
 	end
-	
+
 
 	---StatusFolder---
 	local statusFolder =  Instance.new("Folder")
@@ -135,12 +135,12 @@ function NPCHandler:HandleNPC(npc)
 	local hpText = npcInfo.NPCHealth.HealthNumber
 
 	npcInfo.Adornee = npc.Head
-	
+
 	if npcVitals then
 		local hpChanger = require(uiModules.HPChanger)
 		hpChanger(hpBG, npc)
 	end
-	
+
 
 
 	npcInfo.NPCLevel.LevelText.Text = config.Level

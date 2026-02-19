@@ -76,7 +76,7 @@ function AIService:CanFlashStep()
 	local distance = (self.Root.Position - self.Target.Position).Magnitude
 	if distance <= self.Config.DetectionRange 
 		and distance >= self.Config.DetectionRange/2 
-		and ActionVerifier:CanFlashstep(self.NPC) and self.FlashStepCharge.Value > 0 then
+		and ActionVerifier:CanFlashstep(self.NPC, CharacterVitalsService:GetVital(self.NPC, "FlashStep").CurrentFlashStep) then
 		return true
 	else
 		return false
@@ -105,7 +105,7 @@ end
 
 --------------------------------------------------------------------------------------------------------------------------------------
 function AIService:EnemyBrain()
-	
+		
 	if not self.Alive or self.npcVitals.Health.CurrentHealth <= 0 then
 		self:SetState("Dead")
 		return
@@ -203,7 +203,6 @@ function AIService:CreateAI(npc ,config, animations, Abilties)
 	self.Config = config
 	self.Alive = true
 	self.CurrentState = "Idle"
-	self.FlashStepCharge = npc.Status.FlashStepCharge
 	self.IdleAnimation = animationsModule:GetAnimation(self.Animator, animations.Idle)
 	self.WalkAnimation = animationsModule:GetAnimation(self.Animator, animations.Walk)
 	self.RunAnimation  = animationsModule:GetAnimation(self.Animator, animations.Run)
@@ -601,9 +600,7 @@ function AIService:Flashstep()
 				self:SmartMove(self.Root, self.Target)
 			end
 		end)
-		MovementService:FlashStep(self.NPC, self.FlashStepCharge.Value)
-		self.FlashStepCharge.Value = self.FlashStepCharge.Value -1
-		self.FlashStepCharge.Value = math.clamp(self.FlashStepCharge.Value, 0, 3)
+		MovementService:FlashStep(self.NPC)
 	end	
 end
 

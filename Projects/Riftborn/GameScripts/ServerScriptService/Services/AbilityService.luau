@@ -34,6 +34,7 @@ local ability = {
 
 function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, letter, npcDamage)
 	
+	if not tool then return end
 	
 	local abilityletter = input or letter
 			

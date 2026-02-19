@@ -3,9 +3,11 @@ return function()
 
 	local assetsToLoad = {}
 
-	local function getAllAssets(parent)
+	local function getAllAssets(parent:Folder?)
 		for _, asset in parent:GetDescendants() do
-			table.insert(assetsToLoad, asset)
+			if asset:IsA("MeshPart") or asset:IsA("UnionOperation") or asset:IsA("Model") then
+				table.insert(assetsToLoad, asset)
+			end
 		end
 	end
 
