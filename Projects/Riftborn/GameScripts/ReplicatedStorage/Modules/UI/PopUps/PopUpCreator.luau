@@ -45,9 +45,9 @@ return function()
 		end
 
 		---No Mana For Ability---
-		if popupInfo.AbilityName then
+		if popupInfo.AbilityName and popupInfo.RequiredMana then
 			local NoManaPopup = popupTemplate:Clone()
-			NoManaPopup.PopUpText.Text = "Not Enough Mana For ["..popupInfo.AbilityName.."]"
+			NoManaPopup.PopUpText.Text = "Not Enough Mana For ["..popupInfo.AbilityName.."] ("..popupInfo.RequiredMana..")"
 			NoManaPopup.Parent = popupsFrame
 		end
 

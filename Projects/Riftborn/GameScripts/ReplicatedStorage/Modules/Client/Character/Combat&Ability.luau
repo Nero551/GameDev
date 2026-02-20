@@ -31,7 +31,7 @@ return function()
 	
 	local stepConnection =  nil
 
-	stepConnection = runService.RenderStepped:Connect(function(dt)
+	stepConnection = runService.RenderStepped:Connect(function(deltaTime: number)
 
 		------Death Handler------
 		if statusFolder:FindFirstChild("Dead") then
@@ -46,12 +46,7 @@ return function()
 		if UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) and actionVerifier:CanAttack(character) then
 			remotes.Attack:FireServer()
 		end
-		
-		------M2------
-		--[[if UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) and actionVerifier:CanAttack(character) then
-			remotes.HeavyAttack:FireServer()
-		end
-		--]]
+
 		------Blocking------
 		local wantBlock = UserInputService:IsKeyDown(Enum.KeyCode.F) and not proc
 

@@ -5,19 +5,23 @@ return function(ailmentsFrame:Frame?)
 	local stateService = require(script.Parent.Parent.Parent.StateService)
 	local statusFolder = char:WaitForChild("Status")
 	
-	for _,ailmentIcon in ailmentsFrame:GetChildren() do
-		if ailmentIcon:IsA("ImageLabel") then
-			char:GetAttributeChangedSignal("StatusAilments_"..ailmentIcon.Name.."_Duration"):Connect(function()	
-				task.wait(0.1)
-				
+	local function AilmentsUI()
+		for _,ailmentIcon in ailmentsFrame:GetChildren() do
+			if ailmentIcon:IsA("ImageLabel") then
 				if stateService.checkState(char , ailmentIcon.Name) then
 					ailmentIcon.Visible = true
-					ailmentIcon.Duration.Text = math.max(0, math.floor(char:GetAttribute("StatusAilments_"..ailmentIcon.Name.."_Duration")))
+					ailmentIcon.Duration.Text = math.floor(char:GetAttribute("StatusAilments_"..ailmentIcon.Name.."_Duration"))
 
 				else
 					ailmentIcon.Visible = false
 				end
-			end)
+			end
 		end
 	end
+	
+	char.AttributeChanged:Connect(function()
+		AilmentsUI()
+	end)
+	AilmentsUI()
+	
 end

@@ -18,6 +18,17 @@ remotes.ClientReady.OnServerEvent:Connect(function(player)
 	clientReady[player] = true
 end)
 
+local function WaitForPlayerReady(player)
+	-- wait until data table exists
+	repeat task.wait() until DataService.PlayerDatas[player]
+
+	-- wait until CharacterVitalsService is ready for this character
+	local char = player.Character or player.CharacterAdded:Wait()
+	repeat task.wait() until CharacterVitalsService.CharacterVitals[char]
+
+	-- wait for client ready signal
+	repeat task.wait() until clientReady[player]
+end
 
 local function SetupPlayer(player:Player)
 	---Setup Tables And Folders---
@@ -47,9 +58,7 @@ local function SendSetupRemotes(player:Player)
 	local playerCurrencies = DataService:GetTable(player,"Currency")
 	local playerTitles = DataService:GetTable(player, "Titles")
 	
-	while not clientReady[player] do
-		task.wait()
-	end
+	WaitForPlayerReady(player)
 	---Send Remotes
 	remotes.UpdateEXP:FireClient(player ,playerLevel)
 		
@@ -111,7 +120,10 @@ players.PlayerRemoving:Connect(function(player)
 	local data = DataService:Save(player)
 	clientReady[player] = nil
 	data = nil
-	connections:CleanupConnections(player)
+	
+	local char = player.Character
+	
+	connections:CleanupConnections(char)
 end)
 
 ---Save Data If Server Shuts Down---
@@ -119,7 +131,8 @@ game:BindToClose(function()
 	for _, player in ipairs(players:GetPlayers()) do
 		local data = DataService:Save(player)
 		data = nil
-		connections:CleanupConnections(player)
+		local char = player.Character
+		connections:CleanupConnections(char)
 	end
 	
 	task.wait(2)

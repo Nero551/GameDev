@@ -1,47 +1,47 @@
 local Connections = {}
 
-function Connections:AddConnection(player, Type, connectionName, connection)
-	if not Connections[player] then
-		Connections[player] = {
+function Connections:AddConnection(char, Type, connectionName, connection)
+	if not Connections[char] then
+		Connections[char] = {
 			Character = {},
 			Player = {}
 		}
 	end
 	
-	if not Connections[player][Type] then
+	if not Connections[char][Type] then
 		warn("Type Specified isnot a character nor player")
 		return 
 	end
 	
-	Connections:RemoveConnection(player, Type, connectionName)
+	Connections:RemoveConnection(char, Type, connectionName)
 
-	Connections[player][Type][connectionName] = connection
+	Connections[char][Type][connectionName] = connection
 	
-	print(Connections[player])
+	print(Connections[char])
 end
 
-function Connections:RemoveConnection(player,Type, connectionName)
+function Connections:RemoveConnection(char,Type, connectionName)
 	
-	if not Connections[player] then return end
+	if not Connections[char] then return end
 	
-	if not Connections[player][Type] then
+	if not Connections[char][Type] then
 		warn("Type Specified isnot a character nor player")
 		return 
 	end
-	if Connections[player][Type][connectionName] then
-		Connections[player][Type][connectionName]:Disconnect()
-		Connections[player][Type][connectionName] = nil
+	if Connections[char][Type][connectionName] then
+		Connections[char][Type][connectionName]:Disconnect()
+		Connections[char][Type][connectionName] = nil
 	end
 	
-	print(Connections[player])
+	print(Connections[char])
 end
 
-function Connections:CleanupConnections(player)
-	if not Connections[player] then return end
+function Connections:CleanupConnections(char)
+	if not Connections[char] then return end
 	
-	print(Connections[player])
+	print(Connections[char])
 
-	for typeKey, typeTable in pairs(Connections[player]) do
+	for typeKey, typeTable in pairs(Connections[char]) do
 		for _, conn in pairs(typeTable) do
 			if conn and conn.Disconnect then
 				conn:Disconnect()
@@ -49,7 +49,7 @@ function Connections:CleanupConnections(player)
 		end
 	end
 
-	Connections[player] = nil
+	Connections[char] = nil
 end
 
 return Connections

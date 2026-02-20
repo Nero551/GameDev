@@ -84,7 +84,13 @@ function CharacterVitalsService:Create(character)
 	
 	local humanoid = character:WaitForChild("Humanoid")
 	humanoid.Died:Connect(function()
-		CharacterVitalsService:Cleanup(character) -- remove old character vitals
+		CharacterVitalsService.CharacterVitals[character].Health.HealthRegen = 0
+		CharacterVitalsService:ModifyVital(character, "Health", "ModifyHealth", {
+			["HealthChange"] = -CharacterVitalsService.CharacterVitals[character].Health.CurrentHealth
+
+		})
+		task.wait(3)
+		CharacterVitalsService:Cleanup(character)
 	end)
 	
 	character.AncestryChanged:Connect(function(_, parent)

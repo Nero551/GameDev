@@ -63,9 +63,9 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, l
 			remotes.PopUp:FireClient(player,
 				{
 					["AbilityName"] = abilityData.AbilityName,
+					["RequiredMana"] = abilityData.Mana,
 				}
 			)
-			warn("Not Enough Mana For "..abilityData.AbilityName)
 			return
 		end
 		playerMana.CurrentMana = playerMana.CurrentMana - abilityData.Mana

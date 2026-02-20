@@ -20,10 +20,17 @@ runService.Heartbeat:Connect(function(dt)
 		if character then
 			------Death Handler------
 			if stateService.checkState(character,"Dead") then
-				Connections:RemoveConnection(player, "Character", "StateHandler")
-			else
-				StateHandler:HandleStates(character)
+				Connections:RemoveConnection(character, "Character", "StateHandler")
+				return
 			end
+			StateHandler:HandleStates(character)
 		end
 	end
+end)
+
+local playerInfo = require(script.Parent.Parent.Modules.Utilities.PlayerInfo)
+players.PlayerAdded:Connect(function(player)
+	player.CharacterAdded:Connect(function(char)
+		playerInfo:UpdateInfo(player, char)
+	end)
 end)

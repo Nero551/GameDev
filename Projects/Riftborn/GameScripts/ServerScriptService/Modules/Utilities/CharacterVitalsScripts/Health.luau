@@ -5,7 +5,7 @@ function Health:ModifyHealth(character:Model?, argumentData)
 	local healthData = CharacterVitalsService:GetVital(character, "Health")
 	local healthChange = argumentData.HealthChange
 	
-	healthData.CurrentHealth = math.min(healthData.CurrentHealth + healthChange , healthData.MaxHealth)
+	healthData.CurrentHealth = math.clamp(healthData.CurrentHealth + healthChange, 0 , healthData.MaxHealth)
 	
 	Health:Apply(character)
 end

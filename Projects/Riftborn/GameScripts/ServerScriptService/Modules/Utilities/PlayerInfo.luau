@@ -1,4 +1,6 @@
-return function(char)
+local PlayerInfo = {}
+
+function PlayerInfo:UpdateInfo(player, char)
 	---Player Info GUI---
 	local tween = game:GetService("TweenService")
 	local repstor = game:GetService("ReplicatedStorage")
@@ -17,7 +19,7 @@ return function(char)
 	local hpText = playerInfo.PlayerHealth.HealthNumber
 
 	playerInfo.Adornee = char.Head
-	--playerInfo.PlayerToHideFrom = player
+	playerInfo.PlayerToHideFrom = player
 
 
 	---Health--
@@ -67,11 +69,11 @@ return function(char)
 					ColorSequenceKeypoint.new(1, Color3.fromRGB(154, 154, 154))
 				})
 			end
-			
+
 			if playerInfo.PlayerTitle.UIGradient:FindFirstChild("RotationTween") then
 				playerInfo.PlayerTitle.UIGradient.RotationTween:Destroy()
 			end
-			
+
 			local tweenInfo = TweenInfo.new(16, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1 , true)
 			if playerInfo.PlayerTitle.UIGradient:FindFirstChild("RotationTween") then
 				playerInfo.PlayerTitle.UIGradient.RotationTween:Destroy()
@@ -93,3 +95,5 @@ return function(char)
 		TitleApplier()
 	end)
 end
+
+return PlayerInfo

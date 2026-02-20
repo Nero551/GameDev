@@ -3,11 +3,9 @@ return function()
 
 	local assetsToLoad = {}
 
-	local function getAllAssets(parent:Folder?)
+	local function getAllAssets(parent)
 		for _, asset in parent:GetDescendants() do
-			if asset:IsA("MeshPart") or asset:IsA("UnionOperation") or asset:IsA("Model") then
-				table.insert(assetsToLoad, asset)
-			end
+			table.insert(assetsToLoad, asset)
 		end
 	end
 
@@ -15,6 +13,6 @@ return function()
 	getAllAssets(game.Workspace)
 
 	ContentProvider:PreloadAsync(assetsToLoad)
-	warn(#assetsToLoad .. " assets preloaded!")
+	print(#assetsToLoad .. " assets preloaded!")
 
 end
