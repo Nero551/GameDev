@@ -1,6 +1,7 @@
 local players = game:GetService("Players")
 local repstor = game:GetService("ReplicatedStorage")
 local remotes = repstor.Remotes
+local connections = require(repstor.Modules.Connections)
 
 local CharacterVitalsService = {}
 
@@ -91,6 +92,7 @@ function CharacterVitalsService:Create(character)
 		})
 		task.wait(3)
 		CharacterVitalsService:Cleanup(character)
+		connections:CleanupConnections(character)
 	end)
 	
 	character.AncestryChanged:Connect(function(_, parent)

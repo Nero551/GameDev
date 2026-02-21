@@ -1,7 +1,7 @@
 local PathFindingService = game:GetService("PathfindingService")
 
 local StateService = require(game.ReplicatedStorage.Modules.StateService)
-local StateHandler = require(game.ReplicatedStorage.Modules.StateHandler)
+local StateHandler = require(script.Parent.Parent.Modules.Utilities.StateHandler)
 
 local CombatService = require(script.Parent.Parent.Services.CombatService)
 local AbilityService = require(script.Parent.Parent.Services.AbilityService)
@@ -197,9 +197,9 @@ end
 function AIService:CreateAI(npc ,config, animations, Abilties)
 	local self = setmetatable({}, AIService)
 	self.NPC = npc
-	self.Humanoid = npc:WaitForChild("Humanoid")
+	self.Humanoid = self.NPC:WaitForChild("Humanoid")
 	self.Animator = self.Humanoid.Animator
-	self.Root = npc:WaitForChild("HumanoidRootPart")
+	self.Root = self.NPC:WaitForChild("HumanoidRootPart")
 	self.Config = config
 	self.Alive = true
 	self.CurrentState = "Idle"
@@ -211,12 +211,14 @@ function AIService:CreateAI(npc ,config, animations, Abilties)
 	self.Abilities = Abilties
 	self.Moving = false
 	self.LastTargetPos = nil
-	self.npcVitals = CharacterVitalsService.CharacterVitals[npc]
+	self.npcVitals = CharacterVitalsService.CharacterVitals[self.NPC]
 	
-	self.Humanoid.Died:Connect(function()
-		self.Alive = false
-		self.Target = nil
-		self:SetState("Dead")
+	self.NPC:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(function()
+		if self.NPC:GetAttribute("Health_CurrentHealth") <= 0 then
+			self.Alive = false
+			self.Target = nil
+			self:SetState("Dead")
+		end
 	end)
 
 

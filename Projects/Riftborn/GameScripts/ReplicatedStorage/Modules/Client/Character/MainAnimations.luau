@@ -15,9 +15,9 @@ return function()
 	local char = player.Character or player.CharacterAdded:Wait()
 
 
-	local function StopPreviousAnimation(current, Type, character)
+	local function StopPreviousAnimation(current, Type)
 		local previousTime = 0
-		for animName,anim in pairs(animsModule.loadedAnimations[character]) do
+		for animName,anim in pairs(animsModule.loadedAnimations[char]) do
 			if string.find(animName, "Animations."..Type)  then
 				if anim ~= current and anim.IsPlaying then
 					previousTime = anim.TimePosition
@@ -101,7 +101,7 @@ return function()
 
 		---Idle--
 		if  humanoid.MoveDirection.Magnitude <=  0 or char:GetAttribute("WalkSpeed") == 0 then
-			local previousTime = StopPreviousAnimation(currentIdle, "Idle", char)
+			local previousTime = StopPreviousAnimation(currentIdle, "Idle")
 
 			if not currentIdle.IsPlaying  then					
 				currentIdle:Play()
@@ -114,7 +114,7 @@ return function()
 
 			---Sprint---
 		elseif	stateService.checkState(char,"Sprinting") and ActionVerifier:CanSprint(char) then				
-			local previousTime = StopPreviousAnimation(currentRun, "Run", char )
+			local previousTime = StopPreviousAnimation(currentRun, "Run")
 
 			if not currentRun.IsPlaying then
 				currentRun:Play()
@@ -127,7 +127,7 @@ return function()
 
 			---Walk---
 		elseif	ActionVerifier:CanWalk(char) then	
-			local previousTime = StopPreviousAnimation(currentWalk, "Walk", char)
+			local previousTime = StopPreviousAnimation(currentWalk, "Walk")
 
 			if not currentWalk.IsPlaying then
 				currentWalk:Play()

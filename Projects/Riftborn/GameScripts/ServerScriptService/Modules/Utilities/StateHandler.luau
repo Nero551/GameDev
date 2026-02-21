@@ -1,8 +1,9 @@
 local starterGui = game:GetService("StarterGui")
-local stateService = require(script.Parent.StateService)
+local stateService = require(game.ReplicatedStorage.Modules.StateService)
 local CharacterVitalsService = require(game.ServerScriptService.Services.CharacterVitalsService)
 
 local StateHandler = {}
+
 
 local statePriority = {
 	-- Highest priority: prevents all movement
@@ -33,7 +34,7 @@ function StateHandler:HandleStates(character:Model?)
 	local humanoid = character:WaitForChild("Humanoid")
 	
 	------StateHandler------
-	local finalWalkSpeed = 10 
+	local finalWalkSpeed = 5
 	local finalJumpPower = 50 
 
 	for _, stateInfo in ipairs(statePriority) do

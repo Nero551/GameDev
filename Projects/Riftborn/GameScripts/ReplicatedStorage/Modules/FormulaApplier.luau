@@ -1,38 +1,40 @@
 
 local FormulaApplier = {}
 
-function FormulaApplier:DefaultHitFormula(data , npcDamage, targetDefenseStat, playerDamageStat)
+function FormulaApplier:DefaultHitFormula(data, npcDamage, targetDefenseStat, playerDamageStat)
 	
-	local defaultDamage = math.max((npcDamage or data.Damage) * (100/ (100 + targetDefenseStat)),
-		math.floor(
-			(1+ data.Damage / 100) * (npcDamage or playerDamageStat)) * ( 100 / ( 100 + targetDefenseStat )))
-	
-	return defaultDamage
+	local base1 = (npcDamage or data.Damage) * (100 / (100 + targetDefenseStat))
+	local base2 = (1 + data.Damage / 100) * (npcDamage or playerDamageStat) * (100 / (100 + targetDefenseStat))
+
+	local defaultDamage = math.max(base1, base2)
+	return math.floor(defaultDamage)
 end
 
 function FormulaApplier:BlockedHitFormula(data, npcDamage, targetDefenseStat, playerDamageStat)
 	
-	local blockedDamage = math.max((npcDamage or data.Damage) * (100/ (100 + targetDefenseStat)),
-		math.floor(
-			(1+ data.Damage / 100) * (npcDamage or playerDamageStat)) * ( 100 / ( 100 + targetDefenseStat ))*0.1)
-	
-	return blockedDamage
+	local base1 = (npcDamage or data.Damage) * (100 / (100 + targetDefenseStat))
+	local base2 = (1 + data.Damage / 100) * (npcDamage or playerDamageStat) * (100 / (100 + targetDefenseStat)) * 0.1
+
+	local blockedDamage = math.max(base1, base2)
+	return math.floor(blockedDamage)
 end
 
 function FormulaApplier:CriticalHitFormula(data, targetDefenseStat, playerCriticalDamageStat, playerDamageStat)
-	local criticalDamage =  math.max(data.Damage * (100/ (100 + targetDefenseStat)),
-		math.floor((
-			(1+ data.Damage / 100) * playerDamageStat) *
-				( 100 / ( 100 + targetDefenseStat )))) * playerCriticalDamageStat
-	return criticalDamage
+	
+	local base1 = data.Damage * (100 / (100 + targetDefenseStat))
+	local base2 = (1 + data.Damage / 100) * playerDamageStat * (100 / (100 + targetDefenseStat))
+
+	local criticalDamage = math.max(base1, base2) * playerCriticalDamageStat
+	return math.floor(criticalDamage)
 end
 
 function FormulaApplier:BlackFlashHitFormula(data, targetDefenseStat, playerCriticalDamageStat, playerDamageStat)
-	local blackFlashDamage = math.max(data.Damage * (100/ (100 + targetDefenseStat)),
-		math.floor((
-			(1+ data.Damage / 100) * playerDamageStat) *
-				( 100 / ( 100 + targetDefenseStat )))) * playerCriticalDamageStat * 2
-	return blackFlashDamage
+	
+	local base1 = data.Damage * (100 / (100 + targetDefenseStat))
+	local base2 = (1 + data.Damage / 100) * playerDamageStat * (100 / (100 + targetDefenseStat))
+
+	local blackFlashDamage = math.max(base1, base2) * playerCriticalDamageStat * 2
+	return math.floor(blackFlashDamage)
 end
 
 function FormulaApplier:M1Damage(argumentData)

@@ -14,6 +14,7 @@ return function(arguementData:any)
 		local clone =  VFX:Clone()
 		clone.Parent = workspace.World.Effects
 		clone.CFrame = hitbox.CFrame
+		
 		for _,particle:ParticleEmitter? in clone:GetDescendants() do
 			if particle:IsA("ParticleEmitter") then
 				if particle:GetAttribute("EmitDelay") and particle:GetAttribute("EmitDelay") > 0 then

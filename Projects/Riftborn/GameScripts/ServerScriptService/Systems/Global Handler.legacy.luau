@@ -3,7 +3,7 @@ local repstor = game:GetService("ReplicatedStorage")
 local runService = game:GetService("RunService")
 
 local stateService = require(repstor.Modules.StateService)
-local StateHandler = require(repstor.Modules.StateHandler)
+local StateHandler = require(script.Parent.Parent.Modules.Utilities.StateHandler)
 local AIService = require(script.Parent.Parent.Services.AIService)
 local Connections = require(repstor.Modules.Connections)
 

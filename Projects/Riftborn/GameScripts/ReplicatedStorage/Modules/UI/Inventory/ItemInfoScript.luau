@@ -75,11 +75,11 @@ return function  (scrollingFrame, infoFrame)
 				local iconEquipped:ImageLabel = icon.EquippedIcon
 				local iconImage:ImageLabel = icon.Icon
 				local iconName:StringValue = icon.Name
-				local iconType:StringValue = icon.IconType
-				local iconDesc:StringValue = icon.IconDescription
-				local iconRarity:StringValue = icon.IconRarity
+				local iconType:StringValue = iconFrame:GetAttribute("IconType")
+				local iconDesc:StringValue = iconFrame:GetAttribute("IconDescription")
+				local iconRarity:StringValue = iconFrame:GetAttribute("IconRarity")
 				local iconAmountOwned:TextLabel = icon.OwnedAmount
-				local iconItemId:StringValue? = icon.ItemID
+				local iconItemId:StringValue? = iconFrame:GetAttribute("ItemID")
 
 				iconFrame.MouseEnter:Connect(function()
 					hoverSound:Play()
@@ -141,12 +141,12 @@ return function  (scrollingFrame, infoFrame)
 
 					---Icon Setup---
 					infoFrame.ItemNameValue.Value = iconName
-					infoFrame.ItemID.Value = iconItemId.Value
+					infoFrame.ItemID.Value = iconItemId
 					baseStatsFrame.Visible = false
 					infoImage.Image = iconImage.Image
 					infoText.Text = iconName
-					infoType.Text = iconType.Value
-					infoRarity.Text = iconRarity.Value
+					infoType.Text = iconType
+					infoRarity.Text = iconRarity
 					infoAmountOwned.Text = "Owned: "..iconAmountOwned.Text
 					infoFrame.Visible = true
 
@@ -162,7 +162,7 @@ return function  (scrollingFrame, infoFrame)
 						infoWeaponDescButton.Visible = true
 						infoWeaponDesc.Visible = true
 						infoMastery.Visible = true
-						infoWeaponDesc.Text = iconDesc.Value
+						infoWeaponDesc.Text = iconDesc
 
 						---If Item Is An Armor
 					elseif infoType.Text == "Helmet" or infoType.Text == "ChestPlate" or infoType.Text == "Leggings" or infoType.Text == "Boots" then
@@ -172,7 +172,7 @@ return function  (scrollingFrame, infoFrame)
 						baseStatsButton.Visible  = true
 						equipIcon.Visible = true
 						infoMastery.Visible = false
-						infoNonWeaponDesc.Text = iconDesc.Value
+						infoNonWeaponDesc.Text = iconDesc
 					else
 
 						---If Item Is A Material---
@@ -182,7 +182,7 @@ return function  (scrollingFrame, infoFrame)
 						baseStatsButton.Visible  = false
 						equipIcon.Visible = false
 						infoMastery.Visible = false
-						infoNonWeaponDesc.Text = iconDesc.Value
+						infoNonWeaponDesc.Text = iconDesc
 					end
 				end)
 			end

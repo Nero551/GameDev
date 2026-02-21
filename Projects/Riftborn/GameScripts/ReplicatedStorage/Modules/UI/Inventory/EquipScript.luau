@@ -45,11 +45,11 @@ return function  (itemFrame, OnScreenGui, infoFrame)
 
 
 	infoNameValue.Changed:Connect(function()
-		for _,icon in itemFrame:GetChildren() do
+		for _,icon:Frame? in itemFrame:GetChildren() do
 			if icon:IsA("Frame") then
 				if infoNameValue.Value == icon.Name then
-					local equipState:BoolValue = icon:FindFirstChild(icon.Name):FindFirstChild("IconEquipState")
-					if equipState.Value == true then
+
+					if icon:GetAttribute("IconEquipState") == true then
 						SwitchOutEquip()
 					else
 						SwitchInEquip()
@@ -113,11 +113,10 @@ return function  (itemFrame, OnScreenGui, infoFrame)
 	---LoadEquippedItems---
 	remotes.UpdateEquippedItems.OnClientEvent:Connect(function(inventory, equippedItems)
 
-		for _,icon in itemFrame:GetChildren() do
+		for _,icon:Frame? in itemFrame:GetChildren() do
 			if icon:IsA("Frame") then
 				if infoNameValue.Value == icon.Name then
-					local equipState:BoolValue = icon:FindFirstChild(icon.Name):FindFirstChild("IconEquipState")
-					if equipState.Value == true then
+					if icon:GetAttribute("IconEquipState") == true then
 						SwitchOutEquip()
 					else
 						SwitchInEquip()

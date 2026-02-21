@@ -111,20 +111,24 @@ function NPCHandler:HandleNPC(npc)
 
 	---When NPC Die---
 	local deathAnimation = animator:LoadAnimation(game.ReplicatedStorage.Assets.Shared.Character.Death)
-
-	npc.Humanoid.Died:Connect(function()
-		deathAnimation:Play()
-
-		for _,KillerHit in npcHumanoid:GetChildren() do
-			if KillerHit.Name == "KillerHit" and KillerHit:IsA("ObjectValue") then
-				local KillerPlayer = KillerHit.Value
-				GameEvents.GiveRewards:Fire(KillerPlayer, Drops, false)
-				GameEvents.MobKilled:Fire(KillerPlayer, npc.Name)
+	local alreadyDead = false
+	npc:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(function()
+		if alreadyDead == true then return end
+		if npc:GetAttribute("Health_CurrentHealth") <= 0 then
+			alreadyDead = true
+			deathAnimation:Play()
+			for _,KillerHit in npcHumanoid:GetChildren() do
+				if KillerHit.Name == "KillerHit" and KillerHit:IsA("ObjectValue") then
+					local KillerPlayer = KillerHit.Value
+					GameEvents.GiveRewards:Fire(KillerPlayer, Drops, false)
+					GameEvents.MobKilled:Fire(KillerPlayer, npc.Name)
+				end
 			end
+			task.delay(10,function()
+				npc:Destroy()
+			end)
 		end
-		task.delay(10,function()
-			npc:Destroy()
-		end)
+	
 	end)
 
 

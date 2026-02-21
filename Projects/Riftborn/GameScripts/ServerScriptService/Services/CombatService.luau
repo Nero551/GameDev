@@ -53,8 +53,10 @@ function CombatService:Died(character)
 	local statusFolder = character:WaitForChild("Status", math.huge)
 	local humanoid:Humanoid = character:WaitForChild("Humanoid" , math.huge)
 
-	humanoid.Died:Once(function()
-		stateService.addState(character , "Dead")
+	character:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(function()
+		if character:GetAttribute("Health_CurrentHealth") <= 0 then
+			stateService.addState(character , "Dead")
+		end
 	end)	
 end
 

@@ -52,16 +52,17 @@ return function  (Frame)
 			icon.NameText.Text = itemData.Name
 			icon.OwnedAmount.Text =   item.Amount
 			icon.Icon.Image = itemData.Icon
-			icon.IconType.Value = item.Type
-			icon.IconDescription.Value = itemData.Description
-			icon.IconRarity.Value = itemData.Rarity
-			icon.ItemID.Value = itemID
+			
+			iconFrame:SetAttribute("IconDescription", itemData.Description)
+			iconFrame:SetAttribute("IconRarity", itemData.Rarity)
+			iconFrame:SetAttribute("ItemID", itemID)
+			iconFrame:SetAttribute("IconType", itemData.Type)
 
 			if equippedItems[item.Type] == itemID then
-				icon.IconEquipState.Value = true
+				iconFrame:SetAttribute("IconEquipState", true)
 				icon.EquippedIcon.Visible = true
 			else
-				icon.IconEquipState.Value = false
+				iconFrame:SetAttribute("IconEquipState", false)
 				icon.EquippedIcon.Visible = false
 			end
 

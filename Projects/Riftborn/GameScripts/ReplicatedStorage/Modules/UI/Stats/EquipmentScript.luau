@@ -103,7 +103,6 @@ return function(Icons, EquipmentFolder)
 
 
 					icon.MouseButton1Click:Connect(function()
-						print(itemData)
 						local infoPopup:Frame? = iconFrame:FindFirstChild("EquippedItemPopUp")
 						if infoPopup then
 							local tween = tweenService:Create(infoPopup, info, {Size = UDim2.fromScale(0, 0.905)})

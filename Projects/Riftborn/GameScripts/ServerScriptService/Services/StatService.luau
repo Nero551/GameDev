@@ -139,6 +139,8 @@ function StatService:AllocateStatPoint(player:Player, statType, amount)
 	local playerInventory = DataService:GetTable(player, "Inventory")
 	local playerEquipped = DataService:GetTable(player, "Equipped")
 	
+	print(playerLevel.StatPoints, playerStats[statType])
+	
 	if 	playerLevel.StatPoints <= 0 or playerStats[statType].FlatStatPoint  >= 3000  then return end
 	if playerStats[statType].FlatStatPoint + amount > 3000 then
 		amount = 3000 - playerStats[statType].FlatStatPoint

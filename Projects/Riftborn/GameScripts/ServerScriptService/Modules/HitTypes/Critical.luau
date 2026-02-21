@@ -55,6 +55,12 @@ return function(argumentData)
 		["WeaponUsed"] = weaponUsed.Name,
 	})
 	
+--[[	replicatedStorage.Remotes.ClientEffects:FireAllClients("CriticalHit" , {
+		["Target"] = targetHit ,
+		["WeaponUsed"] = weaponUsed.Name,
+	})
+]]
+	
 	if abilityData then
 		
 		AbilityDamage = formulaApplier:AbilityDamage({

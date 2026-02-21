@@ -34,7 +34,7 @@ return function()
 	stepConnection = runService.RenderStepped:Connect(function(deltaTime: number)
 
 		------Death Handler------
-		if statusFolder:FindFirstChild("Dead") then
+		if stateService.checkState(character, "Dead") then
 			if stepConnection then
 				stepConnection:Disconnect()
 				stepConnection = nil
