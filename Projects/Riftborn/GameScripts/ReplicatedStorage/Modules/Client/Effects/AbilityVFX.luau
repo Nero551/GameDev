@@ -6,14 +6,18 @@ local replicatedStorage = game:GetService("ReplicatedStorage")
 local assets = replicatedStorage:WaitForChild("Assets")
 
 return function(arguementData:any)
-	local VFX:Attachment? = arguementData.VFX
+	local VFX = arguementData.VFX
 	local hitboxName = arguementData.HitBoxName
 	local hitbox = workspace.World.Hitboxes:FindFirstChild(hitboxName)
 	
-	if VFX then
+	if VFX and hitbox then
 		local clone =  VFX:Clone()
 		clone.Parent = workspace.World.Effects
 		clone.CFrame = hitbox.CFrame
+		
+		clone.Anchored = true
+		clone.CanCollide = false
+		clone.Massless = true
 		
 		for _,particle:ParticleEmitter? in clone:GetDescendants() do
 			if particle:IsA("ParticleEmitter") then

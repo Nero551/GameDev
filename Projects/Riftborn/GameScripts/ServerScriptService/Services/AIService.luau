@@ -582,7 +582,7 @@ function AIService:Dash()
 	local distance = (self.Root.Position - targetPos).Magnitude
 	if self:CanDash() then
 		self.Humanoid:MoveTo(targetPos)
-		MovementService:Dash(nil, "Forward", false, self.Target.Parent, self.NPC)
+		MovementService:Dash(nil, (self.Root.CFrame.LookVector), false, self.Target.Parent, self.NPC)
 	end	
 end
 

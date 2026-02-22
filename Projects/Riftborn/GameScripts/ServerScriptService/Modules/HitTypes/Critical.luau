@@ -25,7 +25,8 @@ return function(argumentData)
 	local comboStringNumber = argumentData.ComboStringNumber
 	local lastHit = argumentData.LastHit
 	local playerCriticalDamageStat = argumentData.PlayerCriticalDamageStat
-		
+	local abilityLetter = argumentData.AbilityLetter
+
 	local targetHumanoid:Humanoid = targetHit:WaitForChild("Humanoid")
 	local animator = targetHumanoid:FindFirstChild("Animator")
 	
@@ -74,6 +75,11 @@ return function(argumentData)
 		CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 			["HealthChange"] = -AbilityDamage
 			
+		})
+		
+		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
+			["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Abilities.Hit."..tostring(abilityLetter) ,
+			["Parent"] = targetHRP
 		})
 		
 		animationsModule:GetAnimation(

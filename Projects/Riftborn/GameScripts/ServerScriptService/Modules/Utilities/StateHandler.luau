@@ -18,7 +18,7 @@ local statePriority = {
 	{Name = "Frozen", WS = 0, JP = 0},
 	
 	-- Combat-related movement limitations
-	{Name = "Casting", WS = 10, JP = 0},
+	{Name = "Casting", WS = 0, JP = 0},
 	{Name = "Attacking", WS = 10, JP = 0},
 	{Name = "Blocking", WS = 7, JP = 0},
 	{Name = "NoSprint", WS = 10, JP = 0},   

@@ -18,7 +18,12 @@ function HitApplier:ApplyHit(argumentData)
 	local abilityData = argumentData.AbilityData
 	local npcDamage = argumentData.NPCDamage
 	local trueSwingNumber = argumentData.TrueSwingNumber
+	local abilityLetter = argumentData.AbilityLetter
 	
+	local abilityBlockDetoriation
+	if abilityData then
+		abilityBlockDetoriation = abilityData.BlockDetoriation
+	end
 	
 	local playerDamageStat
 	local playerCriticalDamageStat
@@ -54,12 +59,13 @@ function HitApplier:ApplyHit(argumentData)
 
 		else
 			---Do Blocked HitType----
-			CharacterVitalsService:ModifyVital(targetHit, "Combat", "ModifyBlockCounter", {["BlockCounterChange"] = 1})			
+			CharacterVitalsService:ModifyVital(targetHit, "Combat", "ModifyBlockCounter", {["BlockCounterChange"] = 1 or abilityBlockDetoriation})			
 			
 			hitTypes["Blocked"]({
 				["Attacker"] = character,
 				["TargetHit"] = targetHit,
 				["AbilityData"] = abilityData,
+				["AbilityLetter"] = abilityLetter,
 				["WeaponUsed"] = tool,
 				["TargetDefenseStat"] = targetDefenseStat,
 				["PlayerDamageStat"] = playerDamageStat,
@@ -84,6 +90,7 @@ function HitApplier:ApplyHit(argumentData)
 					["PlayerCriticalDamageStat"] = playerCriticalDamageStat,
 					["Player"] = player,
 					["AbilityData"] = abilityData,
+					["AbilityLetter"] = abilityLetter,
 					["NPCDamage"] = npcDamage, 
 					
 				})
@@ -100,6 +107,7 @@ function HitApplier:ApplyHit(argumentData)
 					["PlayerCriticalDamageStat"] = playerCriticalDamageStat,
 					["Player"] = player,
 					["AbilityData"] = abilityData,
+					["AbilityLetter"] = abilityLetter,
 					["NPCDamage"] = npcDamage,
 				})
 			end
@@ -118,6 +126,7 @@ function HitApplier:ApplyHit(argumentData)
 					["TargetDefenseStat"] = targetDefenseStat,
 					["Player"] = player,
 					["AbilityData"] = abilityData,
+					["AbilityLetter"] = abilityLetter,
 					["NPCDamage"] = npcDamage,
 					["StatusAilments"] = weaponData.StatusAilments.Effects
 				})
@@ -134,12 +143,13 @@ function HitApplier:ApplyHit(argumentData)
 					["TargetDefenseStat"] = targetDefenseStat,
 					["Player"] = player,
 					["AbilityData"] = abilityData,
+					["AbilityLetter"] = abilityLetter,
 					["NPCDamage"] = npcDamage,
 					["StatusAilments"] = abilityData.StatusAilments.Effects
 				})
 				
 			else
-				-----Defualt HitType---		
+				-----Defualt HitType---
 				hitTypes["Default"]({
 					["Attacker"] = character,
 					["TargetHit"] = targetHit,
@@ -150,6 +160,7 @@ function HitApplier:ApplyHit(argumentData)
 					["TargetDefenseStat"] = targetDefenseStat,
 					["Player"] = player,
 					["AbilityData"] = abilityData,
+					["AbilityLetter"] = abilityLetter,
 					["NPCDamage"] = npcDamage,
 				})
 			end

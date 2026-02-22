@@ -53,38 +53,30 @@ return function()
 	end
 
 
-	UIS.InputBegan:Connect(function(input, gp)
-		if gp then return end
-		if input.KeyCode == Enum.KeyCode.LeftAlt then
-			setShiftLock(not shiftLocked)
-		end
-	end)
-
-
 	RunService.RenderStepped:Connect(function(dt)
-
+		if StateService.checkState(character, "Dead") then
+			setShiftLock(false)
+			return
+		end
 		
-		if StateService.checkState(character, "Dead") and shiftLocked then
-			resetShiftLock()
-			return
-		end
-
-		if not shiftLocked then
-			return
-		end
-
 		-- Shiftlock active behavior
-		crosshair.Visible = true
-		UIS.MouseIconEnabled = false
-		if UIS.MouseBehavior ~= Enum.MouseBehavior.LockCenter then
-			UIS.MouseBehavior = Enum.MouseBehavior.LockCenter
-		end
+		if character:FindFirstChildWhichIsA("Tool") then
+			setShiftLock(true)
 
-		local camLook = camera.CFrame.LookVector
-		local flatLook = Vector3.new(camLook.X, 0, camLook.Z)
-		if flatLook.Magnitude > 0 then
-			local target = CFrame.lookAt(root.Position, root.Position + flatLook)
-			root.CFrame = root.CFrame:Lerp(target, dt * 12)
+			crosshair.Visible = true
+			UIS.MouseIconEnabled = false
+			UIS.MouseBehavior = Enum.MouseBehavior.LockCenter
+
+			local camLook = camera.CFrame.LookVector
+			local flatLook = Vector3.new(camLook.X, 0, camLook.Z)
+			if flatLook.Magnitude > 0 then
+				local target = CFrame.lookAt(root.Position, root.Position + flatLook)
+				root.CFrame = root.CFrame:Lerp(target, dt * 12)
+			end
+			
+			---Disable---
+		else
+			setShiftLock(false)
 		end
 	end)
 

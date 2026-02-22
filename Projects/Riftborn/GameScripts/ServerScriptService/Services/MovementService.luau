@@ -36,7 +36,7 @@ function MovementService:Sprint(character)
 	end 
 end
 
-function MovementService:Dash(player:Player, direction , IsShiftLockOff, npcTarget, npc)
+function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff, npcTarget, npc)
 	local character = npc
 	if not npc then
 		character = player.Character or player.CharacterAdded:Wait()
@@ -47,13 +47,7 @@ function MovementService:Dash(player:Player, direction , IsShiftLockOff, npcTarg
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 	local statusFolder = character:WaitForChild("Status")
 	
-	
-	
-	if  npcTarget then
-		direction = "Forward"
-	end
-	
-	if IsShiftLockOff then
+	if IsShiftLockOff or npcTarget then
 		local dashAnim:AnimationTrack? = animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Dashes.Forward")
 		
 		local dashing = stateService.addState(character, "Dashing", dashAnim.Length)
@@ -69,6 +63,30 @@ function MovementService:Dash(player:Player, direction , IsShiftLockOff, npcTarg
 			}
 		)
 	else
+		local rightDot = direction:Dot(character.HumanoidRootPart.CFrame.RightVector)
+		local forwardDot = direction:Dot(character.HumanoidRootPart.CFrame.LookVector)
+
+		local angle = math.atan2(rightDot, forwardDot)
+		angle = math.deg(angle)
+
+		if angle > -22.5 and angle <= 22.5 then
+			direction = "Forward"
+		elseif angle > 22.5 and angle <= 67.5 then
+			direction = "Forward-Right"
+		elseif angle > 67.5 and angle <= 112.5 then
+			direction = "Right"
+		elseif angle > 112.5 and angle <= 157.5 then
+			direction = "Back-Right"
+		elseif angle > 157.5 or angle <= -157.5 then
+			direction = "Back"
+		elseif angle > -157.5 and angle <= -112.5 then
+			direction = "Back-Left"
+		elseif angle > -112.5 and angle <= -67.5 then
+			direction = "Left"
+		elseif angle > -67.5 and angle <= -22.5 then
+			direction = "Forward-Left"
+		end
+		
 		local dashAnim:AnimationTrack? = animsModule:GetAnimation(humanoid.Animator,"Shared.Animations.Dashes."..direction)
 				
 		local dashing = stateService.addState(character, "Dashing", dashAnim.Length)
@@ -128,7 +146,7 @@ function MovementService:Dash(player:Player, direction , IsShiftLockOff, npcTarg
 		end)	
 	else
 		---If Player Then Let Client Handle Movement---
-		repstor.Remotes.Dash:FireClient(player, direction)
+		repstor.Remotes.Dash:FireClient(player, direction, IsShiftLockOff)
 	end
 end
 

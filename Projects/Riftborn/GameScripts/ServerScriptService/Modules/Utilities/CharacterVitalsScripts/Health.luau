@@ -34,8 +34,12 @@ function Health:Apply(character)
 	local healthData = CharacterVitalsService:GetVital(character, "Health")
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 	
-	humanoid.MaxHealth = healthData.MaxHealth
+	if healthData.CurrentHealth == 0  then
+		healthData.HealthRegen = 0
+	end
+	
 	humanoid.Health = healthData.CurrentHealth
+	humanoid.MaxHealth = healthData.MaxHealth
 	
 end
 

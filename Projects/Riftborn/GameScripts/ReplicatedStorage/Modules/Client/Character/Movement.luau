@@ -42,22 +42,8 @@ return function()
 	end)
 
 	local function getDashDirection()
-		local keysPressed = UserInputService:GetKeysPressed()
-		local dashDirection =  nil
-		for _, input:InputObject in keysPressed do
-			if input.KeyCode == Enum.KeyCode.W then
-				return  "Forward"
-			end
-			if input.KeyCode == Enum.KeyCode.A then
-				return "Left"
-			end
-			if input.KeyCode == Enum.KeyCode.S then
-				return "Back"
-			end
-			if input.KeyCode == Enum.KeyCode.D then
-				return "Right"
-			end
-		end
+		local dashDirection = humanoid.MoveDirection
+		return dashDirection.Unit
 	end
 
 	UserInputService.InputBegan:Connect(function(input)
@@ -107,7 +93,7 @@ return function()
 
 	---Dash Movement---
 	local dashConnection
-	remotes.Dash.OnClientEvent:Connect(function(direction)
+	remotes.Dash.OnClientEvent:Connect(function(direction, IsShiftLockOff)
 		---Dash Movement---	
 		local maxDashDistance = DashConfig.MaxDashDistance
 		local root:Part? = character:FindFirstChild("HumanoidRootPart")
@@ -128,21 +114,41 @@ return function()
 				return
 			end
 			local directionVector:Vector3
+			
+			if not IsShiftLockOff then
+				
+				local camRight = Vector3.new(character:GetAttribute("CamVectors_CamRight").X, 0, character:GetAttribute("CamVectors_CamRight").Z)
+				local camLook = Vector3.new(character:GetAttribute("CamVectors_CamLook").X, 0, character:GetAttribute("CamVectors_CamLook").Z)
+				
+				if direction == "Right" then
+					directionVector = camRight
+				elseif direction == "Left" then
+					directionVector = -camRight
 
-			if direction == "Right" then
-				directionVector = character:GetAttribute("CamVectors_CamRight")
-			elseif direction == "Left" then
-				directionVector = -character:GetAttribute("CamVectors_CamRight")
+				elseif direction == "Back" then
+					directionVector = -camLook	
 
-			elseif direction == "Back" then
-				directionVector = -character:GetAttribute("CamVectors_CamLook")
+				elseif direction == "Forward" then
+					directionVector = camLook
 
-			elseif direction == "Forward" then
-				directionVector = character:GetAttribute("CamVectors_CamLook")
+				elseif direction == "Forward-Right" then
+					directionVector = camLook + camRight
 
+				elseif direction == "Forward-Left" then
+					directionVector = camLook - camRight
+
+				elseif direction == "Back-Right" then
+					directionVector = -camLook + camRight
+
+				elseif direction == "Back-Left" then
+					directionVector = -camLook - camRight
+				end
+				directionVector = Vector3.new(directionVector.X, 0, directionVector.Z).Unit
+			else
+				directionVector = Vector3.new(character.HumanoidRootPart.CFrame.LookVector.X, 0, character.HumanoidRootPart.CFrame.LookVector.Z).Unit			
 			end
-
-			local rayResult = workspace:Raycast(root.Position, directionVector * maxDashDistance * dt * 2, rayParams)
+			
+			local rayResult = workspace:Raycast(root.Position, directionVector * maxDashDistance * dt, rayParams)
 			if rayResult then
 				stateService.removeState(character, "Dashing")
 			end

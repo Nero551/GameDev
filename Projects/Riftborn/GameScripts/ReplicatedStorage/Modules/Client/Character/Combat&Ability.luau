@@ -16,15 +16,17 @@ return function()
 
 
 	local proc = false
-
+	
 
 	local abilityKeys = {Z = "AbilityZ", X = "AbilityX", C = "AbilityC", V = "AbilityV", B = "AbilityB"}
+
+
 	UserInputService.InputBegan:Connect(function(input,processed)
 		proc = processed
 		if processed then return end
 
 		---Abilties---
-		if abilityKeys[input.KeyCode.Name] then		
+		if abilityKeys[input.KeyCode.Name] then				
 			remotes.Ability:FireServer(player:GetMouse().Hit.Position, input.KeyCode.Name)
 		end	
 	end)

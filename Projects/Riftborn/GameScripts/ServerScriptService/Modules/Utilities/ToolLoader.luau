@@ -41,10 +41,7 @@ return function(tool:Tool?)
 			weld.Part0 = character:FindFirstChild("Right Arm")
 		end
 		
-		equipedModel.Changed:Connect(function()
-			
-			print(debug.traceback())
-			
+		equipedModel.Changed:Connect(function()			
 			equipedModel:FindFirstChild(tool.Name)
 		end)
 		
@@ -105,8 +102,6 @@ return function(tool:Tool?)
 		unEquippedModel:SetAttribute("WeaponModel", true)
 		unEquippedModel:SetAttribute("WeaponName", tool.Name)
 		
-	else
-		print("No Weapon Model For "..tool.Name)
 	end
 	tool:SetAttribute("ToolLoaded", true)
 end

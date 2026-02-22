@@ -23,7 +23,7 @@ runService.Heartbeat:Connect(function(dt)
 				Connections:RemoveConnection(character, "Character", "StateHandler")
 				return
 			end
-			StateHandler:HandleStates(character)
+			StateHandler:HandleStates(character)		
 		end
 	end
 end)

@@ -13,7 +13,7 @@ local MobData = {}
 MobData.Mobs = {
 	["Zombie"] = {
 		Type = "Enemy",
-		Tool = GetTool("Fist"),
+		Tool = GetTool("Cid Sword"),
 		Level = 1200,
 		Wander = true,
 		WanderRadius = 50,
@@ -35,11 +35,7 @@ MobData.Mobs = {
 			}
 		}
 	}
-	,
-	
-	
-	
-	
+	,	
 }
 
 

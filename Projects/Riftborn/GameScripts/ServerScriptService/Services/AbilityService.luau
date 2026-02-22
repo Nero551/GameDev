@@ -28,11 +28,8 @@ for _,module  in script.Parent.Parent.Modules.HitTypes:GetChildren() do
 	end
 end
 
-local ability = {
-	
-}
 
-function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, letter, npcDamage)
+function AbilityService.AbilityUse(player:Player ,character, tool:Tool, mouse, input, letter, npcDamage)
 	
 	if not tool then return end
 	
@@ -80,7 +77,6 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, l
 	if not animation then warn("Animation Not Found") print(animsModule.loadedAnimations) return end
 	animation:Play()
 	
-	
 	---Ability States---
 	stateService.addState(character,"Ability"..abilityletter.." Cooldown", cooldownTime)
 	stateService.addState(character, "Invulnerable", animation.Length)
@@ -114,7 +110,7 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, l
 		
 		---Sound---
 		remotes.ClientEffects:FireAllClients("AbilitySound", {
-			["SoundName"] = "Weapons."..tool.Name..".Sounds.Abilities."..abilityletter,	
+			["SoundName"] = "Weapons."..tool.Name..".Sounds.Abilities.Activate."..abilityletter,	
 			["HitBoxName"] = hitboxClone.Name,
 		})
 
@@ -132,22 +128,23 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, l
 
 					if stateService.checkState(targetHit, "Invulnerable") then continue end
 
-
 					local targetHumanoid:Humanoid = targetHit:FindFirstChild("Humanoid")
 					if targetHumanoid and not hit[targetHumanoid] then
 						hit[targetHumanoid] = true
-
-						HitApplier:ApplyHit({
-							["Player"] = player,
-							["WeaponData"] = weaponData,
-							["TargetHit"] = targetHit,
-							["Tool"] = tool,
-							["NPCDamage"] = npcDamage,
-							["HitTypes"] = AbilityService.hitTypes,
-							["Character"] = character,
-							["AbilityData"] = abilityData
-						})
-
+						for Hit = 0, abilityData.Hits, 1 do
+							HitApplier:ApplyHit({
+								["Player"] = player,
+								["WeaponData"] = weaponData,
+								["TargetHit"] = targetHit,
+								["Tool"] = tool,
+								["NPCDamage"] = npcDamage,
+								["HitTypes"] = AbilityService.hitTypes,
+								["Character"] = character,
+								["AbilityData"] = abilityData,
+								["AbilityLetter"] = abilityletter,
+							})
+							task.wait(abilityData.TimeBtwnHits)
+						end
 					end
 				end
 			end
@@ -157,4 +154,4 @@ function ability.AbilityUse(player:Player ,character, tool:Tool, mouse, input, l
 	end)	
 end
 
-return ability
+return AbilityService

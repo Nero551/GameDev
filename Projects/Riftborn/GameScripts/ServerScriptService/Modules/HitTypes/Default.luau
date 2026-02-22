@@ -25,6 +25,7 @@ return function(argumentData)
 	local npcDamage = argumentData.NPCDamage
 	local comboStringNumber = argumentData.ComboStringNumber
 	local lastHit = argumentData.LastHit
+	local abilityLetter = argumentData.AbilityLetter
 		
 	local targetHumanoid:Humanoid = targetHit:WaitForChild("Humanoid")
 	local animator = targetHumanoid:FindFirstChild("Animator")
@@ -56,7 +57,8 @@ return function(argumentData)
 		["WeaponUsed"] = weaponUsed.Name,
 	})
 	
-	if abilityData then		
+	if abilityData then	
+		
 		AbilityDamage = formulaApplier:AbilityDamage({
 			["AbilityData"] = abilityData,
 			["TargetDefenseStat"] = targetDefenseStat,
@@ -64,6 +66,11 @@ return function(argumentData)
 			["NPCDamage"] = npcDamage,	
 		})
 		
+		
+		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
+			["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Abilities.Hit."..tostring(abilityLetter) ,
+			["Parent"] = targetHRP
+		})
 		
 		CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 			["HealthChange"] = -AbilityDamage
