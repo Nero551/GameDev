@@ -106,6 +106,7 @@ function AbilityService.AbilityUse(player:Player ,character, tool:Tool, mouse, i
 		remotes.ClientEffects:FireAllClients("AbilityVFX", {
 			["VFX"] = assets.Weapons[tool.Name].Effects.Abilities[abilityletter],
 			["HitBoxName"] = hitboxClone.Name,
+			["Caster"] = character
 		})
 		
 		---Sound---

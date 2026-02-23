@@ -9,16 +9,21 @@ local RegenService = require(script.Parent.Parent.Services.RegenService)
 local AbilityService = require(script.Parent.Parent.Services.AbilityService)
 local CharacterVitalsSerice = require(script.Parent.Parent.Services.CharacterVitalsService)
 
+local ClockService = require(script.Parent.Parent.Services["ClockService(WIP)"])
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
----Regen Stuff---
+---Regen Stuff and clock---
 runService.Heartbeat:Connect(function(dt)
 	RegenService:ManaRegen(dt)
 	RegenService:HealthRegen(dt)
 	RegenService:FlashStepRegen(dt)
 	RegenService:BlockCounterRegen(dt)
+	ClockService:MoveTime(dt)
 end)
+
+
+----------------------------------------------------------------------------------------------------------------------------------
 
 
 ----------------------------------------------------------------------------------------------------------------------------------
