@@ -57,7 +57,7 @@ return function(abilityUI)
 			local onCooldown = stateService.checkState(char, cdStateName)
 			if onCooldown and data.cdActive and data.cdEndTime then
 				local remaining = math.max(0, data.cdEndTime - time())
-				data.cdText.Text = string.format("%.1f", remaining)	
+				data.cdText.Text = string.format("%.1f", remaining)
 			end
 
 			if onCooldown and not data.cdActive then
