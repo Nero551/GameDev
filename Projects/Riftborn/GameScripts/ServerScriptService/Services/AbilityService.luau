@@ -81,6 +81,9 @@ function AbilityService.AbilityUse(player:Player ,character, tool:Tool, mouse, i
 	stateService.addState(character,"Ability"..abilityletter.." Cooldown", cooldownTime)
 	stateService.addState(character, "Invulnerable", animation.Length)
 	stateService.addState(character, "Casting", animation.Length)
+	
+	
+	remotes.CameraShake:FireClient(player ,0.25)
 
 	animation:GetMarkerReachedSignal("Hit"):Once(function()
 		local hrp:Part? = character:WaitForChild("HumanoidRootPart")

@@ -51,6 +51,8 @@ return function(argumentData)
 	killerHit.Name = "KillerHit"	
 	debris:AddItem(killerHit, 30)
 	
+	
+	
 	replicatedStorage.Remotes.ClientEffects:FireAllClients("DefaultHit" , {
 		["Target"] = targetHit ,
 		["WeaponUsed"] = weaponUsed.Name,
@@ -139,6 +141,9 @@ return function(argumentData)
 	end	
 
 	if player then
+		
+		replicatedStorage.Remotes.Hitstop:FireClient(player ,0.06)
+		
 		if AbilityDamage then
 			replicatedStorage.Remotes.ShowDamage:FireClient(player ,AbilityDamage, true, false)
 		else

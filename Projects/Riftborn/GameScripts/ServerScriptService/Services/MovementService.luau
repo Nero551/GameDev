@@ -86,7 +86,7 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 		elseif angle > -67.5 and angle <= -22.5 then
 			direction = "Forward-Left"
 		end
-		
+				
 		local dashAnim:AnimationTrack? = animsModule:GetAnimation(humanoid.Animator,"Shared.Animations.Dashes."..direction)
 				
 		local dashing = stateService.addState(character, "Dashing", dashAnim.Length)

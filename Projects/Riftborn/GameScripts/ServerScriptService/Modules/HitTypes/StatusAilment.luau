@@ -151,6 +151,9 @@ return function(argumentData)
 
 	
 	if player then
+		
+		replicatedStorage.Remotes.Hitstop:FireClient(player ,0.03)
+		
 		if AbilityDamage then
 			replicatedStorage.Remotes.ShowDamage:FireClient(player ,AbilityDamage, false,false, false, ailmentName, ailmentData)
 		else

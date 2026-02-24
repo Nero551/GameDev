@@ -15,15 +15,16 @@ WeaponData.Weapons = {
 			ProcChance = 0.1,
 			Effects = {
 				"Bleed",
+				"Burn",
+				"Poison",
 			},
 		},
 		Damage = 5,
-		ComboCooldown = 2,
-		ComboResetTime = 2,
-		CriticalRate = 0.25,
+		ComboCooldown = 0.5,
+		ComboResetTime = 0.5,
+		CriticalRate = 0.1,
 		CriticalDamage = 1,
 		Stackable = false,
-		MaxStack = 1,	
 	}
 	,
 	------CidSword------
@@ -39,7 +40,6 @@ WeaponData.Weapons = {
 		CriticalRate = 0.25,
 		CriticalDamage = 1,
 		Stackable = false,
-		MaxStack = 1,	
 	}
 	,
 	------Sword------
@@ -55,7 +55,6 @@ WeaponData.Weapons = {
 		CriticalRate = 0.25,
 		CriticalDamage = 1,
 		Stackable = false,
-		MaxStack = 1,	
 	}
 	,
 	------Dagger------
@@ -71,7 +70,6 @@ WeaponData.Weapons = {
 		CriticalRate = 0.25,
 		CriticalDamage = 1,
 		Stackable = false,
-		MaxStack = 1,	
 	}
 	,
 	

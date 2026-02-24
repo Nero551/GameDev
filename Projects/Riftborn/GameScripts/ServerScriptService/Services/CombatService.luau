@@ -167,7 +167,10 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 
 						if stateService.checkState(targetHit, "Invulnerable") then continue end
 						
-						
+						if player then
+							remotes.CameraShake:FireClient(player, 0.1)
+						end
+
 						HitApplier:ApplyHit({
 							["Player"] = player,
 							["WeaponData"] = weaponData,

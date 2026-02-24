@@ -1,6 +1,8 @@
 local players = game:GetService("Players")
 local repstor = game:GetService("ReplicatedStorage")
 local runService = game:GetService("RunService")
+local LocalizationService = game:GetService("LocalizationService")
+local TextChatService = game:GetService("TextChatService")
 
 local remotes = repstor.Remotes
 local InventoryService = require(script.Parent.Parent.Services.InventoryService)
@@ -12,6 +14,25 @@ local DialogueService = require(script.Parent.Parent.Services.DialogueService)
 local BuffService = require(script.Parent.Parent.Services.BuffService)
 
 local QuestData = require(repstor.Modules.Data.QuestData)
+
+local ServerData = require(script.Parent.Parent.Modules.ServerData)
+
+
+players.PlayerAdded:Connect(function(player)
+	ServerData.MaxPlayers = players.maxPlayers
+	ServerData.Players = players:GetPlayers()
+	ServerData.Version = game.PlaceVersion
+	local success, country = pcall(function()
+		return LocalizationService:GetCountryRegionForPlayerAsync(player)
+	end)
+	if success then
+		ServerData.Region = country
+	end
+end)
+
+players.playerRemoving:Connect(function(player)
+	ServerData.Players = players:GetPlayers()
+end)
 
 ---Client Requests To Add An Item---
 remotes.RequestAddItem.OnServerEvent:Connect(function(player:Player, itemID:string, amount:number)

@@ -2,13 +2,13 @@ local lighting = game:GetService("Lighting")
 local runService = game:GetService("RunService")
 local serverData = require(script.Parent.Parent.Modules.ServerData)
 
-local ClockService = {}
+local TimeService = {}
 
 local DayLength = 24
 
-local secondsPerDay = DayLength * 60
+local secondsPerDay = DayLength * 60  
 
-function ClockService:MoveTime(dt)
+function TimeService:TimeCycle(dt)
 	serverData.Time = serverData.Time + dt
 	if serverData.Time >= secondsPerDay then
 		serverData.Time = 0
@@ -24,4 +24,4 @@ function ClockService:MoveTime(dt)
 end
 
 
-return ClockService
+return TimeService

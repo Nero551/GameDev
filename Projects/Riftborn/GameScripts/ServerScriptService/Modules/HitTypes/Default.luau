@@ -57,6 +57,7 @@ return function(argumentData)
 		["WeaponUsed"] = weaponUsed.Name,
 	})
 	
+
 	if abilityData then	
 		
 		AbilityDamage = formulaApplier:AbilityDamage({
@@ -126,6 +127,9 @@ return function(argumentData)
 	end	
 	
 	if player then
+		
+		replicatedStorage.Remotes.Hitstop:FireClient(player ,0.03)
+		
 		if AbilityDamage then
 			replicatedStorage.Remotes.ShowDamage:FireClient(player ,AbilityDamage, false, false)
 		else
