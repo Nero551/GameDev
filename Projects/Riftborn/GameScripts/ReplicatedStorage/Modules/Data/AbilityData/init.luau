@@ -13,6 +13,10 @@ end
 function abilityData.getAbilityData(weapon, abilityLetter)
 	
 	if abilityData.storedData[weapon] then
+		if not abilityLetter then
+			return abilityData.storedData[weapon]
+		end
+		
 		if abilityData.storedData[weapon][abilityLetter] then
 			return abilityData.storedData[weapon][abilityLetter]
 		end

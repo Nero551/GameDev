@@ -1,7 +1,7 @@
 local Combat = {}
 
 function Combat:ModifySwingNumber(character:Model?, argumentData)
-	local CharacterVitalsService = require(script.Parent.Parent.Parent.Parent.Services.CharacterVitalsService)
+	local CharacterVitalsService = require(script.Parent)
 	local swingNumberChange = argumentData.SwingNumberChange
 	if swingNumberChange == 0 then
 		CharacterVitalsService.CharacterVitals[character].SwingNumber = swingNumberChange
@@ -13,7 +13,7 @@ end
 
 
 function Combat:ModifyLastCombo(character:Model?, argumentData)
-	local CharacterVitalsService = require(script.Parent.Parent.Parent.Parent.Services.CharacterVitalsService)
+	local CharacterVitalsService = require(script.Parent)
 	local lastComboChange = argumentData.LastComboChange
 	
 	CharacterVitalsService.CharacterVitals[character].LastCombo = lastComboChange
@@ -21,7 +21,7 @@ function Combat:ModifyLastCombo(character:Model?, argumentData)
 end
 
 function Combat:ModifyLastSwing(character:Model?, argumentData)
-	local CharacterVitalsService = require(script.Parent.Parent.Parent.Parent.Services.CharacterVitalsService)
+	local CharacterVitalsService = require(script.Parent)
 	local lastSwingChange = argumentData.LastSwingChange
 
 	CharacterVitalsService.CharacterVitals[character].LastSwing = lastSwingChange
@@ -29,7 +29,7 @@ function Combat:ModifyLastSwing(character:Model?, argumentData)
 end
 
 function Combat:ModifyBlockCounter(character, argumentData)
-	local CharacterVitalsService = require(script.Parent.Parent.Parent.Parent.Services.CharacterVitalsService)
+	local CharacterVitalsService = require(script.Parent)
 	local vitals = CharacterVitalsService.CharacterVitals[character]
 	if not vitals then return end
 

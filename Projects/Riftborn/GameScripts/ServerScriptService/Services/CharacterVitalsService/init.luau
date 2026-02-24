@@ -8,9 +8,7 @@ local CharacterVitalsService = {}
 CharacterVitalsService.CharacterVitals = {}
 CharacterVitalsService.cachedModules = {}
 
-local characterVitalsScripts = script.Parent.Parent.Modules.Utilities.CharacterVitalsScripts
-
-for _,module in ipairs(characterVitalsScripts:GetChildren()) do
+for _,module in ipairs(script:GetChildren()) do
 	if module:IsA("ModuleScript") then
 		CharacterVitalsService.cachedModules[module.Name] = require(module)
 	end

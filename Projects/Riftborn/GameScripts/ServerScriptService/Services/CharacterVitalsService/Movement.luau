@@ -1,7 +1,7 @@
 local Movement = {}
 
 function Movement:ModifyFlashStep(character:Model?, argumentData)
-	local CharacterVitalsService = require(script.Parent.Parent.Parent.Parent.Services.CharacterVitalsService)
+	local CharacterVitalsService = require(script.Parent)
 	local flashStepData = CharacterVitalsService.CharacterVitals[character].FlashStep
 	local FlashStepChange = argumentData.FlashStepChange
 		
@@ -10,7 +10,7 @@ end
 
 
 function Movement:ModifyWalkSpeed(character:Model?, argumentData)
-	local CharacterVitalsService = require(script.Parent.Parent.Parent.Parent.Services.CharacterVitalsService)
+	local CharacterVitalsService = require(script.Parent)
 	local characterVitals = CharacterVitalsService.CharacterVitals[character]
 	local change = argumentData.WalkSpeed
 
@@ -19,7 +19,7 @@ function Movement:ModifyWalkSpeed(character:Model?, argumentData)
 end
 
 function Movement:ModifyJumpPower(character:Model?, argumentData)
-	local CharacterVitalsService = require(script.Parent.Parent.Parent.Parent.Services.CharacterVitalsService)
+	local CharacterVitalsService = require(script.Parent)
 	local characterVitals = CharacterVitalsService.CharacterVitals[character]
 	local change = argumentData.JumpPower
 	
@@ -28,7 +28,7 @@ function Movement:ModifyJumpPower(character:Model?, argumentData)
 end
 
 function Movement:Apply(character:Model?)
-	local CharacterVitalsService = require(script.Parent.Parent.Parent.Parent.Services.CharacterVitalsService)
+	local CharacterVitalsService = require(script.Parent)
 	local characterVitals = CharacterVitalsService.CharacterVitals[character]
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 	

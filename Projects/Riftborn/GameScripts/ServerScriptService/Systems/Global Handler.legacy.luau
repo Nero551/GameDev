@@ -26,6 +26,11 @@ runService.Heartbeat:Connect(function(dt)
 			StateHandler:HandleStates(character)		
 		end
 	end
+	
+	for npc,AIData in AIService.ActiveAIs do
+		AIService:EnemyBrain(npc)
+	end
+	
 end)
 
 local playerInfo = require(script.Parent.Parent.Modules.Utilities.PlayerInfo)
