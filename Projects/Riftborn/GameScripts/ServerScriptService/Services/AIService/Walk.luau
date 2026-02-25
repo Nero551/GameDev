@@ -23,13 +23,32 @@ return function(npc)
 		AgentCanJump = false,
 	})
 
-	if not AIData.Moving then
+	local needsRepath
+	needsRepath = needsRepath or os.clock()
+
+	if not AIData.Moving  then
 		AIData.Moving = true
 
 		path:ComputeAsync(AIData.Root.Position, AIData.Target.Position)
-		local originialTargetPos = AIData.Target.Position
+
+		if path.Status ~= Enum.PathStatus.Success then
+			AIData.Moving = false
+			print("Path Failed")
+			return
+		end
+
+		local originalTargetPos
+		if AIData.Target then
+			originalTargetPos = AIData.Target.Position
+
+		end
 
 		for _,waypoint:PathWaypoint in ipairs(path:GetWaypoints()) do
+
+			if waypoint.Action == Enum.PathWaypointAction.Jump then
+				humanoid.Jump = true
+			end
+
 			if (waypoint.Position - AIData.Root.Position).Magnitude > 5 then
 
 				if not AIData.Target then break end
@@ -43,16 +62,19 @@ return function(npc)
 				part.Parent = workspace.World.PathFinding
 				game.Debris:AddItem(part, 5)
 
-				humanoid:MoveTo(waypoint.Position)
 
-
-				if (originialTargetPos - AIData.Target.Position).Magnitude > 10 then
+				if (originalTargetPos - AIData.Target.Position).Magnitude > 10 or os.clock() - needsRepath > 1 then
 					break
-				else
-					humanoid.MoveToFinished:Wait()
+				end
+
+				humanoid:MoveTo(waypoint.Position)
+				local reached = humanoid.MoveToFinished:Wait(2)
+				if not reached then
+					break
 				end
 			end
 		end
+		needsRepath = 0
 		AIData.Moving = false
 	end
 end

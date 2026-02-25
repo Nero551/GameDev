@@ -16,7 +16,6 @@ AbilityData.Z = {
 	Mana = 100,
 	AbilityName = "Dimensional Cut",
 	AbilityMastery = 0,
-	AbilityRange = 10,
 }
 
 AbilityData.X = {
@@ -35,7 +34,6 @@ AbilityData.X = {
 	Mana = 200,
 	AbilityName = "Dimensional Slash",
 	AbilityMastery = 50,
-	AbilityRange = 10,
 }
 
 AbilityData.C = {
@@ -46,7 +44,7 @@ AbilityData.C = {
 	Damage = 10,
 	Hits = 3,
 	TimeBtwnHits = 0.2,
-	AbilityCooldown = 1,
+	AbilityCooldown = 5,
 	HitBoxLookVector = 0,
 	HitBoxSize = Vector3.new(19, 3.75, 19),
 	HitBoxPosition = Vector3.new(0, 0, 0),
@@ -54,7 +52,6 @@ AbilityData.C = {
 	Mana = 10,
 	AbilityName = "Dimensional Spin",
 	AbilityMastery = 100,
-	AbilityRange = 10,
 }
 
 return AbilityData

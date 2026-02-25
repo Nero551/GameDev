@@ -29,7 +29,7 @@ for _,module  in script.Parent.Parent.Modules.HitTypes:GetChildren() do
 end
 
 
-function AbilityService.AbilityUse(player:Player ,character, tool:Tool, mouse, input, letter, npcDamage)
+function AbilityService:UseAbility(player:Player ,character, tool:Tool, mouse, input, letter, npcDamage)
 	
 	if not tool then return end
 	
@@ -53,6 +53,7 @@ function AbilityService.AbilityUse(player:Player ,character, tool:Tool, mouse, i
 	local sounds = assets.Shared.Sounds
 	
 	if player then
+		remotes.CameraShake:FireClient(player ,0.25)
 		playerStats = DataService:GetTable(player,"Stats")
 		local playerMana = CharacterVitalsService:GetVital(character , "Mana")
 		if playerMana.CurrentMana < abilityData.Mana  then
@@ -83,7 +84,6 @@ function AbilityService.AbilityUse(player:Player ,character, tool:Tool, mouse, i
 	stateService.addState(character, "Casting", animation.Length)
 	
 	
-	remotes.CameraShake:FireClient(player ,0.25)
 
 	animation:GetMarkerReachedSignal("Hit"):Once(function()
 		local hrp:Part? = character:WaitForChild("HumanoidRootPart")

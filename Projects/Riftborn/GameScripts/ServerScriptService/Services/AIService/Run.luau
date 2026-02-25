@@ -2,25 +2,18 @@
 
 return function(npc)
 	local PathFindingService = game:GetService("PathfindingService")
+	local StateService = require(game.ReplicatedStorage.Modules.StateService)
 	
 	local AIService = require(script.Parent)
 	local CharacterVitalsService = require(script.Parent.Parent.Parent.Services.CharacterVitalsService)
 	
 	local AIData = AIService.ActiveAIs[npc]
-	if not AIData then 
-		AIData.Moving = false
-		return 
-	end
+	if not AIData then return end
 	local humanoid:Humanoid = npc:WaitForChild("Humanoid")
 
-	if not AIData.Target then
-		AIData.Moving = false
-		return
-	end
+	if not AIData.Target then return end
 	
-	CharacterVitalsService:ModifyVital(npc, "Movement", "ModifyWalkSpeed", {
-		["WalkSpeed"] = AIData.RunSpeed	
-	})
+	StateService.addState(npc, "Sprinting")
 		
 	if AIData.IdleAnimation.IsPlaying then
 		AIData.IdleAnimation:Stop()
@@ -38,12 +31,14 @@ return function(npc)
 		AgentRadius = 2,
 		AgentHeight = 5,
 		AgentCanJump = true,
-		WaypointSpacing = 4,
+		WaypointSpacing = 5,
 	})
 	
-	if not AIData.Moving then
+	local needsRepath
+	needsRepath = needsRepath or os.clock()
+
+	if not AIData.Moving  then
 		AIData.Moving = true
-		local needsRepath = os.clock()
 		
 		path:ComputeAsync(AIData.Root.Position, AIData.Target.Position)
 		
@@ -53,12 +48,16 @@ return function(npc)
 			return
 		end
 		
-		local originialTargetPos = AIData.Target.Position
+		local originalTargetPos
+		if AIData.Target then
+			 originalTargetPos = AIData.Target.Position
+
+		end
 		
 		for _,waypoint:PathWaypoint in ipairs(path:GetWaypoints()) do
 			
 			if waypoint.Action == Enum.PathWaypointAction.Jump then
-				humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+				humanoid.Jump = true
 			end
 			
 			if (waypoint.Position - AIData.Root.Position).Magnitude > 5 then
@@ -75,14 +74,18 @@ return function(npc)
 				game.Debris:AddItem(part, 5)
 				
 
-				if (originialTargetPos - AIData.Target.Position).Magnitude > 10 or os.clock() - needsRepath > 1 then
+				if (originalTargetPos - AIData.Target.Position).Magnitude > 10 or os.clock() - needsRepath > 1 then
 					break
 				end
 				
 				humanoid:MoveTo(waypoint.Position)
-				humanoid.MoveToFinished:Wait()
+				local reached = humanoid.MoveToFinished:Wait(2)
+				if not reached then
+					break
+				end
 			end
 		end
+		needsRepath = 0
 		AIData.Moving = false
 	end
 

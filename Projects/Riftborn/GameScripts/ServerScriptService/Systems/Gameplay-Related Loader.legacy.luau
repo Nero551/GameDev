@@ -81,7 +81,7 @@ end)
 remotes.Ability.OnServerEvent:Connect(function(player:Player, mouse , input)
 	local char = player.Character or player.CharacterAdded:Wait()
 	local tool = char:FindFirstChildWhichIsA("Tool")
-	AbilityService.AbilityUse(player ,char , tool, mouse, input)
+	AbilityService:UseAbility(player ,char , tool, mouse, input)
 end)
 
 

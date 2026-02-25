@@ -43,7 +43,7 @@ end
 
 function ActionVerifier:CanAbility(character, abilityLetter)
 	if StateService.checkState(character, "Stunned", "Attacking", "Dashing",
-		"Flashstep", "Blocking", "Frozen") then
+		"Flashstep", "Blocking", "Frozen","FlashStepEndLag" ,"DashEndLag", "Frozen") then
 		return 
 	end
 	

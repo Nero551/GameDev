@@ -1,25 +1,13 @@
-local PathFindingService = game:GetService("PathfindingService")
-
-local StateService = require(game.ReplicatedStorage.Modules.StateService)
 local StateHandler = require(script.Parent.Parent.Modules.Utilities.StateHandler)
-
-local CombatService = require(script.Parent.Parent.Services.CombatService)
-local AbilityService = require(script.Parent.Parent.Services.AbilityService)
-local MovementService = require(script.Parent.Parent.Services.MovementService)
 local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVitalsService)
-
-local ActionVerifier = require(game.ReplicatedStorage.Modules.ActionVerifier)
-
-local animationsFolder = game.ReplicatedStorage.Assets.Shared.Animations
 local animationsModule = require(game.ReplicatedStorage.Modules.Animations)
-
 local abilityDataModule = require(game.ReplicatedStorage.Modules.Data.AbilityData)
-local StateService = require(game.ReplicatedStorage.Modules.StateService)
+
+local CanDoAction = require(script.CanDoAction)
 
 local AIService = {}
 AIService.ActiveAIs = {}
 local ActionModules = {}
-local CanDoAction = require(script.CanDoAction)
 
 for _,module in script:GetChildren() do
 	if module:IsA("ModuleScript") then
@@ -50,25 +38,32 @@ function AIService:AcquireTarget(npc)
 end
 
 function AIService:CreateAI(npc, mobData)
+	if mobData.Tool then
+		animationsModule:loadAnims(npc.Humanoid.Animator,
+			game.ReplicatedStorage.Assets.Weapons[mobData.Tool.Name].Animations)
+	end
 	AIService.ActiveAIs[npc] = {
 		Root = npc:WaitForChild("HumanoidRootPart"),
 		Humanoid = npc:WaitForChild("Humanoid"),
+		
 		State = "Idle",
-		Target = nil,
 		Tool = mobData.Tool,
+		Target = nil,
+		
 		DetectionRange = mobData.DetectionRange,
 		AttackRange = mobData.AttackRange,
 		WanderRadius = mobData.WanderRadius,
 		
-		LastAttackSeenTime = 0,
-		Moving = false,
 		
+		Moving = false,
 		WalkSpeed = mobData.WalkSpeed,
 		RunSpeed = mobData.RunSpeed,
 		
+		LastAttackSeenTime = 0,
 		Damage = mobData.Damage,
 		
-		AbilityData = abilityDataModule.getAbilityData(mobData.Tool.Name),
+		Abilities = abilityDataModule.getAbilityData(mobData.Tool.Name),
+		ChosenAbility = nil,
 		
 		IdleAnimation = animationsModule:GetAnimation(npc.Humanoid.Animator,
 			"Weapons."..mobData.Tool.Name..".Animations.Idle" or "Shared.Animations.Idle.Default"),
@@ -84,13 +79,12 @@ end
 
 function AIService:EnemyBrain(npc)
 	
+	AIService:StateUpdater(npc)
 	local AIData = AIService.ActiveAIs[npc]
 	if not AIData then return end
-	AIService:StateUpdater(npc)
 	AIService:AcquireTarget(npc)
-	
-	print(AIData.Moving)
-	
+		
+		
 	if CharacterVitalsService:GetVital(npc, "Health").CurrentHealth <= 0 then
 		AIData.State = "Dead"
 	end
@@ -115,14 +109,28 @@ function AIService:EnemyBrain(npc)
 		return
 	end
 	
+	if CanDoAction:CanAbility(AIData) then
+		AIData.State = "Ability"
+		return
+	end
+	
 	if CanDoAction:CanAttack(AIData) then
 		AIData.State = "Attack" 
 		return
 	end
 	
+	if CanDoAction:CanFlashstep(AIData) then
+		AIData.State = "Flashstep"
+		return
+	end
+	
+	if CanDoAction:CanDash(AIData) then
+		AIData.State = "Dash"
+		return
+	end
+	
 	if CanDoAction:CanRun(AIData) then
 		AIData.State = "Run"
-		print(AIData.State)
 		return
 	end
 end
@@ -133,16 +141,17 @@ function AIService:StateUpdater(npc)
 	
 	if AIData.State == "Dead" then
 		AIService:DestroyAI(npc)
+		return
 	end
 	
 	if ActionModules[AIData.State] then
 		ActionModules[AIData.State](npc)
 	end
+	StateHandler:HandleStates(npc, AIData.RunSpeed)
 end
 
 function AIService:DestroyAI(npc)
 	AIService.ActiveAIs[npc] = nil
 end
-
 
 return AIService

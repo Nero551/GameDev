@@ -21,6 +21,7 @@ return function(arguementData:any)
 		clone.Anchored = true
 		clone.CanCollide = false
 		clone.Massless = true
+		clone.Transparency = 1
 		
 		for _,particle:ParticleEmitter? in clone:getDescendants() do
 			if particle:IsA("SpotLight") or particle:IsA("PointLight") or particle:IsA("SurfaceLight") then
