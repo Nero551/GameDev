@@ -12,7 +12,6 @@ function ActionVerifier:CanSprint(character)
 	return 
 end
 
-
 function ActionVerifier:CanWalk(character)
 	local humanoid = character:WaitForChild("Humanoid")
 	if humanoid.MoveDirection.Magnitude >  0 then

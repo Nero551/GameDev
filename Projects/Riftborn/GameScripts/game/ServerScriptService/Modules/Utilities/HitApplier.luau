@@ -1,3 +1,4 @@
+
 local sss = game:GetService("ServerScriptService")
 local players = game:GetService("Players")
 
@@ -6,6 +7,8 @@ local DataService = require(sss.Services.DataService)
 local CharacterVitalsService = require(sss.Services.CharacterVitalsService)
 
 local HitApplier = {}
+
+local remote = game.ReplicatedStorage.Remotes.a
 
 function HitApplier:ApplyHit(argumentData)
 	

@@ -81,6 +81,7 @@ return function(argumentData)
 		animationsModule:GetAnimation(
 			animator, "Shared.Character.AbilityHitReactions."..abilityData.HitReaction
 		):Play()
+		stateService.addState(targetHit, "Stunned", 0.2)
 	else				
 		local foundWeaponData = itemDataBase:GetItemData(weaponUsed:GetAttribute("ID")) 
 		if foundWeaponData then

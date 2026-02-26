@@ -7,7 +7,7 @@ local StateHandler = require(script.Parent.Parent.Modules.Utilities.StateHandler
 local AIService = require(script.Parent.Parent.Services.AIService)
 local Connections = require(repstor.Modules.Connections)
 
-local updateRate = 0.025
+local updateRate = 0.05
 ---Player---
 local elapsed = 0
 runService.Heartbeat:Connect(function(dt)
@@ -26,14 +26,9 @@ runService.Heartbeat:Connect(function(dt)
 			StateHandler:HandleStates(character)		
 		end
 	end
-	
-	for npc,AIData in AIService.ActiveAIs do
-		AIService:EnemyBrain(npc)
-	end
-	
 end)
 
-local playerInfo = require(script.Parent.Parent.Modules.Utilities.PlayerInfo)
+local playerInfo = require(script.Parent.Parent.Modules.Utilities.PlayerInfoGui)
 players.PlayerAdded:Connect(function(player)
 	player.CharacterAdded:Connect(function(char)
 		playerInfo:UpdateInfo(player, char)

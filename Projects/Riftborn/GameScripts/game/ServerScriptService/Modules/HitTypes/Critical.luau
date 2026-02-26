@@ -1,5 +1,4 @@
 --Defualt HitType
-
 local debris = game:GetService("Debris")
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local assets = replicatedStorage.Assets
@@ -14,7 +13,7 @@ local animationsModule = require(modules.Animations)
 local CharacterVitalsService = require(script.Parent.Parent.Parent.Services.CharacterVitalsService)
 
 return function(argumentData)
-		
+	
 	local targetHit = argumentData.TargetHit
 	local attacker = argumentData.Attacker
 	local player = argumentData.Player
@@ -25,8 +24,9 @@ return function(argumentData)
 	local npcDamage = argumentData.NPCDamage
 	local comboStringNumber = argumentData.ComboStringNumber
 	local lastHit = argumentData.LastHit
+	local playerCriticalDamageStat = argumentData.PlayerCriticalDamageStat
 	local abilityLetter = argumentData.AbilityLetter
-		
+
 	local targetHumanoid:Humanoid = targetHit:WaitForChild("Humanoid")
 	local animator = targetHumanoid:FindFirstChild("Animator")
 	
@@ -34,7 +34,6 @@ return function(argumentData)
 	local attackerHRP = attacker:WaitForChild("HumanoidRootPart")
 	if not  targetHumanoid then return end
 	if stateService.checkState(targetHit, "Invulnerable") then return end
-	
 
 	local M1Damage
 	local AbilityDamage
@@ -52,88 +51,104 @@ return function(argumentData)
 	killerHit.Name = "KillerHit"	
 	debris:AddItem(killerHit, 30)
 	
+	
+	
 	replicatedStorage.Remotes.ClientEffects:FireAllClients("DefaultHit" , {
 		["Target"] = targetHit ,
 		["WeaponUsed"] = weaponUsed.Name,
 	})
 	
-
-	if abilityData then	
+--[[	replicatedStorage.Remotes.ClientEffects:FireAllClients("CriticalHit" , {
+		["Target"] = targetHit ,
+		["WeaponUsed"] = weaponUsed.Name,
+	})
+]]
+	
+	if abilityData then
 		
 		AbilityDamage = formulaApplier:AbilityDamage({
 			["AbilityData"] = abilityData,
 			["TargetDefenseStat"] = targetDefenseStat,
 			["PlayerDamageStat"] = playerDamageStat,
+			["PlayerCriticalDamageStat"] = playerCriticalDamageStat,
 			["NPCDamage"] = npcDamage,	
 		})
 		
+		CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+			["HealthChange"] = -AbilityDamage
+			
+		})
 		
 		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
 			["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Abilities.Hit."..tostring(abilityLetter) ,
 			["Parent"] = targetHRP
 		})
 		
-		CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
-			["HealthChange"] = -AbilityDamage
-
-		})
-		
 		animationsModule:GetAnimation(
 			animator, "Shared.Character.AbilityHitReactions."..abilityData.HitReaction
 		):Play()
-	else				
+		stateService.addState(targetHit, "Stunned", 0.2)
+
+	else
+		
 		local foundWeaponData = itemDataBase:GetItemData(weaponUsed:GetAttribute("ID")) 
 		if foundWeaponData then
 			M1Damage = formulaApplier:M1Damage({
 				["NPCDamage"] = npcDamage,
 				["PlayerDamageStat"] = playerDamageStat,
 				["TargetDefenseStat"] = targetDefenseStat,
-				["FoundWeaponData"] = foundWeaponData
-				
+				["FoundWeaponData"] = foundWeaponData,
+				["PlayerCriticalDamageStat"] = playerCriticalDamageStat
+
 			})
 			
 			CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 				["HealthChange"] = -M1Damage
 
 			})
-			
 
 			replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
 				["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Hit."..tostring(comboStringNumber) ,
-				["Parent"] = targetHRP
+				["Parent"] = targetHRP,
+				["Volume"] = 2
 			})
+
 
 			local hitReactionAnim = animationsModule:GetAnimation(
 				animator, "Shared.Character.HitReactions."..tostring(comboStringNumber)
 			)
 			hitReactionAnim:Play()
 			stateService.addState(targetHit , "Stunned" , hitReactionAnim.Length + 0.1)
-		end	
-
+		end
+		
 		------Control KnockBack------
 		if lastHit then
 
 			------EndLag Setup------
 			stateService.addState(attacker , "NoMove", .5)
 			stateService.addState(attacker , "NoPunch", 1)
-			
+			------EndLag Setup------
+			stateService.addState(attacker , "NoMove", .5)
+			stateService.addState(attacker , "NoPunch", 1)
+
 			knockbackPull:ApplyKnockback(targetHit,attacker,90)
 		else
 			knockbackPull:ApplyKnockback(targetHit, attacker, 11)
 			knockbackPull:ApplyPull(targetHit,attacker,11)
-			
 
-		end
+
+		end	
+			
 	end	
-	
+
 	if player then
 		
-		replicatedStorage.Remotes.Hitstop:FireClient(player ,0.03)
+		replicatedStorage.Remotes.Hitstop:FireClient(player ,0.06)
 		
 		if AbilityDamage then
-			replicatedStorage.Remotes.ShowDamage:FireClient(player ,AbilityDamage, false, false)
+			replicatedStorage.Remotes.ShowDamage:FireClient(player ,AbilityDamage, true, false)
 		else
-			replicatedStorage.Remotes.ShowDamage:FireClient(player ,M1Damage, false, false)
+			replicatedStorage.Remotes.ShowDamage:FireClient(player ,M1Damage, true, false)
 		end
 	end
 

@@ -1,3 +1,4 @@
+
 local function GetInstanceFromPath(pathString)
 	local current = game
 
@@ -10,7 +11,6 @@ local function GetInstanceFromPath(pathString)
 
 	return current
 end
-
 
 local Animations = {}
 
