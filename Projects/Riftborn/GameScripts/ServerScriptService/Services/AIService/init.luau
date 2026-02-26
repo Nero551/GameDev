@@ -1,7 +1,8 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StateHandler = require(script.Parent.Parent.Modules.Utilities.StateHandler)
 local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVitalsService)
-local animationsModule = require(game.ReplicatedStorage.Modules.Animations)
-local abilityDataModule = require(game.ReplicatedStorage.Modules.Data.AbilityData)
+local animationsModule = require(ReplicatedStorage.Modules.Animations)
+local abilityDataModule = require(ReplicatedStorage.Modules.Data.AbilityData)
 
 local CanDoAction = require(script.CanDoAction)
 
@@ -15,6 +16,7 @@ for _,module in script:GetChildren() do
 	end
 end
 
+-- ! Fix
 function AIService:AcquireTarget(npc)
 	local nearestPlayer = nil
 	local closestDist = math.huge
@@ -36,10 +38,11 @@ function AIService:AcquireTarget(npc)
 	AIData.Target = nearestPlayer
 end
 
+--* Creates AI 
 function AIService:CreateAI(npc, mobData)
 	if mobData.Tool then
 		animationsModule:loadAnims(npc.Humanoid.Animator,
-			game.ReplicatedStorage.Assets.Weapons[mobData.Tool.Name].Animations)
+			ReplicatedStorage.Assets.Weapons[mobData.Tool.Name].Animations)
 	end
 	AIService.ActiveAIs[npc] = {
 		Root = npc:WaitForChild("HumanoidRootPart"),
@@ -76,6 +79,7 @@ function AIService:CreateAI(npc, mobData)
 end
 
 
+--* Enemy AI Loop
 function AIService:EnemyBrain(npc)
 	
 	AIService:StateUpdater(npc)
@@ -139,6 +143,10 @@ function AIService:StateUpdater(npc)
 	if not AIData then return end
 	
 	if AIData.State == "Dead" then
+		for animName,anim in pairs(animationsModule.loadedAnimations[npc])
+		do
+			anim:Stop()
+		end
 		AIService:DestroyAI(npc)
 		return
 	end

@@ -220,6 +220,13 @@ function CombatService:Block(character, boolean, tool:Tool?)
 			end
 		end
 
+		character.Status.ChildAdded:Once(function(child)
+			if not tool or not ActionVerifier:CanBlock(character) then
+				StopBlocking()
+			end	
+		end)
+
+
 
 		if boolean == true then
 			StartBlocking()
@@ -228,10 +235,6 @@ function CombatService:Block(character, boolean, tool:Tool?)
 			StopBlocking()
 			
 		end
-		
-		if not tool then
-			StopBlocking()
-		end	
 	end	
 end
 

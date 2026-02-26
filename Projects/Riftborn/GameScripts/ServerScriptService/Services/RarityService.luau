@@ -35,12 +35,10 @@ function RarityService:CheckPity(player:Player, itemID)
 					return true
 				else
 					ItemPities[itemID] += 1
-					print(itemID," Increased Pity ", ItemPities[itemID] )
 					return false
 				end
 			else
 				ItemPities[itemID] = 1
-				print(itemID," Increased Pity ", ItemPities[itemID] )
 				return false
 			end
 		end

@@ -16,7 +16,7 @@ local Animations = {}
 
 Animations.loadedAnimations = {}
 
-function Animations:loadAnims( animator:Animator , folder :Folder)
+function Animations:loadAnims( animator , folder :Folder)
 	local character = animator.Parent:FindFirstAncestorOfClass("Model")
 
 	Animations.loadedAnimations[character] = Animations.loadedAnimations[character] or {}
@@ -30,7 +30,7 @@ function Animations:loadAnims( animator:Animator , folder :Folder)
 	end
 end
 
-function Animations:GetAnimation(animator:Animator, animation)
+function Animations:GetAnimation(animator, animation)
 	local character = animator.Parent:FindFirstAncestorOfClass("Model")
 
 	Animations.loadedAnimations[character] = Animations.loadedAnimations[character] or {}
