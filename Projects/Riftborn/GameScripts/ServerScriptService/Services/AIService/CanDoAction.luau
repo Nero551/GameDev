@@ -50,6 +50,7 @@ end
 
 function CanDoAction:CanAbility(AIData)
 	if not AIData then return false end
+	if not AIData.Abilities then return false end
 	if not AIData.Target then return false end
 	local highestDamage = 0
 	local distance = (AIData.Root.Position - AIData.Target.Position).Magnitude

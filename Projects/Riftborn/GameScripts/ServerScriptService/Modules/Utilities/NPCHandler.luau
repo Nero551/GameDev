@@ -3,10 +3,7 @@ local NPCHandler = {}
 function NPCHandler:HandleNPC(npc)
 	local ServerScriptService = game:GetService("ServerScriptService")
 	local repstor = game:GetService("ReplicatedStorage")
-	local players = game:GetService("Players")
-	local tween = game:GetService("TweenService")
 
-	local StateService = require(repstor.Modules.StateService)
 	local animations = require(repstor.Modules.Animations)
 	local uiModules = repstor.Modules.UI
 
@@ -34,9 +31,9 @@ function NPCHandler:HandleNPC(npc)
 
 
 	if repstor.Assets.Weapons[toolName].Model:FindFirstChild(toolName.."_Equipped") then
-		local toolModel:Model? = repstor.Assets.Weapons[toolName].Model[toolName.."_Equipped"]:Clone()
+		local toolModel:Model = repstor.Assets.Weapons[toolName].Model[toolName.."_Equipped"]:Clone()
 		toolModel.Parent = npc
-		local weld:Motor6D = toolModel:FindFirstChildWhichIsA("Motor6D")
+		local weld = toolModel:FindFirstChildWhichIsA("Motor6D")
 		weld.Part0 = npc:FindFirstChild("Right Arm")
 	end
 
@@ -68,13 +65,10 @@ function NPCHandler:HandleNPC(npc)
 		end
 	
 	end)
-
-
-
+	
 	---NPC Info GUI---
 	local npcInfo = npc.NPCInfo
 	local hpBG = npcInfo.NPCHealth
-	local hpText = npcInfo.NPCHealth.HealthNumber
 
 	npcInfo.Adornee = npc.Head
 

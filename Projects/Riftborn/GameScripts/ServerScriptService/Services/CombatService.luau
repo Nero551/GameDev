@@ -205,7 +205,7 @@ function CombatService:Block(character, boolean, tool:Tool?)
 
 			end
 		end
-		
+
 		local function StopBlocking()
 			local  blockingInstance = character:WaitForChild("Status"):FindFirstChild("Blocking")
 			if blockingInstance then

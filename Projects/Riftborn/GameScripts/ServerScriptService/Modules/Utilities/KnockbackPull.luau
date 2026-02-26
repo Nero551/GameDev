@@ -5,7 +5,7 @@ local KnockbackPull = {}
 function KnockbackPull:ApplyKnockback(target, attacker, force)
 	
 	local targetHRP = target:WaitForChild("HumanoidRootPart")
-	local knockbackAttachment:Attachment = targetHRP:FindFirstChild("VelocityAttachment")
+	local knockbackAttachment = targetHRP:FindFirstChild("VelocityAttachment")
 	if not knockbackAttachment then
 		knockbackAttachment = Instance.new("Attachment")
 		knockbackAttachment.Name = "KnockbackVelocityAttachment"
@@ -32,7 +32,7 @@ function KnockbackPull:ApplyPull(target, attacker, force)
 	local targetHRP = target:WaitForChild("HumanoidRootPart")
 	local attackerHRP = attacker:WaitForChild("HumanoidRootPart")
 
-	local pullAttachment:Attachment = targetHRP:FindFirstChild("VelocityAttachment")
+	local pullAttachment = targetHRP:FindFirstChild("VelocityAttachment")
 	if not pullAttachment then
 		pullAttachment = Instance.new("Attachment")
 		pullAttachment.Name = "PullVelocityAttachment"

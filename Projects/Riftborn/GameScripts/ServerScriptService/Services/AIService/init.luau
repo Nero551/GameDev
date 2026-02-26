@@ -15,8 +15,6 @@ for _,module in script:GetChildren() do
 	end
 end
 
-
-
 function AIService:AcquireTarget(npc)
 	local nearestPlayer = nil
 	local closestDist = math.huge

@@ -1,4 +1,3 @@
-local starterGui = game:GetService("StarterGui")
 local stateService = require(game.ReplicatedStorage.Modules.StateService)
 local CharacterVitalsService = require(game.ServerScriptService.Services.CharacterVitalsService)
 
@@ -30,7 +29,7 @@ local statePriority = {
 }
 
 
-function StateHandler:HandleStates(character:Model? , runSpeed)
+function StateHandler:HandleStates(character:Model , runSpeed)
 	local humanoid = character:WaitForChild("Humanoid")
 	
 	------StateHandler------

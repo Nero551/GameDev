@@ -2,21 +2,15 @@ local PlayerInfo = {}
 
 function PlayerInfo:UpdateInfo(player, char)
 	---Player Info GUI---
-	local tween = game:GetService("TweenService")
 	local repstor = game:GetService("ReplicatedStorage")
 	local tweenService = game:GetService("TweenService")
-	local humanoid:Humanoid = char:WaitForChild("Humanoid")
 	local DataService = require(game.ServerScriptService.Services.DataService)
-	local CharacterVitalsService = require(game.ServerScriptService.Services.CharacterVitalsService)
 	local uiModules = repstor.Modules.UI
 
-	local players = game:GetService("Players")
-	local player = players:GetPlayerFromCharacter(char)
 	if not player then return end
 
 	local playerInfo = char.PlayerInfo
 	local hpBG = playerInfo.PlayerHealth
-	local hpText = playerInfo.PlayerHealth.HealthNumber
 
 	playerInfo.Adornee = char.Head
 	playerInfo.PlayerToHideFrom = player

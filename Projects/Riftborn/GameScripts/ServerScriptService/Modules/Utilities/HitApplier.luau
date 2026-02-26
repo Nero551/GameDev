@@ -36,7 +36,7 @@ function HitApplier:ApplyHit(argumentData)
 		playerCriticalDamageStat = playerStats.CriticalDamage.Percent + weaponData.CriticalDamage + 1
 		playerCriticalRateStat = (playerStats.CriticalRate.Percent + weaponData.CriticalRate) * 100
 	end
-
+	
 	if players:GetPlayerFromCharacter(targetHit) then
 		targetDefenseStat = DataService:GetTable(players:GetPlayerFromCharacter(targetHit), "Stats").Defense.Final 
 	end

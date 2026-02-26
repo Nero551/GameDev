@@ -1,18 +1,17 @@
-return function(tool:Tool?)
+return function(tool)
 	--toolloader
 	if tool:GetAttribute("ToolLoaded", true) then
 		return
 	end
 	
 	local replicatedStorage = game:GetService("ReplicatedStorage")
-	local debris = game:GetService("Debris")
 	local assets = replicatedStorage.Assets
 	local weaponModels = assets.Weapons[tool.Name].Model
-	local player :Player = tool.Parent.Parent
+	local player = tool.Parent.Parent
 
 	local character = player.Character or player.CharacterAdded:Wait()
-	local humanoid: Humanoid = character:WaitForChild("Humanoid", math.huge)
-	local animator:Animator = humanoid.Animator
+	local humanoid = character:WaitForChild("Humanoid", math.huge)
+	local animator = humanoid.Animator
 
 	local animsModule = require(replicatedStorage.Modules.Animations)
 	local animsFolder = assets.Weapons[tool.Name].Animations

@@ -8,7 +8,6 @@ local remotes = replicatedStorage.Remotes
 local itemDataBase = require(modules.Data.ItemDataBase)
 local abilityDataModule = require(modules.Data.AbilityData)
 
-
 local stateService = require(modules.StateService)
 local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
 
@@ -24,7 +23,6 @@ for _,module  in script.Parent.Parent.Modules.HitTypes:GetChildren() do
 		AbilityService.hitTypes[module.Name] = require(module)
 	end
 end
-
 
 function AbilityService:UseAbility(player:Player? ,character, tool:Tool, mouse, input, letter, npcDamage)
 	
