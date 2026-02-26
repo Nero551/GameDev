@@ -3,51 +3,6 @@
   "className": "DataModel",
   "children": [
     {
-      "name": "StarterPlayer",
-      "className": "StarterPlayer",
-      "pluginManaged": true,
-      "children": [
-        {
-          "name": "StarterPlayerScripts",
-          "className": "StarterPlayerScripts",
-          "pluginManaged": true,
-          "children": [
-            {
-              "name": "InitializePlayer",
-              "className": "LocalScript",
-              "pluginManaged": true,
-              "filePaths": [
-                "/home/offa47/Games/GameDev/Projects/Riftborn/GameScripts/StarterPlayer/StarterPlayerScripts/InitializePlayer.local.luau"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "StarterCharacterScripts",
-          "className": "StarterCharacterScripts",
-          "pluginManaged": true,
-          "children": [
-            {
-              "name": "InitializeCharacter",
-              "className": "LocalScript",
-              "pluginManaged": true,
-              "filePaths": [
-                "/home/offa47/Games/GameDev/Projects/Riftborn/GameScripts/StarterPlayer/StarterCharacterScripts/InitializeCharacter.local.luau"
-              ]
-            },
-            {
-              "name": "Health",
-              "className": "Script",
-              "pluginManaged": true,
-              "filePaths": [
-                "/home/offa47/Games/GameDev/Projects/Riftborn/GameScripts/StarterPlayer/StarterCharacterScripts/Health.legacy.luau"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "name": "ReplicatedStorage",
       "className": "ReplicatedStorage",
       "pluginManaged": true,
@@ -946,6 +901,51 @@
                     }
                   ]
                 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "StarterPlayer",
+      "className": "StarterPlayer",
+      "pluginManaged": true,
+      "children": [
+        {
+          "name": "StarterPlayerScripts",
+          "className": "StarterPlayerScripts",
+          "pluginManaged": true,
+          "children": [
+            {
+              "name": "InitializePlayer",
+              "className": "LocalScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/offa47/Games/GameDev/Projects/Riftborn/GameScripts/StarterPlayer/StarterPlayerScripts/InitializePlayer.local.luau"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "StarterCharacterScripts",
+          "className": "StarterCharacterScripts",
+          "pluginManaged": true,
+          "children": [
+            {
+              "name": "InitializeCharacter",
+              "className": "LocalScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/offa47/Games/GameDev/Projects/Riftborn/GameScripts/StarterPlayer/StarterCharacterScripts/InitializeCharacter.local.luau"
+              ]
+            },
+            {
+              "name": "Health",
+              "className": "Script",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/offa47/Games/GameDev/Projects/Riftborn/GameScripts/StarterPlayer/StarterCharacterScripts/Health.legacy.luau"
               ]
             }
           ]

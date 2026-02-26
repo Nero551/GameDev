@@ -1,7 +1,6 @@
 --Defualt HitType
 
 local replicatedStorage = game:GetService("ReplicatedStorage")
-local assets = replicatedStorage.Assets
 local modules = (replicatedStorage.Modules)
 local stateService = require(modules.StateService)
 

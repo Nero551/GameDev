@@ -24,7 +24,7 @@ return function(argumentData)
 	local lastHit = argumentData.LastHit
 	local playerCriticalDamageStat = argumentData.PlayerCriticalDamageStat
 	local abilityLetter = argumentData.AbilityLetter
-
+	
 	local targetHumanoid:Humanoid = targetHit:WaitForChild("Humanoid")
 	local animator = targetHumanoid:FindFirstChild("Animator")
 	
