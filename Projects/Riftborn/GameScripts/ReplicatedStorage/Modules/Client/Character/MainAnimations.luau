@@ -1,13 +1,10 @@
 return function()
 	local repstor = game:GetService("ReplicatedStorage")
-	local debris = game:GetService("Debris")
 	local runService = game:GetService("RunService")
 
 	local assets = repstor.Assets
-	local animationsFolder = assets.Shared.Animations
 	local stateService = require(repstor.Modules.StateService)
 	local ActionVerifier =  require(repstor.Modules.ActionVerifier)
-	local MovementConfig = require(repstor.Modules.Configs.MovementConfig)
 	local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
 	local animsModule = require(repstor.Modules.Animations)
 	
@@ -29,15 +26,15 @@ return function()
 	end
 
 	---MainStateAnimations---
-	local humanoid:Humanoid = char:WaitForChild("Humanoid")
+	local humanoid = char:WaitForChild("Humanoid")
 	local animator = humanoid.Animator
 
 	animsModule:loadAnims(animator, assets.Shared)
 
-	local currentIdle:AnimationTrack?
-	local currentRun:AnimationTrack?
-	local currentWalk:AnimationTrack?
-	local conn:RBXScriptConnection?
+	local currentIdle:AnimationTrack
+	local currentRun:AnimationTrack
+	local currentWalk:AnimationTrack
+	local conn:RBXScriptConnection
 
 	if not animsModule.loadedAnimations[char]["Shared.Animations.Idle.Default"].IsPlaying then
 		animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Idle.Default"):Play()
@@ -47,8 +44,8 @@ return function()
 	conn = runService.RenderStepped:Connect(function(dt)
 
 		if stateService.checkState(char, "Dead") then
+			if not conn then return end
 			conn:Disconnect()
-			conn = nil
 		end
 
 		local tool = char:FindFirstChildWhichIsA("Tool")
@@ -110,7 +107,7 @@ return function()
 				currentWalk:Stop(0.2)
 				currentRun:Stop(0.2)
 			end
-
+			return
 
 			---Sprint---
 		elseif	stateService.checkState(char,"Sprinting") and ActionVerifier:CanSprint(char) then				
@@ -123,6 +120,7 @@ return function()
 				currentWalk:Stop(0.2)
 				currentIdle:Stop(0.2)
 			end
+			return
 
 
 			---Walk---
@@ -137,7 +135,11 @@ return function()
 				currentRun:Stop(0.2)
 				currentIdle:Stop(0.2)
 			end
+			return
 		end
+
+		currentRun:Stop(0.2)
+		currentIdle:Stop(0.2)
 	end)	
 
 

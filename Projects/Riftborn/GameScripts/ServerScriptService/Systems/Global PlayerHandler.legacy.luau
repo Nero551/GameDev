@@ -4,7 +4,6 @@ local runService = game:GetService("RunService")
 
 local stateService = require(repstor.Modules.StateService)
 local StateHandler = require(script.Parent.Parent.Modules.Utilities.StateHandler)
-local AIService = require(script.Parent.Parent.Services.AIService)
 local Connections = require(repstor.Modules.Connections)
 
 local updateRate = 0.05

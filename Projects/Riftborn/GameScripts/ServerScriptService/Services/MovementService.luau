@@ -1,12 +1,10 @@
 local repstor = game:GetService("ReplicatedStorage")
-local debris = game:GetService("Debris")
 local runService = game:GetService("RunService")
 
 local assets = repstor.Assets
 local stateService = require(repstor.Modules.StateService)
 local ActionVerifier =  require(repstor.Modules.ActionVerifier)
 local MovementConfig = require(repstor.Modules.Configs.MovementConfig)
-local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
 
 local animsModule = require(repstor.Modules.Animations)
 local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
@@ -44,13 +42,13 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 		
 	if not ActionVerifier:CanDash(character) then return end
 	
-	local humanoid:Humanoid = character:WaitForChild("Humanoid")
-	local statusFolder = character:WaitForChild("Status")
-	
+	local humanoid = character:WaitForChild("Humanoid")
+	local directionName
+
 	if IsShiftLockOff or npcTarget then
-		local dashAnim:AnimationTrack? = animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Dashes.Forward")
+		local dashAnim:AnimationTrack = animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Dashes.Forward")
 		
-		local dashing = stateService.addState(character, "Dashing", dashAnim.Length)
+		stateService.addState(character, "Dashing", dashAnim.Length)
 		---Animation---
 		dashAnim:Play()
 
@@ -63,6 +61,7 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 			}
 		)
 	else
+		if direction == nil then return end
 		local rightDot = direction:Dot(character.HumanoidRootPart.CFrame.RightVector)
 		local forwardDot = direction:Dot(character.HumanoidRootPart.CFrame.LookVector)
 
@@ -70,33 +69,33 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 		angle = math.deg(angle)
 
 		if angle > -22.5 and angle <= 22.5 then
-			direction = "Forward"
+			directionName = "Forward"
 		elseif angle > 22.5 and angle <= 67.5 then
-			direction = "Forward-Right"
+			directionName = "Forward-Right"
 		elseif angle > 67.5 and angle <= 112.5 then
-			direction = "Right"
+			directionName = "Right"
 		elseif angle > 112.5 and angle <= 157.5 then
-			direction = "Back-Right"
+			directionName = "Back-Right"
 		elseif angle > 157.5 or angle <= -157.5 then
-			direction = "Back"
+			directionName = "Back"
 		elseif angle > -157.5 and angle <= -112.5 then
-			direction = "Back-Left"
+			directionName = "Back-Left"
 		elseif angle > -112.5 and angle <= -67.5 then
-			direction = "Left"
+			directionName = "Left"
 		elseif angle > -67.5 and angle <= -22.5 then
-			direction = "Forward-Left"
+			directionName = "Forward-Left"
 		end
 				
-		local dashAnim:AnimationTrack? = animsModule:GetAnimation(humanoid.Animator,"Shared.Animations.Dashes."..direction)
+		local dashAnim:AnimationTrack = animsModule:GetAnimation(humanoid.Animator,"Shared.Animations.Dashes."..directionName)
 				
-		local dashing = stateService.addState(character, "Dashing", dashAnim.Length)
+		stateService.addState(character, "Dashing", dashAnim.Length)
 		---Animation---
 		dashAnim:Play()
 
 		---VFX---
 		repstor.Remotes.ClientEffects:FireAllClients("DashVFX",
 			{
-				["Direction"] = direction,
+				["Direction"] = directionName,
 				["Character"] = character,
 				["DashTime"] = dashAnim.Length,
 			}
@@ -116,7 +115,7 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 	if npcTarget then
 		---Dash Movement---	
 		local maxDashDistance = DashConfig.MaxDashDistance
-		local root:Part? = character:FindFirstChild("HumanoidRootPart")
+		local root:Part = character:FindFirstChild("HumanoidRootPart")
 
 		local rayParams = RaycastParams.new()
 		rayParams.FilterType = Enum.RaycastFilterType.Exclude
@@ -146,14 +145,13 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 		end)	
 	else
 		---If Player Then Let Client Handle Movement---
-		repstor.Remotes.Dash:FireClient(player, direction, IsShiftLockOff)
+		repstor.Remotes.Dash:FireClient(player, directionName, IsShiftLockOff)
 	end
 end
 
 function MovementService:FlashStep(character)
 	local playerFlashStep = CharacterVitalsService:GetVital(character, "FlashStep")
 	local flashstepCharge = playerFlashStep.CurrentFlashStep
-	local maxFlashstepCharge = playerFlashStep.MaxFlashStep
 	if not ActionVerifier:CanFlashstep(character, flashstepCharge) then return end
 
 	local statusFolder = character:WaitForChild("Status")
@@ -194,15 +192,12 @@ end
 function MovementService:WallRun(character)
 	if not ActionVerifier:CanWallRun(character) then return end
 	if stateService.checkState(character, "WallRunning") then return end
-	local root:Part? = character:WaitForChild("HumanoidRootPart")
+	local root:Part = character:WaitForChild("HumanoidRootPart")
 
 	stateService.addState(character, "WallRunning")
 	
-	local wallRunSpeed = wallJumpConfig.WalkRunSpeed
-	local stickForce = wallJumpConfig.StickForce
 	local maxDuration = wallJumpConfig.MaxDuration
 	local elapsed = 0
-	local currentTangent
 	
 	local connection
 	connection = runService.Heartbeat:Connect(function(dt)
@@ -216,7 +211,6 @@ function MovementService:WallRun(character)
 		end
 		
 		local hitNormal
-		local hitRotation
 		local directions = {
 			root.CFrame.LookVector,
 			root.CFrame.RightVector,
@@ -249,15 +243,14 @@ function MovementService:AirJump(character, AirJumpCharges:number)
 	
 	if not ActionVerifier:CanAirJump(character, AirJumpCharges) then return end
 	
-	local statusFolder = character:WaitForChild("Status")
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 	local hrp = character:WaitForChild("HumanoidRootPart")
 
 	if humanoid:GetState()  == Enum.HumanoidStateType .Freefall then
 		
-		local AirJump = stateService.addState(character, "AirJump", 0.25)
+		stateService.addState(character, "AirJump", 0.25)
 		
-		local AirJumpSound = assets.Shared.Sounds.AirJump:Play()
+		assets.Shared.Sounds.AirJump:Play()
 
 		local attachment = Instance.new("Attachment")
 		attachment.Name = "Attachment"

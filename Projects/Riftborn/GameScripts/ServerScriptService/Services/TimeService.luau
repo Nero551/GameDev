@@ -1,5 +1,4 @@
 local lighting = game:GetService("Lighting")
-local runService = game:GetService("RunService")
 local serverData = require(script.Parent.Parent.Modules.ServerData)
 
 local TimeService = {}

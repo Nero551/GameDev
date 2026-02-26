@@ -36,14 +36,13 @@ end)
 
 ---Client Requests to Dash---
 remotes.Dash.OnServerEvent:Connect(function(player:Player, direction, IsShiftLockOff)
-	local character = player.Character or player.CharacterAdded:Wait()
 	MovementService:Dash(player, direction, IsShiftLockOff)
 end)
 
 ---Client Requests to Flashstep---
 remotes.FlashStep.OnServerEvent:Connect(function(player:Player, flashstepChage)
 	local character = player.Character or player.CharacterAdded:Wait()
-	MovementService:FlashStep(character, flashstepChage)
+	MovementService:FlashStep(character)
 end)
 
 ---Client Requests to WallRun---

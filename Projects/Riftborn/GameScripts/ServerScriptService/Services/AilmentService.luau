@@ -80,7 +80,6 @@ end
 
 function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 	
-	local playerTarget = players:GetPlayerFromCharacter(targetHit)
 	local playerAttacker = players:GetPlayerFromCharacter(attacker)
 	
 	local ailmentData = statusAilmentsData.Ailments[ailmentName]
@@ -146,7 +145,6 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 end
 
 function AilmentService:Freeze(attacker, targetHit, ailmentName, normalDamage)
-	local playerTarget = players:GetPlayerFromCharacter(targetHit)
 	local playerAttacker = players:GetPlayerFromCharacter(attacker)
 	local ailmentData = statusAilmentsData.Ailments[ailmentName]
 	local characterAilments = CharacterVitalsService:GetVital(targetHit, "StatusAilments")	
@@ -196,7 +194,6 @@ end
 
 function AilmentService:Poison(attacker,targetHit,ailmentName,normalDamage)
 	
-	local playerTarget = players:GetPlayerFromCharacter(targetHit)
 	local playerAttacker = players:GetPlayerFromCharacter(attacker)	
 	
 	local ailmentData = statusAilmentsData.Ailments[ailmentName]

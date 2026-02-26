@@ -15,7 +15,7 @@ end
 function ActionVerifier:CanWalk(character)
 	local humanoid = character:WaitForChild("Humanoid")
 	if humanoid.MoveDirection.Magnitude >  0 then
-		if not StateService.checkState(character, "Attacking", "Blocking", "NoMove", "Stunned", "NoSprint", "Sprinting") then
+		if not StateService.checkState(character, "Attacking", "NoMove", "Stunned", "NoSprint", "Sprinting") then
 			return true
 		end
 	end
@@ -78,7 +78,7 @@ end
 
 
 function ActionVerifier:CanWallRun(character:Model)
-	local hrp:Part? = character:WaitForChild("HumanoidRootPart")
+	local hrp = character:WaitForChild("HumanoidRootPart")
 	local Right = hrp.CFrame.RightVector * 2
 	local Left = -hrp.CFrame.RightVector * 2
 	Left = Vector3.new(Left.X, 0 , Left.Z)

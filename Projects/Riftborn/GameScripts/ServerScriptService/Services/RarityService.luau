@@ -18,6 +18,7 @@ function RarityService:Chance(player , itemID)
 			return false
 		end	
 	end
+	return false
 end
 
 function RarityService:CheckPity(player:Player, itemID)
@@ -27,7 +28,8 @@ function RarityService:CheckPity(player:Player, itemID)
 	if itemRarity == "Mythical" or itemRarity == "Legendary" then
 		if ItemPities then
 			if ItemPities[itemID] then
-				if ItemPities[itemID] == itemRarity.Pity then
+				local pity = RarityData[itemRarity].Pity
+				if ItemPities[itemID] >= pity then
 					ItemPities[itemID] = nil
 					print( itemID," ReachedPity ", ItemPities[itemID])
 					return true
@@ -43,7 +45,7 @@ function RarityService:CheckPity(player:Player, itemID)
 			end
 		end
 	end
-	
+	return false
 end
 
 return RarityService

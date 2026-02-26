@@ -9,7 +9,6 @@ function Service.checkState(character, ...)
 	local statusFolder = character:FindFirstChild("Status")
 	if not statusFolder then return end
 	
-	local arguements = {...}
 	local statusToCheck = {...}
 	for _, stateName in pairs(statusToCheck) do
 		if statusFolder:FindFirstChild(stateName) then
@@ -27,7 +26,7 @@ function Service.removeState(character ,stateName:string)
 		end
 	end
 end
-function Service.addState(character, stateName:string, duration:number, attributes:any)
+function Service.addState(character, stateName, duration, attributes)
 	local statusFolder = character:FindFirstChild("Status")
 	if not statusFolder then
 		if runService:IsServer() then

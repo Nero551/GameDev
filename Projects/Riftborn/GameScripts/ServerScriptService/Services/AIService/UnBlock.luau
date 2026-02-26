@@ -4,7 +4,6 @@ return function(npc)
 	
 	local AIData = AIService.ActiveAIs[npc]
 	if not AIData then return end
-	local humanoid:Humanoid = npc:WaitForChild("Humanoid")
 	AIData.LastAttackSeenTime = 0
 	CombatService:Block(npc, false, AIData.Tool)
 end

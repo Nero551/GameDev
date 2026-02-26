@@ -1,8 +1,6 @@
-local runService = game:GetService("RunService")
 local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVitalsService)
 local StateService = require(game.ReplicatedStorage.Modules.StateService)
-local DataService = require(script.Parent.DataService)
-local BuffService = require(script.Parent.BuffService)
+
 
 local RegenService = {}
 local elapsedFlashStep = {}

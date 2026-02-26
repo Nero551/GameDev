@@ -1,6 +1,5 @@
 local players = game:GetService("Players")
 local repstor = game:GetService("ReplicatedStorage")
-local remotes = repstor.Remotes
 local connections = require(repstor.Modules.Connections)
 
 local CharacterVitalsService = {}
@@ -124,6 +123,7 @@ function CharacterVitalsService:GetVital(character, vitalName)
 	if CharacterVitalsService.CharacterVitals[character][vitalName] then
 		return CharacterVitalsService.CharacterVitals[character][vitalName]
 	end
+	return
 end
 
 function CharacterVitalsService:ModifyVital(character,vital, funcName , argumentData)	

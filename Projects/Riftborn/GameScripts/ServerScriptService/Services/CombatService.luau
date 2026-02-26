@@ -1,7 +1,6 @@
 --CombatService
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local debris = game:GetService("Debris")
-local players = game:GetService("Players")
 
 local assets = replicatedStorage.Assets
 local modules = replicatedStorage.Modules
@@ -11,7 +10,6 @@ local itemDataBase = require(replicatedStorage.Modules.Data.ItemDataBase)
 
 local ActionVerifier = require(modules.ActionVerifier)
 local stateService = require(modules.StateService)
-local DataService = require(script.Parent.Parent.Services.DataService)
 local HitApplier = require(script.Parent.Parent.Modules.Utilities.HitApplier)
 local animationsModule = require(modules.Animations)
 
@@ -50,9 +48,6 @@ function CombatService:Spawn(character)
 end
 
 function CombatService:Died(character)
-	local statusFolder = character:WaitForChild("Status", math.huge)
-	local humanoid:Humanoid = character:WaitForChild("Humanoid" , math.huge)
-
 	character:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(function()
 		if character:GetAttribute("Health_CurrentHealth") <= 0 then
 			stateService.addState(character , "Dead")
@@ -60,7 +55,7 @@ function CombatService:Died(character)
 	end)	
 end
 
-function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
+function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 	
 	local humanoid = character:WaitForChild("Humanoid")
 	
@@ -75,12 +70,10 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
  		return
 	end
 	
-	local animationsFolder = assets.Weapons[tool.Name].Animations
 	
 	--Playing Animations
 	local lastSwing = CharacterVitalsService:GetVital(character, "LastSwing")
 	local lastCombo = CharacterVitalsService:GetVital(character, "LastCombo")
-	local swingNumber = CharacterVitalsService:GetVital(character, "SwingNumber")
 
 	if (os.clock()-lastCombo) < weaponData.ComboCooldown then
 		return
@@ -110,7 +103,7 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 
 	local swingName = "Weapons."..tool.Name..".Animations.Swings.L"..tostring(trueSwingNumber)
 	
-	local animationToPlay:AnimationTrack? = animationsModule:GetAnimation(humanoid.Animator, swingName)
+	local animationToPlay = animationsModule:GetAnimation(humanoid.Animator, swingName)
 				
 	---Attack States---
 	stateService.addState(character , "Attacking", (animationToPlay.Speed * animationToPlay.Length))
@@ -190,9 +183,9 @@ function CombatService:Attack(character, tool:Tool, player:Player, npcDamage)
 	end)
 end
 
-function CombatService:Block(character, boolean, tool:Tool)
+function CombatService:Block(character, boolean, tool:Tool?)
 	
-	local humanoid:Humanoid = character:FindFirstChild("Humanoid")
+	local humanoid = character:FindFirstChild("Humanoid")
 	if humanoid then
 		
 		tool = GetValidTool(tool, character)
@@ -221,7 +214,7 @@ function CombatService:Block(character, boolean, tool:Tool)
 					animationsModule:GetAnimation(humanoid.Animator, "Weapons."..weaponName..".Animations.Block.Idle"):Stop(0.1)
 
 				end
-				blockingInstance:Destroy()
+				stateService.removeState(character, "Blocking")
 
 				stateService.addState(character, "NoBlock", 0.3)
 			end

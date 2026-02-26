@@ -1,7 +1,5 @@
-local players = game:GetService("Players")
 local repstor = game:GetService("ReplicatedStorage")
 local modules =  repstor.Modules
-local remotes = repstor.Remotes
 local itemDataBase = require(modules.Data.ItemDataBase)
 local titleData = require(modules.Data.TitleData)
 local DataService = require(script.Parent.Parent.Services.DataService)
@@ -23,6 +21,7 @@ local function FindPlayerByPartialName(text)
 			return player
 		end
 	end
+	return
 end
 
 local AdminCmdsService = {}
@@ -51,7 +50,6 @@ end
 function AdminCmdsService:GiveItem(msgParts)
 	local playerWanted = FindPlayerByPartialName(msgParts[2])
 	local itemNameParts = {}
-	local lastIndex = #msgParts
 	local amount = tonumber(msgParts[#msgParts])  or 1
 	local itemPartsEnd = #msgParts - 1
 	if amount ~= tonumber(msgParts[#msgParts]) then
@@ -65,7 +63,6 @@ function AdminCmdsService:GiveItem(msgParts)
 	end
 	local itemName = table.concat(itemNameParts, " ")
 	itemName = CapitalizeWords(itemName)
-	local itemType
 	local  itemData,itemID = itemDataBase:GetItemData(itemName)
 	if not itemData or not itemID then
 		warn("Couldn't Find "..itemName)
@@ -80,7 +77,6 @@ end
 function AdminCmdsService:RemoveItem(msgParts)
 	local playerWanted = FindPlayerByPartialName(msgParts[2])
 	local itemNameParts = {}
-	local lastIndex = #msgParts
 	local amount = tonumber(msgParts[#msgParts])  or 1
 	
 	if not playerWanted or not amount then return end
@@ -96,7 +92,6 @@ function AdminCmdsService:RemoveItem(msgParts)
 	local itemName = table.concat(itemNameParts, " ")
 	itemName = CapitalizeWords(itemName)
 	print(itemName)
-	local itemType
 	local  itemData,itemID = itemDataBase:GetItemData(itemName)
 	if not itemData or not itemID then
 		warn("Couldn't Find "..itemName)
@@ -113,7 +108,6 @@ function AdminCmdsService:GetTitle(msgParts)
 	local playerWanted = FindPlayerByPartialName(msgParts[2])
 	if not playerWanted  then return end
 	local itemNameParts = {}
-	local lastIndex = #msgParts
 	local itemPartsEnd = #msgParts
 
 	for i = 3, itemPartsEnd do
@@ -122,7 +116,6 @@ function AdminCmdsService:GetTitle(msgParts)
 	end
 	local titleName = table.concat(itemNameParts, " ")
 	titleName = CapitalizeWords(titleName)
-	local itemType
 	local  titleID = titleData:GetTitleID(titleName)
 	if not titleID then
 		warn("Couldn't Find "..titleName)

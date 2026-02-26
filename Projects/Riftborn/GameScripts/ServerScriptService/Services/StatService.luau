@@ -93,8 +93,6 @@ end
 ---Setup Stats---
 function StatService:SetupStats(player:Player)
 	local playerStats = DataService:GetTable(player, "Stats")
-	local char = player.Character or player.CharacterAdded:Wait()
-	local humanoid: Humanoid = char:WaitForChild("Humanoid")
 	
 	local statsFolder = player:FindFirstChild("PlayerStats")
 	
@@ -136,9 +134,7 @@ end
 function StatService:AllocateStatPoint(player:Player, statType, amount)
 	local playerLevel = DataService:GetTable(player, "Level")
 	local playerStats = DataService:GetTable(player, "Stats")
-	local playerInventory = DataService:GetTable(player, "Inventory")
-	local playerEquipped = DataService:GetTable(player, "Equipped")
-	
+
 	print(playerLevel.StatPoints, playerStats[statType])
 	
 	if 	playerLevel.StatPoints <= 0 or playerStats[statType].FlatStatPoint  >= 3000  then return end
@@ -160,8 +156,6 @@ end
 function StatService:ResetStats(player:Player)
 	local playerLevel = DataService:GetTable(player, "Level")
 	local playerStats = DataService:GetTable(player, "Stats")
-	local playerInventory = DataService:GetTable(player, "Inventory")
-	local playerEquipped = DataService:GetTable(player, "Equipped")
 	
 	playerLevel.StatPoints = (playerLevel.CurrentLevel - 1) * 4
 	playerStats.Health.FlatStatPoint = 0 

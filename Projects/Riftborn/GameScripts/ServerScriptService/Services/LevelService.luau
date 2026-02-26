@@ -62,7 +62,7 @@ function LevelService:IncreaseEXP(player , EXP)
 			levelFolder.CurrentEXP.Value = playerLevel.CurrentEXP
 			levelFolder.RequiredEXP.Value = playerLevel.RequiredEXP
 			levelFolder.StatPoints.Value = playerLevel.StatPoints
-			wait(0.25)
+			task.wait(0.25)
 		end
 	end)
 	levelFolder.CurrentLevel.Value = playerLevel.CurrentLevel

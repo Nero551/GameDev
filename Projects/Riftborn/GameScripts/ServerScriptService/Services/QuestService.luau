@@ -1,7 +1,6 @@
 local repstor = game:GetService("ReplicatedStorage")
 local questDataBase = require(repstor.Modules.Data.QuestData)
 local GameEvents = require(repstor.Modules.GameEvents)
-local InventoryService = require(script.Parent.InventoryService)
 local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
 local DataService = require(script.Parent.DataService)
 
@@ -108,7 +107,7 @@ function QuestService:ProgressQuest(player:Player, mobKilled)
 
 				---If Collect Quest---
 				if objective.ObjectiveType == "Collect" then
-					local itemdata,itemID = itemDataBase:GetItemData(objective.Item)
+					local _,itemID = itemDataBase:GetItemData(objective.Item)
 					if playerInventory[itemID] then
 						objective.CurrentProgress = math.min(playerInventory[itemID].Amount, objective.Required)
 					else
@@ -153,7 +152,6 @@ end
 -----------------------------------------------------------------------------------------------------------------------------
 function QuestService:CompleteQuest(player:Player, questID)
 	local playerQuests = DataService:GetTable(player, "Quests")
-	local playerInventory = DataService:GetTable(player ,"Inventory")
 	local playerEquipped = DataService:GetTable(player, "Equipped")
 	
 	local quest = playerQuests.ActiveQuests[questID]
@@ -164,7 +162,7 @@ function QuestService:CompleteQuest(player:Player, questID)
 	if quest.Completed == true then
 		for objectiveNumber,objective in pairs(quest.Progress) do
 			if objective.Item then
-				local itemData,itemID = itemDataBase:GetItemData(objective.Item)
+				local _,itemID = itemDataBase:GetItemData(objective.Item)
 				if playerEquipped[itemID] then
 					return
 				end
@@ -181,7 +179,8 @@ function QuestService:CompleteQuest(player:Player, questID)
 		repstor.Remotes.PopUp:FireClient(player,{
 			["QuestName"] = questData.Name,
 			["QuestCompleted"] = true
-		})		repstor.Remotes.UpdateQuests:FireClient(player, playerQuests)
+		})		
+		repstor.Remotes.UpdateQuests:FireClient(player, playerQuests)
 		return true
 	else
 		repstor.Remotes.UpdateQuests:FireClient(player, playerQuests)

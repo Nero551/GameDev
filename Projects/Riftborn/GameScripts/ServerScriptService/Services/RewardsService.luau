@@ -17,7 +17,7 @@ function RewardsService:GiveRewards(player, Rewards, quest:boolean)
 		end
 		if Rewards.ItemDrops then
 			for item, itemInfo in pairs(Rewards.ItemDrops) do
-				local itemData,itemID = itemDataBase:GetItemData(item)
+				local _,itemID = itemDataBase:GetItemData(item)
 				---If It Is A Quest---
 				if quest then
 					GameEvents.AddItem:Fire(itemID  , itemInfo.Amount, player)

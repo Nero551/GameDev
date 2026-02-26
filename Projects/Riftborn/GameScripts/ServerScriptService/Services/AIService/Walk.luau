@@ -68,7 +68,7 @@ return function(npc)
 				end
 
 				humanoid:MoveTo(waypoint.Position)
-				local reached = humanoid.MoveToFinished:Wait(2)
+				local reached = humanoid.MoveToFinished:Wait()
 				if not reached then
 					break
 				end

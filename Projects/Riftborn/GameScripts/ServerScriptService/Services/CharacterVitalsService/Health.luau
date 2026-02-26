@@ -17,7 +17,6 @@ function Health:ModifyMaxHealth(character:Model?, argumentData)
 	local maxHealth = argumentData.MaxHealth
 	
 	
-	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 	healthData.MaxHealth = maxHealth
 	if healthData.CurrentHealth > healthData.MaxHealth then
 		healthData.CurrentHealth = healthData.MaxHealth

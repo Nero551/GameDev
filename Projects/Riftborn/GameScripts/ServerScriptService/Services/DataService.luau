@@ -1,5 +1,4 @@
 local dataStoreService = game:GetService("DataStoreService")
-local players = game:GetService("Players")
 
 local store_Name = "PlayerData_V1"
 local playerStore = dataStoreService:GetDataStore(store_Name)
@@ -125,7 +124,7 @@ end
 function DataService:Load(player)
     local key = "Player_"..player.UserId
 
-    local success, err = pcall(function()
+    local success = pcall(function()
         DataService.PlayerDatas[player] = playerStore:GetAsync(key)
     end)
 
@@ -151,7 +150,9 @@ function DataService:Save(player)
 	end)
 	if not success then
 		warn("Failed to save data for", player.Name, err)
+		return
 	end
+	return
 end
 
 

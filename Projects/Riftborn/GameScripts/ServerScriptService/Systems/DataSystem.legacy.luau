@@ -51,7 +51,6 @@ end
 
 local function SendSetupRemotes(player:Player)
 	local playerLevel = DataService:GetTable(player, "Level")
-	local playerStats = DataService:GetTable(player, "Stats")
 	local playerInventory = DataService:GetTable(player, "Inventory")
 	local playerEquipped = DataService:GetTable(player, "Equipped")
 	local playerQuests = DataService:GetTable(player,"Quests")
@@ -139,7 +138,7 @@ game:BindToClose(function()
 end)
 
 ---AutoSave---
-spawn(function()
+task.spawn(function()
 	while task.wait(300) do
 		for _, player in pairs(players:GetPlayers()) do
 			DataService:Save(player)

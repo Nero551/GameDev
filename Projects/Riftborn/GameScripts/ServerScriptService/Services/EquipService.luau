@@ -12,7 +12,10 @@ function  EquipUnEquipService:EquipItem(player:Player , itemID)
 	local inventory = DataService:GetTable(player, "Inventory")
 	local equippedItems = DataService:GetTable(player, "Equipped")
 	---Must own the Item---
-	if not inventory[itemID] then warn(itemID.." Not Found In Inventory") return end
+	if not inventory[itemID] then 
+		warn(itemID.." Not Found In Inventory") 
+		return 
+	end
 	local char = player.Character or player.CharacterAdded:Wait()
 	local itemType = nil
 
@@ -25,33 +28,12 @@ function  EquipUnEquipService:EquipItem(player:Player , itemID)
 			local tool:Tool? = serverStorage.Tools[itemType]:FindFirstChild(itemData.Name):Clone()
 			if tool then
 				
-				local function DeleteOtherTool(anotherTool)
-					if anotherTool:IsA("Tool") then
-						local anotherWeaponData = itemDataBase:GetItemData(anotherTool:GetAttribute("ID"))
-						if anotherWeaponData.Type == itemType then
-							local anotherWeaponEquippedModel = char:FindFirstChild(anotherTool.Name.."_Equipped")
-							local anotherWeaponUnEquippedModel = char:FindFirstChild(anotherTool.Name.."_UnEquipped")
-							if anotherWeaponData.Buffs then
-								GameEvents.RemoveBuff:Fire(player ,  anotherWeaponData,anotherTool:GetAttribute("ID"))
-							end
-							anotherTool:Destroy()
-							if anotherWeaponEquippedModel then
-								anotherWeaponEquippedModel:Destroy()
-							end
-
-							if anotherWeaponUnEquippedModel then
-								anotherWeaponUnEquippedModel:Destroy()
-							end
-						end
-					end
-				end
-
 				--Check For Another Tool With Same Type--
 				for _,anotherTool:Tool? in char:GetChildren() do
 			--		DeleteOtherTool(anotherTool)
 				end
 
-				for _,anotherTool:Tool? in player.Backpack:GetChildren() do
+				for _,anotherTool in player.Backpack:GetChildren() do
 			--		DeleteOtherTool(anotherTool)
 				end
 
@@ -67,7 +49,7 @@ function  EquipUnEquipService:EquipItem(player:Player , itemID)
 			if armor then
 
 				--Check For Another Armor With Same Type--
-				for _,anotherArmor:Accessory? in char:GetChildren() do
+				for _,anotherArmor in char:GetChildren() do
 					if anotherArmor:GetAttribute("Type") == itemType then
 						local anotherArmorData = itemDataBase:GetItemData(anotherArmor:GetAttribute("ID"))
 						if anotherArmorData.Buffs then
@@ -99,7 +81,7 @@ function EquipUnEquipService:UnEquipItem(player:Player ,itemID)
 	local inventory = DataService:GetTable(player, "Inventory")
 	local equippedItems = DataService:GetTable(player, "Equipped")
 	-- Must own the Item
-	if not inventory[itemID] then  warn(itemID.." Not Found In Inventory") return end
+	if not inventory[itemID] then  warn(itemID.." Not Found In Inventory"); return end
 	local char = player.Character or player.CharacterAdded:Wait()
 	local itemType = nil
 
@@ -151,7 +133,7 @@ function EquipUnEquipService:LoadEquippedItems(player:Player)
 	for  itemType, itemID in equippedItems do
 		
 		---Must own the Item---
-		if not inventory[itemID] then warn(itemID.." Not Found In Inventory") return end
+		if not inventory[itemID] then warn(itemID.." Not Found In Inventory"); return end
 		local char = player.Character or player.CharacterAdded:Wait()
 		
 		---If  A Weapon---
@@ -165,7 +147,7 @@ function EquipUnEquipService:LoadEquippedItems(player:Player)
 				itemType = itemData.Type
 
 				--Check For Another Tool With Same Type--
-				for _,anotherTool:Tool? in char:GetChildren() or player.Backpack:GetChildren() do
+				for _,anotherTool in char:GetChildren() or player.Backpack:GetChildren() do
 					if anotherTool:GetAttribute("Type") == itemType then
 						anotherTool:Destroy()
 					end
@@ -185,7 +167,7 @@ function EquipUnEquipService:LoadEquippedItems(player:Player)
 				itemType = itemData.Type
 				
 				--Check For Another Armor With Same Type--
-				for _,anotherArmor:Accessory? in char:GetChildren() do
+				for _,anotherArmor in char:GetChildren() do
 					if anotherArmor:GetAttribute("Type") == itemType then
 						anotherArmor:Destroy()
 					end

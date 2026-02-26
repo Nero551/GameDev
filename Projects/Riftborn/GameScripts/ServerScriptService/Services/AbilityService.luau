@@ -1,10 +1,7 @@
 local replicatedStorage = game:GetService("ReplicatedStorage")
-local run = game:GetService("RunService")
-local players = game:GetService("Players")
 local debris = game:GetService("Debris")
 local modules = replicatedStorage.Modules
 local assets = replicatedStorage.Assets
-local DataService = require(script.Parent.DataService)
 
 local remotes = replicatedStorage.Remotes
 
@@ -29,7 +26,7 @@ for _,module  in script.Parent.Parent.Modules.HitTypes:GetChildren() do
 end
 
 
-function AbilityService:UseAbility(player:Player ,character, tool:Tool, mouse, input, letter, npcDamage)
+function AbilityService:UseAbility(player:Player? ,character, tool:Tool, mouse, input, letter, npcDamage)
 	
 	if not tool then return end
 	
@@ -37,9 +34,8 @@ function AbilityService:UseAbility(player:Player ,character, tool:Tool, mouse, i
 			
 	if not ActionVerifier:CanAbility(character, abilityletter) then return end
 	
-	local playerStats
 	
-	local humanoid:Humanoid = character:WaitForChild("Humanoid")
+	local humanoid = character:WaitForChild("Humanoid")
 	local abilityData = abilityDataModule.getAbilityData(tool.Name,abilityletter)
 	
 	if not abilityData then
@@ -49,12 +45,10 @@ function AbilityService:UseAbility(player:Player ,character, tool:Tool, mouse, i
 	
 	local weaponData = itemDataBase:GetItemData(tool:GetAttribute("ID"))
 	
-	local animsFolder = assets.Weapons[tool.Name].Animations
 	local sounds = assets.Shared.Sounds
 	
 	if player then
 		remotes.CameraShake:FireClient(player ,0.25)
-		playerStats = DataService:GetTable(player,"Stats")
 		local playerMana = CharacterVitalsService:GetVital(character , "Mana")
 		if playerMana.CurrentMana < abilityData.Mana  then
 			sounds.Error:Play()
@@ -75,7 +69,11 @@ function AbilityService:UseAbility(player:Player ,character, tool:Tool, mouse, i
 	---Animation---
 	local animsModule = require(modules.Animations)
 	local animation:AnimationTrack = animsModule:GetAnimation(humanoid.Animator, "Weapons."..tool.Name..".Animations.Abilities."..abilityletter)
-	if not animation then warn("Animation Not Found") print(animsModule.loadedAnimations) return end
+	if not animation then
+		 warn("Animation Not Found")
+		  print(animsModule.loadedAnimations) 
+		  return 
+	end
 	animation:Play()
 	
 	---Ability States---
@@ -86,7 +84,7 @@ function AbilityService:UseAbility(player:Player ,character, tool:Tool, mouse, i
 	
 
 	animation:GetMarkerReachedSignal("Hit"):Once(function()
-		local hrp:Part? = character:WaitForChild("HumanoidRootPart")
+		local hrp = character:WaitForChild("HumanoidRootPart")
 
 		---HitBox---
 		local hitboxClone = assets.HitboxTemplate:Clone()

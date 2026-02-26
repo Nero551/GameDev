@@ -4,12 +4,10 @@ local Services = script.Parent.Parent.Services
 
 local GameEvents = require(modules.GameEvents)
 
-local DataService = require(Services.DataService)
 local QuestService = require(Services.QuestService)
 local InventoryService = require(Services.InventoryService)
 local CurrencyService =  require(Services.CurrencyService)
 local LevelService = require(Services.LevelService)
-local RarityService = require(Services.RarityService)
 local StatsService =  require(Services.StatService)
 local RewardsService = require(Services.RewardsService)
 local EquipService = require(Services.EquipService)
@@ -41,7 +39,7 @@ GameEvents.MobKilled.Event:Connect(function(player, mobKilled)
 end)
 
 GameEvents.AddItem.Event:Connect(function( itemID, itemType, amount, player)
-	InventoryService:AddItem( itemID, itemType, amount, player)
+	InventoryService:AddItem( itemID, amount, player)
 end)
 
 GameEvents.RemoveItem.Event:Connect(function(itemID  ,amount, player)

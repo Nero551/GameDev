@@ -7,7 +7,6 @@ local titleDataBase = require(repstor.Modules.Data.TitleData)
 
 local BuffService = {}
 
-local elapsed = {}
 
 
 function BuffService:UpdateBuffs(player)

@@ -1,8 +1,6 @@
 local players = game:GetService("Players")
 local repstor = game:GetService("ReplicatedStorage")
-local runService = game:GetService("RunService")
 local LocalizationService = game:GetService("LocalizationService")
-local TextChatService = game:GetService("TextChatService")
 
 local remotes = repstor.Remotes
 local InventoryService = require(script.Parent.Parent.Services.InventoryService)
@@ -11,7 +9,6 @@ local StatService = require(script.Parent.Parent.Services.StatService)
 local QuestService = require(script.Parent.Parent.Services.QuestService)
 local TitleService = require(script.Parent.Parent.Services.TitleService)
 local DialogueService = require(script.Parent.Parent.Services.DialogueService)
-local BuffService = require(script.Parent.Parent.Services.BuffService)
 
 local QuestData = require(repstor.Modules.Data.QuestData)
 
