@@ -1,5 +1,4 @@
 local tweenService = game:GetService("TweenService")
-local lighting = game:GetService("Lighting")
 
 
 local DynamicLight = {}

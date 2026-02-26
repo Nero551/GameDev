@@ -38,7 +38,7 @@ GameEvents.MobKilled.Event:Connect(function(player, mobKilled)
 	QuestService:ProgressQuest(player, mobKilled)
 end)
 
-GameEvents.AddItem.Event:Connect(function( itemID, itemType, amount, player)
+GameEvents.AddItem.Event:Connect(function( itemID, amount, player)
 	InventoryService:AddItem( itemID, amount, player)
 end)
 

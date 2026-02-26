@@ -99,36 +99,45 @@ end
 -----------------------------------------------------------------------------------------------------------------------------
 function QuestService:ProgressQuest(player:Player, mobKilled)
 	local playerQuests = DataService:GetTable(player, "Quests")
-	local playerInventory = DataService:GetTable(player ,"Inventory")
 	local quests = playerQuests.ActiveQuests
 	if quests then
 		for  questID,quest in pairs(quests) do
 			for objectiveNumber, objective in pairs(quest.Progress) do
 
-				---If Collect Quest---
-				if objective.ObjectiveType == "Collect" then
-					local _,itemID = itemDataBase:GetItemData(objective.Item)
-					if playerInventory[itemID] then
-						objective.CurrentProgress = math.min(playerInventory[itemID].Amount, objective.Required)
-					else
-						objective.CurrentProgress = 0
-					end
-				end	
-
-				---If Kill Quest---
-				if objective.ObjectiveType == "Kill" then
-					if mobKilled then
-						if mobKilled == objective.Mob then
-							objective.CurrentProgress = math.min(objective.CurrentProgress + 1,objective.Required)
-						end
-					end
-				end	
+				QuestService[objective.ObjectiveType.."Type"](QuestService, objective,
+				 {
+					["Player"] = player,
+					["MobKilled"] = mobKilled,
+				})
 			end
 		end
 	end
 	repstor.Remotes.UpdateQuests:FireClient(player, playerQuests)
 end
 
+-- * Add custom  functions for each objective Type.
+function QuestService:CollectType(objective, argumentData)
+	local player = argumentData.Player
+
+	local playerInventory = DataService:GetTable(player ,"Inventory")
+	if objective.ObjectiveType == "Collect" then
+		local _,itemID = itemDataBase:GetItemData(objective.Item)
+		if playerInventory[itemID] then
+			objective.CurrentProgress = math.min(playerInventory[itemID].Amount, objective.Required)
+		else
+			objective.CurrentProgress = 0
+		end
+	end	
+end
+
+function QuestService:KillType(objective, argumentData)
+	local mobKilled = argumentData.MobKilled
+	if mobKilled then
+		if mobKilled == objective.Mob then
+			objective.CurrentProgress = math.min(objective.CurrentProgress + 1,objective.Required)
+		end
+	end
+end
 
 -----------------------------------------------------------------------------------------------------------------------------
 function QuestService:CheckQuestCompletion(player: Player, questID)

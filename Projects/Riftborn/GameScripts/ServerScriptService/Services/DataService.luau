@@ -118,6 +118,10 @@ end
 
 
 function DataService:GetTable(player ,name)
+	if not player then
+		warn("Player Is Nil")
+		return nil
+	end
 	return DataService.PlayerDatas[player][name]
 end
 ---LoadData---

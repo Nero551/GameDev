@@ -4,7 +4,6 @@ local itemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 
 local RewardsService = {}
 function RewardsService:GiveRewards(player, Rewards, quest:boolean)
-	
 	if Rewards then
 		if Rewards.EXP then
 			GameEvents.IncreaseEXP:Fire(player, Rewards.EXP)
