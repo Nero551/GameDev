@@ -8,8 +8,6 @@ local CharacterVitalsService = require(sss.Services.CharacterVitalsService)
 
 local HitApplier = {}
 
-local remote = game.ReplicatedStorage.Remotes.a
-
 function HitApplier:ApplyHit(argumentData)
 	
 	local targetHit = argumentData.TargetHit

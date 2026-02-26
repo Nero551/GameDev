@@ -1,7 +1,6 @@
 --Defualt HitType
 local debris = game:GetService("Debris")
 local replicatedStorage = game:GetService("ReplicatedStorage")
-local assets = replicatedStorage.Assets
 
 local modules = (replicatedStorage.Modules)
 local stateService = require(modules.StateService)
@@ -25,12 +24,11 @@ return function(argumentData)
 	local lastHit = argumentData.LastHit
 	local playerCriticalDamageStat = argumentData.PlayerCriticalDamageStat
 	local abilityLetter = argumentData.AbilityLetter
-	
+
 	local targetHumanoid:Humanoid = targetHit:WaitForChild("Humanoid")
 	local animator = targetHumanoid:FindFirstChild("Animator")
 	
 	local targetHRP = targetHit:WaitForChild("HumanoidRootPart")
-	local attackerHRP = attacker:WaitForChild("HumanoidRootPart")
 	if not  targetHumanoid then return end
 	if stateService.checkState(targetHit, "Invulnerable") then return end
 
@@ -40,7 +38,7 @@ return function(argumentData)
 	stateService.addState(attacker, "In Combat", 20)
 	stateService.addState(targetHit, "In Combat", 20)
 	
-	local killerHit:ObjectValue = targetHumanoid:FindFirstChild("KillerHit")
+	local killerHit = targetHumanoid:FindFirstChild("KillerHit")
 	if killerHit and killerHit.Value == player then
 		killerHit:Destroy()
 	end
