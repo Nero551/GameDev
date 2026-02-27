@@ -1,14 +1,13 @@
 return function()
-	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local repstor = game:GetService("ReplicatedStorage")
 	local runService = game:GetService("RunService")
 
 	local assets = repstor.Assets
-	local Connections = require(ReplicatedStorage.Modules.Connections)
-	local stateService = require(repstor.Modules.StateService)
+local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 	local ActionVerifier =  require(repstor.Modules.ActionVerifier)
 	local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
-	local animsModule = require(repstor.Modules.Animations)
+	local animsModule = require(repstor.Modules.Animations)	
 	
 	local player = game:GetService("Players").LocalPlayer
 	local char = player.Character or player.CharacterAdded:Wait()
@@ -36,23 +35,18 @@ return function()
 	local currentIdle:AnimationTrack
 	local currentRun:AnimationTrack
 	local currentWalk:AnimationTrack
+	local conn:RBXScriptConnection
 
 	if not animsModule.loadedAnimations[char]["Shared.Animations.Idle.Default"].IsPlaying then
 		animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Idle.Default"):Play()
 	end
 
 
-	Connections:AddConnection(char, "Character", "MainAnimations", runService.RenderStepped:Connect(function(dt)
-		if stateService.checkState(char,"Dead") then
-			for name, anim in animsModule.loadedAnimations[char] do
-				if string.find(name, "Animations.Run") or string.find(name , "Animations.Idle") or string.find(name, "Animations.Walk") then
-					if anim.IsPlaying then
-						anim:Stop(0.2)
-					end
-				end
-			end
-			Connections:RemoveConnection(char, "Character", "MainAnimations")
-			return
+	conn = runService.RenderStepped:Connect(function(dt)
+
+		if StateChecker:CheckState(char, "Dead") then
+			if not conn then return end
+			conn:Disconnect()
 		end
 
 		local tool = char:FindFirstChildWhichIsA("Tool")
@@ -117,7 +111,7 @@ return function()
 			return
 
 			---Sprint---
-		elseif	stateService.checkState(char,"Sprinting") and ActionVerifier:CanSprint(char) then				
+		elseif	StateChecker:CheckState(char,"Sprinting") and ActionVerifier:CanSprint(char) then				
 			local previousTime = StopPreviousAnimation(currentRun, "Run")
 
 			if not currentRun.IsPlaying then
@@ -147,5 +141,7 @@ return function()
 
 		currentRun:Stop(0.2)
 		currentIdle:Stop(0.2)
-	end))	
+	end)	
+
+
 end

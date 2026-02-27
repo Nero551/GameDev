@@ -1,5 +1,5 @@
 local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVitalsService)
-local StateService = require(game.ReplicatedStorage.Modules.StateService)
+local StateChecker = require(game.ReplicatedStorage.Modules.StateChecker)
 
 
 local RegenService = {}
@@ -23,7 +23,7 @@ function RegenService:HealthRegen(dt)
 		if data.Health.CurrentHealth < data.Health.MaxHealth then
 
 			local dh
-			if StateService.checkState(character,"In Combat") then
+			if StateChecker:CheckState(character,"In Combat") then
 				dh = (dt*data.Health.HealthRegen) / 5
 			else
 				dh = dt*data.Health.HealthRegen
@@ -62,7 +62,7 @@ function RegenService:BlockCounterRegen(dt)
 	for character, data in pairs(CharacterVitalsService.CharacterVitals) do
 		
 		if CharacterVitalsService:GetVital(character, "BlockCounter") > 0 then
-			if not StateService.checkState(character,"Blocking") then
+			if not StateChecker:CheckState(character,"Blocking") then
 				elapsedBlock[character] = (elapsedBlock[character] or 0) + dt
 			else
 				elapsedBlock[character] = 0

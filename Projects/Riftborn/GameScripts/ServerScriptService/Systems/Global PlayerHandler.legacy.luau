@@ -2,7 +2,7 @@ local players = game:GetService("Players")
 local repstor = game:GetService("ReplicatedStorage")
 local runService = game:GetService("RunService")
 
-local stateService = require(repstor.Modules.StateService)
+local StateChecker = require(repstor.Modules.StateChecker)
 local StateHandler = require(script.Parent.Parent.Modules.Utilities.StateHandler)
 local Connections = require(repstor.Modules.Connections)
 
@@ -18,7 +18,7 @@ runService.Heartbeat:Connect(function(dt)
 		local character = player.Character
 		if character then
 			------Death Handler------
-			if stateService.checkState(character,"Dead") then
+			if StateChecker:CheckState(character,"Dead") then
 				Connections:RemoveConnection(character, "Character", "StateHandler")
 				return
 			end

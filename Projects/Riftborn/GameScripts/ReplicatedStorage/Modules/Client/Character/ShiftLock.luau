@@ -4,6 +4,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local UIS = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
 	local TweenService = game:GetService("TweenService")
+local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 
 	local player = Players.LocalPlayer
 	local camera = workspace.CurrentCamera
@@ -11,8 +12,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 	local root = character:WaitForChild("HumanoidRootPart")
 	local crosshair = player.PlayerGui.ShiftLock.Crosshair
-local Connections = require(ReplicatedStorage.Modules.Connections)
-	local StateService = require(game.ReplicatedStorage.Modules.StateService)
 
 
 
@@ -55,9 +54,8 @@ local Connections = require(ReplicatedStorage.Modules.Connections)
 	end
 
 
-	Connections:AddConnection(character, "Character", "ShiftLock", RunService.RenderStepped:Connect(function(dt)
-		if StateService.checkState(character, "Dead") then
-			Connections:RemoveConnection(character, "Character", "ShiftLock")
+	RunService.RenderStepped:Connect(function(dt)
+		if StateChecker:CheckState(character, "Dead") then
 			setShiftLock(false)
 			return
 		end
@@ -81,7 +79,7 @@ local Connections = require(ReplicatedStorage.Modules.Connections)
 		else
 			setShiftLock(false)
 		end
-	end))
+	end)
 
 
 	UIS.WindowFocusReleased:Connect(function()

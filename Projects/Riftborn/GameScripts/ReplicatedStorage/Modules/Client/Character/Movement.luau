@@ -12,7 +12,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local modules =  replicatedStorage.Modules
 	local remotes = replicatedStorage.Remotes
 
-	local Connections = require(ReplicatedStorage.Modules.Connections)
 	local stateService = require(modules.StateService)
 	local ActionVerifier = require(modules.ActionVerifier)
 	local MovementConfig = require(modules.Configs.MovementConfig)
@@ -71,7 +70,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	---AirJump---
 	if input.KeyCode == Enum.KeyCode.Space then
 		if humanoid:GetState()  == Enum.HumanoidStateType.Freefall then
-			if not stateService.checkState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
+			if not stateService(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
 				"FlashStepEndLag", "FlashStep", "AirJump") and airJumpCharge > 0 then
 				remotes.AirJump:FireServer(airJumpCharge)
 				airJumpCharge -= 1
@@ -97,11 +96,11 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 			dashConnection:Disconnect()
 			dashConnection = nil
 		end
-
-		Connections:AddConnection(character, "Character", "Dash", runService.RenderStepped:Connect(function(dt)
+		dashConnection = runService.Heartbeat:Connect(function(dt)
 			if not stateService.checkState(character, "Dashing") then
 				stateService.addState(character, "DashCoolDown", DashConfig.DashCooldown)
-				Connections:RemoveConnection(character, "Character", "Dash")
+				dashConnection:Disconnect()
+				dashConnection = nil
 				return
 			end
 			local directionVector:Vector3
@@ -141,7 +140,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 			
 			local rayResult = workspace:Raycast(root.Position, directionVector * maxDashDistance * dt, rayParams)
 			if rayResult then
-				stateService.removeState(character, "Dashing")
 			end
 			root.CFrame = root.CFrame + (directionVector * maxDashDistance * dt)
 		end))

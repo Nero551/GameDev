@@ -31,19 +31,28 @@ function StateService:AddState(character, stateName, duration, attributes)
 
     local statusFolder = character:FindFirstChild("Status")
     if statusFolder then
+        if statusFolder:FindFirstChild(stateName) then
+            statusFolder[stateName]:Destroy()
+        end
         local stateValue = Instance.new("StringValue")
         stateValue.Name = stateName
         stateValue.Parent = statusFolder
-        for attr,Value in pairs(attributes) do
-            stateValue:SetAttribute(attr, Value)
+        if attributes then
+            for attrName,Value in pairs(attributes) do
+                stateValue:SetAttribute(attrName, Value)
+            end
         end
         Connections:AddConnection(character, "Character", stateName, RunService.Heartbeat:Connect(function(dt)
             if charStatus[stateName] and charStatus[stateName].Duration then
                 charStatus[stateName].Duration = charStatus[stateName].Duration - dt
 
-                for attr,Value in pairs(attributes) do
-                     stateValue:SetAttribute(attr, Value)
-                end
+                stateValue:SetAttribute("Duration", charStatus[stateName].Duration)
+                     
+                if attributes then
+                     for attrName,Value in pairs(attributes) do
+                         stateValue:SetAttribute(attrName, Value)
+                      end
+                 end
 
                 if charStatus[stateName].Duration <= 0 then
                    Connections:RemoveConnection(character, "Character", stateName)
@@ -71,20 +80,4 @@ function StateService:RemoveState(character, stateName)
     end
 end
 
-function StateService:CheckState(character, ...)
-    if not StateService.Status[character] then
-        return false
-    end
-
-    local charStatus = StateService.Status[character]
-    local statesToCheck = {...}
-
-    for _, stateName in pairs(statesToCheck) do
-        if charStatus[stateName] then
-            return true
-        end
-    end
-
-    return false
-end
 return StateService

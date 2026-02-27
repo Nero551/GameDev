@@ -2,7 +2,7 @@
 
 return function(npc)
 	local PathFindingService = game:GetService("PathfindingService")
-	local StateService = require(game.ReplicatedStorage.Modules.StateService)
+	local StateService = require(game.ServerScriptService.Services.StateService)
 	
 	local AIService = require(script.Parent)
 	
@@ -12,7 +12,7 @@ return function(npc)
 
 	if not AIData.Target then return end
 	
-	StateService.addState(npc, "Sprinting")
+	StateService:AddState(npc, "Sprinting")
 		
 	if AIData.IdleAnimation.IsPlaying then
 		AIData.IdleAnimation:Stop()

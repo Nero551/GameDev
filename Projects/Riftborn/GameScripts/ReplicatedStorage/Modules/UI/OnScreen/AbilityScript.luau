@@ -1,13 +1,11 @@
 return function(abilityUI)
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local repstor = game:GetService("ReplicatedStorage")
 	local player = game:GetService("Players").LocalPlayer
 	local run = game:GetService("RunService")
 	local tweenService = game:GetService("TweenService")
 	local char = player.Character or player.CharacterAdded:Wait()
 	local modules = repstor.Modules
-local Connections = require(ReplicatedStorage.Modules.Connections)
-	local stateService = require(modules.StateService)
+	local StateChecker = require(modules.StateChecker)
 	local abilityDataModule = require(modules.Data.AbilityData)
 	local itemDataBase = require(modules.Data.ItemDataBase)
 	local bars = {}
@@ -36,7 +34,7 @@ local Connections = require(ReplicatedStorage.Modules.Connections)
 	end
 
 	-- update loop
-	Connections:AddConnection(char, "Player", "AbilityUI", run.RenderStepped:Connect(function()
+	run.RenderStepped:Connect(function()
 		local tool = char:FindFirstChildWhichIsA("Tool")
 		if not tool then
 			for _, bar in pairs(bars) do
@@ -47,7 +45,7 @@ local Connections = require(ReplicatedStorage.Modules.Connections)
 
 		for abilityKey, data in pairs(bars) do
 			local abilityData = abilityDataModule.getAbilityData(tool.Name , abilityKey)
-			local weaponData = itemDataBase:GetItemData(tool.Name)
+			local weaponData = itemDataBase:GetItemData(tool.Name, "Weapon")
 			if not abilityData then
 				data.bar.Visible = false
 				continue
@@ -56,7 +54,7 @@ local Connections = require(ReplicatedStorage.Modules.Connections)
 			data.bar.Visible = true
 			data.nameLabel.Text = abilityData.AbilityName
 			local cdStateName = "Ability"..abilityKey.." Cooldown"
-			local onCooldown = stateService.checkState(char, cdStateName)
+			local onCooldown = StateChecker:CheckState(char, cdStateName)
 			if onCooldown and data.cdActive and data.cdEndTime then
 				local remaining = math.max(0, data.cdEndTime - time())
 				data.cdText.Text = string.format("%.1f", remaining)
@@ -109,6 +107,6 @@ local Connections = require(ReplicatedStorage.Modules.Connections)
 				tweenService:Create(data.innerStroke, info , {ImageColor3 = Color3.fromHex("#b520ff")}):Play()
 			end
 		end
-	end)) 
+	end)
 
 end

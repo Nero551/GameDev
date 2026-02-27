@@ -1,14 +1,12 @@
 return function()
 		
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local replicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
 	local runService = game:GetService("RunService")
 	local remotes = replicatedStorage.Remotes
 	local player = game:GetService("Players").LocalPlayer
 	local modules =  replicatedStorage.Modules
-	local Connections = require(ReplicatedStorage.Modules.Connections)
-	local stateService = require(modules.StateService)
+	local StateChecker = require(modules.StateChecker)
 	local character = player.Character or player.CharacterAdded:Wait()
 
 	local statusFolder = character:WaitForChild("Status", math.huge)
@@ -30,12 +28,17 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 		end	
 	end)
 	
-	Connections:AddConnection(character,"Character", "M1 & Block",runService.RenderStepped:Connect(function(dt)
+	local stepConnection =  nil
+
+	stepConnection = runService.RenderStepped:Connect(function(deltaTime: number)
 
 		------Death Handler------
-		if stateService.checkState(character, "Dead") then
-			Connections:RemoveConnection(character, "Character", "M1 & Block")
-			return
+		if StateChecker:CheckState(character, "Dead") then
+			if stepConnection then
+				stepConnection:Disconnect()
+				stepConnection = nil
+				return		
+			end
 		end
 
 		------M1------
@@ -46,7 +49,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 		------Blocking------
 		local wantBlock = UserInputService:IsKeyDown(Enum.KeyCode.F) and not proc
 
-		if wantBlock ~= stateService.checkState(character, "Blocking") then
+		if wantBlock ~= StateChecker:CheckState(character, "Blocking") then
 			remotes.Block:FireServer(wantBlock)	
 		end
 		local tool = character:FindFirstChildWhichIsA("Tool")
@@ -57,5 +60,5 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 				end
 			end
 		end
-	end))
+	end)
 end

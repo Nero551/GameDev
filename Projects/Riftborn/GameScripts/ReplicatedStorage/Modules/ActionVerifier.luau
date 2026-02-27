@@ -1,13 +1,11 @@
-local ServerScriptService = game:GetService("ServerScriptService")
-local StateService = require(ServerScriptService.Services.StateService)
-
+local StateChecker = require(script.Parent.StateChecker)
 
 local ActionVerifier = {}
 
 function ActionVerifier:CanSprint(character)
 	local humanoid = character:WaitForChild("Humanoid")
 	if humanoid.MoveDirection.Magnitude >  0 then
-		if not StateService:CheckState(character, "Attacking", "Blocking", "NoMove", "Stunned", "NoSprint", "BlockBroken", "Dead") then
+		if not StateChecker:CheckState(character, "Attacking", "Blocking", "NoMove", "Stunned", "NoSprint", "BlockBroken") then
 			return true
 		end
 	end
@@ -17,7 +15,7 @@ end
 function ActionVerifier:CanWalk(character)
 	local humanoid = character:WaitForChild("Humanoid")
 	if humanoid.MoveDirection.Magnitude >  0 then
-		if not StateService:CheckState(character, "Attacking", "NoMove", "Stunned", "NoSprint", "Sprinting", "BlockBroken", "Dead") then
+		if not StateChecker:CheckState(character, "Attacking", "NoMove", "Stunned", "NoSprint", "Sprinting", "BlockBroken") then
 			return true
 		end
 	end
@@ -25,8 +23,8 @@ function ActionVerifier:CanWalk(character)
 end
 
 function ActionVerifier:CanAttack(character)
-	if StateService:CheckState(character , "Attacking" , "Blocking", "Stunned", "NoPunch"
-		, "Dashing", "FlashStep", "FlashStepEndLag" ,"DashEndLag", "Casting", "Frozen", "BlockBroken", "BlockBroken", "Dead") then
+	if StateChecker:CheckState(character , "Attacking" , "Blocking", "Stunned", "NoPunch"
+		, "Dashing", "FlashStep", "FlashStepEndLag" ,"DashEndLag", "Casting", "Frozen", "BlockBroken", "BlockBroken") then
 		return false
 	end
 	return true
@@ -34,23 +32,21 @@ end
 
 
 function ActionVerifier:CanBlock(character)
-	if StateService:CheckState(character, "Stunned", "Attacking", "NoBlock", "Flashstep", "Dashing",
-		"FlashStepEndLag" ,"DashEndLag", "Frozen", "BlockBroken", "Dead") then
+	if StateChecker:CheckState(character, "Stunned", "Attacking", "NoBlock", "Flashstep", "Dashing",
+		"FlashStepEndLag" ,"DashEndLag", "Frozen", "BlockBroken") then
 		return false
 	end
 	return true
 end
 
 
-
-
 function ActionVerifier:CanAbility(character, abilityLetter)
-	if StateService:CheckState(character, "Stunned", "Attacking", "Dashing",
-		"Flashstep", "Blocking", "Frozen","FlashStepEndLag" ,"DashEndLag", "Frozen", "BlockBroken", "Dead") then
+	if StateChecker:CheckState(character, "Stunned", "Attacking", "Dashing",
+		"Flashstep", "Blocking", "Frozen","FlashStepEndLag" ,"DashEndLag", "Frozen", "BlockBroken") then
 		return false
 	end
 	
-	if abilityLetter and StateService:CheckState(character, "Ability"..abilityLetter.. " Cooldown", "Dead") then
+	if abilityLetter and StateChecker:CheckState(character, "Ability"..abilityLetter.. " Cooldown") then
 		return false
 	end
 	
@@ -59,8 +55,8 @@ end
 
 
 function ActionVerifier:CanDash(character)
-	if StateService:CheckState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-		"DashCoolDown", "FlashStep", "Frozen", "BlockBroken", "BlockBroken", "Dead") then
+	if StateChecker:CheckState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
+		"DashCoolDown", "FlashStep", "Frozen", "BlockBroken", "BlockBroken") then
 		return false
 	end
 	return true
@@ -68,8 +64,8 @@ end
 
 
 function ActionVerifier:CanFlashstep(character, flashstepCharge)
-	if StateService:CheckState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-		"FlashStepEndLag", "FlashStep", "Frozen", "BlockBroken", "BlockBroken", "Dead") then
+	if StateChecker:CheckState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
+		"FlashStepEndLag", "FlashStep", "Frozen", "BlockBroken", "BlockBroken") then
 		return false
 	end
 	
@@ -87,8 +83,8 @@ function ActionVerifier:CanWallRun(character:Model)
 	local Left = -hrp.CFrame.RightVector * 2
 	Left = Vector3.new(Left.X, 0 , Left.Z)
 	Right = Vector3.new(Right.X, 0 , Right.Z)
-	if not StateService:CheckState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-		 "WallJump","WallRunning", "FlashStep", "FlashStepEndLag", "Frozen", "BlockBroken", "Dead") then	
+	if not StateChecker:CheckState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
+		 "WallJump","WallRunning", "FlashStep", "FlashStepEndLag", "Frozen", "BlockBroken") then	
 		
 		local rayparams = RaycastParams.new()
 		rayparams.FilterType = Enum.RaycastFilterType.Exclude
@@ -108,8 +104,8 @@ end
 
 
 function ActionVerifier:CanAirJump(character, AirJumpCharges)
-	if StateService:CheckState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-		"FlashStepEndLag", "FlashStep", "AirJump", "Frozen", "Dead") or AirJumpCharges == 0 then
+	if StateChecker:CheckState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
+		"FlashStepEndLag", "FlashStep", "AirJump", "Frozen") or AirJumpCharges == 0 then
 		 return false
 	end
 	return true

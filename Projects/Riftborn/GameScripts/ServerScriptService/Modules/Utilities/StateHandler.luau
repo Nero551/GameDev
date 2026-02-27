@@ -1,4 +1,5 @@
-local stateService = require(game.ReplicatedStorage.Modules.StateService)
+local StateService = require(game.ServerScriptService.Services.StateService)
+local StateChecker = require(game.ReplicatedStorage.Modules.StateChecker)
 local CharacterVitalsService = require(game.ServerScriptService.Services.CharacterVitalsService)
 
 local StateHandler = {}
@@ -37,7 +38,7 @@ function StateHandler:HandleStates(character:Model , runSpeed)
 	local finalJumpPower = 50 
 
 	for _, stateInfo in ipairs(statePriority) do
-		if stateService.checkState(character, stateInfo.Name) then
+		if StateChecker:CheckState(character, stateInfo.Name) then
 			
 			if stateInfo.Name == "Sprinting" then
 				finalWalkSpeed = runSpeed or stateInfo.WS	
@@ -66,7 +67,7 @@ function StateHandler:HandleStates(character:Model , runSpeed)
 		})	
 	end
 	
-	if finalJumpPower == 0 or stateService.checkState(character,"NoJump")  then
+	if finalJumpPower == 0 or StateChecker:CheckState(character,"NoJump")  then
 		humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, false)
 	else
 		humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, true)
