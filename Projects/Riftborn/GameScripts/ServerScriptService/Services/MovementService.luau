@@ -1,7 +1,9 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local repstor = game:GetService("ReplicatedStorage")
 local runService = game:GetService("RunService")
 
 local assets = repstor.Assets
+local Connections = require(ReplicatedStorage.Modules.Connections)
 local stateService = require(repstor.Modules.StateService)
 local ActionVerifier =  require(repstor.Modules.ActionVerifier)
 local MovementConfig = require(repstor.Modules.Configs.MovementConfig)
@@ -121,13 +123,10 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 		rayParams.FilterType = Enum.RaycastFilterType.Exclude
 		rayParams.FilterDescendantsInstances = {character}
 		
-		local dashConnection = nil
-		dashConnection = runService.Heartbeat:Connect(function(dt)
-
+		Connections:AddConnection(character, "Character", "Dash", runService.Heartbeat:Connect(function(dt)
 			if not stateService.checkState(character, "Dashing") then
 				stateService.addState(character, "DashCoolDown", DashConfig.DashCooldown)
-				dashConnection:Disconnect()
-				dashConnection = nil
+				Connections:RemoveConnection(character, "Character", "Dash")
 				return
 			end
 			local directionVector:Vector3
@@ -142,7 +141,7 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 			end
 			root.CFrame = root.CFrame + (directionVector * maxDashDistance * dt)
 
-		end)	
+		end))
 	else
 		---If Player Then Let Client Handle Movement---
 		repstor.Remotes.Dash:FireClient(player, directionName, IsShiftLockOff)

@@ -1,8 +1,10 @@
 return function()
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local repstor = game:GetService("ReplicatedStorage")
 	local runService = game:GetService("RunService")
 
 	local assets = repstor.Assets
+	local Connections = require(ReplicatedStorage.Modules.Connections)
 	local stateService = require(repstor.Modules.StateService)
 	local ActionVerifier =  require(repstor.Modules.ActionVerifier)
 	local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
@@ -34,18 +36,23 @@ return function()
 	local currentIdle:AnimationTrack
 	local currentRun:AnimationTrack
 	local currentWalk:AnimationTrack
-	local conn:RBXScriptConnection
 
 	if not animsModule.loadedAnimations[char]["Shared.Animations.Idle.Default"].IsPlaying then
 		animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Idle.Default"):Play()
 	end
 
 
-	conn = runService.RenderStepped:Connect(function(dt)
-
-		if stateService.checkState(char, "Dead") then
-			if not conn then return end
-			conn:Disconnect()
+	Connections:AddConnection(char, "Character", "MainAnimations", runService.RenderStepped:Connect(function(dt)
+		if stateService.checkState(char,"Dead") then
+			for name, anim in animsModule.loadedAnimations[char] do
+				if string.find(name, "Animations.Run") or string.find(name , "Animations.Idle") or string.find(name, "Animations.Walk") then
+					if anim.IsPlaying then
+						anim:Stop(0.2)
+					end
+				end
+			end
+			Connections:RemoveConnection(char, "Character", "MainAnimations")
+			return
 		end
 
 		local tool = char:FindFirstChildWhichIsA("Tool")
@@ -140,7 +147,5 @@ return function()
 
 		currentRun:Stop(0.2)
 		currentIdle:Stop(0.2)
-	end)	
-
-
+	end))	
 end

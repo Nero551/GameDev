@@ -2,6 +2,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StateHandler = require(script.Parent.Parent.Modules.Utilities.StateHandler)
 local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVitalsService)
 local animationsModule = require(ReplicatedStorage.Modules.Animations)
+local Connections = require(ReplicatedStorage.Modules.Connections)
 local abilityDataModule = require(ReplicatedStorage.Modules.Data.AbilityData)
 
 local CanDoAction = require(script.CanDoAction)
@@ -158,6 +159,7 @@ function AIService:StateUpdater(npc)
 end
 
 function AIService:DestroyAI(npc)
+	Connections:CleanupConnections(npc)
 	AIService.ActiveAIs[npc] = nil
 end
 

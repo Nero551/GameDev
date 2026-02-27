@@ -1,11 +1,13 @@
 return function()
 		
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local replicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
 	local runService = game:GetService("RunService")
 	local remotes = replicatedStorage.Remotes
 	local player = game:GetService("Players").LocalPlayer
 	local modules =  replicatedStorage.Modules
+	local Connections = require(ReplicatedStorage.Modules.Connections)
 	local stateService = require(modules.StateService)
 	local character = player.Character or player.CharacterAdded:Wait()
 
@@ -28,17 +30,12 @@ return function()
 		end	
 	end)
 	
-	local stepConnection =  nil
-
-	stepConnection = runService.RenderStepped:Connect(function(deltaTime: number)
+	Connections:AddConnection(character,"Character", "M1 & Block",runService.RenderStepped:Connect(function(dt)
 
 		------Death Handler------
 		if stateService.checkState(character, "Dead") then
-			if stepConnection then
-				stepConnection:Disconnect()
-				stepConnection = nil
-				return		
-			end
+			Connections:RemoveConnection(character, "Character", "M1 & Block")
+			return
 		end
 
 		------M1------
@@ -60,5 +57,5 @@ return function()
 				end
 			end
 		end
-	end)
+	end))
 end

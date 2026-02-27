@@ -1,4 +1,5 @@
 return function()
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local replicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
 	local runService = game:GetService("RunService")
@@ -10,8 +11,8 @@ return function()
 
 	local modules =  replicatedStorage.Modules
 	local remotes = replicatedStorage.Remotes
-	local assets = replicatedStorage.Assets
 
+	local Connections = require(ReplicatedStorage.Modules.Connections)
 	local stateService = require(modules.StateService)
 	local ActionVerifier = require(modules.ActionVerifier)
 	local MovementConfig = require(modules.Configs.MovementConfig)
@@ -25,21 +26,12 @@ return function()
 
 	---FOV Changes Based On Current Speed---
 	local defualtFOV = 70
-	runService.RenderStepped:Connect(function(dt)
+	Connections:AddConnection(character, "Character", "FOV", runService.RenderStepped:Connect(function(dt)
 		tweenService:Create(camera, tweenInfo, {FieldOfView = defualtFOV + humanoid.WalkSpeed/2}):Play()
-	end)
+	end))
 
 
 	------------------------------------------------------MovementAbilties-------------------------------------------------------
-	---AirJumpCharges---
-	local airJumpMaxCharge = 3
-	local airJumpCharge = 3
-
-	runService.Heartbeat:Connect(function()
-		if humanoid.FloorMaterial ~= Enum.Material.Air then
-			airJumpCharge = airJumpMaxCharge
-		end
-	end)
 
 	local function getDashDirection()
 		local dashDirection = humanoid.MoveDirection
@@ -64,7 +56,6 @@ return function()
 				local direction = getDashDirection()
 				if direction and ActionVerifier:CanDash(character) then
 					local IsShiftLockOff = UserInputService.MouseBehavior ~= Enum.MouseBehavior.LockCenter
-					local character = player.Character or player.CharacterAdded:Wait()
 					remotes.Dash:FireServer(direction, IsShiftLockOff)
 				end	
 			end
@@ -96,7 +87,7 @@ return function()
 	remotes.Dash.OnClientEvent:Connect(function(direction, IsShiftLockOff)
 		---Dash Movement---	
 		local maxDashDistance = DashConfig.MaxDashDistance
-		local root:Part? = character:FindFirstChild("HumanoidRootPart")
+		local root:Part = character:FindFirstChild("HumanoidRootPart")
 
 		local rayParams = RaycastParams.new()
 		rayParams.FilterType = Enum.RaycastFilterType.Exclude
@@ -106,11 +97,11 @@ return function()
 			dashConnection:Disconnect()
 			dashConnection = nil
 		end
-		dashConnection = runService.Heartbeat:Connect(function(dt)
+
+		Connections:AddConnection(character, "Character", "Dash", runService.RenderStepped:Connect(function(dt)
 			if not stateService.checkState(character, "Dashing") then
 				stateService.addState(character, "DashCoolDown", DashConfig.DashCooldown)
-				dashConnection:Disconnect()
-				dashConnection = nil
+				Connections:RemoveConnection(character, "Character", "Dash")
 				return
 			end
 			local directionVector:Vector3
@@ -153,7 +144,7 @@ return function()
 				stateService.removeState(character, "Dashing")
 			end
 			root.CFrame = root.CFrame + (directionVector * maxDashDistance * dt)
-		end)
+		end))
 	end)
 
 

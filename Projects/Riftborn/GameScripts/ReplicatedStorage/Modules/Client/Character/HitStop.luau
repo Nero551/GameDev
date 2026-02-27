@@ -10,7 +10,7 @@ return function()
 		local character = player.Character
 		if not character then return end
 
-		local humanoid:Humanoid = character:FindFirstChildOfClass("Humanoid")
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
 		local animator:Animator = humanoid.Animator
 		if not humanoid then return end
 

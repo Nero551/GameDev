@@ -20,5 +20,4 @@ function TimeService:TimeCycle(dt)
 	lighting.TimeOfDay = time
 end
 
-
 return TimeService

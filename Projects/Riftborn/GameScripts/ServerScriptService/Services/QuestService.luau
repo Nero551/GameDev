@@ -144,7 +144,7 @@ function QuestService:CheckQuestCompletion(player: Player, questID)
 	local playerQuests = DataService:GetTable(player, "Quests")
 	local quest = playerQuests.ActiveQuests[questID]
 	if not quest then return end
-	-- Check Items
+	
 	for objectiveNumber, objective in pairs(quest.Progress) do
 		if objective.CurrentProgress < objective.Required then
 			repstor.Remotes.UpdateQuests:FireClient(player, playerQuests)

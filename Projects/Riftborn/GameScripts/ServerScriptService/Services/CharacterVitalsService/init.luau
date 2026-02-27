@@ -19,9 +19,18 @@ local function SyncAttributes(character: Model?, vitalsTable)
 
 	-- Recursive function to flatten tables and set attributes
 	local function FlattenAndSet(prefix, tbl)
+		for attr,v in character:GetAttributes() do
+			if prefix then
+				if string.find(attr, prefix.."_") == 1 then
+					character:SetAttribute(attr, nil)
+				end
+			else
+				character:SetAttribute(attr, nil)
+			end
+		end
+
 		for key, value in pairs(tbl) do
 			local attrName = prefix and (prefix .. "_" .. key) or key
-
 			if typeof(value) == "table" then
 				-- recurse into the table
 				FlattenAndSet(attrName, value)
@@ -59,11 +68,13 @@ function CharacterVitalsService:Create(character)
 			
 		},
 		AirJump = {
-			CurentAirJump = 3,
+			CurrentAirJump = 3,
 			MaxAirJump = 3
 			
 		},
-		
+
+		Status = {},
+
 		StatusAilments = {},
 		
 		WalkSpeed = 10,
@@ -89,7 +100,7 @@ function CharacterVitalsService:Create(character)
 		})
 		task.wait(3)
 		CharacterVitalsService:Cleanup(character)
-		connections:CleanupConnections(character)
+		connections:CleanupConnections(character, "Character")
 	end)
 	
 	character.AncestryChanged:Connect(function(_, parent)

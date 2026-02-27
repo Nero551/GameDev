@@ -154,7 +154,7 @@ function DataService:Save(player)
 	end)
 	if not success then
 		warn("Failed to save data for", player.Name, err)
-		return
+		return 
 	end
 	return
 end

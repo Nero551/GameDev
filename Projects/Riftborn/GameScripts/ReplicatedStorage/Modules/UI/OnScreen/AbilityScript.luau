@@ -1,10 +1,12 @@
 return function(abilityUI)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local repstor = game:GetService("ReplicatedStorage")
 	local player = game:GetService("Players").LocalPlayer
 	local run = game:GetService("RunService")
 	local tweenService = game:GetService("TweenService")
 	local char = player.Character or player.CharacterAdded:Wait()
 	local modules = repstor.Modules
+local Connections = require(ReplicatedStorage.Modules.Connections)
 	local stateService = require(modules.StateService)
 	local abilityDataModule = require(modules.Data.AbilityData)
 	local itemDataBase = require(modules.Data.ItemDataBase)
@@ -34,7 +36,7 @@ return function(abilityUI)
 	end
 
 	-- update loop
-	run.RenderStepped:Connect(function()
+	Connections:AddConnection(char, "Player", "AbilityUI", run.RenderStepped:Connect(function()
 		local tool = char:FindFirstChildWhichIsA("Tool")
 		if not tool then
 			for _, bar in pairs(bars) do
@@ -45,7 +47,7 @@ return function(abilityUI)
 
 		for abilityKey, data in pairs(bars) do
 			local abilityData = abilityDataModule.getAbilityData(tool.Name , abilityKey)
-			local weaponData = itemDataBase:GetItemData(tool.Name, "Weapon")
+			local weaponData = itemDataBase:GetItemData(tool.Name)
 			if not abilityData then
 				data.bar.Visible = false
 				continue
@@ -107,6 +109,6 @@ return function(abilityUI)
 				tweenService:Create(data.innerStroke, info , {ImageColor3 = Color3.fromHex("#b520ff")}):Play()
 			end
 		end
-	end)
+	end)) 
 
 end

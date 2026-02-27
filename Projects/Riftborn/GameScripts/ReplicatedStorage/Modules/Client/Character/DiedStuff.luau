@@ -1,11 +1,9 @@
 return function()
-	
-	local debris = game:GetService("Debris")
-	
+		
 	local player = game:GetService("Players").LocalPlayer
 	local char = player.Character or player.CharacterAdded:Wait()
-	local humanoid:Humanoid = char:WaitForChild("Humanoid")
-	local root:Part? = char:WaitForChild("HumanoidRootPart")
+	local humanoid = char:WaitForChild("Humanoid")
+	local root:Part = char:WaitForChild("HumanoidRootPart")
 
 	local debris = game:GetService("Debris")
 

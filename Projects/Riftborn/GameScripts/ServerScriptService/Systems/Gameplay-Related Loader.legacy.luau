@@ -12,8 +12,9 @@ local TimeService = require(script.Parent.Parent.Services.TimeService)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
----Regen Stuff and clock---
+---Regen Stuff and Time Cycle---
 runService.Heartbeat:Connect(function(dt)
+	RegenService:AirJumpRegen(dt)
 	RegenService:ManaRegen(dt)
 	RegenService:HealthRegen(dt)
 	RegenService:FlashStepRegen(dt)

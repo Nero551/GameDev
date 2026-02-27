@@ -48,6 +48,15 @@ function RegenService:FlashStepRegen(dt)
 	end
 end
 	
+function RegenService:AirJumpRegen(dt)
+	for character, data in pairs(CharacterVitalsService.CharacterVitals) do
+		local humanoid:Humanoid = character:WaitForChild("Humanoid")
+		if data.AirJump.CurrentAirJump < data.AirJump.MaxAirJump and humanoid.FloorMaterial ~= Enum.Material.Air then
+			CharacterVitalsService:ModifyVital(character, "Movement", "ModifyAirJump", { AirJumpChange = 1 })
+		end
+	end
+end
+
 function RegenService:BlockCounterRegen(dt)
 	local cooldown = 5
 	for character, data in pairs(CharacterVitalsService.CharacterVitals) do

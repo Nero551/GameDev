@@ -72,14 +72,11 @@ function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 	
 	
 	--Playing Animations
-	local lastSwing = CharacterVitalsService:GetVital(character, "LastSwing")
-	local lastCombo = CharacterVitalsService:GetVital(character, "LastCombo")
-
-	if (os.clock()-lastCombo) < weaponData.ComboCooldown then
+	if (os.clock()-CharacterVitalsService:GetVital(character, "LastCombo")) < weaponData.ComboCooldown then
 		return
 	end
 	-- Reset swing if combo window expired
-	if (os.clock() - lastSwing) >= weaponData.ComboResetTime then
+	if (os.clock() - CharacterVitalsService:GetVital(character, "LastSwing")) >= weaponData.ComboResetTime then
 		CharacterVitalsService:ModifyVital(character, "Combat", "ModifySwingNumber", {
 			SwingNumberChange = 0
 		})
@@ -110,7 +107,7 @@ function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 	stateService.addState(character, "NoBlock", (animationToPlay.Speed * animationToPlay.Length)+.3)
 	stateService.addState(character , "NoJump", (animationToPlay.Speed * animationToPlay.Length)+.5)
 	stateService.addState(character , "NoSprint", (animationToPlay.Speed * animationToPlay.Length)+0.35)
-
+	
 	animationToPlay:Play()
 	
 	animationToPlay:GetMarkerReachedSignal("Hit"):Once(function()	

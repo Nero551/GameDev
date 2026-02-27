@@ -1,10 +1,11 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+local Connections = require(ReplicatedStorage.Modules.Connections)
 return function()
-	local tweenService = game:GetService("TweenService")
-	local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	
 	local player = game:GetService("Players").LocalPlayer
 	local char = player.Character or player.CharacterAdded:Wait()
-	local root:Part? =  char:WaitForChild("HumanoidRootPart")
+	local root =  char:WaitForChild("HumanoidRootPart")
 
 	local humanoid:Humanoid = char:WaitForChild("Humanoid")
 	local materialSounds = game.ReplicatedStorage.Assets.Shared.Sounds.LandingSounds
@@ -12,7 +13,7 @@ return function()
 	local elapsed = 0
 	local minFalltime = 2
 
-	game:GetService("RunService").RenderStepped:Connect(function(dt)
+	Connections:AddConnection(char, "Character", "LandingSounds", RunService.RenderStepped:Connect(function(dt)
 		if humanoid:GetState() == Enum.HumanoidStateType.Freefall then
 			elapsed = elapsed + dt
 		else
@@ -21,7 +22,7 @@ return function()
 
 		if elapsed >= minFalltime then
 			if humanoid:GetState() ==  Enum.HumanoidStateType.Landed then
-				local materialSound:Sound? = materialSounds:FindFirstChild(humanoid.FloorMaterial.Name):Clone()
+				local materialSound:Sound = materialSounds:FindFirstChild(humanoid.FloorMaterial.Name):Clone()
 				materialSound.Parent = root
 				if materialSound then
 
@@ -36,5 +37,5 @@ return function()
 
 			end
 		end
-	end)
+	end))
 end

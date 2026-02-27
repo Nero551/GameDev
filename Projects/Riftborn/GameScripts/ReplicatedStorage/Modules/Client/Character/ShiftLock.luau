@@ -1,5 +1,6 @@
 return function()
 	local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local UIS = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
 	local TweenService = game:GetService("TweenService")
@@ -10,6 +11,7 @@ return function()
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 	local root = character:WaitForChild("HumanoidRootPart")
 	local crosshair = player.PlayerGui.ShiftLock.Crosshair
+local Connections = require(ReplicatedStorage.Modules.Connections)
 	local StateService = require(game.ReplicatedStorage.Modules.StateService)
 
 
@@ -53,8 +55,9 @@ return function()
 	end
 
 
-	RunService.RenderStepped:Connect(function(dt)
+	Connections:AddConnection(character, "Character", "ShiftLock", RunService.RenderStepped:Connect(function(dt)
 		if StateService.checkState(character, "Dead") then
+			Connections:RemoveConnection(character, "Character", "ShiftLock")
 			setShiftLock(false)
 			return
 		end
@@ -78,7 +81,7 @@ return function()
 		else
 			setShiftLock(false)
 		end
-	end)
+	end))
 
 
 	UIS.WindowFocusReleased:Connect(function()
