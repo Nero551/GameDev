@@ -1,7 +1,9 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local repstor = game:GetService("ReplicatedStorage")
 local runService = game:GetService("RunService")
 
 local assets = repstor.Assets
+local Connections = require(ReplicatedStorage.Modules.Connections)
 local StateChecker = require(game.ReplicatedStorage.Modules.StateChecker)
 local StateService = require(game.ServerScriptService.Services.StateService)
 local ActionVerifier =  require(repstor.Modules.ActionVerifier)
@@ -148,6 +150,12 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 		---If Player Then Let Client Handle Movement---
 		repstor.Remotes.Dash:FireClient(player, directionName, IsShiftLockOff)
 	end
+	Connections:AddConnection(character, "Character", "DashCD",runService.Heartbeat:Connect(function()
+		if not StateChecker:CheckState(character, "Dashing") then
+			Connections:RemoveConnection(character, "Character", "DashCD")
+			StateService:AddState(character, "DashCoolDown", DashConfig.DashCooldown)
+		end
+	end)) 
 end
 
 function MovementService:FlashStep(character)

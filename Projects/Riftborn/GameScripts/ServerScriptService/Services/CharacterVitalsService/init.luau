@@ -59,13 +59,11 @@ function CharacterVitalsService:Create(character)
 			
 		},
 		AirJump = {
-			CurentAirJump = 3,
+			CurrentAirJump = 3,
 			MaxAirJump = 3
 			
 		},
-		
-		StatusAilments = {},
-		
+				
 		WalkSpeed = 10,
 		JumpPower = 50,
 		

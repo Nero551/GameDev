@@ -1,5 +1,5 @@
 return function()
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local replicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
 	local runService = game:GetService("RunService")
@@ -12,7 +12,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local modules =  replicatedStorage.Modules
 	local remotes = replicatedStorage.Remotes
 
-	local stateService = require(modules.StateService)
+	local Connections = require(ReplicatedStorage.Modules.Connections)
+	local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 	local ActionVerifier = require(modules.ActionVerifier)
 	local MovementConfig = require(modules.Configs.MovementConfig)
 
@@ -97,8 +98,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 			dashConnection = nil
 		end
 		dashConnection = runService.Heartbeat:Connect(function(dt)
-			if not stateService.checkState(character, "Dashing") then
-				stateService.addState(character, "DashCoolDown", DashConfig.DashCooldown)
+			if not StateChecker:CheckState(character, "Dashing") then
 				dashConnection:Disconnect()
 				dashConnection = nil
 				return
@@ -140,9 +140,10 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 			
 			local rayResult = workspace:Raycast(root.Position, directionVector * maxDashDistance * dt, rayParams)
 			if rayResult then
+
 			end
 			root.CFrame = root.CFrame + (directionVector * maxDashDistance * dt)
-		end))
+		end)
 	end)
 
 

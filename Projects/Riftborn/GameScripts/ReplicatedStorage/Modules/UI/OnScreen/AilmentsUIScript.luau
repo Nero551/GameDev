@@ -9,8 +9,10 @@ return function(ailmentsFrame:Frame)
 			if ailmentIcon:IsA("ImageLabel") then
 				if StateChecker:CheckState(char , ailmentIcon.Name) then
 					ailmentIcon.Visible = true
-					ailmentIcon.Duration.Text = math.floor(char:GetAttribute("StatusAilments_"..ailmentIcon.Name.."_Duration"))
-
+					if char:WaitForChild("Status"):FindFirstChild(ailmentIcon.Name):GetAttribute("Duration") then
+						ailmentIcon.Duration.Text = math.floor(
+							char:WaitForChild("Status"):FindFirstChild(ailmentIcon.Name):GetAttribute("Duration"))
+					end
 				else
 					ailmentIcon.Visible = false
 				end

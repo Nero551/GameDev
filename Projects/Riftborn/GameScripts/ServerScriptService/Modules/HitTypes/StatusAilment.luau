@@ -144,7 +144,6 @@ return function(argumentData)
 
 		})
 		
-		
 		AilmentService[ailmentName](AilmentService,attacker,targetHit, ailmentName, M1Damage or AbilityDamage)
 	end
 

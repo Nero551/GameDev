@@ -17,7 +17,6 @@ function Connections:AddConnection(char, Type, connectionName, connection)
 
 	Connections[char][Type][connectionName] = connection
 	
-	print(Connections[char])
 end
 
 function Connections:RemoveConnection(char,Type, connectionName)
