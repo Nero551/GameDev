@@ -1,11 +1,11 @@
 return function(text)
 	local player = game:GetService("Players").LocalPlayer
 	local char = player.Character or player.CharacterAdded:Wait()
-	local stateService = require(script.Parent.Parent.Parent.StateService)
+	local StateChecker = require(script.Parent.Parent.Parent.StateChecker)
 	local statusFolder = char:FindFirstChild("Status")
 	
 	statusFolder.ChildAdded:Connect(function()
-		if stateService.checkState(char, "In Combat") then
+		if StateChecker:CheckState(char, "In Combat") then
 			text.Visible = true
 
 		else
@@ -14,7 +14,7 @@ return function(text)
 	end)
 	
 	statusFolder.ChildRemoved:Connect(function()
-		if stateService.checkState(char, "In Combat") then
+		if StateChecker:CheckState(char, "In Combat") then
 			text.Visible = true
 
 		else

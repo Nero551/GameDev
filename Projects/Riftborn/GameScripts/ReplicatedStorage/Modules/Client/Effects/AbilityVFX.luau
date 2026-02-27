@@ -2,7 +2,7 @@
 
 local debris = game:GetService("Debris")
 local replicatedStorage = game:GetService("ReplicatedStorage")
-local stateService = require(replicatedStorage.Modules.StateService)
+local StateChecker = require(replicatedStorage.Modules.StateChecker)
 local DynamicLight = require(replicatedStorage.Modules.DynamicLight)
 
 local assets = replicatedStorage:WaitForChild("Assets")
@@ -39,11 +39,11 @@ return function(arguementData:any)
 			end
 		end
 		
-		while stateService.checkState(caster, "Casting") do
+		while StateChecker:CheckState(caster, "Casting") do
 			task.wait(0.1)
 		end
 		
-		if not stateService.checkState(caster, "Casting") then
+		if not StateChecker:CheckState(caster, "Casting") then
 			task.wait(20)
 			clone:Destroy()
 		end

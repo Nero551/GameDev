@@ -31,21 +31,28 @@ function StateService:AddState(character, stateName, duration, attributes)
 
     local statusFolder = character:FindFirstChild("Status")
     if statusFolder then
+        if statusFolder:FindFirstChild(stateName) then
+            statusFolder[stateName]:Destroy()
+        end
         local stateValue = Instance.new("StringValue")
         stateValue.Name = stateName
         stateValue.Parent = statusFolder
-        for attr,Value in pairs(attributes) do
-            stateValue:SetAttribute(attr, Value)
+        if attributes then
+            for attrName,Value in pairs(attributes) do
+                stateValue:SetAttribute(attrName, Value)
+            end
         end
         Connections:AddConnection(character, "Character", stateName, RunService.Heartbeat:Connect(function(dt)
             if charStatus[stateName] and charStatus[stateName].Duration then
                 charStatus[stateName].Duration = charStatus[stateName].Duration - dt
 
                 stateValue:SetAttribute("Duration", charStatus[stateName].Duration)
-
-                for attr,Value in pairs(attributes) do
-                     stateValue:SetAttribute(attr, Value)
-                end
+                     
+                if attributes then
+                     for attrName,Value in pairs(attributes) do
+                         stateValue:SetAttribute(attrName, Value)
+                      end
+                 end
 
                 if charStatus[stateName].Duration <= 0 then
                    Connections:RemoveConnection(character, "Character", stateName)

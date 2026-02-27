@@ -1,15 +1,13 @@
 --DefualtHit
 
-local debris = game:GetService("Debris")
 local replicatedStorage = game:GetService("ReplicatedStorage")
 
 local assets = replicatedStorage:WaitForChild("Assets")
-local stateService = require(replicatedStorage.Modules.StateService)
+local StateChecker = require(replicatedStorage.Modules.StateChecker)
 
 return function(arguementData:any)
 	local target:Model = arguementData.Target
 	local ailment = arguementData.Ailment
-	local Duration = arguementData.Duration
 	local state = arguementData.State
 	
 	if target then
@@ -29,11 +27,11 @@ return function(arguementData:any)
 					end
 				end
 			end
-			while stateService.checkState(target, state) do
+			while StateChecker:CheckState(target, state) do
 				task.wait(0.1)
 			end
 			
-			if not stateService.checkState(target, state) then
+			if not StateChecker:CheckState(target, state) then
 				clone:Destroy()
 			end
 		end

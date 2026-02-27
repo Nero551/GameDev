@@ -2,7 +2,8 @@
 
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local modules = (replicatedStorage.Modules)
-local stateService = require(modules.StateService)
+local StateService = require(game.ServerScriptService.Services.StateService)
+local StateChecker = require(modules.StateChecker)
 
 local itemDataBase = require(modules.Data.ItemDataBase)
 
@@ -25,7 +26,7 @@ return function(argumentData)
 	if not targetHumanoid then return end
 	local animator = targetHumanoid:FindFirstChild("Animator")
 	
-	if stateService.checkState(targetHit, "Invulnerable") then return end
+	if StateChecker:CheckState(targetHit, "Invulnerable") then return end
 	local M1Damage
 	local AbilityDamage
 	

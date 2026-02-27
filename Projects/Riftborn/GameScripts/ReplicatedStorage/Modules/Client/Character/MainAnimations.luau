@@ -1,12 +1,13 @@
 return function()
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local repstor = game:GetService("ReplicatedStorage")
 	local runService = game:GetService("RunService")
 
 	local assets = repstor.Assets
-	local stateService = require(repstor.Modules.StateService)
+local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 	local ActionVerifier =  require(repstor.Modules.ActionVerifier)
 	local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
-	local animsModule = require(repstor.Modules.Animations)
+	local animsModule = require(repstor.Modules.Animations)	
 	
 	local player = game:GetService("Players").LocalPlayer
 	local char = player.Character or player.CharacterAdded:Wait()
@@ -43,7 +44,7 @@ return function()
 
 	conn = runService.RenderStepped:Connect(function(dt)
 
-		if stateService.checkState(char, "Dead") then
+		if StateChecker:CheckState(char, "Dead") then
 			if not conn then return end
 			conn:Disconnect()
 		end
@@ -110,7 +111,7 @@ return function()
 			return
 
 			---Sprint---
-		elseif	stateService.checkState(char,"Sprinting") and ActionVerifier:CanSprint(char) then				
+		elseif	StateChecker:CheckState(char,"Sprinting") and ActionVerifier:CanSprint(char) then				
 			local previousTime = StopPreviousAnimation(currentRun, "Run")
 
 			if not currentRun.IsPlaying then

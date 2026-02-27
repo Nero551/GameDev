@@ -1,6 +1,7 @@
 
 local ActionVerifier = require(game.ReplicatedStorage.Modules.ActionVerifier)
-local StateService = require(game.ReplicatedStorage.Modules.StateService)
+local StateService = require(game.ServerScriptService.Services.StateService)
+local StateChecker = require(game.ReplicatedStorage.Modules.StateChecker)
 local CharacterVitalsService = require(script.Parent.Parent.CharacterVitalsService)
 local CanDoAction = {}
 
@@ -67,7 +68,7 @@ function CanDoAction:CanAbility(AIData)
 	
 	local ability = AIData.Abilities[AIData.ChosenAbility]
 	if not ability then return false end
-	if not StateService.checkState(AIData.Target.Parent, "Attacking") and
+	if not StateChecker:CheckState(AIData.Target.Parent, "Attacking") and
 		ActionVerifier:CanAbility(AIData.Humanoid.Parent, AIData.ChosenAbility) and
 		distance <= (math.abs(ability.HitBoxPosition.Z) + (ability.HitBoxSize.Z/2)) then
 		return true
@@ -79,7 +80,7 @@ function CanDoAction:CanBlock(AIData)
 	if not AIData then return false end
 	if not AIData.Target then return false end
 	local distance = (AIData.Root.Position - AIData.Target.Position).Magnitude
-	if StateService.checkState(AIData.Target.Parent, "Attacking") and
+	if StateChecker:CheckState(AIData.Target.Parent, "Attacking") and
 		distance <= AIData.AttackRange and ActionVerifier:CanBlock(AIData.Humanoid.Parent) then
 		return true
 	end
@@ -88,8 +89,8 @@ end
 
 function CanDoAction:CanUnBlock(AIData)
 	if not AIData then return false end
-	if StateService.checkState(AIData.Humanoid.Parent, "Blocking") and not
-		StateService.checkState(AIData.Target.Parent, "Attacking") and
+	if StateChecker:CheckState(AIData.Humanoid.Parent, "Blocking") and not
+		StateChecker:CheckState(AIData.Target.Parent, "Attacking") and
 		AIData.LastAttackSeenTime > 0 and os.clock() - AIData.LastAttackSeenTime > 0.25 then
 		return true
 	end
@@ -97,7 +98,7 @@ function CanDoAction:CanUnBlock(AIData)
 end
 
 function CanDoAction:BlockBroken(AIData)
-	if StateService.checkState(AIData.Humanoid.Parent, "BlockBroken") then
+	if StateChecker:CheckState(AIData.Humanoid.Parent, "BlockBroken") then
 		return true
 	end
 	return false

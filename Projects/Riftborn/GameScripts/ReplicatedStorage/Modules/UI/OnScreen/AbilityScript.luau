@@ -5,7 +5,7 @@ return function(abilityUI)
 	local tweenService = game:GetService("TweenService")
 	local char = player.Character or player.CharacterAdded:Wait()
 	local modules = repstor.Modules
-	local stateService = require(modules.StateService)
+	local StateChecker = require(modules.StateChecker)
 	local abilityDataModule = require(modules.Data.AbilityData)
 	local itemDataBase = require(modules.Data.ItemDataBase)
 	local bars = {}
@@ -54,7 +54,7 @@ return function(abilityUI)
 			data.bar.Visible = true
 			data.nameLabel.Text = abilityData.AbilityName
 			local cdStateName = "Ability"..abilityKey.." Cooldown"
-			local onCooldown = stateService.checkState(char, cdStateName)
+			local onCooldown = StateChecker:CheckState(char, cdStateName)
 			if onCooldown and data.cdActive and data.cdEndTime then
 				local remaining = math.max(0, data.cdEndTime - time())
 				data.cdText.Text = string.format("%.1f", remaining)

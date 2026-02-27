@@ -2,7 +2,7 @@
 local sss = game:GetService("ServerScriptService")
 local players = game:GetService("Players")
 
-local stateService = require(game.ReplicatedStorage.Modules.StateService)
+local StateChecker = require(game.ReplicatedStorage.Modules.StateChecker)
 local DataService = require(sss.Services.DataService)
 local CharacterVitalsService = require(sss.Services.CharacterVitalsService)
 
@@ -44,7 +44,7 @@ function HitApplier:ApplyHit(argumentData)
 	---BlockBreakCounter---
 	local status = targetHit:FindFirstChild("Status")
 	if not status then return end
-	local isBlocking = stateService.checkState(targetHit, "Blocking")
+	local isBlocking = StateChecker:CheckState(targetHit, "Blocking")
 
 	if isBlocking then
 		---BlockBreak---

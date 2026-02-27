@@ -2,7 +2,8 @@
 
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local modules = (replicatedStorage.Modules)
-local stateService = require(modules.StateService)
+local StateService = require(game.ServerScriptService.Services.StateService)
+local StateChecker = require(modules.StateChecker)
 local itemDataBase = require(modules.Data.ItemDataBase)
 local animationsModule = require(modules.Animations)
 
@@ -12,7 +13,7 @@ return function(argumentData)
 	local weaponUsed = argumentData.WeaponUsed
 	local attacker = argumentData.Attacker
 	
-	if stateService.checkState(targetHit, "Invulnerable") then return end
+	if StateChecker:CheckState(targetHit, "Invulnerable") then return end
 
 	local foundWeaponData = itemDataBase:GetItemData(weaponUsed:GetAttribute("ID"))
 	if  foundWeaponData then
@@ -20,12 +21,12 @@ return function(argumentData)
 		if not targetHumanoid then return end
 		local animator = targetHumanoid:FindFirstChild("Animator")
 		
-		stateService.addState(targetHit , "Stunned" , 1.5)
-		stateService.addState(targetHit , "BlockBroken", 1.5)
-		stateService.addState(targetHit , "NoBlock" , 5)
-		
-		stateService.addState(attacker, "In Combat", 20)
-		stateService.addState(targetHit, "In Combat", 20)
+		StateService:AddState(targetHit , "Stunned" , 1.5)
+		StateService:AddState(targetHit , "BlockBroken", 1.5)
+		StateService:AddState(targetHit , "NoBlock" , 5)
+        
+		StateService:AddState(attacker, "In Combat", 20)
+		StateService:AddState(targetHit, "In Combat", 20)
 		
 		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
 			["SoundName"] = "Shared.Sounds.BlockBreak" , 

@@ -2,7 +2,8 @@ local replicatedStorage = game:GetService("ReplicatedStorage")
 local  players = game:GetService("Players")
 local runService = game:GetService("RunService")
 
-local stateService = require(replicatedStorage.Modules.StateService)
+local StateService = require(game.ServerScriptService.Services.StateService)
+local StateChecker = require(replicatedStorage.Modules.StateChecker)
 local statusAilmentsData = require(replicatedStorage.Modules.Data.StatusAilmentsData)
 local StatService = require(script.Parent.StatService)
 local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
@@ -18,7 +19,7 @@ function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 	local ailmentData = statusAilmentsData.Ailments[ailmentName]
 	local characterAilments = CharacterVitalsService:GetVital(targetHit, "StatusAilments")	
 	
-	if stateService.checkState(targetHit, ailmentData.State) then
+	if StateChecker:CheckState(targetHit, ailmentData.State) then
 
 		CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "AddAilment", {
 			["AilmentName"] = ailmentData.State,
@@ -26,9 +27,9 @@ function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 			["AilmentTime"] = characterAilments[ailmentData.State].LastProc or 0
 		})
 
-		stateService.removeState(targetHit, ailmentData.State)
+		StateService:RemoveState(targetHit, ailmentData.State)
 	end
-	stateService.addState(targetHit, ailmentData.State, ailmentData.BaseDuration)
+	StateService:AddState(targetHit, ailmentData.State, ailmentData.BaseDuration)
 	local ailmentDamage = normalDamage * ailmentData.DamagePercent
 	
 	if not characterAilments[ailmentData.State] then
@@ -42,7 +43,7 @@ function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 		end
 		
 		Connections:AddConnection(targetHit, "Character", "Burning", runService.Heartbeat:Connect(function(dt)
-			if not stateService.checkState(targetHit, ailmentData.State) then
+			if not StateChecker:CheckState(targetHit, ailmentData.State) then
 				CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "RemoveAilment", {
 					["AilmentName"] = ailmentData.State,
 				})
@@ -87,7 +88,7 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 	
 	local targetHealth =  CharacterVitalsService:GetVital(targetHit ,"Health")
 
-	if stateService.checkState(targetHit, ailmentData.State) then
+	if StateChecker:CheckState(targetHit, ailmentData.State) then
 
 		CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "AddAilment", {
 			["AilmentName"] = ailmentData.State,
@@ -95,9 +96,9 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 			["AilmentTime"] = characterAilments[ailmentData.State].LastProc or 0
 		})
 
-		stateService.removeState(targetHit, ailmentData.State)
+		StateService:RemoveState(targetHit, ailmentData.State)
 	end
-	stateService.addState(targetHit, ailmentData.State, ailmentData.BaseDuration)
+	StateService:AddState(targetHit, ailmentData.State, ailmentData.BaseDuration)
 	local ailmentDamage = normalDamage * ailmentData.DamagePercent
 
 	if not characterAilments[ailmentData.State] then
@@ -107,7 +108,7 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 		})
 		
 		Connections:AddConnection(targetHit, "Character", "Bleeding", runService.Heartbeat:Connect(function(dt)
-			if not stateService.checkState(targetHit, ailmentData.State) then
+			if not StateChecker:CheckState(targetHit, ailmentData.State) then
 				CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "RemoveAilment", {
 					["AilmentName"] = ailmentData.State,
 				})
@@ -150,16 +151,16 @@ function AilmentService:Freeze(attacker, targetHit, ailmentName, normalDamage)
 	local characterAilments = CharacterVitalsService:GetVital(targetHit, "StatusAilments")	
 	
 
-	if stateService.checkState(targetHit, ailmentData.State) then
+	if StateChecker:CheckState(targetHit, ailmentData.State) then
 
 		CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "AddAilment", {
 			["AilmentName"] = ailmentData.State,
 			["AilmentDuration"] = ailmentData.BaseDuration,
 		})
 
-		stateService.removeState(targetHit, ailmentData.State)
+		StateService:RemoveState(targetHit, ailmentData.State)
 	end
-	stateService.addState(targetHit, ailmentData.State, ailmentData.BaseDuration)
+	StateService:AddState(targetHit, ailmentData.State, ailmentData.BaseDuration)
 	local ailmentDamage = normalDamage * ailmentData.DamagePercent
 
 	if not characterAilments[ailmentData.State] then
@@ -174,7 +175,7 @@ function AilmentService:Freeze(attacker, targetHit, ailmentName, normalDamage)
 	})
 	
 	Connections:AddConnection(targetHit, "Character", "Freezing",runService.Heartbeat:Connect(function(dt)
-		if not stateService.checkState(targetHit, ailmentData.State) then
+		if not StateChecker:CheckState(targetHit, ailmentData.State) then
 			CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "RemoveAilment", {
 				["AilmentName"] = ailmentData.State,
 			})
@@ -199,7 +200,7 @@ function AilmentService:Poison(attacker,targetHit,ailmentName,normalDamage)
 	local ailmentData = statusAilmentsData.Ailments[ailmentName]
 	local characterAilments = CharacterVitalsService:GetVital(targetHit, "StatusAilments")	
 
-	if stateService.checkState(targetHit, ailmentData.State) then
+	if StateChecker:CheckState(targetHit, ailmentData.State) then
 
 		CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "AddAilment", {
 			["AilmentName"] = ailmentData.State,
@@ -207,9 +208,9 @@ function AilmentService:Poison(attacker,targetHit,ailmentName,normalDamage)
 			["AilmentTime"] = characterAilments[ailmentData.State].LastProc or 0
 		})
 
-		stateService.removeState(targetHit, ailmentData.State)
+		StateService:RemoveState(targetHit, ailmentData.State)
 	end
-	stateService.addState(targetHit, ailmentData.State, ailmentData.BaseDuration)
+	StateService:AddState(targetHit, ailmentData.State, ailmentData.BaseDuration)
 	local ailmentDamage = normalDamage * ailmentData.DamagePercent
 
 	if not characterAilments[ailmentData.State] then
@@ -219,7 +220,7 @@ function AilmentService:Poison(attacker,targetHit,ailmentName,normalDamage)
 		})
 		
 		Connections:AddConnection(targetHit, "Character", "Poisoned", runService.Heartbeat:Connect(function(dt)
-			if not stateService.checkState(targetHit, ailmentData.State) then
+			if not StateChecker:CheckState(targetHit, ailmentData.State) then
 				CharacterVitalsService:ModifyVital(targetHit, "StatusAilments", "RemoveAilment", {
 					["AilmentName"] = ailmentData.State,
 				})

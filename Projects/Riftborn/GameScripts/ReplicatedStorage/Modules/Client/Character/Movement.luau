@@ -1,4 +1,5 @@
 return function()
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local replicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
 	local runService = game:GetService("RunService")
@@ -10,9 +11,8 @@ return function()
 
 	local modules =  replicatedStorage.Modules
 	local remotes = replicatedStorage.Remotes
-	local assets = replicatedStorage.Assets
 
-	local stateService = require(modules.StateService)
+local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 	local ActionVerifier = require(modules.ActionVerifier)
 	local MovementConfig = require(modules.Configs.MovementConfig)
 
@@ -31,15 +31,6 @@ return function()
 
 
 	------------------------------------------------------MovementAbilties-------------------------------------------------------
-	---AirJumpCharges---
-	local airJumpMaxCharge = 3
-	local airJumpCharge = 3
-
-	runService.Heartbeat:Connect(function()
-		if humanoid.FloorMaterial ~= Enum.Material.Air then
-			airJumpCharge = airJumpMaxCharge
-		end
-	end)
 
 	local function getDashDirection()
 		local dashDirection = humanoid.MoveDirection
@@ -64,7 +55,6 @@ return function()
 				local direction = getDashDirection()
 				if direction and ActionVerifier:CanDash(character) then
 					local IsShiftLockOff = UserInputService.MouseBehavior ~= Enum.MouseBehavior.LockCenter
-					local character = player.Character or player.CharacterAdded:Wait()
 					remotes.Dash:FireServer(direction, IsShiftLockOff)
 				end	
 			end
@@ -80,7 +70,7 @@ return function()
 	---AirJump---
 	if input.KeyCode == Enum.KeyCode.Space then
 		if humanoid:GetState()  == Enum.HumanoidStateType.Freefall then
-			if not stateService.checkState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
+			if not stateService(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
 				"FlashStepEndLag", "FlashStep", "AirJump") and airJumpCharge > 0 then
 				remotes.AirJump:FireServer(airJumpCharge)
 				airJumpCharge -= 1
@@ -96,7 +86,7 @@ return function()
 	remotes.Dash.OnClientEvent:Connect(function(direction, IsShiftLockOff)
 		---Dash Movement---	
 		local maxDashDistance = DashConfig.MaxDashDistance
-		local root:Part? = character:FindFirstChild("HumanoidRootPart")
+		local root:Part = character:FindFirstChild("HumanoidRootPart")
 
 		local rayParams = RaycastParams.new()
 		rayParams.FilterType = Enum.RaycastFilterType.Exclude
@@ -107,8 +97,7 @@ return function()
 			dashConnection = nil
 		end
 		dashConnection = runService.Heartbeat:Connect(function(dt)
-			if not stateService.checkState(character, "Dashing") then
-				stateService.addState(character, "DashCoolDown", DashConfig.DashCooldown)
+			if not StateChecker:CheckState(character, "Dashing") then
 				dashConnection:Disconnect()
 				dashConnection = nil
 				return
@@ -150,7 +139,6 @@ return function()
 			
 			local rayResult = workspace:Raycast(root.Position, directionVector * maxDashDistance * dt, rayParams)
 			if rayResult then
-				stateService.removeState(character, "Dashing")
 			end
 			root.CFrame = root.CFrame + (directionVector * maxDashDistance * dt)
 		end)

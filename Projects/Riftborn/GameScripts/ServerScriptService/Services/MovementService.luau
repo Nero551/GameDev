@@ -2,7 +2,8 @@ local repstor = game:GetService("ReplicatedStorage")
 local runService = game:GetService("RunService")
 
 local assets = repstor.Assets
-local stateService = require(repstor.Modules.StateService)
+local StateChecker = require(game.ReplicatedStorage.Modules.StateChecker)
+local StateService = require(game.ServerScriptService.Services.StateService)
 local ActionVerifier =  require(repstor.Modules.ActionVerifier)
 local MovementConfig = require(repstor.Modules.Configs.MovementConfig)
 
@@ -26,11 +27,11 @@ function MovementService:LoadSharedAnimations()
 end
 
 function MovementService:Sprint(character)
-	if not stateService.checkState(character, "Sprinting") then
-		stateService.addState(character, "Sprinting")
+	if not StateChecker:CheckState(character, "Sprinting") then
+		StateService:AddState(character, "Sprinting")
 		---Stop Sprinting---
 	else
-		stateService.removeState(character, "Sprinting")
+		StateService:RemoveState(character, "Sprinting")
 	end 
 end
 
@@ -48,7 +49,7 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 	if IsShiftLockOff or npcTarget then
 		local dashAnim:AnimationTrack = animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Dashes.Forward")
 		
-		stateService.addState(character, "Dashing", dashAnim.Length)
+		StateService:AddState(character, "Dashing", dashAnim.Length)
 		---Animation---
 		dashAnim:Play()
 
@@ -88,7 +89,7 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 				
 		local dashAnim:AnimationTrack = animsModule:GetAnimation(humanoid.Animator,"Shared.Animations.Dashes."..directionName)
 				
-		stateService.addState(character, "Dashing", dashAnim.Length)
+		StateService:AddState(character, "Dashing", dashAnim.Length)
 		---Animation---
 		dashAnim:Play()
 
@@ -124,8 +125,8 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 		local dashConnection = nil
 		dashConnection = runService.Heartbeat:Connect(function(dt)
 
-			if not stateService.checkState(character, "Dashing") then
-				stateService.addState(character, "DashCoolDown", DashConfig.DashCooldown)
+				    if not StateChecker:CheckState(character, "Dashing") then
+				StateService:AddState(character, "DashCoolDown", DashConfig.DashCooldown)
 				dashConnection:Disconnect()
 				dashConnection = nil
 				return
@@ -138,7 +139,7 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 
 			local rayResult = workspace:Raycast(root.Position, directionVector * maxDashDistance * dt * 2, rayParams)
 			if rayResult then
-				stateService.removeState(character, "Dashing")
+				StateService:RemoveState(character, "Dashing")
 			end
 			root.CFrame = root.CFrame + (directionVector * maxDashDistance * dt)
 
@@ -157,8 +158,8 @@ function MovementService:FlashStep(character)
 	local statusFolder = character:WaitForChild("Status")
 	local humanoid = character:WaitForChild("Humanoid")
 		
-	stateService.addState(character, "Invulnerable", flashStepConfig.FlashstepDuration)
-	stateService.addState(character, "FlashStep", flashStepConfig.FlashstepDuration)
+	StateService:AddState(character, "Invulnerable", flashStepConfig.FlashstepDuration)
+	StateService:AddState(character, "FlashStep", flashStepConfig.FlashstepDuration)
 	
 	
 	CharacterVitalsService:ModifyVital(character, "Movement", "ModifyFlashStep", {
@@ -167,7 +168,7 @@ function MovementService:FlashStep(character)
 	
 	if statusFolder:FindFirstChild("FlashStep") then
 		task.delay(flashStepConfig.FlashstepDuration, function()
-			stateService.addState(character, "FlashStepEndLag", flashStepConfig.FlashstepEndlag)
+			StateService:AddState(character, "FlashStepEndLag", flashStepConfig.FlashstepEndlag)
 		end)
 		
 		---VFX---
@@ -191,21 +192,21 @@ end
 
 function MovementService:WallRun(character)
 	if not ActionVerifier:CanWallRun(character) then return end
-	if stateService.checkState(character, "WallRunning") then return end
+	if StateChecker:CheckState(character, "WallRunning") then return end
 	local root:Part = character:WaitForChild("HumanoidRootPart")
 
-	stateService.addState(character, "WallRunning")
+	StateService:AddState(character, "WallRunning")
 	
 	local maxDuration = wallJumpConfig.MaxDuration
 	local elapsed = 0
 	
 	local connection
 	connection = runService.Heartbeat:Connect(function(dt)
-		if not stateService.checkState(character , "WallRunning") then return end
+		if not StateChecker:CheckState(character , "WallRunning") then return end
 		
 		elapsed = elapsed + dt
 		if elapsed >= maxDuration then
-			stateService.removeState(character, "WallRunning")
+			StateService:RemoveState(character, "WallRunning")
 			connection:Disconnect()
 			return
 		end
@@ -229,7 +230,7 @@ function MovementService:WallRun(character)
 		end	
 		
 		if not hitNormal then 
-			stateService.removeState(character, "WallRunning")
+			StateService:RemoveState(character, "WallRunning")
 			connection:Disconnect()
 			connection = nil
 			return 
@@ -248,7 +249,7 @@ function MovementService:AirJump(character, AirJumpCharges:number)
 
 	if humanoid:GetState()  == Enum.HumanoidStateType .Freefall then
 		
-		stateService.addState(character, "AirJump", 0.25)
+		StateService:AddState(character, "AirJump", 0.25)
 		
 		assets.Shared.Sounds.AirJump:Play()
 

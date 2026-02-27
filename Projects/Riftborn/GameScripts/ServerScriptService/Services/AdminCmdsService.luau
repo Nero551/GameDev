@@ -6,7 +6,7 @@ local DataService = require(script.Parent.Parent.Services.DataService)
 local InventoryService = require(script.Parent.Parent.Services.InventoryService)
 local TitleService = require(script.Parent.Parent.Services.TitleService)
 local LevelService = require(script.Parent.Parent.Services.LevelService)
-local stateService = require(modules.StateService)
+local StateService = require(game.ServerScriptService.Services.StateService)
 
 local function CapitalizeWords(str)
 	return (str:gsub("(%a)([%w_']*)", function(first, rest)
@@ -143,7 +143,7 @@ function AdminCmdsService:ApplyState(msgParts)
 	if not playerWanted then return end
 	if not state then return end
 	if not duration then return end
-	stateService.addState(char, CapitalizeWords(state), duration)
+	StateService:AddState(char, CapitalizeWords(state), duration)
 end
 
 return AdminCmdsService

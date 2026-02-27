@@ -9,7 +9,8 @@ local remotes = replicatedStorage.Remotes
 local itemDataBase = require(replicatedStorage.Modules.Data.ItemDataBase)
 
 local ActionVerifier = require(modules.ActionVerifier)
-local stateService = require(modules.StateService)
+local StateService = require(game.ServerScriptService.Services.StateService)
+local StateChecker = require(modules.StateChecker)
 local HitApplier = require(script.Parent.Parent.Modules.Utilities.HitApplier)
 local animationsModule = require(modules.Animations)
 
@@ -50,7 +51,7 @@ end
 function CombatService:Died(character)
 	character:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(function()
 		if character:GetAttribute("Health_CurrentHealth") <= 0 then
-			stateService.addState(character , "Dead")
+			StateService:AddState(character , "Dead")
 		end
 	end)	
 end
@@ -105,19 +106,19 @@ function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 	
 	local animationToPlay = animationsModule:GetAnimation(humanoid.Animator, swingName)
 				
-	---Attack States---
-	stateService.addState(character , "Attacking", (animationToPlay.Speed * animationToPlay.Length))
-	stateService.addState(character, "NoBlock", (animationToPlay.Speed * animationToPlay.Length)+.3)
-	stateService.addState(character , "NoJump", (animationToPlay.Speed * animationToPlay.Length)+.5)
-	stateService.addState(character , "NoSprint", (animationToPlay.Speed * animationToPlay.Length)+0.35)
+	--Attack States---
+	StateService:AddState(character , "Attacking", (animationToPlay.Speed * animationToPlay.Length))
+	StateService:AddState(character, "NoBlock", (animationToPlay.Speed * animationToPlay.Length)+.3)
+	StateService:AddState(character , "NoJump", (animationToPlay.Speed * animationToPlay.Length)+.5)
+	StateService:AddState(character , "NoSprint", (animationToPlay.Speed * animationToPlay.Length)+0.35)
 
 	animationToPlay:Play()
 	
 	animationToPlay:GetMarkerReachedSignal("Hit"):Once(function()	
 		
-		if not stateService.checkState(character,"Attacking") then return end
+		if not StateChecker:CheckState(character,"Attacking") then return end
 		
-		if stateService.checkState(character , "Stunned") then
+		if StateChecker:CheckState(character , "Stunned") then
 			return
 		end
 		
@@ -158,7 +159,7 @@ function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 						end
 						alreadyHit[targetHit] = true
 
-						if stateService.checkState(targetHit, "Invulnerable") then continue end
+						if StateChecker:CheckState(targetHit, "Invulnerable") then continue end
 						
 						if player then
 							remotes.CameraShake:FireClient(player, 0.1)
@@ -197,7 +198,7 @@ function CombatService:Block(character, boolean, tool:Tool?)
 			local foundData = itemDataBase:GetItemData(tool:GetAttribute("ID"))
 			if foundData then
 
-				stateService.addState(character, "Blocking", nil,{["weaponName"] = tool.Name})
+				StateService:AddState(character, "Blocking", nil,{["weaponName"] = tool.Name})
 
 				------Block Animations------
 				local blockAnim:AnimationTrack = animationsModule:GetAnimation(humanoid.Animator,"Weapons."..tool.Name..".Animations.Block.Idle") 
@@ -214,9 +215,9 @@ function CombatService:Block(character, boolean, tool:Tool?)
 					animationsModule:GetAnimation(humanoid.Animator, "Weapons."..weaponName..".Animations.Block.Idle"):Stop(0.1)
 
 				end
-				stateService.removeState(character, "Blocking")
+				StateService:RemoveState(character, "Blocking")
 
-				stateService.addState(character, "NoBlock", 0.3)
+				StateService:AddState(character, "NoBlock", 0.3)
 			end
 		end
 

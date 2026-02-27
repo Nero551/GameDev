@@ -1,17 +1,17 @@
 local RunService = game:GetService("RunService")
 local ServerScriptService = game:GetService("ServerScriptService")
-local StateService = require(ServerScriptService.Services.StateService)
---StateService
 
 
-local Service = {}
 
-function Service:checkState(character, ...)
+local StateChecker = {}
+
+function StateChecker:CheckState(character, ...)
 	if not character then return end
 	
 	local statusToCheck = {...}
 
 	if RunService:IsServer() then
+		local StateService = require(ServerScriptService.Services.StateService)
 		if not StateService.Status[character] then return end
 		
 		for _, stateName in pairs(statusToCheck) do
@@ -35,4 +35,4 @@ function Service:checkState(character, ...)
 end
 
 
-return Service
+return StateChecker

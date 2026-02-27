@@ -6,7 +6,7 @@ return function()
 	local remotes = replicatedStorage.Remotes
 	local player = game:GetService("Players").LocalPlayer
 	local modules =  replicatedStorage.Modules
-	local stateService = require(modules.StateService)
+	local StateChecker = require(modules.StateChecker)
 	local character = player.Character or player.CharacterAdded:Wait()
 
 	local statusFolder = character:WaitForChild("Status", math.huge)
@@ -33,7 +33,7 @@ return function()
 	stepConnection = runService.RenderStepped:Connect(function(deltaTime: number)
 
 		------Death Handler------
-		if stateService.checkState(character, "Dead") then
+		if StateChecker:CheckState(character, "Dead") then
 			if stepConnection then
 				stepConnection:Disconnect()
 				stepConnection = nil
@@ -49,7 +49,7 @@ return function()
 		------Blocking------
 		local wantBlock = UserInputService:IsKeyDown(Enum.KeyCode.F) and not proc
 
-		if wantBlock ~= stateService.checkState(character, "Blocking") then
+		if wantBlock ~= StateChecker:CheckState(character, "Blocking") then
 			remotes.Block:FireServer(wantBlock)	
 		end
 		local tool = character:FindFirstChildWhichIsA("Tool")

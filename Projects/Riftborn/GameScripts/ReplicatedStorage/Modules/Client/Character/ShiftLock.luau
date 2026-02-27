@@ -1,8 +1,10 @@
 return function()
 	local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local UIS = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
 	local TweenService = game:GetService("TweenService")
+local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 
 	local player = Players.LocalPlayer
 	local camera = workspace.CurrentCamera
@@ -10,7 +12,6 @@ return function()
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 	local root = character:WaitForChild("HumanoidRootPart")
 	local crosshair = player.PlayerGui.ShiftLock.Crosshair
-	local StateService = require(game.ReplicatedStorage.Modules.StateService)
 
 
 
@@ -54,7 +55,7 @@ return function()
 
 
 	RunService.RenderStepped:Connect(function(dt)
-		if StateService.checkState(character, "Dead") then
+		if StateChecker:CheckState(character, "Dead") then
 			setShiftLock(false)
 			return
 		end

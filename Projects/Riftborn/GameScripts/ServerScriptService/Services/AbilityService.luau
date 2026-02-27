@@ -8,7 +8,8 @@ local remotes = replicatedStorage.Remotes
 local itemDataBase = require(modules.Data.ItemDataBase)
 local abilityDataModule = require(modules.Data.AbilityData)
 
-local stateService = require(modules.StateService)
+local StateService = require(game.ServerScriptService.Services.StateService)
+local StateChecker = require(modules.StateChecker)
 local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
 
 local ActionVerifier = require(modules.ActionVerifier)
@@ -75,10 +76,9 @@ function AbilityService:UseAbility(player:Player? ,character, tool:Tool, mouse, 
 	animation:Play()
 	
 	---Ability States---
-	stateService.addState(character,"Ability"..abilityletter.." Cooldown", cooldownTime)
-	stateService.addState(character, "Invulnerable", animation.Length)
-	stateService.addState(character, "Casting", animation.Length)
-	
+	StateService:AddState(character,"Ability"..abilityletter.." Cooldown", cooldownTime)
+	StateService:AddState(character, "Invulnerable", animation.Length)
+	StateService:AddState(character, "Casting", animation.Length)
 	
 
 	animation:GetMarkerReachedSignal("Hit"):Once(function()
@@ -126,7 +126,7 @@ function AbilityService:UseAbility(player:Player? ,character, tool:Tool, mouse, 
 				if part.Parent and part.Parent:FindFirstChild("Humanoid") then
 					local targetHit = part.Parent
 
-					if stateService.checkState(targetHit, "Invulnerable") then continue end
+					if StateChecker:CheckState(targetHit, "Invulnerable") then continue end
 
 					local targetHumanoid:Humanoid = targetHit:FindFirstChild("Humanoid")
 					if targetHumanoid and not hit[targetHumanoid] then
