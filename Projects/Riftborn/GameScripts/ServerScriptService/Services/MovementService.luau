@@ -18,6 +18,7 @@ local flashStepConfig = MovementConfig.FlashstepConfig
 
 local MovementService = {}
 
+
 function MovementService:LoadSharedAnimations()
 	game.Players.PlayerAdded:Connect(function(player)
 		player.CharacterAdded:Connect(function(character)
