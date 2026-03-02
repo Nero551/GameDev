@@ -94,8 +94,8 @@ function AIService:EnemyBrain(npc)
 	AIService:StateUpdater(npc)
 	local AIData = AIService.ActiveAIs[npc]
 	if not AIData then return end
-			print("Braining")
-	AIService:AcquireTarget(npc)	
+	AIService:AcquireTarget(npc)
+		
 	if CharacterVitalsService:GetVital(npc, "Health").CurrentHealth <= 0 then
 		AIData.State = "Dead"
 		return

@@ -20,7 +20,7 @@ end
 
 function RegenService:HealthRegen(dt)
 	for character, data in pairs(CharacterVitalsService.CharacterVitals) do
-		if data.Health.CurrentHealth < data.Health.MaxHealth and data.Health.CurrentHealth ~= 0 then
+		if data.Health.CurrentHealth < data.Health.MaxHealth then
 
 			local dh
 			if StateChecker:CheckState(character,"In Combat") then

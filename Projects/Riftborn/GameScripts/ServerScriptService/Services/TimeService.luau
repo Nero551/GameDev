@@ -4,7 +4,7 @@ local serverData = require(script.Parent.Parent.Modules.ServerData)
 local TimeService = {}
 
 local DayLength = 24
-local secondsPerDay = DayLength * 360
+local secondsPerDay = DayLength * 60
 
 function TimeService:TimeCycle(dt)
 	serverData.Time = serverData.Time + dt
@@ -13,10 +13,10 @@ function TimeService:TimeCycle(dt)
 	end 
 	
 	local minute = serverData.Time % 60
-	local hour = (serverData.Time/secondsPerDay) % DayLength
+	local hour = (serverData.Time / 60) % DayLength
 
 	local time = tostring(math.floor(hour)..":"..math.floor(minute))
-		
+	print(time)
 	lighting.TimeOfDay = time
 end
 
