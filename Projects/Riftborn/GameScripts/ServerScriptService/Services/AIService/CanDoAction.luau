@@ -93,6 +93,9 @@ function CanDoAction:CanBlock(AIData)
 		distance <= AIData.AttackRange and ActionVerifier:CanBlock(AIData.Humanoid.Parent) then
 		return true
 	end
+	if StateChecker:CheckState(AIData.Target.Parent, "Casting") and ActionVerifier:CanBlock(AIData.Humanoid.Parent) then
+		return true
+	end
 	return false
 end
 
@@ -100,7 +103,7 @@ function CanDoAction:CanUnBlock(AIData)
 	if not AIData then return false end
 	if StateChecker:CheckState(AIData.Humanoid.Parent, "Blocking") and not
 		StateChecker:CheckState(AIData.Target.Parent, "Attacking") and
-		AIData.LastAttackSeenTime > 0 and os.clock() - AIData.LastAttackSeenTime > 0.25 then
+		AIData.LastAttackSeenTime > 0 and os.clock() - AIData.LastAttackSeenTime > 0.5 then
 		return true
 	end
 	return false

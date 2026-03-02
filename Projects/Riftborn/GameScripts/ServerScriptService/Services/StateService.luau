@@ -18,6 +18,15 @@ function StateService:Create(character)
     end
 end 
 
+function StateService:Destroy(character)
+    if StateService.Status[character] then
+        StateService.Status[character] = nil
+    end
+    if character:FindFirstChild("Status") then
+        character:FindFirstChild("Status"):Destroy()
+    end
+end
+
 function StateService:AddState(character, stateName, duration, attributes)
     if not StateService.Status[character] then
         StateService:Create(character)
@@ -35,7 +44,7 @@ function StateService:AddState(character, stateName, duration, attributes)
                 StateService:RemoveState(character, stateName)
             end     
         end
-        if attributes then
+        if attributes and stateName and charStatus[stateName] then
             for attrName,Value in pairs(attributes) do
                 charStatus[stateName][attrName] = Value
                 stateValue:SetAttribute(attrName, Value)
@@ -48,12 +57,6 @@ function StateService:AddState(character, stateName, duration, attributes)
         Duration =  duration,
     }
     
-    if attributes then
-        for attrName,value in pairs(attributes) do
-            charStatus[stateName][attrName] = value
-        end
-	end 
-
 	if not stateValue then
 		stateValue = Instance.new("StringValue")
 		stateValue.Name = stateName
@@ -64,7 +67,8 @@ function StateService:AddState(character, stateName, duration, attributes)
 	end 
 	if attributes then
 		for attrName,Value in pairs(attributes) do
-			stateValue:SetAttribute(attrName, Value)
+            charStatus[stateName][attrName] = Value
+            stateValue:SetAttribute(attrName, Value)
 		end
 	end
 

@@ -1,8 +1,6 @@
 return function(questMenu)
 	local repstor = game:GetService("ReplicatedStorage")
-	local players = game:GetService("Players")
 	local tweenService = game:GetService("TweenService")
-	local player = players.LocalPlayer
 	local remotes = repstor.Remotes
 
 	local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
@@ -36,7 +34,7 @@ return function(questMenu)
 	local questSelected = nil
 	local prevQuestSelected = nil
 
-	local trackedQuestFrame = questMenu.Parent.Parent.OnScreenGUI.TrackedQuestFrame
+	local trackedQuestFrame = questMenu.Parent.Parent:WaitForChild("OnScreenGUI").TrackedQuestFrame
 	local trackedQuestName = trackedQuestFrame.TrackedQuestName
 
 
@@ -54,7 +52,7 @@ return function(questMenu)
 
 
 		for objectiveNumber, objective in pairs(quest.Progress) do
-			local objectiveFrame:Frame? = questInfo.QuestProgress:FindFirstChild("Objective"..objectiveNumber)
+			local objectiveFrame = questInfo.QuestProgress:FindFirstChild("Objective"..objectiveNumber)
 			if not objectiveFrame then
 				objectiveFrame = questImgButton.QuestProgress.ObjectiveTemplate:Clone()
 				objectiveFrame.Name =  "Objective"..objectiveNumber
@@ -74,11 +72,11 @@ return function(questMenu)
 		for reward,amount in pairs(quest.Rewards) do
 			local rewardData = itemDataBase:GetItemData(reward)
 			if rewardData then
-				local rewardFrame:Frame? = repstor.Assets.GUI.Icons[rewardData.Rarity.."ItemFrame"]:Clone()
+				local rewardFrame = repstor.Assets.GUI.Icons[rewardData.Rarity.."ItemFrame"]:Clone()
 				rewardFrame.Parent = questInfo.QuestRewards
 				rewardFrame.Name = reward
 				rewardFrame:FindFirstChildWhichIsA("ImageButton").Name = reward
-				local rewardIcon:ImageButton = rewardFrame[rewardFrame.Name]
+				local rewardIcon = rewardFrame[rewardFrame.Name]
 
 				rewardIcon.Name = rewardFrame.Name
 				rewardIcon.NameText.Text = ""
@@ -90,13 +88,13 @@ return function(questMenu)
 
 			elseif reward == "ItemDrops" then
 				for item,itemInfo in pairs(amount) do
-					local rewardData = itemDataBase:GetItemData(item)
+					rewardData = itemDataBase:GetItemData(item)
 					if rewardData then
-						local rewardFrame:Frame? = repstor.Assets.GUI.Icons[rewardData.Rarity.."ItemFrame"]:Clone()
+						local rewardFrame = repstor.Assets.GUI.Icons[rewardData.Rarity.."ItemFrame"]:Clone()
 						rewardFrame.Parent = questInfo.QuestRewards
 						rewardFrame.Name = item
 						rewardFrame:FindFirstChildWhichIsA("ImageButton").Name = item
-						local rewardIcon:ImageButton = rewardFrame[rewardFrame.Name]
+						local rewardIcon = rewardFrame[rewardFrame.Name]
 
 						rewardIcon.Name = rewardFrame.Name
 						rewardIcon.NameText.Text = ""
@@ -140,7 +138,7 @@ return function(questMenu)
 
 		for questID, quest in pairs(playerQuests.ActiveQuests) do
 
-			local questImgButton:ImageButton = questList:FindFirstChild(questID)
+			local questImgButton = questList:FindFirstChild(questID)
 			if not questImgButton then
 				questImgButton = questTemplate:Clone()
 				questImgButton.Name = questID
@@ -161,7 +159,7 @@ return function(questMenu)
 
 
 				for objectiveNumber, objective in pairs(quest.Progress) do
-					local objectiveFrame:Frame? = questImgButton.QuestProgress:FindFirstChild("Objective"..objectiveNumber)
+					local objectiveFrame = questImgButton.QuestProgress:FindFirstChild("Objective"..objectiveNumber)
 					if not objectiveFrame then
 						objectiveFrame = questImgButton.QuestProgress.ObjectiveTemplate:Clone()
 						objectiveFrame.Name =  "Objective"..objectiveNumber
@@ -275,7 +273,7 @@ return function(questMenu)
 				end
 
 				for objectiveNumber, objective in pairs(Tquest.Progress) do
-					local objectiveFrame:Frame? = trackedQuestFrame.TrackedQuestProgress:FindFirstChild("Objective"..objectiveNumber)
+					local objectiveFrame = trackedQuestFrame.TrackedQuestProgress:FindFirstChild("Objective"..objectiveNumber)
 					if not objectiveFrame then
 						objectiveFrame = questFrame.QuestProgress.ObjectiveTemplate:Clone()
 						objectiveFrame.Name =  "Objective"..objectiveNumber

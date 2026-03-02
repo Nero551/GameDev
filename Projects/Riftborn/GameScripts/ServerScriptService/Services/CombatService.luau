@@ -16,7 +16,6 @@ local animationsModule = require(modules.Animations)
 
 local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
 
-
 local CombatService = {
 	hitTypes = {}
 }

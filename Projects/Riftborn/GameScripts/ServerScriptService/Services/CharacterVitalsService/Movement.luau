@@ -8,15 +8,6 @@ function Movement:ModifyFlashStep(character:Model, argumentData)
 	flashStepData.CurrentFlashStep = math.min(flashStepData.CurrentFlashStep + FlashStepChange, flashStepData.MaxFlashStep)	
 end
 
-function Movement:ModifyAirJump(character:Model, argumentData)
-	local CharacterVitalsService = require(script.Parent)
-	local airJumpData = CharacterVitalsService.CharacterVitals[character].AirJump
-	local AirJumpChange = argumentData.AirJumpChange
-		
-	airJumpData.CurrentAirJump = math.min(airJumpData.CurrentAirJump + AirJumpChange, airJumpData.MaxAirJump)	
-end
-
-
 function Movement:ModifyWalkSpeed(character:Model, argumentData)
 	local CharacterVitalsService = require(script.Parent)
 	local characterVitals = CharacterVitalsService.CharacterVitals[character]

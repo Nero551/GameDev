@@ -56,11 +56,10 @@ function AIService:CreateAI(npc, mobData)
 		AttackRange = mobData.AttackRange,
 		WanderRadius = mobData.WanderRadius,
 		
-		
 		Moving = false,
+		NeedsRepath = 0,
 		WalkSpeed = mobData.WalkSpeed,
 		RunSpeed = mobData.RunSpeed,
-		NeedsRepath = 0,
 		
 		LastAttackSeenTime = 0,
 		Damage = mobData.Damage,
@@ -91,6 +90,7 @@ function AIService:EnemyBrain(npc)
 		
 	if CharacterVitalsService:GetVital(npc, "Health").CurrentHealth <= 0 then
 		AIData.State = "Dead"
+		return
 	end
 	
 	if not AIData.Target then
@@ -123,10 +123,10 @@ function AIService:EnemyBrain(npc)
 		return
 	end
 	
-	-- if CanDoAction:CanFlashstep(AIData) then
-	-- 	AIData.State = "Flashstep"
-	-- 	return
-	-- end
+	if CanDoAction:CanFlashstep(AIData) then
+	 	AIData.State = "Flashstep"
+	 	return
+	end
 	
 	if CanDoAction:CanDash(AIData) then
 		AIData.State = "Dash"
@@ -144,9 +144,10 @@ function AIService:StateUpdater(npc)
 	if not AIData then return end
 	
 	if AIData.State == "Dead" then
-		for animName,anim in pairs(animationsModule.loadedAnimations[npc])
-		do
-			anim:Stop()
+		for animName,anim in pairs(animationsModule.loadedAnimations[npc]) do
+			if anim.IsPlaying then
+				anim:Stop()
+			end
 		end
 		AIService:DestroyAI(npc)
 		return

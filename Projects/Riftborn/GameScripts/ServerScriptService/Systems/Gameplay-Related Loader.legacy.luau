@@ -1,8 +1,10 @@
+local ServerScriptService = game:GetService("ServerScriptService")
 local repstor = game:GetService("ReplicatedStorage")
 local players = game:GetService("Players")
 local runService = game:GetService("RunService")
 local remotes = repstor.Remotes
 
+local StateService = require(ServerScriptService.Services.StateService)
 local MovementService = require(script.Parent.Parent.Services.MovementService)
 local CombatService = require(script.Parent.Parent.Services.CombatService)
 local RegenService = require(script.Parent.Parent.Services.RegenService)
@@ -14,7 +16,6 @@ local TimeService = require(script.Parent.Parent.Services.TimeService)
 
 ---Regen Stuff and Time Cycle---
 runService.Heartbeat:Connect(function(dt)
-	RegenService:AirJumpRegen(dt)
 	RegenService:ManaRegen(dt)
 	RegenService:HealthRegen(dt)
 	RegenService:FlashStepRegen(dt)
@@ -24,8 +25,16 @@ end)
 
 
 ----------------------------------------------------------------------------------------------------------------------------------
-
-
+---Creating Status For Player On Spawn---
+players.PlayerAdded:Connect(function(player)
+	player.CharacterAdded:Connect(function(character)
+		StateService:Create(character)
+	end)
+end)
+---Destroying Status For Player On Leave---
+players.PlayerRemoving:Connect(function(player)
+	StateService:Destroy(player.Character)
+end)
 ----------------------------------------------------------------------------------------------------------------------------------
 
 MovementService:LoadSharedAnimations()

@@ -129,6 +129,7 @@ return function(argumentData)
 		local randomAilment = math.random(1, #statusAilments)
 		ailmentName = statusAilments[randomAilment]
 		ailmentData = statusAilmentsData.Ailments[ailmentName]
+		if not ailmentData then return end
 		
 		replicatedStorage.Remotes.ClientEffects:FireAllClients("AilmentHit",{
 			["Target"] = targetHit,

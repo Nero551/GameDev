@@ -58,11 +58,6 @@ function CharacterVitalsService:Create(character)
 			MaxFlashStep = 3,
 			
 		},
-		AirJump = {
-			CurrentAirJump = 3,
-			MaxAirJump = 3
-			
-		},
 				
 		WalkSpeed = 10,
 		JumpPower = 50,

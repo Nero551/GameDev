@@ -66,9 +66,10 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 		)
 	else
 		if direction == nil then return end
+
 		local rightDot = direction:Dot(character.HumanoidRootPart.CFrame.RightVector)
 		local forwardDot = direction:Dot(character.HumanoidRootPart.CFrame.LookVector)
-
+		
 		local angle = math.atan2(rightDot, forwardDot)
 		angle = math.deg(angle)
 
@@ -95,6 +96,7 @@ function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff
 		StateService:AddState(character, "Dashing", dashAnim.Length)
 		---Animation---
 		dashAnim:Play()
+		dashAnim.Looped = false
 
 		---VFX---
 		repstor.Remotes.ClientEffects:FireAllClients("DashVFX",
@@ -243,41 +245,8 @@ function MovementService:WallRun(character)
 			connection:Disconnect()
 			connection = nil
 			return 
-		end
-		
-		
+		end	
 	end)	
-end
-
-function MovementService:AirJump(character, AirJumpCharges:number)
-	
-	if not ActionVerifier:CanAirJump(character, AirJumpCharges) then return end
-	
-	local humanoid:Humanoid = character:WaitForChild("Humanoid")
-	local hrp = character:WaitForChild("HumanoidRootPart")
-
-	if humanoid:GetState()  == Enum.HumanoidStateType .Freefall then
-		
-		StateService:AddState(character, "AirJump", 0.25)
-		
-		assets.Shared.Sounds.AirJump:Play()
-
-		local attachment = Instance.new("Attachment")
-		attachment.Name = "Attachment"
-		attachment.Parent = hrp
-		local linVel = Instance.new("LinearVelocity")
-		linVel.Parent = hrp
-		linVel.Attachment0  = attachment
-		linVel.RelativeTo = Enum.ActuatorRelativeTo.World
-		linVel.MaxForce = math.huge
-		linVel.VectorVelocity = Vector3.new(0,80,0)
-
-		game:GetService("Debris"):AddItem(linVel, 0.025)
-		game:GetService("Debris"):AddItem(attachment, 0.025)
-		humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-
-	end
-	return AirJumpCharges
 end
 
 

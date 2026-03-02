@@ -16,7 +16,7 @@ local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 	local function StopPreviousAnimation(current, Type)
 		local previousTime = 0
 		for animName,anim in pairs(animsModule.loadedAnimations[char]) do
-			if string.find(animName, "Animations."..Type)  then
+			if string.find(animName, Type)  then
 				if anim ~= current and anim.IsPlaying then
 					previousTime = anim.TimePosition
 					anim:Stop(0.2)

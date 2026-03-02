@@ -1,8 +1,6 @@
 
 return function(npc)
-local PathFindingService = game:GetService("PathfindingService")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Connections = require(ReplicatedStorage.Modules.Connections)
+	local PathFindingService = game:GetService("PathfindingService")
 	local StateService = require(game.ServerScriptService.Services.StateService)
 	
 	local AIService = require(script.Parent)
@@ -73,7 +71,6 @@ local Connections = require(ReplicatedStorage.Modules.Connections)
 				part.Parent = workspace.World.PathFinding
 				game.Debris:AddItem(part, 5)
 				
-				print(os.clock() - AIData.NeedsRepath)
 				if (originalTargetPos - AIData.Target.Position).Magnitude > 10 or os.clock() - AIData.NeedsRepath  > 1 then
 					break
 				end
