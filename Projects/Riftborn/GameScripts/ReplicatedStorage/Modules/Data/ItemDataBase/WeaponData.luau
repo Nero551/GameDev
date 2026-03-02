@@ -1,6 +1,4 @@
---Weapon Data Module
-
-
+--Weapon Data
 local WeaponData = {}
 
 WeaponData.Weapons = {
@@ -18,6 +16,7 @@ WeaponData.Weapons = {
 			},
 		},
 		Damage = 5,
+		Hitbox = Vector3.new(5,5.5,4),
 		ComboCooldown = 2,
 		ComboResetTime = 2,
 		CriticalRate = 0.1,
@@ -33,6 +32,7 @@ WeaponData.Weapons = {
 		Rarity = "Mythical",
 		Description = "A blade forged from slime. Previously wielded by the eminence in shadow.",
 		Damage = 1,
+		Hitbox = Vector3.new(5,5.5,4),
 		ComboCooldown = 2,
 		ComboResetTime = 2,
 		CriticalRate = 0.25,
@@ -48,6 +48,7 @@ WeaponData.Weapons = {
 		Rarity = "Common",
 		Description = "Just a normal blade....dont put it in your mouth please.",
 		Damage = 2,
+		Hitbox = Vector3.new(5,5.5,4),
 		ComboCooldown = 2,
 		ComboResetTime = 2,
 		CriticalRate = 0.25,
@@ -63,6 +64,7 @@ WeaponData.Weapons = {
 		Rarity = "Uncommon",
 		Description = "OpDagger.",
 		Damage = 2000,
+		Hitbox = Vector3.new(5,5.5,4),
 		ComboCooldown = 2,
 		ComboResetTime = 2,
 		CriticalRate = 0.25,
@@ -70,7 +72,7 @@ WeaponData.Weapons = {
 		Stackable = false,
 	}
 	,
-	
+
 }
 
 return WeaponData

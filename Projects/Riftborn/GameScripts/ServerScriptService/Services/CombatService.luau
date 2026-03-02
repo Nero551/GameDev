@@ -128,6 +128,7 @@ function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 		local hitboxClone = assets.HitboxTemplate:Clone()
 		hitboxClone.Name = "M1 Hitbox"
 		hitboxClone.Parent = workspace.World.Hitboxes
+		hitboxClone.Size = weaponData.Hitbox or Vector3.new(5,5.5,4)
 		local weld = Instance.new("Weld")
 		weld.Parent = hitboxClone
 		weld.Part0 = character.HumanoidRootPart
@@ -184,7 +185,6 @@ function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 end
 
 function CombatService:Block(character, boolean, tool:Tool?)
-	
 	local humanoid = character:FindFirstChild("Humanoid")
 	if humanoid then
 		

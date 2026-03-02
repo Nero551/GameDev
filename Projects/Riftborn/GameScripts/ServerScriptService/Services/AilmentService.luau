@@ -50,7 +50,8 @@ function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 			}
 		)
 
-		if StateService.Status[targetHit][ailmentData.State].LastProc >= ailmentData.ProcEvery then
+		if StateService.Status[targetHit][ailmentData.State] and
+		 StateService.Status[targetHit][ailmentData.State].LastProc >= ailmentData.ProcEvery then
 
 			CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 				HealthChange = -ailmentDamage

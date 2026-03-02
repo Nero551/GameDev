@@ -11,8 +11,6 @@ return function()
 
 	local statusFolder = character:WaitForChild("Status", math.huge)
 
-	local actionVerifier = require(modules.ActionVerifier)
-
 	local proc = false
 
 	local abilityKeys = {Z = "AbilityZ", X = "AbilityX", C = "AbilityC", V = "AbilityV", B = "AbilityB"}
@@ -42,7 +40,7 @@ return function()
 		end
 
 		------M1------
-		if UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) and actionVerifier:CanAttack(character) then
+		if UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)  then
 			remotes.Attack:FireServer()
 		end
 

@@ -14,7 +14,6 @@ return function()
 
 	local Connections = require(ReplicatedStorage.Modules.Connections)
 	local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
-	local ActionVerifier = require(modules.ActionVerifier)
 	local MovementConfig = require(modules.Configs.MovementConfig)
 
 	local DashConfig = MovementConfig.DashConfig
@@ -48,37 +47,17 @@ return function()
 		------Dashing & FlashStep------
 		if input.KeyCode == Enum.KeyCode.Q  then
 			---FlashStep---
-			local flashStepCharges = character:GetAttribute("FlashStep_CurrentFlashStep")
-			if UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) and ActionVerifier:CanFlashstep(character, flashStepCharges) then
+			if UserInputService:IsKeyDown(Enum.KeyCode.LeftControl)  then
 				remotes.FlashStep:FireServer()
 			else
 				---Dashing---
 				local direction = getDashDirection()
-				if direction and ActionVerifier:CanDash(character) then
+				if direction then
 					local IsShiftLockOff = UserInputService.MouseBehavior ~= Enum.MouseBehavior.LockCenter
 					remotes.Dash:FireServer(direction, IsShiftLockOff)
 				end	
 			end
 		end
-
-		---WallRun---
-	--[[if input.KeyCode == Enum.KeyCode.Space then
-		if ActionVerifier:CanWallRun(character) then
-			remotes.WallRun:FireServer()
-		end
-	end
-	
-	---AirJump---
-	if input.KeyCode == Enum.KeyCode.Space then
-		if humanoid:GetState()  == Enum.HumanoidStateType.Freefall then
-			if not stateService(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-				"FlashStepEndLag", "FlashStep", "AirJump") and airJumpCharge > 0 then
-				remotes.AirJump:FireServer(airJumpCharge)
-				airJumpCharge -= 1
-			end
-		end
-	end
-	--]]
 	end)
 
 

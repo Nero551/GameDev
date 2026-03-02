@@ -24,7 +24,7 @@ end
 
 function ActionVerifier:CanAttack(character)
 	if StateChecker:CheckState(character , "Attacking" , "Blocking", "Stunned", "NoPunch"
-		, "Dashing", "FlashStep", "FlashStepEndLag" ,"DashEndLag", "Casting", "Frozen", "BlockBroken", "BlockBroken") then
+		, "Dashing", "FlashStep", "FlashStepEndLag" ,"DashEndLag", "Casting", "Frozen", "BlockBroken") then
 		return false
 	end
 	return true
@@ -56,7 +56,7 @@ end
 
 function ActionVerifier:CanDash(character)
 	if StateChecker:CheckState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-		"DashCoolDown", "FlashStep", "Frozen", "BlockBroken", "BlockBroken") then
+		"DashCoolDown", "FlashStep", "Frozen", "BlockBroken") then
 		return false
 	end
 	return true
@@ -65,14 +65,9 @@ end
 
 function ActionVerifier:CanFlashstep(character, flashstepCharge)
 	if StateChecker:CheckState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-		"FlashStepEndLag", "FlashStep", "Frozen", "BlockBroken", "BlockBroken") then
+		"FlashStepEndLag", "FlashStep", "Frozen", "BlockBroken") or flashstepCharge == 0 then
 		return false
 	end
-	
-	if flashstepCharge and flashstepCharge == 0  then
-		return false
-	end
-	
 	return true
 end
 
@@ -100,15 +95,6 @@ function ActionVerifier:CanWallRun(character:Model)
 		end
 	end
 	return false
-end
-
-
-function ActionVerifier:CanAirJump(character, AirJumpCharges)
-	if StateChecker:CheckState(character,"Stunned", "Blocking", "Attacking", "NoMove", "Dashing",
-		"FlashStepEndLag", "FlashStep", "AirJump", "Frozen") or AirJumpCharges == 0 then
-		 return false
-	end
-	return true
 end
 
 return ActionVerifier

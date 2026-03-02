@@ -90,7 +90,7 @@ function CanDoAction:CanBlock(AIData)
 	if not AIData.Target then return false end
 	local distance = (AIData.Root.Position - AIData.Target.Position).Magnitude
 	if StateChecker:CheckState(AIData.Target.Parent, "Attacking") and
-		distance <= AIData.AttackRange and ActionVerifier:CanBlock(AIData.Humanoid.Parent) then
+		distance <= AIData.AttackRange*1.5 and ActionVerifier:CanBlock(AIData.Humanoid.Parent) then
 		return true
 	end
 	if StateChecker:CheckState(AIData.Target.Parent, "Casting") and ActionVerifier:CanBlock(AIData.Humanoid.Parent) then

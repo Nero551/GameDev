@@ -10,16 +10,16 @@ return function(arguementData:any)
 	local character = arguementData.Character
 	
 	local function Transparency(value)
-		for _, part:Part? in character:GetDescendants() do
+		for _, part in character:GetDescendants() do
+			
+			if part:IsA("BasePart") and part.Name ~= "HumanoidRootPart" and not
+			 part:GetAttribute("Ailment") and not
+			 part:GetAttribute("WeaponHandle")  then
 
-			if part:IsA("BasePart") and part.Name ~= "HumanoidRootPart" then
-				if not part:GetAttribute("WeaponHandle") then
-
-					if  part.Parent:GetAttribute("EquipState") ~= false then
-						part.Transparency = value
-					else
-						part.Transparency = 1
-					end
+				if  part.Parent:GetAttribute("EquipState") ~= false then
+					part.Transparency = value
+				else
+					part.Transparency = 1
 				end
 			end	
 		end

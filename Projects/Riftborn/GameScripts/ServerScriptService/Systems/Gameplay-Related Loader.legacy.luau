@@ -33,6 +33,7 @@ players.PlayerAdded:Connect(function(player)
 end)
 ---Destroying Status For Player On Leave---
 players.PlayerRemoving:Connect(function(player)
+	if not player.character then return end 
 	StateService:Destroy(player.Character)
 end)
 ----------------------------------------------------------------------------------------------------------------------------------

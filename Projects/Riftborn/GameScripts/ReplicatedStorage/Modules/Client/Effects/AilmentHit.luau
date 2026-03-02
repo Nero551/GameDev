@@ -9,7 +9,7 @@ return function(arguementData:any)
 	local target:Model = arguementData.Target
 	local ailment = arguementData.Ailment
 	local state = arguementData.State
-	
+
 	if target then
 		local rootPart = target:FindFirstChild("HumanoidRootPart")
 		if rootPart then
@@ -30,7 +30,7 @@ return function(arguementData:any)
 			while StateChecker:CheckState(target, state) do
 				task.wait(0.1)
 			end
-			
+
 			if not StateChecker:CheckState(target, state) then
 				clone:Destroy()
 			end
