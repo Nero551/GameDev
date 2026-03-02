@@ -1,5 +1,4 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local MovementConfig = require(ReplicatedStorage.Modules.Configs.MovementConfig)
 local ActionVerifier = require(game.ReplicatedStorage.Modules.ActionVerifier)
 local StateChecker = require(game.ReplicatedStorage.Modules.StateChecker)
@@ -10,7 +9,6 @@ function CanDoAction:CanRun(AIData)
 	if not AIData then return false end
 	if not AIData.Target then return false end
 	local distance = (AIData.Root.Position - AIData.Target.Position).Magnitude
-		
 	if distance <= AIData.DetectionRange and AIData.Humanoid.WalkSpeed > 0 then
 		return true
 	end

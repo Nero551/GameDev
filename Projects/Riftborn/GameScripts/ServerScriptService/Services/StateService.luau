@@ -28,6 +28,7 @@ function StateService:Destroy(character)
 end
 
 function StateService:AddState(character, stateName, duration, attributes)
+	if not character or not stateName then return end
     if not StateService.Status[character] then
         StateService:Create(character)
     end

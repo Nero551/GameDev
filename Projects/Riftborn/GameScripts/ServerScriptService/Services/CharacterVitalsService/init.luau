@@ -1,6 +1,4 @@
 local players = game:GetService("Players")
-local repstor = game:GetService("ReplicatedStorage")
-local connections = require(repstor.Modules.Connections)
 
 local CharacterVitalsService = {}
 
@@ -72,25 +70,6 @@ function CharacterVitalsService:Create(character)
 		LastSwing = 0,
 		SwingNumber = 0
 	}
-	
-	local humanoid = character:WaitForChild("Humanoid")
-	humanoid.Died:Connect(function()
-		CharacterVitalsService.CharacterVitals[character].Health.HealthRegen = 0
-		CharacterVitalsService:ModifyVital(character, "Health", "ModifyHealth", {
-			["HealthChange"] = -CharacterVitalsService.CharacterVitals[character].Health.CurrentHealth
-
-		})
-		task.wait(3)
-		CharacterVitalsService:Cleanup(character)
-		connections:CleanupConnections(character)
-	end)
-	
-	character.AncestryChanged:Connect(function(_, parent)
-		if not parent then
-			CharacterVitalsService:Cleanup(character)
-		end
-	end)
-
 	
 	SyncAttributes(character, CharacterVitalsService.CharacterVitals[character])
 	

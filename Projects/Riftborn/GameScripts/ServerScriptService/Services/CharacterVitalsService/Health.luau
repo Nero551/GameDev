@@ -6,7 +6,6 @@ function Health:ModifyHealth(character:Model?, argumentData)
 	local healthChange = argumentData.HealthChange
 	
 	healthData.CurrentHealth = math.clamp(healthData.CurrentHealth + healthChange, 0 , healthData.MaxHealth)
-	
 	Health:Apply(character)
 end
 

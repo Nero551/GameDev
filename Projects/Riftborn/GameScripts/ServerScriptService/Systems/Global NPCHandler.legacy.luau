@@ -3,9 +3,6 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local NPCService = require(ServerScriptService.Services.NPCService)
 local AIService = require(script.Parent.Parent.Services.AIService)
 
-local updateRate = 0.05
-local elapsed = 0
-
 for _,NPC in workspace.World.Live.ActiveNPCS:GetDescendants() do
 	if NPC:IsA("Model") then
 		NPCService:RegisterNPC(NPC)
@@ -20,6 +17,8 @@ workspace.World.Live.ActiveNPCS.DescendantRemoving:Connect(function(descendant)
 	NPCService:UnRegisterNPC(descendant)
 end)
 
+local updateRate = 0.05
+local elapsed = 0
 
 RunService.Heartbeat:Connect(function(dt)
 elapsed =  elapsed + dt
@@ -27,6 +26,7 @@ elapsed =  elapsed + dt
 	elapsed = 0
 	
 	for npc,AIData in AIService.ActiveAIs do
-		AIService:EnemyBrain(npc)
+		if not NPCService.SpawnedNPCS[AIData.Type][npc] then return end
+		AIService[AIData.Type.."Brain"](AIService,npc)
 	end
 end)

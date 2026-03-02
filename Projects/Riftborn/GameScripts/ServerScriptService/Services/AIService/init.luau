@@ -45,6 +45,13 @@ function AIService:CreateAI(npc, mobData)
 		animationsModule:loadAnims(npc.Humanoid.Animator,
 			ReplicatedStorage.Assets.Weapons[mobData.Tool.Name].Animations)
 	end
+	CharacterVitalsService:Create(npc)
+	CharacterVitalsService:ModifyVital(npc,"Health" , "ModifyMaxHealth", {
+        ["MaxHealth"] = mobData.Health
+    })		
+    CharacterVitalsService:ModifyVital(npc,"Health" , "ModifyHealth", {
+        ["HealthChange"] = mobData.Health
+    })	
 	StateService:Create(npc)
 	AIService.ActiveAIs[npc] = {
 		Root = npc:WaitForChild("HumanoidRootPart"),
@@ -81,19 +88,19 @@ function AIService:CreateAI(npc, mobData)
 	}	
 end
 
-
 --* Enemy AI Loop
 function AIService:EnemyBrain(npc)
 	
 	AIService:StateUpdater(npc)
 	local AIData = AIService.ActiveAIs[npc]
 	if not AIData then return end
+			print("Braining")
 	AIService:AcquireTarget(npc)	
-		
 	if CharacterVitalsService:GetVital(npc, "Health").CurrentHealth <= 0 then
 		AIData.State = "Dead"
 		return
 	end
+
 	
 	if not AIData.Target then
 		AIData.State = "Idle"
@@ -139,6 +146,7 @@ function AIService:EnemyBrain(npc)
 		AIData.State = "Run"
 		return
 	end
+	print("Idling")
 end
 
 function AIService:StateUpdater(npc)

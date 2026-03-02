@@ -19,6 +19,7 @@ local TimeService = require(script.Parent.Parent.Services.TimeService)
 ----------------------------------------------------------------------------------------------------------------------------------
 local elapsed = 0
 local updateRate = 0.05
+
 ---Regen Stuff , Time Cycle and Handling States---
 runService.Heartbeat:Connect(function(dt)
 	

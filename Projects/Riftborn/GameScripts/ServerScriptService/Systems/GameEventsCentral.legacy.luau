@@ -1,7 +1,9 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local repstor = game:GetService("ReplicatedStorage")
 local modules = repstor.Modules
 local Services = script.Parent.Parent.Services
 
+local MobData = require(ReplicatedStorage.Modules.Data.MobData)
 local GameEvents = require(modules.GameEvents)
 
 local QuestService = require(Services.QuestService)
@@ -35,6 +37,7 @@ GameEvents.UnEquipItem.Event:Connect(function(player, itemID)
 end)
 
 GameEvents.MobKilled.Event:Connect(function(player, mobKilled)
+	RewardsService:GiveRewards(player, MobData.Mobs[mobKilled].Drops, false)
 	QuestService:ProgressQuest(player, mobKilled)
 end)
 
