@@ -1,9 +1,13 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
 local repstor = game:GetService("ReplicatedStorage")
 local players = game:GetService("Players")
 local runService = game:GetService("RunService")
 local remotes = repstor.Remotes
 
+local StateHandler = require(ServerScriptService.Modules.Utilities.StateHandler)
+local Connections = require(ReplicatedStorage.Modules.Connections)
+local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 local StateService = require(ServerScriptService.Services.StateService)
 local MovementService = require(script.Parent.Parent.Services.MovementService)
 local CombatService = require(script.Parent.Parent.Services.CombatService)
@@ -13,16 +17,40 @@ local CharacterVitalsSerice = require(script.Parent.Parent.Services.CharacterVit
 local TimeService = require(script.Parent.Parent.Services.TimeService)
 
 ----------------------------------------------------------------------------------------------------------------------------------
-
----Regen Stuff and Time Cycle---
+local elapsed = 0
+local updateRate = 0.05
+---Regen Stuff , Time Cycle and Handling States---
 runService.Heartbeat:Connect(function(dt)
+	
 	RegenService:ManaRegen(dt)
 	RegenService:HealthRegen(dt)
 	RegenService:FlashStepRegen(dt)
 	RegenService:BlockCounterRegen(dt)
 	TimeService:TimeCycle(dt)
+	
+	elapsed += dt
+	if elapsed > updateRate then
+		elapsed = 0
+		for _, player in pairs(players:GetPlayers()) do
+			local character = player.Character
+			if character then
+				------Death Handler------
+				if StateChecker:CheckState(character,"Dead") then
+					Connections:RemoveConnection(character, "Character", "StateHandler")
+					return
+				end
+				StateHandler:HandleStates(character)		
+			end
+		end
+	end
 end)
 
+local playerInfo = require(script.Parent.Parent.Modules.Utilities.PlayerInfoGui)
+players.PlayerAdded:Connect(function(player)
+	player.CharacterAdded:Connect(function(char)
+		playerInfo:UpdateInfo(player, char)
+	end)
+end)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 ---Creating Status For Player On Spawn---

@@ -1,26 +1,51 @@
-local NPCHandler = {}
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerScriptService = game:GetService("ServerScriptService")
+local MobData = require(ReplicatedStorage.Modules.Data.MobData)
 
-function NPCHandler:HandleNPC(npc)
-	local ServerScriptService = game:GetService("ServerScriptService")
-	local repstor = game:GetService("ReplicatedStorage")
 
-	local animations = require(repstor.Modules.Animations)
-	local uiModules = repstor.Modules.UI
+	local animations = require(ReplicatedStorage.Modules.Animations)
+	local uiModules = ReplicatedStorage.Modules.UI
 
 
 	local AIService = require(ServerScriptService.Services.AIService)
 	local CharacterVitalsService = require(ServerScriptService.Services.CharacterVitalsService)
 
-	local GameEvents = require(repstor.Modules.GameEvents)
-	local MobData = require(repstor.Modules.Data.MobData)
+	local GameEvents = require(ReplicatedStorage.Modules.GameEvents)
 
+local NPCService = {}
+
+NPCService.SpawnedNPCS = {
+	Boss = {},
+	Enemy = {},
+}
+
+
+function NPCService:RegisterNPC(NPC)
+    if NPC:IsA("Model") then
+        if NPCService.SpawnedNPCS[MobData.Mobs[NPC.Name].Type][NPC] then return end
+		NPC:SetAttribute("Type", MobData.Mobs[NPC.Name].Type)
+		NPCService.SpawnedNPCS[MobData.Mobs[NPC.Name].Type][NPC] = true
+		NPCService:HandleNPC(NPC)
+	end
+end
+
+function NPCService:UnRegisterNPC(NPC)
+    if NPC:IsA("Model") then
+        if not NPCService.SpawnedNPCS[MobData.Mobs[NPC.Name].Type][NPC] then return end
+		NPCService.SpawnedNPCS[MobData.Mobs[NPC.Name].Type][NPC] = nil
+	end
+end
+
+print(NPCService.SpawnedNPCS)
+
+function NPCService:HandleNPC(npc)
 	local npcHumanoid = npc:WaitForChild("Humanoid")
 	local animator:Animator = npcHumanoid.Animator
 
 	local mobData = MobData.Mobs[npc.Name]
 	local toolName = mobData.Tool.Name
 
-	local toolAnims = repstor.Assets.Weapons[toolName].Animations
+	local toolAnims = ReplicatedStorage.Assets.Weapons[toolName].Animations
 	animations:loadAnims(animator, toolAnims)
 	
 	AIService:CreateAI(npc, mobData)
@@ -30,18 +55,12 @@ function NPCHandler:HandleNPC(npc)
 	npcVitals.Health.CurrentHealth = mobData.Health
 
 
-	if repstor.Assets.Weapons[toolName].Model:FindFirstChild(toolName.."_Equipped") then
-		local toolModel:Model = repstor.Assets.Weapons[toolName].Model[toolName.."_Equipped"]:Clone()
+	if ReplicatedStorage.Assets.Weapons[toolName].Model:FindFirstChild(toolName.."_Equipped") then
+		local toolModel:Model = ReplicatedStorage.Assets.Weapons[toolName].Model[toolName.."_Equipped"]:Clone()
 		toolModel.Parent = npc
 		local weld = toolModel:FindFirstChildWhichIsA("Motor6D")
 		weld.Part0 = npc:FindFirstChild("Right Arm")
 	end
-
-
-	---StatusFolder---
-	local statusFolder =  Instance.new("Folder")
-	statusFolder.Name = "Status"
-	statusFolder.Parent = npc
 
 	---When NPC Die---
 	local Drops = mobData.Drops
@@ -63,7 +82,6 @@ function NPCHandler:HandleNPC(npc)
 				npc:Destroy()
 			end)
 		end
-	
 	end)
 	
 	---NPC Info GUI---
@@ -76,11 +94,8 @@ function NPCHandler:HandleNPC(npc)
 		local hpChanger = require(uiModules.HPChanger)
 		hpChanger(hpBG, npc)
 	end
-
-
-
 	npcInfo.NPCLevel.LevelText.Text = mobData.Level
 	npcInfo.NPCName.Text = npc.Name
 end
 
-return NPCHandler
+return NPCService

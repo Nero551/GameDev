@@ -6,6 +6,7 @@ local Connections = require(ReplicatedStorage.Modules.Connections)
 local abilityDataModule = require(ReplicatedStorage.Modules.Data.AbilityData)
 
 local CanDoAction = require(script.CanDoAction)
+local StateService = require(script.Parent.StateService)
 
 local AIService = {}
 AIService.ActiveAIs = {}
@@ -44,10 +45,12 @@ function AIService:CreateAI(npc, mobData)
 		animationsModule:loadAnims(npc.Humanoid.Animator,
 			ReplicatedStorage.Assets.Weapons[mobData.Tool.Name].Animations)
 	end
+	StateService:Create(npc)
 	AIService.ActiveAIs[npc] = {
 		Root = npc:WaitForChild("HumanoidRootPart"),
 		Humanoid = npc:WaitForChild("Humanoid"),
-		
+		Type = mobData.Type,
+
 		State = "Idle",
 		Tool = mobData.Tool,
 		Target = nil,
@@ -85,8 +88,7 @@ function AIService:EnemyBrain(npc)
 	AIService:StateUpdater(npc)
 	local AIData = AIService.ActiveAIs[npc]
 	if not AIData then return end
-	AIService:AcquireTarget(npc)
-		
+	AIService:AcquireTarget(npc)	
 		
 	if CharacterVitalsService:GetVital(npc, "Health").CurrentHealth <= 0 then
 		AIData.State = "Dead"
