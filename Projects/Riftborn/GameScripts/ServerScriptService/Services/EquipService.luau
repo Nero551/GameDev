@@ -29,12 +29,30 @@ function  EquipUnEquipService:EquipItem(player:Player , itemID)
 			if tool then
 				
 				--Check For Another Tool With Same Type--
-				for _,anotherTool:Tool? in char:GetChildren() do
-			--		DeleteOtherTool(anotherTool)
+				for _,anotherTool in char:GetChildren() do
+					if anotherTool:IsA("Tool") then
+                        local anotherToolData = itemDataBase:GetItemData(anotherTool:GetAttribute("ID"))
+					    if anotherToolData.Buffs then
+						   GameEvents.RemoveBuff:Fire(player, anotherToolData, anotherTool:GetAttribute("ID"))
+					    end
+						anotherTool:Destroy()
+					end
+					if anotherTool:IsA("Model") and string.find(anotherTool.Name, "_Equipped") then
+						anotherTool:Destroy()
+					end
 				end
 
 				for _,anotherTool in player.Backpack:GetChildren() do
-			--		DeleteOtherTool(anotherTool)
+					if anotherTool:IsA("Tool") then
+                        local anotherToolData = itemDataBase:GetItemData(anotherTool:GetAttribute("ID"))
+					    if anotherToolData.Buffs then
+						   GameEvents.RemoveBuff:Fire(player, anotherToolData, anotherTool:GetAttribute("ID"))
+					    end
+						anotherTool:Destroy()
+					end
+					if anotherTool:IsA("Model") and string.find(anotherTool.Name, "_Equipped") then
+						anotherTool:Destroy()
+					end
 				end
 
 				tool.Parent = player.Backpack
@@ -101,7 +119,6 @@ function EquipUnEquipService:UnEquipItem(player:Player ,itemID)
 				if weaponUnEquippedModel then
 					weaponUnEquippedModel:Destroy()
 				end
-				GameEvents.RemoveBuff:Fire(player ,  itemData, itemID)
 			else
 				warn("Weapon: "..itemData.Name.." Not Found")
 			end
@@ -111,11 +128,11 @@ function EquipUnEquipService:UnEquipItem(player:Player ,itemID)
 			local armor:Part? = char:FindFirstChild(itemData.Name)
 			if armor then
 				armor:Destroy()
-				GameEvents.RemoveBuff:Fire(player ,  itemData, itemID)
 			else
 				warn("Armor: "..itemData.Name.." Not Found")
 			end
 		end
+        GameEvents.RemoveBuff:Fire(player ,  itemData, itemID)
 	end	
 	equippedItems[itemType] = nil
 	GameEvents.UpdateMana:Fire(player)

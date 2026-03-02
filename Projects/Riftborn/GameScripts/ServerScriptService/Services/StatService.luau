@@ -85,8 +85,7 @@ end
 
 ---Calculate Final Stat---
 local function CalculateFinal(stat)
-	local percent = math.clamp(stat.Percent, -0.9, 10)
-	return (stat.Base + stat.FlatStatPoint + stat.FlatBuff) * (1 + percent)
+	return (stat.Base + stat.FlatStatPoint + stat.FlatBuff) * (1 + stat.Percent)
 end
 
 
@@ -108,8 +107,6 @@ function StatService:SetupStats(player:Player)
 		stat.Final = CalculateFinal(stat)
 	end
 	StatService:UpdateStats(player)
-	ApplyHealth(player)
-	ApplyMana(player)
 end
 
 ---Update Stats---
@@ -183,7 +180,7 @@ function StatService:ApplyBuffs(player:Player,  buffs)
 			end
 		end
 	end
-	self:UpdateStats(player)
+	StatService:UpdateStats(player)
 end
 
 ---Reset Buffs---
@@ -193,5 +190,6 @@ function StatService:ResetBuffs(player:Player)
 		stat.FlatBuff = 0
 		stat.Percent = 0
 	end
+	StatService:UpdateStats(player)
 end
 return StatService

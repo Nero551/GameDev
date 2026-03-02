@@ -12,12 +12,9 @@ function TimeService:TimeCycle(dt)
 		serverData.Time = 0
 	end 
 	
-	local minute = serverData.Time % 60
 	local hour = (serverData.Time / 60) % DayLength
 
-	local time = tostring(math.floor(hour)..":"..math.floor(minute))
-	print(time)
-	lighting.TimeOfDay = time
+	lighting.ClockTime = hour
 end
 
 return TimeService

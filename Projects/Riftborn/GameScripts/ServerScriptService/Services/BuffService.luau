@@ -1,5 +1,4 @@
 local repstor = game:GetService("ReplicatedStorage")
-
 local DataService = require(script.Parent.Parent.Services.DataService)
 local statService = require(script.Parent.StatService)
 local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
@@ -7,25 +6,19 @@ local titleDataBase = require(repstor.Modules.Data.TitleData)
 
 local BuffService = {}
 
-
-
 function BuffService:UpdateBuffs(player)
 	statService:ResetBuffs(player)
 	local playerBuffs = DataService:GetTable(player, "Buffs")
 	for buffID, buffInfo in pairs(playerBuffs) do
-		local data = itemDataBase:GetItemData(buffID)
-		if not data then
-			data = titleDataBase.Titles[buffID]
-		end
+		local data = itemDataBase:GetItemData(buffID) or titleDataBase.Titles[buffID]
+		if not data then return end
 		if  data.Buffs then 
 			buffInfo.Buffs = data.Buffs
 			buffInfo.Type = data.Type or nil
-			
+			statService:ApplyBuffs(player, buffInfo.Buffs)
 		else
 			playerBuffs[buffID] = nil
 		end		
-		
-		statService:ApplyBuffs(player, buffInfo.Buffs)
 	end
 end
 
