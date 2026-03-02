@@ -17,7 +17,6 @@ for _,module in script:GetChildren() do
 	end
 end
 
--- ! Fix
 function AIService:AcquireTarget(npc)
 	local nearestPlayer = nil
 	local closestDist = math.huge
@@ -61,6 +60,7 @@ function AIService:CreateAI(npc, mobData)
 		Moving = false,
 		WalkSpeed = mobData.WalkSpeed,
 		RunSpeed = mobData.RunSpeed,
+		NeedsRepath = 0,
 		
 		LastAttackSeenTime = 0,
 		Damage = mobData.Damage,
@@ -123,10 +123,10 @@ function AIService:EnemyBrain(npc)
 		return
 	end
 	
-	if CanDoAction:CanFlashstep(AIData) then
-		AIData.State = "Flashstep"
-		return
-	end
+	-- if CanDoAction:CanFlashstep(AIData) then
+	-- 	AIData.State = "Flashstep"
+	-- 	return
+	-- end
 	
 	if CanDoAction:CanDash(AIData) then
 		AIData.State = "Dash"

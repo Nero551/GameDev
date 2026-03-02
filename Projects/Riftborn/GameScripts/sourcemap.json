@@ -1,0 +1,1482 @@
+{
+  "name": "Default",
+  "className": "DataModel",
+  "children": [
+    {
+      "name": "StarterPlayer",
+      "className": "StarterPlayer",
+      "pluginManaged": true,
+      "children": [
+        {
+          "name": "StarterPlayerScripts",
+          "className": "StarterPlayerScripts",
+          "pluginManaged": true,
+          "children": [
+            {
+              "name": "InitializePlayer",
+              "className": "LocalScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/StarterPlayer/StarterPlayerScripts/InitializePlayer.local.luau"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "StarterCharacterScripts",
+          "className": "StarterCharacterScripts",
+          "pluginManaged": true,
+          "children": [
+            {
+              "name": "InitializeCharacter",
+              "className": "LocalScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/StarterPlayer/StarterCharacterScripts/InitializeCharacter.local.luau"
+              ]
+            },
+            {
+              "name": "Health",
+              "className": "Script",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/StarterPlayer/StarterCharacterScripts/Health.legacy.luau"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ReplicatedStorage",
+      "className": "ReplicatedStorage",
+      "pluginManaged": true,
+      "children": [
+        {
+          "name": "Modules",
+          "className": "Folder",
+          "pluginManaged": true,
+          "children": [
+            {
+              "name": "GameEvents",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/GameEvents.luau"
+              ]
+            },
+            {
+              "name": "ActionVerifier",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/ActionVerifier.luau"
+              ]
+            },
+            {
+              "name": "Data",
+              "className": "Folder",
+              "pluginManaged": true,
+              "children": [
+                {
+                  "name": "AbilityData",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/AbilityData/init.luau"
+                  ],
+                  "children": [
+                    {
+                      "name": "Cid Sword",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/AbilityData/Cid Sword.luau"
+                      ]
+                    },
+                    {
+                      "name": "Fist",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/AbilityData/Fist.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ItemDataBase",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/ItemDataBase/init.luau"
+                  ],
+                  "children": [
+                    {
+                      "name": "MaterialData",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/ItemDataBase/MaterialData.luau"
+                      ]
+                    },
+                    {
+                      "name": "WeaponData",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/ItemDataBase/WeaponData.luau"
+                      ]
+                    },
+                    {
+                      "name": "ArmorData",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/ItemDataBase/ArmorData.luau"
+                      ]
+                    },
+                    {
+                      "name": "ResourceData",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/ItemDataBase/ResourceData.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "QuestData",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/QuestData.luau"
+                  ]
+                },
+                {
+                  "name": "MobData",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/MobData.luau"
+                  ]
+                },
+                {
+                  "name": "DialogueDataBase",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/DialogueDataBase/init.luau"
+                  ],
+                  "children": [
+                    {
+                      "name": "QuestsDialogue",
+                      "className": "Folder",
+                      "pluginManaged": true,
+                      "children": [
+                        {
+                          "name": "Crystal Gathering",
+                          "className": "ModuleScript",
+                          "pluginManaged": true,
+                          "filePaths": [
+                            "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/DialogueDataBase/QuestsDialogue/Crystal Gathering.luau"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "GreetingsDialogue",
+                      "className": "Folder",
+                      "pluginManaged": true,
+                      "children": [
+                        {
+                          "name": "Zombie Greeting",
+                          "className": "ModuleScript",
+                          "pluginManaged": true,
+                          "filePaths": [
+                            "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/DialogueDataBase/GreetingsDialogue/Zombie Greeting.luau"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "TitleData",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/TitleData.luau"
+                  ]
+                },
+                {
+                  "name": "RarityData",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/RarityData.luau"
+                  ]
+                },
+                {
+                  "name": "StatusAilmentsData",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/StatusAilmentsData.luau"
+                  ]
+                },
+                {
+                  "name": "AdminIDs",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Data/AdminIDs.luau"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Configs",
+              "className": "Folder",
+              "pluginManaged": true,
+              "children": [
+                {
+                  "name": "MovementConfig",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Configs/MovementConfig.luau"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "FormulaApplier",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/FormulaApplier.luau"
+              ]
+            },
+            {
+              "name": "UI",
+              "className": "Folder",
+              "pluginManaged": true,
+              "children": [
+                {
+                  "name": "Inventory",
+                  "className": "Folder",
+                  "pluginManaged": true,
+                  "children": [
+                    {
+                      "name": "ItemIconsScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Inventory/ItemIconsScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "BaseStatsScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Inventory/BaseStatsScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "ItemInfoScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Inventory/ItemInfoScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "EquipScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Inventory/EquipScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "ItemFiltersScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Inventory/ItemFiltersScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "SearchBoxScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Inventory/SearchBoxScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "SlideInSlideOutScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Inventory/SlideInSlideOutScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "ItemRarityColorScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Inventory/ItemRarityColorScript.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Quests",
+                  "className": "Folder",
+                  "pluginManaged": true,
+                  "children": [
+                    {
+                      "name": "QuestFiltersScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Quests/QuestFiltersScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "QuestListScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Quests/QuestListScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "AbandonQuestScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Quests/AbandonQuestScript.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Stats",
+                  "className": "Folder",
+                  "pluginManaged": true,
+                  "children": [
+                    {
+                      "name": "EquipmentScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Stats/EquipmentScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "ImportantStatsScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Stats/ImportantStatsScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "PlayerNameScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Stats/PlayerNameScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "SectionScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Stats/SectionScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "MenuNameScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Stats/MenuNameScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "TitlesScripts",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Stats/TitlesScripts.luau"
+                      ]
+                    },
+                    {
+                      "name": "StatDetailsScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Stats/StatDetailsScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "AllocateStatPointsScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Stats/AllocateStatPointsScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "ResetStatsScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/Stats/ResetStatsScript.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ReturnButtonScript",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/ReturnButtonScript.luau"
+                  ]
+                },
+                {
+                  "name": "HPChanger",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/HPChanger.luau"
+                  ]
+                },
+                {
+                  "name": "EXPChanger",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/EXPChanger.luau"
+                  ]
+                },
+                {
+                  "name": "ManaChanger",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/ManaChanger.luau"
+                  ]
+                },
+                {
+                  "name": "OnScreen",
+                  "className": "Folder",
+                  "pluginManaged": true,
+                  "children": [
+                    {
+                      "name": "ToolsUIScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/OnScreen/ToolsUIScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "AbilityScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/OnScreen/AbilityScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "DamageCounterScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/OnScreen/DamageCounterScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "DialogueScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/OnScreen/DialogueScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "MainMenuButtonScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/OnScreen/MainMenuButtonScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "TrackedQuestScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/OnScreen/TrackedQuestScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "AilmentsUIScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/OnScreen/AilmentsUIScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "InCombatScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/OnScreen/InCombatScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "TimeUIScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/OnScreen/TimeUIScript.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "CurrencyChanger",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/CurrencyChanger.luau"
+                  ]
+                },
+                {
+                  "name": "FlashstepChanger",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/FlashstepChanger.luau"
+                  ]
+                },
+                {
+                  "name": "CloneConfirmPopup",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/CloneConfirmPopup.luau"
+                  ]
+                },
+                {
+                  "name": "PopUps",
+                  "className": "Folder",
+                  "pluginManaged": true,
+                  "children": [
+                    {
+                      "name": "PopUpDestroyer",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/PopUps/PopUpDestroyer.luau"
+                      ]
+                    },
+                    {
+                      "name": "PopUpCreator",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/PopUps/PopUpCreator.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "StartScreen",
+                  "className": "Folder",
+                  "pluginManaged": true,
+                  "children": [
+                    {
+                      "name": "AssetLoader",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/StartScreen/AssetLoader.luau"
+                      ]
+                    },
+                    {
+                      "name": "StartMenu",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/StartScreen/StartMenu.luau"
+                      ]
+                    },
+                    {
+                      "name": "PlayButtonScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/StartScreen/PlayButtonScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "CharCutomizationScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/StartScreen/CharCutomizationScript.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "MainMenu",
+                  "className": "Folder",
+                  "pluginManaged": true,
+                  "children": [
+                    {
+                      "name": "MenuController",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/MainMenu/MenuController.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "AdminPanel",
+                  "className": "Folder",
+                  "pluginManaged": true,
+                  "children": [
+                    {
+                      "name": "ButtonScript",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/AdminPanel/ButtonScript.luau"
+                      ]
+                    },
+                    {
+                      "name": "TextSender",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/UI/AdminPanel/TextSender.luau"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Animations",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Animations.luau"
+              ]
+            },
+            {
+              "name": "Client",
+              "className": "Folder",
+              "pluginManaged": true,
+              "children": [
+                {
+                  "name": "Effects",
+                  "className": "Folder",
+                  "pluginManaged": true,
+                  "children": [
+                    {
+                      "name": "DefaultHit",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Effects/DefaultHit.luau"
+                      ]
+                    },
+                    {
+                      "name": "Sound",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Effects/Sound.luau"
+                      ]
+                    },
+                    {
+                      "name": "BlockBreakHit",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Effects/BlockBreakHit.luau"
+                      ]
+                    },
+                    {
+                      "name": "BlockedHit",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Effects/BlockedHit.luau"
+                      ]
+                    },
+                    {
+                      "name": "DashVFX",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Effects/DashVFX.luau"
+                      ]
+                    },
+                    {
+                      "name": "FlashstepVFX",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Effects/FlashstepVFX.luau"
+                      ]
+                    },
+                    {
+                      "name": "SpawnVFX",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Effects/SpawnVFX.luau"
+                      ]
+                    },
+                    {
+                      "name": "BlackFlashHit",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Effects/BlackFlashHit.luau"
+                      ]
+                    },
+                    {
+                      "name": "AilmentHit",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Effects/AilmentHit.luau"
+                      ]
+                    },
+                    {
+                      "name": "AbilityVFX",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Effects/AbilityVFX.luau"
+                      ]
+                    },
+                    {
+                      "name": "AbilitySound",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Effects/AbilitySound.luau"
+                      ]
+                    },
+                    {
+                      "name": "CriticalHit",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Effects/CriticalHit.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Character",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Character/init.luau"
+                  ],
+                  "children": [
+                    {
+                      "name": "CamVectorsUpdater",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Character/CamVectorsUpdater.luau"
+                      ]
+                    },
+                    {
+                      "name": "Combat&Ability",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Character/Combat&Ability.luau"
+                      ]
+                    },
+                    {
+                      "name": "LandingSounds",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Character/LandingSounds.luau"
+                      ]
+                    },
+                    {
+                      "name": "Movement",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Character/Movement.luau"
+                      ]
+                    },
+                    {
+                      "name": "MainAnimations",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Character/MainAnimations.luau"
+                      ]
+                    },
+                    {
+                      "name": "ShiftLock",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Character/ShiftLock.luau"
+                      ]
+                    },
+                    {
+                      "name": "DiedStuff",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Character/DiedStuff.luau"
+                      ]
+                    },
+                    {
+                      "name": "HitStop",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Character/HitStop.luau"
+                      ]
+                    },
+                    {
+                      "name": "Trails",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Character/Trails.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Player",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Player/init.luau"
+                  ],
+                  "children": [
+                    {
+                      "name": "ClientEffects",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Player/ClientEffects.luau"
+                      ]
+                    },
+                    {
+                      "name": "Disable Some CoreGUIS Script",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Player/Disable Some CoreGUIS Script.luau"
+                      ]
+                    },
+                    {
+                      "name": "CameraShake",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Client/Player/CameraShake.luau"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Connections",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/Connections.luau"
+              ]
+            },
+            {
+              "name": "ZoneLighting",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/ZoneLighting.luau"
+              ]
+            },
+            {
+              "name": "DynamicLight",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/DynamicLight.luau"
+              ]
+            },
+            {
+              "name": "StateChecker",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ReplicatedStorage/Modules/StateChecker.luau"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ServerScriptService",
+      "className": "ServerScriptService",
+      "pluginManaged": true,
+      "children": [
+        {
+          "name": "Modules",
+          "className": "Folder",
+          "pluginManaged": true,
+          "children": [
+            {
+              "name": "Utilities",
+              "className": "Folder",
+              "pluginManaged": true,
+              "children": [
+                {
+                  "name": "NPCHandler",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Modules/Utilities/NPCHandler.luau"
+                  ]
+                },
+                {
+                  "name": "KnockbackPull",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Modules/Utilities/KnockbackPull.luau"
+                  ]
+                },
+                {
+                  "name": "HitApplier",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Modules/Utilities/HitApplier.luau"
+                  ]
+                },
+                {
+                  "name": "ToolLoader",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Modules/Utilities/ToolLoader.luau"
+                  ]
+                },
+                {
+                  "name": "PlayerInfoGui",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Modules/Utilities/PlayerInfoGui.luau"
+                  ]
+                },
+                {
+                  "name": "StateHandler",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Modules/Utilities/StateHandler.luau"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "HitTypes",
+              "className": "Folder",
+              "pluginManaged": true,
+              "children": [
+                {
+                  "name": "BlockBreak",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Modules/HitTypes/BlockBreak.luau"
+                  ]
+                },
+                {
+                  "name": "Blocked",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Modules/HitTypes/Blocked.luau"
+                  ]
+                },
+                {
+                  "name": "Default",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Modules/HitTypes/Default.luau"
+                  ]
+                },
+                {
+                  "name": "Critical",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Modules/HitTypes/Critical.luau"
+                  ]
+                },
+                {
+                  "name": "BlackFlash",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Modules/HitTypes/BlackFlash.luau"
+                  ]
+                },
+                {
+                  "name": "StatusAilment",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Modules/HitTypes/StatusAilment.luau"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ServerData",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Modules/ServerData.luau"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Services",
+          "className": "Folder",
+          "pluginManaged": true,
+          "children": [
+            {
+              "name": "AbilityService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AbilityService.luau"
+              ]
+            },
+            {
+              "name": "InventoryService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/InventoryService.luau"
+              ]
+            },
+            {
+              "name": "DataService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/DataService.luau"
+              ]
+            },
+            {
+              "name": "StatService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/StatService.luau"
+              ]
+            },
+            {
+              "name": "EquipService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/EquipService.luau"
+              ]
+            },
+            {
+              "name": "LevelService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/LevelService.luau"
+              ]
+            },
+            {
+              "name": "CurrencyService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/CurrencyService.luau"
+              ]
+            },
+            {
+              "name": "AIService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AIService/init.luau"
+              ],
+              "children": [
+                {
+                  "name": "Run",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AIService/Run.luau"
+                  ]
+                },
+                {
+                  "name": "Walk",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AIService/Walk.luau"
+                  ]
+                },
+                {
+                  "name": "Attack",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AIService/Attack.luau"
+                  ]
+                },
+                {
+                  "name": "Block",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AIService/Block.luau"
+                  ]
+                },
+                {
+                  "name": "Idle",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AIService/Idle.luau"
+                  ]
+                },
+                {
+                  "name": "CanDoAction",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AIService/CanDoAction.luau"
+                  ]
+                },
+                {
+                  "name": "UnBlock",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AIService/UnBlock.luau"
+                  ]
+                },
+                {
+                  "name": "BlockBroken",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AIService/BlockBroken.luau"
+                  ]
+                },
+                {
+                  "name": "Dash",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AIService/Dash.luau"
+                  ]
+                },
+                {
+                  "name": "Flashstep",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AIService/Flashstep.luau"
+                  ]
+                },
+                {
+                  "name": "Ability",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AIService/Ability.luau"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CombatService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/CombatService.luau"
+              ]
+            },
+            {
+              "name": "RewardsService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/RewardsService.luau"
+              ]
+            },
+            {
+              "name": "RarityService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/RarityService.luau"
+              ]
+            },
+            {
+              "name": "QuestService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/QuestService.luau"
+              ]
+            },
+            {
+              "name": "DialogueService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/DialogueService.luau"
+              ]
+            },
+            {
+              "name": "MovementService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/MovementService.luau"
+              ]
+            },
+            {
+              "name": "TitleService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/TitleService.luau"
+              ]
+            },
+            {
+              "name": "BuffService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/BuffService.luau"
+              ]
+            },
+            {
+              "name": "RegenService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/RegenService.luau"
+              ]
+            },
+            {
+              "name": "CharacterVitalsService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/CharacterVitalsService/init.luau"
+              ],
+              "children": [
+                {
+                  "name": "Movement",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/CharacterVitalsService/Movement.luau"
+                  ]
+                },
+                {
+                  "name": "Mana",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/CharacterVitalsService/Mana.luau"
+                  ]
+                },
+                {
+                  "name": "Health",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/CharacterVitalsService/Health.luau"
+                  ]
+                },
+                {
+                  "name": "Combat",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/CharacterVitalsService/Combat.luau"
+                  ]
+                },
+                {
+                  "name": "CamVectors",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/CharacterVitalsService/CamVectors.luau"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "AilmentService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AilmentService.luau"
+              ]
+            },
+            {
+              "name": "AdminCmdsService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/AdminCmdsService.luau"
+              ]
+            },
+            {
+              "name": "TimeService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/TimeService.luau"
+              ]
+            },
+            {
+              "name": "StateService",
+              "className": "ModuleScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Services/StateService.luau"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Systems",
+          "className": "Folder",
+          "pluginManaged": true,
+          "children": [
+            {
+              "name": "CollisionHandler",
+              "className": "Script",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Systems/CollisionHandler.legacy.luau"
+              ]
+            },
+            {
+              "name": "DataSystem",
+              "className": "Script",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Systems/DataSystem.legacy.luau"
+              ]
+            },
+            {
+              "name": "AdminCommands",
+              "className": "Script",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Systems/AdminCommands.legacy.luau"
+              ]
+            },
+            {
+              "name": "GameEventsCentral",
+              "className": "Script",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Systems/GameEventsCentral.legacy.luau"
+              ]
+            },
+            {
+              "name": "Data-Related Loader",
+              "className": "Script",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Systems/Data-Related Loader.legacy.luau"
+              ]
+            },
+            {
+              "name": "Gameplay-Related Loader",
+              "className": "Script",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Systems/Gameplay-Related Loader.legacy.luau"
+              ]
+            },
+            {
+              "name": "Global PlayerHandler",
+              "className": "Script",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Systems/Global PlayerHandler.legacy.luau"
+              ]
+            },
+            {
+              "name": "Global NPCHandler",
+              "className": "Script",
+              "pluginManaged": true,
+              "filePaths": [
+                "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/Systems/Global NPCHandler.legacy.luau"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "MathFunctions",
+          "className": "Script",
+          "pluginManaged": true,
+          "filePaths": [
+            "/home/nero551/Games/GameDev/Projects/Riftborn/GameScripts/ServerScriptService/MathFunctions.legacy.luau"
+          ]
+        }
+      ]
+    }
+  ]
+}

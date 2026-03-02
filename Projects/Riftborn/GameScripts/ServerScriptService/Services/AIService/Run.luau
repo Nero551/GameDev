@@ -1,7 +1,8 @@
 
-
 return function(npc)
-	local PathFindingService = game:GetService("PathfindingService")
+local PathFindingService = game:GetService("PathfindingService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Connections = require(ReplicatedStorage.Modules.Connections)
 	local StateService = require(game.ServerScriptService.Services.StateService)
 	
 	local AIService = require(script.Parent)
@@ -32,11 +33,11 @@ return function(npc)
 		AgentCanJump = true,
 		WaypointSpacing = 5,
 	})
-	
-	local needsRepath
-	needsRepath = needsRepath or os.clock()
-
+	if os.clock() - AIData.NeedsRepath > 1 then
+		AIData.Moving = false 
+	end
 	if not AIData.Moving  then
+		AIData.NeedsRepath = os.clock()
 		AIData.Moving = true
 		
 		path:ComputeAsync(AIData.Root.Position, AIData.Target.Position)
@@ -72,8 +73,8 @@ return function(npc)
 				part.Parent = workspace.World.PathFinding
 				game.Debris:AddItem(part, 5)
 				
-
-				if (originalTargetPos - AIData.Target.Position).Magnitude > 10 or os.clock() - needsRepath > 1 then
+				print(os.clock() - AIData.NeedsRepath)
+				if (originalTargetPos - AIData.Target.Position).Magnitude > 10 or os.clock() - AIData.NeedsRepath  > 1 then
 					break
 				end
 				
@@ -84,8 +85,7 @@ return function(npc)
 				end
 			end
 		end
-		needsRepath = 0
+		AIData.NeedsRepath = 0
 		AIData.Moving = false
 	end
-
 end

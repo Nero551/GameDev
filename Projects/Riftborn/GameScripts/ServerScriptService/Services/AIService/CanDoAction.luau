@@ -1,6 +1,7 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local MovementConfig = require(ReplicatedStorage.Modules.Configs.MovementConfig)
 local ActionVerifier = require(game.ReplicatedStorage.Modules.ActionVerifier)
-local StateService = require(game.ServerScriptService.Services.StateService)
 local StateChecker = require(game.ReplicatedStorage.Modules.StateChecker)
 local CharacterVitalsService = require(script.Parent.Parent.CharacterVitalsService)
 local CanDoAction = {}
@@ -22,7 +23,15 @@ function CanDoAction:CanDash(AIData)
 	local distance = (AIData.Root.Position - AIData.Target.Position).Magnitude
 	if distance <= AIData.DetectionRange and distance >= AIData.DetectionRange/2 and
 		ActionVerifier:CanDash(AIData.Humanoid.Parent) then
-		return true
+		local rayparams = RaycastParams.new()
+		rayparams.FilterType = Enum.RaycastFilterType.Include	
+		rayparams.FilterDescendantsInstances = {AIData.Target.Parent}
+
+		local result = workspace:Raycast(AIData.Root.Position,
+		 AIData.Root.CFrame.LookVector*MovementConfig.DashConfig.MaxDashDistance, rayparams)
+		if result then
+			return true
+		end
 	end	
 	return false
 end
