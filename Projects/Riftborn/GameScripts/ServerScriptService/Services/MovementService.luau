@@ -38,7 +38,7 @@ function MovementService:Sprint(character)
 	end 
 end
 
-function MovementService:Dash(player:Player, direction:Vector3? , IsShiftLockOff, npcTarget, npc)
+function MovementService:Dash(player, direction:Vector3? , IsShiftLockOff, npcTarget, npc)
 	local character = npc
 	if not npc then
 		character = player.Character or player.CharacterAdded:Wait()

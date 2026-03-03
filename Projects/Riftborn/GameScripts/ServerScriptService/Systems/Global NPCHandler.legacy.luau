@@ -26,7 +26,6 @@ elapsed =  elapsed + dt
 	elapsed = 0
 	
 	for npc,AIData in AIService.ActiveAIs do
-		if not NPCService.SpawnedNPCS[AIData.Type][npc] then return end
 		AIService[AIData.Type.."Brain"](AIService,npc)
 	end
 end)

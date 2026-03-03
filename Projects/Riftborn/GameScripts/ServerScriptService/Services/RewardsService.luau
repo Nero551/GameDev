@@ -17,18 +17,20 @@ function RewardsService:GiveRewards(player, Rewards, quest:boolean)
 		if Rewards.ItemDrops then
 			for item, itemInfo in pairs(Rewards.ItemDrops) do
 				local _,itemID = itemDataBase:GetItemData(item)
+				if not itemID then
+					warn("Invalid Item")
+					return
+				end
 				---If It Is A Quest---
 				if quest then
 					GameEvents.AddItem:Fire(itemID  , itemInfo.Amount, player)
 				else
 					---If Normal Mob Drops---
-					if RarityService:Chance(player , itemID) then
-						
+					if RarityService:CheckPity(player, itemID) then
 						GameEvents.AddItem:Fire(itemID  , itemInfo.Amount, player)
-					else
-						if RarityService:CheckPity(player, itemID) then
-							GameEvents.AddItem:Fire( itemID , itemInfo.Amount, player)
-						end
+						
+					elseif RarityService:Chance(player , itemID) then
+						GameEvents.AddItem:Fire( itemID , itemInfo.Amount, player)
 					end
 				end
 			end

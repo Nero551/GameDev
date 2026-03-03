@@ -4,6 +4,7 @@ local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVi
 local animationsModule = require(ReplicatedStorage.Modules.Animations)
 local Connections = require(ReplicatedStorage.Modules.Connections)
 local abilityDataModule = require(ReplicatedStorage.Modules.Data.AbilityData)
+local MobData = require(ReplicatedStorage.Modules.Data.MobData)
 
 local CanDoAction = require(script.CanDoAction)
 local StateService = require(script.Parent.StateService)
@@ -40,7 +41,8 @@ function AIService:AcquireTarget(npc)
 end
 
 --* Creates AI 
-function AIService:CreateAI(npc, mobData)
+function AIService:CreateAI(npc)
+	local mobData = MobData.Mobs[npc.Name]
 	if mobData.Tool then
 		animationsModule:loadAnims(npc.Humanoid.Animator,
 			ReplicatedStorage.Assets.Weapons[mobData.Tool.Name].Animations)
@@ -61,6 +63,7 @@ function AIService:CreateAI(npc, mobData)
 		State = "Idle",
 		Tool = mobData.Tool,
 		Target = nil,
+		Drops = mobData.Drops,
 		
 		DetectionRange = mobData.DetectionRange,
 		AttackRange = mobData.AttackRange,
@@ -146,7 +149,6 @@ function AIService:EnemyBrain(npc)
 		AIData.State = "Run"
 		return
 	end
-	print("Idling")
 end
 
 function AIService:StateUpdater(npc)

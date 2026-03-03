@@ -14,8 +14,6 @@ function RarityService:Chance(player , itemID)
 		if math.random(1,100) < wantedRarityInfo.Weight then
 			ItemPities[itemID] = nil
 		    return true
-		else
-			return false
 		end	
 	end
 	return false
@@ -35,11 +33,9 @@ function RarityService:CheckPity(player:Player, itemID)
 					return true
 				else
 					ItemPities[itemID] += 1
-					return false
 				end
 			else
 				ItemPities[itemID] = 1
-				return false
 			end
 		end
 	end

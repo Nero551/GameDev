@@ -12,6 +12,7 @@ return function(npc)
     local uiModules = ReplicatedStorage.Modules.UI
 
     local AIService = require(ServerScriptService.Services.AIService)
+	local CharacterVitalsService = require(ServerScriptService.Services.CharacterVitalsService)
 
     local GameEvents = require(ReplicatedStorage.Modules.GameEvents)
 	local npcHumanoid = npc:WaitForChild("Humanoid")
@@ -20,7 +21,7 @@ return function(npc)
 	local mobData = MobData.Mobs[npc.Name]
 	local toolName = mobData.Tool.Name
 
-	AIService:CreateAI(npc, mobData)
+	AIService:CreateAI(npc)
 
 
 	if ReplicatedStorage.Assets.Weapons[toolName].Model:FindFirstChild(toolName.."_Equipped") then
@@ -47,7 +48,7 @@ return function(npc)
 	local alreadyDead = false
 	npc:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(function()
 		if alreadyDead == true then return end
-		if npc:GetAttribute("Health_CurrentHealth") <= 0 then
+		if CharacterVitalsService:GetVital(npc, "Health").CurrentHealth <= 0 then
 			alreadyDead = true
             npcInfo.Enabled = false
 			deathAnimation:Play()
