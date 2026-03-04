@@ -1,1 +1,2 @@
-Just my game development assets and scripts
+Just my game development assets and scripts.
+Feel free to take them, they are not that good.
