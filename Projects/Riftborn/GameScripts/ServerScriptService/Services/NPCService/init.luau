@@ -12,6 +12,7 @@ NPCService.SpawnedNPCS = {
 }
 
 function NPCService:RegisterNPC(NPC)
+
     if NPC:IsA("Model") then
         local npcType = MobData.Mobs[NPC.Name].Type
         if NPCService.SpawnedNPCS[npcType][NPC] then return end

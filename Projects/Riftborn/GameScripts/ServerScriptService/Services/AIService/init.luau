@@ -63,6 +63,8 @@ function AIService:CreateAI(npc)
 		State = "Idle",
 		Tool = mobData.Tool,
 		Target = nil,
+		AggroList = {}, -- (does nothing  yet)
+		DamageTaken = {}, -- (does nothing  yet)
 		Drops = mobData.Drops,
 		
 		DetectionRange = mobData.DetectionRange,
