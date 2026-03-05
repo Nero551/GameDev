@@ -18,8 +18,6 @@ function TitleService:SetupTitle(player)
 		activeTitle.Parent = TitlesFolder
 		activeTitle.Name = "ActiveTitle"
 	end
-	
-	
 end
 
 function TitleService:GetTitle(player, titleID)

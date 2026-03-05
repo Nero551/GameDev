@@ -30,7 +30,8 @@ end
 function Health:Apply(character)
 	local CharacterVitalsService = require(script.Parent)
 	local healthData = CharacterVitalsService:GetVital(character, "Health")
-	local humanoid:Humanoid = character:WaitForChild("Humanoid")
+	local humanoid:Humanoid = character:FindFirstChild("Humanoid")
+	if not humanoid then return end
 	
 	if healthData.CurrentHealth == 0  then
 		healthData.HealthRegen = 0

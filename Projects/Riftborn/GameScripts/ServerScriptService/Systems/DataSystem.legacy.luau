@@ -116,9 +116,8 @@ end)
 ---Save Data---
 players.PlayerRemoving:Connect(function(player)
 
-	local data = DataService:Save(player)
+	DataService:Save(player)
 	clientReady[player] = nil
-	data = nil
 	
 	local char = player.Character
 	
@@ -128,10 +127,7 @@ end)
 ---Save Data If Server Shuts Down---
 game:BindToClose(function()
 	for _, player in ipairs(players:GetPlayers()) do
-		local data = DataService:Save(player)
-		data = nil
-		local char = player.Character
-		connections:CleanupConnections(char)
+		DataService:Save(player)
 	end
 	
 	task.wait(2)

@@ -12,7 +12,7 @@ function TimeService:TimeCycle(dt)
 		serverData.Time = 0
 	end 
 	
-	local hour = (serverData.Time / 60) % DayLength
+	local hour = (serverData.Time / 60)
 
 	lighting.ClockTime = hour
 end

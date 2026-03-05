@@ -93,6 +93,7 @@ end)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
+---Death and Spawn---
 players.PlayerAdded:Connect(function(player)
 	player.CharacterAdded:Connect(function(character)
 		CombatService:Spawn(character)
