@@ -1,8 +1,8 @@
 local players = game:GetService("Players")
-local repstor = game:GetService("ReplicatedStorage")
 local LocalizationService = game:GetService("LocalizationService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local remotes = repstor.Remotes
+local remotes = ReplicatedStorage.Remotes
 local InventoryService = require(script.Parent.Parent.Services.InventoryService)
 local EquipService = require(script.Parent.Parent.Services.EquipService)
 local StatService = require(script.Parent.Parent.Services.StatService)
@@ -10,11 +10,10 @@ local QuestService = require(script.Parent.Parent.Services.QuestService)
 local TitleService = require(script.Parent.Parent.Services.TitleService)
 local DialogueService = require(script.Parent.Parent.Services.DialogueService)
 
-local QuestData = require(repstor.Modules.Data.QuestData)
+local QuestData = require(ReplicatedStorage.Modules.Data.QuestData)
 
 local ServerData = require(script.Parent.Parent.Modules.ServerData)
-
-
+---Server Data---
 players.PlayerAdded:Connect(function(player)
 	ServerData.MaxPlayers = players.maxPlayers
 	ServerData.Players = players:GetPlayers()
@@ -23,7 +22,7 @@ players.PlayerAdded:Connect(function(player)
 		return LocalizationService:GetCountryRegionForPlayerAsync(player)
 	end)
 	if success then
-		ServerData.Region = country
+		ServerData.Region = country	
 	end
 end)
 
@@ -61,7 +60,6 @@ end)
 
 ---Client Requests To Allocate Stat Point---
 remotes.AllocateStatPoint.OnServerEvent:Connect(function(player:Player, StatType, amount)
-
 	StatService:AllocateStatPoint(player, StatType, amount)
 end)
 
@@ -92,7 +90,6 @@ end)
 
 
 ----------------------------------------------------------------------------------------------------------------------------------
-
 ---Client Requests to Equip Title---
 remotes.EquipTitle.OnServerEvent:Connect(function(player, titleID)
 	TitleService:EquipTitle(player, titleID)

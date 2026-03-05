@@ -106,7 +106,6 @@ function AIService:EnemyBrain(npc)
 		return
 	end
 
-	
 	if not AIData.Target then
 		AIData.State = "Idle"
 		return

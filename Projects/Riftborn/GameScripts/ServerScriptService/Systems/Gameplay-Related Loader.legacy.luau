@@ -37,7 +37,7 @@ runService.Heartbeat:Connect(function(dt)
 				------Death Handler------
 				if StateChecker:CheckState(character,"Dead") then
 					Connections:RemoveConnection(character, "Character", "StateHandler")
-					return
+					continue
 				end
 				StateHandler:HandleStates(character)		
 			end
