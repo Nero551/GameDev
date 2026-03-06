@@ -13,7 +13,7 @@ map_Ka Cidsword1_diff.png
 map_Kd Cidsword1_diff.png
 map_d Cidsword1_diff.png
 
-newmtl DefaultRig1Mtl
+newmtl AnimationDummy1Mtl
 Material Color
 Ka 1 1 1
 Kd 1 1 1
@@ -24,9 +24,9 @@ d 1
 
 Ns 0
 
-map_Ka DefaultRig1_diff.png
-map_Kd DefaultRig1_diff.png
-map_d DefaultRig1_diff.png
+map_Ka AnimationDummy1_diff.png
+map_Kd AnimationDummy1_diff.png
+map_d AnimationDummy1_diff.png
 
 newmtl Meta1q1pmrhmzlsonuw63rchirdclrreiwce4tjm5hgc3lfei5ceq11Mtl
 Material Color
@@ -38,4 +38,10 @@ Ks 0.0234425 0.0231273 0.02408
 d 1
 
 Ns 0
+
+map_Ka Meta1q1pmrhmzlsonuw63rchirdclrreiwce4tjm5hgc3lfei5ceq11_diff.png
+map_Kd Meta1q1pmrhmzlsonuw63rchirdclrreiwce4tjm5hgc3lfei5ceq11_diff.png
+map_d Meta1q1pmrhmzlsonuw63rchirdclrreiwce4tjm5hgc3lfei5ceq11_diff.png
+
+map_Bump Meta1q1pmrhmzlsonuw63rchirdclrreiwce4tjm5hgc3lfei5ceq11_nmap.png
 

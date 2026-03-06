@@ -6,16 +6,22 @@ local Connections = require(ReplicatedStorage.Modules.Connections)
 local abilityDataModule = require(ReplicatedStorage.Modules.Data.AbilityData)
 local MobData = require(ReplicatedStorage.Modules.Data.MobData)
 
-local CanDoAction = require(script.CanDoAction)
 local StateService = require(script.Parent.StateService)
 
 local AIService = {}
 AIService.ActiveAIs = {}
 local ActionModules = {}
+AIService.Brains = {}
 
 for _,module in script:GetChildren() do
 	if module:IsA("ModuleScript") then
 		ActionModules[module.Name] = require(module)
+	end
+end
+
+for _,module in script.Brains:GetChildren() do
+	if module:IsA("ModuleScript") then
+		AIService.Brains[module.Name] = require(module)
 	end
 end
 
@@ -91,65 +97,6 @@ function AIService:CreateAI(npc)
 		RunAnimation = animationsModule:GetAnimation(npc.Humanoid.Animator,
 			"Weapons."..mobData.Tool.Name..".Animations.Run" or "Shared.Animations.Run.Default"),
 	}	
-end
-
---* Enemy AI Loop
-function AIService:EnemyBrain(npc)
-	
-	AIService:StateUpdater(npc)
-	local AIData = AIService.ActiveAIs[npc]
-	if not AIData then return end
-	AIService:AcquireTarget(npc)
-		
-	if CharacterVitalsService:GetVital(npc, "Health").CurrentHealth <= 0 then
-		AIData.State = "Dead"
-		return
-	end
-
-	if not AIData.Target then
-		AIData.State = "Idle"
-		return
-	end
-	
-	if CanDoAction:BlockBroken(AIData) then
-		AIData.State = "BlockBroken" 
-		return
-	end
-	
-	if CanDoAction:CanUnBlock(AIData) then
-		AIData.State = "UnBlock" 
-		return
-	end
-	
-	if CanDoAction:CanBlock(AIData) then
-		AIData.State = "Block"
-		return
-	end
-	
-	if CanDoAction:CanAbility(AIData) then
-		AIData.State = "Ability"
-		return
-	end
-	
-	if CanDoAction:CanAttack(AIData) then
-		AIData.State = "Attack" 
-		return
-	end
-	
-	if CanDoAction:CanFlashstep(AIData) then
-	 	AIData.State = "Flashstep"
-	 	return
-	end
-	
-	if CanDoAction:CanDash(AIData) then
-		AIData.State = "Dash"
-		return
-	end
-	
-	if CanDoAction:CanRun(AIData) then
-		AIData.State = "Run"
-		return
-	end
 end
 
 function AIService:StateUpdater(npc)
