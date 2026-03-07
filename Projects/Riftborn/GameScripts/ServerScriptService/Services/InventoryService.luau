@@ -90,6 +90,7 @@ end
 
 ---Sync Item Data Changes With Inventory---
 function InventoryService:SyncInventoryWithDatabase(player)
+	local EquippedItems = DataService:GetTable(player, "Equipped")
 	local inventory = DataService:GetTable(player, "Inventory")
 	if not inventory then return end
 	
@@ -101,6 +102,8 @@ function InventoryService:SyncInventoryWithDatabase(player)
 		itemInfo.Type = itemData.Type
 		itemInfo.Name = itemData.Name
 	end
+	NetworkingService:FireToClient(player, "UpdateInventory", inventory, EquippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventoryInfo", inventory, EquippedItems)
 end
 
 return InventoryService

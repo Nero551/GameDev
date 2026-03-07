@@ -5,6 +5,7 @@ return function()
 	local UserInputService = game:GetService("UserInputService")
 	local runService = game:GetService("RunService")
 	local tweenService = game:GetService("TweenService")
+local ActionVerifier = require(ReplicatedStorage.Modules.ActionVerifier)
 
 	local player = game:GetService("Players").LocalPlayer
 	local character = player.Character or player.CharacterAdded:Wait()
@@ -53,7 +54,7 @@ return function()
 			else
 				---Dashing---
 				local direction = getDashDirection()
-				if direction then
+				if direction and ActionVerifier:CanDash(character) then
 					local IsShiftLockOff = UserInputService.MouseBehavior ~= Enum.MouseBehavior.LockCenter
 					NetworkingService:FireToServer("Dash", direction, IsShiftLockOff)
 				end	

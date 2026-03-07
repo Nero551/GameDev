@@ -26,6 +26,7 @@ function ItemDatabase:GetItemData(item)
 			end
 		end
 	end
+	return
 end
 
 return ItemDatabase
