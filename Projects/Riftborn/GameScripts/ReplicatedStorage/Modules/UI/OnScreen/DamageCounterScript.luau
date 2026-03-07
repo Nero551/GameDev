@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(damageFrame)
 	local TweenService = game:GetService("TweenService")
 	local repstor = game:GetService("ReplicatedStorage")
@@ -176,7 +177,7 @@ return function(damageFrame)
 		end)
 	end
 	
-	remotes.ShowDamage.OnClientEvent:Connect(function(damage, critical, blocked, blackFlash, ailmentName, ailmentData)
+	NetworkingService:OnClientEvent("ShowDamage", function(damage, critical, blocked, blackFlash, ailmentName, ailmentData)
 		damageFrame.Visible = true
 
 		---ComboDuration---

@@ -65,7 +65,7 @@ local ActionVerifier = require(ReplicatedStorage.Modules.ActionVerifier)
 
 	---Dash Movement---
 	local dashConnection
-	remotes.Dash.OnClientEvent:Connect(function(direction, IsShiftLockOff)
+	NetworkingService:OnClientEvent("Dash", function(direction, IsShiftLockOff)
 		---Dash Movement---	
 		local maxDashDistance = DashConfig.MaxDashDistance
 		local root:Part = character:FindFirstChild("HumanoidRootPart")

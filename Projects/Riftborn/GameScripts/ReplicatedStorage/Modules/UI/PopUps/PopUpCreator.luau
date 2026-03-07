@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function()
 	local repstor = game:GetService("ReplicatedStorage")
 	local player = game:GetService("Players").LocalPlayer
@@ -15,7 +16,7 @@ return function()
 		end
 	end
 
-	remotes.PopUp.OnClientEvent:Connect(function(popupInfo:any)
+	NetworkingService:OnClientEvent("PopUp", function(popupInfo:any)
 		if not popupInfo then return end
 
 		if popupInfo.TitleData  then

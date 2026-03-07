@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function()
 	--ClientEffects
 
@@ -15,7 +16,7 @@ return function()
 
 
 	end
-	remotes.ClientEffects.OnClientEvent:Connect(function(action :string , arguementData:any)
+	NetworkingService:OnClientEvent("ClientEffects", function(action :string , arguementData:any)
 		local foundEffect = cachedEffects[action] 
 		if foundEffect then
 			foundEffect(arguementData)

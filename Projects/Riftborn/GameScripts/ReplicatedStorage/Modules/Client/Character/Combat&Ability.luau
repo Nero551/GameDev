@@ -40,7 +40,11 @@ return function()
 		------M1------
 		if UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) 
 		and not StateChecker:CheckState(character, "Attacking") and ActionVerifier:CanAttack(character)  then
-			NetworkingService:FireToServer("Attack")
+			
+			local tool = character:FindFirstChildWhichIsA("Tool")
+			if tool then
+				NetworkingService:FireToServer("Attack")
+			end
 		end
 
 		------Blocking------

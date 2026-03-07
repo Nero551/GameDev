@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function  (itemFrame, OnScreenGui, infoFrame)
 	local repstor = game:GetService("ReplicatedStorage")
 	local tweenService = game:GetService("TweenService")
@@ -105,7 +106,7 @@ return function  (itemFrame, OnScreenGui, infoFrame)
 	end)
 
 	---LoadEquippedItems---
-	remotes.UpdateEquippedItems.OnClientEvent:Connect(function(inventory, equippedItems)
+	NetworkingService:OnClientEvent("UpdateEquippedItems", function(inventory, equippedItems)
 
 		for _,icon:Frame in itemFrame:GetChildren() do
 			if icon:IsA("Frame") then

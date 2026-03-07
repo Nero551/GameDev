@@ -1,12 +1,11 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
-local repstor = game:GetService("ReplicatedStorage")
 local players = game:GetService("Players")
 local runService = game:GetService("RunService")
-local remotes = repstor.Remotes
 
 local StateHandler = require(ServerScriptService.Modules.Utilities.StateHandler)
 local Connections = require(ReplicatedStorage.Modules.Connections)
+local NetworkingService = require(ReplicatedStorage.Modules.NetworkingService)
 local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 local StateService = require(ServerScriptService.Services.StateService)
 local MovementService = require(script.Parent.Parent.Services.MovementService)
@@ -68,24 +67,24 @@ end)
 MovementService:LoadSharedAnimations()
 
 ---Client Requests to Sprint---
-remotes.Sprint.OnServerEvent:Connect(function(player:Player)
+NetworkingService:OnServerEvent("Sprint", function(player:Player)
 	local character = player.Character or player.CharacterAdded:Wait()
 	MovementService:Sprint(character)
 end)
 
 ---Client Requests to Dash---
-remotes.Dash.OnServerEvent:Connect(function(player:Player, direction, IsShiftLockOff)
+NetworkingService:OnServerEvent("Dash", function(player:Player, direction, IsShiftLockOff)
 	MovementService:Dash(player, direction, IsShiftLockOff)
 end)
 
 ---Client Requests to Flashstep---
-remotes.FlashStep.OnServerEvent:Connect(function(player:Player)
+NetworkingService:OnServerEvent("FlashStep", function(player:Player)
 	local character = player.Character or player.CharacterAdded:Wait()
 	MovementService:FlashStep(character)
 end)
 
 ---Client Requests to WallRun---
-remotes.WallRun.OnServerEvent:Connect(function(player:Player)
+NetworkingService:OnServerEvent("WallRun", function(player:Player)
 	local character = player.Character or player.CharacterAdded:Wait()
 	MovementService:WallRun(character)
 end)
@@ -102,13 +101,13 @@ players.PlayerAdded:Connect(function(player)
 end)
 
 ---Client Requests to Block---
-remotes.Block.OnServerEvent:Connect(function(player:Player, boolean:boolean)
+NetworkingService:OnServerEvent("Block", function(player:Player, boolean:boolean)
 	local character = player.Character or player.CharacterAdded:Wait()
 	CombatService:Block(character, boolean, nil)
 end)
 
 ---Client Requests to Attack---
-remotes.Attack.OnServerEvent:Connect(function(player:Player, argumentData)
+NetworkingService:OnServerEvent("Attack", function(player:Player, argumentData)
 	local character = player.Character or player.CharacterAdded:Wait()
 	CombatService:Attack(character, nil, player)
 end)
@@ -117,7 +116,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 
 ---Client Requests to use Ability---
-remotes.Ability.OnServerEvent:Connect(function(player:Player, mouse , input)
+NetworkingService:OnServerEvent("Ability", function(player:Player, mouse , input)
 	local char = player.Character or player.CharacterAdded:Wait()
 	local tool = char:FindFirstChildWhichIsA("Tool")
 	AbilityService:UseAbility(player ,char , tool, mouse, input)

@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(Icons, EquipmentFolder)
 	local repstor =game:GetService("ReplicatedStorage")
 	local tweenService = game:GetService("TweenService")
@@ -187,7 +188,7 @@ return function(Icons, EquipmentFolder)
 		end
 	end
 
-	remotes.UpdateEquippedItems.OnClientEvent:Connect(function(inventory, equippedItems)	
+	NetworkingService:OnClientEvent("UpdateEquippedItems", function(inventory, equippedItems)	
 		UpdateEquipmentUI(inventory, equippedItems)
 	end)
 end

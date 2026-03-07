@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(titles, overviewFrameTitleText)
 	local repstor = game:GetService("ReplicatedStorage")
 	local tweenService = game:GetService("TweenService")	
@@ -14,7 +15,7 @@ return function(titles, overviewFrameTitleText)
 	end
 
 
-	repstor.Remotes.UpdateTitles.OnClientEvent:Connect(function(playerTitle)
+	NetworkingService:OnClientEvent("UpdateTitles", function(playerTitle)
 		for _,title in titles:GetChildren() do
 			if title:IsA("ImageButton") then
 				title:Destroy()

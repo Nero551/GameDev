@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function  (Frame)
 	local repstor = game:GetService("ReplicatedStorage")
 	local remotes = repstor.Remotes
@@ -11,7 +12,7 @@ return function  (Frame)
 	end
 
 
-	remotes.UpdateInventory.OnClientEvent:Connect(function(inventory, equippedItems)
+	NetworkingService:OnClientEvent("UpdateInventory", function(inventory, equippedItems)
 		for  itemID, item in pairs(inventory) do
 
 			for _,icon in Frame:GetChildren() do

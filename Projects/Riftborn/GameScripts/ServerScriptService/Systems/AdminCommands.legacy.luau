@@ -1,13 +1,13 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local repstor = game:GetService("ReplicatedStorage")
 local modules =  repstor.Modules
-local remotes = repstor.Remotes
 
 local AdminCmdsService = require(script.Parent.Parent.Services.AdminCmdsService)
 
 local ADMIN_IDS = require(modules.Data.AdminIDs)
 
 ---COMMANDS---
-remotes.AdminCommand.OnServerEvent:Connect(function(player, msg)
+NetworkingService:OnServerEvent("AdminCommand", function(player, msg)
 	if not ADMIN_IDS[player.UserId] then return end
 	local msgParts = msg:split(" ")
 	

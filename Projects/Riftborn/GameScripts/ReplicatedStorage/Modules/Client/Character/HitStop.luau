@@ -1,11 +1,10 @@
 return function()
-	local replicatedStorage = game:GetService("ReplicatedStorage")
-	local hitstopEvent = replicatedStorage.Remotes:WaitForChild("Hitstop")
+	local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 
 	local Players = game:GetService("Players")
 	local player = Players.LocalPlayer
 
-	hitstopEvent.OnClientEvent:Connect(function(duration)
+	NetworkingService:OnClientEvent("Hitstop", function(duration)
 
 		local character = player.Character
 		if not character then return end

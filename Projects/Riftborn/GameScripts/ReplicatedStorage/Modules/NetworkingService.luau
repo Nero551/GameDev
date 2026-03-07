@@ -27,8 +27,32 @@ local function AssertClient()
 	return true
 end
 
+function NetworkingService:OnClientEvent(remoteName:string, callback)
+    if not AssertClient() then return end
+    local remote = Remotes[remoteName]
+    if remote then
+        remote.OnClientEvent:Connect(function(...)
+            callback(...)
+        end)
+    end
+    return
+end
+
+function NetworkingService:OnServerEvent(remoteName: string, callback)
+	if not AssertServer() then
+		return
+	end
+	local remote = Remotes[remoteName]
+	if remote then
+		remote.OnServerEvent:Connect(function(...)
+			callback(...)
+		end)
+	end
+	return
+end
+
 function NetworkingService:FireToServer(remoteName: string, ...)
-	if AssertClient() then return end
+	if not AssertClient() then return end
     
 	warn("From Client:", remoteName)
 	-- warn("From Client:", debug.traceback())
@@ -36,7 +60,7 @@ function NetworkingService:FireToServer(remoteName: string, ...)
 	if remote then
 		remote:FireServer(...)
 	end
-end
+end             
 
 function NetworkingService:FireToClient(player ,remoteName:string, ...)
     if not AssertServer() then return end
@@ -69,11 +93,12 @@ function NetworkingService:FireInRange(remoteName:string, origin, range, ...)
     --warn("From Server:", debug.traceback())
 	local remote = Remotes[remoteName]
 	if remote then
+        if typeof(origin) ~= "Vector3" then return end
         for _,player in Players:GetPlayers() do
             local char = player.Character
             local hrp = char and char:FindFirstChild("HumanoidRootPart")
 
-			if hrp and typeof(origin) == "Vector3" then
+			if hrp then
 				local maxRange = range or 500
 				local distance = (hrp.Position - origin).Magnitude
 
@@ -100,7 +125,7 @@ function NetworkingService:FireToExcept(exceptPlayer:Player?, remoteName:string,
     end
 end
 
-function NetworkingService:FireToPlayers(players:any, remoteName:string, ...)
+function NetworkingService:FireToPlayers(players, remoteName:string, ...)
 	if not AssertServer() then return end
 
 	warn("From Server:", remoteName)

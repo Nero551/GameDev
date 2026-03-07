@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function()
 	local replicatedStorage = game:GetService("ReplicatedStorage")
 	local RunService = game:GetService("RunService")
@@ -7,7 +8,7 @@ return function()
 	local char = player.Character or player.CharacterAdded:Wait()
 	local camera = workspace.CurrentCamera
 	
-	replicatedStorage.Remotes.CameraShake.OnClientEvent:Connect(function(shakeIntensity)
+	NetworkingService:OnClientEvent("CameraShake", function(shakeIntensity)
 		Connections:AddConnection(char, "Character", "CameraShake", RunService.RenderStepped:Connect(function(dt)
 			if shakeIntensity > 0 then
 				local offset = Vector3.new(

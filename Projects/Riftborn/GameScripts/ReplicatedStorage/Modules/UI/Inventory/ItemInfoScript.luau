@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function  (scrollingFrame, infoFrame)
 	local repstor = game:GetService("ReplicatedStorage")
 	local tweenService = game:GetService("TweenService")
@@ -38,7 +39,7 @@ return function  (scrollingFrame, infoFrame)
 	end)
 
 
-	remotes.UpdateInventoryInfo.OnClientEvent:Connect(function(inventory , equippedItems)
+	NetworkingService:OnClientEvent("UpdateInventoryInfo", function(inventory , equippedItems)
 		for _,iconFrame:Frame? in  scrollingFrame:GetChildren() do
 			if iconFrame:IsA("Frame") then
 				local icon:ImageButton? = iconFrame:FindFirstChildWhichIsA("ImageButton")

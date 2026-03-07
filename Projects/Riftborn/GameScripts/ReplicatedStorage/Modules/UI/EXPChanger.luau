@@ -1,12 +1,11 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(expBG, levelFrame)
-	local repstor = game:GetService("ReplicatedStorage")
 	local tweenService = game:GetService("TweenService")
-	local remotes = repstor.Remotes
 	local EXPFill = expBG.EXPFill
 	local EXPNumber = expBG.EXPNumber
 
 
-	remotes.UpdateEXP.OnClientEvent:Connect(function(playerLevel)
+	NetworkingService:OnClientEvent("UpdateEXP", function(playerLevel)
 		local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 		local ratio = playerLevel.CurrentEXP / playerLevel.RequiredEXP
 		ratio = math.clamp(ratio, 0, 1)

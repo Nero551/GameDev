@@ -1,7 +1,5 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local repstor = game:GetService("ReplicatedStorage")
 local players = game:GetService("Players")
-local remotes = repstor.Remotes
 local DataService = require(script.Parent.Parent.Services.DataService)
 local statService = require(script.Parent.Parent.Services.StatService)
 local LevelService = require(script.Parent.Parent.Services.LevelService)
@@ -15,7 +13,7 @@ local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVi
 local connections = require(game.ReplicatedStorage.Modules.Connections)
 
 local clientReady = {}
-remotes.ClientReady.OnServerEvent:Connect(function(player)
+NetworkingService:OnServerEvent("ClientReady", function(player)
 	clientReady[player] = true
 end)
 

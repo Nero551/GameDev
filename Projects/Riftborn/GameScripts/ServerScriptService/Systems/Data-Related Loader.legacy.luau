@@ -1,8 +1,8 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local players = game:GetService("Players")
 local LocalizationService = game:GetService("LocalizationService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local remotes = ReplicatedStorage.Remotes
 local InventoryService = require(script.Parent.Parent.Services.InventoryService)
 local EquipService = require(script.Parent.Parent.Services.EquipService)
 local StatService = require(script.Parent.Parent.Services.StatService)
@@ -31,14 +31,14 @@ players.playerRemoving:Connect(function(player)
 end)
 
 ---Client Requests To Add An Item---
-remotes.RequestAddItem.OnServerEvent:Connect(function(player:Player, itemID:string, amount:number)
+NetworkingService:OnServerEvent("RequestAddItem", function(player:Player, itemID:string, amount:number)
 
 	InventoryService:AddItem(itemID , amount, player)
 
 end)
 
 ---Client Requests To Remove An Item---
-remotes.RequestRemoveItem.OnServerEvent:Connect(function(player:Player, itemID:string, amount:number)
+NetworkingService:OnServerEvent("RequestRemoveItem", function(player:Player, itemID:string, amount:number)
 	InventoryService:RemoveItem(itemID, amount, player)
 
 end)
@@ -46,12 +46,12 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 
 ---Client Requests to Equip Item---
-remotes.EquipItem.OnServerEvent:Connect(function(player, itemID)
+NetworkingService:OnServerEvent("EquipItem", function(player, itemID)
 	EquipService:EquipItem(player, itemID)
 end)
 
 ---Client Requests To UnEquip Item---
-remotes.UnequipItem.OnServerEvent:Connect(function(player, itemID)
+NetworkingService:OnServerEvent("UnequipItem", function(player, itemID)
 	EquipService:UnEquipItem(player, itemID)
 end)	
 
@@ -59,31 +59,31 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 
 ---Client Requests To Allocate Stat Point---
-remotes.AllocateStatPoint.OnServerEvent:Connect(function(player:Player, StatType, amount)
+NetworkingService:OnServerEvent("AllocateStatPoint", function(player:Player, StatType, amount)
 	StatService:AllocateStatPoint(player, StatType, amount)
 end)
 
 ---Client Requests To Reset Stat Points---
-remotes.ResetStatPoints.OnServerEvent:Connect(function(player)	
+NetworkingService:OnServerEvent("ResetStatPoints", function(player)	
 	StatService:ResetStats(player)
 end)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
 ---Client Requests to Accept Quest---
-remotes.AcceptQuest.OnServerEvent:Connect(function(player, QuestName)
+NetworkingService:OnServerEvent("AcceptQuest", function(player, QuestName)
 end)
 
 
 ---Client Requests to Abandon Quest---
-remotes.AbandonQuest.OnServerEvent:Connect(function(player, questName)
+NetworkingService:OnServerEvent("AbandonQuest", function(player, questName)
 	local questID = QuestData:GetQuestID(questName)
 	QuestService:AbandonQuest(player, questID)
 end)
 
 
 ---Client Requests to Track Quest---
-remotes.TrackQuest.OnServerEvent:Connect(function(player:Player, questName)
+NetworkingService:OnServerEvent("TrackQuest", function(player:Player, questName)
 	local questID = QuestData:GetQuestID(questName)
 	QuestService:TrackQuest(player, questID)
 end)
@@ -91,24 +91,24 @@ end)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 ---Client Requests to Equip Title---
-remotes.EquipTitle.OnServerEvent:Connect(function(player, titleID)
+NetworkingService:OnServerEvent("EquipTitle", function(player, titleID)
 	TitleService:EquipTitle(player, titleID)
 end)
 
 
 ---Client Requests to UnEquip Title---
-remotes.UnEquipTitle.OnServerEvent:Connect(function(player)
+NetworkingService:OnServerEvent("UnEquipTitle", function(player)
 	TitleService:UnEquipTitle(player)
 end)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
 ---Client Requests to Conitnue Dialogue---
-remotes.ContinueDialogue.OnServerEvent:Connect(function(player:Player)
+NetworkingService:OnServerEvent("ContinueDialogue", function(player:Player)
 	DialogueService:ContinueDialogue(player)
 end)
 
 ---Client Selected Dialogue Option---
-remotes.SelectDialogueOption.OnServerEvent:Connect(function(player:Player,optionNumber)
+NetworkingService:OnServerEvent("SelectDialogueOption", function(player:Player,optionNumber)
 	DialogueService:SelectDialogueOption(player, optionNumber)	
 end)

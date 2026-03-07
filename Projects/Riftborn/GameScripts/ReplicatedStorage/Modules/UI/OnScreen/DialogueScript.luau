@@ -39,7 +39,7 @@ return function(DialogueFrame)
 		skipLine = true
 	end
 
-	repstor.Remotes.ShowDialogue.OnClientEvent:Connect(function(speaker, dialogueData, ended)
+	NetworkingService:OnClientEvent("ShowDialogue", function(speaker, dialogueData, ended)
 		if ended then
 			DialogueFrame.Visible = false
 			SpeakerName.Text = ""

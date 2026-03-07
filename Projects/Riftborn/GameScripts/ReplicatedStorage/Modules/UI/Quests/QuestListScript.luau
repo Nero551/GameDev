@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(questMenu)
 	local repstor = game:GetService("ReplicatedStorage")
 	local tweenService = game:GetService("TweenService")
@@ -110,7 +111,7 @@ return function(questMenu)
 	end
 
 
-	remotes.UpdateQuests.OnClientEvent:Connect(function(playerQuests)
+	NetworkingService:OnClientEvent("UpdateQuests", function(playerQuests)
 
 		---QuestFrame---
 		for _,quest in questList:GetChildren() do

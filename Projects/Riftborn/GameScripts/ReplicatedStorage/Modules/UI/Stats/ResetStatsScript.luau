@@ -34,7 +34,7 @@ return function(resetButton ,statsMenu)
 		return confirmPopUp
 	end
 
-	remotes.UpdateEXP.OnClientEvent:Connect(function(playerLevel)
+	NetworkingService:OnClientEvent("UpdateEXP", function(playerLevel)
 		statsMenu.StatPointsFrame.AvailablePoints.Text = "Points: "..playerLevel.StatPoints
 	end)
 

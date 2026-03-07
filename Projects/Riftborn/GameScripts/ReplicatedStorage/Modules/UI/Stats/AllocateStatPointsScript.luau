@@ -9,7 +9,7 @@ return function(statPointsFrame)
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-	remotes.UpdateEXP.OnClientEvent:Connect(function(playerLevel)
+	NetworkingService:OnClientEvent("UpdateEXP", function(playerLevel)
 		statPointsFrame.AvailablePoints.Text = "Points: "..playerLevel.StatPoints
 	end)
 
