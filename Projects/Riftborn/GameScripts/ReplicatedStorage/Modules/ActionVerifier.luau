@@ -24,7 +24,7 @@ end
 
 function ActionVerifier:CanAttack(character)
 	if StateChecker:CheckState(character , "Attacking" , "Blocking", "Stunned", "NoPunch"
-		, "Dashing", "FlashStep", "FlashStepEndLag" ,"DashEndLag", "Casting", "Frozen", "BlockBroken") then
+		, "Dashing", "FlashStep", "FlashStepEndLag" ,"DashEndLag", "Casting", "Frozen", "BlockBroken", "ComboCooldown") then
 		return false
 	end
 	return true

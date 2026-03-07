@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(resetButton ,statsMenu)
 	local player  = game:GetService("Players").LocalPlayer
 	local repstor = game:GetService("ReplicatedStorage")
@@ -50,7 +51,7 @@ return function(resetButton ,statsMenu)
 		end
 
 		confirmConnection = confirmButton.MouseButton1Click:Connect(function()
-			remotes.ResetStatPoints:FireServer()
+			NetworkingService:FireToServer("ResetStatPoints")
 			popup.Visible = false
 		end)
 	end)

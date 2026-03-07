@@ -1,5 +1,4 @@
-local remotes = game:GetService("ReplicatedStorage").Remotes
-
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 
 local Character = {}
 
@@ -21,7 +20,7 @@ function Character:Init()
 	for moduleName,module in  pairs(cachedModules) do
 		module()
 	end
-	remotes.ClientReady:FireServer()
+	NetworkingService:FireToServer("ClientReady")
 end
 
 

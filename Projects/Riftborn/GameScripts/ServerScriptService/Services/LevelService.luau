@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local repstor = game:GetService("ReplicatedStorage")
 local remotes = repstor.Remotes
 local DataService = require(script.Parent.Parent.Services.DataService)
@@ -53,11 +54,11 @@ function LevelService:IncreaseEXP(player , EXP)
 
 				playerLevel.RequiredEXP = math.floor(100 * (playerLevel.CurrentLevel ^ 1.9))
 				playerLevel.StatPoints += 4
-				remotes.PopUp:FireClient(player, {
+				NetworkingService:FireToClient(player, "PopUp", {
 					["Level"] = playerLevel
 				})
 			end
-			remotes.UpdateEXP:FireClient(player , playerLevel)
+			NetworkingService:FireToClient(player , "UpdateEXP", playerLevel)
 			levelFolder.CurrentLevel.Value = playerLevel.CurrentLevel
 			levelFolder.CurrentEXP.Value = playerLevel.CurrentEXP
 			levelFolder.RequiredEXP.Value = playerLevel.RequiredEXP
@@ -70,8 +71,8 @@ function LevelService:IncreaseEXP(player , EXP)
 	levelFolder.RequiredEXP.Value = playerLevel.RequiredEXP
 	levelFolder.StatPoints.Value = playerLevel.StatPoints
 	
-	remotes.UpdateEXP:FireClient(player , playerLevel)
-	remotes.PopUp:FireClient(player, {
+	NetworkingService:FireToClient(player , "UpdateEXP", playerLevel)
+	NetworkingService:FireToClient(player, "PopUp", {
 		["EXP"] = EXP
 	})
 end

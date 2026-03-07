@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(statPointsFrame)
 	local player = game:GetService("Players").LocalPlayer
 	local repstore = game:GetService("ReplicatedStorage")
@@ -21,7 +22,7 @@ return function(statPointsFrame)
 				if tonumber(amount) == nil then
 					amount = 1
 				end
-				remotes.AllocateStatPoint:FireServer(statFrame.Name, tonumber(amount))
+				NetworkingService:FireToServer("AllocateStatPoint", statFrame.Name, tonumber(amount))
 			end)
 			allocateButton.MouseEnter:Connect(function()
 				tweenService:Create(allocateButton["+"], info , {TextColor3 = Color3.fromRGB(255, 154, 213)}):Play()

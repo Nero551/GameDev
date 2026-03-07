@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 --Defualt HitType
 local debris = game:GetService("Debris")
 local replicatedStorage = game:GetService("ReplicatedStorage")
@@ -49,16 +50,16 @@ return function(argumentData)
 	killerHit.Name = "KillerHit"	
 	debris:AddItem(killerHit, 30)
 	
-	replicatedStorage.Remotes.ClientEffects:FireAllClients("DefaultHit" , {
+	NetworkingService:FireToClient("All", "ClientEffects", "DefaultHit" , {
 		["Target"] = targetHit ,
 		["WeaponUsed"] = weaponUsed.Name,
 	})
 	
-	replicatedStorage.Remotes.ClientEffects:FireAllClients("BlackFlashHit",{
+	NetworkingService:FireToClient("All", "ClientEffects", "BlackFlashHit",{
 		["Target"] = targetHit ,
 	})
 	
-	replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound",{
+	NetworkingService:FireToClient("All", "ClientEffects", "Sound",{
 		["Parent"] = targetHumanoid,
 		["SoundName"] = "Shared.Sounds.BlackFlash"
 	})
@@ -80,7 +81,7 @@ return function(argumentData)
 
 		})
 		
-		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
+		NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
 			["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Abilities.Hit."..tostring(abilityLetter) ,
 			["Parent"] = targetHRP
 		})
@@ -135,12 +136,12 @@ return function(argumentData)
 
 	if player then
 		
-		replicatedStorage.Remotes.Hitstop:FireClient(player ,0.1)
+		NetworkingService:FireToClient(player , "Hitstop", 0.1)
 		
 		if AbilityDamage then
-			replicatedStorage.Remotes.ShowDamage:FireClient(player ,AbilityDamage, false, false , true)
+			NetworkingService:FireToClient(player , "ShowDamage", AbilityDamage, false, false , true)
 		else
-			replicatedStorage.Remotes.ShowDamage:FireClient(player ,M1Damage, false, false, true)
+			NetworkingService:FireToClient(player , "ShowDamage", M1Damage, false, false, true)
 		end
 	end
 

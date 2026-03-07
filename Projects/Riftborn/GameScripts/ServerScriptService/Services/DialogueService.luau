@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local repstor = game:GetService("ReplicatedStorage")
 
 local dialogueDataBase = require(repstor.Modules.Data.DialogueDataBase)
@@ -18,8 +19,12 @@ function DialogueService:PlayDialogue(player, dialogue, stage)
 			Current = stageData,
 			Line = 1,
 		}
-		repstor.Remotes.ShowDialogue:FireClient(player ,DialogueService.ActiveDialogues[player].Current.Speaker 
-			,DialogueService.ActiveDialogues[player].Current.Lines[DialogueService.ActiveDialogues[player].Line])
+		NetworkingService:FireToClient(
+			player,
+			"ShowDialogue",
+			DialogueService.ActiveDialogues[player].Current.Speaker,
+			DialogueService.ActiveDialogues[player].Current.Lines[DialogueService.ActiveDialogues[player].Line]
+		)
 	end
 end
 
@@ -29,8 +34,13 @@ function DialogueService:ContinueDialogue(player)
 		DialogueService:EndDialogue(player)
 		
 	else
-		repstor.Remotes.ShowDialogue:FireClient(player ,DialogueService.ActiveDialogues[player].Current.Speaker 
-			,DialogueService.ActiveDialogues[player].Current.Lines[DialogueService.ActiveDialogues[player].Line], DialogueService.ActiveDialogues[player].Current.Name)
+		NetworkingService:FireToClient(
+			player,
+			"ShowDialogue",
+			DialogueService.ActiveDialogues[player].Current.Speaker,
+			DialogueService.ActiveDialogues[player].Current.Lines[DialogueService.ActiveDialogues[player].Line],
+			DialogueService.ActiveDialogues[player].Current.Name
+		)
 	end
 	
 end
@@ -45,8 +55,13 @@ function DialogueService:NextDialogueBranch(player:Player, option)
 		DialogueService.ActiveDialogues[player].Current = nextDialogue
 		DialogueService.ActiveDialogues[player].Line = 1
 	end
-	repstor.Remotes.ShowDialogue:FireClient(player ,DialogueService.ActiveDialogues[player].Current.Speaker 
-		,DialogueService.ActiveDialogues[player].Current.Lines[DialogueService.ActiveDialogues[player].Line], DialogueService.ActiveDialogues[player].Current.Name)
+	NetworkingService:FireToClient(
+		player,
+		"ShowDialogue",
+		DialogueService.ActiveDialogues[player].Current.Speaker,
+		DialogueService.ActiveDialogues[player].Current.Lines[DialogueService.ActiveDialogues[player].Line],
+		DialogueService.ActiveDialogues[player].Current.Name
+	)
 end
 
 function DialogueService:SelectDialogueOption(player, optionNumber)
@@ -66,7 +81,7 @@ end
 function DialogueService:EndDialogue(player)
 	DialogueService.ActiveDialogues[player].Current = nil
 	DialogueService.ActiveDialogues[player].Line = 1
-	repstor.Remotes.ShowDialogue:FireClient(player ,nil,nil, true)
+	NetworkingService:FireToClient(player , "ShowDialogue", nil,nil, true)
 end
 
 

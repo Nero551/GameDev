@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local repstor = game:GetService("ReplicatedStorage")
 local remotes = repstor.Remotes
 
@@ -145,7 +146,7 @@ function StatService:AllocateStatPoint(player:Player, statType, amount)
 	playerLevel.StatPoints -= amount
 	playerStats[statType].FlatStatPoint = playerStats[statType].FlatStatPoint + amount
 	StatService:UpdateStats(player)
-	remotes.UpdateEXP:FireClient(player ,playerLevel)
+	NetworkingService:FireToClient(player , "UpdateEXP", playerLevel)
 end
 
 
@@ -161,7 +162,7 @@ function StatService:ResetStats(player:Player)
 	playerStats.Mana.FlatStatPoint = 0
 	playerStats.RiftBorn.FlatStatPoint = 0
 	StatService:UpdateStats(player)
-	remotes.UpdateEXP:FireClient(player ,playerLevel)
+	NetworkingService:FireToClient(player , "UpdateEXP", playerLevel)
 end
 
 ---Apply Item Buffs---

@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function  (itemFrame, OnScreenGui, infoFrame)
 	local repstor = game:GetService("ReplicatedStorage")
 	local tweenService = game:GetService("TweenService")
@@ -63,7 +64,7 @@ return function  (itemFrame, OnScreenGui, infoFrame)
 		local itemImage = infoFrame:FindFirstChild("ItemImage").Image
 		local itemID = infoFrame:FindFirstChild("ItemID").Value
 
-		remotes.EquipItem:FireServer(itemID)
+		NetworkingService:FireToServer("EquipItem", itemID)
 
 		if itemType == "Melee" then
 			local slot = toolIcons:FindFirstChild("MeleeSlot")
@@ -86,7 +87,7 @@ return function  (itemFrame, OnScreenGui, infoFrame)
 		local itemType = infoFrame:FindFirstChild("ItemType").Text
 		local itemID = infoFrame:FindFirstChild("ItemID").Value
 
-		remotes.UnequipItem:FireServer(itemID)
+		NetworkingService:FireToServer("UnequipItem", itemID)
 
 		if itemType == "Melee" then
 			local slot = toolIcons:FindFirstChild("MeleeSlot")

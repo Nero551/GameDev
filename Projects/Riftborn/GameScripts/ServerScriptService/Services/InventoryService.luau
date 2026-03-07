@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local repstor = game:GetService("ReplicatedStorage")
 local modules = repstor.Modules
 local GameEvents = require(modules.GameEvents)
@@ -39,7 +40,7 @@ function InventoryService:AddItem(itemID:string, amount:number, player:Player)
 				0,
 				maxStack
 			)
-		repstor.Remotes.PopUp:FireClient(player,{
+		NetworkingService:FireToClient(player, "PopUp", {
 			["ItemName"] = itemData.Name,
 			["ItemRarity"] = itemData.Rarity,
 			["ItemAmount"] = math.clamp(amount, 0, maxStack),
@@ -47,15 +48,15 @@ function InventoryService:AddItem(itemID:string, amount:number, player:Player)
 		})
 	else
 		inventory[itemID].Amount = 1
-		repstor.Remotes.PopUp:FireClient(player,{
+		NetworkingService:FireToClient(player, "PopUp", {
 			["ItemName"] = itemData.Name,
 			["ItemRarity"] = itemData.Rarity,
 			["ItemAmount"] = 1,
 
 		})
 	end
-	repstor.Remotes.UpdateInventory:FireClient(player, inventory,  EquippedItems)
-	repstor.Remotes.UpdateInventoryInfo:FireClient(player, inventory,  EquippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventory", inventory,  EquippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventoryInfo", inventory,  EquippedItems)
 	GameEvents.ItemChanged:Fire(player)
 	
 	return true
@@ -80,8 +81,8 @@ function InventoryService:RemoveItem(itemID:string , amount:number, player)
 		inventory[itemID] = nil
 	end	
 		
-	repstor.Remotes.UpdateInventory:FireClient(player, inventory,  EquippedItems)
-	repstor.Remotes.UpdateInventoryInfo:FireClient(player, inventory,  EquippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventory", inventory,  EquippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventoryInfo", inventory,  EquippedItems)
 	GameEvents.ItemChanged:Fire(player)
 	
 	return true	

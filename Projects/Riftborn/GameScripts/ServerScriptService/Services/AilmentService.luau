@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local  players = game:GetService("Players")
 local runService = game:GetService("RunService")
@@ -57,7 +58,7 @@ function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 				HealthChange = -ailmentDamage
 			})
 			if playerAttacker then
-				replicatedStorage.Remotes.ShowDamage:FireClient(playerAttacker, ailmentDamage, false,false,false, ailmentName, ailmentData)
+				NetworkingService:FireToClient(playerAttacker, "ShowDamage", ailmentDamage, false,false,false, ailmentName, ailmentData)
 			end
 			StateService:AddState(targetHit,
 			 ailmentData.State,
@@ -106,7 +107,7 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 			})
 
 			if playerAttacker then
-				replicatedStorage.Remotes.ShowDamage:FireClient(playerAttacker, ailmentDamage, false,false,false, ailmentName, ailmentData)
+				NetworkingService:FireToClient(playerAttacker, "ShowDamage", ailmentDamage, false,false,false, ailmentName, ailmentData)
 			end
 			StateService:AddState(targetHit, ailmentData.State,
 				StateService.Status[targetHit][ailmentData.State].Duration - dt,
@@ -140,7 +141,7 @@ function AilmentService:Freeze(attacker, targetHit, ailmentName, normalDamage)
 	end))
 	
 	if playerAttacker then
-		replicatedStorage.Remotes.ShowDamage:FireClient(playerAttacker, ailmentDamage, false,false,false, ailmentName, ailmentData)
+		NetworkingService:FireToClient(playerAttacker, "ShowDamage", ailmentDamage, false,false,false, ailmentName, ailmentData)
 	end
 end
 

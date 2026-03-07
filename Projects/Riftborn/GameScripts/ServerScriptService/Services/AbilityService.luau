@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local debris = game:GetService("Debris")
 local modules = replicatedStorage.Modules
@@ -47,11 +48,11 @@ function AbilityService:UseAbility(player:Player? ,character, tool:Tool, mouse, 
 	local sounds = assets.Shared.Sounds
 	
 	if player then
-		remotes.CameraShake:FireClient(player ,0.25)
+		NetworkingService:FireToClient(player , "CameraShake", 0.25)
 		local playerMana = CharacterVitalsService:GetVital(character , "Mana")
 		if playerMana.CurrentMana < abilityData.Mana  then
 			sounds.Error:Play()
-			remotes.PopUp:FireClient(player,
+			NetworkingService:FireToClient(player, "PopUp",
 				{
 					["AbilityName"] = abilityData.AbilityName,
 					["RequiredMana"] = abilityData.Mana,
@@ -102,14 +103,14 @@ function AbilityService:UseAbility(player:Player? ,character, tool:Tool, mouse, 
 		end
 
 		---VFX---	
-		remotes.ClientEffects:FireAllClients("AbilityVFX", {
+		NetworkingService:FireToClient("All", "ClientEffects", "AbilityVFX", {
 			["VFX"] = assets.Weapons[tool.Name].Effects.Abilities[abilityletter],
 			["HitBoxName"] = hitboxClone.Name,
 			["Caster"] = character
 		})
 		
 		---Sound---
-		remotes.ClientEffects:FireAllClients("AbilitySound", {
+		NetworkingService:FireToClient("All", "ClientEffects", "AbilitySound", {
 			["SoundName"] = "Weapons."..tool.Name..".Sounds.Abilities.Activate."..abilityletter,	
 			["HitBoxName"] = hitboxClone.Name,
 		})

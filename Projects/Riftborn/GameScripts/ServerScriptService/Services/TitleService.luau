@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local repstor = game:GetService("ReplicatedStorage")
 local titleDataBase = require(repstor.Modules.Data.TitleData)
 local GameEvents = require(repstor.Modules.GameEvents)
@@ -28,8 +29,8 @@ function TitleService:GetTitle(player, titleID)
 			playerTitles.Titles[titleID] = titleData
 		end
 		
-		repstor.Remotes.UpdateTitles:FireClient(player, playerTitles)	
-		repstor.Remotes.PopUp:FireClient(player,{
+		NetworkingService:FireToClient(player, "UpdateTitles", playerTitles)	
+		NetworkingService:FireToClient(player, "PopUp", {
 			["TitleData"] = titleData 
 		})
 	return true
@@ -50,7 +51,7 @@ function TitleService:EquipTitle(player, titleID)
 	
 	
 	player.PlayerTitles.ActiveTitle.Value = playerTitles.Titles[playerTitles.ActiveTitle].Name or ""
-	repstor.Remotes.UpdateTitles:FireClient(player, playerTitles)	
+	NetworkingService:FireToClient(player, "UpdateTitles", playerTitles)	
 end
 
 function TitleService:UnEquipTitle(player)
@@ -66,7 +67,7 @@ function TitleService:UnEquipTitle(player)
 	
 	
 	player.PlayerTitles.ActiveTitle.Value =  ""
-	repstor.Remotes.UpdateTitles:FireClient(player, playerTitles)	
+	NetworkingService:FireToClient(player, "UpdateTitles", playerTitles)	
 end
 
 function TitleService:SyncTitlesWithTitleData(player)
@@ -99,7 +100,7 @@ function TitleService:SyncTitlesWithTitleData(player)
 	end
 	
 	
-	repstor.Remotes.UpdateTitles:FireClient(player, playerTitles)	
+	NetworkingService:FireToClient(player, "UpdateTitles", playerTitles)	
 end
 
 return TitleService

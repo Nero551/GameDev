@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local repstor = game:GetService("ReplicatedStorage")
 local questDataBase = require(repstor.Modules.Data.QuestData)
 local GameEvents = require(repstor.Modules.GameEvents)
@@ -49,10 +50,10 @@ function QuestService:AcceptQuest(player:Player, questID)
 		QuestService:TrackQuest(player, questID)
 	end
 	
-repstor.Remotes.PopUp:FireClient(player,{
+NetworkingService:FireToClient(player, "PopUp", {
 	["QuestName"] = questData.Name
 })
-repstor.Remotes.UpdateQuests:FireClient(player, playerQuests)
+NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
 end
 
 
@@ -70,11 +71,11 @@ function QuestService:AbandonQuest(player:Player, questID)
 	end
 	
 	
-	repstor.Remotes.PopUp:FireClient(player,{
+	NetworkingService:FireToClient(player, "PopUp", {
 		["QuestName"] = questName,
 		["QuestAbandonded"] = true
 	})
-	repstor.Remotes.UpdateQuests:FireClient(player, playerQuests)
+	NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
 end
 
 
@@ -92,7 +93,7 @@ function QuestService:TrackQuest(player:Player, questID)
 		playerQuests.TrackedQuest = nil
 	end
 	
-	repstor.Remotes.UpdateQuests:FireClient(player , playerQuests)
+	NetworkingService:FireToClient(player , "UpdateQuests", playerQuests)
 end
 
 
@@ -112,7 +113,7 @@ function QuestService:ProgressQuest(player:Player, mobKilled)
 			end
 		end
 	end
-	repstor.Remotes.UpdateQuests:FireClient(player, playerQuests)
+	NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
 end
 
 -- * Add custom  functions for each objective Type.
@@ -147,7 +148,7 @@ function QuestService:CheckQuestCompletion(player: Player, questID)
 	
 	for objectiveNumber, objective in pairs(quest.Progress) do
 		if objective.CurrentProgress < objective.Required then
-			repstor.Remotes.UpdateQuests:FireClient(player, playerQuests)
+			NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
 			return false
 		end
 	end
@@ -185,14 +186,14 @@ function QuestService:CompleteQuest(player:Player, questID)
 		playerQuests.CompletedQuests[questID] = questData
 		playerQuests.ActiveQuests[questID] = nil
 		GameEvents.GiveRewards:Fire(player, questData.Rewards, true)
-		repstor.Remotes.PopUp:FireClient(player,{
+		NetworkingService:FireToClient(player, "PopUp", {
 			["QuestName"] = questData.Name,
 			["QuestCompleted"] = true
 		})		
-		repstor.Remotes.UpdateQuests:FireClient(player, playerQuests)
+		NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
 		return true
 	else
-		repstor.Remotes.UpdateQuests:FireClient(player, playerQuests)
+		NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
 		return false
 	end	
 end

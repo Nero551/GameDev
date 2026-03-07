@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 --Defualt HitType
 
 local replicatedStorage = game:GetService("ReplicatedStorage")
@@ -44,7 +45,7 @@ return function(argumentData)
 
 		})
 
-		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
+		NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
 			["SoundName"] = "Shared.Sounds.AbilityBlock",
 			["Parent"] = targetHit.HumanoidRootPart
 		})
@@ -67,14 +68,14 @@ return function(argumentData)
 			})
 
 			local randomNumber =  math.random(1,4)
-			replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
+			NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
 				["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Blocked."..tostring(randomNumber) ,
 				["Parent"] = targetHit.HumanoidRootPart
 			})
 		end	
 	end
 	
-	replicatedStorage.Remotes.ClientEffects:FireAllClients("BlockedHit" , {
+	NetworkingService:FireToClient("All", "ClientEffects", "BlockedHit" , {
 		["Target"] = targetHit ,
 		["weaponUsed"] = weaponUsed.Name,
 		["BlockCounter"] = CharacterVitalsService:GetVital(targetHit, "BlockCounter")
@@ -87,9 +88,9 @@ return function(argumentData)
 	
 	if player then
 		if AbilityDamage then
-			replicatedStorage.Remotes.ShowDamage:FireClient(player ,AbilityDamage, false, true)
+			NetworkingService:FireToClient(player , "ShowDamage", AbilityDamage, false, true)
 		else
-			replicatedStorage.Remotes.ShowDamage:FireClient(player ,M1Damage, false, true)
+			NetworkingService:FireToClient(player , "ShowDamage", M1Damage, false, true)
 		end
 	end
 	

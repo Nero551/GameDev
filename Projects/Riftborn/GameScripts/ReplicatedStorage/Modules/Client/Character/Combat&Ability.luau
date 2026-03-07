@@ -1,13 +1,14 @@
 return function()
 		
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local replicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
 	local runService = game:GetService("RunService")
-	local remotes = replicatedStorage.Remotes
 	local player = game:GetService("Players").LocalPlayer
 	local modules =  replicatedStorage.Modules
-local NetworkingService = require(ReplicatedStorage.Modules.NetworkingService)
+	local ActionVerifier = require(ReplicatedStorage.Modules.ActionVerifier)
+	local Connections = require(ReplicatedStorage.Modules.Connections)
+	local NetworkingService = require(ReplicatedStorage.Modules.NetworkingService)
 	local StateChecker = require(modules.StateChecker)
 	local character = player.Character or player.CharacterAdded:Wait()
 
@@ -24,41 +25,38 @@ local NetworkingService = require(ReplicatedStorage.Modules.NetworkingService)
 
 		---Abilties---
 		if abilityKeys[input.KeyCode.Name] then				
-			remotes.Ability:FireServer(player:GetMouse().Hit.Position, input.KeyCode.Name)
+			NetworkingService:FireToServer("Ability", player:GetMouse().Hit.Position, input.KeyCode.Name)
 		end	
 	end)
-	
-	local stepConnection =  nil
 
-	stepConnection = runService.RenderStepped:Connect(function(deltaTime: number)
-
+	Connections:AddConnection(character, "Character", "Block & Attack",runService.RenderStepped:Connect(function(deltaTime: number)
 		------Death Handler------
 		if StateChecker:CheckState(character, "Dead") then
-			if stepConnection then
-				stepConnection:Disconnect()
-				stepConnection = nil
-				return		
-			end
+			Connections:RemoveConnection(character, "Character", "Block & Attack")
+			return
 		end
 
+		if proc then return end
 		------M1------
-		if UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)  then
-			remotes.Attack:FireServer()
+		if UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) 
+		and not StateChecker:CheckState(character, "Attacking") and ActionVerifier:CanAttack(character)  then
+			NetworkingService:FireToServer("Attack")
 		end
 
 		------Blocking------
-		local wantBlock = UserInputService:IsKeyDown(Enum.KeyCode.F) and not proc
+		if UserInputService:IsKeyDown(Enum.KeyCode.F) and ActionVerifier:CanBlock(character) then
+			local tool = character:FindFirstChildWhichIsA("Tool")
 
-		if wantBlock ~= StateChecker:CheckState(character, "Blocking") then
-			remotes.Block:FireServer(wantBlock)	
-		end
-		local tool = character:FindFirstChildWhichIsA("Tool")
-		if tool then
-			if statusFolder:FindFirstChild("Blocking") then	
-				if statusFolder:FindFirstChild("Blocking"):GetAttribute("weaponName") ~= tool.Name then
-					NetworkingService:FireToServer("Block", false)
-				end
+			if tool and StateChecker:CheckState(character, "Blocking")
+				and statusFolder:FindFirstChild("Blocking"):GetAttribute("weaponName") ~= tool.Name then
+				NetworkingService:FireToServer("Block", false)
+
+			elseif not StateChecker:CheckState(character, "Blocking") then
+				NetworkingService:FireToServer("Block", true)
 			end
+
+		elseif StateChecker:CheckState(character, "Blocking") then
+			NetworkingService:FireToServer("Block", false)	
 		end
-	end)
+	end))
 end

@@ -1,5 +1,6 @@
 --Defualt HitType
 
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local modules = (replicatedStorage.Modules)
 local StateService = require(game.ServerScriptService.Services.StateService)
@@ -28,12 +29,12 @@ return function(argumentData)
 		StateService:AddState(attacker, "In Combat", 20)
 		StateService:AddState(targetHit, "In Combat", 20)
 		
-		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
+		NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
 			["SoundName"] = "Shared.Sounds.BlockBreak" , 
 			["Parent"] = targetHit.HumanoidRootPart
 		})
 		
-		replicatedStorage.Remotes.ClientEffects:FireAllClients("BlockBreakHit" , {
+		NetworkingService:FireToClient("All", "ClientEffects", "BlockBreakHit" , {
 			["Target"] = targetHit ,
 			["weaponUsed"] = weaponUsed.Name,
 			["Duration"] = 1.5,

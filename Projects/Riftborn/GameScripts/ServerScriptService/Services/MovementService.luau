@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local repstor = game:GetService("ReplicatedStorage")
 local runService = game:GetService("RunService")
@@ -57,7 +58,7 @@ function MovementService:Dash(player, direction:Vector3? , IsShiftLockOff, npcTa
 		dashAnim:Play()
 
 		---VFX---
-		repstor.Remotes.ClientEffects:FireAllClients("DashVFX",
+		NetworkingService:FireToClient("All", "ClientEffects", "DashVFX",
 			{
 				["Direction"] = "Forward",
 				["Character"] = character,
@@ -99,7 +100,7 @@ function MovementService:Dash(player, direction:Vector3? , IsShiftLockOff, npcTa
 		dashAnim.Looped = false
 
 		---VFX---
-		repstor.Remotes.ClientEffects:FireAllClients("DashVFX",
+		NetworkingService:FireToClient("All", "ClientEffects", "DashVFX",
 			{
 				["Direction"] = directionName,
 				["Character"] = character,
@@ -109,7 +110,7 @@ function MovementService:Dash(player, direction:Vector3? , IsShiftLockOff, npcTa
 	end
 	
 	---Sound---
-	repstor.Remotes.ClientEffects:FireAllClients("Sound",
+	NetworkingService:FireToClient("All", "ClientEffects", "Sound",
 		{
 			["SoundName"] = "Shared.Sounds.Dash",
 			["Parent"] = humanoid,	
@@ -151,7 +152,7 @@ function MovementService:Dash(player, direction:Vector3? , IsShiftLockOff, npcTa
 		end)	
 	else
 		---If Player Then Let Client Handle Movement---
-		repstor.Remotes.Dash:FireClient(player, directionName, IsShiftLockOff)
+		NetworkingService:FireToClient(player, "Dash", directionName, IsShiftLockOff)
 	end
 	Connections:AddConnection(character, "Character", "DashCD",runService.Heartbeat:Connect(function()
 		if not StateChecker:CheckState(character, "Dashing") then
@@ -183,14 +184,14 @@ function MovementService:FlashStep(character)
 		end)
 		
 		---VFX---
-		repstor.Remotes.ClientEffects:FireAllClients("FlashstepVFX",
+		NetworkingService:FireToClient("All", "ClientEffects", "FlashstepVFX",
 			{
 				["Character"] = character,
 			}
 		)
 		
 		---Sound---
-		repstor.Remotes.ClientEffects:FireAllClients("Sound",
+		NetworkingService:FireToClient("All", "ClientEffects", "Sound",
 			{
 				["SoundName"] = "Shared.Sounds.FlashStep",
 				["Parent"] = humanoid,

@@ -1,12 +1,12 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(trackQuestbutton)
-	local repstor = game:GetService("ReplicatedStorage")
 	local tweenService = game:GetService("TweenService")
 
 	------------------------------------------------------------------------------------------------------------------------------
 
 trackQuestbutton.MouseButton1Click:Connect(function()
 		local questName = trackQuestbutton.Parent.TrackedQuestName.Text
-		repstor.Remotes.TrackQuest:FireServer(questName)
+		NetworkingService:FireToServer("TrackQuest", questName)
 
 
 	end)

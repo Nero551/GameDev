@@ -75,7 +75,6 @@ function CharacterVitalsService:Create(character)
 	
 	local player = players:GetPlayerFromCharacter(character)
 	if player then
-		--remotes.UpdateVitals:FireClient(player, CharacterVitalsService.CharacterVitals[character])
 	end
 	
 	return CharacterVitalsService.CharacterVitals[character]
@@ -120,7 +119,6 @@ function CharacterVitalsService:ModifyVital(character,vital, funcName , argument
 	
 	local player = players:GetPlayerFromCharacter(character)
 	if player then
-		--remotes.UpdateVitals:FireClient(player, CharacterVitalsService.CharacterVitals[character])
 	end
 
 end

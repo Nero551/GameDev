@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local repstor = game:GetService("ReplicatedStorage")
 local DataService = require(script.Parent.Parent.Services.DataService)
 
@@ -14,8 +15,8 @@ function CurrencyService:CurrencyChange(player , currency, amount)
 			end
 		end
 	end
-	repstor.Remotes.UpdateCurrency:FireClient(player ,playerCurrency)
-	repstor.Remotes.PopUp:FireClient(player,{
+	NetworkingService:FireToClient(player , "UpdateCurrency", playerCurrency)
+	NetworkingService:FireToClient(player, "PopUp", {
 		["Currency"] = currency,
 		["CurrencyAmount"] = amount,
 	})

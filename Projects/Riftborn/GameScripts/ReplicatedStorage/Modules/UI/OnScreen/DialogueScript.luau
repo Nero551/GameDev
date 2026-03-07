@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(DialogueFrame)
 	local player = game:GetService("Players").LocalPlayer
 	local repstor = game:GetService("ReplicatedStorage")
@@ -11,7 +12,7 @@ return function(DialogueFrame)
 
 	Texture.MouseButton1Click:Connect(function()
 		if skipLine == true and canClick == true then
-			repstor.Remotes.ContinueDialogue:FireServer(player)
+			NetworkingService:FireToServer("ContinueDialogue", player)
 		end
 		skipLine = true
 	end)
@@ -62,7 +63,7 @@ return function(DialogueFrame)
 				optionButton.Text.Text = optioninfo.Text
 				optionButton.Parent = DialogueFrame.OptionFrame
 				optionButton.MouseButton1Click:Connect(function()
-					repstor.Remotes.SelectDialogueOption:FireServer(option)
+					NetworkingService:FireToServer("SelectDialogueOption", option)
 				end)
 			end		
 			canClick = false

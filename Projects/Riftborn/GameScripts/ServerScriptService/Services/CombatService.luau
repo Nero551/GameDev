@@ -1,10 +1,10 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 --CombatService
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local debris = game:GetService("Debris")
 
 local assets = replicatedStorage.Assets
 local modules = replicatedStorage.Modules
-local remotes = replicatedStorage.Remotes
 
 local itemDataBase = require(replicatedStorage.Modules.Data.ItemDataBase)
 
@@ -40,7 +40,7 @@ for _,module  in script.Parent.Parent.Modules.HitTypes:GetChildren() do
 end
 
 function CombatService:Spawn(character)
-	remotes.ClientEffects:FireAllClients("SpawnVFX",
+	NetworkingService:FireToClient("All", "ClientEffects", "SpawnVFX",
 		{
 			["Character"] = character
 		}
@@ -76,6 +76,7 @@ function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 	local lastCombo = CharacterVitalsService:GetVital(character, "LastCombo")
 
 	if (os.clock()-lastCombo) < weaponData.ComboCooldown then
+		StateService:AddState(character, "ComboCooldown", weaponData.ComboCooldown)
 		return
 	end
 	-- Reset swing if combo window expired
@@ -135,7 +136,7 @@ function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 		weld.Part1 = hitboxClone
 		weld.C0 = CFrame.new(0 , 0 , -3)
 		
-		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
+		NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
 			["SoundName"] = "Weapons."..tool.Name..".Sounds.Swings."..tostring(trueSwingNumber) ,
 			["Parent"] = character.HumanoidRootPart
 		})
@@ -162,7 +163,7 @@ function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 						if StateChecker:CheckState(targetHit, "Invulnerable") then continue end
 						
 						if player then
-							remotes.CameraShake:FireClient(player, 0.1)
+							NetworkingService:FireToClient(player, "CameraShake", 0.1)
 						end
 
 						HitApplier:ApplyHit({
@@ -191,8 +192,7 @@ function CombatService:Block(character, boolean, tool:Tool?)
 		tool = GetValidTool(tool, character)
 				
 		local function StartBlocking()
-			if not ActionVerifier:CanBlock(character) then return end
-			if not tool then return end
+			if not ActionVerifier:CanBlock(character) or not tool then return end
 			--Block--
 			local foundData = itemDataBase:GetItemData(tool:GetAttribute("ID"))
 			if foundData then

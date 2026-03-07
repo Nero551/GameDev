@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local repstor = game:GetService("ReplicatedStorage")
 local players = game:GetService("Players")
 local remotes = repstor.Remotes
@@ -59,18 +60,18 @@ local function SendSetupRemotes(player:Player)
 	
 	WaitForPlayerReady(player)
 	---Send Remotes
-	remotes.UpdateEXP:FireClient(player ,playerLevel)
+	NetworkingService:FireToClient(player , "UpdateEXP", playerLevel)
 		
-	remotes.UpdateInventory:FireClient(player, playerInventory,  playerEquipped)
-	remotes.UpdateInventoryInfo:FireClient(player, playerInventory,  playerEquipped)
+	NetworkingService:FireToClient(player, "UpdateInventory", playerInventory,  playerEquipped)
+	NetworkingService:FireToClient(player, "UpdateInventoryInfo", playerInventory,  playerEquipped)
 	
-	remotes.UpdateEquippedItems:FireClient(player, playerInventory,  playerEquipped)
+	NetworkingService:FireToClient(player, "UpdateEquippedItems", playerInventory,  playerEquipped)
 	
-	remotes.UpdateCurrency:FireClient(player ,playerCurrencies)
+	NetworkingService:FireToClient(player , "UpdateCurrency", playerCurrencies)
 	
-	remotes.UpdateQuests:FireClient(player, playerQuests)
+	NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
 	
-	remotes.UpdateTitles:FireClient(player, playerTitles)
+	NetworkingService:FireToClient(player, "UpdateTitles", playerTitles)
 	
 end
 

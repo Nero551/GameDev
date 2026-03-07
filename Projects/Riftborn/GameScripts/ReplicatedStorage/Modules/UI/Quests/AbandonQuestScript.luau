@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(questMenu, abandonQuestButton)
 	local repstor = game:GetService("ReplicatedStorage")
 	local tweenService = game:GetService("TweenService")
@@ -50,7 +51,7 @@ return function(questMenu, abandonQuestButton)
 
 		confirmConnection = confirmButton.MouseButton1Click:Connect(function()
 			local questName = abandonQuestButton.Parent.QuestName.Text
-			repstor.Remotes.AbandonQuest:FireServer(questName)
+			NetworkingService:FireToServer("AbandonQuest", questName)
 			questMenu.QuestInfo.Visible = false
 			popup.Visible = false
 		end)

@@ -15,6 +15,7 @@ function NetworkingService:FireToServer(remoteName: string, ...)
 		warn("Attempted to fire to server from server")
 		return
 	end
+	print("From Client:", remoteName)
 	local remote = Remotes[remoteName]
 	if remote then
 		remote:FireServer(...)
@@ -26,7 +27,7 @@ function NetworkingService:FireToClient(player ,remoteName:string, ...)
         warn("Attempted to fire to client from client")
         return
     end
-
+	print("From Server:", remoteName)
 	local remote = Remotes[remoteName]
 	if remote then
         if player == "All" then

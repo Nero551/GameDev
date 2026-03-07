@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 --StatusAilment HitType
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -55,7 +56,7 @@ return function(argumentData)
 	killerHit.Name = "KillerHit"	
 	debris:AddItem(killerHit, 30)
 	
-	replicatedStorage.Remotes.ClientEffects:FireAllClients("DefaultHit" , {
+	NetworkingService:FireToClient("All", "ClientEffects", "DefaultHit" , {
 		["Target"] = targetHit ,
 		["WeaponUsed"] = weaponUsed.Name,
 	})
@@ -97,7 +98,7 @@ return function(argumentData)
 			})
 			
 
-			replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound" , {
+			NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
 				["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Hit."..tostring(comboStringNumber) ,
 				["Parent"] = targetHRP
 			})
@@ -131,7 +132,7 @@ return function(argumentData)
 		ailmentData = statusAilmentsData.Ailments[ailmentName]
 		if not ailmentData then return end
 		
-		replicatedStorage.Remotes.ClientEffects:FireAllClients("AilmentHit",{
+		NetworkingService:FireToClient("All", "ClientEffects", "AilmentHit",{
 			["Target"] = targetHit,
 			["Ailment"] = ailmentName,
 			["Duration"] = ailmentData.BaseDuration,
@@ -139,7 +140,7 @@ return function(argumentData)
 
 		})
 
-		replicatedStorage.Remotes.ClientEffects:FireAllClients("Sound",{
+		NetworkingService:FireToClient("All", "ClientEffects", "Sound",{
 			["Parent"] = targetHRP,
 			["SoundName"] = "Shared.Sounds.AilmentSounds."..ailmentName
 
@@ -151,12 +152,12 @@ return function(argumentData)
 	
 	if player then
 		
-		replicatedStorage.Remotes.Hitstop:FireClient(player ,0.03)
+		NetworkingService:FireToClient(player , "Hitstop", 0.03)
 		
 		if AbilityDamage then
-			replicatedStorage.Remotes.ShowDamage:FireClient(player ,AbilityDamage, false,false, false, ailmentName, ailmentData)
+			NetworkingService:FireToClient(player , "ShowDamage", AbilityDamage, false,false, false, ailmentName, ailmentData)
 		else
-			replicatedStorage.Remotes.ShowDamage:FireClient(player ,M1Damage, false,false, false, ailmentName, ailmentData)
+			NetworkingService:FireToClient(player , "ShowDamage", M1Damage, false,false, false, ailmentName, ailmentData)
 		end
 	end
 

@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function()
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local replicatedStorage = game:GetService("ReplicatedStorage")
@@ -41,20 +42,20 @@ return function()
 
 		------Sprinting------
 		if input.KeyCode == Enum.KeyCode.LeftShift then
-			remotes.Sprint:FireServer()  	
+			NetworkingService:FireToServer("Sprint")  	
 		end
 
 		------Dashing & FlashStep------
 		if input.KeyCode == Enum.KeyCode.Q  then
 			---FlashStep---
 			if UserInputService:IsKeyDown(Enum.KeyCode.LeftControl)  then
-				remotes.FlashStep:FireServer()
+				NetworkingService:FireToServer("FlashStep")
 			else
 				---Dashing---
 				local direction = getDashDirection()
 				if direction then
 					local IsShiftLockOff = UserInputService.MouseBehavior ~= Enum.MouseBehavior.LockCenter
-					remotes.Dash:FireServer(direction, IsShiftLockOff)
+					NetworkingService:FireToServer("Dash", direction, IsShiftLockOff)
 				end	
 			end
 		end

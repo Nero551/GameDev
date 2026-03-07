@@ -1,3 +1,4 @@
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local serverStorage = game:GetService("ServerStorage")
 local repstor = game:GetService("ReplicatedStorage")
 local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
@@ -88,9 +89,9 @@ function  EquipUnEquipService:EquipItem(player:Player , itemID)
 	end
 	
 	GameEvents.UpdateMana:Fire(player)
-	repstor.Remotes.UpdateInventory:FireClient(player, inventory, equippedItems)
-	repstor.Remotes.UpdateInventoryInfo:FireClient(player, inventory, equippedItems)
-	repstor.Remotes.UpdateEquippedItems:FireClient(player, inventory, equippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventory", inventory, equippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventoryInfo", inventory, equippedItems)
+	NetworkingService:FireToClient(player, "UpdateEquippedItems", inventory, equippedItems)
 
 end
 
@@ -136,9 +137,9 @@ function EquipUnEquipService:UnEquipItem(player:Player ,itemID)
 	end	
 	equippedItems[itemType] = nil
 	GameEvents.UpdateMana:Fire(player)
-	repstor.Remotes.UpdateInventory:FireClient(player, inventory, equippedItems)
-	repstor.Remotes.UpdateInventoryInfo:FireClient(player, inventory, equippedItems)
-	repstor.Remotes.UpdateEquippedItems:FireClient(player, inventory, equippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventory", inventory, equippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventoryInfo", inventory, equippedItems)
+	NetworkingService:FireToClient(player, "UpdateEquippedItems", inventory, equippedItems)
 end
 
 ---Load Equipped Items---
@@ -200,9 +201,9 @@ function EquipUnEquipService:LoadEquippedItems(player:Player)
 		end
 	end
 	
-	repstor.Remotes.UpdateInventory:FireClient(player, inventory, equippedItems)
-	repstor.Remotes.UpdateInventoryInfo:FireClient(player, inventory, equippedItems)
-	repstor.Remotes.UpdateEquippedItems:FireClient(player, inventory, equippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventory", inventory, equippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventoryInfo", inventory, equippedItems)
+	NetworkingService:FireToClient(player, "UpdateEquippedItems", inventory, equippedItems)
 	
 	GameEvents.UpdateMana:Fire(player)
 end
