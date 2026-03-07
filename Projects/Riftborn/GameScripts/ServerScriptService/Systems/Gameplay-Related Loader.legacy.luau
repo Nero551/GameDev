@@ -69,7 +69,8 @@ end)
 MovementService:LoadSharedAnimations()
 
 ---Client Requests to Sprint---
-remotes.Sprint.OnServerEvent:Connect(function(player:Player, character)
+remotes.Sprint.OnServerEvent:Connect(function(player:Player)
+	local character = player.Character or player.CharacterAdded:Wait()
 	MovementService:Sprint(character)
 end)
 
@@ -79,7 +80,7 @@ remotes.Dash.OnServerEvent:Connect(function(player:Player, direction, IsShiftLoc
 end)
 
 ---Client Requests to Flashstep---
-remotes.FlashStep.OnServerEvent:Connect(function(player:Player, flashstepChage)
+remotes.FlashStep.OnServerEvent:Connect(function(player:Player)
 	local character = player.Character or player.CharacterAdded:Wait()
 	MovementService:FlashStep(character)
 end)
@@ -127,7 +128,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 
 ---Update CamVectors---
-remotes.UpdateCamVectors.OnServerEvent:Connect(function(player,camLookVector, camRightVector)
+remotes.Unreliable.UpdateCamVectors.OnServerEvent:Connect(function(player,camLookVector, camRightVector)
 	local char = player.Character or player.CharacterAdded:Wait()
 	CharacterVitalsSerice:ModifyVital(char, "CamVectors", "UpdateCamVectors", {
 		["CamRightVector"] = camRightVector,

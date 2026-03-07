@@ -41,7 +41,7 @@ return function()
 
 		------Sprinting------
 		if input.KeyCode == Enum.KeyCode.LeftShift then
-			remotes.Sprint:FireServer(character)  	
+			remotes.Sprint:FireServer()  	
 		end
 
 		------Dashing & FlashStep------

@@ -105,9 +105,8 @@ players.PlayerAdded:Connect(function(player)
 		SetupCharacter(player, player.Character)
 	end
 	
-	player.CharacterAdded:Connect(function(character)		
-		print(playerData)
-		
+	player.CharacterAdded:Connect(function(character)	
+		player.PlayerGui:WaitForChild("MenusGUI"):WaitForChild("StatsMenu"):WaitForChild("Spells")
 		SetupCharacter(player, character)
 	end)
 end)

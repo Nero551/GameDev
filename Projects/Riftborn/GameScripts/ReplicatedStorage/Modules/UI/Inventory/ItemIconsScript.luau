@@ -1,7 +1,6 @@
 return function  (Frame)
 	local repstor = game:GetService("ReplicatedStorage")
 	local remotes = repstor.Remotes
-	local player = game:GetService("Players").LocalPlayer
 	local icons = repstor.Assets.GUI.Icons
 	local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
 

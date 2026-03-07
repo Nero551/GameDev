@@ -1,4 +1,3 @@
-local StateService = require(game.ServerScriptService.Services.StateService)
 local StateChecker = require(game.ReplicatedStorage.Modules.StateChecker)
 local CharacterVitalsService = require(game.ServerScriptService.Services.CharacterVitalsService)
 

@@ -1,11 +1,13 @@
 return function()
 		
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local replicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
 	local runService = game:GetService("RunService")
 	local remotes = replicatedStorage.Remotes
 	local player = game:GetService("Players").LocalPlayer
 	local modules =  replicatedStorage.Modules
+local NetworkingService = require(ReplicatedStorage.Modules.NetworkingService)
 	local StateChecker = require(modules.StateChecker)
 	local character = player.Character or player.CharacterAdded:Wait()
 
@@ -54,7 +56,7 @@ return function()
 		if tool then
 			if statusFolder:FindFirstChild("Blocking") then	
 				if statusFolder:FindFirstChild("Blocking"):GetAttribute("weaponName") ~= tool.Name then
-					remotes.Block:FireServer(false)
+					NetworkingService:FireToServer("Block", false)
 				end
 			end
 		end

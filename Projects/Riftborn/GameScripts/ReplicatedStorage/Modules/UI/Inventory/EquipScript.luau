@@ -1,11 +1,7 @@
 return function  (itemFrame, OnScreenGui, infoFrame)
 	local repstor = game:GetService("ReplicatedStorage")
-	local player = game:GetService("Players").LocalPlayer
 	local tweenService = game:GetService("TweenService")
-	
-	local char = player.Character or player.CharacterAdded:Wait()
-	local humanoid:Humanoid = char:FindFirstChild("Humanoid")
-	
+		
 	local remotes = repstor.Remotes
 	
 	local box = infoFrame:FindFirstChild("Equip(HoverSoundSizeChange)")
@@ -29,7 +25,7 @@ return function  (itemFrame, OnScreenGui, infoFrame)
 		local info =  TweenInfo.new(0.0625, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out)
 		tweenService:Create(equipButton, info , {TextTransparency = 0}):Play()
 		tweenService:Create(unequipButton, info , {TextTransparency = 1}):Play()
-		wait(0.1)
+		task.wait(0.1)
 		equipButton.Visible = true
 		unequipButton.Visible = false
 	end
@@ -38,14 +34,14 @@ return function  (itemFrame, OnScreenGui, infoFrame)
 		local info =  TweenInfo.new(0.0625, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out)
 		tweenService:Create(equipButton, info , {TextTransparency = 1}):Play()
 		tweenService:Create(unequipButton, info , {TextTransparency = 0}):Play()
-		wait(0.1)
+		task.wait(0.1)
 		equipButton.Visible = false
 		unequipButton.Visible = true
 	end
 
 
 	infoNameValue.Changed:Connect(function()
-		for _,icon:Frame? in itemFrame:GetChildren() do
+		for _,icon in itemFrame:GetChildren() do
 			if icon:IsA("Frame") then
 				if infoNameValue.Value == icon.Name then
 
@@ -88,8 +84,6 @@ return function  (itemFrame, OnScreenGui, infoFrame)
 	---unEquip Item---
 	unequipButton.MouseButton1Click:Connect(function()
 		local itemType = infoFrame:FindFirstChild("ItemType").Text
-		local itemName = infoFrame:FindFirstChild("ItemName").Text
-		local itemImage = infoFrame:FindFirstChild("ItemImage").Image
 		local itemID = infoFrame:FindFirstChild("ItemID").Value
 
 		remotes.UnequipItem:FireServer(itemID)
@@ -113,7 +107,7 @@ return function  (itemFrame, OnScreenGui, infoFrame)
 	---LoadEquippedItems---
 	remotes.UpdateEquippedItems.OnClientEvent:Connect(function(inventory, equippedItems)
 
-		for _,icon:Frame? in itemFrame:GetChildren() do
+		for _,icon in itemFrame:GetChildren() do
 			if icon:IsA("Frame") then
 				if infoNameValue.Value == icon.Name then
 					if icon:GetAttribute("IconEquipState") == true then
