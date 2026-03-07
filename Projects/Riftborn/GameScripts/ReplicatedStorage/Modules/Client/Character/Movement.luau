@@ -86,9 +86,8 @@ return function()
 			local directionVector:Vector3
 			
 			if not IsShiftLockOff then
-				
-				local camRight = Vector3.new(character:GetAttribute("CamVectors_CamRight").X, 0, character:GetAttribute("CamVectors_CamRight").Z)
-				local camLook = Vector3.new(character:GetAttribute("CamVectors_CamLook").X, 0, character:GetAttribute("CamVectors_CamLook").Z)
+				local camRight = Vector3.new(camera.CFrame.RightVector.X, 0, camera.CFrame.RightVector.Z)
+				local camLook = Vector3.new(camera.CFrame.LookVector.X, 0, camera.CFrame.LookVector.Z)
 				
 				if direction == "Right" then
 					directionVector = camRight

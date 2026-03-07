@@ -13,7 +13,6 @@ local MovementService = require(script.Parent.Parent.Services.MovementService)
 local CombatService = require(script.Parent.Parent.Services.CombatService)
 local RegenService = require(script.Parent.Parent.Services.RegenService)
 local AbilityService = require(script.Parent.Parent.Services.AbilityService)
-local CharacterVitalsSerice = require(script.Parent.Parent.Services.CharacterVitalsService)
 local TimeService = require(script.Parent.Parent.Services.TimeService)
 
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -127,17 +126,5 @@ end)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
----Update CamVectors---
-remotes.Unreliable.UpdateCamVectors.OnServerEvent:Connect(function(player,camLookVector, camRightVector)
-	local char = player.Character or player.CharacterAdded:Wait()
-	CharacterVitalsSerice:ModifyVital(char, "CamVectors", "UpdateCamVectors", {
-		["CamRightVector"] = camRightVector,
-		["CamLookVector"] = camLookVector,	
-	})
-end)
 
 
-----------------------------------------------------------------------------------------------------------------------------------
-
-
-----------------------------------------------------------------------------------------------------------------------------------

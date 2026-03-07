@@ -60,11 +60,6 @@ function CharacterVitalsService:Create(character)
 		WalkSpeed = 10,
 		JumpPower = 50,
 		
-		CamVectors = {
-			CamLook = 0,
-			CamRight = 0,
-		},
-		
 		BlockCounter = 0,
 		LastCombo = 0,
 		LastSwing = 0,
