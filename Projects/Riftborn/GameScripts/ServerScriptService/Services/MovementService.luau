@@ -58,7 +58,7 @@ function MovementService:Dash(player, direction:Vector3? , IsShiftLockOff, npcTa
 		dashAnim:Play()
 
 		---VFX---
-		NetworkingService:FireToClient("All", "ClientEffects", "DashVFX",
+		NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "DashVFX",
 			{
 				["Direction"] = "Forward",
 				["Character"] = character,
@@ -100,7 +100,7 @@ function MovementService:Dash(player, direction:Vector3? , IsShiftLockOff, npcTa
 		dashAnim.Looped = false
 
 		---VFX---
-		NetworkingService:FireToClient("All", "ClientEffects", "DashVFX",
+		NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "DashVFX",
 			{
 				["Direction"] = directionName,
 				["Character"] = character,
@@ -110,7 +110,7 @@ function MovementService:Dash(player, direction:Vector3? , IsShiftLockOff, npcTa
 	end
 	
 	---Sound---
-	NetworkingService:FireToClient("All", "ClientEffects", "Sound",
+	NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "Sound",
 		{
 			["SoundName"] = "Shared.Sounds.Dash",
 			["Parent"] = humanoid,	
@@ -184,14 +184,14 @@ function MovementService:FlashStep(character)
 		end)
 		
 		---VFX---
-		NetworkingService:FireToClient("All", "ClientEffects", "FlashstepVFX",
+		NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "FlashstepVFX",
 			{
 				["Character"] = character,
 			}
 		)
 		
 		---Sound---
-		NetworkingService:FireToClient("All", "ClientEffects", "Sound",
+		NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "Sound",
 			{
 				["SoundName"] = "Shared.Sounds.FlashStep",
 				["Parent"] = humanoid,

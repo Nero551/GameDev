@@ -53,12 +53,12 @@ return function(argumentData)
 	
 	
 	
-	NetworkingService:FireToClient("All", "ClientEffects", "DefaultHit" , {
+	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit" , {
 		["Target"] = targetHit ,
 		["WeaponUsed"] = weaponUsed.Name,
 	})
 	
---[[	NetworkingService:FireToClient("All", "ClientEffects", "CriticalHit" , {
+--[[	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "CriticalHit" , {
 		["Target"] = targetHit ,
 		["WeaponUsed"] = weaponUsed.Name,
 	})
@@ -79,7 +79,7 @@ return function(argumentData)
 			
 		})
 		
-		NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
+		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound" , {
 			["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Abilities.Hit."..tostring(abilityLetter) ,
 			["Parent"] = targetHRP
 		})
@@ -107,7 +107,7 @@ return function(argumentData)
 
 			})
 
-			NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
+			NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound" , {
 				["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Hit."..tostring(comboStringNumber) ,
 				["Parent"] = targetHRP,
 				["Volume"] = 2

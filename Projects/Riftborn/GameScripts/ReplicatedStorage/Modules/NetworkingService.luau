@@ -1,3 +1,4 @@
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local NetworkingService = {}
@@ -10,13 +11,27 @@ for _, remote in ReplicatedStorage.Remotes:GetDescendants() do
 	end
 end
 
-function NetworkingService:FireToServer(remoteName: string, ...)
-	if not RunService:IsClient() then
-		warn("Attempted to fire to server from server")
-		return
+local function AssertServer()
+	if not RunService:IsServer() then
+		warn("Attempted to use server networking from client")
+		return false
 	end
+	return true
+end
+
+local function AssertClient()
+	if not RunService:IsClient() then
+		warn("Attempted to use client networking from server")
+		return false
+	end
+	return true
+end
+
+function NetworkingService:FireToServer(remoteName: string, ...)
+	if AssertClient() then return end
+    
 	warn("From Client:", remoteName)
-	--warn("From Client:", debug.traceback())
+	-- warn("From Client:", debug.traceback())
 	local remote = Remotes[remoteName]
 	if remote then
 		remote:FireServer(...)
@@ -24,22 +39,79 @@ function NetworkingService:FireToServer(remoteName: string, ...)
 end
 
 function NetworkingService:FireToClient(player ,remoteName:string, ...)
-    if not RunService:IsServer() then
-        warn("Attempted to fire to client from client")
-        return
-    end
+    if not AssertServer() then return end
+
+	warn("From Server:", remoteName)
+    -- warn("From Server:", debug.traceback())
+	local remote = Remotes[remoteName]
+	if remote then
+		if player:IsA("Player") then
+			remote:FireClient(player, ...)
+		end
+	end
+end
+
+function NetworkingService:FireToAll(remoteName:string,...)
+	if not AssertServer() then return end
+
+	warn("From Server:", remoteName)
+    -- warn("From Server:", debug.traceback())
+	local remote = Remotes[remoteName]
+	if remote then
+        remote:FireAllClients(...)
+	end
+end
+
+function NetworkingService:FireInRange(remoteName:string, origin, range, ...)
+	if not AssertServer() then return end
+
 	warn("From Server:", remoteName)
     --warn("From Server:", debug.traceback())
 	local remote = Remotes[remoteName]
 	if remote then
-        if player == "All" then
-            remote:FireAllClients(...)
+        for _,player in Players:GetPlayers() do
+            local char = player.Character
+            local hrp = char and char:FindFirstChild("HumanoidRootPart")
 
-        else
-            if player:IsA("Player") then
-				remote:FireClient(player, ...)            
+			if hrp and typeof(origin) == "Vector3" then
+				local maxRange = range or 500
+				local distance = (hrp.Position - origin).Magnitude
+
+				if distance <= maxRange then
+					remote:FireClient(player, ...)
+				end
             end
         end
+	end
+end
+
+function NetworkingService:FireToExcept(exceptPlayer:Player?, remoteName:string, ...)
+	if not AssertServer() then return end
+
+	warn("From Server:", remoteName)
+	--warn("From Server:", debug.traceback())
+	local remote = Remotes[remoteName]
+    if remote then
+        for _,player in Players:GetPlayers() do
+            if player ~= exceptPlayer then
+                remote:FireClient(player, ...)
+            end
+        end
+    end
+end
+
+function NetworkingService:FireToPlayers(players:any, remoteName:string, ...)
+	if not AssertServer() then return end
+
+	warn("From Server:", remoteName)
+	--warn("From Server:", debug.traceback())
+	local remote = Remotes[remoteName]
+	if remote then
+		for _, player in pairs(players) do
+			if player:IsA("Player") then
+                remote:FireClient(player, ...)
+			end
+		end
 	end
 end
 

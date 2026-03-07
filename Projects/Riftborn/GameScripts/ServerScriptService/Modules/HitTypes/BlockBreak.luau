@@ -29,12 +29,12 @@ return function(argumentData)
 		StateService:AddState(attacker, "In Combat", 20)
 		StateService:AddState(targetHit, "In Combat", 20)
 		
-		NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
+		NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "Sound" , {
 			["SoundName"] = "Shared.Sounds.BlockBreak" , 
 			["Parent"] = targetHit.HumanoidRootPart
 		})
 		
-		NetworkingService:FireToClient("All", "ClientEffects", "BlockBreakHit" , {
+		NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "BlockBreakHit" , {
 			["Target"] = targetHit ,
 			["weaponUsed"] = weaponUsed.Name,
 			["Duration"] = 1.5,

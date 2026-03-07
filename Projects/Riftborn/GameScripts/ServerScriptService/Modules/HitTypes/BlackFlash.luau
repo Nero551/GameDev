@@ -50,16 +50,16 @@ return function(argumentData)
 	killerHit.Name = "KillerHit"	
 	debris:AddItem(killerHit, 30)
 	
-	NetworkingService:FireToClient("All", "ClientEffects", "DefaultHit" , {
+	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit" , {
 		["Target"] = targetHit ,
 		["WeaponUsed"] = weaponUsed.Name,
 	})
 	
-	NetworkingService:FireToClient("All", "ClientEffects", "BlackFlashHit",{
+	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "BlackFlashHit",{
 		["Target"] = targetHit ,
 	})
 	
-	NetworkingService:FireToClient("All", "ClientEffects", "Sound",{
+	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound",{
 		["Parent"] = targetHumanoid,
 		["SoundName"] = "Shared.Sounds.BlackFlash"
 	})
@@ -81,7 +81,7 @@ return function(argumentData)
 
 		})
 		
-		NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
+		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound" , {
 			["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Abilities.Hit."..tostring(abilityLetter) ,
 			["Parent"] = targetHRP
 		})

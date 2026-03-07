@@ -56,7 +56,7 @@ return function(argumentData)
 	killerHit.Name = "KillerHit"	
 	debris:AddItem(killerHit, 30)
 	
-	NetworkingService:FireToClient("All", "ClientEffects", "DefaultHit" , {
+	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit" , {
 		["Target"] = targetHit ,
 		["WeaponUsed"] = weaponUsed.Name,
 	})
@@ -98,7 +98,7 @@ return function(argumentData)
 			})
 			
 
-			NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
+			NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound" , {
 				["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Hit."..tostring(comboStringNumber) ,
 				["Parent"] = targetHRP
 			})
@@ -132,7 +132,7 @@ return function(argumentData)
 		ailmentData = statusAilmentsData.Ailments[ailmentName]
 		if not ailmentData then return end
 		
-		NetworkingService:FireToClient("All", "ClientEffects", "AilmentHit",{
+		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "AilmentHit",{
 			["Target"] = targetHit,
 			["Ailment"] = ailmentName,
 			["Duration"] = ailmentData.BaseDuration,
@@ -140,7 +140,7 @@ return function(argumentData)
 
 		})
 
-		NetworkingService:FireToClient("All", "ClientEffects", "Sound",{
+		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound",{
 			["Parent"] = targetHRP,
 			["SoundName"] = "Shared.Sounds.AilmentSounds."..ailmentName
 

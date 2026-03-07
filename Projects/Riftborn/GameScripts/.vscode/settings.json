@@ -1,5 +1,6 @@
 {
     "luau-lsp.plugin.enabled": true,
     "luau-lsp.sourcemap.enabled": false,
-    "luau-lsp.sourcemap.autogenerate": false
+    "luau-lsp.sourcemap.autogenerate": false,
+    "stylua.targetReleaseVersion": "latest"
 }

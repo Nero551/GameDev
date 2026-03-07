@@ -51,7 +51,7 @@ return function(argumentData)
 	killerHit.Name = "KillerHit"	
 	debris:AddItem(killerHit, 30)
 	
-	NetworkingService:FireToClient("All", "ClientEffects", "DefaultHit" , {
+	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit" , {
 		["Target"] = targetHit ,
 		["WeaponUsed"] = weaponUsed.Name,
 	})
@@ -67,7 +67,7 @@ return function(argumentData)
 		})
 		
 		
-		NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
+		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound" , {
 			["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Abilities.Hit."..tostring(abilityLetter) ,
 			["Parent"] = targetHRP
 		})
@@ -99,7 +99,7 @@ return function(argumentData)
 			})
 			
 
-			NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
+			NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound" , {
 				["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Hit."..tostring(comboStringNumber) ,
 				["Parent"] = targetHRP
 			})

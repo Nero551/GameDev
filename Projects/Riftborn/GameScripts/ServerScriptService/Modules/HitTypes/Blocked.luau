@@ -3,7 +3,6 @@ local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.N
 
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local modules = (replicatedStorage.Modules)
-local StateService = require(game.ServerScriptService.Services.StateService)
 local StateChecker = require(modules.StateChecker)
 
 local itemDataBase = require(modules.Data.ItemDataBase)
@@ -45,7 +44,7 @@ return function(argumentData)
 
 		})
 
-		NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
+		NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "Sound" , {
 			["SoundName"] = "Shared.Sounds.AbilityBlock",
 			["Parent"] = targetHit.HumanoidRootPart
 		})
@@ -68,14 +67,14 @@ return function(argumentData)
 			})
 
 			local randomNumber =  math.random(1,4)
-			NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
+			NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "Sound" , {
 				["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Blocked."..tostring(randomNumber) ,
 				["Parent"] = targetHit.HumanoidRootPart
 			})
 		end	
 	end
 	
-	NetworkingService:FireToClient("All", "ClientEffects", "BlockedHit" , {
+	NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "BlockedHit" , {
 		["Target"] = targetHit ,
 		["weaponUsed"] = weaponUsed.Name,
 		["BlockCounter"] = CharacterVitalsService:GetVital(targetHit, "BlockCounter")
@@ -95,4 +94,3 @@ return function(argumentData)
 	end
 	
 end
-

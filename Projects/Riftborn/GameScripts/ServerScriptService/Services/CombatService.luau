@@ -40,7 +40,7 @@ for _,module  in script.Parent.Parent.Modules.HitTypes:GetChildren() do
 end
 
 function CombatService:Spawn(character)
-	NetworkingService:FireToClient("All", "ClientEffects", "SpawnVFX",
+	NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "SpawnVFX",
 		{
 			["Character"] = character
 		}
@@ -136,7 +136,7 @@ function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 		weld.Part1 = hitboxClone
 		weld.C0 = CFrame.new(0 , 0 , -3)
 		
-		NetworkingService:FireToClient("All", "ClientEffects", "Sound" , {
+		NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "Sound" , {
 			["SoundName"] = "Weapons."..tool.Name..".Sounds.Swings."..tostring(trueSwingNumber) ,
 			["Parent"] = character.HumanoidRootPart
 		})

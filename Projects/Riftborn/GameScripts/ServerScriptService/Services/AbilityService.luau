@@ -4,7 +4,6 @@ local debris = game:GetService("Debris")
 local modules = replicatedStorage.Modules
 local assets = replicatedStorage.Assets
 
-local remotes = replicatedStorage.Remotes
 
 local itemDataBase = require(modules.Data.ItemDataBase)
 local abilityDataModule = require(modules.Data.AbilityData)
@@ -103,14 +102,14 @@ function AbilityService:UseAbility(player:Player? ,character, tool:Tool, mouse, 
 		end
 
 		---VFX---	
-		NetworkingService:FireToClient("All", "ClientEffects", "AbilityVFX", {
+		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "AbilityVFX", {
 			["VFX"] = assets.Weapons[tool.Name].Effects.Abilities[abilityletter],
 			["HitBoxName"] = hitboxClone.Name,
 			["Caster"] = character
 		})
 		
 		---Sound---
-		NetworkingService:FireToClient("All", "ClientEffects", "AbilitySound", {
+		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "AbilitySound", {
 			["SoundName"] = "Weapons."..tool.Name..".Sounds.Abilities.Activate."..abilityletter,	
 			["HitBoxName"] = hitboxClone.Name,
 		})
