@@ -6,7 +6,7 @@ local NetworkingService = {}
 local Remotes = {}
 
 local SentRemotes = {}
-local RateLimit = 50
+local RateLimit = 100
 
 for _, remote in ReplicatedStorage.Remotes:GetDescendants() do
 	if remote:IsA("RemoteEvent") or remote:IsA("UnreliableRemoteEvent") then
