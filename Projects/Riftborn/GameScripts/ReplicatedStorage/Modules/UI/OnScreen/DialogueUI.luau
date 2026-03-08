@@ -1,7 +1,7 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(DialogueFrame)
-	local player = game:GetService("Players").LocalPlayer
-	local repstor = game:GetService("ReplicatedStorage")
+	local Player = game:GetService("Players").LocalPlayer
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 	local DialogueText = DialogueFrame.DialogueText
 	local SpeakerName = DialogueFrame.SpeakerName
@@ -12,7 +12,7 @@ return function(DialogueFrame)
 
 	Texture.MouseButton1Click:Connect(function()
 		if skipLine == true and canClick == true then
-			NetworkingService:FireToServer("ContinueDialogue", player)
+			NetworkingService:FireToServer("ContinueDialogue", Player)
 		end
 		skipLine = true
 	end)
@@ -29,7 +29,7 @@ return function(DialogueFrame)
 		while i < length do
 			i += 1
 			DialogueText.Text = string.sub(line, 1, i)
-			repstor.Assets.Shared.Sounds.DialogueSound:Play()
+			ReplicatedStorage.Assets.Shared.Sounds.DialogueSound:Play()
 			if skipLine then
 				DialogueText.Text = line
 				break
@@ -58,7 +58,7 @@ return function(DialogueFrame)
 		if dialogueData.Options then
 
 			for option,optioninfo in pairs(dialogueData.Options) do
-				local optionButton:ImageButton? = repstor.Assets.GUI.DialogueOption:Clone()
+				local optionButton:ImageButton? = ReplicatedStorage.Assets.GUI.DialogueOption:Clone()
 				optionButton.Name = option
 				optionButton.Text.Text = optioninfo.Text
 				optionButton.Parent = DialogueFrame.OptionFrame

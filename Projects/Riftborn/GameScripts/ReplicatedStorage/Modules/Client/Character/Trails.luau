@@ -1,15 +1,15 @@
 return function()
-	local runService = game:GetService("RunService")
-	local itemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
-	local player = game:GetService("Players").LocalPlayer
-	local character = player.Character or player.CharacterAdded:Wait()
+	local RunService = game:GetService("RunService")
+	local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
+	local Player = game:GetService("Players").LocalPlayer
+	local character = Player.Character or Player.CharacterAdded:Wait()
 
 	local StateChecker = require(game.ReplicatedStorage.Modules.StateChecker)
 
-	local _stepConnection = runService.RenderStepped:Connect(function()
+	local _stepConnection = RunService.RenderStepped:Connect(function()
 		---Trails---
 		local weapon = character:FindFirstChildWhichIsA("Tool")
-		if weapon and itemDataBase:GetItemData(weapon.Name) then
+		if weapon and ItemDataBase:GetItemData(weapon.Name) then
 			---SprintTrails---
 			if StateChecker:CheckState(character, "Sprinting")  then
 				for _, model in character:GetChildren() do 

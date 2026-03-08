@@ -1,7 +1,7 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local repstor = game:GetService("ReplicatedStorage")
-local titleDataBase = require(repstor.Modules.Data.TitleData)
-local GameEvents = require(repstor.Modules.GameEvents)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TitleData = require(ReplicatedStorage.Modules.Data.TitleData)
+local GameEvents = require(ReplicatedStorage.Modules.GameEvents)
 local DataService = require(script.Parent.Parent.Services.DataService)
 
 local TitleService = {}
@@ -25,7 +25,7 @@ end
 function TitleService:GetTitle(player, titleID)
 	local playerTitles = DataService:GetTable(player, "Titles")
 	if playerTitles.Titles[titleID] then return end
-		local titleData = titleDataBase.Titles[titleID]
+		local titleData = TitleData.Titles[titleID]
 		if titleData then
 			playerTitles.Titles[titleID] = titleData
 		end
@@ -74,7 +74,7 @@ end
 function TitleService:SyncTitlesWithTitleData(player)
 	local playerTitles = DataService:GetTable(player, "Titles")
 	for titleID, title in pairs(playerTitles.Titles) do
-		local titleData = titleDataBase.Titles[titleID]
+		local titleData = TitleData.Titles[titleID]
 		if titleData then
 			title.Name = titleData.Name
 			title.Buffs = titleData.Buffs

@@ -1,9 +1,9 @@
 --DefualtHit
 
-local debris = game:GetService("Debris")
-local replicatedStorage = game:GetService("ReplicatedStorage")
+local Debris = game:GetService("Debris")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local assets = replicatedStorage:WaitForChild("Assets")
+local assets = ReplicatedStorage:WaitForChild("Assets")
 
 return function(arguementData:any)
 	local target:Model = arguementData.Target
@@ -24,7 +24,7 @@ return function(arguementData:any)
 					v.Enabled = true
 				end
 			end
-			debris:AddItem(clone, 1.5)
+			Debris:AddItem(clone, 1.5)
 		end
 	end
 end

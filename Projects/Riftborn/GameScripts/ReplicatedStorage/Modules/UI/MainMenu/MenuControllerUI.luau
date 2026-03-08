@@ -1,13 +1,13 @@
 return function()
-local tweenService = game:GetService("TweenService")
-local userInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
 local Lighting = game:GetService("Lighting")
-local repstor = game:GetService("ReplicatedStorage")
-local runService = game:GetService("RunService")
-local player = game:GetService("Players").LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+local Player = game:GetService("Players").LocalPlayer
 
 local blur:BlurEffect = Lighting.Blur
-local MainMenu = player:WaitForChild("PlayerGui"):WaitForChild("MenusGUI"):WaitForChild("MainMenu")
+local MainMenu = Player:WaitForChild("PlayerGui"):WaitForChild("MenusGUI"):WaitForChild("MainMenu")
 local menuGui = MainMenu.Parent
 local Texture = menuGui.Texture
 
@@ -15,14 +15,14 @@ local info = TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirecti
 
 local function BackgroundBlurTweenIn()
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-	tweenService:Create(blur, info, {Size = 24}):Play()
-	tweenService:Create(Texture, info, {ImageTransparency = 0.8}):Play()
+	TweenService:Create(blur, info, {Size = 24}):Play()
+	TweenService:Create(Texture, info, {ImageTransparency = 0.8}):Play()
 end
 
 local function BackgroundBlurTweenOut()
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-	tweenService:Create(blur, info, {Size = 0}):Play()
-	tweenService:Create(Texture, info, {ImageTransparency = 1}):Play()
+	TweenService:Create(blur, info, {Size = 0}):Play()
+	TweenService:Create(Texture, info, {ImageTransparency = 1}):Play()
 end
 
 
@@ -43,11 +43,11 @@ for ui, data in pairs(Buttons) do
 	------Rotate when hovering
 	local function Rotate()
 		local info = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		local tween =  tweenService:Create(ui , info, {Rotation = -8}):Play()
+		local tween =  TweenService:Create(ui , info, {Rotation = -8}):Play()
 	end
 	local function RotateBack()
 		local info = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		tweenService:Create(ui, info, {Rotation = 0}):Play()
+		TweenService:Create(ui, info, {Rotation = 0}):Play()
 	end
 
 	------Button To Open Menu Functions------
@@ -55,7 +55,7 @@ for ui, data in pairs(Buttons) do
 		for _,child in ipairs(menuGui:GetChildren()) do
 			if child:IsA("Frame") and child ~= data.frame then
 
-				tweenService:Create(child, info, {Size = UDim2.fromScale(0,0)}):Play()
+				TweenService:Create(child, info, {Size = UDim2.fromScale(0,0)}):Play()
 				child.Visible = false
 			end
 		end
@@ -63,11 +63,11 @@ for ui, data in pairs(Buttons) do
 
 	local function OpenYourMenu()
 		data.frame.Visible = true
-		tweenService:Create(data.frame , info, {Size = UDim2.fromScale(1,1)}):Play()
+		TweenService:Create(data.frame , info, {Size = UDim2.fromScale(1,1)}):Play()
 	end
 
 	local function CloseYourMenu()
-		local tween = tweenService:Create(data.frame, info, {Size = UDim2.fromScale(0,0)})
+		local tween = TweenService:Create(data.frame, info, {Size = UDim2.fromScale(0,0)})
 		tween:Play()
 		tween.Completed:Connect(function()
 			data.frame.Visible = false
@@ -89,7 +89,7 @@ for ui, data in pairs(Buttons) do
 		BackgroundBlurTweenIn()
 	end)
 
-	userInputService.InputBegan:Connect(function(inp, proc)
+	UserInputService.InputBegan:Connect(function(inp, proc)
 		if proc then return end
 		if inp.KeyCode == Enum.KeyCode.M then
 			CloseYourMenu()
@@ -101,18 +101,18 @@ end
 ------M to open MainMenu------ 
 local function OpenMenu()
 	MainMenu.Visible = true
-	tweenService:Create(MainMenu, info, {Size = UDim2.fromScale(0.4, 0.9)}):Play()
+	TweenService:Create(MainMenu, info, {Size = UDim2.fromScale(0.4, 0.9)}):Play()
 end
 
 local function CloseMenu()
-	local tween = tweenService:Create(MainMenu, info, {Size = UDim2.fromScale(0,0)})
+	local tween = TweenService:Create(MainMenu, info, {Size = UDim2.fromScale(0,0)})
 	tween:Play()
 	tween.Completed:Connect(function()
 		MainMenu.Visible = false
 	end)
 end
 
-userInputService.InputBegan:Connect(function(inp, proc)
+UserInputService.InputBegan:Connect(function(inp, proc)
 	if proc then return end	
 	if inp.KeyCode == Enum.KeyCode.M then
 		if MainMenu.Size == UDim2.fromScale(0,0) then

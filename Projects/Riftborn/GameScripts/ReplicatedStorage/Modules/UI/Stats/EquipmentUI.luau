@@ -1,22 +1,22 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(Icons, EquipmentFolder)
-	local repstor =game:GetService("ReplicatedStorage")
-	local tweenService = game:GetService("TweenService")
-	local player = game:GetService("Players").LocalPlayer
-	local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
-	local playerStats = player:WaitForChild("PlayerStats")
-	local FormulaApplier = require(repstor.Modules.FormulaApplier)
+	local ReplicatedStorage =game:GetService("ReplicatedStorage")
+	local TweenService = game:GetService("TweenService")
+	local Player = game:GetService("Players").LocalPlayer
+	local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+	local playerStats = Player:WaitForChild("PlayerStats")
+	local FormulaApplier = require(ReplicatedStorage.Modules.FormulaApplier)
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 	local function SizeIncrease(scale:UIScale)
 		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		tweenService:Create(scale, info, {Scale = 1.05}):Play()
+		TweenService:Create(scale, info, {Scale = 1.05}):Play()
 	end
 
 	local function SizeClickDecrease(scale:UIScale)
 		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		tweenService:Create(scale, info, {Scale = 0.975}):Play()
+		TweenService:Create(scale, info, {Scale = 0.975}):Play()
 	end
 
 	local Equipment = {}
@@ -62,7 +62,7 @@ return function(Icons, EquipmentFolder)
 
 
 		for itemType,itemID in pairs(equippedItems) do
-			local itemData = itemDataBase:GetItemData(itemID)
+			local itemData = ItemDataBase:GetItemData(itemID)
 			if  Equipment[itemType] then
 				Equipment[itemType].Item = itemData.Name
 				Equipment[itemType].ItemID = itemID
@@ -82,7 +82,7 @@ return function(Icons, EquipmentFolder)
 					icon:FindFirstChild("Border"):Destroy()
 					icon:FindFirstChild("EquippedIcon"):Destroy()
 					icon:FindFirstChild("OwnedAmount"):Destroy()
-					local itemData = itemDataBase:GetItemData(Info.ItemID)
+					local itemData = ItemDataBase:GetItemData(Info.ItemID)
 					if not  itemData then
 						print("idk")
 						return 
@@ -105,7 +105,7 @@ return function(Icons, EquipmentFolder)
 					icon.MouseButton1Click:Connect(function()
 						local infoPopup = iconFrame:FindFirstChild("EquippedItemPopUp")
 						if infoPopup then
-							local tween = tweenService:Create(infoPopup, info, {Size = UDim2.fromScale(0, 0.905)})
+							local tween = TweenService:Create(infoPopup, info, {Size = UDim2.fromScale(0, 0.905)})
 							tween:Play()
 							tween.Completed:Connect(function()
 								infoPopup:Destroy()	
@@ -119,7 +119,7 @@ return function(Icons, EquipmentFolder)
 								end
 							end
 
-							infoPopup = repstor.Assets.GUI["EquippedItemPopUp"]:Clone()
+							infoPopup = ReplicatedStorage.Assets.GUI["EquippedItemPopUp"]:Clone()
 							infoPopup.ItemName.Text = itemData.Name
 
 							if itemData.Buffs then
@@ -178,7 +178,7 @@ return function(Icons, EquipmentFolder)
 
 							end
 							infoPopup.Parent = iconFrame
-							local tween = tweenService:Create(infoPopup, info, {Size = UDim2.fromScale(2.277, 0.905)})
+							local tween = TweenService:Create(infoPopup, info, {Size = UDim2.fromScale(2.277, 0.905)})
 							tween:Play()
 						end	
 					end)

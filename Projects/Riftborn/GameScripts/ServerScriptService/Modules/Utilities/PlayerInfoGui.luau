@@ -2,10 +2,10 @@ local PlayerInfo = {}
 
 function PlayerInfo:UpdateInfo(player, char)
 	---Player Info GUI---
-	local repstor = game:GetService("ReplicatedStorage")
-	local tweenService = game:GetService("TweenService")
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local TweenService = game:GetService("TweenService")
 	local DataService = require(game.ServerScriptService.Services.DataService)
-	local uiModules = repstor.Modules.UI
+	local uiModules = ReplicatedStorage.Modules.UI
 
 	if not player then return end
 
@@ -21,8 +21,8 @@ function PlayerInfo:UpdateInfo(player, char)
 	char:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(function()
 		if tick() - lastUpdate > 0.1 then -- 20 FPS limit
 			lastUpdate = tick()
-			local hpChanger = require(uiModules.HPChangerUI)
-			hpChanger(hpBG, char)
+			local HPChangerUI = require(uiModules.HPChangerUI)
+			HPChangerUI(hpBG, char)
 		end
 	end)
 
@@ -32,8 +32,6 @@ function PlayerInfo:UpdateInfo(player, char)
 	playerInfo.PlayerName.Text = char.Name
 
 	---Level---
-	local playerLevel = player:FindFirstChild("PlayerLevel")
-	if not playerLevel then task.wait() end
 	playerInfo.PlayerLevel.LevelText.Text = player:WaitForChild("PlayerLevel").CurrentLevel.Value
 	player:WaitForChild("PlayerLevel").CurrentLevel.Changed:Connect(function()
 		playerInfo.PlayerLevel.LevelText.Text = player:WaitForChild("PlayerLevel").CurrentLevel.Value
@@ -72,7 +70,7 @@ function PlayerInfo:UpdateInfo(player, char)
 			if playerInfo.PlayerTitle.UIGradient:FindFirstChild("RotationTween") then
 				playerInfo.PlayerTitle.UIGradient.RotationTween:Destroy()
 			end
-			local tween = tweenService:Create(playerInfo.PlayerTitle.UIGradient, tweenInfo, {Rotation = 360})
+			local tween = TweenService:Create(playerInfo.PlayerTitle.UIGradient, tweenInfo, {Rotation = 360})
 			tween.Name = "RotationTween"
 			tween:Play()
 

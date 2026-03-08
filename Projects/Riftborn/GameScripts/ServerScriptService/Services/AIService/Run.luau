@@ -1,6 +1,6 @@
 
 return function(npc)
-	local PathFindingService = game:GetService("PathfindingService")
+	local PathfindingService = game:GetService("PathfindingService")
 	local StateService = require(game.ServerScriptService.Services.StateService)
 	
 	local AIService = require(script.Parent)
@@ -25,7 +25,7 @@ return function(npc)
 		AIData.RunAnimation:Play()
 	end
 	
-	local path = PathFindingService:CreatePath({
+	local path = PathfindingService:CreatePath({
 		AgentRadius = 2,
 		AgentHeight = 5,
 		AgentCanJump = true,

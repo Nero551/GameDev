@@ -1,5 +1,5 @@
 return function  (Icons, Filters)
-	local tweenService = game:GetService("TweenService")
+	local TweenService = game:GetService("TweenService")
 
 	local filterSelected = nil
 	local prevFilterSelected = nil
@@ -11,13 +11,13 @@ return function  (Icons, Filters)
 
 			filter.MouseEnter:Connect(function()
 				if filterSelected ~= filter then
-					tweenService:Create(filter, info ,{ImageColor3 =  Color3.fromRGB(87, 107, 194)}):Play()
+					TweenService:Create(filter, info ,{ImageColor3 =  Color3.fromRGB(87, 107, 194)}):Play()
 				end
 			end)
 
 			filter.MouseLeave:Connect(function()
 				if filterSelected ~= filter then
-					tweenService:Create(filter, info ,{ImageColor3 =  Color3.fromRGB(255,255,255)}):Play()
+					TweenService:Create(filter, info ,{ImageColor3 =  Color3.fromRGB(255,255,255)}):Play()
 				end
 			end)
 
@@ -27,14 +27,14 @@ return function  (Icons, Filters)
 				filterSelected = filter
 
 				if filterSelected ~= nil then
-					tweenService:Create(filterSelected["FilterType"], info ,{TextColor3 =  Color3.fromRGB(255, 154, 213)}):Play()
-					tweenService:Create(filterSelected.RGBStroke, info ,{ImageColor3 =  Color3.fromRGB(255, 154, 213)}):Play()
-					tweenService:Create(filterSelected, info ,{ImageColor3 =  Color3.fromRGB(60, 49, 88)}):Play()
+					TweenService:Create(filterSelected["FilterType"], info ,{TextColor3 =  Color3.fromRGB(255, 154, 213)}):Play()
+					TweenService:Create(filterSelected.RGBStroke, info ,{ImageColor3 =  Color3.fromRGB(255, 154, 213)}):Play()
+					TweenService:Create(filterSelected, info ,{ImageColor3 =  Color3.fromRGB(60, 49, 88)}):Play()
 					if prevFilterSelected ~= nil then
 						if prevFilterSelected ~= filterSelected then
-							tweenService:Create(prevFilterSelected, info ,{ImageColor3 =  Color3.fromRGB(255,255,255)}):Play()
-							tweenService:Create(prevFilterSelected.RGBStroke, info ,{ImageColor3 =  Color3.fromRGB(255, 255, 255)}):Play()
-							tweenService:Create(prevFilterSelected["FilterType"], info ,{TextColor3 =  Color3.fromRGB(255, 255, 255)}):Play()
+							TweenService:Create(prevFilterSelected, info ,{ImageColor3 =  Color3.fromRGB(255,255,255)}):Play()
+							TweenService:Create(prevFilterSelected.RGBStroke, info ,{ImageColor3 =  Color3.fromRGB(255, 255, 255)}):Play()
+							TweenService:Create(prevFilterSelected["FilterType"], info ,{TextColor3 =  Color3.fromRGB(255, 255, 255)}):Play()
 						end
 
 					end

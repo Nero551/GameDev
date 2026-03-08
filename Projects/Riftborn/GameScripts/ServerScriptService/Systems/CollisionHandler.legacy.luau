@@ -1,7 +1,7 @@
 --CollisionHandler
 
-local runService = game:GetService("RunService")
-local  players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local  Players = game:GetService("Players")
 
 local function HandleCollisionGroups(character)
 	for _, v in character:GetDescendants() do
@@ -12,7 +12,7 @@ local function HandleCollisionGroups(character)
 end
 
 local function characterAdded(character:Model)
-	runService.Heartbeat:Wait()
+	RunService.Heartbeat:Wait()
 	character.Parent = workspace.World.Live
 	HandleCollisionGroups(character)
 end
@@ -23,17 +23,17 @@ local function handleCharacterAdded(player)
 	player.CharacterAdded:Connect(characterAdded)
 end
 
-players.PlayerAdded:Connect(function(player)
+Players.PlayerAdded:Connect(function(player)
 	handleCharacterAdded(player)
 end)
 
-for _, player in players:GetPlayers() do
+for _, player in Players:GetPlayers() do
 		handleCharacterAdded(player)
 end
 
 -----Handle CollisionGroups For Non-Players-----
 for _, v:Model in workspace.World.Live:GetChildren() do
-	if not players:GetPlayerFromCharacter(v) then
+	if not Players:GetPlayerFromCharacter(v) then
 		HandleCollisionGroups(v)
 	end
 end

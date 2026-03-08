@@ -1,7 +1,7 @@
 return function(statDetailsFrame)
-	local player = game:GetService("Players").LocalPlayer
-	local char = player.Character or player.CharacterAdded:Wait()
-	local playerStats = player:WaitForChild("PlayerStats")
+	local Player = game:GetService("Players").LocalPlayer
+	local char = Player.Character or Player.CharacterAdded:Wait()
+	local playerStats = Player:WaitForChild("PlayerStats")
 
 	for _,stat in playerStats:GetChildren() do
 		local function StatDetailsRefresh()

@@ -1,7 +1,7 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(questMenu, abandonQuestButton)
-	local repstor = game:GetService("ReplicatedStorage")
-	local tweenService = game:GetService("TweenService")
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local TweenService = game:GetService("TweenService")
 
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
@@ -9,24 +9,24 @@ return function(questMenu, abandonQuestButton)
 	local confirmPopup
 	local confirmConnection
 	
-	local cloneConfirmPopup = require(script.Parent.Parent.CloneConfirmPopupUI)
+	local CloneConfirmPopupUI = require(script.Parent.Parent.CloneConfirmPopupUI)
 
 	local function GetConfirmPopup()
 		if confirmPopup and confirmPopup.Parent then
 			return confirmPopup
 		end
 
-		confirmPopup = cloneConfirmPopup()
+		confirmPopup = CloneConfirmPopupUI()
 
 		confirmPopup:GetPropertyChangedSignal("Visible"):Connect(function()
 			if confirmPopup.Visible then
-				tweenService:Create(abandonQuestButton.AbandonQuestText, info, {TextColor3 = Color3.fromRGB(255,154,213)}):Play()
-				tweenService:Create(abandonQuestButton.RGBStroke, info, {ImageColor3 = Color3.fromRGB(255,154,213)}):Play()
-				tweenService:Create(abandonQuestButton, info, {	ImageColor3 = Color3.fromRGB(60,49,88)}):Play()
+				TweenService:Create(abandonQuestButton.AbandonQuestText, info, {TextColor3 = Color3.fromRGB(255,154,213)}):Play()
+				TweenService:Create(abandonQuestButton.RGBStroke, info, {ImageColor3 = Color3.fromRGB(255,154,213)}):Play()
+				TweenService:Create(abandonQuestButton, info, {	ImageColor3 = Color3.fromRGB(60,49,88)}):Play()
 			else
-				tweenService:Create(abandonQuestButton, info, {ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
-				tweenService:Create(abandonQuestButton.RGBStroke, info, {ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
-				tweenService:Create(abandonQuestButton.AbandonQuestText, info, {	TextColor3 = Color3.fromRGB(255,255,255)}):Play()
+				TweenService:Create(abandonQuestButton, info, {ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
+				TweenService:Create(abandonQuestButton.RGBStroke, info, {ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
+				TweenService:Create(abandonQuestButton.AbandonQuestText, info, {	TextColor3 = Color3.fromRGB(255,255,255)}):Play()
 			end
 		end)
 
@@ -41,7 +41,7 @@ return function(questMenu, abandonQuestButton)
 
 		popup.TextLabel.Text = "Abandon Quest?"
 		popup.Visible = true
-		tweenService:Create(popup, info, {
+		TweenService:Create(popup, info, {
 			Size = UDim2.fromScale(0.262, 0.49)
 		}):Play()
 
@@ -61,7 +61,7 @@ return function(questMenu, abandonQuestButton)
 	-----------------------------------------------------------------------------------------------------------------------------
 	abandonQuestButton.MouseEnter:Connect(function()
 		if confirmPopup and not confirmPopup.Visible then
-			tweenService:Create(abandonQuestButton, info, {ImageColor3 = Color3.fromRGB(87,107,194)}):Play()
+			TweenService:Create(abandonQuestButton, info, {ImageColor3 = Color3.fromRGB(87,107,194)}):Play()
 		end
 	end)
 
@@ -69,7 +69,7 @@ return function(questMenu, abandonQuestButton)
 	-----------------------------------------------------------------------------------------------------------------------------
 	abandonQuestButton.MouseLeave:Connect(function()
 		if confirmPopup and not confirmPopup.Visible then
-			tweenService:Create(abandonQuestButton, info, {	ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
+			TweenService:Create(abandonQuestButton, info, {	ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
 		end
 	end)
 end

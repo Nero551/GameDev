@@ -1,6 +1,6 @@
 return function(chargeText)
-	local player = game:GetService("Players").LocalPlayer
-	local char = player.Character or player.CharacterAdded:Wait()
+	local Player = game:GetService("Players").LocalPlayer
+	local char = Player.Character or Player.CharacterAdded:Wait()
 	
 	local function UpdateUI()
 		local currentFlashStep = char:GetAttribute("FlashStep_CurrentFlashStep")

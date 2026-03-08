@@ -1,7 +1,7 @@
 return function(button:TextButton?, frame:Frame?)
-	local adminIDS = require(game.ReplicatedStorage.Modules.Data.AdminIDs)
-	local player = game:GetService("Players").LocalPlayer
-	if not adminIDS[player.UserId] then
+	local AdminIDs = require(game.ReplicatedStorage.Modules.Data.AdminIDs)
+	local Player = game:GetService("Players").LocalPlayer
+	if not AdminIDs[Player.UserId] then
 		button.Visible = false
 		return
 	end

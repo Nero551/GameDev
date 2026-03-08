@@ -1,10 +1,10 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(damageFrame)
 	local TweenService = game:GetService("TweenService")
-	local repstor = game:GetService("ReplicatedStorage")
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local damageText = damageFrame.DamageNumber
 	local comboDuration = damageFrame.ComboDuration
-	local remotes = repstor.Remotes
+	local remotes = ReplicatedStorage.Remotes
 	local ExtraText = damageFrame.ExtraText
 	local ExtraImage = damageFrame.ExtraImage
 

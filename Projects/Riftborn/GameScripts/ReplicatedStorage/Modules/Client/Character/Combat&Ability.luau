@@ -1,16 +1,15 @@
 return function()
 		
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
-	local replicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
-	local runService = game:GetService("RunService")
-	local player = game:GetService("Players").LocalPlayer
-	local modules =  replicatedStorage.Modules
+	local RunService = game:GetService("RunService")
+	local Player = game:GetService("Players").LocalPlayer
+	local modules =  ReplicatedStorage.Modules
 	local ActionVerifier = require(ReplicatedStorage.Modules.ActionVerifier)
 	local Connections = require(ReplicatedStorage.Modules.Connections)
 	local NetworkingService = require(ReplicatedStorage.Modules.NetworkingService)
 	local StateChecker = require(modules.StateChecker)
-	local character = player.Character or player.CharacterAdded:Wait()
+	local character = Player.Character or Player.CharacterAdded:Wait()
 
 	local statusFolder = character:WaitForChild("Status", math.huge)
 
@@ -25,11 +24,11 @@ return function()
 
 		---Abilties---
 		if abilityKeys[input.KeyCode.Name] then				
-			NetworkingService:FireToServer("Ability", player:GetMouse().Hit.Position, input.KeyCode.Name)
+			NetworkingService:FireToServer("Ability", Player:GetMouse().Hit.Position, input.KeyCode.Name)
 		end	
 	end)
 
-	Connections:AddConnection(character, "Character", "Block & Attack",runService.RenderStepped:Connect(function(deltaTime: number)
+	Connections:AddConnection(character, "Character", "Block & Attack",RunService.RenderStepped:Connect(function(deltaTime: number)
 		------Death Handler------
 		if StateChecker:CheckState(character, "Dead") then
 			Connections:RemoveConnection(character, "Character", "Block & Attack")

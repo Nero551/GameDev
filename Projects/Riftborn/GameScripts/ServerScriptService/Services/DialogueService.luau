@@ -1,7 +1,7 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local repstor = game:GetService("ReplicatedStorage")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local dialogueDataBase = require(repstor.Modules.Data.DialogueDataBase)
+local DialogueDataBase = require(ReplicatedStorage.Modules.Data.DialogueDataBase)
 local GameEvents = require(game.ReplicatedStorage.Modules.GameEvents)
 
 local DialogueService = {}
@@ -9,7 +9,7 @@ local DialogueService = {}
 DialogueService.ActiveDialogues = {}
 
 function DialogueService:PlayDialogue(player, dialogue, stage)
-	local data = dialogueDataBase:GetDialogueData(dialogue)
+	local data = DialogueDataBase:GetDialogueData(dialogue)
 	if data then
 		
 		local stageData = data[stage]

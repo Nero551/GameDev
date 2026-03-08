@@ -1,4 +1,4 @@
-local questData = require(script.Parent.Parent.Parent.QuestData)
+local QuestData = require(script.Parent.Parent.Parent.QuestData)
 
 local QuestDialogueData = {}
 
@@ -20,7 +20,7 @@ QuestDialogueData["Start"] = {
 				{
 					Text = "Alright",
 					Action = "AcceptQuest",
-					Quest = questData:GetQuestID("Crystal Gathering")
+					Quest = QuestData:GetQuestID("Crystal Gathering")
 				},
 				{
 					Text = "No",

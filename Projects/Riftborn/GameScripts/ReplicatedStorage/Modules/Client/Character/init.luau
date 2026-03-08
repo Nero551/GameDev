@@ -13,9 +13,9 @@ end
 
 function Character:Init()
 	
-	local player = game:GetService("Players").LocalPlayer
-	local playerGUI = player:WaitForChild("PlayerGui")
-	local DeepGUI = playerGUI:WaitForChild("StyleGuide"):WaitForChild("Big Text"):WaitForChild("UIGradient")
+	local Player = game:GetService("Players").LocalPlayer
+	local playerGUI = Player:WaitForChild("PlayerGui")
+	playerGUI:WaitForChild("StyleGuide"):WaitForChild("Big Text"):WaitForChild("UIGradient")
 	
 	for moduleName,module in  pairs(cachedModules) do
 		module()

@@ -1,11 +1,11 @@
 return function()
 		
-	local player = game:GetService("Players").LocalPlayer
-	local char = player.Character or player.CharacterAdded:Wait()
+	local Player = game:GetService("Players").LocalPlayer
+	local char = Player.Character or Player.CharacterAdded:Wait()
 	local humanoid = char:WaitForChild("Humanoid")
 	local root:Part = char:WaitForChild("HumanoidRootPart")
 
-	local debris = game:GetService("Debris")
+	local Debris = game:GetService("Debris")
 
 	local animator:Animator = humanoid.Animator
 	local deathAnimation = animator:LoadAnimation(game.ReplicatedStorage.Assets.Shared.Character.Death)
@@ -28,7 +28,7 @@ return function()
 		ragdoll.RelativeTo = Enum.ActuatorRelativeTo.World
 		ragdoll.VectorVelocity = root.CFrame.LookVector * 5
 
-		debris:AddItem(ragdoll, 0.1)
+		Debris:AddItem(ragdoll, 0.1)
 
 	end)
 end

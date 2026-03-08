@@ -2,10 +2,10 @@ local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.N
 return function()
 	--ClientEffects
 
-	local replicatedStorage = game:GetService("ReplicatedStorage")
-	local  modules = replicatedStorage:WaitForChild("Modules")
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local  modules = ReplicatedStorage:WaitForChild("Modules")
 
-	local remotes = replicatedStorage:WaitForChild("Remotes")
+	local remotes = ReplicatedStorage:WaitForChild("Remotes")
 
 	local cachedEffects = {}
 

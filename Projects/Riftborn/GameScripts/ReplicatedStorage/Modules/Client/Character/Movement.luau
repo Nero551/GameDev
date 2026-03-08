@@ -1,17 +1,16 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function()
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
-	local replicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
-	local runService = game:GetService("RunService")
-	local tweenService = game:GetService("TweenService")
+	local RunService = game:GetService("RunService")
+	local TweenService = game:GetService("TweenService")
 local ActionVerifier = require(ReplicatedStorage.Modules.ActionVerifier)
 
-	local player = game:GetService("Players").LocalPlayer
-	local character = player.Character or player.CharacterAdded:Wait()
+	local Player = game:GetService("Players").LocalPlayer
+	local character = Player.Character or Player.CharacterAdded:Wait()
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 
-	local modules =  replicatedStorage.Modules
+	local modules =  ReplicatedStorage.Modules
 
 	local Connections = require(ReplicatedStorage.Modules.Connections)
 	local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
@@ -26,8 +25,8 @@ local ActionVerifier = require(ReplicatedStorage.Modules.ActionVerifier)
 
 	---FOV Changes Based On Current Speed---
 	local defualtFOV = 70
-	Connections:AddConnection(character, "Character", "FOV", runService.RenderStepped:Connect(function(dt)
-		tweenService:Create(camera, tweenInfo, {FieldOfView = defualtFOV + humanoid.WalkSpeed/2}):Play()
+	Connections:AddConnection(character, "Character", "FOV", RunService.RenderStepped:Connect(function(dt)
+		TweenService:Create(camera, tweenInfo, {FieldOfView = defualtFOV + humanoid.WalkSpeed/2}):Play()
 	end))
 
 
@@ -77,7 +76,7 @@ local ActionVerifier = require(ReplicatedStorage.Modules.ActionVerifier)
 			dashConnection:Disconnect()
 			dashConnection = nil
 		end
-		dashConnection = runService.Heartbeat:Connect(function(dt)
+		dashConnection = RunService.Heartbeat:Connect(function(dt)
 			if not StateChecker:CheckState(character, "Dashing") then
 				dashConnection:Disconnect()
 				dashConnection = nil

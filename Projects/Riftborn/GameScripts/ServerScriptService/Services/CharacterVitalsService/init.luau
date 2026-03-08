@@ -1,4 +1,4 @@
-local players = game:GetService("Players")
+local Players = game:GetService("Players")
 
 local CharacterVitalsService = {}
 
@@ -68,7 +68,7 @@ function CharacterVitalsService:Create(character)
 	
 	SyncAttributes(character, CharacterVitalsService.CharacterVitals[character])
 	
-	local player = players:GetPlayerFromCharacter(character)
+	local player = Players:GetPlayerFromCharacter(character)
 	if player then
 	end
 	
@@ -112,7 +112,7 @@ function CharacterVitalsService:ModifyVital(character,vital, funcName , argument
 	
 	SyncAttributes(character, CharacterVitalsService.CharacterVitals[character])
 	
-	local player = players:GetPlayerFromCharacter(character)
+	local player = Players:GetPlayerFromCharacter(character)
 	if player then
 	end
 

@@ -1,5 +1,5 @@
-local repstor = game:GetService("ReplicatedStorage")
-local maxStats = repstor.Values.MaxTotalStats.Value
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local maxStats = ReplicatedStorage.Values.MaxTotalStats.Value
 
 local starMarks = {
 	maxStats*0.05,  --1st Star
@@ -11,8 +11,8 @@ local starMarks = {
 
 
 return function(importantStatsFrame)
-	local player = game:GetService("Players").LocalPlayer
-	local playerStats = player:WaitForChild("PlayerStats")
+	local Player = game:GetService("Players").LocalPlayer
+	local playerStats = Player:WaitForChild("PlayerStats")
 
 	for _,Stat  in playerStats:GetChildren() do
 		local function TotalStatsRefresh()

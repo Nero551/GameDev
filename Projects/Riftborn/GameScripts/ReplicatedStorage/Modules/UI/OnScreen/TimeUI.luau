@@ -1,12 +1,12 @@
 return function(timeText:TextLabel)
-	local lighting = game:GetService("Lighting")
+	local Lighting = game:GetService("Lighting")
 	
-	timeText.Text = lighting.TimeOfDay
+	timeText.Text = Lighting.TimeOfDay
 	
 	
-	lighting:GetPropertyChangedSignal("TimeOfDay"):Connect(function()
+	Lighting:GetPropertyChangedSignal("TimeOfDay"):Connect(function()
 		
-		local splits = lighting.TimeOfDay:split(":")
+		local splits = Lighting.TimeOfDay:split(":")
 		local hour = tonumber(splits[1])
 		local minute = tonumber(splits[2])
 		

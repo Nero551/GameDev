@@ -1,8 +1,8 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local serverStorage = game:GetService("ServerStorage")
-local repstor = game:GetService("ReplicatedStorage")
-local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
-local GameEvents = require(repstor.Modules.GameEvents)
+local ServerStorage = game:GetService("ServerStorage")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+local GameEvents = require(ReplicatedStorage.Modules.GameEvents)
 
 local DataService = require(script.Parent.Parent.Services.DataService)
 
@@ -21,18 +21,18 @@ function  EquipUnEquipService:EquipItem(player:Player , itemID)
 	local itemType = nil
 
 	---If A Weapon---
-	local itemData = itemDataBase:GetItemData(itemID)
+	local itemData = ItemDataBase:GetItemData(itemID)
 	if itemData then
 		if itemData.Type == "Melee" or itemData.Type == "Sword" or itemData.Type == "Grimiore" or itemData.Type == "RiftBorn" then
 			print(itemData)
 			itemType = itemData.Type
-			local tool:Tool? = serverStorage.Tools[itemType]:FindFirstChild(itemData.Name):Clone()
+			local tool:Tool? = ServerStorage.Tools[itemType]:FindFirstChild(itemData.Name):Clone()
 			if tool then
 				
 				--Check For Another Tool With Same Type--
 				for _,anotherTool in char:GetChildren() do
 					if anotherTool:IsA("Tool") then
-                        local anotherToolData = itemDataBase:GetItemData(anotherTool:GetAttribute("ID"))
+                        local anotherToolData = ItemDataBase:GetItemData(anotherTool:GetAttribute("ID"))
 					    if anotherToolData.Buffs then
 						   GameEvents.RemoveBuff:Fire(player, anotherToolData, anotherTool:GetAttribute("ID"))
 					    end
@@ -45,7 +45,7 @@ function  EquipUnEquipService:EquipItem(player:Player , itemID)
 
 				for _,anotherTool in player.Backpack:GetChildren() do
 					if anotherTool:IsA("Tool") then
-                        local anotherToolData = itemDataBase:GetItemData(anotherTool:GetAttribute("ID"))
+                        local anotherToolData = ItemDataBase:GetItemData(anotherTool:GetAttribute("ID"))
 					    if anotherToolData.Buffs then
 						   GameEvents.RemoveBuff:Fire(player, anotherToolData, anotherTool:GetAttribute("ID"))
 					    end
@@ -64,13 +64,13 @@ function  EquipUnEquipService:EquipItem(player:Player , itemID)
 			
 		elseif itemData.Type == "Helmet" or itemData.Type == "ChestPlate" or itemData.Type == "Leggings" or itemData.Type == "Boots" then
 			itemType = itemData.Type
-			local armor:Part? = serverStorage.Armors[itemType]:FindFirstChild(itemData.Name):Clone()
+			local armor:Part? = ServerStorage.Armors[itemType]:FindFirstChild(itemData.Name):Clone()
 			if armor then
 
 				--Check For Another Armor With Same Type--
 				for _,anotherArmor in char:GetChildren() do
 					if anotherArmor:GetAttribute("Type") == itemType then
-						local anotherArmorData = itemDataBase:GetItemData(anotherArmor:GetAttribute("ID"))
+						local anotherArmorData = ItemDataBase:GetItemData(anotherArmor:GetAttribute("ID"))
 						if anotherArmorData.Buffs then
 							GameEvents.RemoveBuff:Fire(player ,  anotherArmorData, anotherArmor:GetAttribute("ID"))
 						end
@@ -102,7 +102,7 @@ function EquipUnEquipService:UnEquipItem(player:Player ,itemID)
 	local itemType = nil
 
 	---If A Weapon--- 
-	local itemData = itemDataBase:GetItemData(itemID)
+	local itemData = ItemDataBase:GetItemData(itemID)
 	if  itemData then
 		if itemData.Type == "Melee" or itemData.Type == "Sword" or itemData.Type == "Grimiore" or itemData.Type == "RiftBorn" then
 			itemType = itemData.Type
@@ -150,7 +150,7 @@ function EquipUnEquipService:LoadEquippedItems(player:Player)
 		local char = player.Character or player.CharacterAdded:Wait()
 		
 		---If  A Weapon---
-		local itemData = itemDataBase:GetItemData(itemID)
+		local itemData = ItemDataBase:GetItemData(itemID)
 		if  itemData then
 			if itemData.Type == "Melee" or itemData.Type == "Sword" or itemData.Type == "Grimiore" or itemData.Type == "RiftBorn" then
 				if itemData.Buffs then
@@ -169,7 +169,7 @@ function EquipUnEquipService:LoadEquippedItems(player:Player)
 				---Cloning Equipped Tools---
 				local tool = player.Backpack:FindFirstChild(itemData.Name)
 				if not tool then
-					tool = serverStorage.Tools[itemType]:FindFirstChild(itemData.Name):Clone()
+					tool = ServerStorage.Tools[itemType]:FindFirstChild(itemData.Name):Clone()
 					tool.Parent = player.Backpack
 				end
 				
@@ -189,7 +189,7 @@ function EquipUnEquipService:LoadEquippedItems(player:Player)
 				---Cloning Equipped Armor---
 				local armor = char:FindFirstChild(itemData.Name)
 				if not armor then
-					armor = serverStorage.Armors[itemType]:FindFirstChild(itemData.Name):Clone()
+					armor = ServerStorage.Armors[itemType]:FindFirstChild(itemData.Name):Clone()
 					armor.Parent = char
 				end
 			end

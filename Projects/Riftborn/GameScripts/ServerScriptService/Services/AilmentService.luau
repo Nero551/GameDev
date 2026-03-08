@@ -1,23 +1,23 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local replicatedStorage = game:GetService("ReplicatedStorage")
-local  players = game:GetService("Players")
-local runService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local  Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
 local StateService = require(game.ServerScriptService.Services.StateService)
-local StateChecker = require(replicatedStorage.Modules.StateChecker)
-local statusAilmentsData = require(replicatedStorage.Modules.Data.StatusAilmentsData)
+local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
+local StatusAilmentsData = require(ReplicatedStorage.Modules.Data.StatusAilmentsData)
 local StatService = require(script.Parent.StatService)
 local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
 
-local Connections = require(replicatedStorage.Modules.Connections)
+local Connections = require(ReplicatedStorage.Modules.Connections)
 
 local AilmentService = {}
 
 function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 
-	local playerTarget = players:GetPlayerFromCharacter(targetHit)
-	local playerAttacker = players:GetPlayerFromCharacter(attacker)
-	local ailmentData = statusAilmentsData.Ailments[ailmentName]
+	local playerTarget = Players:GetPlayerFromCharacter(targetHit)
+	local playerAttacker = Players:GetPlayerFromCharacter(attacker)
+	local ailmentData = StatusAilmentsData.Ailments[ailmentName]
 	local ailmentDamage = normalDamage * ailmentData.DamagePercent
 	
 	if not StateChecker:CheckState(targetHit, ailmentData.State) then
@@ -31,7 +31,7 @@ function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 		["LastProc"] = 	 (StateService.Status[targetHit][ailmentData.State] and
 						 StateService.Status[targetHit][ailmentData.State].LastProc) or 0
 	})
-	Connections:AddConnection(targetHit, "Character", "Burning", runService.Heartbeat:Connect(function(dt)
+	Connections:AddConnection(targetHit, "Character", "Burning", RunService.Heartbeat:Connect(function(dt)
 		if not StateChecker:CheckState(targetHit, ailmentData.State) then
 
 			if playerTarget then
@@ -73,8 +73,8 @@ end
 
 function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 	
-	local playerAttacker = players:GetPlayerFromCharacter(attacker)
-	local ailmentData = statusAilmentsData.Ailments[ailmentName]
+	local playerAttacker = Players:GetPlayerFromCharacter(attacker)
+	local ailmentData = StatusAilmentsData.Ailments[ailmentName]
 	local targetHealth =  CharacterVitalsService:GetVital(targetHit ,"Health")
 	local ailmentDamage = normalDamage * ailmentData.DamagePercent
 
@@ -83,7 +83,7 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 		["LastProc"] = 0,
 	})
 	
-	Connections:AddConnection(targetHit, "Character", "Bleeding", runService.Heartbeat:Connect(function(dt)
+	Connections:AddConnection(targetHit, "Character", "Bleeding", RunService.Heartbeat:Connect(function(dt)
 		if not StateChecker:CheckState(targetHit, ailmentData.State) then
 			Connections:RemoveConnection(targetHit , "Character", "Bleeding")
 			return
@@ -120,8 +120,8 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 end
 
 function AilmentService:Freeze(attacker, targetHit, ailmentName, normalDamage)
-	local playerAttacker = players:GetPlayerFromCharacter(attacker)
-	local ailmentData = statusAilmentsData.Ailments[ailmentName]
+	local playerAttacker = Players:GetPlayerFromCharacter(attacker)
+	local ailmentData = StatusAilmentsData.Ailments[ailmentName]
 	
 	local ailmentDamage = normalDamage * ailmentData.DamagePercent
 
@@ -131,7 +131,7 @@ function AilmentService:Freeze(attacker, targetHit, ailmentName, normalDamage)
 		HealthChange = -ailmentDamage
 	})
 	
-	Connections:AddConnection(targetHit, "Character", "Freezing",runService.Heartbeat:Connect(function(dt)
+	Connections:AddConnection(targetHit, "Character", "Freezing",RunService.Heartbeat:Connect(function(dt)
 		if not StateChecker:CheckState(targetHit, ailmentData.State) then
 			Connections:RemoveConnection(targetHit , "Character", "Freezing")
 			return

@@ -1,11 +1,10 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(itemFrame, OnScreenGui, infoFrame)
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
-	local repstor = game:GetService("ReplicatedStorage")
-	local tweenService = game:GetService("TweenService")
+	local TweenService = game:GetService("TweenService")
 	local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 
-	local remotes = repstor.Remotes
+	local remotes = ReplicatedStorage.Remotes
 
 	local box = infoFrame:FindFirstChild("Equip(HoverSoundSizeChange)")
 
@@ -16,17 +15,17 @@ return function(itemFrame, OnScreenGui, infoFrame)
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 	box.MouseEnter:Connect(function()
-		tweenService:Create(box, info, { ImageColor3 = Color3.fromRGB(55, 67, 122) }):Play()
+		TweenService:Create(box, info, { ImageColor3 = Color3.fromRGB(55, 67, 122) }):Play()
 	end)
 
 	box.MouseLeave:Connect(function()
-		tweenService:Create(box, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+		TweenService:Create(box, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
 	end)
 
 	local function SwitchInEquip()
 		local info = TweenInfo.new(0.0625, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out)
-		tweenService:Create(equipButton, info, { TextTransparency = 0 }):Play()
-		tweenService:Create(unequipButton, info, { TextTransparency = 1 }):Play()
+		TweenService:Create(equipButton, info, { TextTransparency = 0 }):Play()
+		TweenService:Create(unequipButton, info, { TextTransparency = 1 }):Play()
 		task.wait(0.1)
 		equipButton.Visible = true
 		unequipButton.Visible = false
@@ -34,8 +33,8 @@ return function(itemFrame, OnScreenGui, infoFrame)
 
 	local function SwitchOutEquip()
 		local info = TweenInfo.new(0.0625, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out)
-		tweenService:Create(equipButton, info, { TextTransparency = 1 }):Play()
-		tweenService:Create(unequipButton, info, { TextTransparency = 0 }):Play()
+		TweenService:Create(equipButton, info, { TextTransparency = 1 }):Play()
+		TweenService:Create(unequipButton, info, { TextTransparency = 0 }):Play()
 		task.wait(0.1)
 		equipButton.Visible = false
 		unequipButton.Visible = true

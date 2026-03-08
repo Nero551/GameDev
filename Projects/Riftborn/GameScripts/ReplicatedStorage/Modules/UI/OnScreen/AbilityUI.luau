@@ -1,13 +1,13 @@
 return function(abilityUI)
-	local repstor = game:GetService("ReplicatedStorage")
-	local player = game:GetService("Players").LocalPlayer
-	local run = game:GetService("RunService")
-	local tweenService = game:GetService("TweenService")
-	local char = player.Character or player.CharacterAdded:Wait()
-	local modules = repstor.Modules
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local Player = game:GetService("Players").LocalPlayer
+	local RunService = game:GetService("RunService")
+	local TweenService = game:GetService("TweenService")
+	local char = Player.Character or Player.CharacterAdded:Wait()
+	local modules = ReplicatedStorage.Modules
 	local StateChecker = require(modules.StateChecker)
-	local abilityDataModule = require(modules.Data.AbilityData)
-	local itemDataBase = require(modules.Data.ItemDataBase)
+	local AbilityData = require(modules.Data.AbilityData)
+	local ItemDataBase = require(modules.Data.ItemDataBase)
 	local bars = {}
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad,Enum.EasingDirection.Out)
@@ -34,7 +34,7 @@ return function(abilityUI)
 	end
 
 	-- update loop
-	run.RenderStepped:Connect(function()
+	RunService.RenderStepped:Connect(function()
 		local tool = char:FindFirstChildWhichIsA("Tool")
 		if not tool then
 			for _, bar in pairs(bars) do
@@ -44,8 +44,8 @@ return function(abilityUI)
 		end
 
 		for abilityKey, data in pairs(bars) do
-			local abilityData = abilityDataModule.getAbilityData(tool.Name , abilityKey)
-			local weaponData = itemDataBase:GetItemData(tool.Name, "Weapon")
+			local abilityData = AbilityData.getAbilityData(tool.Name , abilityKey)
+			local weaponData = ItemDataBase:GetItemData(tool.Name, "Weapon")
 			if not abilityData then
 				data.bar.Visible = false
 				continue
@@ -65,7 +65,7 @@ return function(abilityUI)
 				data.cdBar.Visible = true	
 				data.cdEndTime = time() + abilityData.AbilityCooldown
 
-				local tween = tweenService:Create(
+				local tween = TweenService:Create(
 					data.cdBar,
 					TweenInfo.new(abilityData.AbilityCooldown, Enum.EasingStyle.Linear),
 					{ Size = UDim2.fromScale(0,0.87) }
@@ -84,27 +84,27 @@ return function(abilityUI)
 			---Looks BS---
 			if weaponData.Type == "Sword" then
 
-				tweenService:Create(data.nameLabel, info, {TextColor3 = Color3.fromHex("#ffe134")}):Play()
-				tweenService:Create(data.abilityLetter, info, {TextColor3 = Color3.fromHex("#ffe134")}):Play()
-				tweenService:Create(data.innerStroke, info , {ImageColor3 = Color3.fromHex("#ffe134")}):Play()
+				TweenService:Create(data.nameLabel, info, {TextColor3 = Color3.fromHex("#ffe134")}):Play()
+				TweenService:Create(data.abilityLetter, info, {TextColor3 = Color3.fromHex("#ffe134")}):Play()
+				TweenService:Create(data.innerStroke, info , {ImageColor3 = Color3.fromHex("#ffe134")}):Play()
 
 			elseif weaponData.Type == "Melee" then
 
-				tweenService:Create(data.nameLabel, info, {TextColor3 = Color3.fromHex("#ff2c30")}):Play()
-				tweenService:Create(data.abilityLetter, info, {TextColor3 = Color3.fromHex("#ff2c30")}):Play()
-				tweenService:Create(data.innerStroke, info , {ImageColor3 = Color3.fromHex("#ff2c30")}):Play()
+				TweenService:Create(data.nameLabel, info, {TextColor3 = Color3.fromHex("#ff2c30")}):Play()
+				TweenService:Create(data.abilityLetter, info, {TextColor3 = Color3.fromHex("#ff2c30")}):Play()
+				TweenService:Create(data.innerStroke, info , {ImageColor3 = Color3.fromHex("#ff2c30")}):Play()
 
 			elseif weaponData.Type == "Grimiore" then
 
-				tweenService:Create(data.nameLabel, info, {TextColor3 = Color3.fromHex("#1cd9ff")}):Play()
-				tweenService:Create(data.abilityLetter, info, {TextColor3 = Color3.fromHex("#1cd9ff")}):Play()
-				tweenService:Create(data.innerStroke, info , {ImageColor3 = Color3.fromHex("#1cd9ff")}):Play()
+				TweenService:Create(data.nameLabel, info, {TextColor3 = Color3.fromHex("#1cd9ff")}):Play()
+				TweenService:Create(data.abilityLetter, info, {TextColor3 = Color3.fromHex("#1cd9ff")}):Play()
+				TweenService:Create(data.innerStroke, info , {ImageColor3 = Color3.fromHex("#1cd9ff")}):Play()
 
 			elseif weaponData.Type == "RiftBorn" then
 
-				tweenService:Create(data.nameLabel, info, {TextColor3 = Color3.fromHex("#b520ff")}):Play()
-				tweenService:Create(data.abilityLetter, info, {TextColor3 = Color3.fromHex("#b520ff")}):Play()
-				tweenService:Create(data.innerStroke, info , {ImageColor3 = Color3.fromHex("#b520ff")}):Play()
+				TweenService:Create(data.nameLabel, info, {TextColor3 = Color3.fromHex("#b520ff")}):Play()
+				TweenService:Create(data.abilityLetter, info, {TextColor3 = Color3.fromHex("#b520ff")}):Play()
+				TweenService:Create(data.innerStroke, info , {ImageColor3 = Color3.fromHex("#b520ff")}):Play()
 			end
 		end
 	end)

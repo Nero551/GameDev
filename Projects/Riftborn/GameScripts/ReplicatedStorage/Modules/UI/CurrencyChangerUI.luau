@@ -1,6 +1,6 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(currencyFrame)
-	local repstor = game:GetService("ReplicatedStorage")
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local yen = currencyFrame.YenNumber
 	local Fracta = currencyFrame.FractaNumber
 

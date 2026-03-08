@@ -1,18 +1,18 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 --CombatService
-local replicatedStorage = game:GetService("ReplicatedStorage")
-local debris = game:GetService("Debris")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Debris = game:GetService("Debris")
 
-local assets = replicatedStorage.Assets
-local modules = replicatedStorage.Modules
+local assets = ReplicatedStorage.Assets
+local modules = ReplicatedStorage.Modules
 
-local itemDataBase = require(replicatedStorage.Modules.Data.ItemDataBase)
+local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 
 local ActionVerifier = require(modules.ActionVerifier)
 local StateService = require(game.ServerScriptService.Services.StateService)
 local StateChecker = require(modules.StateChecker)
 local HitApplier = require(script.Parent.Parent.Modules.Utilities.HitApplier)
-local animationsModule = require(modules.Animations)
+local Animations = require(modules.Animations)
 
 local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
 
@@ -25,7 +25,7 @@ local function GetValidTool(tool, character)
 	
 	local foundTool = character:FindFirstChildWhichIsA("Tool")
 	if foundTool and foundTool:GetAttribute("ToolLoaded") then
-		if itemDataBase:GetItemData(foundTool:GetAttribute("ID")) then
+		if ItemDataBase:GetItemData(foundTool:GetAttribute("ID")) then
 			return foundTool
 		end
 	end
@@ -64,7 +64,7 @@ function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 	tool = GetValidTool(tool, character)
 	if not tool then return end
 	
-	local weaponData = itemDataBase:GetItemData(tool:GetAttribute("ID"))
+	local weaponData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
 	
 	if tool.Name ~= weaponData.Name then
  		return
@@ -104,7 +104,7 @@ function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 
 	local swingName = "Weapons."..tool.Name..".Animations.Swings.L"..tostring(trueSwingNumber)
 	
-	local animationToPlay = animationsModule:GetAnimation(humanoid.Animator, swingName)
+	local animationToPlay = Animations:GetAnimation(humanoid.Animator, swingName)
 				
 	--Attack States---
 	StateService:AddState(character , "Attacking", (animationToPlay.Speed * animationToPlay.Length))
@@ -181,7 +181,7 @@ function CombatService:Attack(character, tool:Tool?, player:Player?, npcDamage)
 				task.wait()
 			end
 		end)
-		debris:AddItem(hitboxClone , 0.35)
+		Debris:AddItem(hitboxClone , 0.35)
 	end)
 end
 
@@ -194,13 +194,13 @@ function CombatService:Block(character, boolean, tool:Tool?)
 		local function StartBlocking()
 			if not ActionVerifier:CanBlock(character) or not tool then return end
 			--Block--
-			local foundData = itemDataBase:GetItemData(tool:GetAttribute("ID"))
+			local foundData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
 			if foundData then
 
 				StateService:AddState(character, "Blocking", nil,{["weaponName"] = tool.Name})
 
 				------Block Animations------
-				local blockAnim:AnimationTrack = animationsModule:GetAnimation(humanoid.Animator,"Weapons."..tool.Name..".Animations.Block.Idle") 
+				local blockAnim:AnimationTrack = Animations:GetAnimation(humanoid.Animator,"Weapons."..tool.Name..".Animations.Block.Idle") 
 				blockAnim:Play()
 
 			end
@@ -211,7 +211,7 @@ function CombatService:Block(character, boolean, tool:Tool?)
 			if blockingInstance then
 				local weaponName = blockingInstance:GetAttribute("weaponName")
 				if weaponName then
-					animationsModule:GetAnimation(humanoid.Animator, "Weapons."..weaponName..".Animations.Block.Idle"):Stop(0.1)
+					Animations:GetAnimation(humanoid.Animator, "Weapons."..weaponName..".Animations.Block.Idle"):Stop(0.1)
 
 				end
 				StateService:RemoveState(character, "Blocking")

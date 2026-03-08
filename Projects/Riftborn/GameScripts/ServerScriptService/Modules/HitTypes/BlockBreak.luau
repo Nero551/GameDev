@@ -1,12 +1,12 @@
 --Defualt HitType
 
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local replicatedStorage = game:GetService("ReplicatedStorage")
-local modules = (replicatedStorage.Modules)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local modules = (ReplicatedStorage.Modules)
 local StateService = require(game.ServerScriptService.Services.StateService)
 local StateChecker = require(modules.StateChecker)
-local itemDataBase = require(modules.Data.ItemDataBase)
-local animationsModule = require(modules.Animations)
+local ItemDataBase = require(modules.Data.ItemDataBase)
+local Animations = require(modules.Animations)
 
 return function(argumentData)
 	
@@ -16,7 +16,7 @@ return function(argumentData)
 	
 	if StateChecker:CheckState(targetHit, "Invulnerable") then return end
 
-	local foundWeaponData = itemDataBase:GetItemData(weaponUsed:GetAttribute("ID"))
+	local foundWeaponData = ItemDataBase:GetItemData(weaponUsed:GetAttribute("ID"))
 	if  foundWeaponData then
 		local targetHumanoid:Humanoid = targetHit:FindFirstChild("Humanoid")
 		if not targetHumanoid then return end
@@ -40,7 +40,7 @@ return function(argumentData)
 			["Duration"] = 1.5,
 		})
 		
-		animationsModule:GetAnimation(animator, "Shared.Character.BlockBreak"):Play()	
+		Animations:GetAnimation(animator, "Shared.Character.BlockBreak"):Play()	
 		--print("[BlockBreak] HitType Reached","From",attacker ,"To",targetHit ,"With", weaponUsed)
 	end
 

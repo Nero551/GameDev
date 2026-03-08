@@ -1,21 +1,20 @@
 return function()
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-	local repstor = game:GetService("ReplicatedStorage")
-	local runService = game:GetService("RunService")
+	local RunService = game:GetService("RunService")
 
-	local assets = repstor.Assets
+	local assets = ReplicatedStorage.Assets
 local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
-	local ActionVerifier =  require(repstor.Modules.ActionVerifier)
-	local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
-	local animsModule = require(repstor.Modules.Animations)	
+	local ActionVerifier =  require(ReplicatedStorage.Modules.ActionVerifier)
+	local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+	local Animations = require(ReplicatedStorage.Modules.Animations)	
 	
-	local player = game:GetService("Players").LocalPlayer
-	local char = player.Character or player.CharacterAdded:Wait()
+	local Player = game:GetService("Players").LocalPlayer
+	local char = Player.Character or Player.CharacterAdded:Wait()
 
 
 	local function StopPreviousAnimation(current, Type)
 		local previousTime = 0
-		for animName,anim in pairs(animsModule.loadedAnimations[char]) do
+		for animName,anim in pairs(Animations.loadedAnimations[char]) do
 			if string.find(animName, Type)  then
 				if anim ~= current and anim.IsPlaying then
 					previousTime = anim.TimePosition
@@ -30,19 +29,19 @@ local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 	local humanoid = char:WaitForChild("Humanoid")
 	local animator = humanoid.Animator
 
-	animsModule:loadAnims(animator, assets.Shared)
+	Animations:loadAnims(animator, assets.Shared)
 
 	local currentIdle:AnimationTrack
 	local currentRun:AnimationTrack
 	local currentWalk:AnimationTrack
 	local conn:RBXScriptConnection
 
-	if not animsModule.loadedAnimations[char]["Shared.Animations.Idle.Default"].IsPlaying then
-		animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Idle.Default"):Play()
+	if not Animations.loadedAnimations[char]["Shared.Animations.Idle.Default"].IsPlaying then
+		Animations:GetAnimation(humanoid.Animator, "Shared.Animations.Idle.Default"):Play()
 	end
 
 
-	conn = runService.RenderStepped:Connect(function(dt)
+	conn = RunService.RenderStepped:Connect(function(dt)
 
 		if StateChecker:CheckState(char, "Dead") then
 			if not conn then return end
@@ -52,31 +51,31 @@ local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 		local tool = char:FindFirstChildWhichIsA("Tool")
 
 		if tool then
-			local weaponData = itemDataBase:GetItemData(tool:GetAttribute("ID"))
+			local weaponData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
 			if weaponData then
 
-				currentIdle = animsModule:GetAnimation(animator, "Weapons."..tool.Name..".Animations.Idle")
-				currentRun = animsModule:GetAnimation(animator, "Weapons."..tool.Name..".Animations.Run")
-				currentWalk = animsModule:GetAnimation(animator, "Weapons."..tool.Name..".Animations.Walk")
+				currentIdle = Animations:GetAnimation(animator, "Weapons."..tool.Name..".Animations.Idle")
+				currentRun = Animations:GetAnimation(animator, "Weapons."..tool.Name..".Animations.Run")
+				currentWalk = Animations:GetAnimation(animator, "Weapons."..tool.Name..".Animations.Walk")
 			end
 
 		else
 
-			currentIdle = animsModule:GetAnimation(animator, "Shared.Animations.Idle.Default")
-			currentRun = animsModule:GetAnimation(animator, "Shared.Animations.Run.Default")
-			currentWalk = animsModule:GetAnimation(animator, "Shared.Animations.Walk.Default")
+			currentIdle = Animations:GetAnimation(animator, "Shared.Animations.Idle.Default")
+			currentRun = Animations:GetAnimation(animator, "Shared.Animations.Run.Default")
+			currentWalk = Animations:GetAnimation(animator, "Shared.Animations.Walk.Default")
 		end
 
 
 		---Jump Animation---
 		if humanoid:GetState() == Enum.HumanoidStateType.Jumping then
-			animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Jump.Jump"):Play()
+			Animations:GetAnimation(humanoid.Animator, "Shared.Animations.Jump.Jump"):Play()
 
 		end
 
 		---Falling Animation---
 		if humanoid:GetState() == Enum.HumanoidStateType.Freefall then
-			animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Fall.Fall"):Play()
+			Animations:GetAnimation(humanoid.Animator, "Shared.Animations.Fall.Fall"):Play()
 		end
 
 		---Landing Animation---
@@ -87,7 +86,7 @@ local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 		if humanoid:GetState() == Enum.HumanoidStateType.Jumping or  humanoid:GetState() == Enum.HumanoidStateType.Freefall or 
 			humanoid:GetState() == Enum.HumanoidStateType.Landed then
 
-			for name, anim in animsModule.loadedAnimations[char] do
+			for name, anim in Animations.loadedAnimations[char] do
 				if string.find(name, "Animations.Run") or string.find(name , "Animations.Idle") or string.find(name, "Animations.Walk") then
 					if anim.IsPlaying then
 						anim:Stop(0.2)

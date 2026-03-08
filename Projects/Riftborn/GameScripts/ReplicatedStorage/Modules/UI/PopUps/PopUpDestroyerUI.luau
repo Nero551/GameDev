@@ -1,7 +1,7 @@
 return function()
-	local tweenService = game:GetService("TweenService")
-	local player = game:GetService("Players").LocalPlayer
-	local popupsFrame = player:WaitForChild("PlayerGui"):WaitForChild("PopUpGui"):WaitForChild("PopUpsFrame")
+	local TweenService = game:GetService("TweenService")
+	local Player = game:GetService("Players").LocalPlayer
+	local popupsFrame = Player:WaitForChild("PlayerGui"):WaitForChild("PopUpGui"):WaitForChild("PopUpsFrame")
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
 
@@ -16,7 +16,7 @@ return function()
 		for _,popup in popupsFrame:GetChildren() do
 			if popup:IsA("Frame") then
 				task.wait(2)
-				local tween = tweenService:Create(popup, info, {Size = UDim2.fromScale(0.3, 0.046)})
+				local tween = TweenService:Create(popup, info, {Size = UDim2.fromScale(0.3, 0.046)})
 				tween:Play()
 				tween.Completed:Connect(function()
 					popup:Destroy()

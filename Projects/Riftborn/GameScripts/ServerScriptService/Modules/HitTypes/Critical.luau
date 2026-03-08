@@ -1,15 +1,15 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 --Defualt HitType
-local debris = game:GetService("Debris")
-local replicatedStorage = game:GetService("ReplicatedStorage")
+local Debris = game:GetService("Debris")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local modules = (replicatedStorage.Modules)
+local modules = (ReplicatedStorage.Modules)
 local StateService = require(game.ServerScriptService.Services.StateService)
 local StateChecker = require(modules.StateChecker)
-local itemDataBase = require(modules.Data.ItemDataBase)
-local knockbackPull = require(script.Parent.Parent.Utilities.KnockbackPull)
-local formulaApplier = require(modules.FormulaApplier)
-local animationsModule = require(modules.Animations)
+local ItemDataBase = require(modules.Data.ItemDataBase)
+local KnockbackPull = require(script.Parent.Parent.Utilities.KnockbackPull)
+local FormulaApplier = require(modules.FormulaApplier)
+local Animations = require(modules.Animations)
 
 local CharacterVitalsService = require(script.Parent.Parent.Parent.Services.CharacterVitalsService)
 
@@ -49,7 +49,7 @@ return function(argumentData)
 	killerHit.Parent = targetHumanoid
 	killerHit.Value = player
 	killerHit.Name = "KillerHit"	
-	debris:AddItem(killerHit, 30)
+	Debris:AddItem(killerHit, 30)
 	
 	
 	
@@ -66,7 +66,7 @@ return function(argumentData)
 	
 	if abilityData then
 		
-		AbilityDamage = formulaApplier:AbilityDamage({
+		AbilityDamage = FormulaApplier:AbilityDamage({
 			["AbilityData"] = abilityData,
 			["TargetDefenseStat"] = targetDefenseStat,
 			["PlayerDamageStat"] = playerDamageStat,
@@ -84,16 +84,16 @@ return function(argumentData)
 			["Parent"] = targetHRP
 		})
 		
-		animationsModule:GetAnimation(
+		Animations:GetAnimation(
 			animator, "Shared.Character.AbilityHitReactions."..abilityData.HitReaction
 		):Play()
 		StateService:AddState(targetHit, "Stunned", 0.2)
 
 	else
 		
-		local foundWeaponData = itemDataBase:GetItemData(weaponUsed:GetAttribute("ID")) 
+		local foundWeaponData = ItemDataBase:GetItemData(weaponUsed:GetAttribute("ID")) 
 		if foundWeaponData then
-			M1Damage = formulaApplier:M1Damage({
+			M1Damage = FormulaApplier:M1Damage({
 				["NPCDamage"] = npcDamage,
 				["PlayerDamageStat"] = playerDamageStat,
 				["TargetDefenseStat"] = targetDefenseStat,
@@ -114,7 +114,7 @@ return function(argumentData)
 			})
 
 
-			local hitReactionAnim = animationsModule:GetAnimation(
+			local hitReactionAnim = Animations:GetAnimation(
 				animator, "Shared.Character.HitReactions."..tostring(comboStringNumber)
 			)
 			hitReactionAnim:Play()
@@ -131,10 +131,10 @@ return function(argumentData)
 			StateService:AddState(attacker , "NoMove", .5)
 			StateService:AddState(attacker , "NoPunch", 1)
 
-			knockbackPull:ApplyKnockback(targetHit,attacker,90)
+			KnockbackPull:ApplyKnockback(targetHit,attacker,90)
 		else
-			knockbackPull:ApplyKnockback(targetHit, attacker, 11)
-			knockbackPull:ApplyPull(targetHit,attacker,11)
+			KnockbackPull:ApplyKnockback(targetHit, attacker, 11)
+			KnockbackPull:ApplyPull(targetHit,attacker,11)
 
 
 		end	

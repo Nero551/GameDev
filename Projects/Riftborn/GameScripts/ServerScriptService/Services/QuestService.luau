@@ -1,8 +1,8 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local repstor = game:GetService("ReplicatedStorage")
-local questDataBase = require(repstor.Modules.Data.QuestData)
-local GameEvents = require(repstor.Modules.GameEvents)
-local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local QuestData = require(ReplicatedStorage.Modules.Data.QuestData)
+local GameEvents = require(ReplicatedStorage.Modules.GameEvents)
+local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 local DataService = require(script.Parent.DataService)
 
 local QuestService = {}
@@ -11,7 +11,7 @@ local QuestService = {}
 function QuestService:AcceptQuest(player:Player, questID)
 	local playerQuests = DataService:GetTable(player, "Quests")
 	if playerQuests.ActiveQuests[questID] then  return end
-	local  questData =  questDataBase.Quests[questID]
+	local  questData =  QuestData.Quests[questID]
 	if not questData then return end
 	
 	
@@ -122,7 +122,7 @@ function QuestService:CollectType(objective, argumentData)
 
 	local playerInventory = DataService:GetTable(player ,"Inventory")
 	if objective.ObjectiveType == "Collect" then
-		local _,itemID = itemDataBase:GetItemData(objective.Item)
+		local _,itemID = ItemDataBase:GetItemData(objective.Item)
 		if playerInventory[itemID] then
 			objective.CurrentProgress = math.min(playerInventory[itemID].Amount, objective.Required)
 		else
@@ -166,13 +166,13 @@ function QuestService:CompleteQuest(player:Player, questID)
 	
 	local quest = playerQuests.ActiveQuests[questID]
 	if not quest then  return end
-	local questData = questDataBase.Quests[questID]
+	local questData = QuestData.Quests[questID]
 	if  not questData then return end
 	
 	if quest.Completed == true then
 		for objectiveNumber,objective in pairs(quest.Progress) do
 			if objective.Item then
-				local _,itemID = itemDataBase:GetItemData(objective.Item)
+				local _,itemID = ItemDataBase:GetItemData(objective.Item)
 				if playerEquipped[itemID] then
 					return
 				end
@@ -203,7 +203,7 @@ end
 function QuestService:SyncQuestsWithQuestData(player:Player)
 	local playerQuests = DataService:GetTable(player, "Quests")
 	for questID, quest in pairs(playerQuests.ActiveQuests) do
-		local questData = questDataBase.Quests[questID]
+		local questData = QuestData.Quests[questID]
 		quest.Name = questData.Name
 		quest.QuestDescription = questData.Description
 		quest.QuestType = questData.QuestType

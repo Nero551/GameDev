@@ -1,8 +1,8 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function  (Frame)
 local TweenService = game:GetService("TweenService")
-	local repstor = game:GetService("ReplicatedStorage")
-	local icons = repstor.Assets.GUI.Icons
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local icons = ReplicatedStorage.Assets.GUI.Icons
 	local infoFrame = Frame.Parent.Parent.Parent.InfoFrame
 
 	local infoImage = infoFrame.ItemImage
@@ -19,15 +19,15 @@ local TweenService = game:GetService("TweenService")
 	local equipIcon = infoFrame["Equip(HoverSoundSizeChange)"]
 	local baseStatsButton = infoFrame["BaseStatsButton(HoverClickSoundSizeChange)"]
 
-	local clickSound = repstor.Assets.Shared.Sounds.MenuSounds.Click
-	local hoverSound = repstor.Assets.Shared.Sounds.MenuSounds.Hover
+	local clickSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Click
+	local hoverSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Hover
 
-	local abilityModule = require(repstor.Modules.Data.AbilityData)
+	local AbilityData = require(ReplicatedStorage.Modules.Data.AbilityData)
 	local abilitiesFrame = infoFrame.Abilties
 
 	local IconSelected = nil
 	local PrevIconSelected = nil
-	local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
+	local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
@@ -65,7 +65,7 @@ local TweenService = game:GetService("TweenService")
 				end
 			end
 
-			local itemData = itemDataBase:GetItemData(itemID)
+			local itemData = ItemDataBase:GetItemData(itemID)
 
 			---Adding And Getting Icon---
 			local iconFrame = Frame:FindFirstChild(item.Name)
@@ -148,7 +148,7 @@ local TweenService = game:GetService("TweenService")
 					for _, ability in abilitiesFrame:GetChildren() do
 						if ability:IsA("Frame") then
 							local abilityLetter = ability.AbilityIcon.AbilityLetter.Text
-							local abilityData = abilityModule.getAbilityData(item.Name .. abilityLetter)
+							local abilityData = AbilityData.getAbilityData(item.Name .. abilityLetter)
 							if not abilityData then
 								ability.Visible = false
 							else

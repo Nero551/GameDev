@@ -1,6 +1,5 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local repstor = game:GetService("ReplicatedStorage")
-local modules = repstor.Modules
+local modules = ReplicatedStorage.Modules
 local Services = script.Parent.Parent.Services
 
 local MobData = require(ReplicatedStorage.Modules.Data.MobData)

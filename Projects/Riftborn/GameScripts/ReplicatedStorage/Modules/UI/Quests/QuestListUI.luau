@@ -1,13 +1,13 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(questMenu)
-	local repstor = game:GetService("ReplicatedStorage")
-	local tweenService = game:GetService("TweenService")
-	local remotes = repstor.Remotes
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local TweenService = game:GetService("TweenService")
+	local remotes = ReplicatedStorage.Remotes
 
-	local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
+	local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 	
 
-	local questTemplate = repstor.Assets.GUI.Quest
+	local questTemplate = ReplicatedStorage.Assets.GUI.Quest
 	local questList = questMenu.QuestListFrame.QuestList.ScrollingFrame
 	local questInfo = questMenu.QuestInfo
 
@@ -16,17 +16,17 @@ return function(questMenu)
 
 	local function SizeIncrease(scale:UIScale)
 		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		tweenService:Create(scale, info, {Scale = 1.025}):Play()
+		TweenService:Create(scale, info, {Scale = 1.025}):Play()
 	end
 
 	local function SizeDecrease(scale:UIScale)
 		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		tweenService:Create(scale, info, {Scale = 1}):Play()
+		TweenService:Create(scale, info, {Scale = 1}):Play()
 	end
 
 	local function SizeClickDecrease(scale:UIScale)
 		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		tweenService:Create(scale, info, {Scale = 0.975}):Play()
+		TweenService:Create(scale, info, {Scale = 0.975}):Play()
 	end
 
 
@@ -67,13 +67,13 @@ return function(questMenu)
 			elseif objective.Mob then
 				objectiveFrame.ProgressText.Text = objective.ObjectiveType.." "..objective.Mob.." "..objective.CurrentProgress.." / "..objective.Required
 			end
-			tweenService:Create(objectiveFrame.ProgressBarBG.ProgressBar, info, {Size = UDim2.fromScale(math.min(objective.CurrentProgress/objective.Required) ,1)}):Play()
+			TweenService:Create(objectiveFrame.ProgressBarBG.ProgressBar, info, {Size = UDim2.fromScale(math.min(objective.CurrentProgress/objective.Required) ,1)}):Play()
 		end
 
 		for reward,amount in pairs(quest.Rewards) do
-			local rewardData = itemDataBase:GetItemData(reward)
+			local rewardData = ItemDataBase:GetItemData(reward)
 			if rewardData then
-				local rewardFrame = repstor.Assets.GUI.Icons[rewardData.Rarity.."ItemFrame"]:Clone()
+				local rewardFrame = ReplicatedStorage.Assets.GUI.Icons[rewardData.Rarity.."ItemFrame"]:Clone()
 				rewardFrame.Parent = questInfo.QuestRewards
 				rewardFrame.Name = reward
 				rewardFrame:FindFirstChildWhichIsA("ImageButton").Name = reward
@@ -89,9 +89,9 @@ return function(questMenu)
 
 			elseif reward == "ItemDrops" then
 				for item,itemInfo in pairs(amount) do
-					rewardData = itemDataBase:GetItemData(item)
+					rewardData = ItemDataBase:GetItemData(item)
 					if rewardData then
-						local rewardFrame = repstor.Assets.GUI.Icons[rewardData.Rarity.."ItemFrame"]:Clone()
+						local rewardFrame = ReplicatedStorage.Assets.GUI.Icons[rewardData.Rarity.."ItemFrame"]:Clone()
 						rewardFrame.Parent = questInfo.QuestRewards
 						rewardFrame.Name = item
 						rewardFrame:FindFirstChildWhichIsA("ImageButton").Name = item
@@ -174,7 +174,7 @@ return function(questMenu)
 					elseif objective.Mob then
 						objectiveFrame.ProgressText.Text = objective.ObjectiveType.." "..objective.Mob.." "..objective.CurrentProgress.." / "..objective.Required
 					end
-					tweenService:Create(objectiveFrame.ProgressBarBG.ProgressBar, info, {Size = UDim2.fromScale(math.min(objective.CurrentProgress/objective.Required) ,1)}):Play()
+					TweenService:Create(objectiveFrame.ProgressBarBG.ProgressBar, info, {Size = UDim2.fromScale(math.min(objective.CurrentProgress/objective.Required) ,1)}):Play()
 				end
 
 
@@ -193,7 +193,7 @@ return function(questMenu)
 					questImgButton.MouseEnter:Connect(function()
 						SizeIncrease(scale)
 						if questSelected ~= questImgButton then
-							tweenService:Create(questImgButton, info ,{ImageColor3 =  Color3.fromRGB(87, 107, 194)}):Play()
+							TweenService:Create(questImgButton, info ,{ImageColor3 =  Color3.fromRGB(87, 107, 194)}):Play()
 
 						end
 					end)
@@ -201,7 +201,7 @@ return function(questMenu)
 					questImgButton.MouseLeave:Connect(function()
 						SizeDecrease(scale)
 						if questSelected ~= questImgButton then
-							tweenService:Create(questImgButton, info ,{ImageColor3 =  Color3.fromRGB(255,255,255)}):Play()
+							TweenService:Create(questImgButton, info ,{ImageColor3 =  Color3.fromRGB(255,255,255)}):Play()
 
 						end
 					end)
@@ -235,14 +235,14 @@ return function(questMenu)
 						prevQuestSelected = questSelected
 						questSelected = questImgButton
 						if  questSelected ~= nil then
-							tweenService:Create(questSelected, info ,{ImageColor3 =  Color3.fromRGB(60, 49, 88)}):Play()
-							tweenService:Create(questSelected.UIStroke, info, {Color = Color3.fromRGB(114, 142,255)}):Play()
+							TweenService:Create(questSelected, info ,{ImageColor3 =  Color3.fromRGB(60, 49, 88)}):Play()
+							TweenService:Create(questSelected.UIStroke, info, {Color = Color3.fromRGB(114, 142,255)}):Play()
 
 							if prevQuestSelected ~= nil  then
 								if prevQuestSelected ~= questSelected then
-									tweenService:Create(prevQuestSelected, info ,{ImageColor3 =  Color3.fromRGB(255,255,255)}):Play()
+									TweenService:Create(prevQuestSelected, info ,{ImageColor3 =  Color3.fromRGB(255,255,255)}):Play()
 									if prevQuestSelected:FindFirstChild("UIStroke") then
-										tweenService:Create(prevQuestSelected.UIStroke, info, {Color = Color3.fromRGB(255,255,255)}):Play()
+										TweenService:Create(prevQuestSelected.UIStroke, info, {Color = Color3.fromRGB(255,255,255)}):Play()
 									end
 								end
 							end
@@ -288,7 +288,7 @@ return function(questMenu)
 					elseif objective.Mob then
 						objectiveFrame.ProgressText.Text = objective.ObjectiveType.." "..objective.Mob.." "..objective.CurrentProgress.." / "..objective.Required
 					end
-					tweenService:Create(objectiveFrame.ProgressBarBG.ProgressBar, info, {Size = UDim2.fromScale(math.min(objective.CurrentProgress/objective.Required) ,1)}):Play()
+					TweenService:Create(objectiveFrame.ProgressBarBG.ProgressBar, info, {Size = UDim2.fromScale(math.min(objective.CurrentProgress/objective.Required) ,1)}):Play()
 				end
 			end
 

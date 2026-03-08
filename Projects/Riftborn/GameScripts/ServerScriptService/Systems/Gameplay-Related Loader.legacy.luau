@@ -1,7 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
-local players = game:GetService("Players")
-local runService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
 local StateHandler = require(ServerScriptService.Modules.Utilities.StateHandler)
 local Connections = require(ReplicatedStorage.Modules.Connections)
@@ -18,7 +18,7 @@ local TimeService = require(script.Parent.Parent.Services.TimeService)
 local elapsed = 0
 local updateRate = 0.05
 ---Regen Stuff , Time Cycle and Handling States---
-runService.Heartbeat:Connect(function(dt)
+RunService.Heartbeat:Connect(function(dt)
 	
 	RegenService:ManaRegen(dt)
 	RegenService:HealthRegen(dt)
@@ -29,7 +29,7 @@ runService.Heartbeat:Connect(function(dt)
 	elapsed += dt
 	if elapsed > updateRate then
 		elapsed = 0
-		for _, player in pairs(players:GetPlayers()) do
+		for _, player in pairs(Players:GetPlayers()) do
 			local character = player.Character
 			if character then
 				------Death Handler------
@@ -43,22 +43,22 @@ runService.Heartbeat:Connect(function(dt)
 	end
 end)
 
-local playerInfo = require(script.Parent.Parent.Modules.Utilities.PlayerInfoGui)
-players.PlayerAdded:Connect(function(player)
+local PlayerInfoGui = require(script.Parent.Parent.Modules.Utilities.PlayerInfoGui)
+Players.PlayerAdded:Connect(function(player)
 	player.CharacterAdded:Connect(function(char)
-		playerInfo:UpdateInfo(player, char)
+		PlayerInfoGui:UpdateInfo(player, char)
 	end)
 end)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 ---Creating Status For Player On Spawn---
-players.PlayerAdded:Connect(function(player)
+Players.PlayerAdded:Connect(function(player)
 	player.CharacterAdded:Connect(function(character)
 		StateService:Create(character)
 	end)
 end)
 ---Destroying Status For Player On Leave---
-players.PlayerRemoving:Connect(function(player)
+Players.PlayerRemoving:Connect(function(player)
 	if not player.character then return end 
 	StateService:Destroy(player.Character)
 end)
@@ -93,7 +93,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 
 ---Death and Spawn---
-players.PlayerAdded:Connect(function(player)
+Players.PlayerAdded:Connect(function(player)
 	player.CharacterAdded:Connect(function(character)
 		CombatService:Spawn(character)
 		CombatService:Died(character)

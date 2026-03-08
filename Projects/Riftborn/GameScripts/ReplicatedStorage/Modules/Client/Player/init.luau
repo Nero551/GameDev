@@ -1,7 +1,4 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-
 local Player = {}
-
 local cachedModules = {}
 
 for _,module in ipairs(script:GetChildren()) do
@@ -15,7 +12,6 @@ function Player:Init()
 	for moduleName,module in  pairs(cachedModules) do
 		module()
 	end
-	NetworkingService:FireToServer("ClientReady")
 end
 
 

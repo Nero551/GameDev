@@ -24,8 +24,8 @@ function DialogueDataBase:GetDialogueData(Dialogue)
 		for _,dialogue:ModuleScript? in pairs(category) do
 
 			if dialogue.Name == Dialogue then
-				local data = require(dialogue)
-				return data
+				local DialogueData = require(dialogue)
+				return DialogueData
 			end
 		end
 	end

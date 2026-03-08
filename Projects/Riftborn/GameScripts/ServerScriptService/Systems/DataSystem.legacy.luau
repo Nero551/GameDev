@@ -1,7 +1,7 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local players = game:GetService("Players")
+local Players = game:GetService("Players")
 local DataService = require(script.Parent.Parent.Services.DataService)
-local statService = require(script.Parent.Parent.Services.StatService)
+local StatService = require(script.Parent.Parent.Services.StatService)
 local LevelService = require(script.Parent.Parent.Services.LevelService)
 local EquipService = require(script.Parent.Parent.Services.EquipService)
 local InventoryService = require(script.Parent.Parent.Services.InventoryService)
@@ -10,7 +10,7 @@ local TitleService = require(script.Parent.Parent.Services.TitleService)
 local BuffService = require(script.Parent.Parent.Services.BuffService)
 local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVitalsService)
 
-local connections = require(game.ReplicatedStorage.Modules.Connections)
+local Connections = require(game.ReplicatedStorage.Modules.Connections)
 
 local clientReady = {}
 NetworkingService:OnServerEvent("ClientReady", function(player)
@@ -25,7 +25,7 @@ local function Setup(player:Player)
 	local character = player.Character or player.CharacterAdded:Wait()
 	player.PlayerGui:WaitForChild("MenusGUI"):WaitForChild("StatsMenu"):WaitForChild("Spells")
 
-	statService:SetupStats(player)
+	StatService:SetupStats(player)
 
 	LevelService:SetupLevel(player)
 
@@ -58,7 +58,7 @@ local function Setup(player:Player)
 end
 
 ---Load Data---
-players.PlayerAdded:Connect(function(player)
+Players.PlayerAdded:Connect(function(player)
 	local playerData = DataService:Load(player)	
 	Setup(player)
 
@@ -66,19 +66,19 @@ players.PlayerAdded:Connect(function(player)
 end)
 
 ---Save Data---
-players.PlayerRemoving:Connect(function(player)
+Players.PlayerRemoving:Connect(function(player)
 
 	DataService:Save(player)
 	clientReady[player] = nil
 	
 	local char = player.Character
 	
-	connections:CleanupConnections(char)
+	Connections:CleanupConnections(char)
 end)
 
 ---Save Data If Server Shuts Down---
 game:BindToClose(function()
-	for _, player in ipairs(players:GetPlayers()) do
+	for _, player in ipairs(Players:GetPlayers()) do
 		DataService:Save(player)
 	end
 	
@@ -88,7 +88,7 @@ end)
 ---AutoSave---
 task.spawn(function()
 	while task.wait(300) do
-		for _, player in pairs(players:GetPlayers()) do
+		for _, player in pairs(Players:GetPlayers()) do
 			DataService:Save(player)
 		end
 	end

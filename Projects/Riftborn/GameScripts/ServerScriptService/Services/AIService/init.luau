@@ -1,9 +1,9 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StateHandler = require(script.Parent.Parent.Modules.Utilities.StateHandler)
 local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVitalsService)
-local animationsModule = require(ReplicatedStorage.Modules.Animations)
+local Animations = require(ReplicatedStorage.Modules.Animations)
 local Connections = require(ReplicatedStorage.Modules.Connections)
-local abilityDataModule = require(ReplicatedStorage.Modules.Data.AbilityData)
+local AbilityData = require(ReplicatedStorage.Modules.Data.AbilityData)
 local MobData = require(ReplicatedStorage.Modules.Data.MobData)
 
 local StateService = require(script.Parent.StateService)
@@ -50,7 +50,7 @@ end
 function AIService:CreateAI(npc)
 	local mobData = MobData.Mobs[npc.Name]
 	if mobData.Tool then
-		animationsModule:loadAnims(npc.Humanoid.Animator,
+		Animations:loadAnims(npc.Humanoid.Animator,
 			ReplicatedStorage.Assets.Weapons[mobData.Tool.Name].Animations)
 	end
 	CharacterVitalsService:Create(npc)
@@ -85,16 +85,16 @@ function AIService:CreateAI(npc)
 		LastAttackSeenTime = 0,
 		Damage = mobData.Damage,
 		
-		Abilities = abilityDataModule.getAbilityData(mobData.Tool.Name),
+		Abilities = AbilityData.getAbilityData(mobData.Tool.Name),
 		ChosenAbility = nil,
 		
-		IdleAnimation = animationsModule:GetAnimation(npc.Humanoid.Animator,
+		IdleAnimation = Animations:GetAnimation(npc.Humanoid.Animator,
 			"Weapons."..mobData.Tool.Name..".Animations.Idle" or "Shared.Animations.Idle.Default"),
 		
-		WalkAnimation = animationsModule:GetAnimation(npc.Humanoid.Animator,
+		WalkAnimation = Animations:GetAnimation(npc.Humanoid.Animator,
 			"Weapons."..mobData.Tool.Name..".Animations.Walk" or "Shared.Animations.Walk.Default"),
 		
-		RunAnimation = animationsModule:GetAnimation(npc.Humanoid.Animator,
+		RunAnimation = Animations:GetAnimation(npc.Humanoid.Animator,
 			"Weapons."..mobData.Tool.Name..".Animations.Run" or "Shared.Animations.Run.Default"),
 	}	
 end
@@ -104,7 +104,7 @@ function AIService:StateUpdater(npc)
 	if not AIData then return end
 	
 	if AIData.State == "Dead" then
-		for animName,anim in pairs(animationsModule.loadedAnimations[npc]) do
+		for animName,anim in pairs(Animations.loadedAnimations[npc]) do
 			if anim.IsPlaying then
 				anim:Stop()
 			end

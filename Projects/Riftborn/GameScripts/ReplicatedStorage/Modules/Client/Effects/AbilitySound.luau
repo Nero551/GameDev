@@ -1,7 +1,7 @@
 
-local debris = game:GetService("Debris")
-local replicatedStorage = game:GetService("ReplicatedStorage")
-local assets = replicatedStorage:WaitForChild("Assets")
+local Debris = game:GetService("Debris")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local assets = ReplicatedStorage:WaitForChild("Assets")
 
 local cachedSounds = {}
 

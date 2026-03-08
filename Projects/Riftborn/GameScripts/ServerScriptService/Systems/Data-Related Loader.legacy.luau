@@ -1,5 +1,5 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local players = game:GetService("Players")
+local Players = game:GetService("Players")
 local LocalizationService = game:GetService("LocalizationService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -14,9 +14,9 @@ local QuestData = require(ReplicatedStorage.Modules.Data.QuestData)
 
 local ServerData = require(script.Parent.Parent.Modules.ServerData)
 ---Server Data---
-players.PlayerAdded:Connect(function(player)
-	ServerData.MaxPlayers = players.maxPlayers
-	ServerData.Players = players:GetPlayers()
+Players.PlayerAdded:Connect(function(player)
+	ServerData.MaxPlayers = Players.maxPlayers
+	ServerData.Players = Players:GetPlayers()
 	ServerData.Version = game.PlaceVersion
 	local success, country = pcall(function()
 		return LocalizationService:GetCountryRegionForPlayerAsync(player)
@@ -26,8 +26,8 @@ players.PlayerAdded:Connect(function(player)
 	end
 end)
 
-players.playerRemoving:Connect(function(player)
-	ServerData.Players = players:GetPlayers()
+Players.playerRemoving:Connect(function(player)
+	ServerData.Players = Players:GetPlayers()
 end)
 
 ---Client Requests To Add An Item---

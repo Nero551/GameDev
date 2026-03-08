@@ -1,9 +1,9 @@
 --SpawnVFX
 
-local debris = game:GetService("Debris")
-local replicatedStorage = game:GetService("ReplicatedStorage")
+local Debris = game:GetService("Debris")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local assets = replicatedStorage:WaitForChild("Assets")
+local assets = ReplicatedStorage:WaitForChild("Assets")
 local effects = assets.Shared.Effects
 
 return function(arguementData:any)

@@ -1,7 +1,7 @@
-local repstor = game:GetService("ReplicatedStorage")
-local modules =  repstor.Modules
-local itemDataBase = require(modules.Data.ItemDataBase)
-local titleData = require(modules.Data.TitleData)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local modules =  ReplicatedStorage.Modules
+local ItemDataBase = require(modules.Data.ItemDataBase)
+local TitleData = require(modules.Data.TitleData)
 local DataService = require(script.Parent.Parent.Services.DataService)
 local InventoryService = require(script.Parent.Parent.Services.InventoryService)
 local TitleService = require(script.Parent.Parent.Services.TitleService)
@@ -63,7 +63,7 @@ function AdminCmdsService:GiveItem(msgParts)
 	end
 	local itemName = table.concat(itemNameParts, " ")
 	itemName = CapitalizeWords(itemName)
-	local  itemData,itemID = itemDataBase:GetItemData(itemName)
+	local  itemData,itemID = ItemDataBase:GetItemData(itemName)
 	if not itemData or not itemID then
 		warn("Couldn't Find "..itemName)
 		return
@@ -92,7 +92,7 @@ function AdminCmdsService:RemoveItem(msgParts)
 	local itemName = table.concat(itemNameParts, " ")
 	itemName = CapitalizeWords(itemName)
 	print(itemName)
-	local  itemData,itemID = itemDataBase:GetItemData(itemName)
+	local  itemData,itemID = ItemDataBase:GetItemData(itemName)
 	if not itemData or not itemID then
 		warn("Couldn't Find "..itemName)
 		return
@@ -116,7 +116,7 @@ function AdminCmdsService:GetTitle(msgParts)
 	end
 	local titleName = table.concat(itemNameParts, " ")
 	titleName = CapitalizeWords(titleName)
-	local  titleID = titleData:GetTitleID(titleName)
+	local  titleID = TitleData:GetTitleID(titleName)
 	if not titleID then
 		warn("Couldn't Find "..titleName)
 		return

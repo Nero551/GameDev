@@ -1,12 +1,12 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local replicatedStorage = game:GetService("ReplicatedStorage")
-local debris = game:GetService("Debris")
-local modules = replicatedStorage.Modules
-local assets = replicatedStorage.Assets
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Debris = game:GetService("Debris")
+local modules = ReplicatedStorage.Modules
+local assets = ReplicatedStorage.Assets
 
 
-local itemDataBase = require(modules.Data.ItemDataBase)
-local abilityDataModule = require(modules.Data.AbilityData)
+local ItemDataBase = require(modules.Data.ItemDataBase)
+local AbilityData = require(modules.Data.AbilityData)
 
 local StateService = require(game.ServerScriptService.Services.StateService)
 local StateChecker = require(modules.StateChecker)
@@ -35,19 +35,18 @@ function AbilityService:UseAbility(player:Player? ,character, tool:Tool, mouse, 
 	
 	
 	local humanoid = character:WaitForChild("Humanoid")
-	local abilityData = abilityDataModule.getAbilityData(tool.Name,abilityletter)
+	local abilityData = AbilityData.getAbilityData(tool.Name,abilityletter)
 	
 	if not abilityData then
 		print("Ability data not found for:", tool.Name..abilityletter)
 		return
 	end	
 	
-	local weaponData = itemDataBase:GetItemData(tool:GetAttribute("ID"))
+	local weaponData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
 	
 	local sounds = assets.Shared.Sounds
 	
 	if player then
-		NetworkingService:FireToClient(player , "CameraShake", 0.25)
 		local playerMana = CharacterVitalsService:GetVital(character , "Mana")
 		if playerMana.CurrentMana < abilityData.Mana  then
 			sounds.Error:Play()
@@ -59,6 +58,7 @@ function AbilityService:UseAbility(player:Player? ,character, tool:Tool, mouse, 
 			)
 			return
 		end
+		NetworkingService:FireToClient(player, "CameraShake", 0.25)
 		playerMana.CurrentMana = playerMana.CurrentMana - abilityData.Mana
 	end
 
@@ -66,11 +66,11 @@ function AbilityService:UseAbility(player:Player? ,character, tool:Tool, mouse, 
 	local cooldownTime  = abilityData.AbilityCooldown
 
 	---Animation---
-	local animsModule = require(modules.Animations)
-	local animation:AnimationTrack = animsModule:GetAnimation(humanoid.Animator, "Weapons."..tool.Name..".Animations.Abilities."..abilityletter)
+	local Animations = require(modules.Animations)
+	local animation:AnimationTrack = Animations:GetAnimation(humanoid.Animator, "Weapons."..tool.Name..".Animations.Abilities."..abilityletter)
 	if not animation then
 		 warn("Animation Not Found")
-		  print(animsModule.loadedAnimations) 
+		  print(Animations.loadedAnimations) 
 		  return 
 	end
 	animation:Play()
@@ -150,7 +150,7 @@ function AbilityService:UseAbility(player:Player? ,character, tool:Tool, mouse, 
 			end
 		end)
 		
-		debris:AddItem(hitboxClone, 1)
+		Debris:AddItem(hitboxClone, 1)
 	end)	
 end
 

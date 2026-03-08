@@ -1,8 +1,8 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local repstor = game:GetService("ReplicatedStorage")
-local modules = repstor.Modules
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local modules = ReplicatedStorage.Modules
 local GameEvents = require(modules.GameEvents)
-local itemDataBase = require(modules.Data.ItemDataBase)
+local ItemDataBase = require(modules.Data.ItemDataBase)
 
 local DataService = require(script.Parent.Parent.Services.DataService)
 
@@ -14,7 +14,7 @@ function InventoryService:AddItem(itemID:string, amount:number, player:Player)
 	if not inventory then return end
 	
 	amount = amount or 1
-	local itemData = itemDataBase:GetItemData(itemID)
+	local itemData = ItemDataBase:GetItemData(itemID)
 	
 	-- Validate item
 	if not itemData then
@@ -90,7 +90,7 @@ function InventoryService:SyncInventoryWithDatabase(player)
 	if not inventory then return end
 	
 	for itemID,itemInfo in  pairs(inventory) do
-		local itemData = itemDataBase:GetItemData(itemID)
+		local itemData = ItemDataBase:GetItemData(itemID)
 		itemInfo.Description = itemData.Description
 		itemInfo.Icon = itemData.Icon
 		itemInfo.Rarity = itemData.Rarity

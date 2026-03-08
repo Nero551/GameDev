@@ -1,4 +1,4 @@
-local debris =  game:GetService("Debris")
+local Debris =  game:GetService("Debris")
 
 local KnockbackPull = {}
 
@@ -23,8 +23,8 @@ function KnockbackPull:ApplyKnockback(target, attacker, force)
 		knockbackAttachment.Name = "KnockBackLinVelocity"
 	end
 	
-	debris:AddItem(knockbackAttachment, 0.13)
-	debris:AddItem(knockbackVelocity, 0.13)
+	Debris:AddItem(knockbackAttachment, 0.13)
+	Debris:AddItem(knockbackVelocity, 0.13)
 end
 
 function KnockbackPull:ApplyPull(target, attacker, force)
@@ -50,8 +50,8 @@ function KnockbackPull:ApplyPull(target, attacker, force)
 		pullVelocity.Name = "PullLinVelocity"
 	end
 	
-	debris:AddItem(pullAttachment, 0.13)
-	debris:AddItem(pullVelocity, 0.13)
+	Debris:AddItem(pullAttachment, 0.13)
+	Debris:AddItem(pullVelocity, 0.13)
 end
 
 return KnockbackPull

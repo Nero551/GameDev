@@ -1,9 +1,9 @@
 --DefualtHit
 
-local replicatedStorage = game:GetService("ReplicatedStorage")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local assets = replicatedStorage:WaitForChild("Assets")
-local StateChecker = require(replicatedStorage.Modules.StateChecker)
+local assets = ReplicatedStorage:WaitForChild("Assets")
+local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 
 return function(arguementData:any)
 	local target:Model = arguementData.Target

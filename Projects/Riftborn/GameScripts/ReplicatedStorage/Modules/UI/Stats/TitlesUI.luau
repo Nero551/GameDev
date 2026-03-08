@@ -1,7 +1,7 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(titles, overviewFrameTitleText)
-	local repstor = game:GetService("ReplicatedStorage")
-	local tweenService = game:GetService("TweenService")	
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local TweenService = game:GetService("TweenService")	
 	
 	local function createGradientFromTable(colorTable)
 		local keypoints = {}
@@ -27,7 +27,7 @@ return function(titles, overviewFrameTitleText)
 		for titleID,title in pairs(playerTitle.Titles) do
 			local titleImgButton:ImageButton? = titles:FindFirstChild(titleID)
 			if not titleImgButton then
-				titleImgButton = repstor.Assets.GUI.Title:Clone()
+				titleImgButton = ReplicatedStorage.Assets.GUI.Title:Clone()
 				local titleName:TextLabel? = titleImgButton.TitleName
 				local gradient:UIGradient = titleName.UIGradient
 				titleImgButton.Parent = titles
@@ -49,7 +49,7 @@ return function(titles, overviewFrameTitleText)
 					})
 				end
 				local tweenInfo = TweenInfo.new(16, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1 , true)
-				tweenService:Create(gradient, tweenInfo, {Rotation = 360}):Play()
+				TweenService:Create(gradient, tweenInfo, {Rotation = 360}):Play()
 
 
 				---Stats---
@@ -109,7 +109,7 @@ return function(titles, overviewFrameTitleText)
 				})
 			end
 			local tweenInfo = TweenInfo.new(16, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1 , true)
-			tweenService:Create(overviewFrameTitleText.UIGradient, tweenInfo, {Rotation = 360}):Play()
+			TweenService:Create(overviewFrameTitleText.UIGradient, tweenInfo, {Rotation = 360}):Play()
 		end
 	end)
 

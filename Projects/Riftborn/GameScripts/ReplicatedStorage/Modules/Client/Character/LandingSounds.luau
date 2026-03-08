@@ -3,8 +3,8 @@ local RunService = game:GetService("RunService")
 local Connections = require(ReplicatedStorage.Modules.Connections)
 return function()
 	
-	local player = game:GetService("Players").LocalPlayer
-	local char = player.Character or player.CharacterAdded:Wait()
+	local Player = game:GetService("Players").LocalPlayer
+	local char = Player.Character or Player.CharacterAdded:Wait()
 	local root =  char:WaitForChild("HumanoidRootPart")
 
 	local humanoid:Humanoid = char:WaitForChild("Humanoid")

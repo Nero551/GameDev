@@ -4,8 +4,8 @@ return function(tool)
 		return
 	end
 	
-	local replicatedStorage = game:GetService("ReplicatedStorage")
-	local assets = replicatedStorage.Assets
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local assets = ReplicatedStorage.Assets
 	local weaponModels = assets.Weapons[tool.Name].Model
 	local player = tool.Parent.Parent
 
@@ -13,9 +13,9 @@ return function(tool)
 	local humanoid = character:WaitForChild("Humanoid", math.huge)
 	local animator = humanoid.Animator
 
-	local animsModule = require(replicatedStorage.Modules.Animations)
+	local Animations = require(ReplicatedStorage.Modules.Animations)
 	local animsFolder = assets.Weapons[tool.Name].Animations
-	animsModule:loadAnims(animator , animsFolder)
+	Animations:loadAnims(animator , animsFolder)
 	
 	if weaponModels:FindFirstChild(tool.Name.."_Equipped") and weaponModels:FindFirstChild(tool.Name.."_UnEquipped") then
 		

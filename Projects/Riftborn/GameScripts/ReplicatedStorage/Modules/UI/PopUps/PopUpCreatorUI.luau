@@ -1,13 +1,13 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function()
-	local repstor = game:GetService("ReplicatedStorage")
-	local player = game:GetService("Players").LocalPlayer
-	local remotes = repstor.Remotes
-	local assets = repstor.Assets
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local Player = game:GetService("Players").LocalPlayer
+	local remotes = ReplicatedStorage.Remotes
+	local assets = ReplicatedStorage.Assets
 	local popupTemplate = assets.GUI.PopUp
-	local popupsFrame = player:WaitForChild("PlayerGui"):WaitForChild("PopUpGui"):WaitForChild("PopUpsFrame")
+	local popupsFrame = Player:WaitForChild("PlayerGui"):WaitForChild("PopUpGui"):WaitForChild("PopUpsFrame")
 	
-	local rarityData = require(repstor.Modules.Data.RarityData)
+	local RarityData = require(ReplicatedStorage.Modules.Data.RarityData)
 
 
 	for _,oldPopup in popupsFrame:GetChildren() do
@@ -79,7 +79,7 @@ return function()
 			local obtainedItemPopup =  assets.GUI.PopUp:Clone()
 			obtainedItemPopup.PopUpText.RichText = true
 			
-			local itemRarityColor = rarityData[popupInfo.ItemRarity].Color
+			local itemRarityColor = RarityData[popupInfo.ItemRarity].Color
 			
 			if popupInfo.ItemAmount ~= 1 then
 				obtainedItemPopup.PopUpText.Text = 'Obtained '..popupInfo.ItemAmount..' <font color="'..itemRarityColor..'">'..popupInfo.ItemName..'</font>'

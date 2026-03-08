@@ -1,9 +1,9 @@
 --DefualtHit
 
-local debris = game:GetService("Debris")
-local replicatedStorage = game:GetService("ReplicatedStorage")
+local Debris = game:GetService("Debris")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local assets = replicatedStorage:WaitForChild("Assets")
+local assets = ReplicatedStorage:WaitForChild("Assets")
 local effects = assets.Shared.Effects
 
 return function(arguementData:any)
@@ -28,7 +28,7 @@ return function(arguementData:any)
 						end
 					end
 				end
-				debris:AddItem(clone, 1.5)
+				Debris:AddItem(clone, 1.5)
 			end
 		end)
 		
@@ -49,7 +49,7 @@ return function(arguementData:any)
 						
 				 end
 			end
-			debris:AddItem(clone , 1.5)
+			Debris:AddItem(clone , 1.5)
 		end)
 		
 		

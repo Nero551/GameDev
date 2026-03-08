@@ -1,16 +1,15 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local repstor = game:GetService("ReplicatedStorage")
-local runService = game:GetService("RunService")
+local RunService = game:GetService("RunService")
 
-local assets = repstor.Assets
+local assets = ReplicatedStorage.Assets
 local Connections = require(ReplicatedStorage.Modules.Connections)
 local StateChecker = require(game.ReplicatedStorage.Modules.StateChecker)
 local StateService = require(game.ServerScriptService.Services.StateService)
-local ActionVerifier =  require(repstor.Modules.ActionVerifier)
-local MovementConfig = require(repstor.Modules.Configs.MovementConfig)
+local ActionVerifier =  require(ReplicatedStorage.Modules.ActionVerifier)
+local MovementConfig = require(ReplicatedStorage.Modules.Configs.MovementConfig)
 
-local animsModule = require(repstor.Modules.Animations)
+local Animations = require(ReplicatedStorage.Modules.Animations)
 local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
 
 local DashConfig = MovementConfig.DashConfig
@@ -25,7 +24,7 @@ function MovementService:LoadSharedAnimations()
 		player.CharacterAdded:Connect(function(character)
 			local humanoid = character:WaitForChild("Humanoid")
 			local animator = humanoid.Animator
-			animsModule:loadAnims(animator, assets.Shared)
+			Animations:loadAnims(animator, assets.Shared)
 		end)
 	end)
 end
@@ -51,7 +50,7 @@ function MovementService:Dash(player, direction:Vector3? , IsShiftLockOff, npcTa
 	local directionName
 
 	if IsShiftLockOff or npcTarget then
-		local dashAnim:AnimationTrack = animsModule:GetAnimation(humanoid.Animator, "Shared.Animations.Dashes.Forward")
+		local dashAnim:AnimationTrack = Animations:GetAnimation(humanoid.Animator, "Shared.Animations.Dashes.Forward")
 		
 		StateService:AddState(character, "Dashing", dashAnim.Length)
 		---Animation---
@@ -92,7 +91,7 @@ function MovementService:Dash(player, direction:Vector3? , IsShiftLockOff, npcTa
 			directionName = "Forward-Left"
 		end
 				
-		local dashAnim:AnimationTrack = animsModule:GetAnimation(humanoid.Animator,"Shared.Animations.Dashes."..directionName)
+		local dashAnim:AnimationTrack = Animations:GetAnimation(humanoid.Animator,"Shared.Animations.Dashes."..directionName)
 				
 		StateService:AddState(character, "Dashing", dashAnim.Length)
 		---Animation---
@@ -129,7 +128,7 @@ function MovementService:Dash(player, direction:Vector3? , IsShiftLockOff, npcTa
 		rayParams.FilterDescendantsInstances = {character}
 		
 		local dashConnection = nil
-		dashConnection = runService.Heartbeat:Connect(function(dt)
+		dashConnection = RunService.Heartbeat:Connect(function(dt)
 
 				    if not StateChecker:CheckState(character, "Dashing") then
 				StateService:AddState(character, "DashCoolDown", DashConfig.DashCooldown)
@@ -154,7 +153,7 @@ function MovementService:Dash(player, direction:Vector3? , IsShiftLockOff, npcTa
 		---If Player Then Let Client Handle Movement---
 		NetworkingService:FireToClient(player, "Dash", directionName, IsShiftLockOff)
 	end
-	Connections:AddConnection(character, "Character", "DashCD",runService.Heartbeat:Connect(function()
+	Connections:AddConnection(character, "Character", "DashCD",RunService.Heartbeat:Connect(function()
 		if not StateChecker:CheckState(character, "Dashing") then
 			Connections:RemoveConnection(character, "Character", "DashCD")
 			StateService:AddState(character, "DashCoolDown", DashConfig.DashCooldown)
@@ -213,7 +212,7 @@ function MovementService:WallRun(character)
 	local elapsed = 0
 	
 	local connection
-	connection = runService.Heartbeat:Connect(function(dt)
+	connection = RunService.Heartbeat:Connect(function(dt)
 		if not StateChecker:CheckState(character , "WallRunning") then return end
 		
 		elapsed = elapsed + dt

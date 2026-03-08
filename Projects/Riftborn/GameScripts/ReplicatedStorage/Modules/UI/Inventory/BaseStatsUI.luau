@@ -1,7 +1,7 @@
 return function  (infoFrame)
-	local tween = game:GetService("TweenService")
-	local repstor = game:GetService("ReplicatedStorage")
-	local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
+	local TweenService = game:GetService("TweenService")
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 
 	local baseStatsbutton = infoFrame:FindFirstChild("BaseStatsButton(HoverClickSoundSizeChange)")
 	local baseStatsFrame = infoFrame:FindFirstChild("BaseStats")
@@ -22,13 +22,13 @@ return function  (infoFrame)
 			abiltiesFrame.Visible = false
 			weaponDesc.Visible = false
 			nonWeaponDesc.Visible = false
-			tween:Create(baseStatsbutton, info , {ImageColor3 = Color3.fromRGB(26, 21, 38)}):Play()
-			tween:Create(baseStatsbutton.BaseStats, info , {TextColor3 = Color3.fromRGB(255, 154, 213)}):Play()
-			tween:Create(baseStatsbutton.RGBStroke, info , {ImageColor3 = Color3.fromRGB(255, 154, 213)}):Play()
+			TweenService:Create(baseStatsbutton, info , {ImageColor3 = Color3.fromRGB(26, 21, 38)}):Play()
+			TweenService:Create(baseStatsbutton.BaseStats, info , {TextColor3 = Color3.fromRGB(255, 154, 213)}):Play()
+			TweenService:Create(baseStatsbutton.RGBStroke, info , {ImageColor3 = Color3.fromRGB(255, 154, 213)}):Play()
 		else
-			tween:Create(baseStatsbutton, info , {ImageColor3  = Color3.fromRGB(255,255,255)}):Play()
-			tween:Create(baseStatsbutton.BaseStats, info , {TextColor3 = Color3.fromRGB(255,255,255)}):Play()
-			tween:Create(baseStatsbutton.RGBStroke, info , {ImageColor3 =  Color3.fromRGB(255,255,255)}):Play()
+			TweenService:Create(baseStatsbutton, info , {ImageColor3  = Color3.fromRGB(255,255,255)}):Play()
+			TweenService:Create(baseStatsbutton.BaseStats, info , {TextColor3 = Color3.fromRGB(255,255,255)}):Play()
+			TweenService:Create(baseStatsbutton.RGBStroke, info , {ImageColor3 =  Color3.fromRGB(255,255,255)}):Play()
 
 			if infoFrame.ItemType.Text == "Sword" or infoFrame.ItemType.Text ==  "Melee" then
 				weaponDesc.Visible = true
@@ -50,13 +50,13 @@ return function  (infoFrame)
 
 	baseStatsbutton.MouseEnter:Connect(function()
 		if baseStatsFrame.Visible == false  then
-			tween:Create(baseStatsbutton, info , {ImageColor3 = Color3.fromRGB(87, 107, 194)}):Play()
+			TweenService:Create(baseStatsbutton, info , {ImageColor3 = Color3.fromRGB(87, 107, 194)}):Play()
 		end
 	end)
 
 	baseStatsbutton.MouseLeave:Connect(function()
 		if baseStatsFrame.Visible == false then
-			tween:Create(baseStatsbutton, info, {ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
+			TweenService:Create(baseStatsbutton, info, {ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
 		end
 	end)
 
@@ -70,7 +70,7 @@ return function  (infoFrame)
 			infoType = "Armor"
 		end
 
-		local itemData = itemDataBase:GetItemData(infoID)
+		local itemData = ItemDataBase:GetItemData(infoID)
 		for _,Stat in statsScrollingFrame:GetChildren() do
 			if Stat:IsA("Frame") then
 				local statCatagory:TextLabel = Stat.StatCatagory.Text

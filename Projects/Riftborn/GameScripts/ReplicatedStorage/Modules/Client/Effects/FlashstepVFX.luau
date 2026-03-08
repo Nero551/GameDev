@@ -1,9 +1,9 @@
 --FlashstepVFX
 
-local debris = game:GetService("Debris")
-local replicatedStorage = game:GetService("ReplicatedStorage")
+local Debris = game:GetService("Debris")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local assets = replicatedStorage:WaitForChild("Assets")
+local assets = ReplicatedStorage:WaitForChild("Assets")
 local effects = assets.Shared.Effects
 
 return function(arguementData:any)
@@ -36,7 +36,7 @@ return function(arguementData:any)
 			end
 
 		end	
-		debris:AddItem(clone, 1)
+		Debris:AddItem(clone, 1)
 	end
 	
 	---Smoke---
@@ -48,7 +48,7 @@ return function(arguementData:any)
 			particle.Enabled = true
 		end	
 	end	
-	debris:AddItem(smoke, 0.1)
+	Debris:AddItem(smoke, 0.1)
 	
 	Transparency(1)
 	task.delay(1, function()
@@ -60,6 +60,6 @@ return function(arguementData:any)
 				particle.Enabled = true
 			end
 		end
-		debris:AddItem(smoke , 0.1)
+		Debris:AddItem(smoke , 0.1)
 	end)
 end

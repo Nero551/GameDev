@@ -1,4 +1,4 @@
-local tweenService = game:GetService("TweenService")
+local TweenService = game:GetService("TweenService")
 
 
 local DynamicLight = {}
@@ -23,7 +23,7 @@ function DynamicLight:Spawn(type, parent , color, brightness , range , duration:
 	if duration then
 		task.delay(duration,function()
 			local info = TweenInfo.new(fadeTime, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
-			local tween = tweenService:Create(light,info,{Brightness = 0})
+			local tween = TweenService:Create(light,info,{Brightness = 0})
 			tween:Play()
 			tween.completed:Connect(function()
 				light:Destroy()
@@ -41,7 +41,7 @@ function DynamicLight:Destroy(light,duration:number?, fadeTime)
 	if duration then
 		task.delay(duration,function()
 			local info = TweenInfo.new(fadeTime, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
-			local tween = tweenService:Create(light,info,{Brightness = 0})
+			local tween = TweenService:Create(light,info,{Brightness = 0})
 			tween:Play()
 			tween.completed:Connect(function()
 				light:Destroy()

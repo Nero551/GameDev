@@ -1,6 +1,6 @@
 local RarityService = require(script.Parent.RarityService)
 local GameEvents = require(game.ReplicatedStorage.Modules.GameEvents)
-local itemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
+local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 
 local RewardsService = {}
 function RewardsService:GiveRewards(player, Rewards, quest:boolean)
@@ -16,7 +16,7 @@ function RewardsService:GiveRewards(player, Rewards, quest:boolean)
 		end
 		if Rewards.ItemDrops then
 			for item, itemInfo in pairs(Rewards.ItemDrops) do
-				local _,itemID = itemDataBase:GetItemData(item)
+				local _,itemID = ItemDataBase:GetItemData(item)
 				if not itemID then
 					warn("Invalid Item")
 					return

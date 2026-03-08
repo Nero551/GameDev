@@ -1,24 +1,24 @@
 return function(hpBG, char:Model?)
-	local tween = game:GetService("TweenService")
+	local TweenService = game:GetService("TweenService")
 	local humanoid:Humanoid = char:WaitForChild("Humanoid")
 	local hpBar = hpBG.HealthFill
 	local hpText = hpBG.HealthNumber
 
 	local function HpChanger(currentHealth, maxHealth)
 		local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		tween:Create(hpBar, info , {Size = UDim2.fromScale(currentHealth/maxHealth,1)}):Play()
+		TweenService:Create(hpBar, info , {Size = UDim2.fromScale(currentHealth/maxHealth,1)}):Play()
 		hpText.Text = math.round(currentHealth).."/"..math.round(maxHealth)
 	end
 
 	local function ThirtyPercentHp(currentHealth, maxHealth)
 		local info =  TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 		if maxHealth / 3 > currentHealth then
-			tween:Create(hpText, info, {TextColor3 = Color3.fromRGB(255, 140, 150)}):Play()
-			tween:Create(hpBG.HealthText, info, {TextColor3 = Color3.fromRGB(255, 140, 150)}):Play()
+			TweenService:Create(hpText, info, {TextColor3 = Color3.fromRGB(255, 140, 150)}):Play()
+			TweenService:Create(hpBG.HealthText, info, {TextColor3 = Color3.fromRGB(255, 140, 150)}):Play()
 
 		else
-			tween:Create(hpText, info, {TextColor3 = Color3.fromRGB(255,255,255)}):Play()
-			tween:Create(hpBG.HealthText, info, {TextColor3 = Color3.fromRGB(255, 255,255)}):Play()
+			TweenService:Create(hpText, info, {TextColor3 = Color3.fromRGB(255,255,255)}):Play()
+			TweenService:Create(hpBG.HealthText, info, {TextColor3 = Color3.fromRGB(255, 255,255)}):Play()
 		end
 	end
 	

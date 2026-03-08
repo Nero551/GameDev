@@ -1,11 +1,11 @@
 --DefualtHit
 
-local debris = game:GetService("Debris")
-local replicatedStorage = game:GetService("ReplicatedStorage")
-local StateChecker = require(replicatedStorage.Modules.StateChecker)
-local DynamicLight = require(replicatedStorage.Modules.DynamicLight)
+local Debris = game:GetService("Debris")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
+local DynamicLight = require(ReplicatedStorage.Modules.DynamicLight)
 
-local assets = replicatedStorage:WaitForChild("Assets")
+local assets = ReplicatedStorage:WaitForChild("Assets")
 
 return function(arguementData:any)
 	local VFX = arguementData.VFX

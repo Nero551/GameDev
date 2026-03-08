@@ -1,9 +1,9 @@
 return function(toolSlots)
-	local player = game:GetService("Players").LocalPlayer
-	local char = player.Character or player.CharacterAdded:Wait()
+	local Player = game:GetService("Players").LocalPlayer
+	local char = Player.Character or Player.CharacterAdded:Wait()
 	local humanoid:Humanoid = char:WaitForChild("Humanoid")
-	local userInputService = game:GetService("UserInputService")
-	local tweenService = game:GetService("TweenService")
+	local UserInputService = game:GetService("UserInputService")
+	local TweenService = game:GetService("TweenService")
 
 	---Equips Tool In Backpack---
 
@@ -23,11 +23,11 @@ return function(toolSlots)
 		for _, slot in toolSlots:GetChildren() do
 			if slot:IsA("ImageButton") then
 				if slot == selectedSlot then
-					tweenService:Create(slot, info, {Size = UDim2.fromScale(0.181,1.16)}):Play()
-					tweenService:Create(slot.Border, info, {ImageColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+					TweenService:Create(slot, info, {Size = UDim2.fromScale(0.181,1.16)}):Play()
+					TweenService:Create(slot.Border, info, {ImageColor3 = Color3.fromRGB(255, 255, 255)}):Play()
 				else
-					tweenService:Create(slot, info, {Size = UDim2.fromScale(0.175,0.953)}):Play()
-					tweenService:Create(slot.Border, info, {ImageColor3 = Color3.fromRGB(116, 116, 116)}):Play()
+					TweenService:Create(slot, info, {Size = UDim2.fromScale(0.175,0.953)}):Play()
+					TweenService:Create(slot.Border, info, {ImageColor3 = Color3.fromRGB(116, 116, 116)}):Play()
 				end
 			end
 		end
@@ -42,10 +42,10 @@ return function(toolSlots)
 		local toolName = toolSlot.ToolName.Value
 		local tool = char:FindFirstChild(toolName)
 		if tool and tool:IsA("Tool") then
-			tool.Parent = player.Backpack
+			tool.Parent = Player.Backpack
 			selectedSlot = nil
 		else
-			local tool = player.Backpack:FindFirstChild(toolName)
+			local tool = Player.Backpack:FindFirstChild(toolName)
 			if tool then
 				humanoid:EquipTool(tool)
 				selectedSlot = toolSlot
@@ -55,7 +55,7 @@ return function(toolSlots)
 		updateSlotTweens()
 	end
 
-	userInputService.InputBegan:Connect(function(inp, proc)
+	UserInputService.InputBegan:Connect(function(inp, proc)
 		if proc then return end
 
 		local slotName = keyToSlot[inp.KeyCode]

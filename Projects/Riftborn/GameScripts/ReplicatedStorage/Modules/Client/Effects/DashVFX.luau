@@ -1,9 +1,9 @@
 --DashVFX
 
-local debris = game:GetService("Debris")
-local replicatedStorage = game:GetService("ReplicatedStorage")
+local Debris = game:GetService("Debris")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local assets = replicatedStorage.Assets
+local assets = ReplicatedStorage.Assets
 local effects = assets.Shared.Effects
 
 return function(arguementData:any)
@@ -26,6 +26,6 @@ return function(arguementData:any)
 				effect.Enabled = true
 			end
 		end
-		debris:AddItem(clone, dashTime)
+		Debris:AddItem(clone, dashTime)
 	end	
 end

@@ -1,7 +1,7 @@
 return function()
 	local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-	local UIS = game:GetService("UserInputService")
+	local UserInputService = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
 	local TweenService = game:GetService("TweenService")
 local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
@@ -25,8 +25,8 @@ local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 	local function resetShiftLock()
 		shiftLocked = false
 		humanoid.AutoRotate = true
-		UIS.MouseIconEnabled = true
-		UIS.MouseBehavior = Enum.MouseBehavior.Default
+		UserInputService.MouseIconEnabled = true
+		UserInputService.MouseBehavior = Enum.MouseBehavior.Default
 		crosshair.Visible = false
 		humanoid.CameraOffset = Vector3.zero
 	end
@@ -65,8 +65,8 @@ local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 			setShiftLock(true)
 
 			crosshair.Visible = true
-			UIS.MouseIconEnabled = false
-			UIS.MouseBehavior = Enum.MouseBehavior.LockCenter
+			UserInputService.MouseIconEnabled = false
+			UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
 
 			local camLook = camera.CFrame.LookVector
 			local flatLook = Vector3.new(camLook.X, 0, camLook.Z)
@@ -82,9 +82,9 @@ local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 	end)
 
 
-	UIS.WindowFocusReleased:Connect(function()
+	UserInputService.WindowFocusReleased:Connect(function()
 		if shiftLocked then
-			UIS.MouseBehavior = Enum.MouseBehavior.LockCenter
+			UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
 		else
 			resetShiftLock()
 		end

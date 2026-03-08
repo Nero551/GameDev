@@ -1,6 +1,6 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local repstor = game:GetService("ReplicatedStorage")
-local modules =  repstor.Modules
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local modules =  ReplicatedStorage.Modules
 
 local AdminCmdsService = require(script.Parent.Parent.Services.AdminCmdsService)
 

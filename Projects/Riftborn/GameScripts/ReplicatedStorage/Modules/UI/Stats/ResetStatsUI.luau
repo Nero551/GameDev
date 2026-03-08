@@ -1,13 +1,13 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 return function(resetButton ,statsMenu)
-	local player  = game:GetService("Players").LocalPlayer
-	local repstor = game:GetService("ReplicatedStorage")
-	local tween = game:GetService("TweenService")
-	local remotes = repstor.Remotes
+	local Player  = game:GetService("Players").LocalPlayer
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local TweenService = game:GetService("TweenService")
+	local remotes = ReplicatedStorage.Remotes
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	
-	local cloneConfirmPopup = require(script.Parent.Parent.CloneConfirmPopupUI)
+	local CloneConfirmPopupUI = require(script.Parent.Parent.CloneConfirmPopupUI)
 	
 	local confirmPopUp
 	local confirmConnection
@@ -17,17 +17,17 @@ return function(resetButton ,statsMenu)
 			return confirmPopUp
 		end
 
-		confirmPopUp = cloneConfirmPopup()
+		confirmPopUp = CloneConfirmPopupUI()
 
 		confirmPopUp:GetPropertyChangedSignal("Visible"):Connect(function()
 			if confirmPopUp.Visible then
-				tween:Create(resetButton.ResetText, info, {TextColor3 = Color3.fromRGB(255,154,213)}):Play()
-				tween:Create(resetButton.RGBStroke, info, {ImageColor3 = Color3.fromRGB(255,154,213)}):Play()
-				tween:Create(resetButton, info, {ImageColor3 = Color3.fromRGB(60,49,88)}):Play()
+				TweenService:Create(resetButton.ResetText, info, {TextColor3 = Color3.fromRGB(255,154,213)}):Play()
+				TweenService:Create(resetButton.RGBStroke, info, {ImageColor3 = Color3.fromRGB(255,154,213)}):Play()
+				TweenService:Create(resetButton, info, {ImageColor3 = Color3.fromRGB(60,49,88)}):Play()
 			else
-				tween:Create(resetButton.ResetText, info, {TextColor3 = Color3.fromRGB(255,255,255)}):Play()
-				tween:Create(resetButton.RGBStroke, info, {ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
-				tween:Create(resetButton, info, {ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
+				TweenService:Create(resetButton.ResetText, info, {TextColor3 = Color3.fromRGB(255,255,255)}):Play()
+				TweenService:Create(resetButton.RGBStroke, info, {ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
+				TweenService:Create(resetButton, info, {ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
 			end
 		end)
 
@@ -44,7 +44,7 @@ return function(resetButton ,statsMenu)
 
 		popup.TextLabel.Text = "Reset Stats?"
 		popup.Visible = true
-		tween:Create(popup, info, {Size = UDim2.fromScale(0.262, 0.49)}):Play()
+		TweenService:Create(popup, info, {Size = UDim2.fromScale(0.262, 0.49)}):Play()
 
 		if confirmConnection then
 			confirmConnection:Disconnect()
@@ -58,13 +58,13 @@ return function(resetButton ,statsMenu)
 
 	resetButton.MouseEnter:Connect(function()
 		if confirmPopUp and not confirmPopUp.Visible then
-			tween:Create(resetButton, info, {ImageColor3 = Color3.fromRGB(87,107,194)}):Play()
+			TweenService:Create(resetButton, info, {ImageColor3 = Color3.fromRGB(87,107,194)}):Play()
 		end
 	end)
 
 	resetButton.MouseLeave:Connect(function()
 		if confirmPopUp and not confirmPopUp.Visible then
-			tween:Create(resetButton, info, {ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
+			TweenService:Create(resetButton, info, {ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
 		end
 	end)
 
