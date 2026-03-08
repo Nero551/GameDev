@@ -7,7 +7,7 @@ local DataService = require(script.Parent.Parent.Services.DataService)
 local TitleService = {}
 
 function TitleService:SetupTitle(player)
-	
+	local playerTitles = DataService:GetTable(player, "Titles")
 	local TitlesFolder = player:FindFirstChild("PlayerTitles")
 	
 	if not TitlesFolder then
@@ -19,6 +19,7 @@ function TitleService:SetupTitle(player)
 		activeTitle.Parent = TitlesFolder
 		activeTitle.Name = "ActiveTitle"
 	end
+	NetworkingService:FireToClient(player, "UpdateTitles", playerTitles)
 end
 
 function TitleService:GetTitle(player, titleID)
@@ -98,9 +99,6 @@ function TitleService:SyncTitlesWithTitleData(player)
 	else
 		player.PlayerTitles.ActiveTitle.Value = playerTitles.Titles[playerTitles.ActiveTitle].Name
 	end
-	
-	
-	NetworkingService:FireToClient(player, "UpdateTitles", playerTitles)	
 end
 
 return TitleService

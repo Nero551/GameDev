@@ -7,7 +7,7 @@ return function(resetButton ,statsMenu)
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	
-	local cloneConfirmPopup = require(script.Parent.Parent.CloneConfirmPopup)
+	local cloneConfirmPopup = require(script.Parent.Parent.CloneConfirmPopupUI)
 	
 	local confirmPopUp
 	local confirmConnection

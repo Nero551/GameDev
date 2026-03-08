@@ -1,5 +1,4 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local repstor = game:GetService("ReplicatedStorage")
 local DataService = require(script.Parent.Parent.Services.DataService)
 
 local CurrencyService = {}

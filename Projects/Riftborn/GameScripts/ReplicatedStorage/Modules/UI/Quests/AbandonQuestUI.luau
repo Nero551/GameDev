@@ -9,7 +9,7 @@ return function(questMenu, abandonQuestButton)
 	local confirmPopup
 	local confirmConnection
 	
-	local cloneConfirmPopup = require(script.Parent.Parent.CloneConfirmPopup)
+	local cloneConfirmPopup = require(script.Parent.Parent.CloneConfirmPopupUI)
 
 	local function GetConfirmPopup()
 		if confirmPopup and confirmPopup.Parent then

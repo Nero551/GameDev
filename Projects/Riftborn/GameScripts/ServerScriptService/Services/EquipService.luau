@@ -89,10 +89,7 @@ function  EquipUnEquipService:EquipItem(player:Player , itemID)
 	end
 	
 	GameEvents.UpdateMana:Fire(player)
-	NetworkingService:FireToClient(player, "UpdateInventory", inventory, equippedItems)
-	NetworkingService:FireToClient(player, "UpdateInventoryInfo", inventory, equippedItems)
-	NetworkingService:FireToClient(player, "UpdateEquippedItems", inventory, equippedItems)
-
+	NetworkingService:FireToClient(player, "UpdateEquippedItems", equippedItems)
 end
 
 ---UnEquip Item---
@@ -137,9 +134,7 @@ function EquipUnEquipService:UnEquipItem(player:Player ,itemID)
 	end	
 	equippedItems[itemType] = nil
 	GameEvents.UpdateMana:Fire(player)
-	NetworkingService:FireToClient(player, "UpdateInventory", inventory, equippedItems)
-	NetworkingService:FireToClient(player, "UpdateInventoryInfo", inventory, equippedItems)
-	NetworkingService:FireToClient(player, "UpdateEquippedItems", inventory, equippedItems)
+	NetworkingService:FireToClient(player, "UpdateEquippedItems", equippedItems)
 end
 
 ---Load Equipped Items---
@@ -201,10 +196,7 @@ function EquipUnEquipService:LoadEquippedItems(player:Player)
 		end
 	end
 	
-	NetworkingService:FireToClient(player, "UpdateInventory", inventory, equippedItems)
-	NetworkingService:FireToClient(player, "UpdateInventoryInfo", inventory, equippedItems)
-	NetworkingService:FireToClient(player, "UpdateEquippedItems", inventory, equippedItems)
-	
+	NetworkingService:FireToClient(player, "UpdateEquippedItems", equippedItems)
 	GameEvents.UpdateMana:Fire(player)
 end
 

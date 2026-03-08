@@ -17,74 +17,40 @@ NetworkingService:OnServerEvent("ClientReady", function(player)
 	clientReady[player] = true
 end)
 
-local function WaitForPlayerReady(player)
-	-- wait until data table exists
-	repeat task.wait() until DataService.PlayerDatas[player]
+local function Setup(player:Player)
+	repeat
+		task.wait()
+	until clientReady[player]
 
-	-- wait until CharacterVitalsService is ready for this character
-	local char = player.Character or player.CharacterAdded:Wait()
-	repeat task.wait() until CharacterVitalsService.CharacterVitals[char]
+	local character = player.Character or player.CharacterAdded:Wait()
+	player.PlayerGui:WaitForChild("MenusGUI"):WaitForChild("StatsMenu"):WaitForChild("Spells")
 
-	-- wait for client ready signal
-	repeat task.wait() until clientReady[player]
-end
-
-local function SetupPlayer(player:Player)
-	---Setup Tables And Folders---
 	statService:SetupStats(player)
-		
-	InventoryService:SyncInventoryWithDatabase(player)
-	
-	EquipService:LoadEquippedItems(player)
-	
+
 	LevelService:SetupLevel(player)
-	LevelService:IncreaseEXP(player, 0)
-	
+
+	InventoryService:SyncInventoryWithDatabase(player)
+
+	EquipService:LoadEquippedItems(player)
+
 	QuestService:SyncQuestsWithQuestData(player)
-	
+
 	TitleService:SetupTitle(player)
 	TitleService:SyncTitlesWithTitleData(player)
-	
+
 	BuffService:UpdateBuffs(player)
-end
 
-local function SendSetupRemotes(player:Player)
-	local playerLevel = DataService:GetTable(player, "Level")
-	local playerInventory = DataService:GetTable(player, "Inventory")
-	local playerEquipped = DataService:GetTable(player, "Equipped")
-	local playerQuests = DataService:GetTable(player,"Quests")
-	local playerCurrencies = DataService:GetTable(player,"Currency")
-	local playerTitles = DataService:GetTable(player, "Titles")
-	
-	WaitForPlayerReady(player)
-	---Send Remotes
-	NetworkingService:FireToClient(player , "UpdateEXP", playerLevel)
-		
-	NetworkingService:FireToClient(player, "UpdateInventory", playerInventory,  playerEquipped)
-	NetworkingService:FireToClient(player, "UpdateInventoryInfo", playerInventory,  playerEquipped)
-	
-	NetworkingService:FireToClient(player, "UpdateEquippedItems", playerInventory,  playerEquipped)
-	
-	NetworkingService:FireToClient(player , "UpdateCurrency", playerCurrencies)
-	
-	NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
-	
-	NetworkingService:FireToClient(player, "UpdateTitles", playerTitles)
-	
-end
+	local playerCurrencies = DataService:GetTable(player, "Currency")
+	NetworkingService:FireToClient(player, "UpdateCurrency", playerCurrencies)
 
-local function SetupCharacter(player:Player, character)
-	SetupPlayer(player)
 	CharacterVitalsService:Create(character)
-	
-	SendSetupRemotes(player)
 	
 	CharacterVitalsService:ModifyVital(character, "Health", "ModifyHealth", {
 		["HealthChange"] = CharacterVitalsService.CharacterVitals[character].Health.MaxHealth - 
 			CharacterVitalsService.CharacterVitals[character].Health.CurrentHealth
 		
 	})
-	
+
 	CharacterVitalsService:ModifyVital(character, "Mana", "ModifyMana",{
 		["ManaChange"] = CharacterVitalsService.CharacterVitals[character].Mana.MaxMana -
 			CharacterVitalsService.CharacterVitals[character].Mana.CurrentMana
@@ -93,23 +59,11 @@ end
 
 ---Load Data---
 players.PlayerAdded:Connect(function(player)
-	
 	local playerData = DataService:Load(player)	
-	
-	SetupPlayer(player)	
-	
-	---SetupCharacter---
-	if player.Character then
-		print(playerData)
-		SetupCharacter(player, player.Character)
-	end
-	
-	player.CharacterAdded:Connect(function(character)	
-		player.PlayerGui:WaitForChild("MenusGUI"):WaitForChild("StatsMenu"):WaitForChild("Spells")
-		SetupCharacter(player, character)
-	end)
-end)
+	Setup(player)
 
+	print(playerData)
+end)
 
 ---Save Data---
 players.PlayerRemoving:Connect(function(player)

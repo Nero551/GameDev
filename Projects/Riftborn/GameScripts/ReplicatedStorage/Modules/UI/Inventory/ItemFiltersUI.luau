@@ -1,16 +1,12 @@
 return function  (Icons, Filters)
 	local tweenService = game:GetService("TweenService")
 
-	local player = game:GetService("Players").LocalPlayer
-	local char = player.Character or player.CharacterAdded:Wait()
-
-
-	local filterSelected:ImageButton? = nil
-	local prevFilterSelected:ImageButton? = nil
+	local filterSelected = nil
+	local prevFilterSelected = nil
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-	for _, filter:TextButton? in Filters:GetChildren() do
+	for _, filter in Filters:GetChildren() do
 		if filter:IsA("ImageButton") then
 
 			filter.MouseEnter:Connect(function()
@@ -59,14 +55,12 @@ return function  (Icons, Filters)
 					end
 					for _, iconFrame in Icons:GetChildren() do
 						if iconFrame:IsA("Frame") then
-							local icon = iconFrame:FindFirstChild(iconFrame.Name)
-							if not icon then return end
-							if icon:FindFirstChild("IconType").Value ~= filterType then	
+							if iconFrame:GetAttribute("IconType") ~= filterType then	
 								iconFrame.Visible = false
 							end
 
-							if icon:FindFirstChild("IconType").Value == "Helmet" or icon:FindFirstChild("IconType").Value == "ChestPlate" 
-								or icon:FindFirstChild("IconType").Value == "Leggings" or icon:FindFirstChild("IconType").Value == "Boots" then
+							if iconFrame:GetAttribute("IconType") == "Helmet" or iconFrame:GetAttribute("IconType") == "ChestPlate" 
+								or iconFrame:GetAttribute("IconType") == "Leggings" or iconFrame:GetAttribute("IconType") == "Boots" then
 								local iconType = "Armor"
 								if iconType == filterType then
 									iconFrame.Visible = true

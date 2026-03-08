@@ -3,7 +3,6 @@ return function(Icons, EquipmentFolder)
 	local repstor =game:GetService("ReplicatedStorage")
 	local tweenService = game:GetService("TweenService")
 	local player = game:GetService("Players").LocalPlayer
-	local remotes = repstor.Remotes
 	local itemDataBase = require(repstor.Modules.Data.ItemDataBase)
 	local playerStats = player:WaitForChild("PlayerStats")
 	local FormulaApplier = require(repstor.Modules.FormulaApplier)
@@ -46,7 +45,7 @@ return function(Icons, EquipmentFolder)
 		end
 	end
 
-	local function UpdateEquipmentUI(inventory , equippedItems)
+	local function UpdateEquipmentUI(equippedItems)
 		for _,info in pairs(Equipment) do
 			info.Item = nil
 			info.ItemID = nil
@@ -54,7 +53,7 @@ return function(Icons, EquipmentFolder)
 			if info.IconFrame then
 				info.IconFrame:Destroy()
 			end
-			for _,frame:Frame? in info.Instance:GetChildren() do
+			for _,frame in info.Instance:GetChildren() do
 				if frame:IsA("Frame") then
 					frame:Destroy()
 				end
@@ -73,13 +72,13 @@ return function(Icons, EquipmentFolder)
 
 		for type,Info in pairs(Equipment) do
 			if Info.Item ~= nil then
-				local iconFrame:Frame? = Info.Instance:FindFirstChild(Info.Item)
+				local iconFrame = Info.Instance:FindFirstChild(Info.Item)
 				if not iconFrame then
 					iconFrame = Icons:FindFirstChild(Info.Item):Clone()
 					iconFrame.Parent = Info.Instance
 					iconFrame.Size = UDim2.fromScale(1,1)
 					Info.IconFrame = iconFrame
-					local icon:ImageButton? =  iconFrame:FindFirstChild(iconFrame.Name)
+					local icon =  iconFrame:FindFirstChild(iconFrame.Name)
 					icon:FindFirstChild("Border"):Destroy()
 					icon:FindFirstChild("EquippedIcon"):Destroy()
 					icon:FindFirstChild("OwnedAmount"):Destroy()
@@ -104,7 +103,7 @@ return function(Icons, EquipmentFolder)
 
 
 					icon.MouseButton1Click:Connect(function()
-						local infoPopup:Frame? = iconFrame:FindFirstChild("EquippedItemPopUp")
+						local infoPopup = iconFrame:FindFirstChild("EquippedItemPopUp")
 						if infoPopup then
 							local tween = tweenService:Create(infoPopup, info, {Size = UDim2.fromScale(0, 0.905)})
 							tween:Play()
@@ -112,7 +111,7 @@ return function(Icons, EquipmentFolder)
 								infoPopup:Destroy()	
 							end)
 						else
-							for _, otherInfoPopups:Frame? in EquipmentFolder:GetDescendants() do
+							for _, otherInfoPopups in EquipmentFolder:GetDescendants() do
 								if otherInfoPopups:IsA("Frame")  then
 									if otherInfoPopups.Name == "EquippedItemPopUp" then
 										otherInfoPopups:Destroy()
@@ -188,7 +187,7 @@ return function(Icons, EquipmentFolder)
 		end
 	end
 
-	NetworkingService:OnClientEvent("UpdateEquippedItems", function(inventory, equippedItems)	
-		UpdateEquipmentUI(inventory, equippedItems)
+	NetworkingService:OnClientEvent("UpdateEquippedItems", function(equippedItems)	
+		UpdateEquipmentUI(equippedItems)
 	end)
 end

@@ -61,8 +61,8 @@ return function  (infoFrame)
 	end)
 
 	baseStatsbutton.MouseButton1Click:Connect(function()
-		local infoID = infoFrame.ItemID.Value
-		local infoType = infoFrame.ItemType.Text
+		local infoID = infoFrame:GetAttribute("ItemID")
+		local infoType = infoFrame:GetAttribute("IconType")
 
 		if infoType == "Sword" or infoType == "Melee" then
 			infoType = "Weapon"

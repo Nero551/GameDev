@@ -36,7 +36,7 @@ return function(npc)
 	local hpBG = npcInfo.NPCHealth
 	npcInfo.Adornee = npc.Head
 
-	local hpChanger = require(uiModules.HPChanger)
+	local hpChanger = require(uiModules.HPChangerUI)
 	hpChanger(hpBG, npc)
 
 	npcInfo.NPCLevel.LevelText.Text = mobData.Level

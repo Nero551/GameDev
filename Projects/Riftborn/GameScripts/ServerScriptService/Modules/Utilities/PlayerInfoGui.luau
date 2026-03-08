@@ -21,7 +21,7 @@ function PlayerInfo:UpdateInfo(player, char)
 	char:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(function()
 		if tick() - lastUpdate > 0.1 then -- 20 FPS limit
 			lastUpdate = tick()
-			local hpChanger = require(uiModules.HPChanger)
+			local hpChanger = require(uiModules.HPChangerUI)
 			hpChanger(hpBG, char)
 		end
 	end)

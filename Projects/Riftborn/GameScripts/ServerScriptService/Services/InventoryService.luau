@@ -11,7 +11,6 @@ local InventoryService = {}
 ------Add An Item------
 function InventoryService:AddItem(itemID:string, amount:number, player:Player)
 	local inventory = DataService:GetTable(player, "Inventory")
-	local EquippedItems = DataService:GetTable(player, "Equipped")
 	if not inventory then return end
 	
 	amount = amount or 1
@@ -55,8 +54,7 @@ function InventoryService:AddItem(itemID:string, amount:number, player:Player)
 
 		})
 	end
-	NetworkingService:FireToClient(player, "UpdateInventory", inventory,  EquippedItems)
-	NetworkingService:FireToClient(player, "UpdateInventoryInfo", inventory,  EquippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventory", inventory)
 	GameEvents.ItemChanged:Fire(player)
 	
 	return true
@@ -65,7 +63,6 @@ end
 ------Remove An Item------
 function InventoryService:RemoveItem(itemID:string , amount:number, player)
 	local inventory = DataService:GetTable(player, "Inventory")
-	local EquippedItems = DataService:GetTable(player, "Equipped")
 	
 	if not inventory then return end
 	
@@ -81,8 +78,7 @@ function InventoryService:RemoveItem(itemID:string , amount:number, player)
 		inventory[itemID] = nil
 	end	
 		
-	NetworkingService:FireToClient(player, "UpdateInventory", inventory,  EquippedItems)
-	NetworkingService:FireToClient(player, "UpdateInventoryInfo", inventory,  EquippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventory", inventory)
 	GameEvents.ItemChanged:Fire(player)
 	
 	return true	
@@ -90,7 +86,6 @@ end
 
 ---Sync Item Data Changes With Inventory---
 function InventoryService:SyncInventoryWithDatabase(player)
-	local EquippedItems = DataService:GetTable(player, "Equipped")
 	local inventory = DataService:GetTable(player, "Inventory")
 	if not inventory then return end
 	
@@ -102,8 +97,7 @@ function InventoryService:SyncInventoryWithDatabase(player)
 		itemInfo.Type = itemData.Type
 		itemInfo.Name = itemData.Name
 	end
-	NetworkingService:FireToClient(player, "UpdateInventory", inventory, EquippedItems)
-	NetworkingService:FireToClient(player, "UpdateInventoryInfo", inventory, EquippedItems)
+	NetworkingService:FireToClient(player, "UpdateInventory", inventory)
 end
 
 return InventoryService

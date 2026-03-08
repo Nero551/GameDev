@@ -212,6 +212,7 @@ function QuestService:SyncQuestsWithQuestData(player:Player)
 			objective.Required = questData.Objectives[objectiveIndex].Required
 		end
 	end
+	NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
 end
 
 

@@ -1,12 +1,11 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local repstor = game:GetService("ReplicatedStorage")
-local remotes = repstor.Remotes
 local DataService = require(script.Parent.Parent.Services.DataService)
 
 
 local LevelService = {}
 
 function LevelService:SetupLevel(player)
+	local playerLevel = DataService:GetTable(player, "Level")
 	local LevelFolder = player:FindFirstChild("PlayerLevel")
 	
 	if not LevelFolder then
@@ -30,7 +29,7 @@ function LevelService:SetupLevel(player)
 		StatPointsValue.Parent = LevelFolder
 		StatPointsValue.Name = "StatPoints"
 	end
-	
+	NetworkingService:FireToClient(player, "UpdateEXP", playerLevel)
 end
 
 function LevelService:IncreaseEXP(player , EXP)

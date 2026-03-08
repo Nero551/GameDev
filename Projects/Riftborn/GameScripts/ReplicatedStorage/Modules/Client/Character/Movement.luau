@@ -12,7 +12,6 @@ local ActionVerifier = require(ReplicatedStorage.Modules.ActionVerifier)
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 
 	local modules =  replicatedStorage.Modules
-	local remotes = replicatedStorage.Remotes
 
 	local Connections = require(ReplicatedStorage.Modules.Connections)
 	local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
