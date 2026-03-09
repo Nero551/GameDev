@@ -3,7 +3,6 @@ local Players = game:GetService("Players")
 local LocalizationService = game:GetService("LocalizationService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local InventoryService = require(script.Parent.Parent.Services.InventoryService)
 local EquipService = require(script.Parent.Parent.Services.EquipService)
 local StatService = require(script.Parent.Parent.Services.StatService)
 local QuestService = require(script.Parent.Parent.Services.QuestService)
@@ -29,20 +28,6 @@ end)
 Players.playerRemoving:Connect(function(player)
 	ServerData.Players = Players:GetPlayers()
 end)
-
----Client Requests To Add An Item---
-NetworkingService:OnServerEvent("RequestAddItem", function(player:Player, itemID:string, amount:number)
-
-	InventoryService:AddItem(itemID , amount, player)
-
-end)
-
----Client Requests To Remove An Item---
-NetworkingService:OnServerEvent("RequestRemoveItem", function(player:Player, itemID:string, amount:number)
-	InventoryService:RemoveItem(itemID, amount, player)
-
-end)
-
 ----------------------------------------------------------------------------------------------------------------------------------
 
 ---Client Requests to Equip Item---

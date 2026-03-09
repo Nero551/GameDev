@@ -5,8 +5,8 @@ local NetworkingService = {}
 
 local Remotes = {}
 
-local SentRemotes = {}
-local RateLimit = 75
+local _SentRemotes = {}
+local _RateLimit = 75
 
 for _, remote in ReplicatedStorage.Remotes:GetDescendants() do
 	if remote:IsA("RemoteEvent") or remote:IsA("UnreliableRemoteEvent") then
@@ -58,7 +58,7 @@ function NetworkingService:FireToServer(remoteName: string, ...)
 	if not AssertClient() then return end
     
 	-- warn("From Client:", remoteName)
-	warn("From Client:", debug.traceback())
+	--warn("From Client:", debug.traceback())
 	local remote = Remotes[remoteName]
 	if remote then
 		remote:FireServer(...)
@@ -69,7 +69,7 @@ function NetworkingService:FireToClient(player ,remoteName:string, ...)
     if not AssertServer() then return end
 
 	-- warn("From Server:", remoteName)
-    warn("From Server:", debug.traceback())
+   -- warn("From Server:", debug.traceback())
 	local remote = Remotes[remoteName]
 	if remote then
 		if player:IsA("Player") then
@@ -82,7 +82,7 @@ function NetworkingService:FireToAll(remoteName:string,...)
 	if not AssertServer() then return end
 
 	-- warn("From Server:", remoteName)
-    warn("From Server:", debug.traceback())
+    --warn("From Server:", debug.traceback())
 	local remote = Remotes[remoteName]
 	if remote then
         remote:FireAllClients(...)
@@ -93,7 +93,7 @@ function NetworkingService:FireInRange(remoteName:string, origin, range, ...)
 	if not AssertServer() then return end
 
 	-- warn("From Server:", remoteName)
-    warn("From Server:", debug.traceback())
+    --warn("From Server:", debug.traceback())
 	local remote = Remotes[remoteName]
 	if remote then
         if typeof(origin) ~= "Vector3" then return end
@@ -117,7 +117,7 @@ function NetworkingService:FireToExcept(exceptPlayer:Player?, remoteName:string,
 	if not AssertServer() then return end
 
 	-- warn("From Server:", remoteName)
-	warn("From Server:", debug.traceback())
+	--warn("From Server:", debug.traceback())
 	local remote = Remotes[remoteName]
     if remote then
         for _,player in Players:GetPlayers() do
@@ -132,7 +132,7 @@ function NetworkingService:FireToPlayers(players, remoteName:string, ...)
 	if not AssertServer() then return end
 
 	-- warn("From Server:", remoteName)
-	warn("From Server:", debug.traceback())
+--	warn("From Server:", debug.traceback())
 	local remote = Remotes[remoteName]
 	if remote then
 		for _, player in pairs(players) do

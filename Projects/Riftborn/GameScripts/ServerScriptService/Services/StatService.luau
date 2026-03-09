@@ -1,6 +1,4 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local remotes = ReplicatedStorage.Remotes
 
 local GameEvents = require(game.ReplicatedStorage.Modules.GameEvents)
 local DataService = require(script.Parent.Parent.Services.DataService)

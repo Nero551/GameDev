@@ -26,12 +26,10 @@ local function Setup(player:Player)
 	player.PlayerGui:WaitForChild("MenusGUI"):WaitForChild("StatsMenu"):WaitForChild("Spells")
 
 	StatService:SetupStats(player)
-
 	LevelService:SetupLevel(player)
+	InventoryService:SetupInventory(player)
 
-	InventoryService:SyncInventoryWithDatabase(player)
-
-	EquipService:LoadEquippedItems(player)
+	--EquipService:LoadEquippedItems(player)
 
 	QuestService:SyncQuestsWithQuestData(player)
 

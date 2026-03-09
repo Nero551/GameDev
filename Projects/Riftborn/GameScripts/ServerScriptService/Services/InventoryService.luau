@@ -8,6 +8,28 @@ local DataService = require(script.Parent.Parent.Services.DataService)
 
 local InventoryService = {}
 
+function InventoryService:SetupInventory(player)
+	local Folder = player:FindFirstChild("Inventory")
+	if not Folder then
+		Folder = Instance.new("Folder")
+		Folder.Name = "Inventory"
+		Folder.Parent = player
+	end
+
+	local Inventory = DataService:GetTable(player, "Inventory")
+	for itemID,itemInfo in pairs(Inventory) do
+		local itemData = ItemDataBase:GetItemData(itemID)
+		local value = Folder:FindFirstChild(itemID)
+		if not value then
+			value = Instance.new("StringValue")
+			value.Name = itemID
+			value.Parent = Folder
+		end
+		value:SetAttribute("Name", itemData.Name)
+		value:SetAttribute("Amount", itemInfo.Amount)
+	end
+end
+
 ------Add An Item------
 function InventoryService:AddItem(itemID:string, amount:number, player:Player)
 	local inventory = DataService:GetTable(player, "Inventory")
@@ -24,11 +46,8 @@ function InventoryService:AddItem(itemID:string, amount:number, player:Player)
 	
 	-- Create entry if missing
 	if not inventory[itemID] then
-		inventory[itemID] = {Name = itemData.Name ,Amount = 0 , Type = itemData.Type , Rarity = itemData.Rarity,
-        Icon = itemData.Icon, Description = itemData.Description}
+		inventory[itemID] = {Amount = 0}
 	end
-	
-
 	
 	-- Handle stacking
 	if itemData.Stackable then
@@ -54,51 +73,59 @@ function InventoryService:AddItem(itemID:string, amount:number, player:Player)
 
 		})
 	end
-	NetworkingService:FireToClient(player, "UpdateInventory", inventory)
+
+	local folder = player:FindFirstChild("Inventory")
+	if not folder then
+		InventoryService:SetupInventory(player)
+	end
+	local value = folder:FindFirstChild(itemID)
+	if not value then
+		 value = Instance.new("StringValue")
+		value.Name = itemID
+		value.Parent = player:FindFirstChild("Inventory")
+	end
+	value:SetAttribute("Name", itemData.Name)
+	value:SetAttribute("Amount", inventory[itemID].Amount)
+
 	GameEvents.ItemChanged:Fire(player)
-	
 	return true
 end
 
 ------Remove An Item------
 function InventoryService:RemoveItem(itemID:string , amount:number, player)
 	local inventory = DataService:GetTable(player, "Inventory")
+	local itemData = ItemDataBase:GetItemData(itemID)
 	
 	if not inventory then return end
 	
 	amount = amount or 1
 	-- Check if item exists in inventory
+	local folder = player:FindFirstChild("Inventory")
+	local value = folder:FindFirstChild(itemID)
+
 	if not inventory[itemID] then
 		warn("Item not found in inventory:", itemID)
+		if value then
+			value:Destroy()
+		end
 		return false
 	end
 	
 	inventory[itemID].Amount -= amount
 	if inventory[itemID].Amount <= 0 then
 		inventory[itemID] = nil
+		if value then
+			value:Destroy()
+		end
+	else
+		if value then
+			value:SetAttribute("Name", itemData.Name)
+			value:SetAttribute("Amount", inventory[itemID].Amount)
+		end	
 	end	
 		
-	NetworkingService:FireToClient(player, "UpdateInventory", inventory)
 	GameEvents.ItemChanged:Fire(player)
-	
 	return true	
 end
-
----Sync Item Data Changes With Inventory---
-function InventoryService:SyncInventoryWithDatabase(player)
-	local inventory = DataService:GetTable(player, "Inventory")
-	if not inventory then return end
-	
-	for itemID,itemInfo in  pairs(inventory) do
-		local itemData = ItemDataBase:GetItemData(itemID)
-		itemInfo.Description = itemData.Description
-		itemInfo.Icon = itemData.Icon
-		itemInfo.Rarity = itemData.Rarity
-		itemInfo.Type = itemData.Type
-		itemInfo.Name = itemData.Name
-	end
-	NetworkingService:FireToClient(player, "UpdateInventory", inventory)
-end
-
 return InventoryService
                                         
