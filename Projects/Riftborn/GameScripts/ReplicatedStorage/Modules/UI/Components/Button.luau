@@ -3,6 +3,8 @@ local UIFactory = require(ReplicatedStorage.Modules.UI.Utilities.UIFactory)
 local UIHelper = require(ReplicatedStorage.Modules.UI.Utilities.UIHelper)
 local Button = {}
 
+local xd = Instance.new("TextLabel")
+
 function Button:Create(name,parent)
     UIFactory:Create(name, "ImageButton", parent, {
         Size = UDim2.fromScale(0.05,0.025),
