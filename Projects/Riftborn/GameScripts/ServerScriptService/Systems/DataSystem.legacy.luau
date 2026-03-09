@@ -1,5 +1,7 @@
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local Players = game:GetService("Players")
+local ServerScriptService = game:GetService("ServerScriptService")
+local CurrencyService = require(ServerScriptService.Services.CurrencyService)
 local DataService = require(script.Parent.Parent.Services.DataService)
 local StatService = require(script.Parent.Parent.Services.StatService)
 local LevelService = require(script.Parent.Parent.Services.LevelService)
@@ -28,18 +30,14 @@ local function Setup(player:Player)
 	StatService:SetupStats(player)
 	LevelService:SetupLevel(player)
 	InventoryService:SetupInventory(player)
-
-	--EquipService:LoadEquippedItems(player)
+	EquipService:SetupEquipped(player)
+	LevelService:SetupLevel(player)
+	TitleService:SetupTitles(player)
+	CurrencyService:SetupCurrencies(player)
 
 	QuestService:SyncQuestsWithQuestData(player)
 
-	TitleService:SetupTitle(player)
-	TitleService:SyncTitlesWithTitleData(player)
-
 	BuffService:UpdateBuffs(player)
-
-	local playerCurrencies = DataService:GetTable(player, "Currency")
-	NetworkingService:FireToClient(player, "UpdateCurrency", playerCurrencies)
 
 	CharacterVitalsService:Create(character)
 	

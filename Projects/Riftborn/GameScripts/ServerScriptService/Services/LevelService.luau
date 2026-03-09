@@ -12,29 +12,22 @@ function LevelService:SetupLevel(player)
 		LevelFolder = Instance.new("Folder")
 		LevelFolder.Parent = player
 		LevelFolder.Name = "PlayerLevel"
+	end	
 
-		local LevelValue = Instance.new("IntValue")
-		LevelValue.Parent = LevelFolder
-		LevelValue.Name = "CurrentLevel"
-
-		local CurrentEXPValue = Instance.new("IntValue")
-		CurrentEXPValue.Parent = LevelFolder
-		CurrentEXPValue.Name = "CurrentEXP"
-
-		local RequiredEXPValue = Instance.new("IntValue")
-		RequiredEXPValue.Parent = LevelFolder
-		RequiredEXPValue.Name = "RequiredEXP"
-
-		local StatPointsValue = Instance.new("IntValue")
-		StatPointsValue.Parent = LevelFolder
-		StatPointsValue.Name = "StatPoints"
+	for stat,v in pairs(playerLevel) do
+		local value = LevelFolder:FindFirstChild(stat)
+		if not value then
+			value = Instance.new("StringValue")
+			value.Name = stat
+			value.Parent = LevelFolder
+		end
+		value:SetAttribute("Amount", v)
 	end
-	NetworkingService:FireToClient(player, "UpdateEXP", playerLevel)
 end
 
 function LevelService:IncreaseEXP(player , EXP)
 	local playerLevel = DataService:GetTable(player , "Level")
-	local levelFolder = player:WaitForChild("PlayerLevel")
+	local LevelFolder = player:WaitForChild("PlayerLevel")
 	playerLevel.CurrentEXP  += EXP
 	
 	local maxLevel = 3000
@@ -57,20 +50,28 @@ function LevelService:IncreaseEXP(player , EXP)
 					["Level"] = playerLevel
 				})
 			end
-			NetworkingService:FireToClient(player , "UpdateEXP", playerLevel)
-			levelFolder.CurrentLevel.Value = playerLevel.CurrentLevel
-			levelFolder.CurrentEXP.Value = playerLevel.CurrentEXP
-			levelFolder.RequiredEXP.Value = playerLevel.RequiredEXP
-			levelFolder.StatPoints.Value = playerLevel.StatPoints
+			for stat, v in pairs(playerLevel) do
+				local value = LevelFolder:FindFirstChild(stat)
+				if not value then
+					value = Instance.new("StringValue")
+					value.Name = stat
+					value.Parent = LevelFolder
+				end
+				value:SetAttribute("Amount", v)
+			end
 			task.wait(0.25)
 		end
 	end)
-	levelFolder.CurrentLevel.Value = playerLevel.CurrentLevel
-	levelFolder.CurrentEXP.Value = playerLevel.CurrentEXP
-	levelFolder.RequiredEXP.Value = playerLevel.RequiredEXP
-	levelFolder.StatPoints.Value = playerLevel.StatPoints
+	for stat, v in pairs(playerLevel) do
+		local value = LevelFolder:FindFirstChild(stat)
+		if not value then
+			value = Instance.new("StringValue")
+			value.Name = stat
+			value.Parent = LevelFolder
+		end
+		value:SetAttribute("Amount", v)
+	end
 	
-	NetworkingService:FireToClient(player , "UpdateEXP", playerLevel)
 	NetworkingService:FireToClient(player, "PopUp", {
 		["EXP"] = EXP
 	})

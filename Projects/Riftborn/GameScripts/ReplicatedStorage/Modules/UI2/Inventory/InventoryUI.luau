@@ -27,10 +27,9 @@ local TweenService = game:GetService("TweenService")
 	local AbilityData = require(ReplicatedStorage.Modules.Data.AbilityData)
 	local abilitiesFrame = infoFrame.Abilties
 
-	local IconSelected = nil
-	local PrevIconSelected = nil
+
 	local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
-local UIPlus = require(ReplicatedStorage.Modules.UIPlus)
+	local UIPlus = require(ReplicatedStorage.Modules.UIPlus)
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
@@ -86,9 +85,13 @@ local UIPlus = require(ReplicatedStorage.Modules.UIPlus)
 			end
 
 			for _, grad in icon:GetDescendants() do
-				UIPlus:RotateGradient(grad)
+				if string.find(grad, "RotGrad") then
+					UIPlus:RotateGradient(grad)
+				end
 			end
 
+			local IconSelected
+			local PrevIconSelected
 			iconFrame.MouseEnter:Connect(function()
 				hoverSound:Play()
 				icon.ImageColor3 = Color3.fromHex("#eeeeee")

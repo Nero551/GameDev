@@ -75,9 +75,6 @@ function InventoryService:AddItem(itemID:string, amount:number, player:Player)
 	end
 
 	local folder = player:FindFirstChild("Inventory")
-	if not folder then
-		InventoryService:SetupInventory(player)
-	end
 	local value = folder:FindFirstChild(itemID)
 	if not value then
 		 value = Instance.new("StringValue")

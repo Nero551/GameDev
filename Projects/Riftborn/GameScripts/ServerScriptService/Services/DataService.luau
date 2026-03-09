@@ -8,7 +8,7 @@ local DataService = {}
 
 DataService.PlayerDatas = {}
 
-local function getDefaultData()
+function DataService:GetDefaultData()
 
 	local DefaultData = {
 		Inventory = {
@@ -98,7 +98,7 @@ local function deepCopy(tbl)
 end
 
 local function ValidateData(playerData)
-	local defaultData = getDefaultData()
+	local defaultData = DataService:GetDefaultData()
 
 	for key, defaultValue in pairs(defaultData) do
 		if playerData[key] == nil then
@@ -133,7 +133,7 @@ function DataService:Load(player)
     end)
 
     if not success or not DataService.PlayerDatas[player] then
-        DataService.PlayerDatas[player] = getDefaultData()
+        DataService.PlayerDatas[player] = DataService:GetDefaultData()
     end
 
     -- Validate the data
@@ -148,7 +148,7 @@ function DataService:Save(player)
 	local key = "Player_" .. player.UserId
 	local success, err = pcall(function()
 		playerStore:UpdateAsync(key, function(oldData)
-			oldData = oldData or getDefaultData()
+			oldData = oldData or DataService:GetDefaultData()
 			return deepCopy(DataService.PlayerDatas[player])
 		end)
 	end)

@@ -1,0 +1,7 @@
+local UIHelper = {}
+
+function UIHelper:Create(name ,class, parent, properties)
+    
+end
+
+return UIHelper
