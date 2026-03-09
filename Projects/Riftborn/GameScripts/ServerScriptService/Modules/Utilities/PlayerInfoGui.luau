@@ -81,11 +81,11 @@ function PlayerInfo:UpdateInfo(player, char)
 
 	end
 
-	TitleApplier()
+	--TitleApplier()
 
-	player:WaitForChild("PlayerTitles").ActiveTitle.Changed:Connect(function()
-		TitleApplier()
-	end)
+	--player:WaitForChild("PlayerTitles").ActiveTitle.Changed:Connect(function()
+	--	TitleApplier()
+	--end)
 end
 
 return PlayerInfo
