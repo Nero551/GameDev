@@ -1,18 +1,20 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
-local UIPlus = {}
+local UIFactory = require(script.Parent.UIFactory)
+local UIHelper = {}
 
 local hoverSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Hover
 local clickSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Click
 
-function UIPlus:RotateGradient(grad)
-	if grad:IsA("UIGradient") then
+function UIHelper:RotateGradient(gradName)
+	local grad = UIFactory.UI[gradName]
+	if grad then
 		local info = TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true)
 		TweenService:Create(grad, info, { Rotation = 405 }):Play()
 	end
 end
 
-function UIPlus:Select(ui)
+function UIHelper:Select(ui)
 	local UISelected
 	local prevUISelected
 
@@ -50,7 +52,7 @@ function UIPlus:Select(ui)
 	end)
 end
 
-function UIPlus:HoverScale(ui)
+function UIHelper:HoverScale(ui)
 	local scale = ui:FindFirstChildWhichIsA("UIScale")
 	if not scale then
 		scale = Instance.new("UIScale")
@@ -67,7 +69,7 @@ function UIPlus:HoverScale(ui)
 	end)
 end
 
-function UIPlus:ClickScale(ui)
+function UIHelper:ClickScale(ui)
 	if not ui:IsA("TextButton") or not ui:IsA("ImageButton") then
 		return
 	end
@@ -87,4 +89,4 @@ function UIPlus:ClickScale(ui)
 	end)
 end
 
-return UIPlus
+return UIHelper

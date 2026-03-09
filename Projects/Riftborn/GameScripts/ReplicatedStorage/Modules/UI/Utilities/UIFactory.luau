@@ -6,6 +6,7 @@ local player = Players.LocalPlayer
 local UIFactory = {}
 
 UIFactory.UI = {}
+UIFactory.Constraints = {}
 
 function UIFactory:Create(name, class, parent, properties)
 	---Making UI---
@@ -25,7 +26,7 @@ function UIFactory:Create(name, class, parent, properties)
 		warn("Invalid Parent:", parent)
 	end
 	---Setting Properties---
-	for property, value in pairs(( DefaultProperties[class] or {})) do
+	for property, value in pairs((DefaultProperties[class] or {})) do
 		pcall(function()
 			ui[property] = value
 		end)
@@ -36,13 +37,34 @@ function UIFactory:Create(name, class, parent, properties)
 			ui[property] = value
 		end)
 		if not success then
-			warn("Failed to set property:", property, err)
+			if property ~= "KeepAspectRatio" then
+				warn("Failed to set property:", property, "|", err)
+			end
 		end
 	end
 
 	UIFactory.UI[name] = ui
-	print(UIFactory.UI)
+
+	if properties.KeepAspectRatio == true then
+		UIFactory:CreateConstraint(ui, "UIAspectRatioConstraint", ui.AbsoluteSize.X, ui.AbsoluteSize.Y)
+	end
+
 	return UIFactory.UI[name]
+end
+
+function UIFactory:CreateConstraint(parent, class, x, y)
+	local constraint = Instance.new(class)
+	if constraint then
+		constraint.Parent = parent
+		if class == "UIAspectRatioConstraint" then
+			constraint.AspectRatio = x / y
+			constraint.DominantAxis = "Width"
+			constraint.AspectType = "FitWithinMaxSize"
+		end
+	else
+		warn("Invalid Constraint Class:", class)
+	end
+	UIFactory.Constraints[parent.Name] = constraint
 end
 
 function UIFactory:Get(name)
@@ -73,6 +95,21 @@ function UIFactory:ModifyProperty(name, properties)
 		end
 	else
 		warn("Properties isn't a table or is equal nil.")
+	end
+end
+
+function UIFactory:AddAttributes(name, attributes)
+	local ui = UIFactory.UI[name]
+	if not ui then
+		warn("Invalid UI:", name)
+		return
+	end
+	if attributes and typeof(attributes) == "table" then
+		for attrName, value in pairs(attributes) do
+			ui:SetAttribute(attrName, value)
+		end
+	else
+		warn("Attributes isn't a table or is equal nil.")
 	end
 end
 

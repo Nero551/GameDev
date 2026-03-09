@@ -3,8 +3,8 @@ local DefaultProperties = {}
 DefaultProperties.Frame = {
     AnchorPoint = Vector2.new(0.5, 0.5),
 	Size = UDim2.fromScale(0.2, 0.1),
-	Position = UDim2.fromScale(0.4, 0.45),
-	BackgroundColor3 = Color3.fromRGB(50, 50, 50),
+	Position = UDim2.fromScale(0.5, 0.5),
+	BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 	BorderSizePixel = 0,
 	BackgroundTransparency = 0,
 	ClipsDescendants = false,
@@ -14,7 +14,7 @@ DefaultProperties.Frame = {
 DefaultProperties.TextLabel = {
     AnchorPoint = Vector2.new(0.5, 0.5),
 	Size = UDim2.fromScale(1, 0.3),
-	Position = UDim2.fromScale(0, 0),
+	Position = UDim2.fromScale(0.5, 0.5),
 	BackgroundTransparency = 1,
 	TextColor3 = Color3.fromRGB(255, 255, 255),
 	Font = Enum.Font.SourceSans,
@@ -23,10 +23,25 @@ DefaultProperties.TextLabel = {
 	Visible = true,
 }
 
+DefaultProperties.ImageLabel = {
+    AnchorPoint = Vector2.new(0.5, 0.5),
+    BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+	Size = UDim2.fromScale(0.1, 0.1),
+	Position = UDim2.fromScale(0.5, 0.5),
+	BackgroundTransparency = 1,
+	BorderSizePixel = 0,
+	Visible = true,
+    ImageColor3 = Color3.fromRGB(255,255,255),
+    ImageTransparency = 0,
+    ScaleType = "Stretch",
+    ResampleMode = "Default",
+}
+
 DefaultProperties.TextButton = {
     AnchorPoint = Vector2.new(0.5, 0.5),
 	Size = UDim2.fromScale(0.2, 0.1),
-	BackgroundColor3 = Color3.fromRGB(80, 80, 80),
+	Position = UDim2.fromScale(0.5, 0.5),
+	BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 	TextColor3 = Color3.fromRGB(255, 255, 255),
 	Font = Enum.Font.SourceSansBold,
 	TextScaled = true,
@@ -35,10 +50,26 @@ DefaultProperties.TextButton = {
 	Visible = true,
 }
 
+DefaultProperties.ImageButton = {
+	AnchorPoint = Vector2.new(0.5, 0.5),
+	Size = UDim2.fromScale(0.1, 0.1),
+	Position = UDim2.fromScale(0.5, 0.5),
+	BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+	BackgroundTransparency = 1,
+	BorderSizePixel = 0,
+	Visible = true,
+    ImageColor3 = Color3.fromRGB(255,255,255),
+    ImageTransparency = 0,
+    ScaleType = "Stretch",
+    ResampleMode = "Default",
+}
+
 DefaultProperties.TextBox = {
     AnchorPoint = Vector2.new(0.5, 0.5),
 	Size = UDim2.fromScale(0.2, 0.1),
-	BackgroundColor3 = Color3.fromRGB(70, 70, 70),
+	Position = UDim2.fromScale(0.5, 0.5),
+	BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+    BackgroundTransparency = 1,
 	TextColor3 = Color3.fromRGB(255, 255, 255),
 	Font = Enum.Font.SourceSans,
 	TextScaled = true,
@@ -46,15 +77,6 @@ DefaultProperties.TextBox = {
 	ClearTextOnFocus = false,
 	BorderSizePixel = 0,
 	Visible = true,
-}
-
-DefaultProperties.ImageButton = {
-    AnchorPoint = Vector2.new(0.5, 0.5),
-	Size = UDim2.fromScale(0.1, 0.1),
-	BackgroundColor3 = Color3.fromRGB(50, 50, 50),
-	BorderSizePixel = 0,
-	Visible = true,
-	AutoButtonColor = true,
 }
 
 DefaultProperties.ScreenGui = {
