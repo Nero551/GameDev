@@ -1,0 +1,116 @@
+local Gadolinium = {
+    Appearance = "A soft, silvery metal that reacts with oxygen and water.",
+    AtomicMass = 157.25,
+    AtomicNumber = 64,
+    AtomicRadius = 2.34,
+    Block = "f",
+    BoilingPointK = 3546,
+    Category = "Lanthanoid",
+    CovalentRadius = 1.82,
+    ElectronConfiguration = "[Xe] 4f75d16s2",
+    Electronegativity = 1.2,
+    Density = 7.9,
+    Electrons = 64,
+    EnergyLevels = {
+        2,
+        8,
+        18,
+        25,
+        9,
+        2,
+    },
+    Group = "Lanthanides",
+    IonizationEnergies = {
+        593.366,
+        1166.51,
+        1990.49,
+        4245,
+    },
+    Isotopes = {
+        {
+            HalfLife = {},
+            Mass = 151.92,
+            MassNumber = 152,
+            ModeOfDecay = {},
+            Name = "152Gd",
+            NaturalAbundance = 0.2,
+        },
+        {
+            HalfLife = {},
+            Mass = 153.921,
+            MassNumber = 154,
+            ModeOfDecay = {},
+            Name = "154Gd",
+            NaturalAbundance = 2.18,
+        },
+        {
+            HalfLife = {},
+            Mass = 154.923,
+            MassNumber = 155,
+            ModeOfDecay = {},
+            Name = "155Gd",
+            NaturalAbundance = 14.8,
+        },
+        {
+            HalfLife = {},
+            Mass = 155.922,
+            MassNumber = 156,
+            ModeOfDecay = {},
+            Name = "156Gd",
+            NaturalAbundance = 20.47,
+        },
+        {
+            HalfLife = {},
+            Mass = 156.924,
+            MassNumber = 157,
+            ModeOfDecay = {},
+            Name = "157Gd",
+            NaturalAbundance = 15.65,
+        },
+        {
+            HalfLife = {},
+            Mass = 157.924,
+            MassNumber = 158,
+            ModeOfDecay = {},
+            Name = "158Gd",
+            NaturalAbundance = 24.84,
+        },
+        {
+            HalfLife = {
+                "> 1.9 x 1019 y",
+            },
+            Mass = 159.927,
+            MassNumber = 160,
+            ModeOfDecay = {
+                "beta-beta-",
+            },
+            Name = "160Gd",
+            NaturalAbundance = 21.86,
+        },
+    },
+    KeyIsotopes = {
+        {
+            HalfLife = {},
+            Mass = 157.924,
+            MassNumber = 158,
+            ModeOfDecay = {},
+            Name = "158Gd",
+            NaturalAbundance = 24.84,
+        },
+    },
+    MeltingPointK = 1586,
+    Name = "Gadolinium",
+    NeutronsApprox = 94,
+    Period = 6,
+    Protons = 64,
+    RepresentativeMassNumber = 158,
+    StateAt293K = "Solid",
+    Symbol = "Gd",
+    Uses = "Gadolinium has useful properties in alloys. As little as 1% gadolinium can improve the workability of iron and chromium alloys, and their resistance to high temperatures and oxidation. It is also used in alloys for making magnets, electronic components and data storage disks. \
+\
+Its compounds are useful in magnetic resonance imaging (MRI), particularly in diagnosing cancerous tumours. \
+\
+Gadolinium is excellent at absorbing neutrons, and so is used in the core of nuclear reactors.",
+}
+
+return Gadolinium

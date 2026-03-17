@@ -1,0 +1,110 @@
+local Strontium = {
+    Appearance = "A soft, silvery metal that burns in air and reacts with water.",
+    AtomicMass = 87.62,
+    AtomicNumber = 38,
+    AtomicRadius = 2.49,
+    Block = "s",
+    BoilingPointK = 1650,
+    Category = "Alkaline",
+    CovalentRadius = 1.9,
+    ElectronAffinity = 4.631,
+    ElectronConfiguration = "[Kr] 5s2",
+    Electronegativity = 0.95,
+    Density = 2.64,
+    Electrons = 38,
+    EnergyLevels = {
+        2,
+        8,
+        18,
+        8,
+        2,
+    },
+    Group = "2",
+    IonizationEnergies = {
+        549.47,
+        1064.243,
+        4138.26,
+        5500,
+        6908.4,
+        8760.9,
+        10227,
+        11800.2,
+    },
+    Isotopes = {
+        {
+            HalfLife = {},
+            Mass = 83.913,
+            MassNumber = 84,
+            ModeOfDecay = {},
+            Name = "84Sr",
+            NaturalAbundance = 0.56,
+        },
+        {
+            HalfLife = {},
+            Mass = 85.909,
+            MassNumber = 86,
+            ModeOfDecay = {},
+            Name = "86Sr",
+            NaturalAbundance = 9.86,
+        },
+        {
+            HalfLife = {},
+            Mass = 86.909,
+            MassNumber = 87,
+            ModeOfDecay = {},
+            Name = "87Sr",
+            NaturalAbundance = 7,
+        },
+        {
+            HalfLife = {},
+            Mass = 87.906,
+            MassNumber = 88,
+            ModeOfDecay = {},
+            Name = "88Sr",
+            NaturalAbundance = 82.58,
+        },
+    },
+    KeyIsotopes = {
+        {
+            HalfLife = {},
+            Mass = 85.909,
+            MassNumber = 86,
+            ModeOfDecay = {},
+            Name = "86Sr",
+            NaturalAbundance = 9.86,
+        },
+        {
+            HalfLife = {},
+            Mass = 86.909,
+            MassNumber = 87,
+            ModeOfDecay = {},
+            Name = "87Sr",
+            NaturalAbundance = 7,
+        },
+        {
+            HalfLife = {},
+            Mass = 87.906,
+            MassNumber = 88,
+            ModeOfDecay = {},
+            Name = "88Sr",
+            NaturalAbundance = 82.58,
+        },
+    },
+    MeltingPointK = 1050,
+    Name = "Strontium",
+    NeutronsApprox = 48,
+    Period = 5,
+    Protons = 38,
+    RepresentativeMassNumber = 86,
+    StateAt293K = "Solid",
+    Symbol = "Sr",
+    Uses = "Strontium is best known for the brilliant reds its salts give to fireworks and flares. It is also used in producing ferrite magnets and refining zinc. \
+\
+Modern 'glow-in-the-dark' paints and plastics contain strontium aluminate. They absorb light during the day and release it slowly for hours afterwards.\
+\
+Strontium-90, a radioactive isotope, is a by-product of nuclear reactors and present in nuclear fallout. It has a half-life of 28 years. It is absorbed by bone tissue instead of calcium and can destroy bone marrow and cause cancer. However, it is also useful as it is one of the best high-energy beta-emitters known. It can be used to generate electricity for space vehicles, remote weather stations and navigation buoys. It can also be used for thickness gauges and to remove static charges from machinery handling paper or plastic.\
+\
+Strontium chloride hexahydrate is an ingredient in toothpaste for sensitive teeth.",
+}
+
+return Strontium

@@ -29,18 +29,19 @@ local statePriority = {
 }
 
 
-function StateHandler:HandleStates(character:Model , runSpeed)
+function StateHandler:HandleStates(character:Model ,dt, runSpeed)
 	local humanoid = character:WaitForChild("Humanoid")
 	
 	------StateHandler------
 	local finalWalkSpeed = 5
 	local finalJumpPower = 50 
 
+
 	for _, stateInfo in ipairs(statePriority) do
 		if StateChecker:CheckState(character, stateInfo.Name) then
 			
 			if stateInfo.Name == "Sprinting" then
-				finalWalkSpeed = runSpeed or stateInfo.WS	
+				finalWalkSpeed = runSpeed or stateInfo.WS
 				finalJumpPower = stateInfo.JP
 			else
 				finalWalkSpeed = stateInfo.WS

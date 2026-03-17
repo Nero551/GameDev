@@ -4,7 +4,6 @@ local CanDoAction = require(script.Parent.Parent.CanDoAction)
 return function(npc)
     local AIService = require(ServerScriptService.Services.AIService)
     
-	AIService:StateUpdater(npc)
 	local AIData = AIService.ActiveAIs[npc]
 	if not AIData then return end
 	AIService:AcquireTarget(npc)

@@ -1,0 +1,143 @@
+local Tin = {
+    Appearance = "A soft, pliable metal. Below 13C it slowly changes to a powder form.",
+    AtomicMass = 118.71,
+    AtomicNumber = 50,
+    AtomicRadius = 2.17,
+    Block = "p",
+    BoilingPointK = 2859,
+    Category = "Poor",
+    CovalentRadius = 1.4,
+    ElectronAffinity = 107.298,
+    ElectronConfiguration = "[Kr] 4d105s25p2",
+    Electronegativity = 1.96,
+    Density = 7.365,
+    Electrons = 50,
+    EnergyLevels = {
+        2,
+        8,
+        18,
+        18,
+        4,
+    },
+    Group = "14",
+    IonizationEnergies = {
+        708.581,
+        1411.793,
+        2943.054,
+        3930.332,
+        6973.96,
+    },
+    Isotopes = {
+        {
+            HalfLife = {},
+            Mass = 111.905,
+            MassNumber = 112,
+            ModeOfDecay = {},
+            Name = "112Sn",
+            NaturalAbundance = 0.97,
+        },
+        {
+            HalfLife = {},
+            Mass = 113.903,
+            MassNumber = 114,
+            ModeOfDecay = {},
+            Name = "114Sn",
+            NaturalAbundance = 0.66,
+        },
+        {
+            HalfLife = {},
+            Mass = 114.903,
+            MassNumber = 115,
+            ModeOfDecay = {},
+            Name = "115Sn",
+            NaturalAbundance = 0.34,
+        },
+        {
+            HalfLife = {},
+            Mass = 115.902,
+            MassNumber = 116,
+            ModeOfDecay = {},
+            Name = "116Sn",
+            NaturalAbundance = 14.54,
+        },
+        {
+            HalfLife = {},
+            Mass = 116.903,
+            MassNumber = 117,
+            ModeOfDecay = {},
+            Name = "117Sn",
+            NaturalAbundance = 7.68,
+        },
+        {
+            HalfLife = {},
+            Mass = 117.902,
+            MassNumber = 118,
+            ModeOfDecay = {},
+            Name = "118Sn",
+            NaturalAbundance = 24.22,
+        },
+        {
+            HalfLife = {},
+            Mass = 118.903,
+            MassNumber = 119,
+            ModeOfDecay = {},
+            Name = "119Sn",
+            NaturalAbundance = 8.59,
+        },
+        {
+            HalfLife = {},
+            Mass = 119.902,
+            MassNumber = 120,
+            ModeOfDecay = {},
+            Name = "120Sn",
+            NaturalAbundance = 32.58,
+        },
+        {
+            HalfLife = {},
+            Mass = 121.903,
+            MassNumber = 122,
+            ModeOfDecay = {},
+            Name = "122Sn",
+            NaturalAbundance = 4.63,
+        },
+        {
+            HalfLife = {
+                "> 2.2 x 1018 y",
+            },
+            Mass = 123.905,
+            MassNumber = 124,
+            ModeOfDecay = {
+                "beta-beta-",
+            },
+            Name = "124Sn",
+            NaturalAbundance = 5.79,
+        },
+    },
+    KeyIsotopes = {
+        {
+            HalfLife = {},
+            Mass = 119.902,
+            MassNumber = 120,
+            ModeOfDecay = {},
+            Name = "120Sn",
+            NaturalAbundance = 32.58,
+        },
+    },
+    MeltingPointK = 505.078,
+    Name = "Tin",
+    NeutronsApprox = 70,
+    Period = 5,
+    Protons = 50,
+    RepresentativeMassNumber = 120,
+    StateAt293K = "Solid",
+    Symbol = "Sn",
+    Uses = "Tin has many uses. It takes a high polish and is used to coat other metals to prevent corrosion, such as in tin cans, which are made of tin-coated steel. Alloys of tin are important, such as soft solder, pewter, bronze and phosphor bronze. A niobium-tin alloy is used for superconducting magnets. \
+\
+Most window glass is made by floating molten glass on molten tin to produce a flat surface. Tin salts sprayed onto glass are used to produce electrically conductive coatings.\
+\
+The most important tin salt used is tin(II) chloride, which is used as a reducing agent and as a mordant for dyeing calico and silk. Tin(IV) oxide is used for ceramics and gas sensors. Zinc stannate (Zn2SnO4) is a fire-retardant used in plastics.\
+\
+Some tin compounds have been used as anti-fouling paint for ships and boats, to prevent barnacles. However, even at low levels these compounds are deadly to marine life, especially oysters. Its use has now been banned in most countries.",
+}
+
+return Tin

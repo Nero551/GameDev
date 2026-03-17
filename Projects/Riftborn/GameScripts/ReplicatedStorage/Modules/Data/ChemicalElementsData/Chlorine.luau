@@ -1,0 +1,86 @@
+local Chlorine = {
+    Appearance = "A yellowy-green dense gas with a choking smell.",
+    AtomicMass = 35.45,
+    AtomicNumber = 17,
+    AtomicRadius = 1.75,
+    Block = "p",
+    BoilingPointK = 239.11,
+    Category = "Nonmetal",
+    CovalentRadius = 1,
+    ElectronAffinity = 348.575,
+    ElectronConfiguration = "[Ne] 3s23p5",
+    Electronegativity = 3.16,
+    Density = 3.2,
+    Electrons = 17,
+    EnergyLevels = {
+        2,
+        8,
+        7,
+    },
+    Group = "17",
+    IonizationEnergies = {
+        1251.186,
+        2297.663,
+        3821.78,
+        5158.608,
+        6541.7,
+        9361.97,
+        11018.221,
+        33603.91,
+    },
+    Isotopes = {
+        {
+            HalfLife = {},
+            Mass = 34.969,
+            MassNumber = 35,
+            ModeOfDecay = {},
+            Name = "35Cl",
+            NaturalAbundance = 75.76,
+        },
+        {
+            HalfLife = {},
+            Mass = 36.966,
+            MassNumber = 37,
+            ModeOfDecay = {},
+            Name = "37Cl",
+            NaturalAbundance = 24.24,
+        },
+    },
+    KeyIsotopes = {
+        {
+            HalfLife = {},
+            Mass = 34.969,
+            MassNumber = 35,
+            ModeOfDecay = {},
+            Name = "35Cl",
+            NaturalAbundance = 75.76,
+        },
+        {
+            HalfLife = {},
+            Mass = 36.966,
+            MassNumber = 37,
+            ModeOfDecay = {},
+            Name = "37Cl",
+            NaturalAbundance = 24.24,
+        },
+    },
+    MeltingPointK = 171.7,
+    Name = "Chlorine",
+    NeutronsApprox = 18,
+    Period = 3,
+    Protons = 17,
+    RepresentativeMassNumber = 35,
+    StateAt293K = "Gas",
+    Symbol = "Cl",
+    Uses = "Chlorine kills bacteria - it is a disinfectant. It is used to treat drinking water and swimming pool water. It is also used to make hundreds of consumer products from paper to paints, and from textiles to insecticides. \
+\
+About 20% of chlorine produced is used to make PVC. This is a very versatile plastic used in window frames, car interiors, electrical wiring insulation, water pipes, blood bags and vinyl flooring.\
+\
+Another major use for chlorine is in organic chemistry. It is used as an oxidising agent and in substitution reactions. 85% of pharmaceuticals use chlorine or its compounds at some stage in their manufacture.\
+\
+In the past chlorine was commonly used to make chloroform (an anaesthetic) and carbon tetrachloride (a dry-cleaning solvent). However, both of these chemicals are now strictly controlled as they can cause liver damage. \
+\
+Chlorine gas is itself very poisonous, and was used as a chemical weapon during the First World War.",
+}
+
+return Chlorine

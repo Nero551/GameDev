@@ -1,0 +1,90 @@
+local Sulfur = {
+    Appearance = "There are several allotropes of sulfur. The most common appears as yellow crystals or powder.",
+    AtomicMass = 32.06,
+    AtomicNumber = 16,
+    AtomicRadius = 1.8,
+    Block = "p",
+    BoilingPointK = 717.76,
+    Category = "Nonmetal",
+    CovalentRadius = 1.04,
+    ElectronAffinity = 200.41,
+    ElectronConfiguration = "[Ne] 3s23p4",
+    Electronegativity = 2.58,
+    Density = 2.07,
+    Electrons = 16,
+    EnergyLevels = {
+        2,
+        8,
+        6,
+    },
+    Group = "16",
+    IonizationEnergies = {
+        999.589,
+        2251.763,
+        3356.72,
+        4556.231,
+        7004.305,
+        8495.824,
+        27107.363,
+        31719.56,
+    },
+    Isotopes = {
+        {
+            HalfLife = {},
+            Mass = 31.972,
+            MassNumber = 32,
+            ModeOfDecay = {},
+            Name = "32S",
+            NaturalAbundance = 94.99,
+        },
+        {
+            HalfLife = {},
+            Mass = 32.971,
+            MassNumber = 33,
+            ModeOfDecay = {},
+            Name = "33S",
+            NaturalAbundance = 0.75,
+        },
+        {
+            HalfLife = {},
+            Mass = 33.968,
+            MassNumber = 34,
+            ModeOfDecay = {},
+            Name = "34S",
+            NaturalAbundance = 4.25,
+        },
+        {
+            HalfLife = {},
+            Mass = 35.967,
+            MassNumber = 36,
+            ModeOfDecay = {},
+            Name = "36S",
+            NaturalAbundance = 0.01,
+        },
+    },
+    KeyIsotopes = {
+        {
+            HalfLife = {},
+            Mass = 31.972,
+            MassNumber = 32,
+            ModeOfDecay = {},
+            Name = "32S",
+            NaturalAbundance = 94.99,
+        },
+    },
+    MeltingPointK = 388.36,
+    Name = "Sulfur",
+    NeutronsApprox = 16,
+    Period = 3,
+    Protons = 16,
+    RepresentativeMassNumber = 32,
+    StateAt293K = "Solid",
+    Symbol = "S",
+    Uses = "Sulfur is used in the vulcanisation of black rubber, as a fungicide and in black gunpowder. Most sulfur is, however, used in the production of sulfuric acid, which is perhaps the most important chemical manufactured by western civilisations. The most important of sulfuric acid's many uses is in the manufacture of phosphoric acid, to make phosphates for fertilisers. \
+\
+Mercaptans are a family of organosulfur compounds. Some are added to natural gas supplies because of their distinctive smell, so that gas leaks can be detected easily. Others are used in silver polish, and in the production of pesticides and herbicides. \
+\
+Sulfites are used to bleach paper and as preservatives for many foodstuffs. Many surfactants and detergents are sulfate derivatives. Calcium sulfate (gypsum) is mined on the scale of 100 million tonnes each year for use in cement and plaster.",
+}
+
+return Sulfur

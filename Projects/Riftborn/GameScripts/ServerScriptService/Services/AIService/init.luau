@@ -99,7 +99,7 @@ function AIService:CreateAI(npc)
 	}	
 end
 
-function AIService:StateUpdater(npc)
+function AIService:StateUpdater(npc,dt)
 	local AIData = AIService.ActiveAIs[npc]
 	if not AIData then return end
 	
@@ -116,7 +116,7 @@ function AIService:StateUpdater(npc)
 	if ActionModules[AIData.State] then
 		ActionModules[AIData.State](npc)
 	end
-	StateHandler:HandleStates(npc, AIData.RunSpeed)
+	StateHandler:HandleStates(npc,dt, AIData.RunSpeed)
 end
 
 function AIService:DestroyAI(npc)

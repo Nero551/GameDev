@@ -1,0 +1,57 @@
+local Tennessine = {
+    Appearance = "A highly radioactive metal, of which only a few atoms have ever been made.",
+    AtomicMass = -294,
+    AtomicNumber = 117,
+    Block = "p",
+    Category = "Other",
+    CovalentRadius = 1.65,
+    ElectronConfiguration = "[Rn] 5f146d107s27p5",
+    Density = 7.17,
+    Electrons = 117,
+    EnergyLevels = {
+        2,
+        8,
+        18,
+        32,
+        32,
+        18,
+        7,
+    },
+    Group = "17",
+    IonizationEnergies = {},
+    Isotopes = {
+        {
+            HalfLife = {},
+            Mass = 292.207,
+            MassNumber = 292,
+            ModeOfDecay = {},
+            Name = "292Ts",
+        },
+        {
+            HalfLife = {},
+            Mass = 294.21,
+            MassNumber = 294,
+            ModeOfDecay = {},
+            Name = "294Ts",
+        },
+    },
+    KeyIsotopes = {
+        {
+            HalfLife = {},
+            Mass = 294.21,
+            MassNumber = 294,
+            ModeOfDecay = {},
+            Name = "294Ts",
+        },
+    },
+    Name = "Tennessine",
+    NeutronsApprox = 177,
+    Period = 7,
+    Protons = 117,
+    RepresentativeMassNumber = 294,
+    StateAt293K = "Solid",
+    Symbol = "Ts",
+    Uses = "At present, it is only used in research.",
+}
+
+return Tennessine

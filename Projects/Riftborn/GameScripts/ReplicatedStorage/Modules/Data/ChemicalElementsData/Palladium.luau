@@ -1,0 +1,102 @@
+local Palladium = {
+    Appearance = "A shiny, silvery-white metal that resists corrosion.",
+    AtomicMass = 106.42,
+    AtomicNumber = 46,
+    AtomicRadius = 2.1,
+    Block = "d",
+    BoilingPointK = 3236,
+    Category = "Transition",
+    CovalentRadius = 1.3,
+    ElectronAffinity = 54.225,
+    ElectronConfiguration = "[Kr] 4d10",
+    Electronegativity = 2.2,
+    Density = 12.023,
+    Electrons = 46,
+    EnergyLevels = {
+        2,
+        8,
+        18,
+        18,
+    },
+    Group = "10",
+    IonizationEnergies = {
+        804.389,
+        1874.71,
+        3177.26,
+    },
+    Isotopes = {
+        {
+            HalfLife = {},
+            Mass = 101.906,
+            MassNumber = 102,
+            ModeOfDecay = {},
+            Name = "102Pd",
+            NaturalAbundance = 1.02,
+        },
+        {
+            HalfLife = {},
+            Mass = 103.904,
+            MassNumber = 104,
+            ModeOfDecay = {},
+            Name = "104Pd",
+            NaturalAbundance = 11.14,
+        },
+        {
+            HalfLife = {},
+            Mass = 104.905,
+            MassNumber = 105,
+            ModeOfDecay = {},
+            Name = "105Pd",
+            NaturalAbundance = 22.33,
+        },
+        {
+            HalfLife = {},
+            Mass = 105.903,
+            MassNumber = 106,
+            ModeOfDecay = {},
+            Name = "106Pd",
+            NaturalAbundance = 27.33,
+        },
+        {
+            HalfLife = {},
+            Mass = 107.904,
+            MassNumber = 108,
+            ModeOfDecay = {},
+            Name = "108Pd",
+            NaturalAbundance = 26.46,
+        },
+        {
+            HalfLife = {},
+            Mass = 109.905,
+            MassNumber = 110,
+            ModeOfDecay = {},
+            Name = "110Pd",
+            NaturalAbundance = 11.72,
+        },
+    },
+    KeyIsotopes = {
+        {
+            HalfLife = {},
+            Mass = 105.903,
+            MassNumber = 106,
+            ModeOfDecay = {},
+            Name = "106Pd",
+            NaturalAbundance = 27.33,
+        },
+    },
+    MeltingPointK = 1828,
+    Name = "Palladium",
+    NeutronsApprox = 60,
+    Period = 5,
+    Protons = 46,
+    RepresentativeMassNumber = 106,
+    StateAt293K = "Solid",
+    Symbol = "Pd",
+    Uses = "Most palladium is used in catalytic converters for cars. It is also used in jewellery and some dental fillings and crowns. White gold is an alloy of gold that has been decolourised by alloying with another metal, sometimes palladium. \
+\
+It is used in the electronics industry in ceramic capacitors, found in laptop computers and mobile phones. These consist of layers of palladium sandwiched between layers of ceramic.\
+\
+Finely divided palladium is a good catalyst and is used for hydrogenation and dehydrogenation reactions. Hydrogen easily diffuses through heated palladium and this provides a way of separating and purifying the gas.",
+}
+
+return Palladium
