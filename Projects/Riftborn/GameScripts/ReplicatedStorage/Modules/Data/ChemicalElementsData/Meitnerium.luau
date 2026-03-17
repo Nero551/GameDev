@@ -1,13 +1,23 @@
 local Meitnerium = {
-    Appearance = "A highly radioactive metal, of which only a few atoms have ever been made.",
-    AtomicMass = -278,
+    Name = "Meitnerium",
+    Symbol = "Mt",
     AtomicNumber = 109,
-    Block = "d",
-    Category = "Other",
-    CovalentRadius = 1.29,
-    ElectronConfiguration = "[Rn] 5f146d77s2",
-    Density = 37.4,
+    AtomicMass = -278,
+    RepresentativeMassNumber = 276,
+    Protons = 109,
     Electrons = 109,
+    NeutronsApprox = 167,
+    Category = "Other",
+    Group = "9",
+    Period = 7,
+    Block = "d",
+    StateAt293K = "Solid",
+    Density = 37.4,
+    Appearance = "A highly radioactive metal, of which only a few atoms have ever been made.",
+    Uses = {
+        "At present it is only used in research.",
+    },
+    ElectronConfiguration = "[Rn] 5f146d77s2",
     EnergyLevels = {
         2,
         8,
@@ -17,23 +27,11 @@ local Meitnerium = {
         15,
         2,
     },
-    Group = "9",
+    CovalentRadius = 1.29,
     IonizationEnergies = {},
-    Isotopes = {
-        {
-            HalfLife = {
-                "~ 0.7 s",
-            },
-            Mass = 276.152,
-            MassNumber = 276,
-            ModeOfDecay = {
-                "alpha",
-            },
-            Name = "276Mt",
-        },
-    },
     KeyIsotopes = {
         {
+            Name = "276Mt",
             HalfLife = {
                 "~ 0.7 s",
             },
@@ -42,17 +40,21 @@ local Meitnerium = {
             ModeOfDecay = {
                 "alpha",
             },
-            Name = "276Mt",
         },
     },
-    Name = "Meitnerium",
-    NeutronsApprox = 167,
-    Period = 7,
-    Protons = 109,
-    RepresentativeMassNumber = 276,
-    StateAt293K = "Solid",
-    Symbol = "Mt",
-    Uses = "At present it is only used in research.",
+    Isotopes = {
+        {
+            Name = "276Mt",
+            HalfLife = {
+                "~ 0.7 s",
+            },
+            Mass = 276.152,
+            MassNumber = 276,
+            ModeOfDecay = {
+                "alpha",
+            },
+        },
+    },
 }
 
 return Meitnerium

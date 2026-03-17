@@ -1,14 +1,23 @@
 local Einsteinium = {
-    Appearance = "A radioactive metal, only a few milligrams of which are made each year.",
-    AtomicMass = -252,
+    Name = "Einsteinium",
+    Symbol = "Es",
     AtomicNumber = 99,
-    AtomicRadius = 2.45,
-    Block = "f",
-    Category = "Actinoid",
-    CovalentRadius = 1.65,
-    ElectronConfiguration = "[Rn] 5f117s2",
-    Density = 8.84,
+    AtomicMass = -252,
+    RepresentativeMassNumber = 252,
+    Protons = 99,
     Electrons = 99,
+    NeutronsApprox = 153,
+    Category = "Actinoid",
+    Group = "Actinides",
+    Period = 7,
+    Block = "f",
+    StateAt293K = "Solid",
+    Density = 8.84,
+    Appearance = "A radioactive metal, only a few milligrams of which are made each year.",
+    Uses = {
+        "Einsteinium has no uses outside research.",
+    },
+    ElectronConfiguration = "[Rn] 5f117s2",
     EnergyLevels = {
         2,
         8,
@@ -18,27 +27,16 @@ local Einsteinium = {
         8,
         2,
     },
-    Group = "Actinides",
+    AtomicRadius = 2.45,
+    CovalentRadius = 1.65,
     IonizationEnergies = {
         619.44,
         1158,
     },
-    Isotopes = {
-        {
-            HalfLife = {
-                "1.29 y",
-            },
-            Mass = 252.083,
-            MassNumber = 252,
-            ModeOfDecay = {
-                "alpha",
-                "EC",
-            },
-            Name = "252Es",
-        },
-    },
+    MeltingPointK = 1133,
     KeyIsotopes = {
         {
+            Name = "252Es",
             HalfLife = {
                 "1.29 y",
             },
@@ -48,18 +46,22 @@ local Einsteinium = {
                 "alpha",
                 "EC",
             },
-            Name = "252Es",
         },
     },
-    MeltingPointK = 1133,
-    Name = "Einsteinium",
-    NeutronsApprox = 153,
-    Period = 7,
-    Protons = 99,
-    RepresentativeMassNumber = 252,
-    StateAt293K = "Solid",
-    Symbol = "Es",
-    Uses = "Einsteinium has no uses outside research.",
+    Isotopes = {
+        {
+            Name = "252Es",
+            HalfLife = {
+                "1.29 y",
+            },
+            Mass = 252.083,
+            MassNumber = 252,
+            ModeOfDecay = {
+                "alpha",
+                "EC",
+            },
+        },
+    },
 }
 
 return Einsteinium

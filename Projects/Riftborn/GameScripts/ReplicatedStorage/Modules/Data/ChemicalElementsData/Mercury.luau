@@ -1,16 +1,27 @@
 local Mercury = {
-    Appearance = "A liquid, silvery metal.",
-    AtomicMass = 200.59,
+    Name = "Mercury",
+    Symbol = "Hg",
     AtomicNumber = 80,
-    AtomicRadius = 2.23,
-    Block = "d",
-    BoilingPointK = 629.769,
-    Category = "Transition",
-    CovalentRadius = 1.32,
-    ElectronConfiguration = "[Xe] 4f145d106s2",
-    Electronegativity = 1.9,
-    Density = 13.534,
+    AtomicMass = 200.59,
+    RepresentativeMassNumber = 202,
+    Protons = 80,
     Electrons = 80,
+    NeutronsApprox = 122,
+    Category = "Transition",
+    Group = "12",
+    Period = 6,
+    Block = "d",
+    StateAt293K = "Liquid",
+    Density = 13.534,
+    Appearance = "A liquid, silvery metal.",
+    Uses = {
+        "Mercury has fascinated people for millennia, as a heavy liquid metal. However, because of its toxicity, many uses of mercury are being phased out or are under review.",
+        "It is now mainly used in the chemical industry as catalysts. It is also used in some electrical switches and rectifiers.",
+        "Previously its major use was in the manufacture of sodium hydroxide and chlorine by electrolysis of brine. These plants will all be phased out by 2020. It was also commonly used in batteries, fluorescent lights, felt production, thermometers and barometers. Again, these uses have been phased out.",
+        "Mercury easily forms alloys, called amalgams, with other metals such as gold, silver and tin. The ease with which it amalgamates with gold made it useful in recovering gold from its ores. Mercury amalgams were also used in dental fillings.",
+        "Mercuric sulfide (vermilion) is a high-grade, bright-red paint pigment, but is very toxic so is now only used with great care.",
+    },
+    ElectronConfiguration = "[Xe] 4f145d106s2",
     EnergyLevels = {
         2,
         8,
@@ -19,14 +30,29 @@ local Mercury = {
         18,
         2,
     },
-    Group = "12",
+    AtomicRadius = 2.23,
+    CovalentRadius = 1.32,
+    Electronegativity = 1.9,
     IonizationEnergies = {
         1007.066,
         1809.756,
         3299.8,
     },
+    MeltingPointK = 234.321,
+    BoilingPointK = 629.769,
+    KeyIsotopes = {
+        {
+            Name = "202Hg",
+            HalfLife = {},
+            Mass = 201.971,
+            MassNumber = 202,
+            ModeOfDecay = {},
+            NaturalAbundance = 29.86,
+        },
+    },
     Isotopes = {
         {
+            Name = "196Hg",
             HalfLife = {
                 "> 2.5 x 1018 y",
             },
@@ -35,85 +61,57 @@ local Mercury = {
             ModeOfDecay = {
                 "alpha",
             },
-            Name = "196Hg",
             NaturalAbundance = 0.15,
         },
         {
+            Name = "198Hg",
             HalfLife = {},
             Mass = 197.967,
             MassNumber = 198,
             ModeOfDecay = {},
-            Name = "198Hg",
             NaturalAbundance = 9.97,
         },
         {
+            Name = "199Hg",
             HalfLife = {},
             Mass = 198.968,
             MassNumber = 199,
             ModeOfDecay = {},
-            Name = "199Hg",
             NaturalAbundance = 16.87,
         },
         {
+            Name = "200Hg",
             HalfLife = {},
             Mass = 199.968,
             MassNumber = 200,
             ModeOfDecay = {},
-            Name = "200Hg",
             NaturalAbundance = 23.1,
         },
         {
+            Name = "201Hg",
             HalfLife = {},
             Mass = 200.97,
             MassNumber = 201,
             ModeOfDecay = {},
-            Name = "201Hg",
             NaturalAbundance = 13.18,
         },
         {
+            Name = "202Hg",
             HalfLife = {},
             Mass = 201.971,
             MassNumber = 202,
             ModeOfDecay = {},
-            Name = "202Hg",
             NaturalAbundance = 29.86,
         },
         {
+            Name = "204Hg",
             HalfLife = {},
             Mass = 203.973,
             MassNumber = 204,
             ModeOfDecay = {},
-            Name = "204Hg",
             NaturalAbundance = 6.87,
         },
     },
-    KeyIsotopes = {
-        {
-            HalfLife = {},
-            Mass = 201.971,
-            MassNumber = 202,
-            ModeOfDecay = {},
-            Name = "202Hg",
-            NaturalAbundance = 29.86,
-        },
-    },
-    MeltingPointK = 234.321,
-    Name = "Mercury",
-    NeutronsApprox = 122,
-    Period = 6,
-    Protons = 80,
-    RepresentativeMassNumber = 202,
-    StateAt293K = "Liquid",
-    Symbol = "Hg",
-    Uses = "Mercury has fascinated people for millennia, as a heavy liquid metal. However, because of its toxicity, many uses of mercury are being phased out or are under review.\
-\
-It is now mainly used in the chemical industry as catalysts. It is also used in some electrical switches and rectifiers.\
-\
-Previously its major use was in the manufacture of sodium hydroxide and chlorine by electrolysis of brine. These plants will all be phased out by 2020. It was also commonly used in batteries, fluorescent lights, felt production, thermometers and barometers. Again, these uses have been phased out.\
-\
-Mercury easily forms alloys, called amalgams, with other metals such as gold, silver and tin. The ease with which it amalgamates with gold made it useful in recovering gold from its ores. Mercury amalgams were also used in dental fillings.\
-\
-Mercuric sulfide (vermilion) is a high-grade, bright-red paint pigment, but is very toxic so is now only used with great care.",
 }
 
 return Mercury

@@ -1,13 +1,23 @@
 local Darmstadtium = {
-    Appearance = "A highly radioactive metal, of which only a few atoms have ever been made.",
-    AtomicMass = -281,
+    Name = "Darmstadtium",
+    Symbol = "Ds",
     AtomicNumber = 110,
-    Block = "d",
-    Category = "Other",
-    CovalentRadius = 1.28,
-    ElectronConfiguration = "[Rn] 5f146d97s1",
-    Density = 34.8,
+    AtomicMass = -281,
+    RepresentativeMassNumber = 281,
+    Protons = 110,
     Electrons = 110,
+    NeutronsApprox = 171,
+    Category = "Other",
+    Group = "10",
+    Period = 7,
+    Block = "d",
+    StateAt293K = "Solid",
+    Density = 34.8,
+    Appearance = "A highly radioactive metal, of which only a few atoms have ever been made.",
+    Uses = {
+        "At present, it is only used in research.",
+    },
+    ElectronConfiguration = "[Rn] 5f146d97s1",
     EnergyLevels = {
         2,
         8,
@@ -17,23 +27,11 @@ local Darmstadtium = {
         17,
         1,
     },
-    Group = "10",
+    CovalentRadius = 1.28,
     IonizationEnergies = {},
-    Isotopes = {
-        {
-            HalfLife = {
-                "13 s",
-            },
-            Mass = 281.165,
-            MassNumber = 281,
-            ModeOfDecay = {
-                "sf",
-            },
-            Name = "281Ds",
-        },
-    },
     KeyIsotopes = {
         {
+            Name = "281Ds",
             HalfLife = {
                 "13 s",
             },
@@ -42,17 +40,21 @@ local Darmstadtium = {
             ModeOfDecay = {
                 "sf",
             },
-            Name = "281Ds",
         },
     },
-    Name = "Darmstadtium",
-    NeutronsApprox = 171,
-    Period = 7,
-    Protons = 110,
-    RepresentativeMassNumber = 281,
-    StateAt293K = "Solid",
-    Symbol = "Ds",
-    Uses = "At present, it is only used in research.",
+    Isotopes = {
+        {
+            Name = "281Ds",
+            HalfLife = {
+                "13 s",
+            },
+            Mass = 281.165,
+            MassNumber = 281,
+            ModeOfDecay = {
+                "sf",
+            },
+        },
+    },
 }
 
 return Darmstadtium

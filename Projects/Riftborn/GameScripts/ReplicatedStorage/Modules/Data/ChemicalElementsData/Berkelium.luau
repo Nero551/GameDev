@@ -1,14 +1,23 @@
 local Berkelium = {
-    Appearance = "Berkelium is a radioactive, silvery metal.",
-    AtomicMass = -247,
+    Name = "Berkelium",
+    Symbol = "Bk",
     AtomicNumber = 97,
-    AtomicRadius = 2.44,
-    Block = "f",
-    Category = "Actinoid",
-    CovalentRadius = 1.68,
-    ElectronConfiguration = "[Rn] 5f97s2",
-    Density = 14.78,
+    AtomicMass = -247,
+    RepresentativeMassNumber = 247,
+    Protons = 97,
     Electrons = 97,
+    NeutronsApprox = 150,
+    Category = "Actinoid",
+    Group = "Actinides",
+    Period = 7,
+    Block = "f",
+    StateAt293K = "Solid",
+    Density = 14.78,
+    Appearance = "Berkelium is a radioactive, silvery metal.",
+    Uses = {
+        "Because it is so rare, berkelium has no commercial or technological use at present.",
+    },
+    ElectronConfiguration = "[Rn] 5f97s2",
     EnergyLevels = {
         2,
         8,
@@ -18,40 +27,15 @@ local Berkelium = {
         8,
         2,
     },
-    Group = "Actinides",
+    AtomicRadius = 2.44,
+    CovalentRadius = 1.68,
     IonizationEnergies = {
         598.007,
     },
-    Isotopes = {
-        {
-            HalfLife = {
-                "1.43 x 103 y",
-            },
-            Mass = 247.07,
-            MassNumber = 247,
-            ModeOfDecay = {
-                "alpha",
-            },
-            Name = "247Bk",
-        },
-        {
-            HalfLife = {
-                "320 d",
-                nil,
-                "1.8 x 109 y",
-            },
-            Mass = 249.075,
-            MassNumber = 249,
-            ModeOfDecay = {
-                "beta",
-                "alpha",
-                "sf",
-            },
-            Name = "249Bk",
-        },
-    },
+    MeltingPointK = 1259,
     KeyIsotopes = {
         {
+            Name = "247Bk",
             HalfLife = {
                 "1.43 x 103 y",
             },
@@ -60,9 +44,9 @@ local Berkelium = {
             ModeOfDecay = {
                 "alpha",
             },
-            Name = "247Bk",
         },
         {
+            Name = "249Bk",
             HalfLife = {
                 "320 d",
                 nil,
@@ -75,18 +59,36 @@ local Berkelium = {
                 "alpha",
                 "sf",
             },
-            Name = "249Bk",
         },
     },
-    MeltingPointK = 1259,
-    Name = "Berkelium",
-    NeutronsApprox = 150,
-    Period = 7,
-    Protons = 97,
-    RepresentativeMassNumber = 247,
-    StateAt293K = "Solid",
-    Symbol = "Bk",
-    Uses = "Because it is so rare, berkelium has no commercial or technological use at present.",
+    Isotopes = {
+        {
+            Name = "247Bk",
+            HalfLife = {
+                "1.43 x 103 y",
+            },
+            Mass = 247.07,
+            MassNumber = 247,
+            ModeOfDecay = {
+                "alpha",
+            },
+        },
+        {
+            Name = "249Bk",
+            HalfLife = {
+                "320 d",
+                nil,
+                "1.8 x 109 y",
+            },
+            Mass = 249.075,
+            MassNumber = 249,
+            ModeOfDecay = {
+                "beta",
+                "alpha",
+                "sf",
+            },
+        },
+    },
 }
 
 return Berkelium

@@ -1,24 +1,39 @@
 local Iron = {
-    Appearance = "A shiny, greyish metal that rusts in damp air.",
-    AtomicMass = 55.845,
+    Name = "Iron",
+    Symbol = "Fe",
     AtomicNumber = 26,
-    AtomicRadius = 2.04,
-    Block = "d",
-    BoilingPointK = 3134,
-    Category = "Transition",
-    CovalentRadius = 1.24,
-    ElectronAffinity = 14.569,
-    ElectronConfiguration = "[Ar] 3d64s2",
-    Electronegativity = 1.83,
-    Density = 7.874,
+    AtomicMass = 55.845,
+    RepresentativeMassNumber = 56,
+    Protons = 26,
     Electrons = 26,
+    NeutronsApprox = 30,
+    Category = "Transition",
+    Group = "8",
+    Period = 4,
+    Block = "d",
+    StateAt293K = "Solid",
+    Density = 7.874,
+    Appearance = "A shiny, greyish metal that rusts in damp air.",
+    Uses = {
+        "Iron is an enigma - it rusts easily, yet it is the most important of all metals. 90% of all metal that is refined today is iron.",
+        "Most is used to manufacture steel, used in civil engineering (reinforced concrete, girders etc) and in manufacturing.",
+        "There are many different types of steel with different properties and uses. Ordinary carbon steel is an alloy of iron with carbon (from 0.1% for mild steel up to 2% for high carbon steels), with small amounts of other elements.",
+        "Alloy steels are carbon steels with other additives such as nickel, chromium, vanadium, tungsten and manganese. These are stronger and tougher than carbon steels and have a huge variety of applications including bridges, electricity pylons, bicycle chains, cutting tools and rifle barrels.",
+        "Stainless steel is very resistant to corrosion. It contains at least 10.5% chromium. Other metals such as nickel, molybdenum, titanium and copper are added to enhance its strength and workability. It is used in architecture, bearings, cutlery, surgical instruments and jewellery.",
+        "Cast iron contains 3-5% carbon. It is used for pipes, valves and pumps. It is not as tough as steel but it is cheaper. Magnets can be made of iron and its alloys and compounds.",
+        "Iron catalysts are used in the Haber process for producing ammonia, and in the Fischer-Tropsch process for converting syngas (hydrogen and carbon monoxide) into liquid fuels.",
+    },
+    ElectronConfiguration = "[Ar] 3d64s2",
     EnergyLevels = {
         2,
         8,
         14,
         2,
     },
-    Group = "8",
+    AtomicRadius = 2.04,
+    CovalentRadius = 1.24,
+    ElectronAffinity = 14.569,
+    Electronegativity = 1.83,
     IonizationEnergies = {
         762.466,
         1561.876,
@@ -29,8 +44,21 @@ local Iron = {
         12058.74,
         14575.08,
     },
+    MeltingPointK = 1811,
+    BoilingPointK = 3134,
+    KeyIsotopes = {
+        {
+            Name = "56Fe",
+            HalfLife = {},
+            Mass = 55.935,
+            MassNumber = 56,
+            ModeOfDecay = {},
+            NaturalAbundance = 91.754,
+        },
+    },
     Isotopes = {
         {
+            Name = "54Fe",
             HalfLife = {
                 "> 3.1 x 1022 y",
             },
@@ -39,65 +67,33 @@ local Iron = {
             ModeOfDecay = {
                 "EC-EC",
             },
-            Name = "54Fe",
             NaturalAbundance = 5.845,
         },
         {
+            Name = "56Fe",
             HalfLife = {},
             Mass = 55.935,
             MassNumber = 56,
             ModeOfDecay = {},
-            Name = "56Fe",
             NaturalAbundance = 91.754,
         },
         {
+            Name = "57Fe",
             HalfLife = {},
             Mass = 56.935,
             MassNumber = 57,
             ModeOfDecay = {},
-            Name = "57Fe",
             NaturalAbundance = 2.119,
         },
         {
+            Name = "58Fe",
             HalfLife = {},
             Mass = 57.933,
             MassNumber = 58,
             ModeOfDecay = {},
-            Name = "58Fe",
             NaturalAbundance = 0.282,
         },
     },
-    KeyIsotopes = {
-        {
-            HalfLife = {},
-            Mass = 55.935,
-            MassNumber = 56,
-            ModeOfDecay = {},
-            Name = "56Fe",
-            NaturalAbundance = 91.754,
-        },
-    },
-    MeltingPointK = 1811,
-    Name = "Iron",
-    NeutronsApprox = 30,
-    Period = 4,
-    Protons = 26,
-    RepresentativeMassNumber = 56,
-    StateAt293K = "Solid",
-    Symbol = "Fe",
-    Uses = "Iron is an enigma - it rusts easily, yet it is the most important of all metals. 90% of all metal that is refined today is iron. \
-\
-Most is used to manufacture steel, used in civil engineering (reinforced concrete, girders etc) and in manufacturing. \
-\
-There are many different types of steel with different properties and uses. Ordinary carbon steel is an alloy of iron with carbon (from 0.1% for mild steel up to 2% for high carbon steels), with small amounts of other elements. \
-\
-Alloy steels are carbon steels with other additives such as nickel, chromium, vanadium, tungsten and manganese. These are stronger and tougher than carbon steels and have a huge variety of applications including bridges, electricity pylons, bicycle chains, cutting tools and rifle barrels.\
-\
-Stainless steel is very resistant to corrosion. It contains at least 10.5% chromium. Other metals such as nickel, molybdenum, titanium and copper are added to enhance its strength and workability. It is used in architecture, bearings, cutlery, surgical instruments and jewellery.\
-\
-Cast iron contains 3-5% carbon. It is used for pipes, valves and pumps. It is not as tough as steel but it is cheaper. Magnets can be made of iron and its alloys and compounds.\
-\
-Iron catalysts are used in the Haber process for producing ammonia, and in the Fischer-Tropsch process for converting syngas (hydrogen and carbon monoxide) into liquid fuels.",
 }
 
 return Iron

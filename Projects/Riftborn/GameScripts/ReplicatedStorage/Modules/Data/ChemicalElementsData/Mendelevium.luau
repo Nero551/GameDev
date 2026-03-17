@@ -1,14 +1,22 @@
 local Mendelevium = {
-    Appearance = "A radioactive metal, of which only a few atoms have ever been created.",
-    AtomicMass = -258,
+    Name = "Mendelevium",
+    Symbol = "Md",
     AtomicNumber = 101,
-    AtomicRadius = 2.46,
-    Block = "f",
-    Category = "Actinoid",
-    CovalentRadius = 1.73,
-    ElectronConfiguration = "[Rn] 5f137s2",
-    Density = nil,
+    AtomicMass = -258,
+    RepresentativeMassNumber = 258,
+    Protons = 101,
     Electrons = 101,
+    NeutronsApprox = 157,
+    Category = "Actinoid",
+    Group = "Actinides",
+    Period = 7,
+    Block = "f",
+    StateAt293K = "Solid",
+    Appearance = "A radioactive metal, of which only a few atoms have ever been created.",
+    Uses = {
+        "Mendelevium is used only for research.",
+    },
+    ElectronConfiguration = "[Rn] 5f137s2",
     EnergyLevels = {
         2,
         8,
@@ -18,37 +26,15 @@ local Mendelevium = {
         8,
         2,
     },
-    Group = "Actinides",
+    AtomicRadius = 2.46,
+    CovalentRadius = 1.73,
     IonizationEnergies = {
         634.87,
     },
-    Isotopes = {
-        {
-            HalfLife = {
-                "51.5 d",
-            },
-            Mass = 258.098,
-            MassNumber = 258,
-            ModeOfDecay = {
-                "alpha",
-                "sf",
-            },
-            Name = "258Md",
-        },
-        {
-            HalfLife = {
-                "~ 27.8 d",
-            },
-            Mass = 260.104,
-            MassNumber = 260,
-            ModeOfDecay = {
-                "sf",
-            },
-            Name = "260Md",
-        },
-    },
+    MeltingPointK = 1100,
     KeyIsotopes = {
         {
+            Name = "258Md",
             HalfLife = {
                 "51.5 d",
             },
@@ -58,9 +44,9 @@ local Mendelevium = {
                 "alpha",
                 "sf",
             },
-            Name = "258Md",
         },
         {
+            Name = "260Md",
             HalfLife = {
                 "~ 27.8 d",
             },
@@ -69,18 +55,33 @@ local Mendelevium = {
             ModeOfDecay = {
                 "sf",
             },
-            Name = "260Md",
         },
     },
-    MeltingPointK = 1100,
-    Name = "Mendelevium",
-    NeutronsApprox = 157,
-    Period = 7,
-    Protons = 101,
-    RepresentativeMassNumber = 258,
-    StateAt293K = "Solid",
-    Symbol = "Md",
-    Uses = "Mendelevium is used only for research.",
+    Isotopes = {
+        {
+            Name = "258Md",
+            HalfLife = {
+                "51.5 d",
+            },
+            Mass = 258.098,
+            MassNumber = 258,
+            ModeOfDecay = {
+                "alpha",
+                "sf",
+            },
+        },
+        {
+            Name = "260Md",
+            HalfLife = {
+                "~ 27.8 d",
+            },
+            Mass = 260.104,
+            MassNumber = 260,
+            ModeOfDecay = {
+                "sf",
+            },
+        },
+    },
 }
 
 return Mendelevium

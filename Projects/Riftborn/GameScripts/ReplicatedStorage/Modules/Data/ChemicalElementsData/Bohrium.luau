@@ -1,13 +1,23 @@
 local Bohrium = {
-    Appearance = "Bohrium is a highly radioactive metal.",
-    AtomicMass = -270,
+    Name = "Bohrium",
+    Symbol = "Bh",
     AtomicNumber = 107,
-    Block = "d",
-    Category = "Transition",
-    CovalentRadius = 1.41,
-    ElectronConfiguration = "[Rn] 5f146d57s2",
-    Density = 37.1,
+    AtomicMass = -270,
+    RepresentativeMassNumber = 272,
+    Protons = 107,
     Electrons = 107,
+    NeutronsApprox = 165,
+    Category = "Transition",
+    Group = "7",
+    Period = 7,
+    Block = "d",
+    StateAt293K = "Solid",
+    Density = 37.1,
+    Appearance = "Bohrium is a highly radioactive metal.",
+    Uses = {
+        "At present, bohrium is of research interest only.",
+    },
+    ElectronConfiguration = "[Rn] 5f146d57s2",
     EnergyLevels = {
         2,
         8,
@@ -17,23 +27,11 @@ local Bohrium = {
         13,
         2,
     },
-    Group = "7",
+    CovalentRadius = 1.41,
     IonizationEnergies = {},
-    Isotopes = {
-        {
-            HalfLife = {
-                "~ 10 s",
-            },
-            Mass = 272.138,
-            MassNumber = 272,
-            ModeOfDecay = {
-                "alpha",
-            },
-            Name = "272Bh",
-        },
-    },
     KeyIsotopes = {
         {
+            Name = "272Bh",
             HalfLife = {
                 "~ 10 s",
             },
@@ -42,17 +40,21 @@ local Bohrium = {
             ModeOfDecay = {
                 "alpha",
             },
-            Name = "272Bh",
         },
     },
-    Name = "Bohrium",
-    NeutronsApprox = 165,
-    Period = 7,
-    Protons = 107,
-    RepresentativeMassNumber = 272,
-    StateAt293K = "Solid",
-    Symbol = "Bh",
-    Uses = "At present, bohrium is of research interest only.",
+    Isotopes = {
+        {
+            Name = "272Bh",
+            HalfLife = {
+                "~ 10 s",
+            },
+            Mass = 272.138,
+            MassNumber = 272,
+            ModeOfDecay = {
+                "alpha",
+            },
+        },
+    },
 }
 
 return Bohrium

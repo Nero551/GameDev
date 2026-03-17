@@ -1,13 +1,23 @@
 local Nihonium = {
-    Appearance = "A highly radioactive metal, of which only a few atoms have ever been made.",
-    AtomicMass = -286,
+    Name = "Nihonium",
+    Symbol = "Nh",
     AtomicNumber = 113,
-    Block = "p",
-    Category = "Other",
-    CovalentRadius = 1.36,
-    ElectronConfiguration = "[Rn] 5f146d107s27p1",
-    Density = 16,
+    AtomicMass = -286,
+    RepresentativeMassNumber = 286,
+    Protons = 113,
     Electrons = 113,
+    NeutronsApprox = 173,
+    Category = "Other",
+    Group = "13",
+    Period = 7,
+    Block = "p",
+    StateAt293K = "Solid",
+    Density = 16,
+    Appearance = "A highly radioactive metal, of which only a few atoms have ever been made.",
+    Uses = {
+        "At present, it is only used in research.",
+    },
+    ElectronConfiguration = "[Rn] 5f146d107s27p1",
     EnergyLevels = {
         2,
         8,
@@ -17,10 +27,20 @@ local Nihonium = {
         18,
         3,
     },
-    Group = "13",
+    CovalentRadius = 1.36,
     IonizationEnergies = {},
+    KeyIsotopes = {
+        {
+            Name = "286Nh",
+            HalfLife = {},
+            Mass = 286.182,
+            MassNumber = 286,
+            ModeOfDecay = {},
+        },
+    },
     Isotopes = {
         {
+            Name = "284Nh",
             HalfLife = {
                 "~ 0.48 s",
             },
@@ -29,33 +49,15 @@ local Nihonium = {
             ModeOfDecay = {
                 "alpha",
             },
-            Name = "284Nh",
         },
         {
+            Name = "286Nh",
             HalfLife = {},
             Mass = 286.182,
             MassNumber = 286,
             ModeOfDecay = {},
-            Name = "286Nh",
         },
     },
-    KeyIsotopes = {
-        {
-            HalfLife = {},
-            Mass = 286.182,
-            MassNumber = 286,
-            ModeOfDecay = {},
-            Name = "286Nh",
-        },
-    },
-    Name = "Nihonium",
-    NeutronsApprox = 173,
-    Period = 7,
-    Protons = 113,
-    RepresentativeMassNumber = 286,
-    StateAt293K = "Solid",
-    Symbol = "Nh",
-    Uses = "At present, it is only used in research.",
 }
 
 return Nihonium

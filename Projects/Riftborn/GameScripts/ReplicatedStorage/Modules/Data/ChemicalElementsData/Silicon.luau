@@ -1,23 +1,36 @@
 local Silicon = {
-    Appearance = "The element, when ultrapure, is a solid with a blue-grey metallic sheen.",
-    AtomicMass = 28.085,
+    Name = "Silicon",
+    Symbol = "Si",
     AtomicNumber = 14,
-    AtomicRadius = 2.1,
-    Block = "p",
-    BoilingPointK = 3538,
-    Category = "Metalloid",
-    CovalentRadius = 1.14,
-    ElectronAffinity = 134.068,
-    ElectronConfiguration = "[Ne] 3s23p2",
-    Electronegativity = 1.9,
-    Density = 2.329,
+    AtomicMass = 28.085,
+    RepresentativeMassNumber = 28,
+    Protons = 14,
     Electrons = 14,
+    NeutronsApprox = 14,
+    Category = "Metalloid",
+    Group = "14",
+    Period = 3,
+    Block = "p",
+    StateAt293K = "Solid",
+    Density = 2.329,
+    Appearance = "The element, when ultrapure, is a solid with a blue-grey metallic sheen.",
+    Uses = {
+        "Silicon is one of the most useful elements to mankind. Most is used to make alloys including aluminium-silicon and ferro-silicon (iron-silicon). These are used to make dynamo and transformer plates, engine blocks, cylinder heads and machine tools and to deoxidise steel.",
+        "Silicon is also used to make silicones. These are silicon-oxygen polymers with methyl groups attached. Silicone oil is a lubricant and is added to some cosmetics and hair conditioners. Silicone rubber is used as a waterproof sealant in bathrooms and around windows, pipes and roofs.",
+        "The element silicon is used extensively as a semiconductor in solid-state devices in the computer and microelectronics industries. For this, hyperpure silicon is needed. The silicon is selectively doped with tiny amounts of boron, gallium, phosphorus or arsenic to control its electrical properties.",
+        "Granite and most other rocks are complex silicates, and these are used for civil engineering projects. Sand (silicon dioxide or silica) and clay (aluminium silicate) are used to make concrete and cement. Sand is also the principal ingredient of glass, which has thousands of uses. Silicon, as silicate, is present in pottery, enamels and high-temperature ceramics.",
+        "Silicon carbides are important abrasives and are also used in lasers.",
+    },
+    ElectronConfiguration = "[Ne] 3s23p2",
     EnergyLevels = {
         2,
         8,
         4,
     },
-    Group = "14",
+    AtomicRadius = 2.1,
+    CovalentRadius = 1.14,
+    ElectronAffinity = 134.068,
+    Electronegativity = 1.9,
     IonizationEnergies = {
         786.518,
         1577.134,
@@ -28,67 +41,52 @@ local Silicon = {
         23783.6,
         29287.16,
     },
-    Isotopes = {
+    MeltingPointK = 1687,
+    BoilingPointK = 3538,
+    KeyIsotopes = {
         {
+            Name = "28Si",
             HalfLife = {},
             Mass = 27.977,
             MassNumber = 28,
             ModeOfDecay = {},
-            Name = "28Si",
             NaturalAbundance = 92.223,
         },
         {
+            Name = "30Si",
+            HalfLife = {},
+            Mass = 29.974,
+            MassNumber = 30,
+            ModeOfDecay = {},
+            NaturalAbundance = 3.092,
+        },
+    },
+    Isotopes = {
+        {
+            Name = "28Si",
+            HalfLife = {},
+            Mass = 27.977,
+            MassNumber = 28,
+            ModeOfDecay = {},
+            NaturalAbundance = 92.223,
+        },
+        {
+            Name = "29Si",
             HalfLife = {},
             Mass = 28.976,
             MassNumber = 29,
             ModeOfDecay = {},
-            Name = "29Si",
             NaturalAbundance = 4.685,
         },
         {
+            Name = "30Si",
             HalfLife = {},
             Mass = 29.974,
             MassNumber = 30,
             ModeOfDecay = {},
-            Name = "30Si",
             NaturalAbundance = 3.092,
         },
     },
-    KeyIsotopes = {
-        {
-            HalfLife = {},
-            Mass = 27.977,
-            MassNumber = 28,
-            ModeOfDecay = {},
-            Name = "28Si",
-            NaturalAbundance = 92.223,
-        },
-        {
-            HalfLife = {},
-            Mass = 29.974,
-            MassNumber = 30,
-            ModeOfDecay = {},
-            Name = "30Si",
-            NaturalAbundance = 3.092,
-        },
-    },
-    MeltingPointK = 1687,
-    Name = "Silicon",
-    NeutronsApprox = 14,
-    Period = 3,
-    Protons = 14,
-    RepresentativeMassNumber = 28,
-    StateAt293K = "Solid",
-    Symbol = "Si",
-    Uses = "Silicon is one of the most useful elements to mankind. Most is used to make alloys including aluminium-silicon and ferro-silicon (iron-silicon). These are used to make dynamo and transformer plates, engine blocks, cylinder heads and machine tools and to deoxidise steel.\
-\
-Silicon is also used to make silicones. These are silicon-oxygen polymers with methyl groups attached. Silicone oil is a lubricant and is added to some cosmetics and hair conditioners. Silicone rubber is used as a waterproof sealant in bathrooms and around windows, pipes and roofs. \
-\
-The element silicon is used extensively as a semiconductor in solid-state devices in the computer and microelectronics industries. For this, hyperpure silicon is needed. The silicon is selectively doped with tiny amounts of boron, gallium, phosphorus or arsenic to control its electrical properties. \
-\
-Granite and most other rocks are complex silicates, and these are used for civil engineering projects. Sand (silicon dioxide or silica) and clay (aluminium silicate) are used to make concrete and cement. Sand is also the principal ingredient of glass, which has thousands of uses. Silicon, as silicate, is present in pottery, enamels and high-temperature ceramics.\
-\
-Silicon carbides are important abrasives and are also used in lasers.",
 }
 
 return Silicon

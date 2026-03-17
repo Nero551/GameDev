@@ -1,14 +1,23 @@
 local Californium = {
-    Appearance = "Californium is a radioactive metal.",
-    AtomicMass = -251,
+    Name = "Californium",
+    Symbol = "Cf",
     AtomicNumber = 98,
-    AtomicRadius = 2.45,
-    Block = "f",
-    Category = "Actinoid",
-    CovalentRadius = 1.68,
-    ElectronConfiguration = "[Rn] 5f107s2",
-    Density = 15.1,
+    AtomicMass = -251,
+    RepresentativeMassNumber = 249,
+    Protons = 98,
     Electrons = 98,
+    NeutronsApprox = 151,
+    Category = "Actinoid",
+    Group = "Actinides",
+    Period = 7,
+    Block = "f",
+    StateAt293K = "Solid",
+    Density = 15.1,
+    Appearance = "Californium is a radioactive metal.",
+    Uses = {
+        "Californium is a very strong neutron emitter. It is used in portable metal detectors, for identifying gold and silver ores, to identify water and oil layers in oil wells and to detect metal fatigue and stress in aeroplanes.",
+    },
+    ElectronConfiguration = "[Rn] 5f107s2",
     EnergyLevels = {
         2,
         8,
@@ -18,13 +27,16 @@ local Californium = {
         8,
         2,
     },
-    Group = "Actinides",
+    AtomicRadius = 2.45,
+    CovalentRadius = 1.68,
     IonizationEnergies = {
         606.092,
         1138.5,
     },
-    Isotopes = {
+    MeltingPointK = 1173,
+    KeyIsotopes = {
         {
+            Name = "249Cf",
             HalfLife = {
                 "351 y",
                 "8 x 1010 y",
@@ -35,9 +47,37 @@ local Californium = {
                 "alpha",
                 "sf",
             },
-            Name = "249Cf",
         },
         {
+            Name = "252Cf",
+            HalfLife = {
+                "2.65 y",
+                "86 y",
+            },
+            Mass = 252.082,
+            MassNumber = 252,
+            ModeOfDecay = {
+                "alpha",
+                "sf",
+            },
+        },
+    },
+    Isotopes = {
+        {
+            Name = "249Cf",
+            HalfLife = {
+                "351 y",
+                "8 x 1010 y",
+            },
+            Mass = 249.075,
+            MassNumber = 249,
+            ModeOfDecay = {
+                "alpha",
+                "sf",
+            },
+        },
+        {
+            Name = "250Cf",
             HalfLife = {
                 "13.1 y",
                 "1.7 x 104 y",
@@ -48,9 +88,9 @@ local Californium = {
                 "alpha",
                 "sf",
             },
-            Name = "250Cf",
         },
         {
+            Name = "251Cf",
             HalfLife = {
                 "9 x 102 y",
             },
@@ -59,9 +99,9 @@ local Californium = {
             ModeOfDecay = {
                 "alpha",
             },
-            Name = "251Cf",
         },
         {
+            Name = "252Cf",
             HalfLife = {
                 "2.65 y",
                 "86 y",
@@ -72,46 +112,8 @@ local Californium = {
                 "alpha",
                 "sf",
             },
-            Name = "252Cf",
         },
     },
-    KeyIsotopes = {
-        {
-            HalfLife = {
-                "351 y",
-                "8 x 1010 y",
-            },
-            Mass = 249.075,
-            MassNumber = 249,
-            ModeOfDecay = {
-                "alpha",
-                "sf",
-            },
-            Name = "249Cf",
-        },
-        {
-            HalfLife = {
-                "2.65 y",
-                "86 y",
-            },
-            Mass = 252.082,
-            MassNumber = 252,
-            ModeOfDecay = {
-                "alpha",
-                "sf",
-            },
-            Name = "252Cf",
-        },
-    },
-    MeltingPointK = 1173,
-    Name = "Californium",
-    NeutronsApprox = 151,
-    Period = 7,
-    Protons = 98,
-    RepresentativeMassNumber = 249,
-    StateAt293K = "Solid",
-    Symbol = "Cf",
-    Uses = "Californium is a very strong neutron emitter. It is used in portable metal detectors, for identifying gold and silver ores, to identify water and oil layers in oil wells and to detect metal fatigue and stress in aeroplanes.",
 }
 
 return Californium

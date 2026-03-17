@@ -1,14 +1,23 @@
 local Curium = {
-    Appearance = "A radioactive metal that is silver in colour. It tarnishes rapidly in air.",
-    AtomicMass = -247,
+    Name = "Curium",
+    Symbol = "Cm",
     AtomicNumber = 96,
-    AtomicRadius = 2.45,
-    Block = "f",
-    Category = "Actinoid",
-    CovalentRadius = 1.68,
-    ElectronConfiguration = "[Rn] 5f76d17s2",
-    Density = 13.51,
+    AtomicMass = -247,
+    RepresentativeMassNumber = 243,
+    Protons = 96,
     Electrons = 96,
+    NeutronsApprox = 147,
+    Category = "Actinoid",
+    Group = "Actinides",
+    Period = 7,
+    Block = "f",
+    StateAt293K = "Solid",
+    Density = 13.51,
+    Appearance = "A radioactive metal that is silver in colour. It tarnishes rapidly in air.",
+    Uses = {
+        "Curium has been used to provide power to electrical equipment used on space missions.",
+    },
+    ElectronConfiguration = "[Rn] 5f76d17s2",
     EnergyLevels = {
         2,
         8,
@@ -18,12 +27,15 @@ local Curium = {
         9,
         2,
     },
-    Group = "Actinides",
+    AtomicRadius = 2.45,
+    CovalentRadius = 1.68,
     IonizationEnergies = {
         578.082,
     },
-    Isotopes = {
+    MeltingPointK = 1618,
+    KeyIsotopes = {
         {
+            Name = "243Cm",
             HalfLife = {
                 "29.1 y",
                 "5.5 x 1011 y",
@@ -34,9 +46,35 @@ local Curium = {
                 "alpha",
                 "sf",
             },
-            Name = "243Cm",
         },
         {
+            Name = "248Cm",
+            HalfLife = {
+                "3.48 x 105 y",
+            },
+            Mass = 248.072,
+            MassNumber = 248,
+            ModeOfDecay = {
+                "alpha",
+            },
+        },
+    },
+    Isotopes = {
+        {
+            Name = "243Cm",
+            HalfLife = {
+                "29.1 y",
+                "5.5 x 1011 y",
+            },
+            Mass = 243.061,
+            MassNumber = 243,
+            ModeOfDecay = {
+                "alpha",
+                "sf",
+            },
+        },
+        {
+            Name = "244Cm",
             HalfLife = {
                 "18.1 y",
                 "1.32 x 107 y",
@@ -47,9 +85,9 @@ local Curium = {
                 "alpha",
                 "sf",
             },
-            Name = "244Cm",
         },
         {
+            Name = "245Cm",
             HalfLife = {
                 "8.48 x 103 y",
                 "1.4 x 1012 y",
@@ -60,9 +98,9 @@ local Curium = {
                 "alpha",
                 "sf",
             },
-            Name = "245Cm",
         },
         {
+            Name = "246Cm",
             HalfLife = {
                 "4.76 x 103 y",
                 "1.8 x 107 y",
@@ -73,9 +111,9 @@ local Curium = {
                 "alpha",
                 "sf",
             },
-            Name = "246Cm",
         },
         {
+            Name = "247Cm",
             HalfLife = {
                 "1.56 x 107 y",
             },
@@ -84,9 +122,9 @@ local Curium = {
             ModeOfDecay = {
                 "alpha",
             },
-            Name = "247Cm",
         },
         {
+            Name = "248Cm",
             HalfLife = {
                 "3.48 x 105 y",
             },
@@ -95,44 +133,8 @@ local Curium = {
             ModeOfDecay = {
                 "alpha",
             },
-            Name = "248Cm",
         },
     },
-    KeyIsotopes = {
-        {
-            HalfLife = {
-                "29.1 y",
-                "5.5 x 1011 y",
-            },
-            Mass = 243.061,
-            MassNumber = 243,
-            ModeOfDecay = {
-                "alpha",
-                "sf",
-            },
-            Name = "243Cm",
-        },
-        {
-            HalfLife = {
-                "3.48 x 105 y",
-            },
-            Mass = 248.072,
-            MassNumber = 248,
-            ModeOfDecay = {
-                "alpha",
-            },
-            Name = "248Cm",
-        },
-    },
-    MeltingPointK = 1618,
-    Name = "Curium",
-    NeutronsApprox = 147,
-    Period = 7,
-    Protons = 96,
-    RepresentativeMassNumber = 243,
-    StateAt293K = "Solid",
-    Symbol = "Cm",
-    Uses = "Curium has been used to provide power to electrical equipment used on space missions.",
 }
 
 return Curium

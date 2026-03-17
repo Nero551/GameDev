@@ -1,14 +1,22 @@
 local Nobelium = {
-    Appearance = "Nobelium is a radioactive metal. Only a few atoms have ever been made. Its half-life is only 58 minutes.",
-    AtomicMass = -259,
+    Name = "Nobelium",
+    Symbol = "No",
     AtomicNumber = 102,
-    AtomicRadius = 2.46,
-    Block = "f",
-    Category = "Actinoid",
-    CovalentRadius = 1.76,
-    ElectronConfiguration = "[Rn] 5f147s2",
-    Density = nil,
+    AtomicMass = -259,
+    RepresentativeMassNumber = 259,
+    Protons = 102,
     Electrons = 102,
+    NeutronsApprox = 157,
+    Category = "Actinoid",
+    Group = "Actinides",
+    Period = 7,
+    Block = "f",
+    StateAt293K = "Solid",
+    Appearance = "Nobelium is a radioactive metal. Only a few atoms have ever been made. Its half-life is only 58 minutes.",
+    Uses = {
+        "Nobelium has no uses outside research.",
+    },
+    ElectronConfiguration = "[Rn] 5f147s2",
     EnergyLevels = {
         2,
         8,
@@ -18,27 +26,15 @@ local Nobelium = {
         8,
         2,
     },
-    Group = "Actinides",
+    AtomicRadius = 2.46,
+    CovalentRadius = 1.76,
     IonizationEnergies = {
         641.63,
     },
-    Isotopes = {
-        {
-            HalfLife = {
-                "58 m",
-            },
-            Mass = 259.101,
-            MassNumber = 259,
-            ModeOfDecay = {
-                "alpha",
-                "EC",
-                "sf",
-            },
-            Name = "259No",
-        },
-    },
+    MeltingPointK = 1100,
     KeyIsotopes = {
         {
+            Name = "259No",
             HalfLife = {
                 "58 m",
             },
@@ -49,18 +45,23 @@ local Nobelium = {
                 "EC",
                 "sf",
             },
-            Name = "259No",
         },
     },
-    MeltingPointK = 1100,
-    Name = "Nobelium",
-    NeutronsApprox = 157,
-    Period = 7,
-    Protons = 102,
-    RepresentativeMassNumber = 259,
-    StateAt293K = "Solid",
-    Symbol = "No",
-    Uses = "Nobelium has no uses outside research.",
+    Isotopes = {
+        {
+            Name = "259No",
+            HalfLife = {
+                "58 m",
+            },
+            Mass = 259.101,
+            MassNumber = 259,
+            ModeOfDecay = {
+                "alpha",
+                "EC",
+                "sf",
+            },
+        },
+    },
 }
 
 return Nobelium

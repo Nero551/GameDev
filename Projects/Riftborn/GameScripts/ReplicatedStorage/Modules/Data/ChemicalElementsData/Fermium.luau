@@ -1,14 +1,22 @@
 local Fermium = {
-    Appearance = "A radioactive metal obtained only in microgram quantities.",
-    AtomicMass = -257,
+    Name = "Fermium",
+    Symbol = "Fm",
     AtomicNumber = 100,
-    AtomicRadius = 2.45,
-    Block = "f",
-    Category = "Actinoid",
-    CovalentRadius = 1.67,
-    ElectronConfiguration = "[Rn] 5f127s2",
-    Density = nil,
+    AtomicMass = -257,
+    RepresentativeMassNumber = 257,
+    Protons = 100,
     Electrons = 100,
+    NeutronsApprox = 157,
+    Category = "Actinoid",
+    Group = "Actinides",
+    Period = 7,
+    Block = "f",
+    StateAt293K = "Solid",
+    Appearance = "A radioactive metal obtained only in microgram quantities.",
+    Uses = {
+        "Fermium has no uses outside research.",
+    },
+    ElectronConfiguration = "[Rn] 5f127s2",
     EnergyLevels = {
         2,
         8,
@@ -18,26 +26,15 @@ local Fermium = {
         8,
         2,
     },
-    Group = "Actinides",
+    AtomicRadius = 2.45,
+    CovalentRadius = 1.67,
     IonizationEnergies = {
         627.2,
     },
-    Isotopes = {
-        {
-            HalfLife = {
-                "100.5 d",
-            },
-            Mass = 257.095,
-            MassNumber = 257,
-            ModeOfDecay = {
-                "alpha",
-                "sf",
-            },
-            Name = "257Fm",
-        },
-    },
+    MeltingPointK = 1800,
     KeyIsotopes = {
         {
+            Name = "257Fm",
             HalfLife = {
                 "100.5 d",
             },
@@ -47,18 +44,22 @@ local Fermium = {
                 "alpha",
                 "sf",
             },
-            Name = "257Fm",
         },
     },
-    MeltingPointK = 1800,
-    Name = "Fermium",
-    NeutronsApprox = 157,
-    Period = 7,
-    Protons = 100,
-    RepresentativeMassNumber = 257,
-    StateAt293K = "Solid",
-    Symbol = "Fm",
-    Uses = "Fermium has no uses outside research.",
+    Isotopes = {
+        {
+            Name = "257Fm",
+            HalfLife = {
+                "100.5 d",
+            },
+            Mass = 257.095,
+            MassNumber = 257,
+            ModeOfDecay = {
+                "alpha",
+                "sf",
+            },
+        },
+    },
 }
 
 return Fermium

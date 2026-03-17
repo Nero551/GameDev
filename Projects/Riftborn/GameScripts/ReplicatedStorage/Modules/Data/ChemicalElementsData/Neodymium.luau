@@ -1,16 +1,26 @@
 local Neodymium = {
-    Appearance = "A silvery-white metal. It rapidly tarnishes in air.",
-    AtomicMass = 144.24,
+    Name = "Neodymium",
+    Symbol = "Nd",
     AtomicNumber = 60,
-    AtomicRadius = 2.39,
-    Block = "f",
-    BoilingPointK = 3347,
-    Category = "Lanthanoid",
-    CovalentRadius = 1.88,
-    ElectronConfiguration = "[Xe] 4f46s2",
-    Electronegativity = 1.14,
-    Density = 7.01,
+    AtomicMass = 144.24,
+    RepresentativeMassNumber = 142,
+    Protons = 60,
     Electrons = 60,
+    NeutronsApprox = 82,
+    Category = "Lanthanoid",
+    Group = "Lanthanides",
+    Period = 6,
+    Block = "f",
+    StateAt293K = "Solid",
+    Density = 7.01,
+    Appearance = "A silvery-white metal. It rapidly tarnishes in air.",
+    Uses = {
+        "The most important use for neodymium is in an alloy with iron and boron to make very strong permanent magnets. This discovery, in 1983, made it possible to miniaturise many electronic devices, including mobile phones, microphones, loudspeakers and electronic musical instruments. These magnets are also used in car windscreen wipers and wind turbines.",
+        "Neodymium is a component, along with praseodymium, of didymium glass. This is a special glass for goggles used during glass blowing and welding. The element colours glass delicate shades of violet, wine-red and grey. Neodymium is also used in the glass for tanning booths, since it transmits the tanning UV rays but not the heating infrared rays.",
+        "Neodymium glass is used to make lasers. These are used as laser pointers, as well as in eye surgery, cosmetic surgery and for the treatment of skin cancers.",
+        "Neodymium oxide and nitrate are used as catalysts in polymerisation reactions.",
+    },
+    ElectronConfiguration = "[Xe] 4f46s2",
     EnergyLevels = {
         2,
         8,
@@ -19,31 +29,46 @@ local Neodymium = {
         8,
         2,
     },
-    Group = "Lanthanides",
+    AtomicRadius = 2.39,
+    CovalentRadius = 1.88,
+    Electronegativity = 1.14,
     IonizationEnergies = {
         533.082,
         1034.32,
         2132.3,
         3898,
     },
-    Isotopes = {
+    MeltingPointK = 1289,
+    BoilingPointK = 3347,
+    KeyIsotopes = {
         {
+            Name = "142Nd",
             HalfLife = {},
             Mass = 141.908,
             MassNumber = 142,
             ModeOfDecay = {},
+            NaturalAbundance = 27.2,
+        },
+    },
+    Isotopes = {
+        {
             Name = "142Nd",
+            HalfLife = {},
+            Mass = 141.908,
+            MassNumber = 142,
+            ModeOfDecay = {},
             NaturalAbundance = 27.2,
         },
         {
+            Name = "143Nd",
             HalfLife = {},
             Mass = 142.91,
             MassNumber = 143,
             ModeOfDecay = {},
-            Name = "143Nd",
             NaturalAbundance = 12.2,
         },
         {
+            Name = "144Nd",
             HalfLife = {
                 "2.1 x 1015 y",
             },
@@ -52,34 +77,34 @@ local Neodymium = {
             ModeOfDecay = {
                 "a",
             },
-            Name = "144Nd",
             NaturalAbundance = 23.8,
         },
         {
+            Name = "145Nd",
             HalfLife = {},
             Mass = 144.913,
             MassNumber = 145,
             ModeOfDecay = {},
-            Name = "145Nd",
             NaturalAbundance = 8.3,
         },
         {
+            Name = "146Nd",
             HalfLife = {},
             Mass = 145.913,
             MassNumber = 146,
             ModeOfDecay = {},
-            Name = "146Nd",
             NaturalAbundance = 17.2,
         },
         {
+            Name = "148Nd",
             HalfLife = {},
             Mass = 147.917,
             MassNumber = 148,
             ModeOfDecay = {},
-            Name = "148Nd",
             NaturalAbundance = 5.8,
         },
         {
+            Name = "150Nd",
             HalfLife = {
                 "1.33 x 1020 y",
             },
@@ -88,35 +113,9 @@ local Neodymium = {
             ModeOfDecay = {
                 "beta-beta-",
             },
-            Name = "150Nd",
             NaturalAbundance = 5.6,
         },
     },
-    KeyIsotopes = {
-        {
-            HalfLife = {},
-            Mass = 141.908,
-            MassNumber = 142,
-            ModeOfDecay = {},
-            Name = "142Nd",
-            NaturalAbundance = 27.2,
-        },
-    },
-    MeltingPointK = 1289,
-    Name = "Neodymium",
-    NeutronsApprox = 82,
-    Period = 6,
-    Protons = 60,
-    RepresentativeMassNumber = 142,
-    StateAt293K = "Solid",
-    Symbol = "Nd",
-    Uses = "The most important use for neodymium is in an alloy with iron and boron to make very strong permanent magnets. This discovery, in 1983, made it possible to miniaturise many electronic devices, including mobile phones, microphones, loudspeakers and electronic musical instruments. These magnets are also used in car windscreen wipers and wind turbines.\
-\
-Neodymium is a component, along with praseodymium, of didymium glass. This is a special glass for goggles used during glass blowing and welding. The element colours glass delicate shades of violet, wine-red and grey. Neodymium is also used in the glass for tanning booths, since it transmits the tanning UV rays but not the heating infrared rays. \
-\
-Neodymium glass is used to make lasers. These are used as laser pointers, as well as in eye surgery, cosmetic surgery and for the treatment of skin cancers. \
-\
-Neodymium oxide and nitrate are used as catalysts in polymerisation reactions.",
 }
 
 return Neodymium

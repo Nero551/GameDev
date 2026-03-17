@@ -1,13 +1,23 @@
 local Livermorium = {
-    Appearance = "A highly radioactive metal, of which only a few atoms have ever been made.",
-    AtomicMass = -293,
+    Name = "Livermorium",
+    Symbol = "Lv",
     AtomicNumber = 116,
-    Block = "p",
-    Category = "Other",
-    CovalentRadius = 1.75,
-    ElectronConfiguration = "[Rn] 5f146d107s27p4",
-    Density = 12.9,
+    AtomicMass = -293,
+    RepresentativeMassNumber = 293,
+    Protons = 116,
     Electrons = 116,
+    NeutronsApprox = 177,
+    Category = "Other",
+    Group = "16",
+    Period = 7,
+    Block = "p",
+    StateAt293K = "Solid",
+    Density = 12.9,
+    Appearance = "A highly radioactive metal, of which only a few atoms have ever been made.",
+    Uses = {
+        "At present, it is only used in research.",
+    },
+    ElectronConfiguration = "[Rn] 5f146d107s27p4",
     EnergyLevels = {
         2,
         8,
@@ -17,23 +27,11 @@ local Livermorium = {
         18,
         6,
     },
-    Group = "16",
+    CovalentRadius = 1.75,
     IonizationEnergies = {},
-    Isotopes = {
-        {
-            HalfLife = {
-                "0.06 s",
-            },
-            Mass = 293,
-            MassNumber = 293,
-            ModeOfDecay = {
-                "alpha",
-            },
-            Name = "293Lv",
-        },
-    },
     KeyIsotopes = {
         {
+            Name = "293Lv",
             HalfLife = {
                 "0.06 s",
             },
@@ -42,17 +40,21 @@ local Livermorium = {
             ModeOfDecay = {
                 "alpha",
             },
-            Name = "293Lv",
         },
     },
-    Name = "Livermorium",
-    NeutronsApprox = 177,
-    Period = 7,
-    Protons = 116,
-    RepresentativeMassNumber = 293,
-    StateAt293K = "Solid",
-    Symbol = "Lv",
-    Uses = "At present, it is only used in research.",
+    Isotopes = {
+        {
+            Name = "293Lv",
+            HalfLife = {
+                "0.06 s",
+            },
+            Mass = 293,
+            MassNumber = 293,
+            ModeOfDecay = {
+                "alpha",
+            },
+        },
+    },
 }
 
 return Livermorium

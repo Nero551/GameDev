@@ -1,24 +1,35 @@
 local Calcium = {
-    Appearance = "Calcium is a silvery-white, soft metal that tarnishes rapidly in air and reacts with water.",
-    AtomicMass = 40.078,
+    Name = "Calcium",
+    Symbol = "Ca",
     AtomicNumber = 20,
-    AtomicRadius = 2.31,
-    Block = "s",
-    BoilingPointK = 1757,
-    Category = "Alkaline",
-    CovalentRadius = 1.74,
-    ElectronAffinity = 2.369,
-    ElectronConfiguration = "[Ar] 4s2",
-    Electronegativity = 1,
-    Density = 1.55,
+    AtomicMass = 40.078,
+    RepresentativeMassNumber = 40,
+    Protons = 20,
     Electrons = 20,
+    NeutronsApprox = 20,
+    Category = "Alkaline",
+    Group = "2",
+    Period = 4,
+    Block = "s",
+    StateAt293K = "Solid",
+    Density = 1.55,
+    Appearance = "Calcium is a silvery-white, soft metal that tarnishes rapidly in air and reacts with water.",
+    Uses = {
+        "Calcium metal is used as a reducing agent in preparing other metals such as thorium and uranium. It is also used as an alloying agent for aluminium, beryllium, copper, lead and magnesium alloys.",
+        "Calcium compounds are widely used. There are vast deposits of limestone (calcium carbonate) used directly as a building stone and indirectly for cement. When limestone is heated in kilns it gives off carbon dioxide gas leaving behind quicklime (calcium oxide). This reacts vigorously with water to give slaked lime (calcium hydroxide). Slaked lime is used to make cement, as a soil conditioner and in water treatment to reduce acidity, and in the chemicals industry. It is also used in steel making to remove impurities from the molten iron ore. When mixed with sand, slaked lime takes up carbon dioxide from the air and hardens as lime plaster.",
+        "Gypsum (calcium sulfate) is used by builders as a plaster and by nurses for setting bones, as 'plaster of Paris'.",
+    },
+    ElectronConfiguration = "[Ar] 4s2",
     EnergyLevels = {
         2,
         8,
         8,
         2,
     },
-    Group = "2",
+    AtomicRadius = 2.31,
+    CovalentRadius = 1.74,
+    ElectronAffinity = 2.369,
+    Electronegativity = 1,
     IonizationEnergies = {
         589.83,
         1145.447,
@@ -29,8 +40,11 @@ local Calcium = {
         12272.9,
         14206.5,
     },
-    Isotopes = {
+    MeltingPointK = 1115,
+    BoilingPointK = 1757,
+    KeyIsotopes = {
         {
+            Name = "40Ca",
             HalfLife = {
                 "5.92 x 1021 y",
             },
@@ -39,34 +53,48 @@ local Calcium = {
             ModeOfDecay = {
                 "EC-EC",
             },
+            NaturalAbundance = 96.941,
+        },
+    },
+    Isotopes = {
+        {
             Name = "40Ca",
+            HalfLife = {
+                "5.92 x 1021 y",
+            },
+            Mass = 39.963,
+            MassNumber = 40,
+            ModeOfDecay = {
+                "EC-EC",
+            },
             NaturalAbundance = 96.941,
         },
         {
+            Name = "42Ca",
             HalfLife = {},
             Mass = 41.959,
             MassNumber = 42,
             ModeOfDecay = {},
-            Name = "42Ca",
             NaturalAbundance = 0.647,
         },
         {
+            Name = "43Ca",
             HalfLife = {},
             Mass = 42.959,
             MassNumber = 43,
             ModeOfDecay = {},
-            Name = "43Ca",
             NaturalAbundance = 0.135,
         },
         {
+            Name = "44Ca",
             HalfLife = {},
             Mass = 43.955,
             MassNumber = 44,
             ModeOfDecay = {},
-            Name = "44Ca",
             NaturalAbundance = 2.086,
         },
         {
+            Name = "46Ca",
             HalfLife = {
                 "> 0.4 x 1016 y",
             },
@@ -75,10 +103,10 @@ local Calcium = {
             ModeOfDecay = {
                 "beta-beta-",
             },
-            Name = "46Ca",
             NaturalAbundance = 0.004,
         },
         {
+            Name = "48Ca",
             HalfLife = {
                 "4.4 x 1019 y",
                 "> 7.1 x 1019 y",
@@ -89,37 +117,9 @@ local Calcium = {
                 "beta-beta-",
                 "beta-",
             },
-            Name = "48Ca",
             NaturalAbundance = 0.187,
         },
     },
-    KeyIsotopes = {
-        {
-            HalfLife = {
-                "5.92 x 1021 y",
-            },
-            Mass = 39.963,
-            MassNumber = 40,
-            ModeOfDecay = {
-                "EC-EC",
-            },
-            Name = "40Ca",
-            NaturalAbundance = 96.941,
-        },
-    },
-    MeltingPointK = 1115,
-    Name = "Calcium",
-    NeutronsApprox = 20,
-    Period = 4,
-    Protons = 20,
-    RepresentativeMassNumber = 40,
-    StateAt293K = "Solid",
-    Symbol = "Ca",
-    Uses = "Calcium metal is used as a reducing agent in preparing other metals such as thorium and uranium. It is also used as an alloying agent for aluminium, beryllium, copper, lead and magnesium alloys. \
-\
-Calcium compounds are widely used. There are vast deposits of limestone (calcium carbonate) used directly as a building stone and indirectly for cement. When limestone is heated in kilns it gives off carbon dioxide gas leaving behind quicklime (calcium oxide). This reacts vigorously with water to give slaked lime (calcium hydroxide). Slaked lime is used to make cement, as a soil conditioner and in water treatment to reduce acidity, and in the chemicals industry. It is also used in steel making to remove impurities from the molten iron ore. When mixed with sand, slaked lime takes up carbon dioxide from the air and hardens as lime plaster. \
-\
-Gypsum (calcium sulfate) is used by builders as a plaster and by nurses for setting bones, as 'plaster of Paris'.",
 }
 
 return Calcium

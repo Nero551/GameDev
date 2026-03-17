@@ -1,14 +1,22 @@
 local Lawrencium = {
-    Appearance = "A radioactive metal of which only a few atoms have ever been created.",
-    AtomicMass = -266,
+    Name = "Lawrencium",
+    Symbol = "Lr",
     AtomicNumber = 103,
-    AtomicRadius = 2.46,
-    Block = "f",
-    Category = "Actinoid",
-    CovalentRadius = 1.61,
-    ElectronConfiguration = "[Rn] 5f147s27p1",
-    Density = nil,
+    AtomicMass = -266,
+    RepresentativeMassNumber = 262,
+    Protons = 103,
     Electrons = 103,
+    NeutronsApprox = 159,
+    Category = "Actinoid",
+    Group = "Actinides",
+    Period = 7,
+    Block = "f",
+    StateAt293K = "Solid",
+    Appearance = "A radioactive metal of which only a few atoms have ever been created.",
+    Uses = {
+        "Lawrencium has no uses outside research.",
+    },
+    ElectronConfiguration = "[Rn] 5f147s27p1",
     EnergyLevels = {
         2,
         8,
@@ -18,26 +26,15 @@ local Lawrencium = {
         8,
         3,
     },
-    Group = "Actinides",
+    AtomicRadius = 2.46,
+    CovalentRadius = 1.61,
     IonizationEnergies = {
         472.8,
     },
-    Isotopes = {
-        {
-            HalfLife = {
-                "3.6 h",
-            },
-            Mass = 262.11,
-            MassNumber = 262,
-            ModeOfDecay = {
-                "EC",
-                "sf",
-            },
-            Name = "262Lr",
-        },
-    },
+    MeltingPointK = 1900,
     KeyIsotopes = {
         {
+            Name = "262Lr",
             HalfLife = {
                 "3.6 h",
             },
@@ -47,18 +44,22 @@ local Lawrencium = {
                 "EC",
                 "sf",
             },
-            Name = "262Lr",
         },
     },
-    MeltingPointK = 1900,
-    Name = "Lawrencium",
-    NeutronsApprox = 159,
-    Period = 7,
-    Protons = 103,
-    RepresentativeMassNumber = 262,
-    StateAt293K = "Solid",
-    Symbol = "Lr",
-    Uses = "Lawrencium has no uses outside research.",
+    Isotopes = {
+        {
+            Name = "262Lr",
+            HalfLife = {
+                "3.6 h",
+            },
+            Mass = 262.11,
+            MassNumber = 262,
+            ModeOfDecay = {
+                "EC",
+                "sf",
+            },
+        },
+    },
 }
 
 return Lawrencium

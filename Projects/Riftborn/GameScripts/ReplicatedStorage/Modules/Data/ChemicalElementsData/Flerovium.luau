@@ -1,13 +1,23 @@
 local Flerovium = {
-    Appearance = "A highly radioactive metal, of which only a few atoms have ever been made.",
-    AtomicMass = -289,
+    Name = "Flerovium",
+    Symbol = "Fl",
     AtomicNumber = 114,
-    Block = "p",
-    Category = "Poor",
-    CovalentRadius = 1.43,
-    ElectronConfiguration = "[Rn] 5f146d107s27p2",
-    Density = 14,
+    AtomicMass = -289,
+    RepresentativeMassNumber = 289,
+    Protons = 114,
     Electrons = 114,
+    NeutronsApprox = 175,
+    Category = "Poor",
+    Group = "14",
+    Period = 7,
+    Block = "p",
+    StateAt293K = "Solid",
+    Density = 14,
+    Appearance = "A highly radioactive metal, of which only a few atoms have ever been made.",
+    Uses = {
+        "At present, it is only used in research.",
+    },
+    ElectronConfiguration = "[Rn] 5f146d107s27p2",
     EnergyLevels = {
         2,
         8,
@@ -17,23 +27,11 @@ local Flerovium = {
         18,
         4,
     },
-    Group = "14",
+    CovalentRadius = 1.43,
     IonizationEnergies = {},
-    Isotopes = {
-        {
-            HalfLife = {
-                "~ 2.1 s",
-            },
-            Mass = 289.19,
-            MassNumber = 289,
-            ModeOfDecay = {
-                "alpha",
-            },
-            Name = "289Fl",
-        },
-    },
     KeyIsotopes = {
         {
+            Name = "289Fl",
             HalfLife = {
                 "~ 2.1 s",
             },
@@ -42,17 +40,21 @@ local Flerovium = {
             ModeOfDecay = {
                 "alpha",
             },
-            Name = "289Fl",
         },
     },
-    Name = "Flerovium",
-    NeutronsApprox = 175,
-    Period = 7,
-    Protons = 114,
-    RepresentativeMassNumber = 289,
-    StateAt293K = "Solid",
-    Symbol = "Fl",
-    Uses = "At present, it is only used in research.",
+    Isotopes = {
+        {
+            Name = "289Fl",
+            HalfLife = {
+                "~ 2.1 s",
+            },
+            Mass = 289.19,
+            MassNumber = 289,
+            ModeOfDecay = {
+                "alpha",
+            },
+        },
+    },
 }
 
 return Flerovium

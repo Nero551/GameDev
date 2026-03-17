@@ -1,16 +1,24 @@
 local Samarium = {
-    Appearance = "A silvery-white metal.",
-    AtomicMass = 150.36,
+    Name = "Samarium",
+    Symbol = "Sm",
     AtomicNumber = 62,
-    AtomicRadius = 2.36,
-    Block = "f",
-    BoilingPointK = 2067,
-    Category = "Lanthanoid",
-    CovalentRadius = 1.85,
-    ElectronConfiguration = "[Xe] 4f66s2",
-    Electronegativity = 1.17,
-    Density = 7.52,
+    AtomicMass = 150.36,
+    RepresentativeMassNumber = 152,
+    Protons = 62,
     Electrons = 62,
+    NeutronsApprox = 90,
+    Category = "Lanthanoid",
+    Group = "Lanthanides",
+    Period = 6,
+    Block = "f",
+    StateAt293K = "Solid",
+    Density = 7.52,
+    Appearance = "A silvery-white metal.",
+    Uses = {
+        "Samarium-cobalt magnets are much more powerful than iron magnets. They remain magnetic at high temperatures and so are used in microwave applications. They enabled the miniaturisation of electronic devices like headphones, and the development of personal stereos. However, neodymium magnets are now more commonly used instead.",
+        "Samarium is used to dope calcium chloride crystals for use in optical lasers. It is also used in infrared absorbing glass and as a neutron absorber in nuclear reactors. Samarium oxide finds specialised use in glass and ceramics. In common with other lanthanides, samarium is used in carbon arc lighting for studio lighting and projection.",
+    },
+    ElectronConfiguration = "[Xe] 4f66s2",
     EnergyLevels = {
         2,
         8,
@@ -19,23 +27,38 @@ local Samarium = {
         8,
         2,
     },
-    Group = "Lanthanides",
+    AtomicRadius = 2.36,
+    CovalentRadius = 1.85,
+    Electronegativity = 1.17,
     IonizationEnergies = {
         544.534,
         1068.09,
         2257.8,
         3994.5,
     },
+    MeltingPointK = 1345,
+    BoilingPointK = 2067,
+    KeyIsotopes = {
+        {
+            Name = "152Sm",
+            HalfLife = {},
+            Mass = 151.92,
+            MassNumber = 152,
+            ModeOfDecay = {},
+            NaturalAbundance = 26.75,
+        },
+    },
     Isotopes = {
         {
+            Name = "144Sm",
             HalfLife = {},
             Mass = 143.912,
             MassNumber = 144,
             ModeOfDecay = {},
-            Name = "144Sm",
             NaturalAbundance = 3.07,
         },
         {
+            Name = "147Sm",
             HalfLife = {
                 "1.06 x 1011 y",
             },
@@ -44,10 +67,10 @@ local Samarium = {
             ModeOfDecay = {
                 "a",
             },
-            Name = "147Sm",
             NaturalAbundance = 14.99,
         },
         {
+            Name = "148Sm",
             HalfLife = {
                 "7 x 1015 y",
             },
@@ -56,10 +79,10 @@ local Samarium = {
             ModeOfDecay = {
                 "a",
             },
-            Name = "148Sm",
             NaturalAbundance = 11.24,
         },
         {
+            Name = "149Sm",
             HalfLife = {
                 "1016 y",
             },
@@ -68,55 +91,33 @@ local Samarium = {
             ModeOfDecay = {
                 "a",
             },
-            Name = "149Sm",
             NaturalAbundance = 13.82,
         },
         {
+            Name = "150Sm",
             HalfLife = {},
             Mass = 149.917,
             MassNumber = 150,
             ModeOfDecay = {},
-            Name = "150Sm",
             NaturalAbundance = 7.38,
         },
         {
+            Name = "152Sm",
             HalfLife = {},
             Mass = 151.92,
             MassNumber = 152,
             ModeOfDecay = {},
-            Name = "152Sm",
             NaturalAbundance = 26.75,
         },
         {
+            Name = "154Sm",
             HalfLife = {},
             Mass = 153.922,
             MassNumber = 154,
             ModeOfDecay = {},
-            Name = "154Sm",
             NaturalAbundance = 22.75,
         },
     },
-    KeyIsotopes = {
-        {
-            HalfLife = {},
-            Mass = 151.92,
-            MassNumber = 152,
-            ModeOfDecay = {},
-            Name = "152Sm",
-            NaturalAbundance = 26.75,
-        },
-    },
-    MeltingPointK = 1345,
-    Name = "Samarium",
-    NeutronsApprox = 90,
-    Period = 6,
-    Protons = 62,
-    RepresentativeMassNumber = 152,
-    StateAt293K = "Solid",
-    Symbol = "Sm",
-    Uses = "Samarium-cobalt magnets are much more powerful than iron magnets. They remain magnetic at high temperatures and so are used in microwave applications. They enabled the miniaturisation of electronic devices like headphones, and the development of personal stereos. However, neodymium magnets are now more commonly used instead.\
-\
-Samarium is used to dope calcium chloride crystals for use in optical lasers. It is also used in infrared absorbing glass and as a neutron absorber in nuclear reactors. Samarium oxide finds specialised use in glass and ceramics. In common with other lanthanides, samarium is used in carbon arc lighting for studio lighting and projection.",
 }
 
 return Samarium

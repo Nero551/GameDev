@@ -1,17 +1,24 @@
 local Technetium = {
-    Appearance = "A radioactive, silvery metal that does not occur naturally.",
-    AtomicMass = -98,
+    Name = "Technetium",
+    Symbol = "Tc",
     AtomicNumber = 43,
-    AtomicRadius = 2.16,
-    Block = "d",
-    BoilingPointK = 4535,
-    Category = "Transition",
-    CovalentRadius = 1.38,
-    ElectronAffinity = 53.07,
-    ElectronConfiguration = "[Kr] 4d55s2",
-    Electronegativity = 2.1,
-    Density = 11,
+    AtomicMass = -98,
+    RepresentativeMassNumber = 97,
+    Protons = 43,
     Electrons = 43,
+    NeutronsApprox = 54,
+    Category = "Transition",
+    Group = "7",
+    Period = 5,
+    Block = "d",
+    StateAt293K = "Solid",
+    Density = 11,
+    Appearance = "A radioactive, silvery metal that does not occur naturally.",
+    Uses = {
+        "The gamma-ray emitting technetium-99m (metastable) is widely used for medical diagnostic studies. Several chemical forms are used to image different parts of the body.",
+        "Technetium is a remarkable corrosion inhibitor for steel, and adding very small amounts can provide excellent protection. This use is limited to closed systems as technetium is radioactive.",
+    },
+    ElectronConfiguration = "[Kr] 4d55s2",
     EnergyLevels = {
         2,
         8,
@@ -19,14 +26,21 @@ local Technetium = {
         13,
         2,
     },
-    Group = "7",
+    AtomicRadius = 2.16,
+    CovalentRadius = 1.38,
+    ElectronAffinity = 53.07,
+    Electronegativity = 2.1,
     IonizationEnergies = {
         702.41,
         1472.37,
         2850.18,
     },
+    MeltingPointK = 2430,
+    BoilingPointK = 4535,
+    KeyIsotopes = {},
     Isotopes = {
         {
+            Name = "97Tc",
             HalfLife = {
                 "4.2 x 106 y",
             },
@@ -35,9 +49,9 @@ local Technetium = {
             ModeOfDecay = {
                 "EC",
             },
-            Name = "97Tc",
         },
         {
+            Name = "98Tc",
             HalfLife = {
                 "6.6 x 106 y",
             },
@@ -47,9 +61,9 @@ local Technetium = {
                 "beta-",
                 "EC",
             },
-            Name = "98Tc",
         },
         {
+            Name = "99Tc",
             HalfLife = {
                 "2.13 x 105 y",
             },
@@ -58,21 +72,8 @@ local Technetium = {
             ModeOfDecay = {
                 "beta-",
             },
-            Name = "99Tc",
         },
     },
-    KeyIsotopes = {},
-    MeltingPointK = 2430,
-    Name = "Technetium",
-    NeutronsApprox = 54,
-    Period = 5,
-    Protons = 43,
-    RepresentativeMassNumber = 97,
-    StateAt293K = "Solid",
-    Symbol = "Tc",
-    Uses = "The gamma-ray emitting technetium-99m (metastable) is widely used for medical diagnostic studies. Several chemical forms are used to image different parts of the body. \
-\
-Technetium is a remarkable corrosion inhibitor for steel, and adding very small amounts can provide excellent protection. This use is limited to closed systems as technetium is radioactive.",
 }
 
 return Technetium

@@ -1,24 +1,36 @@
 local Bromine = {
-    Appearance = "Bromine is a deep-red, oily liquid with a sharp smell. It is toxic.",
-    AtomicMass = 79.904,
+    Name = "Bromine",
+    Symbol = "Br",
     AtomicNumber = 35,
-    AtomicRadius = 1.85,
-    Block = "p",
-    BoilingPointK = 332,
-    Category = "Nonmetal",
-    CovalentRadius = 1.17,
-    ElectronAffinity = 324.537,
-    ElectronConfiguration = "[Ar] 3d104s24p5",
-    Electronegativity = 2.96,
-    Density = 3.1028,
+    AtomicMass = 79.904,
+    RepresentativeMassNumber = 79,
+    Protons = 35,
     Electrons = 35,
+    NeutronsApprox = 44,
+    Category = "Nonmetal",
+    Group = "17",
+    Period = 4,
+    Block = "p",
+    StateAt293K = "Liquid",
+    Density = 3.1028,
+    Appearance = "Bromine is a deep-red, oily liquid with a sharp smell. It is toxic.",
+    Uses = {
+        "Bromine is used in many areas such as agricultural chemicals, dyestuffs, insecticides, pharmaceuticals and chemical intermediates. Some uses are being phased out for environmental reasons, but new uses continue to be found.",
+        "Bromine compounds can be used as flame retardants. They are added to furniture foam, plastic casings for electronics and textiles to make them less flammable. However, the use of bromine as a flame retardant has been phased out in the USA because of toxicity concerns.",
+        "Organobromides are used in halon fire extinguishers that are used to fight fires in places like museums, aeroplanes and tanks. Silver bromide is a chemical used in film photography.",
+        "Before leaded fuels were phased out, bromine was used to prepare 1,2-di-bromoethane, which was an anti-knock agent.",
+    },
+    ElectronConfiguration = "[Ar] 3d104s24p5",
     EnergyLevels = {
         2,
         8,
         18,
         7,
     },
-    Group = "17",
+    AtomicRadius = 1.85,
+    CovalentRadius = 1.17,
+    ElectronAffinity = 324.537,
+    Electronegativity = 2.96,
     IonizationEnergies = {
         1139.859,
         2083.215,
@@ -29,49 +41,36 @@ local Bromine = {
         9938,
         18602.4,
     },
-    Isotopes = {
+    MeltingPointK = 266,
+    BoilingPointK = 332,
+    KeyIsotopes = {
         {
+            Name = "79Br",
             HalfLife = {},
             Mass = 78.918,
             MassNumber = 79,
             ModeOfDecay = {},
+            NaturalAbundance = 50.69,
+        },
+    },
+    Isotopes = {
+        {
             Name = "79Br",
+            HalfLife = {},
+            Mass = 78.918,
+            MassNumber = 79,
+            ModeOfDecay = {},
             NaturalAbundance = 50.69,
         },
         {
+            Name = "81Br",
             HalfLife = {},
             Mass = 80.916,
             MassNumber = 81,
             ModeOfDecay = {},
-            Name = "81Br",
             NaturalAbundance = 49.31,
         },
     },
-    KeyIsotopes = {
-        {
-            HalfLife = {},
-            Mass = 78.918,
-            MassNumber = 79,
-            ModeOfDecay = {},
-            Name = "79Br",
-            NaturalAbundance = 50.69,
-        },
-    },
-    MeltingPointK = 266,
-    Name = "Bromine",
-    NeutronsApprox = 44,
-    Period = 4,
-    Protons = 35,
-    RepresentativeMassNumber = 79,
-    StateAt293K = "Liquid",
-    Symbol = "Br",
-    Uses = "Bromine is used in many areas such as agricultural chemicals, dyestuffs, insecticides, pharmaceuticals and chemical intermediates. Some uses are being phased out for environmental reasons, but new uses continue to be found. \
-\
-Bromine compounds can be used as flame retardants. They are added to furniture foam, plastic casings for electronics and textiles to make them less flammable. However, the use of bromine as a flame retardant has been phased out in the USA because of toxicity concerns.\
-\
-Organobromides are used in halon fire extinguishers that are used to fight fires in places like museums, aeroplanes and tanks. Silver bromide is a chemical used in film photography.\
-\
-Before leaded fuels were phased out, bromine was used to prepare 1,2-di-bromoethane, which was an anti-knock agent.",
 }
 
 return Bromine

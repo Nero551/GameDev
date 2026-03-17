@@ -1,24 +1,36 @@
 local Chromium = {
-    Appearance = "A hard, silvery metal with a blue tinge.",
-    AtomicMass = 51.996,
+    Name = "Chromium",
+    Symbol = "Cr",
     AtomicNumber = 24,
-    AtomicRadius = 2.06,
-    Block = "d",
-    BoilingPointK = 2944,
-    Category = "Transition",
-    CovalentRadius = 1.3,
-    ElectronAffinity = 64.259,
-    ElectronConfiguration = "[Ar] 3d54s1",
-    Electronegativity = 1.66,
-    Density = 7.19,
+    AtomicMass = 51.996,
+    RepresentativeMassNumber = 52,
+    Protons = 24,
     Electrons = 24,
+    NeutronsApprox = 28,
+    Category = "Transition",
+    Group = "6",
+    Period = 4,
+    Block = "d",
+    StateAt293K = "Solid",
+    Density = 7.19,
+    Appearance = "A hard, silvery metal with a blue tinge.",
+    Uses = {
+        "Chromium is used to harden steel, to manufacture stainless steel (named as it won't rust) and to produce several alloys.",
+        "Chromium plating can be used to give a polished mirror finish to steel. Chromium-plated car and lorry parts, such as bumpers, were once very common. It is also possible to chromium plate plastics, which are often used in bathroom fittings.",
+        "About 90% of all leather is tanned using chrome. However, the waste effluent is toxic so alternatives are being investigated.",
+        "Chromium compounds are used as industrial catalysts and pigments (in bright green, yellow, red and orange colours). Rubies get their red colour from chromium, and glass treated with chromium has an emerald green colour.",
+    },
+    ElectronConfiguration = "[Ar] 3d54s1",
     EnergyLevels = {
         2,
         8,
         13,
         1,
     },
-    Group = "6",
+    AtomicRadius = 2.06,
+    CovalentRadius = 1.3,
+    ElectronAffinity = 64.259,
+    Electronegativity = 1.66,
     IonizationEnergies = {
         652.869,
         1590.628,
@@ -29,8 +41,21 @@ local Chromium = {
         15455.02,
         17820.8,
     },
+    MeltingPointK = 2180,
+    BoilingPointK = 2944,
+    KeyIsotopes = {
+        {
+            Name = "52Cr",
+            HalfLife = {},
+            Mass = 51.941,
+            MassNumber = 52,
+            ModeOfDecay = {},
+            NaturalAbundance = 83.789,
+        },
+    },
     Isotopes = {
         {
+            Name = "50Cr",
             HalfLife = {
                 "> 1.3 x 1018 y",
             },
@@ -39,59 +64,33 @@ local Chromium = {
             ModeOfDecay = {
                 "beta+EC",
             },
-            Name = "50Cr",
             NaturalAbundance = 4.345,
         },
         {
+            Name = "52Cr",
             HalfLife = {},
             Mass = 51.941,
             MassNumber = 52,
             ModeOfDecay = {},
-            Name = "52Cr",
             NaturalAbundance = 83.789,
         },
         {
+            Name = "53Cr",
             HalfLife = {},
             Mass = 52.941,
             MassNumber = 53,
             ModeOfDecay = {},
-            Name = "53Cr",
             NaturalAbundance = 9.501,
         },
         {
+            Name = "54Cr",
             HalfLife = {},
             Mass = 53.939,
             MassNumber = 54,
             ModeOfDecay = {},
-            Name = "54Cr",
             NaturalAbundance = 2.365,
         },
     },
-    KeyIsotopes = {
-        {
-            HalfLife = {},
-            Mass = 51.941,
-            MassNumber = 52,
-            ModeOfDecay = {},
-            Name = "52Cr",
-            NaturalAbundance = 83.789,
-        },
-    },
-    MeltingPointK = 2180,
-    Name = "Chromium",
-    NeutronsApprox = 28,
-    Period = 4,
-    Protons = 24,
-    RepresentativeMassNumber = 52,
-    StateAt293K = "Solid",
-    Symbol = "Cr",
-    Uses = "Chromium is used to harden steel, to manufacture stainless steel (named as it won't rust) and to produce several alloys. \
-\
-Chromium plating can be used to give a polished mirror finish to steel. Chromium-plated car and lorry parts, such as bumpers, were once very common. It is also possible to chromium plate plastics, which are often used in bathroom fittings.\
-\
-About 90% of all leather is tanned using chrome. However, the waste effluent is toxic so alternatives are being investigated.\
-\
-Chromium compounds are used as industrial catalysts and pigments (in bright green, yellow, red and orange colours). Rubies get their red colour from chromium, and glass treated with chromium has an emerald green colour.",
 }
 
 return Chromium

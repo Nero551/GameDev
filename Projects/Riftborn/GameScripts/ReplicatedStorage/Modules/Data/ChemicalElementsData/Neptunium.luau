@@ -1,16 +1,23 @@
 local Neptunium = {
-    Appearance = "A radioactive metal.",
-    AtomicMass = -237,
+    Name = "Neptunium",
+    Symbol = "Np",
     AtomicNumber = 93,
-    AtomicRadius = 2.39,
-    Block = "f",
-    BoilingPointK = 4175,
-    Category = "Actinoid",
-    CovalentRadius = 1.8,
-    ElectronConfiguration = "[Rn] 5f46d17s2",
-    Electronegativity = 1.3,
-    Density = 20.45,
+    AtomicMass = -237,
+    RepresentativeMassNumber = 237,
+    Protons = 93,
     Electrons = 93,
+    NeutronsApprox = 144,
+    Category = "Actinoid",
+    Group = "Actinides",
+    Period = 7,
+    Block = "f",
+    StateAt293K = "Solid",
+    Density = 20.45,
+    Appearance = "A radioactive metal.",
+    Uses = {
+        "Neptunium is little used outside research. The isotope neptunium-237 has been used in neutron detectors.",
+    },
+    ElectronConfiguration = "[Rn] 5f46d17s2",
     EnergyLevels = {
         2,
         8,
@@ -20,12 +27,32 @@ local Neptunium = {
         9,
         2,
     },
-    Group = "Actinides",
+    AtomicRadius = 2.39,
+    CovalentRadius = 1.8,
+    Electronegativity = 1.3,
     IonizationEnergies = {
         604.548,
     },
+    MeltingPointK = 917,
+    BoilingPointK = 4175,
+    KeyIsotopes = {
+        {
+            Name = "237Np",
+            HalfLife = {
+                "2.14 x 106 y",
+                "1 x 1018 y",
+            },
+            Mass = 237.048,
+            MassNumber = 237,
+            ModeOfDecay = {
+                "alpha",
+                "sf",
+            },
+        },
+    },
     Isotopes = {
         {
+            Name = "236Np",
             HalfLife = {
                 "1.55 x 105 y",
             },
@@ -35,9 +62,9 @@ local Neptunium = {
                 "EC",
                 "beta-",
             },
-            Name = "236Np",
         },
         {
+            Name = "237Np",
             HalfLife = {
                 "2.14 x 106 y",
                 "1 x 1018 y",
@@ -48,33 +75,8 @@ local Neptunium = {
                 "alpha",
                 "sf",
             },
-            Name = "237Np",
         },
     },
-    KeyIsotopes = {
-        {
-            HalfLife = {
-                "2.14 x 106 y",
-                "1 x 1018 y",
-            },
-            Mass = 237.048,
-            MassNumber = 237,
-            ModeOfDecay = {
-                "alpha",
-                "sf",
-            },
-            Name = "237Np",
-        },
-    },
-    MeltingPointK = 917,
-    Name = "Neptunium",
-    NeutronsApprox = 144,
-    Period = 7,
-    Protons = 93,
-    RepresentativeMassNumber = 237,
-    StateAt293K = "Solid",
-    Symbol = "Np",
-    Uses = "Neptunium is little used outside research. The isotope neptunium-237 has been used in neutron detectors.",
 }
 
 return Neptunium

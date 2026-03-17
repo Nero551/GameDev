@@ -1,16 +1,27 @@
 local Cadmium = {
-    Appearance = "Cadmium is a silvery metal with a bluish tinge to its surface.",
-    AtomicMass = 112.41,
+    Name = "Cadmium",
+    Symbol = "Cd",
     AtomicNumber = 48,
-    AtomicRadius = 2.18,
-    Block = "d",
-    BoilingPointK = 1040,
-    Category = "Transition",
-    CovalentRadius = 1.4,
-    ElectronConfiguration = "[Kr] 4d105s2",
-    Electronegativity = 1.69,
-    Density = 8.65,
+    AtomicMass = 112.41,
+    RepresentativeMassNumber = 114,
+    Protons = 48,
     Electrons = 48,
+    NeutronsApprox = 66,
+    Category = "Transition",
+    Group = "12",
+    Period = 5,
+    Block = "d",
+    StateAt293K = "Solid",
+    Density = 8.65,
+    Appearance = "Cadmium is a silvery metal with a bluish tinge to its surface.",
+    Uses = {
+        "Cadmium is a poison and is known to cause birth defects and cancer. As a result, there are moves to limit its use.",
+        "80% of cadmium currently produced is used in rechargeable nickel-cadmium batteries. However, they are gradually being phased out and replaced with nickel metal hydride batteries.",
+        "Cadmium was often used to electroplate steel and protect it from corrosion. It is still used today to protect critical components of aeroplanes and oil platforms.",
+        "Other past uses of cadmium included phosphors in cathode ray tube colour TV sets, and yellow, orange and red pigments.",
+        "Cadmium absorbs neutrons and so is used in rods in nuclear reactors to control atomic fission.",
+    },
+    ElectronConfiguration = "[Kr] 4d105s2",
     EnergyLevels = {
         2,
         8,
@@ -18,14 +29,33 @@ local Cadmium = {
         18,
         2,
     },
-    Group = "12",
+    AtomicRadius = 2.18,
+    CovalentRadius = 1.4,
+    Electronegativity = 1.69,
     IonizationEnergies = {
         867.772,
         1631.404,
         3616.27,
     },
+    MeltingPointK = 594.219,
+    BoilingPointK = 1040,
+    KeyIsotopes = {
+        {
+            Name = "114Cd",
+            HalfLife = {
+                "> 1.3 x 1018 y",
+            },
+            Mass = 113.903,
+            MassNumber = 114,
+            ModeOfDecay = {
+                "beta-beta-",
+            },
+            NaturalAbundance = 28.73,
+        },
+    },
     Isotopes = {
         {
+            Name = "106Cd",
             HalfLife = {
                 "> 1.9 x 1019 y",
             },
@@ -34,10 +64,10 @@ local Cadmium = {
             ModeOfDecay = {
                 "EC, EC",
             },
-            Name = "106Cd",
             NaturalAbundance = 1.25,
         },
         {
+            Name = "108Cd",
             HalfLife = {
                 "> 4.1 x 1017 y",
             },
@@ -46,34 +76,34 @@ local Cadmium = {
             ModeOfDecay = {
                 "EC EC",
             },
-            Name = "108Cd",
             NaturalAbundance = 0.89,
         },
         {
+            Name = "110Cd",
             HalfLife = {},
             Mass = 109.903,
             MassNumber = 110,
             ModeOfDecay = {},
-            Name = "110Cd",
             NaturalAbundance = 12.49,
         },
         {
+            Name = "111Cd",
             HalfLife = {},
             Mass = 110.904,
             MassNumber = 111,
             ModeOfDecay = {},
-            Name = "111Cd",
             NaturalAbundance = 12.8,
         },
         {
+            Name = "112Cd",
             HalfLife = {},
             Mass = 111.903,
             MassNumber = 112,
             ModeOfDecay = {},
-            Name = "112Cd",
             NaturalAbundance = 24.13,
         },
         {
+            Name = "113Cd",
             HalfLife = {
                 "8.04 x 1015 y",
             },
@@ -82,10 +112,10 @@ local Cadmium = {
             ModeOfDecay = {
                 "beta-beta-",
             },
-            Name = "113Cd",
             NaturalAbundance = 12.22,
         },
         {
+            Name = "114Cd",
             HalfLife = {
                 "> 1.3 x 1018 y",
             },
@@ -94,10 +124,10 @@ local Cadmium = {
             ModeOfDecay = {
                 "beta-beta-",
             },
-            Name = "114Cd",
             NaturalAbundance = 28.73,
         },
         {
+            Name = "116Cd",
             HalfLife = {
                 "3.8 x 1019 y",
             },
@@ -106,41 +136,9 @@ local Cadmium = {
             ModeOfDecay = {
                 "beta-beta-",
             },
-            Name = "116Cd",
             NaturalAbundance = 7.49,
         },
     },
-    KeyIsotopes = {
-        {
-            HalfLife = {
-                "> 1.3 x 1018 y",
-            },
-            Mass = 113.903,
-            MassNumber = 114,
-            ModeOfDecay = {
-                "beta-beta-",
-            },
-            Name = "114Cd",
-            NaturalAbundance = 28.73,
-        },
-    },
-    MeltingPointK = 594.219,
-    Name = "Cadmium",
-    NeutronsApprox = 66,
-    Period = 5,
-    Protons = 48,
-    RepresentativeMassNumber = 114,
-    StateAt293K = "Solid",
-    Symbol = "Cd",
-    Uses = "Cadmium is a poison and is known to cause birth defects and cancer. As a result, there are moves to limit its use. \
-\
-80% of cadmium currently produced is used in rechargeable nickel-cadmium batteries. However, they are gradually being phased out and replaced with nickel metal hydride batteries. \
-\
-Cadmium was often used to electroplate steel and protect it from corrosion. It is still used today to protect critical components of aeroplanes and oil platforms.\
-\
-Other past uses of cadmium included phosphors in cathode ray tube colour TV sets, and yellow, orange and red pigments. \
-\
-Cadmium absorbs neutrons and so is used in rods in nuclear reactors to control atomic fission.",
 }
 
 return Cadmium
