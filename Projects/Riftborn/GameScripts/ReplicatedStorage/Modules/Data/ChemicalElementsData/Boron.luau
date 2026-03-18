@@ -13,7 +13,9 @@ local Boron = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 2.08,
-    Appearance = "Pure boron is a dark amorphous powder.",
+    Appearance = {
+        "Pure boron is a dark amorphous powder.",
+    },
     Uses = {
         "Amorphous boron is used as a rocket fuel igniter and in pyrotechnic flares. It gives the flares a distinctive green colour.",
         "The most important compounds of boron are boric (or boracic) acid, borax (sodium borate) and boric oxide. These can be found in eye drops, mild antiseptics, washing powders and tile glazes. Borax used to be used to make bleach and as a food preservative.",

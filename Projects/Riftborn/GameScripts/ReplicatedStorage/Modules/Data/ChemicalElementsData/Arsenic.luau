@@ -13,7 +13,9 @@ local Arsenic = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 5.727,
-    Appearance = "Arsenic is a semi-metal. In its metallic form it is bright, silver-grey and brittle.",
+    Appearance = {
+        "Arsenic is a semi-metal. In its metallic form it is bright, silver-grey and brittle.",
+    },
     Uses = {
         "Arsenic is a well-known poison. Arsenic compounds are sometimes used as rat poisons and insecticides but their use is strictly controlled.",
         "Surprisingly, arsenic can also have medicinal applications. In Victorian times, Dr Fowler's Solution (potassium arsenate dissolved in water) was a popular cure-all tonic that was even used by Charles Dickens. Today, organoarsenic compounds are added to poultry feed to prevent disease and improve weight gain.",

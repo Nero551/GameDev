@@ -13,7 +13,9 @@ local Strontium = {
     Block = "s",
     StateAt293K = "Solid",
     Density = 2.64,
-    Appearance = "A soft, silvery metal that burns in air and reacts with water.",
+    Appearance = {
+        "A soft, silvery metal that burns in air and reacts with water.",
+    },
     Uses = {
         "Strontium is best known for the brilliant reds its salts give to fireworks and flares. It is also used in producing ferrite magnets and refining zinc.",
         "Modern 'glow-in-the-dark' paints and plastics contain strontium aluminate. They absorb light during the day and release it slowly for hours afterwards.",

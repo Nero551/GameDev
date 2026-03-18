@@ -13,7 +13,9 @@ local Rubidium = {
     Block = "s",
     StateAt293K = "Solid",
     Density = 1.532,
-    Appearance = "A soft metal that ignites in the air and reacts violently with water.",
+    Appearance = {
+        "A soft metal that ignites in the air and reacts violently with water.",
+    },
     Uses = {
         "Rubidium is little used outside research. It has been used as a component of photocells, to remove traces of oxygen from vacuum tubes and to make special types of glass.",
         "It is easily ionised so was considered for use in ion engines, but was found to be less effective than caesium. It has also been proposed for use as a working fluid for vapour turbines and in thermoelectric generators.",

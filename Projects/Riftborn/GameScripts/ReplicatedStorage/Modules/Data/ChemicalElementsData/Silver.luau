@@ -13,7 +13,9 @@ local Silver = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 10.49,
-    Appearance = "Silver is a relatively soft, shiny metal. It tarnishes slowly in air as sulfur compounds react with the surface forming black silver sulfide.",
+    Appearance = {
+        "Silver is a relatively soft, shiny metal. It tarnishes slowly in air as sulfur compounds react with the surface forming black silver sulfide.",
+    },
     Uses = {
         "Sterling silver contains 92.5% silver. The rest is copper or some other metal. It is used for jewellery and silver tableware, where appearance is important.",
         "Silver is used to make mirrors, as it is the best reflector of visible light known, although it does tarnish with time. It is also used in dental alloys, solder and brazing alloys, electrical contacts and batteries. Silver paints are used for making printed circuits.",

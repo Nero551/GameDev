@@ -13,7 +13,9 @@ local Potassium = {
     Block = "s",
     StateAt293K = "Solid",
     Density = 0.862,
-    Appearance = "A soft, silvery metal that tarnishes in air within minutes.",
+    Appearance = {
+        "A soft, silvery metal that tarnishes in air within minutes.",
+    },
     Uses = {
         "The greatest demand for potassium compounds is in fertilisers. Many other potassium salts are of great importance, including the nitrate, carbonate, chloride, bromide, cyanide and sulfate. Potassium carbonate is used in the manufacture of glass. Potassium hydroxide is used to make detergent and liquid soap. Potassium chloride is used in pharmaceuticals and saline drips.",
     },

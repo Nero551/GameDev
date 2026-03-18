@@ -13,7 +13,9 @@ local Thallium = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 11.85,
-    Appearance = "A soft, silvery-white metal that tarnishes easily.",
+    Appearance = {
+        "A soft, silvery-white metal that tarnishes easily.",
+    },
     Uses = {
         "The use of thallium is limited as it is a toxic element. Thallium sulfate was employed as a rodent killer - it is odourless and tasteless - but household use of this poison has been prohibited in most developed countries.",
         "Most thallium is used by the electronics industry in photoelectric cells. Thallium oxide is used to produce special glass with a high index of refraction, and also low melting glass that becomes fluid at about 125K.",

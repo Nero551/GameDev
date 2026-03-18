@@ -13,7 +13,9 @@ local Curium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 13.51,
-    Appearance = "A radioactive metal that is silver in colour. It tarnishes rapidly in air.",
+    Appearance = {
+        "A radioactive metal that is silver in colour. It tarnishes rapidly in air.",
+    },
     Uses = {
         "Curium has been used to provide power to electrical equipment used on space missions.",
     },

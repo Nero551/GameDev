@@ -13,7 +13,9 @@ local Sulfur = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 2.07,
-    Appearance = "There are several allotropes of sulfur. The most common appears as yellow crystals or powder.",
+    Appearance = {
+        "There are several allotropes of sulfur. The most common appears as yellow crystals or powder.",
+    },
     Uses = {
         "Sulfur is used in the vulcanisation of black rubber, as a fungicide and in black gunpowder. Most sulfur is, however, used in the production of sulfuric acid, which is perhaps the most important chemical manufactured by western civilisations. The most important of sulfuric acid's many uses is in the manufacture of phosphoric acid, to make phosphates for fertilisers.",
         "Mercaptans are a family of organosulfur compounds. Some are added to natural gas supplies because of their distinctive smell, so that gas leaks can be detected easily. Others are used in silver polish, and in the production of pesticides and herbicides.",

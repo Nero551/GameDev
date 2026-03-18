@@ -13,7 +13,9 @@ local Dysprosium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 8.54,
-    Appearance = "A bright, silvery metallic element.",
+    Appearance = {
+        "A bright, silvery metallic element.",
+    },
     Uses = {
         "As a pure metal it is little used, because it reacts readily with water and air. Dysprosium's main use is in alloys for neodymium-based magnets. This is because it is resistant to demagnetisation at high temperatures. This property is important for magnets used in motors or generators. These magnets are used in wind turbines and electrical vehicles, so demand for dysprosium is growing rapidly.",
         "Dysprosium iodide is used in halide discharge lamps. The salt enables the lamps to give out a very intense white light.",

@@ -12,7 +12,9 @@ local Mendelevium = {
     Period = 7,
     Block = "f",
     StateAt293K = "Solid",
-    Appearance = "A radioactive metal, of which only a few atoms have ever been created.",
+    Appearance = {
+        "A radioactive metal, of which only a few atoms have ever been created.",
+    },
     Uses = {
         "Mendelevium is used only for research.",
     },

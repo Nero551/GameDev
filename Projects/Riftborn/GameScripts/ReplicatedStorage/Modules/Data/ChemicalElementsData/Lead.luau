@@ -13,7 +13,9 @@ local Lead = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 11.34,
-    Appearance = "A dull, silvery-grey metal. It is soft and easily worked into sheets.",
+    Appearance = {
+        "A dull, silvery-grey metal. It is soft and easily worked into sheets.",
+    },
     Uses = {
         "This easily worked and corrosion-resistant metal has been used for pipes, pewter and paint since Roman times. It has also been used in lead glazes for pottery and, in this century, insecticides, hair dyes and as an anti-knocking additive for petrol. All these uses have now been banned, replaced or discouraged as lead is known to be detrimental to health, particularly that of children.",
         "Lead is still widely used for car batteries, pigments, ammunition, cable sheathing, weights for lifting, weight belts for diving, lead crystal glass, radiation protection and in some solders.",

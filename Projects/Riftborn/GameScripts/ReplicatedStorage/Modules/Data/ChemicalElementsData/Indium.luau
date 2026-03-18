@@ -13,7 +13,9 @@ local Indium = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 7.31,
-    Appearance = "A soft, silvery metal that is stable in air and water.",
+    Appearance = {
+        "A soft, silvery metal that is stable in air and water.",
+    },
     Uses = {
         "Most indium is used to make indium tin oxide (ITO), which is an important part of touch screens, flatscreen TVs and solar panels. This is because it conducts electricity, bonds strongly to glass and is transparent.",
         "Indium nitride, phosphide and antimonide are semiconductors used in transistors and microchips.",

@@ -13,7 +13,9 @@ local Germanium = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 5.323,
-    Appearance = "A silvery-white semi-metal. It is brittle.",
+    Appearance = {
+        "A silvery-white semi-metal. It is brittle.",
+    },
     Uses = {
         "Germanium is a semiconductor. The pure element was commonly doped with arsenic, gallium or other elements and used as a transistor in thousands of electronic applications. Today, however, other semiconductors have replaced it.",
         "Germanium oxide has a high index of refraction and dispersion. This makes it suitable for use in wide-angle camera lenses and objective lenses for microscopes. This is now the major use for this element.",

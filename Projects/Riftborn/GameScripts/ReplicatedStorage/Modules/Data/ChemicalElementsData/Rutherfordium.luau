@@ -13,7 +13,9 @@ local Rutherfordium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 23.2,
-    Appearance = "A radioactive metal that does not occur naturally. Relatively few atoms have ever been made.",
+    Appearance = {
+        "A radioactive metal that does not occur naturally. Relatively few atoms have ever been made.",
+    },
     Uses = {
         "At present, it is only used in research.",
     },

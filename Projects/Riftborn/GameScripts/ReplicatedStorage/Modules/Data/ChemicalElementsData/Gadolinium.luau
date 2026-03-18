@@ -13,7 +13,9 @@ local Gadolinium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 7.9,
-    Appearance = "A soft, silvery metal that reacts with oxygen and water.",
+    Appearance = {
+        "A soft, silvery metal that reacts with oxygen and water.",
+    },
     Uses = {
         "Gadolinium has useful properties in alloys. As little as 1% gadolinium can improve the workability of iron and chromium alloys, and their resistance to high temperatures and oxidation. It is also used in alloys for making magnets, electronic components and data storage disks.",
         "Its compounds are useful in magnetic resonance imaging (MRI), particularly in diagnosing cancerous tumours.",

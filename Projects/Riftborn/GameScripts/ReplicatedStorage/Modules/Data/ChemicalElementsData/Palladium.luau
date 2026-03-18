@@ -13,7 +13,9 @@ local Palladium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 12.023,
-    Appearance = "A shiny, silvery-white metal that resists corrosion.",
+    Appearance = {
+        "A shiny, silvery-white metal that resists corrosion.",
+    },
     Uses = {
         "Most palladium is used in catalytic converters for cars. It is also used in jewellery and some dental fillings and crowns. White gold is an alloy of gold that has been decolourised by alloying with another metal, sometimes palladium.",
         "It is used in the electronics industry in ceramic capacitors, found in laptop computers and mobile phones. These consist of layers of palladium sandwiched between layers of ceramic.",

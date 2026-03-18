@@ -13,7 +13,9 @@ local Neptunium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 20.45,
-    Appearance = "A radioactive metal.",
+    Appearance = {
+        "A radioactive metal.",
+    },
     Uses = {
         "Neptunium is little used outside research. The isotope neptunium-237 has been used in neutron detectors.",
     },

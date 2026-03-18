@@ -13,7 +13,9 @@ local Europium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 5.264,
-    Appearance = "A soft, silvery metal that tarnishes quickly and reacts with water.",
+    Appearance = {
+        "A soft, silvery metal that tarnishes quickly and reacts with water.",
+    },
     Uses = {
         "Europium is used in the printing of euro banknotes. It glows red under UV light, and forgeries can be detected by the lack of this red glow.",
         "Low-energy light bulbs contain a little europium to give a more natural light, by balancing the blue (cold) light with a little red (warm) light.",

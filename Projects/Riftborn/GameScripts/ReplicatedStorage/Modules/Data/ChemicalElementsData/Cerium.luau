@@ -13,7 +13,9 @@ local Cerium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 6.77,
-    Appearance = "Cerium is a grey metal. It is little used because it tarnishes easily, reacts with water and burns when heated.",
+    Appearance = {
+        "Cerium is a grey metal. It is little used because it tarnishes easily, reacts with water and burns when heated.",
+    },
     Uses = {
         "Cerium is the major component of mischmetal alloy (just under 50%). The best-known use for this alloy is in 'flints' for cigarette lighters. This is because cerium will make sparks when struck. The only other element that does this is iron.",
         "Cerium(Ill) oxide has uses as a catalyst. It is used in the inside walls of self-cleaning ovens to prevent the build-up of cooking residues. It is also used in catalytic converters. Cerium(III) oxide nanoparticles are being studied as an additive for diesel fuel to help it burn more completely and reduce exhaust emissions.",

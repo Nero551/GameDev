@@ -13,7 +13,9 @@ local Copper = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 8.96,
-    Appearance = "A reddish-gold metal that is easily worked and drawn into wires.",
+    Appearance = {
+        "A reddish-gold metal that is easily worked and drawn into wires.",
+    },
     Uses = {
         "Historically, copper was the first metal to be worked by people. The discovery that it could be hardened with a little tin to form the alloy bronze gave the name to the Bronze Age.",
         "Traditionally it has been one of the metals used to make coins, along with silver and gold. However, it is the most common of the three and therefore the least valued. All US coins are now copper alloys, and gun metals also contain copper.",

@@ -13,7 +13,9 @@ local Iron = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 7.874,
-    Appearance = "A shiny, greyish metal that rusts in damp air.",
+    Appearance = {
+        "A shiny, greyish metal that rusts in damp air.",
+    },
     Uses = {
         "Iron is an enigma - it rusts easily, yet it is the most important of all metals. 90% of all metal that is refined today is iron.",
         "Most is used to manufacture steel, used in civil engineering (reinforced concrete, girders etc) and in manufacturing.",

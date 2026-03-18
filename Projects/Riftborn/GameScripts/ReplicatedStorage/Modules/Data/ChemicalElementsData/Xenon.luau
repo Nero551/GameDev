@@ -13,7 +13,9 @@ local Xenon = {
     Block = "p",
     StateAt293K = "Gas",
     Density = 5.894,
-    Appearance = "A colourless, odourless gas. It is very unreactive.",
+    Appearance = {
+        "A colourless, odourless gas. It is very unreactive.",
+    },
     Uses = {
         "Xenon is used in certain specialised light sources. It produces a beautiful blue glow when excited by an electrical discharge. Xenon lamps have applications as high-speed electronic flash bulbs used by photographers, sunbed lamps and bactericidal lamps used in food preparation and processing. Xenon lamps are also used in ruby lasers.",
         "Xenon ion propulsion systems are used by several satellites to keep them in orbit, and in some other spacecraft.",

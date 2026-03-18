@@ -13,7 +13,9 @@ local Thorium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 11.724,
-    Appearance = "A weakly radioactive, silvery metal.",
+    Appearance = {
+        "A weakly radioactive, silvery metal.",
+    },
     Uses = {
         "Thorium is an important alloying agent in magnesium, as it imparts greater strength and creep resistance at high temperatures. Thorium oxide is used as an industrial catalyst.",
         "Thorium can be used as a source of nuclear power. It is about three times as abundant as uranium and about as abundant as lead, and there is probably more energy available from thorium than from both uranium and fossil fuels. India and China are in the process of developing nuclear power plants with thorium reactors, but this is still a very new technology.",

@@ -13,7 +13,9 @@ local Thulium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 9.32,
-    Appearance = "A bright, silvery metal.",
+    Appearance = {
+        "A bright, silvery metal.",
+    },
     Uses = {
         "When irradiated in a nuclear reactor, thulium produces an isotope that emits x-rays. A 'button' of this isotope is used to make a lightweight, portable x-ray machine for medical use. Thulium is used in lasers with surgical applications.",
     },

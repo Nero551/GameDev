@@ -13,7 +13,9 @@ local Manganese = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 7.21,
-    Appearance = "A hard, brittle, silvery metal.",
+    Appearance = {
+        "A hard, brittle, silvery metal.",
+    },
     Uses = {
         "Manganese is too brittle to be of much use as a pure metal. It is mainly used in alloys, such as steel.",
         "Steel contains about 1% manganese, to increase the strength and also improve workability and resistance to wear.",

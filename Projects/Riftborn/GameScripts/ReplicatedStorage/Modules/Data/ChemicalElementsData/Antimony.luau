@@ -13,7 +13,9 @@ local Antimony = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 6.697,
-    Appearance = "Antimony is a semi-metal. In its metallic form it is silvery, hard and brittle.",
+    Appearance = {
+        "Antimony is a semi-metal. In its metallic form it is silvery, hard and brittle.",
+    },
     Uses = {
         "Antimony is used in the electronics industry to make some semiconductor devices, such as infrared detectors and diodes.",
         "It is alloyed with lead or other metals to improve their hardness and strength. A lead-antimony alloy is used in batteries. Other uses of antimony alloys include type metal (in printing presses), bullets and cable sheathing.",

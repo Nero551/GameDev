@@ -13,7 +13,9 @@ local Oxygen = {
     Block = "p",
     StateAt293K = "Gas",
     Density = 1.429,
-    Appearance = "A colourless, odourless gas.",
+    Appearance = {
+        "A colourless, odourless gas.",
+    },
     Uses = {
         "The greatest commercial use of oxygen gas is in the steel industry. Large quantities are also used in the manufacture of a wide range of chemicals including nitric acid and hydrogen peroxide. It is also used to make epoxyethane (ethylene oxide), used as antifreeze and to make polyester, and chloroethene, the precursor to PVC.",
         "Oxygen gas is used for oxy-acetylene welding and cutting of metals. A growing use is in the treatment of sewage and of effluent from industry.",

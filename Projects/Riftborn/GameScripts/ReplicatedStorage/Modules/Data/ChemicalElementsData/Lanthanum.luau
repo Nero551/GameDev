@@ -13,7 +13,9 @@ local Lanthanum = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 6.162,
-    Appearance = "A soft, silvery-white metal. It rapidly tarnishes in air and burns easily when ignited.",
+    Appearance = {
+        "A soft, silvery-white metal. It rapidly tarnishes in air and burns easily when ignited.",
+    },
     Uses = {
         "Lanthanum metal has no commercial uses. However, its alloys have a variety of uses. A lanthanum-nickel alloy is used to store hydrogen gas for use in hydrogen-powered vehicles. Lanthanum is also found in the anode of nickel metal hydride batteries used in hybrid cars.",
         "Lanthanum is an important component of mischmetal alloy (about 20%). The best-known use for this alloy is in 'flints' for cigarette lighters.",

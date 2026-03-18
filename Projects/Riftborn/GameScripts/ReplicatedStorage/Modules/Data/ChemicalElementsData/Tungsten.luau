@@ -13,7 +13,9 @@ local Tungsten = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 19.25,
-    Appearance = "A shiny, silvery-white metal.",
+    Appearance = {
+        "A shiny, silvery-white metal.",
+    },
     Uses = {
         "Tungsten was used extensively for the filaments of old-style incandescent light bulbs, but these have been phased out in many countries. This is because they are not very energy efficient; they produce much more heat than light.",
         "Tungsten has the highest melting point of all metals and is alloyed with other metals to strengthen them. Tungsten and its alloys are used in many high-temperature applications, such as arc-welding electrodes and heating elements in high-temperature furnaces.",

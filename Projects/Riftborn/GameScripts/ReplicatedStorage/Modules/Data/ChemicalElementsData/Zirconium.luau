@@ -13,7 +13,9 @@ local Zirconium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 6.52,
-    Appearance = "A hard, silvery metal that is very resistant to corrosion.",
+    Appearance = {
+        "A hard, silvery metal that is very resistant to corrosion.",
+    },
     Uses = {
         "Zirconium does not absorb neutrons, making it an ideal material for use in nuclear power stations. More than 90% of zirconium is used in this way. Nuclear reactors can have more than 100,000 metres of zirconium alloy tubing. With niobium, zirconium is superconductive at low temperatures and is used to make superconducting magnets.",
         "Zirconium metal is protected by a thin oxide layer making it exceptionally resistant to corrosion by acids, alkalis and seawater. For this reason it is extensively used by the chemical industry.",

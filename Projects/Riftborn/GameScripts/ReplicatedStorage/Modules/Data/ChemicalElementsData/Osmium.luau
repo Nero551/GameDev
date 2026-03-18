@@ -13,7 +13,9 @@ local Osmium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 22.59,
-    Appearance = "A shiny, silver metal that resists corrosion. It is the densest of all the elements and is twice as dense as lead.",
+    Appearance = {
+        "A shiny, silver metal that resists corrosion. It is the densest of all the elements and is twice as dense as lead.",
+    },
     Uses = {
         "Osmium has only a few uses. It is used to produce very hard alloys for fountain pen tips, instrument pivots, needles and electrical contacts. It is also used in the chemical industry as a catalyst.",
     },

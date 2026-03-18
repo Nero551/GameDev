@@ -13,7 +13,9 @@ local Lutetium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 9.841,
-    Appearance = "A silvery-white, hard, dense metal.",
+    Appearance = {
+        "A silvery-white, hard, dense metal.",
+    },
     Uses = {
         "Lutetium is little used outside research. One of its few commercial uses is as a catalyst for cracking hydrocarbons in oil refineries.",
     },

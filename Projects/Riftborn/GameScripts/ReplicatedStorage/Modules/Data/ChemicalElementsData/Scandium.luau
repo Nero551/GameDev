@@ -13,7 +13,9 @@ local Scandium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 2.985,
-    Appearance = "A silvery metal that tarnishes in air, burns easily and reacts with water.",
+    Appearance = {
+        "A silvery metal that tarnishes in air, burns easily and reacts with water.",
+    },
     Uses = {
         "Scandium is mainly used for research purposes. It has, however, great potential because it has almost as low a density as aluminium and a much higher melting point. An aluminium-scandium alloy has been used in Russian MIG fighter planes, high-end bicycle frames and baseball bats.",
         "Scandium iodide is added to mercury vapour lamps to produce a highly efficient light source resembling sunlight. These lamps help television cameras to reproduce colour well when filming indoors or at night-time.",

@@ -13,7 +13,9 @@ local Niobium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 8.57,
-    Appearance = "A silvery metal that is very resistant to corrosion due to a layer of oxide on its surface.",
+    Appearance = {
+        "A silvery metal that is very resistant to corrosion due to a layer of oxide on its surface.",
+    },
     Uses = {
         "Niobium is used in alloys including stainless steel. It improves the strength of the alloys, particularly at low temperatures. Alloys containing niobium are used in jet engines and rockets, beams and girders for buildings and oil rigs, and oil and gas pipelines.",
         "This element also has superconducting properties. It is used in superconducting magnets for particle accelerators, MRI scanners and NMR equipment.",

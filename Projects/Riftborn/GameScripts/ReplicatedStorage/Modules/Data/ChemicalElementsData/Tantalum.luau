@@ -13,7 +13,9 @@ local Tantalum = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 16.69,
-    Appearance = "A shiny, silvery metal that is very resistant to corrosion.",
+    Appearance = {
+        "A shiny, silvery metal that is very resistant to corrosion.",
+    },
     Uses = {
         "One of the main uses of tantalum is in the production of electronic components. An oxide layer which forms on the surface of tantalum can act as an insulating (dielectric) layer. Because tantalum can be used to coat other metals with a very thin layer, a high capacitance can be achieved in a small volume. This makes tantalum capacitors attractive for portable electronics such as mobile phones.",
         "Tantalum causes no immune response in mammals, so has found wide use in the making of surgical implants. It can replace bone, for example in skull plates; as foil or wire it connects torn nerves; and as woven gauze it binds abdominal muscle.",

@@ -13,7 +13,9 @@ local Fluorine = {
     Block = "p",
     StateAt293K = "Gas",
     Density = 1.696,
-    Appearance = "A very pale yellow-green, dangerously reactive gas. It is the most reactive of all the elements and quickly attacks all metals. Steel wool bursts into flames when exposed to fluorine.",
+    Appearance = {
+        "A very pale yellow-green, dangerously reactive gas. It is the most reactive of all the elements and quickly attacks all metals. Steel wool bursts into flames when exposed to fluorine.",
+    },
     Uses = {
         "There was no commercial production of fluorine until the Second World War, when the development of the atom bomb, and other nuclear energy projects, made it necessary to produce large quantities. Before this, fluorine salts, known as fluorides, were for a long time used in welding and for frosting glass.",
         "The element is used to make uranium hexafluoride, needed by the nuclear power industry to separate uranium isotopes. It is also used to make sulfur hexafluoride, the insulating gas for high-power electricity transformers.",

@@ -13,7 +13,9 @@ local Chromium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 7.19,
-    Appearance = "A hard, silvery metal with a blue tinge.",
+    Appearance = {
+        "A hard, silvery metal with a blue tinge.",
+    },
     Uses = {
         "Chromium is used to harden steel, to manufacture stainless steel (named as it won't rust) and to produce several alloys.",
         "Chromium plating can be used to give a polished mirror finish to steel. Chromium-plated car and lorry parts, such as bumpers, were once very common. It is also possible to chromium plate plastics, which are often used in bathroom fittings.",

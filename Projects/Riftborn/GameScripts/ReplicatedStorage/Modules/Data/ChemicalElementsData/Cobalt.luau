@@ -13,7 +13,9 @@ local Cobalt = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 8.9,
-    Appearance = "A lustrous, silvery-blue metal. It is magnetic.",
+    Appearance = {
+        "A lustrous, silvery-blue metal. It is magnetic.",
+    },
     Uses = {
         "Cobalt, like iron, can be magnetised and so is used to make magnets. It is alloyed with aluminium and nickel to make particularly powerful magnets.",
         "Other alloys of cobalt are used in jet turbines and gas turbine generators, where high-temperature strength is important.",

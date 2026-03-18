@@ -13,7 +13,9 @@ local Caesium = {
     Block = "s",
     StateAt293K = "Solid",
     Density = 1.93,
-    Appearance = "Caesium is a soft, gold-coloured metal that is quickly attacked by air and reacts explosively in water.",
+    Appearance = {
+        "Caesium is a soft, gold-coloured metal that is quickly attacked by air and reacts explosively in water.",
+    },
     Uses = {
         "The most common use for caesium compounds is as a drilling fluid. They are also used to make special optical glass, as a catalyst promoter, in vacuum tubes and in radiation monitoring equipment.",
         "One of its most important uses is in the 'caesium clock' (atomic clock). These clocks are a vital part of the internetand mobile phone networks, as well as Global Positioning System (GPS) satellites. They give the standard measure of time: the electron resonance frequency of the caesium atom is 9,192,631,770 cycles per second. Some caesium clocks are accurate to 1 second in 15 million years.",

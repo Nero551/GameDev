@@ -13,7 +13,9 @@ local Neon = {
     Block = "p",
     StateAt293K = "Gas",
     Density = 0.9002,
-    Appearance = "A colourless, odourless gas. Neon will not react with any other substance.",
+    Appearance = {
+        "A colourless, odourless gas. Neon will not react with any other substance.",
+    },
     Uses = {
         "The largest use of neon is in making the ubiquitous 'neon signs' for advertising. In a vacuum discharge tube neon glows a reddish orange colour. Only the red signs actually contain pure neon. Others contain different gases to give different colours.",
         "Neon is also used to make high-voltage indicators and switching gear, lightning arresters, diving equipment and lasers.",

@@ -13,7 +13,9 @@ local Bohrium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 37.1,
-    Appearance = "Bohrium is a highly radioactive metal.",
+    Appearance = {
+        "Bohrium is a highly radioactive metal.",
+    },
     Uses = {
         "At present, bohrium is of research interest only.",
     },

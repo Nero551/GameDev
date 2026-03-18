@@ -13,7 +13,9 @@ local Yttrium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 4.472,
-    Appearance = "A soft, silvery metal.",
+    Appearance = {
+        "A soft, silvery metal.",
+    },
     Uses = {
         "Yttrium is often used as an additive in alloys. It increases the strength of aluminium and magnesium alloys. It is also used in the making of microwave filters for radar and has been used as a catalyst in ethene polymerisation.",
         "Yttrium-aluminium garnet (YAG) is used in lasers that can cut through metals. It is also used in white LED lights.",

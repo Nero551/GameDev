@@ -13,7 +13,9 @@ local Lithium = {
     Block = "s",
     StateAt293K = "Solid",
     Density = 0.534,
-    Appearance = "A soft, silvery metal. It has the lowest density of all metals. It reacts vigorously with water.",
+    Appearance = {
+        "A soft, silvery metal. It has the lowest density of all metals. It reacts vigorously with water.",
+    },
     Uses = {
         "The most important use of lithium is in rechargeable batteries for mobile phones, laptops, digital cameras and electric vehicles. Lithium is also used in some non-rechargeable batteries for things like heart pacemakers, toys and clocks.",
         "Lithium metal is made into alloys with aluminium and magnesium, improving their strength and making them lighter. A magnesium-lithium alloy is used for armour plating. Aluminium-lithium alloys are used in aircraft, bicycle frames and high-speed trains.",

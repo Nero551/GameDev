@@ -13,7 +13,9 @@ local Mercury = {
     Block = "d",
     StateAt293K = "Liquid",
     Density = 13.534,
-    Appearance = "A liquid, silvery metal.",
+    Appearance = {
+        "A liquid, silvery metal.",
+    },
     Uses = {
         "Mercury has fascinated people for millennia, as a heavy liquid metal. However, because of its toxicity, many uses of mercury are being phased out or are under review.",
         "It is now mainly used in the chemical industry as catalysts. It is also used in some electrical switches and rectifiers.",

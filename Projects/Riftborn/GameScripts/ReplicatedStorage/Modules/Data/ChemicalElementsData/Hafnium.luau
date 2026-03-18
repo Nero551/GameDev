@@ -13,7 +13,9 @@ local Hafnium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 13.31,
-    Appearance = "A shiny, silvery metal that resists corrosion and can be drawn into wires.",
+    Appearance = {
+        "A shiny, silvery metal that resists corrosion and can be drawn into wires.",
+    },
     Uses = {
         "Hafnium is a good absorber of neutrons and is used to make control rods, such as those found in nuclear submarines. It also has a very high melting point and because of this is used in plasma welding torches.",
         "Hafnium has been successfully alloyed with several metals including iron, titanium and niobium.",

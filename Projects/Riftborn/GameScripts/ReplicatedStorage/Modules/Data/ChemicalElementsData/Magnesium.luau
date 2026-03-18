@@ -13,7 +13,9 @@ local Magnesium = {
     Block = "s",
     StateAt293K = "Solid",
     Density = 1.738,
-    Appearance = "A silvery-white metal that ignites easily in air and burns with a bright light.",
+    Appearance = {
+        "A silvery-white metal that ignites easily in air and burns with a bright light.",
+    },
     Uses = {
         "Magnesium is one-third less dense than aluminium. It improves the mechanical, fabrication and welding characteristics of aluminium when used as an alloying agent. These alloys are useful in aeroplane and car construction.",
         "Magnesium is used in products that benefit from being lightweight, such as car seats, luggage, laptops, cameras and power tools. It is also added to molten iron and steel to remove sulfur.",

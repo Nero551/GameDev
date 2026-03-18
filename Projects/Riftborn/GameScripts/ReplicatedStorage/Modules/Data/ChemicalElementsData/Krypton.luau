@@ -13,7 +13,9 @@ local Krypton = {
     Block = "p",
     StateAt293K = "Gas",
     Density = 3.749,
-    Appearance = "Krypton is a gas with no colour or smell. It does not react with anything except fluorine gas.",
+    Appearance = {
+        "Krypton is a gas with no colour or smell. It does not react with anything except fluorine gas.",
+    },
     Uses = {
         "Krypton is used commercially as a filling gas for energy-saving fluorescent lights. It is also used in some flash lamps used for high-speed photography.",
         "Unlike the lighter gases in its group, it is reactive enough to form some chemical compounds. For example, krypton will react with fluorine to form krypton fluoride. Krypton fluoride is used in some lasers.",

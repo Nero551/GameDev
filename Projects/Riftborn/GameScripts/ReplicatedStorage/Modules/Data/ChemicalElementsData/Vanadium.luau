@@ -13,7 +13,9 @@ local Vanadium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 6,
-    Appearance = "A silvery metal that resists corrosion.",
+    Appearance = {
+        "A silvery metal that resists corrosion.",
+    },
     Uses = {
         "About 80% of the vanadium produced is used as a steel additive. Vanadium-steel alloys are very tough and are used for armour plate, axles, tools, piston rods and crankshafts. Less than 1% of vanadium, and as little chromium, makes steel shock resistant and vibration resistant. Vanadium alloys are used in nuclear reactors because of vanadium's low neutron-absorbing properties.",
         "Vanadium(V) oxide is used as a pigment for ceramics and glass, as a catalyst and in producing superconducting magnets.",

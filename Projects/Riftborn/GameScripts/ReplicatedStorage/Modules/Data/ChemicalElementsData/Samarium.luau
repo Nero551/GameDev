@@ -13,7 +13,9 @@ local Samarium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 7.52,
-    Appearance = "A silvery-white metal.",
+    Appearance = {
+        "A silvery-white metal.",
+    },
     Uses = {
         "Samarium-cobalt magnets are much more powerful than iron magnets. They remain magnetic at high temperatures and so are used in microwave applications. They enabled the miniaturisation of electronic devices like headphones, and the development of personal stereos. However, neodymium magnets are now more commonly used instead.",
         "Samarium is used to dope calcium chloride crystals for use in optical lasers. It is also used in infrared absorbing glass and as a neutron absorber in nuclear reactors. Samarium oxide finds specialised use in glass and ceramics. In common with other lanthanides, samarium is used in carbon arc lighting for studio lighting and projection.",

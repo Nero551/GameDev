@@ -13,7 +13,9 @@ local Berkelium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 14.78,
-    Appearance = "Berkelium is a radioactive, silvery metal.",
+    Appearance = {
+        "Berkelium is a radioactive, silvery metal.",
+    },
     Uses = {
         "Because it is so rare, berkelium has no commercial or technological use at present.",
     },

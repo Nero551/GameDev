@@ -13,7 +13,9 @@ local Radon = {
     Block = "p",
     StateAt293K = "Gas",
     Density = 9.73,
-    Appearance = "Radon is a colourless and odourless gas. It is chemically inert, but radioactive.",
+    Appearance = {
+        "Radon is a colourless and odourless gas. It is chemically inert, but radioactive.",
+    },
     Uses = {
         "Radon decays into radioactive polonium and alpha particles. This emitted radiation made radon useful in cancer therapy. Radon was used in some hospitals to treat tumours by sealing the gas in minute tubes, and implanting these into the tumour, treating the disease in situ. Other, safer treatments are now more commonly used.",
         "In some places, high concentrations of radon can build up indoors, escaping from the ground or from granite buildings. Home testing kits are available which can be sent away for analysis.",

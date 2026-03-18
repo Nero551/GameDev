@@ -13,7 +13,9 @@ local Hydrogen = {
     Block = "s",
     StateAt293K = "Gas",
     Density = 0.08988,
-    Appearance = "A colourless, odourless gas. It has the lowest density of all gases.",
+    Appearance = {
+        "A colourless, odourless gas. It has the lowest density of all gases.",
+    },
     Uses = {
         "Some see hydrogen gas as the clean fuel of the future - generated from water and returning to water when it is oxidised. Hydrogen-powered fuel cells are increasingly being seen as 'pollution-free' sources of energy and are now being used in some buses and cars.",
         "Hydrogen has many other uses. In the chemical industry it is used to make ammonia for agricultural fertiliser (the Haber process) and cyclohexane and methanol, which are intermediates in the production of plastics and pharmaceuticals. It is also used to remove sulfur from fuels during the oil-refining process. Large quantities of hydrogen are used to hydrogenate oils to form fats, for example to make margarine.",

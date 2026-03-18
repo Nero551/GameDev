@@ -13,7 +13,9 @@ local Chlorine = {
     Block = "p",
     StateAt293K = "Gas",
     Density = 3.2,
-    Appearance = "A yellowy-green dense gas with a choking smell.",
+    Appearance = {
+        "A yellowy-green dense gas with a choking smell.",
+    },
     Uses = {
         "Chlorine kills bacteria - it is a disinfectant. It is used to treat drinking water and swimming pool water. It is also used to make hundreds of consumer products from paper to paints, and from textiles to insecticides.",
         "About 20% of chlorine produced is used to make PVC. This is a very versatile plastic used in window frames, car interiors, electrical wiring insulation, water pipes, blood bags and vinyl flooring.",

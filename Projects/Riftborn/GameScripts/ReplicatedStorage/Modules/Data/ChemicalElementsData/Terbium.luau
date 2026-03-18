@@ -13,7 +13,9 @@ local Terbium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 8.23,
-    Appearance = "A soft, silvery metal.",
+    Appearance = {
+        "A soft, silvery metal.",
+    },
     Uses = {
         "Terbium is used to dope calcium fluoride, calcium tungstate and strontium molybdate, all used in solid-state devices. It is also used in low-energy lightbulbs and mercury lamps. It has been used to improve the safety of medical x-rays by allowing the same quality image to be produced with a much shorter exposure time. Terbium salts are used in laser devices.",
         "An alloy of terbium, dysprosium and iron lengthens and shortens in a magnetic field. This effect forms the basis of loudspeakers that sit on a flat surface, such as a window pane, which then acts as the speaker.",

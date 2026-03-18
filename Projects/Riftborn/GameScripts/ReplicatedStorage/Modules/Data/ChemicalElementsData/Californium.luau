@@ -13,7 +13,9 @@ local Californium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 15.1,
-    Appearance = "Californium is a radioactive metal.",
+    Appearance = {
+        "Californium is a radioactive metal.",
+    },
     Uses = {
         "Californium is a very strong neutron emitter. It is used in portable metal detectors, for identifying gold and silver ores, to identify water and oil layers in oil wells and to detect metal fatigue and stress in aeroplanes.",
     },

@@ -13,7 +13,9 @@ local Holmium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 8.79,
-    Appearance = "A bright, silvery metal.",
+    Appearance = {
+        "A bright, silvery metal.",
+    },
     Uses = {
         "Holmium can absorb neutrons, so it is used in nuclear reactors to keep a chain reaction under control. Its alloys are used in some magnets.",
     },

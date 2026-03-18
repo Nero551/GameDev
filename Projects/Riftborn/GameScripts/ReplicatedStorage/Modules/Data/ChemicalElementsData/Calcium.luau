@@ -13,7 +13,9 @@ local Calcium = {
     Block = "s",
     StateAt293K = "Solid",
     Density = 1.55,
-    Appearance = "Calcium is a silvery-white, soft metal that tarnishes rapidly in air and reacts with water.",
+    Appearance = {
+        "Calcium is a silvery-white, soft metal that tarnishes rapidly in air and reacts with water.",
+    },
     Uses = {
         "Calcium metal is used as a reducing agent in preparing other metals such as thorium and uranium. It is also used as an alloying agent for aluminium, beryllium, copper, lead and magnesium alloys.",
         "Calcium compounds are widely used. There are vast deposits of limestone (calcium carbonate) used directly as a building stone and indirectly for cement. When limestone is heated in kilns it gives off carbon dioxide gas leaving behind quicklime (calcium oxide). This reacts vigorously with water to give slaked lime (calcium hydroxide). Slaked lime is used to make cement, as a soil conditioner and in water treatment to reduce acidity, and in the chemicals industry. It is also used in steel making to remove impurities from the molten iron ore. When mixed with sand, slaked lime takes up carbon dioxide from the air and hardens as lime plaster.",

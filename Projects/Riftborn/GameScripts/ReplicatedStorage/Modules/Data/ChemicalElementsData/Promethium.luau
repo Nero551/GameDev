@@ -13,7 +13,9 @@ local Promethium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 7.26,
-    Appearance = "A radioactive metal.",
+    Appearance = {
+        "A radioactive metal.",
+    },
     Uses = {
         "Most promethium is used only in research. A little promethium is used in specialised atomic batteries. These are roughly the size of a drawing pin and are used for pacemakers, guided missiles and radios. The radioactive decay of promethium is used to make a phosphor give off light and this light is converted into electricity by a solar cell.",
         "Promethium can also be used as a source of x-rays and radioactivity in measuring instruments.",

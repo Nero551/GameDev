@@ -12,7 +12,9 @@ local Nobelium = {
     Period = 7,
     Block = "f",
     StateAt293K = "Solid",
-    Appearance = "Nobelium is a radioactive metal. Only a few atoms have ever been made. Its half-life is only 58 minutes.",
+    Appearance = {
+        "Nobelium is a radioactive metal. Only a few atoms have ever been made. Its half-life is only 58 minutes.",
+    },
     Uses = {
         "Nobelium has no uses outside research.",
     },

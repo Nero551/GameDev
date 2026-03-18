@@ -13,7 +13,9 @@ local Protactinium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 15.37,
-    Appearance = "A silvery, radioactive metal.",
+    Appearance = {
+        "A silvery, radioactive metal.",
+    },
     Uses = {
         "Protactinium is little used outside of research.",
     },

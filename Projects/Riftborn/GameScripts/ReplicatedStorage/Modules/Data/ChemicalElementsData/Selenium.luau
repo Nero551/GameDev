@@ -13,7 +13,9 @@ local Selenium = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 4.81,
-    Appearance = "A semi-metal that can exist in two forms: as a silvery metal or as a red powder.",
+    Appearance = {
+        "A semi-metal that can exist in two forms: as a silvery metal or as a red powder.",
+    },
     Uses = {
         "The biggest use of selenium is as an additive to glass. Some selenium compounds decolourise glass, while others give a deep red colour. Selenium can also be used to reduce the transmission of sunlight in architectural glass, giving it a bronze tint. Selenium is used to make pigments for ceramics, paint and plastics.",
         "Selenium has both a photovoltaic action (converts light to electricity) and a photoconductive action (electrical resistance decreases with increased illumination). It is therefore useful in photocells, solar cells and photocopiers. It can also convert AC electricity to DC electricity, so is extensively used in rectifiers.",

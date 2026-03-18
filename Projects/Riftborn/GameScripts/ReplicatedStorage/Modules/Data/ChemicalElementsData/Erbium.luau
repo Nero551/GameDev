@@ -13,7 +13,9 @@ local Erbium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 9.066,
-    Appearance = "A soft, silvery metallic element.",
+    Appearance = {
+        "A soft, silvery metallic element.",
+    },
     Uses = {
         "Erbium finds little use as a metal because it slowly tarnishes in air and is attacked by water.",
         "When alloyed with metals such as vanadium, erbium lowers their hardness and improves their workability.",

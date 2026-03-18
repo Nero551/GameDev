@@ -13,7 +13,9 @@ local Rhenium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 21.02,
-    Appearance = "A metal with a very high melting point.  Tungsten is the only metallic element with a higher melting point.",
+    Appearance = {
+        "A metal with a very high melting point.  Tungsten is the only metallic element with a higher melting point.",
+    },
     Uses = {
         "Rhenium is used as an additive to tungsten- and molybdenum-based alloys to give useful properties. These alloys are used for oven filaments and x-ray machines. It is also used as an electrical contact material as it resists wear and withstands arc corrosion.",
         "Rhenium catalysts are extremely resistant to poisoning (deactivation) and are used for the hydrogenation of fine chemicals. Some rhenium is used in nickel alloys to make single-crystal turbine blades.",

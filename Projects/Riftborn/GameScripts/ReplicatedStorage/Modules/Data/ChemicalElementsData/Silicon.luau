@@ -13,7 +13,9 @@ local Silicon = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 2.329,
-    Appearance = "The element, when ultrapure, is a solid with a blue-grey metallic sheen.",
+    Appearance = {
+        "The element, when ultrapure, is a solid with a blue-grey metallic sheen.",
+    },
     Uses = {
         "Silicon is one of the most useful elements to mankind. Most is used to make alloys including aluminium-silicon and ferro-silicon (iron-silicon). These are used to make dynamo and transformer plates, engine blocks, cylinder heads and machine tools and to deoxidise steel.",
         "Silicon is also used to make silicones. These are silicon-oxygen polymers with methyl groups attached. Silicone oil is a lubricant and is added to some cosmetics and hair conditioners. Silicone rubber is used as a waterproof sealant in bathrooms and around windows, pipes and roofs.",

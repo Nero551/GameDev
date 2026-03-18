@@ -13,7 +13,9 @@ local Nickel = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 8.908,
-    Appearance = "A silvery metal that resists corrosion even at high temperatures.",
+    Appearance = {
+        "A silvery metal that resists corrosion even at high temperatures.",
+    },
     Uses = {
         "Nickel resists corrosion and is used to plate other metals to protect them. It is, however, mainly used in making alloys such as stainless steel. Nichrome is an alloy of nickel and chromium with small amounts of silicon, manganese and iron. It resists corrosion, even when red hot, so is used in toasters and electric ovens. A copper-nickel alloy is commonly used in desalination plants, which convert seawater into fresh water. Nickel steel is used for armour plating. Other alloys of nickel are used in boat propeller shafts and turbine blades.",
         "Nickel is used in batteries, including rechargeable nickel-cadmium batteries and nickel-metal hydride batteries used in hybrid vehicles.",

@@ -13,7 +13,9 @@ local Astatine = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 6.35,
-    Appearance = "Astatine is a dangerously radioactive element.",
+    Appearance = {
+        "Astatine is a dangerously radioactive element.",
+    },
     Uses = {
         "There are currently no uses for astatine outside of research. The half-life of the most stable isotope is only 8 hours, and only tiny amounts have ever been produced.",
         "A mass spectrometer has been used to confirm that astatine behaves chemically like other halogens, particularly iodine.",

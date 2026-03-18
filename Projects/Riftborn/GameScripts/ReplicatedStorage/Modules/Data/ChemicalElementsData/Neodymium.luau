@@ -13,7 +13,9 @@ local Neodymium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 7.01,
-    Appearance = "A silvery-white metal. It rapidly tarnishes in air.",
+    Appearance = {
+        "A silvery-white metal. It rapidly tarnishes in air.",
+    },
     Uses = {
         "The most important use for neodymium is in an alloy with iron and boron to make very strong permanent magnets. This discovery, in 1983, made it possible to miniaturise many electronic devices, including mobile phones, microphones, loudspeakers and electronic musical instruments. These magnets are also used in car windscreen wipers and wind turbines.",
         "Neodymium is a component, along with praseodymium, of didymium glass. This is a special glass for goggles used during glass blowing and welding. The element colours glass delicate shades of violet, wine-red and grey. Neodymium is also used in the glass for tanning booths, since it transmits the tanning UV rays but not the heating infrared rays.",

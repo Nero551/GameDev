@@ -13,7 +13,9 @@ local Aluminium = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 2.7,
-    Appearance = "Aluminium is a silvery-white, lightweight metal. It is soft and malleable.",
+    Appearance = {
+        "Aluminium is a silvery-white, lightweight metal. It is soft and malleable.",
+    },
     Uses = {
         "Aluminium is used in a huge variety of products including cans, foils, kitchen utensils, window frames, beer kegs and aeroplane parts. This is because of its particular properties. It has low density, is non-toxic, has a high thermal conductivity, has excellent corrosion resistance and can be easily cast, machined and formed. It is also non-magnetic and non-sparking. It is the second most malleable metal and the sixth most ductile.",
         "It is often used as an alloy because aluminium itself is not particularly strong. Alloys with copper, manganese, magnesium and silicon are lightweight but strong. They are very important in the construction of aeroplanes and other forms of transport.",

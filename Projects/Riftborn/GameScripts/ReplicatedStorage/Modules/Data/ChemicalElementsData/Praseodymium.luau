@@ -13,7 +13,9 @@ local Praseodymium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 6.77,
-    Appearance = "A soft, silvery metal.",
+    Appearance = {
+        "A soft, silvery metal.",
+    },
     Uses = {
         "Praseodymium is used in a variety of alloys. The high-strength alloy it forms with magnesium is used in aircraft engines. Mischmetal is an alloy containing about 5% praseodymium and is used to make flints for cigarette lighters. Praseodymium is also used in alloys for permanent magnets.",
         "Along with other lanthanide elements, it is used in carbon arc electrodes for studio lighting and projection.",

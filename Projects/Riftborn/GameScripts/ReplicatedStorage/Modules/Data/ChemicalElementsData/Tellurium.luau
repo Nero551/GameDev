@@ -13,7 +13,9 @@ local Tellurium = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 6.24,
-    Appearance = "A semi-metal usually obtained as a grey powder.",
+    Appearance = {
+        "A semi-metal usually obtained as a grey powder.",
+    },
     Uses = {
         "Tellurium is used in alloys, mostly with copper and stainless steel, to improve their machinability. When added to lead it makes it more resistant to acids and improves its strength and hardness.",
         "Tellurium has been used to vulcanise rubber, to tint glass and ceramics, in solar cells, in rewritable CDs and DVDs and as a catalyst in oil refining. It can be doped with silver, gold, copper or tin in semiconductor applications.",

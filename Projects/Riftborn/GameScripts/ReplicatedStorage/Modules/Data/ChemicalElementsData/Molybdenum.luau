@@ -13,7 +13,9 @@ local Molybdenum = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 10.28,
-    Appearance = "A shiny, silvery metal.",
+    Appearance = {
+        "A shiny, silvery metal.",
+    },
     Uses = {
         "Molybdenum has a very high melting point so it is produced and sold as a grey powder. Many molybdenum items are formed by compressing the powder at a very high pressure.",
         "Most molybdenum is used to make alloys. It is used in steel alloys to increase strength, hardness, electrical conductivity and resistance to corrosion and wear. These 'moly steel' alloys are used in parts of engines. Other alloys are used in heating elements, drills and saw blades.",

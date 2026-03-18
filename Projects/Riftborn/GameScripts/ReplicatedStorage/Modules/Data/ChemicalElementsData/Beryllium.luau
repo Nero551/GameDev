@@ -13,7 +13,9 @@ local Beryllium = {
     Block = "s",
     StateAt293K = "Solid",
     Density = 1.85,
-    Appearance = "Beryllium is a silvery-white metal. It is relatively soft and has a low density.",
+    Appearance = {
+        "Beryllium is a silvery-white metal. It is relatively soft and has a low density.",
+    },
     Uses = {
         "Beryllium is used in alloys with copper or nickel to make gyroscopes, springs, electrical contacts, spot-welding electrodes and non-sparking tools. Mixing beryllium with these metals increases their electrical and thermal conductivity.",
         "Other beryllium alloys are used as structural materials for high-speed aircraft, missiles, spacecraft and communication satellites.",

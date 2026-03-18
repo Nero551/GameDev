@@ -13,7 +13,9 @@ local Bromine = {
     Block = "p",
     StateAt293K = "Liquid",
     Density = 3.1028,
-    Appearance = "Bromine is a deep-red, oily liquid with a sharp smell. It is toxic.",
+    Appearance = {
+        "Bromine is a deep-red, oily liquid with a sharp smell. It is toxic.",
+    },
     Uses = {
         "Bromine is used in many areas such as agricultural chemicals, dyestuffs, insecticides, pharmaceuticals and chemical intermediates. Some uses are being phased out for environmental reasons, but new uses continue to be found.",
         "Bromine compounds can be used as flame retardants. They are added to furniture foam, plastic casings for electronics and textiles to make them less flammable. However, the use of bromine as a flame retardant has been phased out in the USA because of toxicity concerns.",

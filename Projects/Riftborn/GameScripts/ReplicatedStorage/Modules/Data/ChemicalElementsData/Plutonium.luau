@@ -13,7 +13,9 @@ local Plutonium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 19.816,
-    Appearance = "A radioactive, silvery metal.",
+    Appearance = {
+        "A radioactive, silvery metal.",
+    },
     Uses = {
         "Plutonium was used in several of the first atomic bombs, and is still used in nuclear weapons. The complete detonation of a kilogram of plutonium produces an explosion equivalent to over 10,000 tonnes of chemical explosive.",
         "Plutonium is also a key material in the development of nuclear power. It has been used as a source of energy on space missions, such as the Mars Curiosity Rover and the New Horizons spacecraft on its way to Pluto.",

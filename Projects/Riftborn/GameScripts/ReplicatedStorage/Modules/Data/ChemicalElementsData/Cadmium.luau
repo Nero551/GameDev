@@ -13,7 +13,9 @@ local Cadmium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 8.65,
-    Appearance = "Cadmium is a silvery metal with a bluish tinge to its surface.",
+    Appearance = {
+        "Cadmium is a silvery metal with a bluish tinge to its surface.",
+    },
     Uses = {
         "Cadmium is a poison and is known to cause birth defects and cancer. As a result, there are moves to limit its use.",
         "80% of cadmium currently produced is used in rechargeable nickel-cadmium batteries. However, they are gradually being phased out and replaced with nickel metal hydride batteries.",

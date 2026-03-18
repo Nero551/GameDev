@@ -13,7 +13,9 @@ local Roentgenium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 28.7,
-    Appearance = "A highly radioactive metal, of which only a few atoms have ever been made.",
+    Appearance = {
+        "A highly radioactive metal, of which only a few atoms have ever been made.",
+    },
     Uses = {
         "At present, it is only used in research.",
     },

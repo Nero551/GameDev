@@ -13,7 +13,9 @@ local Tin = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 7.365,
-    Appearance = "A soft, pliable metal. Below 13C it slowly changes to a powder form.",
+    Appearance = {
+        "A soft, pliable metal. Below 13C it slowly changes to a powder form.",
+    },
     Uses = {
         "Tin has many uses. It takes a high polish and is used to coat other metals to prevent corrosion, such as in tin cans, which are made of tin-coated steel. Alloys of tin are important, such as soft solder, pewter, bronze and phosphor bronze. A niobium-tin alloy is used for superconducting magnets.",
         "Most window glass is made by floating molten glass on molten tin to produce a flat surface. Tin salts sprayed onto glass are used to produce electrically conductive coatings.",

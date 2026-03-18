@@ -13,7 +13,9 @@ local Iodine = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 4.933,
-    Appearance = "A black, shiny, crystalline solid. When heated, iodine sublimes to form a purple vapour.",
+    Appearance = {
+        "A black, shiny, crystalline solid. When heated, iodine sublimes to form a purple vapour.",
+    },
     Uses = {
         "Photography was the first commercial use for iodine after Louis Daguerre, in 1839, invented a technique for producing images on a piece of metal. These images were called daguerreotypes.",
         "Today, iodine has many commercial uses. Iodide salts are used in pharmaceuticals and disinfectants, printing inks and dyes, catalysts, animal feed supplements and photographic chemicals. Iodine is also used to make polarising filters for LCD displays.",

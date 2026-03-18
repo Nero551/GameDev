@@ -13,7 +13,9 @@ local Americium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 12,
-    Appearance = "Americium is a silvery, shiny radioactive metal.",
+    Appearance = {
+        "Americium is a silvery, shiny radioactive metal.",
+    },
     Uses = {
         "Americium is commonly used in smoke alarms, but has few other uses.",
         "It has the potential to be used in spacecraft batteries in the future. Currently plutonium is used but availability is poor so alternatives are being considered.",

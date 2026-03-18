@@ -13,7 +13,9 @@ local Iridium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 22.56,
-    Appearance = "Iridium is a hard, silvery metal. It is almost as unreactive as gold. It has a very high density and melting point.",
+    Appearance = {
+        "Iridium is a hard, silvery metal. It is almost as unreactive as gold. It has a very high density and melting point.",
+    },
     Uses = {
         "Iridium is the most corrosion-resistant material known. It is used in special alloys and forms an alloy with osmium, which is used for pen tips and compass bearings. It was used in making the standard metre bar, which is an alloy of 90% platinum and 10% iridium. It is also used for the contacts in spark plugs because of its high melting point and low reactivity.",
     },

@@ -13,7 +13,9 @@ local Ruthenium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 12.45,
-    Appearance = "A shiny, silvery metal.",
+    Appearance = {
+        "A shiny, silvery metal.",
+    },
     Uses = {
         "Many new uses are emerging for ruthenium. Most is used in the electronics industry for chip resistors and electrical contacts. Ruthenium oxide is used in the chemical industry to coat the anodes of electrochemical cells for chlorine production. Ruthenium is also used in catalysts for ammonia and acetic acid production. Ruthenium compounds can be used in solar cells, which turn light energy into electrical energy.",
         "Ruthenium is one of the most effective hardeners for platinum and palladium, and is alloyed with these metals to make electrical contacts for severe wear resistance. It is used in some jewellery as an alloy with platinum.",

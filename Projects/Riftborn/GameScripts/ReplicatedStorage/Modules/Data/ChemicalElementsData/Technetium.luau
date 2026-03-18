@@ -13,7 +13,9 @@ local Technetium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 11,
-    Appearance = "A radioactive, silvery metal that does not occur naturally.",
+    Appearance = {
+        "A radioactive, silvery metal that does not occur naturally.",
+    },
     Uses = {
         "The gamma-ray emitting technetium-99m (metastable) is widely used for medical diagnostic studies. Several chemical forms are used to image different parts of the body.",
         "Technetium is a remarkable corrosion inhibitor for steel, and adding very small amounts can provide excellent protection. This use is limited to closed systems as technetium is radioactive.",

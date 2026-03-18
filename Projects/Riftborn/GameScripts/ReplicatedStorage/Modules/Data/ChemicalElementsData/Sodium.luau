@@ -13,7 +13,9 @@ local Sodium = {
     Block = "s",
     StateAt293K = "Solid",
     Density = 0.968,
-    Appearance = "Sodium is a soft metal that tarnishes within seconds of being exposed to the air. It also reacts vigorously with water.",
+    Appearance = {
+        "Sodium is a soft metal that tarnishes within seconds of being exposed to the air. It also reacts vigorously with water.",
+    },
     Uses = {
         "Sodium is used as a heat exchanger in some nuclear reactors, and as a reagent in the chemicals industry. But sodium salts have more uses than the metal itself.",
         "The most common compound of sodium is sodium chloride (common salt). It is added to food and used to de-ice roads in winter. It is also used as a feedstock for the chemical industry.",

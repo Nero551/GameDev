@@ -13,7 +13,9 @@ local Radium = {
     Block = "s",
     StateAt293K = "Solid",
     Density = 5.5,
-    Appearance = "A soft, shiny and silvery radioactive metal.",
+    Appearance = {
+        "A soft, shiny and silvery radioactive metal.",
+    },
     Uses = {
         "Radium now has few uses, because it is so highly radioactive.",
         "Radium-223 is sometimes used to treat prostate cancer that has spread to the bones. Because bones contain calcium and radium is in the same group as calcium, it can be used to target cancerous bone cells. It gives off alpha particles that can kill the cancerous cells.",

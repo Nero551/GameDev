@@ -13,7 +13,9 @@ local Nitrogen = {
     Block = "p",
     StateAt293K = "Gas",
     Density = 1.251,
-    Appearance = "A colourless, odourless gas.",
+    Appearance = {
+        "A colourless, odourless gas.",
+    },
     Uses = {
         "Nitrogen is important to the chemical industry. It is used to make fertilisers, nitric acid, nylon, dyes and explosives. To make these products, nitrogen must first be reacted with hydrogen to produce ammonia. This is done by the Haber process. 150 million tonnes of ammonia are produced in this way every year.",
         "Nitrogen gas is also used to provide an unreactive atmosphere. It is used in this way to preserve foods, and in the electronics industry during the production of transistors and diodes. Large quantities of nitrogen are used in annealing stainless steel and other steel mill products. Annealing is a heat treatment that makes steel easier to work.",

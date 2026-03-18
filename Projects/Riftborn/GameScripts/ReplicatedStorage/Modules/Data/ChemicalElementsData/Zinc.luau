@@ -13,7 +13,9 @@ local Zinc = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 7.14,
-    Appearance = "A silvery-white metal with a blue tinge. It tarnishes in air.",
+    Appearance = {
+        "A silvery-white metal with a blue tinge. It tarnishes in air.",
+    },
     Uses = {
         "Most zinc is used to galvanise other metals, such as iron, to prevent rusting. Galvanised steel is used for car bodies, street lamp posts, safety barriers and suspension bridges.",
         "Large quantities of zinc are used to produce die-castings, which are important in the automobile, electrical and hardware industries. Zinc is also used in alloys such as brass, nickel silver and aluminium solder.",

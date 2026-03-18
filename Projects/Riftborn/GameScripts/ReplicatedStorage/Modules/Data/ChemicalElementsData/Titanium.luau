@@ -13,7 +13,9 @@ local Titanium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 4.506,
-    Appearance = "A hard, shiny and strong metal.",
+    Appearance = {
+        "A hard, shiny and strong metal.",
+    },
     Uses = {
         "Titanium is as strong as steel but much less dense. It is therefore important as an alloying agent with many metals including aluminium, molybdenum and iron. These alloys are mainly used in aircraft, spacecraft and missiles because of their low density and ability to withstand extremes of temperature. They are also used in golf clubs, laptops, bicycles and crutches.",
         "Power plant condensers use titanium pipes because of their resistance to corrosion. Because titanium has excellent resistance to corrosion in seawater, it is used in desalination plants and to protect the hulls of ships, submarines and other structures exposed to seawater.",

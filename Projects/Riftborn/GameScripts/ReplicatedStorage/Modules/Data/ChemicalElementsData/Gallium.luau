@@ -13,7 +13,9 @@ local Gallium = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 5.91,
-    Appearance = "Gallium is a soft, silvery-white metal, similar to aluminium.",
+    Appearance = {
+        "Gallium is a soft, silvery-white metal, similar to aluminium.",
+    },
     Uses = {
         "Gallium arsenide has a similar structure to silicon and is a useful silicon substitute for the electronics industry. It is an important component of many semiconductors. It is also used in red LEDs (light emitting diodes) because of its ability to convert electricity to light. Solar panels on the Mars Exploration Rover contained gallium arsenide.",
         "Gallium nitride is also a semiconductor. It has particular properties that make it very versatile. It has important uses in Blu-ray technology, mobile phones, blue and green LEDs and pressure sensors for touch switches.",

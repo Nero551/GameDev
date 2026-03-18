@@ -13,7 +13,9 @@ local Helium = {
     Block = "s",
     StateAt293K = "Gas",
     Density = 0.1786,
-    Appearance = "A colourless, odourless gas that is totally unreactive.",
+    Appearance = {
+        "A colourless, odourless gas that is totally unreactive.",
+    },
     Uses = {
         "Helium is used as a cooling medium for the Large Hadron Collider (LHC), and the superconducting magnets in MRI scanners and NMR spectrometers. It is also used to keep satellite instruments cool and was used to cool the liquid oxygen and hydrogen that powered the Apollo space vehicles.",
         "Because of its low density helium is often used to fill decorative balloons, weather balloons and airships. Hydrogen was once used to fill balloons but it is dangerously reactive.",

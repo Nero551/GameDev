@@ -13,7 +13,9 @@ local Francium = {
     Block = "s",
     StateAt293K = "Solid",
     Density = 1.87,
-    Appearance = "An intensely radioactive metal.",
+    Appearance = {
+        "An intensely radioactive metal.",
+    },
     Uses = {
         "Francium has no uses, having a half life of only 22 minutes.",
     },

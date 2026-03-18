@@ -13,7 +13,9 @@ local Ytterbium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 6.9,
-    Appearance = "A soft, silvery metal. It slowly oxidises in air, forming a protective surface layer.",
+    Appearance = {
+        "A soft, silvery metal. It slowly oxidises in air, forming a protective surface layer.",
+    },
     Uses = {
         "Ytterbium is beginning to find a variety of uses, such as in memory devices and tuneable lasers. It can also be used as an industrial catalyst and is increasingly being used to replace other catalysts considered to be too toxic and polluting.",
     },

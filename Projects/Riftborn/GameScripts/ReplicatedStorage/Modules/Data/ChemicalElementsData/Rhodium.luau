@@ -13,7 +13,9 @@ local Rhodium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 12.41,
-    Appearance = "A hard, shiny, silvery metal.",
+    Appearance = {
+        "A hard, shiny, silvery metal.",
+    },
     Uses = {
         "The major use of rhodium is in catalytic converters for cars (80%). It reduces nitrogen oxides in exhaust gases.",
         "Rhodium is also used as catalysts in the chemical industry, for making nitric acid, acetic acid and hydrogenation reactions.",

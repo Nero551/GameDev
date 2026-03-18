@@ -13,7 +13,9 @@ local Bismuth = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 9.78,
-    Appearance = "Bismuth is a high-density, silvery, pink-tinged metal.",
+    Appearance = {
+        "Bismuth is a high-density, silvery, pink-tinged metal.",
+    },
     Uses = {
         "Bismuth metal is brittle and so it is usually mixed with other metals to make it useful. Its alloys with tin or cadmium have low melting points and are used in fire detectors and extinguishers, electric fuses and solders.",
         "Bismuth oxide is used as a yellow pigment for cosmetics and paints, while bismuth(III) chloride oxide (BiClO) gives a pearly effect to cosmetics. Basic bismuth carbonate is taken in tablet or liquid form for indigestion as 'bismuth mixture'.",

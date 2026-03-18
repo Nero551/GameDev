@@ -13,7 +13,9 @@ local Platinum = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 21.45,
-    Appearance = "A shiny, silvery-white metal as resistant to corrosion as gold.",
+    Appearance = {
+        "A shiny, silvery-white metal as resistant to corrosion as gold.",
+    },
     Uses = {
         "Platinum is used extensively for jewellery. Its main use, however, is in catalytic converters for cars, trucks and buses. This accounts for about 50% of demand each year. Platinum is very effective at converting emissions from the vehicle's engine into less harmful waste products.",
         "Platinum is used in the chemicals industry as a catalyst for the production of nitric acid, silicone and benzene. It is also used as a catalyst to improve the efficiency of fuel cells.",

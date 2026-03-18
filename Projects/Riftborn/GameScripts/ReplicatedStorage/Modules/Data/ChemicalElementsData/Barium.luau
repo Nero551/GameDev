@@ -13,7 +13,9 @@ local Barium = {
     Block = "s",
     StateAt293K = "Solid",
     Density = 3.51,
-    Appearance = "Barium is a soft, silvery metal that rapidly tarnishes in air and reacts with water.",
+    Appearance = {
+        "Barium is a soft, silvery metal that rapidly tarnishes in air and reacts with water.",
+    },
     Uses = {
         "Barium is not an extensively used element. Most is used in drilling fluids for oil and gas wells. It is also used in paint and in glassmaking.",
         "All barium compounds are toxic; however, barium sulfate is insoluble and so can be safely swallowed. A suspension of barium sulfate is sometimes given to patients suffering from digestive disorders. This is a  'barium meal' or 'barium enema'. Barium is a heavy element and scatters X-rays, so as it passes through the body the stomach and intestines can be distinguished on an X-ray.",

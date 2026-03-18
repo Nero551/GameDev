@@ -13,7 +13,9 @@ local Argon = {
     Block = "p",
     StateAt293K = "Gas",
     Density = 1.784,
-    Appearance = "Argon is a colourless, odourless gas that is totally inert to other substances.",
+    Appearance = {
+        "Argon is a colourless, odourless gas that is totally inert to other substances.",
+    },
     Uses = {
         "Argon is often used when an inert atmosphere is needed. It is used in this way for the production of titanium and other reactive elements. It is also used by welders to protect the weld area and in incandescent light bulbs to stop oxygen from corroding the filament.",
         "Argon is used in fluorescent tubes and low-energy light bulbs. A low-energy light bulb often contains argon gas and mercury. When it is switched on an electric discharge passes through the gas, generating UV light. The coating on the inside surface of the bulb is activated by the UV light and it glows brightly.",

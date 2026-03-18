@@ -13,7 +13,9 @@ local Phosphorus = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 1.823,
-    Appearance = "The two main forms of phosphorus are white phosphorus and red phosphorus. White phosphorus is a poisonous waxy solid and contact with skin can cause severe burns. It glows in the dark and is spontaneously flammable when exposed to air. Red phosphorus is an amorphous non-toxic solid.",
+    Appearance = {
+        "The two main forms of phosphorus are white phosphorus and red phosphorus. White phosphorus is a poisonous waxy solid and contact with skin can cause severe burns. It glows in the dark and is spontaneously flammable when exposed to air. Red phosphorus is an amorphous non-toxic solid.",
+    },
     Uses = {
         "White phosphorus is used in flares and incendiary devices. Red phosphorus is in the material stuck on the side of matchboxes, used to strike safety matches against to light them.",
         "By far the largest use of phosphorus compounds is for fertilisers. Ammonium phosphate is made from phosphate ores. The ores are first converted into phosphoric acids before being made into ammonium phosphate.",

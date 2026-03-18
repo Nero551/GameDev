@@ -13,7 +13,9 @@ local Actinium = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 10,
-    Appearance = "Actinium is a soft, silvery-white radioactive metal. It glows blue in the dark because its intense radioactivity excites the air around it.",
+    Appearance = {
+        "Actinium is a soft, silvery-white radioactive metal. It glows blue in the dark because its intense radioactivity excites the air around it.",
+    },
     Uses = {
         "Actinium is a very powerful source of alpha rays, but is rarely used outside research.",
     },

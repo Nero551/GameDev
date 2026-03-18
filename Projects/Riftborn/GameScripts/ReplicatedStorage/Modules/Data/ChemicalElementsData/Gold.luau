@@ -13,7 +13,9 @@ local Gold = {
     Block = "d",
     StateAt293K = "Solid",
     Density = 19.3,
-    Appearance = "A soft metal with a characteristic yellow colour. It is chemically unreactive, although it will dissolve in aqua regia (a mixture of nitric and hydrochloric acids).",
+    Appearance = {
+        "A soft metal with a characteristic yellow colour. It is chemically unreactive, although it will dissolve in aqua regia (a mixture of nitric and hydrochloric acids).",
+    },
     Uses = {
         "Most mined gold is stored as bullion. It is also, however, used extensively in jewellery, either in its pure form or as an alloy. The term 'carat' indicates the amount of gold present in an alloy. 24-carat is pure gold, but it is very soft. 18- and 9-carat gold alloys are commonly used because they are more durable.",
         "The metal is also used for coinage, and has been used as standard for monetary systems in some countries.",

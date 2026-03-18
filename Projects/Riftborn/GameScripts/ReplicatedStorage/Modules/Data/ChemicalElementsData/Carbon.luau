@@ -13,9 +13,10 @@ local Carbon = {
     Block = "p",
     StateAt293K = "Solid",
     Density = 1.821,
-    Appearance = "There are a number of pure forms of this element including graphite, diamond, fullerenes and graphene. \
-\
-Diamond is a colourless, transparent, crystalline solid and the hardest known material. Graphite is black and shiny but soft. The nano-forms, fullerenes and graphene, appear as black or dark brown, soot-like powders.",
+    Appearance = {
+        "There are a number of pure forms of this element including graphite, diamond, fullerenes and graphene.",
+        "Diamond is a colourless, transparent, crystalline solid and the hardest known material. Graphite is black and shiny but soft. The nano-forms, fullerenes and graphene, appear as black or dark brown, soot-like powders.",
+    },
     Uses = {
         "Carbon is unique among the elements in its ability to form strongly bonded chains, sealed off by hydrogen atoms. These hydrocarbons, extracted naturally as fossil fuels (coal, oil and natural gas), are mostly used as fuels. A small but important fraction is used as a feedstock for the petrochemical industries producing polymers, fibres, paints, solvents and plastics etc.",
         "Impure carbon in the form of charcoal (from wood) and coke (from coal) is used in metal smelting. It is particularly important in the iron and steel industries.",

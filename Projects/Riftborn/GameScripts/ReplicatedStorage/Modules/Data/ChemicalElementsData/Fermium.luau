@@ -12,7 +12,9 @@ local Fermium = {
     Period = 7,
     Block = "f",
     StateAt293K = "Solid",
-    Appearance = "A radioactive metal obtained only in microgram quantities.",
+    Appearance = {
+        "A radioactive metal obtained only in microgram quantities.",
+    },
     Uses = {
         "Fermium has no uses outside research.",
     },

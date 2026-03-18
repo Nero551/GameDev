@@ -13,7 +13,9 @@ local Einsteinium = {
     Block = "f",
     StateAt293K = "Solid",
     Density = 8.84,
-    Appearance = "A radioactive metal, only a few milligrams of which are made each year.",
+    Appearance = {
+        "A radioactive metal, only a few milligrams of which are made each year.",
+    },
     Uses = {
         "Einsteinium has no uses outside research.",
     },
