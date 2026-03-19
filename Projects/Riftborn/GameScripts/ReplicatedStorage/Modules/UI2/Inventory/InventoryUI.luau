@@ -134,7 +134,7 @@ local TweenService = game:GetService("TweenService")
 				for _, ability in abilitiesFrame:GetChildren() do
 					if ability:IsA("Frame") then
 						local abilityLetter = ability.AbilityIcon.AbilityLetter.Text
-						local abilityData = AbilityData.getAbilityData(itemData.Name .. abilityLetter)
+						local abilityData = AbilityData:GetAbilityData(itemData.Name .. abilityLetter)
 						if not abilityData then
 							ability.Visible = false
 						else

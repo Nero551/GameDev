@@ -1,23 +1,18 @@
 local DialogueDataBase = {}
 
-DialogueDataBase.Sources = {
-	QuestDialogues = {},
-	GreetingDialogues = {},
-	
-}
+DialogueDataBase.Sources = {}
 
-for _,questDialogue in script.QuestsDialogue:GetChildren() do
-	if questDialogue:IsA("ModuleScript") then
-		table.insert(DialogueDataBase.Sources.QuestDialogues, questDialogue)
+for _,type in script.Parent:GetChildren() do
+	if type:IsA("Folder") then
+		DialogueDataBase.Sources[type] = {}
+
+		for _, dialogue in type:GetChildren() do
+			if dialogue:IsA("ModuleScript") then
+				table.insert(DialogueDataBase.Sources[type], dialogue)
+			end
+		end
 	end
 end
-
-for _,greetingDialogue in script.GreetingsDialogue:GetChildren() do
-	if greetingDialogue:IsA("ModuleScript") then
-		table.insert(DialogueDataBase.Sources.GreetingDialogues, greetingDialogue)
-	end
-end
-
 
 function DialogueDataBase:GetDialogueData(Dialogue)
 	for _, category in pairs(DialogueDataBase.Sources) do
@@ -29,6 +24,7 @@ function DialogueDataBase:GetDialogueData(Dialogue)
 			end
 		end
 	end
+	return
 end
 
 return DialogueDataBase

@@ -56,10 +56,11 @@ function CharacterVitalsService:Create(character)
 			MaxFlashStep = 3,
 			
 		},
-				
+		
+		InHand = "",
 		WalkSpeed = 10,
 		JumpPower = 50,
-		
+
 		BlockCounter = 0,
 		LastCombo = 0,
 		LastSwing = 0,

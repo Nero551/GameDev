@@ -38,6 +38,9 @@ function NetworkingService:OnClientEvent(remoteName:string, callback)
         remote.OnClientEvent:Connect(function(...)
             callback(...)
         end)
+
+	else
+		warn("Remote:", remoteName, "Doesn't Exist")
     end
     return
 end
@@ -50,6 +53,9 @@ function NetworkingService:OnServerEvent(remoteName: string, callback)
 		remote.OnServerEvent:Connect(function(...)
 			callback(...)
 		end)
+
+	else
+		warn("Remote:", remoteName, "Doesn't Exist")
 	end
 	return
 end
@@ -62,6 +68,9 @@ function NetworkingService:FireToServer(remoteName: string, ...)
 	local remote = Remotes[remoteName]
 	if remote then
 		remote:FireServer(...)
+
+	else
+		warn("Remote:",remoteName,"Doesn't Exist")	
 	end
 end             
 
@@ -75,6 +84,9 @@ function NetworkingService:FireToClient(player ,remoteName:string, ...)
 		if player:IsA("Player") then
 			remote:FireClient(player, ...)
 		end
+
+	else
+		warn("Remote:", remoteName, "Doesn't Exist")
 	end
 end
 
@@ -86,6 +98,9 @@ function NetworkingService:FireToAll(remoteName:string,...)
 	local remote = Remotes[remoteName]
 	if remote then
         remote:FireAllClients(...)
+
+	else
+		warn("Remote:", remoteName, "Doesn't Exist")
 	end
 end
 
@@ -110,6 +125,9 @@ function NetworkingService:FireInRange(remoteName:string, origin, range, ...)
 				end
             end
         end
+
+	else
+		warn("Remote:", remoteName, "Doesn't Exist")
 	end
 end
 
@@ -125,6 +143,9 @@ function NetworkingService:FireToExcept(exceptPlayer:Player?, remoteName:string,
                 remote:FireClient(player, ...)
             end
         end
+
+	else
+		warn("Remote:", remoteName, "Doesn't Exist")
     end
 end
 
@@ -140,6 +161,9 @@ function NetworkingService:FireToPlayers(players, remoteName:string, ...)
                 remote:FireClient(player, ...)
 			end
 		end
+
+	else
+		warn("Remote:", remoteName, "Doesn't Exist")
 	end
 end
 

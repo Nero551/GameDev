@@ -1,4 +1,5 @@
 local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
 local UIManager = {}
 
 local player = Players.LocalPlayer
@@ -35,39 +36,61 @@ UIManager.AcceptableClasses = {
 	ViewportFrame = true,
 }
 
-for screen: ScreenGui in playerGui:GetChildren() do
-	UIManager.Screens[screen.Name] = {}
-	for _, child: Instance in screen:GetDescendants() do
-		if not UIManager.AcceptableClasses[child.ClassName] then
-			continue
-		end
-
-		if
-			child:IsA("UIStroke")
-			or child:IsA("UIGradient")
-			or child:IsA("UIScale")
-			or child:IsA("UICorner")
-			or child:IsA("UIAspectRatioConstraint")
-			or child:IsA("UISizeConstraint")
-			or child:IsA("UITextSizeConstraint")
-			or child:IsA("UIListLayout")
-			or child:IsA("UIGridLayout")
-			or child:IsA("UITableLayout")
-			or child:IsA("UIPageLayout")
-			or child:IsA("UIPadding")
-			or child:IsA("UIFlexItem")
-		then
-			UIManager.Screens[screen.Name][child.Parent.Name .. "." .. child.Name] = child
-		else
-			UIManager.Screens[screen.Name][child.Name] = child
-		end
-	end
+function UIManager:WaitForLoad()
+	repeat
+		task.wait()
+	until #playerGui:GetDescendants() >= #StarterGui:GetDescendants()
+	task.wait(0.25)
 end
 
-for _, controller in script.Parent.Controllers:GetChildren() do
-	if controller:IsA("ModuleScript") then
-		UIManager.Controllers[controller.Name] = require(controller)
+function UIManager:Init()
+	UIManager:WaitForLoad()
+	for _, screen in playerGui:GetChildren() do
+		if screen:IsA("ScreenGui") then
+			UIManager.Screens[screen.Name] = {}
+			for _, child in screen:GetDescendants() do
+				if not UIManager.AcceptableClasses[child.ClassName] then
+					continue
+				end
+
+				if
+					child:IsA("UIStroke")
+					or child:IsA("UIGradient")
+					or child:IsA("UIScale")
+					or child:IsA("UICorner")
+					or child:IsA("UIAspectRatioConstraint")
+					or child:IsA("UISizeConstraint")
+					or child:IsA("UITextSizeConstraint")
+					or child:IsA("UIListLayout")
+					or child:IsA("UIGridLayout")
+					or child:IsA("UITableLayout")
+					or child:IsA("UIPageLayout")
+					or child:IsA("UIPadding")
+					or child:IsA("UIFlexItem")
+				then
+					continue
+				else
+					UIManager.Screens[screen.Name][child.Name] = child
+				end
+			end
+		end
 	end
+
+	for _, controller in script.Parent.Controllers:GetChildren() do
+		if controller:IsA("ModuleScript") then
+			UIManager.Controllers[controller.Name] = require(controller)
+		end
+	end
+
+	for _, controller in UIManager.Controllers do
+		for _, value in controller do
+			if typeof(value) == "function" then
+				value(controller)
+			end
+		end
+	end
+	print("Controllers:", UIManager.Controllers)
+	print("Screens:", UIManager.Screens)
 end
 
 function UIManager:CreateUI(screenName, name, class, parent, properties)
@@ -93,11 +116,7 @@ function UIManager:CreateUI(screenName, name, class, parent, properties)
 		return
 	end
 
-	ui.Name = name
-	ui.Parent = parentInstance
 	properties = typeof(properties) == "table" and properties or {}
-	print(properties)
-
 	for property, value in pairs(properties) do
 		local _, error = pcall(function()
 			ui[property] = value
@@ -107,8 +126,12 @@ function UIManager:CreateUI(screenName, name, class, parent, properties)
 			continue
 		end
 	end
+
+	ui.Name = name
+	ui.Parent = parentInstance
+
 	UIManager.Screens[screenName][name] = ui
-    return UIManager.Screens[screenName][name]
+	return UIManager.Screens[screenName][name]
 end
 
 function UIManager:DestroyUI(screenName, name)
@@ -124,6 +147,7 @@ function UIManager:GetUI(screenName, name)
 	if UIManager.Screens[screenName] and UIManager.Screens[screenName][name] then
 		return UIManager.Screens[screenName][name]
 	end
+	warn("UI:",name,"Doesn't Exist")
 	return
 end
 

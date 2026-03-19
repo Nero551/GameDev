@@ -4,6 +4,8 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
 local StateHandler = require(ServerScriptService.Modules.Utilities.StateHandler)
+local CharacterVitalsService = require(ServerScriptService.Services.CharacterVitalsService)
+local HandService = require(ServerScriptService.Services.HandService)
 local Connections = require(ReplicatedStorage.Modules.Connections)
 local NetworkingService = require(ReplicatedStorage.Modules.NetworkingService)
 local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
@@ -43,18 +45,21 @@ RunService.Heartbeat:Connect(function(dt)
 	end
 end)
 
-local PlayerInfoGui = require(script.Parent.Parent.Modules.Utilities.PlayerInfoGui)
-Players.PlayerAdded:Connect(function(player)
-	player.CharacterAdded:Connect(function(char)
-		PlayerInfoGui:UpdateInfo(player, char)
-	end)
-end)
+--local PlayerInfoGui = require(script.Parent.Parent.Modules.Utilities.PlayerInfoGui)
+--Players.PlayerAdded:Connect(function(player)
+--	player.CharacterAdded:Connect(function(char)
+--		PlayerInfoGui:UpdateInfo(player, char)
+--	end)
+--end)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 ---Creating Status For Player On Spawn---
 Players.PlayerAdded:Connect(function(player)
 	player.CharacterAdded:Connect(function(character)
 		StateService:Create(character)
+	end)
+	player.CharacterRemoving:Connect(function(character)
+		CharacterVitalsService:Cleanup(character)
 	end)
 end)
 ---Destroying Status For Player On Leave---
@@ -112,6 +117,13 @@ NetworkingService:OnServerEvent("Attack", function(player:Player, argumentData)
 	CombatService:Attack(character, nil, player)
 end)
 
+NetworkingService:OnServerEvent("RequestPutInHand", function(player,toolId)
+	HandService:PutInHand(player, toolId)
+end)
+
+NetworkingService:OnServerEvent("RequestRemoveFromHand", function(player,toolId)
+	HandService:RemoveFromHand(player, toolId)
+end)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 

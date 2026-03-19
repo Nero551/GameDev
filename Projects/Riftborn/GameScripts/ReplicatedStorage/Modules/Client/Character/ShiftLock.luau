@@ -53,6 +53,8 @@ local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 		end
 	end
 
+	setShiftLock(false)
+
 
 	RunService.RenderStepped:Connect(function(dt)
 		if StateChecker:CheckState(character, "Dead") then

@@ -1,3 +1,4 @@
+local StarterGui = game:GetService("StarterGui")
 local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 
 local Character = {}
@@ -12,10 +13,13 @@ end
 
 
 function Character:Init()
-	
+	print("nice")
 	local Player = game:GetService("Players").LocalPlayer
-	local playerGUI = Player:WaitForChild("PlayerGui")
-	playerGUI:WaitForChild("StyleGuide"):WaitForChild("Big Text"):WaitForChild("UIGradient")
+	local playerGui = Player:WaitForChild("PlayerGui")
+
+	repeat
+		task.wait()
+	until #playerGui:GetDescendants() >= #StarterGui:GetDescendants()
 	
 	for moduleName,module in  pairs(cachedModules) do
 		module()

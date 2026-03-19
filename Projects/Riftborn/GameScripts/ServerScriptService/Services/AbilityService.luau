@@ -35,7 +35,7 @@ function AbilityService:UseAbility(player:Player? ,character, tool:Tool, mouse, 
 	
 	
 	local humanoid = character:WaitForChild("Humanoid")
-	local abilityData = AbilityData.getAbilityData(tool.Name,abilityletter)
+	local abilityData = AbilityData:GetAbilityData(tool.Name,abilityletter)
 	
 	if not abilityData then
 		print("Ability data not found for:", tool.Name..abilityletter)

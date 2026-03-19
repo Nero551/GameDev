@@ -196,7 +196,7 @@ function EquipService:LoadEquippedItems(player: Player)
 		---Must own the Item---
 		if not inventory[itemID] then
 			warn(itemID .. " Not Found In Inventory")
-			return
+			continue
 		end
 		local char = player.Character or player.CharacterAdded:Wait()
 
@@ -216,7 +216,7 @@ function EquipService:LoadEquippedItems(player: Player)
 				itemType = itemData.Type
 
 				--Check For Another Tool With Same Type--
-				for _, anotherTool in char:GetChildren() or player.Backpack:GetChildren() do
+				for _, anotherTool in player.Backpack:GetChildren() do
 					if anotherTool:GetAttribute("Type") == itemType then
 						anotherTool:Destroy()
 					end
@@ -238,13 +238,6 @@ function EquipService:LoadEquippedItems(player: Player)
 					GameEvents.AddBuff:Fire(player, itemData, itemID)
 				end
 				itemType = itemData.Type
-
-				--Check For Another Armor With Same Type--
-				for _, anotherArmor in char:GetChildren() do
-					if anotherArmor:GetAttribute("Type") == itemType then
-						anotherArmor:Destroy()
-					end
-				end
 
 				---Cloning Equipped Armor---
 				local armor = char:FindFirstChild(itemData.Name)

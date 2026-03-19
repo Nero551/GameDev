@@ -10,7 +10,7 @@ end
 
 
 
-function abilityData.getAbilityData(weapon, abilityLetter)
+function abilityData:GetAbilityData(weapon, abilityLetter)
 	
 	if abilityData.storedData[weapon] then
 		if not abilityLetter then

@@ -85,7 +85,7 @@ function AIService:CreateAI(npc)
 		LastAttackSeenTime = 0,
 		Damage = mobData.Damage,
 		
-		Abilities = AbilityData.getAbilityData(mobData.Tool.Name),
+		Abilities = AbilityData:GetAbilityData(mobData.Tool.Name),
 		ChosenAbility = nil,
 		
 		IdleAnimation = Animations:GetAnimation(npc.Humanoid.Animator,

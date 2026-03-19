@@ -1,91 +1,49 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
-local UIFactory = require(script.Parent.UIFactory)
+local UIManager = require(script.Parent.UIManager)
 local UIHelper = {}
 
-local hoverSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Hover
-local clickSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Click
-
-function UIHelper:RotateGradient(gradName)
-	local grad = UIFactory.UI[gradName]
-	if grad then
+function UIHelper:RotateGradient(gradient)
+	if gradient and gradient:IsA("UIGradient") then
 		local info = TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true)
-		TweenService:Create(grad, info, { Rotation = 405 }):Play()
+		TweenService:Create(gradient, info, { Rotation = 405 }):Play()
 	end
 end
 
-function UIHelper:Select(ui)
-	local UISelected
-	local prevUISelected
-
+function UIHelper:HoverEffects(ui)
+	if not ui then return end
+	local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	local scale = ui:FindFirstChildWhichIsA("UIScale")
 	if not scale then
-		scale = Instance.new("UIScale")
-		scale.Parent = ui
+		scale = UIManager:CreateUI("HUD", "UIScale", "UIScale", ui.Name, {})
 	end
-
+	local hoverSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Hover
 	ui.MouseEnter:Connect(function()
+		TweenService:Create(scale, info, { Scale = 1.1 }):Play()
 		hoverSound:Play()
-		ui.ImageColor3 = Color3.fromHex("#eeeeee")
-
-		local info = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		TweenService:Create(scale, info, { Scale = 1.05 }):Play()
-
-		if UISelected ~= ui then
-			if ui.Border then
-				TweenService:Create(ui.Border, info, { ImageColor3 = Color3.fromRGB(71, 88, 158) }):Play()				
-			end
-		end
 	end)
-
 	ui.MouseLeave:Connect(function()
-		ui.ImageColor3 = Color3.fromHex("#ffffff")
-		local info = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		TweenService:Create(scale, info, { Scale = 1 }):Play()
-	
-
-		if UISelected ~= ui then
-			if ui.Border then
-				TweenService:Create(ui.Border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255)}):Play()				
-			end
-		end
+		TweenService:Create(scale, info, {Scale = 1}):Play()
 	end)
 end
 
-function UIHelper:HoverScale(ui)
+function UIHelper:ClickEffects(ui)
+	if not ui then return end
+	local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	local scale = ui:FindFirstChildWhichIsA("UIScale")
 	if not scale then
-		scale = Instance.new("UIScale")
-		scale.Parent = ui
+		scale = UIManager:CreateUI("HUD", "UIScale", "UIScale", ui.Name, {})
 	end
-	ui.MouseEnter:Connect(function()
-		local info = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		TweenService:Create(scale, info, { Scale = 1.05 }):Play()
+	local clickSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Click
+	ui.MouseButton1Click:Connect(function()
+		clickSound:Play()
 	end)
 
-	ui.MouseLeave:Connect(function()
-		local info = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		TweenService:Create(scale, info, { Scale = 1 }):Play()
-	end)
-end
-
-function UIHelper:ClickScale(ui)
-	if not ui:IsA("TextButton") or not ui:IsA("ImageButton") then
-		return
-	end
-	local scale = ui:FindFirstChildWhichIsA("UIScale")
-	if not scale then
-		scale = Instance.new("UIScale")
-		scale.Parent = ui
-	end
 	ui.MouseButton1Down:Connect(function()
-		local info = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		TweenService:Create(scale, info, { Scale = 1.05 }):Play()
+		TweenService:Create(scale, info, { Scale = 0.975 }):Play()
 	end)
-
 	ui.MouseButton1Up:Connect(function()
-		local info = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		TweenService:Create(scale, info, { Scale = 1 }):Play()
+		TweenService:Create(scale, info, {Scale = 1.1}):Play()
 	end)
 end
 

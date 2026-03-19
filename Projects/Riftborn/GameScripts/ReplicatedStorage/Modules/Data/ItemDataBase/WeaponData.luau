@@ -10,7 +10,7 @@ WeaponData.Weapons = {
 		Rarity = "Rare",
 		Description = "Can't even hit your target berarebones? noob.",
 		StatusAilments = {
-			ProcChance = 0.1,
+			ProcChance = 1,
 			Effects = {
 				"Burn",
 			},

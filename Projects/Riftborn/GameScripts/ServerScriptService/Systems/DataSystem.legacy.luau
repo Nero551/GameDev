@@ -19,12 +19,11 @@ NetworkingService:OnServerEvent("ClientReady", function(player)
 	clientReady[player] = true
 end)
 
-local function Setup(player:Player)
+local function Setup(player:Player, character)
 	repeat
 		task.wait()
 	until clientReady[player]
 
-	local character = player.Character or player.CharacterAdded:Wait()
 	player.PlayerGui:WaitForChild("MenusGUI"):WaitForChild("StatsMenu"):WaitForChild("Spells")
 
 	StatService:SetupStats(player)
@@ -55,9 +54,13 @@ end
 
 ---Load Data---
 Players.PlayerAdded:Connect(function(player)
-	local playerData = DataService:Load(player)	
-	Setup(player)
-
+	local playerData = DataService:Load(player)
+	if player.character then
+		Setup(player,player.Character)	
+	end
+	player.CharacterAdded:Connect(function(character)
+		Setup(player,character)
+	end)
 	print(playerData)
 end)
 

@@ -13,20 +13,10 @@ function DataService:GetDefaultData()
 	local DefaultData = {
 		Inventory = {
 			["weapon_0000000001"] = {
-				Name = "Fist",
 				Amount = 1,
-				Description = "Can't even hit your target barebones? noob.",
-				Icon = "rbxassetid://2245735821",
-				Rarity = "Rare",
-				Type = "Melee"
 			},
 			["armor_0000000001"] = {
-				Name = "Slime Head",
 				Amount = 1,
-				Description = "A friendly slime to keep you safe",
-				Icon = "rbxassetid://70381584984142",
-				Rarity = "Uncommon",
-				Type = "Helmet",
 			},
 
 		},
