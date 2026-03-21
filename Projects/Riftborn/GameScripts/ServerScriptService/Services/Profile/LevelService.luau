@@ -1,6 +1,5 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
-local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
-local DataService = ModuleLoader:Load("Server", "DataService")
+local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
+local DataService = require(game.ServerScriptService.Services.Profile.DataService)
 
 
 local LevelService = {}

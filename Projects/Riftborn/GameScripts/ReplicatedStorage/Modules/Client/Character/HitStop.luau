@@ -1,6 +1,5 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 return function()
-	local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
+	local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 
 	local Players = game:GetService("Players")
 	local player = Players.LocalPlayer

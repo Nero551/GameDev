@@ -1,12 +1,11 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local ServerStorage = game:GetService("ServerStorage")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
-local ToolLoader = ModuleLoader:Load("Server", "ToolLoader")
-local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
-local GameEvents = ModuleLoader:Load("Shared", "GameEvents")
+local ToolLoader = require(game.ServerScriptService.Modules.Utilities.ToolLoader)
+local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
+local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
 
-local DataService = ModuleLoader:Load("Server", "DataService")
+local DataService = require(game.ServerScriptService.Services.Profile.DataService)
 
 local EquipService = {}
 

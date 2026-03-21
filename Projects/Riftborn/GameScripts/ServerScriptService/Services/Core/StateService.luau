@@ -1,7 +1,6 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
-local Connections = ModuleLoader:Load("Shared", "Connections")
+local Connections = require(game.ReplicatedStorage.Modules.Core.Connections)
 local StateService = {}
 StateService.Status = {}
 

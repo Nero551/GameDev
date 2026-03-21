@@ -1,6 +1,5 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local Lighting = game:GetService("Lighting")
-local ServerData = ModuleLoader:Load("Server", "ServerData")
+local ServerData = require(game.ServerScriptService.Modules.ServerData)
 
 local TimeService = {}
 

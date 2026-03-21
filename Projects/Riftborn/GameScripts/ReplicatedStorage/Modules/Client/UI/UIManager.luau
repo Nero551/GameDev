@@ -1,4 +1,3 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local Players = game:GetService("Players")
 local StarterGui = game:GetService("StarterGui")
 local UIManager = {}
@@ -83,7 +82,7 @@ function UIManager:Init()
 
 	for _, controller in script.Parent.Controllers:GetChildren() do
 		if controller:IsA("ModuleScript") then
-			UIManager.Controllers[controller.Name] = ModuleLoader:Load("Client", controller.Name)
+			UIManager.Controllers[controller.Name] = require(controller)
 		end
 	end
 

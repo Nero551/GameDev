@@ -1,13 +1,12 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
-local AbilityData = ModuleLoader:Load("Shared", "AbilityData")
-local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
-local RarityData = ModuleLoader:Load("Shared", "RarityData")
-local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
-local UIHelper = ModuleLoader:Load("Client", "UIHelper")
-local UIManager = ModuleLoader:Load("Client", "UIManager")
+local AbilityData = require(game.ReplicatedStorage.Modules.Data.AbilityData)
+local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
+local RarityData = require(game.ReplicatedStorage.Modules.Data.RarityData)
+local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
+local UIHelper = require(game.ReplicatedStorage.Modules.Client.UI.UIHelper)
+local UIManager = require(game.ReplicatedStorage.Modules.Client.UI.UIManager)
 
 local InventoryMenuController = {}
 

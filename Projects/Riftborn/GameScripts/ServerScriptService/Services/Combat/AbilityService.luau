@@ -1,20 +1,19 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
-local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
+local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Debris = game:GetService("Debris")
 local modules = ReplicatedStorage.Modules
 local assets = ReplicatedStorage.Assets
 
 
-local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
-local AbilityData = ModuleLoader:Load("Shared", "AbilityData")
+local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
+local AbilityData = require(game.ReplicatedStorage.Modules.Data.AbilityData)
 
-local StateService = ModuleLoader:Load("Server", "StateService")
-local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
-local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
+local StateService = require(game.ServerScriptService.Services.Core.StateService)
+local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
+local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 
-local ActionVerifier = ModuleLoader:Load("Shared", "ActionVerifier")
-local HitApplier = ModuleLoader:Load("Server", "HitApplier")
+local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
+local HitApplier = require(game.ServerScriptService.Modules.Utilities.HitApplier)
 
 local AbilityService = {
 	hitTypes = {}
@@ -22,7 +21,7 @@ local AbilityService = {
 
 for _,module  in game.ServerScriptService.Modules.HitTypes:GetChildren() do
 	if module:IsA("ModuleScript") then
-		AbilityService.hitTypes[module.Name] = ModuleLoader:Load("Server", module.Name)
+		AbilityService.hitTypes[module.Name] = require(module)
 	end
 end
 
@@ -67,7 +66,7 @@ function AbilityService:UseAbility(player:Player? ,character, tool:Tool, mouse, 
 	local cooldownTime  = abilityData.AbilityCooldown
 
 	---Animation---
-	local Animations = ModuleLoader:Load("Shared", "Animations")
+	local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 	local animation:AnimationTrack = Animations:GetAnimation(humanoid.Animator, "Weapons."..tool.Name..".Animations.Abilities."..abilityletter)
 	if not animation then
 		 warn("Animation Not Found")

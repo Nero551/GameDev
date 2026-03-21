@@ -1,11 +1,10 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local PlayerInfo = {}
 
 function PlayerInfo:UpdateInfo(player, char)
 	---Player Info GUI---
 	local TweenService = game:GetService("TweenService")
-	local DataService = ModuleLoader:Load("Server", "DataService")
-	local HPChangerUI = ModuleLoader:Load("Shared", "HPChangerUI")
+	local DataService = require(game.ServerScriptService.Services.Profile.DataService)
+	local HPChangerUI = require(game.ReplicatedStorage.Modules.UI2.HPChangerUI)
 
 	if not player then return end
 

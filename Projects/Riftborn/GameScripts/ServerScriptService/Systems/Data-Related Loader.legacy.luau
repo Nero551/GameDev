@@ -1,18 +1,17 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
-local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
+local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local Players = game:GetService("Players")
 local LocalizationService = game:GetService("LocalizationService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local EquipService = ModuleLoader:Load("Server", "EquipService")
-local StatService = ModuleLoader:Load("Server", "StatService")
-local QuestService = ModuleLoader:Load("Server", "QuestService")
-local TitleService = ModuleLoader:Load("Server", "TitleService")
-local DialogueService = ModuleLoader:Load("Server", "DialogueService")
+local EquipService = require(game.ServerScriptService.Services.Profile.EquipService)
+local StatService = require(game.ServerScriptService.Services.Profile.StatService)
+local QuestService = require(game.ServerScriptService.Services.Profile.QuestService)
+local TitleService = require(game.ServerScriptService.Services.Profile.TitleService)
+local DialogueService = require(game.ServerScriptService.Services.NPC.DialogueService)
 
-local QuestData = ModuleLoader:Load("Shared", "QuestData")
+local QuestData = require(game.ReplicatedStorage.Modules.Data.QuestData)
 
-local ServerData = ModuleLoader:Load("Server", "ServerData")
+local ServerData = require(game.ServerScriptService.Modules.ServerData)
 ---Server Data---
 Players.PlayerAdded:Connect(function(player)
 	ServerData.MaxPlayers = Players.maxPlayers

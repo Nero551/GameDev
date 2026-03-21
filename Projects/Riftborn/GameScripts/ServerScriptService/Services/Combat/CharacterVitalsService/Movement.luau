@@ -1,8 +1,7 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local Movement = {}
 
 function Movement:ModifyFlashStep(character:Model, argumentData)
-	local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
+	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 	local flashStepData = CharacterVitalsService.CharacterVitals[character].FlashStep
 	local FlashStepChange = argumentData.FlashStepChange
 		
@@ -10,7 +9,7 @@ function Movement:ModifyFlashStep(character:Model, argumentData)
 end
 
 function Movement:ModifyWalkSpeed(character:Model, argumentData)
-	local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
+	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 	local characterVitals = CharacterVitalsService.CharacterVitals[character]
 	local change = argumentData.WalkSpeed
 
@@ -19,7 +18,7 @@ function Movement:ModifyWalkSpeed(character:Model, argumentData)
 end
 
 function Movement:ModifyJumpPower(character:Model, argumentData)
-	local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
+	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 	local characterVitals = CharacterVitalsService.CharacterVitals[character]
 	local change = argumentData.JumpPower
 	
@@ -28,7 +27,7 @@ function Movement:ModifyJumpPower(character:Model, argumentData)
 end
 
 function Movement:Apply(character:Model)
-	local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
+	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 	local characterVitals = CharacterVitalsService.CharacterVitals[character]
 	local humanoid = character:WaitForChild("Humanoid")
 	

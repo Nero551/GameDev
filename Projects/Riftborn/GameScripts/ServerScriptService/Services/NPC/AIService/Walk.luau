@@ -1,10 +1,9 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 return function(npc)
 	local PathfindingService = game:GetService("PathfindingService")
 	
-	local AIService = ModuleLoader:Load("Server", "AIService")
+	local AIService = require(game.ServerScriptService.Services.NPC.AIService)
 	local AIData = AIService.ActiveAIs[npc]
-	local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
+	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 	if not AIData then return end
 	local humanoid:Humanoid = npc:WaitForChild("Humanoid")
 

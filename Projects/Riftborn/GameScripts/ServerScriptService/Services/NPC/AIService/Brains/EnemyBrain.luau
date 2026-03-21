@@ -1,9 +1,8 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local ServerScriptService = game:GetService("ServerScriptService")
-local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
-local CanDoAction = ModuleLoader:Load("Server", "CanDoAction")
+local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local CanDoAction = require(game.ServerScriptService.Services.NPC.AIService.CanDoAction)
 return function(npc)
-    local AIService = ModuleLoader:Load("Server", "AIService")
+    local AIService = require(game.ServerScriptService.Services.NPC.AIService)
     
 	local AIData = AIService.ActiveAIs[npc]
 	if not AIData then return end

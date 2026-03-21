@@ -1,5 +1,4 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
-local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
+local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 return function()
 	--ClientEffects
 
@@ -12,7 +11,7 @@ return function()
 
 	for  _, module in modules.Client.Effects:GetChildren() do
 		if module:IsA("ModuleScript") then
-			cachedEffects[module.Name] = ModuleLoader:Load("Client", module.Name)
+			cachedEffects[module.Name] = require(module)
 		end
 
 

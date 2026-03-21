@@ -1,5 +1,4 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
-local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
+local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 return function(questMenu, abandonQuestButton)
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local TweenService = game:GetService("TweenService")
@@ -10,7 +9,7 @@ return function(questMenu, abandonQuestButton)
 	local confirmPopup
 	local confirmConnection
 	
-	local CloneConfirmPopupUI = ModuleLoader:Load("Shared", "CloneConfirmPopupUI")
+	local CloneConfirmPopupUI = require(game.ReplicatedStorage.Modules.UI2.CloneConfirmPopupUI)
 
 	local function GetConfirmPopup()
 		if confirmPopup and confirmPopup.Parent then

@@ -1,11 +1,10 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 return function()
 	local RunService = game:GetService("RunService")
-	local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
+	local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 	local Player = game:GetService("Players").LocalPlayer
 	local character = Player.Character or Player.CharacterAdded:Wait()
 
-	local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
+	local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 
 	local _stepConnection = RunService.RenderStepped:Connect(function()
 		---Trails---

@@ -1,8 +1,7 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local Health = {}
 
 function Health:ModifyHealth(character:Model?, argumentData)
-	local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
+	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 	local healthData = CharacterVitalsService:GetVital(character, "Health")
 	local healthChange = argumentData.HealthChange
 	
@@ -11,7 +10,7 @@ function Health:ModifyHealth(character:Model?, argumentData)
 end
 
 function Health:ModifyMaxHealth(character:Model?, argumentData)
-	local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
+	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 	local healthData = CharacterVitalsService:GetVital(character, "Health")
 	
 	local maxHealth = argumentData.MaxHealth
@@ -29,7 +28,7 @@ end
 
 
 function Health:Apply(character)
-	local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
+	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 	local healthData = CharacterVitalsService:GetVital(character, "Health")
 	local humanoid:Humanoid = character:FindFirstChild("Humanoid")
 	if not humanoid then return end

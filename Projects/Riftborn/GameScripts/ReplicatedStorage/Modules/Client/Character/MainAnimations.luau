@@ -1,13 +1,12 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 return function()
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local RunService = game:GetService("RunService")
 
 	local assets = ReplicatedStorage.Assets
-local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
-	local ActionVerifier =  ModuleLoader:Load("Shared", "ActionVerifier")
-	local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
-	local Animations = ModuleLoader:Load("Shared", "Animations")	
+local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
+	local ActionVerifier =  require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
+	local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
+	local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)	
 	
 	local Player = game:GetService("Players").LocalPlayer
 	local char = Player.Character or Player.CharacterAdded:Wait()

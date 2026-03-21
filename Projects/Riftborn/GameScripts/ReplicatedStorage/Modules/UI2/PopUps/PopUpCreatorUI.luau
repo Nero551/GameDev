@@ -1,5 +1,4 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
-local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
+local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 return function()
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local Player = game:GetService("Players").LocalPlayer
@@ -8,7 +7,7 @@ return function()
 	local popupTemplate = assets.GUI.PopUp
 	local popupsFrame = Player:WaitForChild("PlayerGui"):WaitForChild("PopUpGui"):WaitForChild("PopUpsFrame")
 	
-	local RarityData = ModuleLoader:Load("Shared", "RarityData")
+	local RarityData = require(game.ReplicatedStorage.Modules.Data.RarityData)
 
 
 	for _,oldPopup in popupsFrame:GetChildren() do

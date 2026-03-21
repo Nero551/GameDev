@@ -1,7 +1,6 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
-local RarityService = ModuleLoader:Load("Server", "RarityService")
-local GameEvents = ModuleLoader:Load("Shared", "GameEvents")
-local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
+local RarityService = require(game.ServerScriptService.Services.World.RarityService)
+local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
+local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 
 local RewardsService = {}
 function RewardsService:GiveRewards(player, Rewards, quest:boolean)

@@ -1,6 +1,5 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 return function(button:TextButton?, frame:Frame?)
-	local AdminIDs = ModuleLoader:Load("Shared", "AdminIDs")
+	local AdminIDs = require(game.ReplicatedStorage.Modules.Data.AdminIDs)
 	local Player = game:GetService("Players").LocalPlayer
 	if not AdminIDs[Player.UserId] then
 		button.Visible = false

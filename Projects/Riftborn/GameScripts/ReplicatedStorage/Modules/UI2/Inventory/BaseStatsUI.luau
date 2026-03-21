@@ -1,8 +1,7 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 return function  (infoFrame)
 	local TweenService = game:GetService("TweenService")
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
-	local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
+	local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 
 	local baseStatsbutton = infoFrame:FindFirstChild("BaseStatsButton(HoverClickSoundSizeChange)")
 	local baseStatsFrame = infoFrame:FindFirstChild("BaseStats")

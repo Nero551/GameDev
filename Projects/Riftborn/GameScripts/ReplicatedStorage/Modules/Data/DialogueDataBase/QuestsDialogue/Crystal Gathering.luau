@@ -1,5 +1,4 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
-local QuestData = ModuleLoader:Load("Shared", "QuestData")
+local QuestData = require(game.ReplicatedStorage.Modules.Data.QuestData)
 
 local QuestDialogueData = {}
 

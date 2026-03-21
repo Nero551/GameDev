@@ -1,11 +1,10 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 return function()
 	local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
 	local TweenService = game:GetService("TweenService")
-local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
+local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 
 	local player = Players.LocalPlayer
 	local camera = workspace.CurrentCamera

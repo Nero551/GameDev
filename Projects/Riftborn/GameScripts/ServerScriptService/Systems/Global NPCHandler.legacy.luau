@@ -1,8 +1,7 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local RunService = game:GetService("RunService")
 local ServerScriptService = game:GetService("ServerScriptService")
-local NPCService = ModuleLoader:Load("Server", "NPCService")
-local AIService = ModuleLoader:Load("Server", "AIService")
+local NPCService = require(game.ServerScriptService.Services.NPC.NPCService)
+local AIService = require(game.ServerScriptService.Services.NPC.AIService)
 
 for _,NPC in workspace.World.Live.ActiveNPCS:GetDescendants() do
 	if NPC:IsA("Model") then

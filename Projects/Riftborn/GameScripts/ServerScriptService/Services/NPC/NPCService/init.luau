@@ -1,6 +1,5 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local MobData = ModuleLoader:Load("Shared", "MobData")
+local MobData = require(game.ReplicatedStorage.Modules.Data.MobData)
 
 local NPCService = {}
 
@@ -24,7 +23,7 @@ function NPCService:RegisterNPC(NPC)
             ["Type"] = npcType,
             
 		}
-		ModuleLoader:Load("Server", npcType .. "NPC")(NPC)
+		require(script[npcType .. "NPC"])(NPC)
 	end
 end
 

@@ -1,4 +1,3 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local StarterGui = game:GetService("StarterGui")
 
 local Character = {}
@@ -7,7 +6,7 @@ local cachedModules = {}
 
 for _,module in ipairs(script:GetChildren()) do
 	if module:IsA("ModuleScript") then
-		cachedModules[module.Name] = ModuleLoader:Load("Client", module.Name)
+		cachedModules[module.Name] = require(module)
 	end
 end
 

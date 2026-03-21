@@ -1,4 +1,3 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local RunService = game:GetService("RunService")
 local ServerScriptService = game:GetService("ServerScriptService")
 
@@ -12,7 +11,7 @@ function StateChecker:CheckState(character, ...)
 	local statusToCheck = { ... }
 
 	if RunService:IsServer() then
-		local StateService = ModuleLoader:Load("Server", "StateService")
+		local StateService = require(game.ServerScriptService.Services.Core.StateService)
 		if not StateService.Status[character] then
 			return
 		end

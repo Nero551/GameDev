@@ -1,21 +1,20 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
-local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
+local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 --StatusAilment HitType
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Debris = game:GetService("Debris")
 
 local modules = (ReplicatedStorage.Modules)
-local FormulaApplier = ModuleLoader:Load("Shared", "FormulaApplier")
-local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
-local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
-local KnockbackPull = ModuleLoader:Load("Server", "KnockbackPull")
-local StateService = ModuleLoader:Load("Server", "StateService")
-local Animations = ModuleLoader:Load("Shared", "Animations")
-local StatusAilmentsData = ModuleLoader:Load("Shared", "StatusAilmentsData")
+local FormulaApplier = require(game.ReplicatedStorage.Modules.Helpers.FormulaApplier)
+local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
+local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
+local KnockbackPull = require(game.ServerScriptService.Modules.Utilities.KnockbackPull)
+local StateService = require(game.ServerScriptService.Services.Core.StateService)
+local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
+local StatusAilmentsData = require(game.ReplicatedStorage.Modules.Data.StatusAilmentsData)
 
-local AilmentService = ModuleLoader:Load("Server", "AilmentService")
-local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
+local AilmentService = require(game.ServerScriptService.Services.Combat.AilmentService)
+local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 
 
 return function(argumentData)

@@ -1,13 +1,12 @@
-local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 --Defualt HitType
 
-local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
+local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local modules = (ReplicatedStorage.Modules)
-local StateService = ModuleLoader:Load("Server", "StateService")
-local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
-local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
-local Animations = ModuleLoader:Load("Shared", "Animations")
+local StateService = require(game.ServerScriptService.Services.Core.StateService)
+local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
+local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
+local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 
 return function(argumentData)
 	
