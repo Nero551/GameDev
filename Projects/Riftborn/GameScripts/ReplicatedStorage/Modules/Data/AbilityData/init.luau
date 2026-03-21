@@ -1,10 +1,11 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local abilityData = {
 	storedData = {},
 }
 
 for _, module in script:GetDescendants() do
 	if module:IsA("ModuleScript") then
-		abilityData.storedData[module.Name] = require(module)
+		abilityData.storedData[module.Name] = ModuleLoader:Load("Shared", module.Name)
 	end
 end
 

@@ -1,4 +1,5 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
 return function(resetButton ,statsMenu)
 	local Player  = game:GetService("Players").LocalPlayer
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -7,7 +8,7 @@ return function(resetButton ,statsMenu)
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	
-	local CloneConfirmPopupUI = require(script.Parent.Parent.CloneConfirmPopupUI)
+	local CloneConfirmPopupUI = ModuleLoader:Load("Shared", "CloneConfirmPopupUI")
 	
 	local confirmPopUp
 	local confirmConnection

@@ -1,7 +1,8 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local InHand = {}
 
 function InHand:PutInHand(character:Model, argumentData)
-	local CharacterVitalsService = require(script.Parent)
+	local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
     local toolId = argumentData.ToolId
 
     if CharacterVitalsService.CharacterVitals[character].InHand ~= toolId then
@@ -10,7 +11,7 @@ function InHand:PutInHand(character:Model, argumentData)
 end
 
 function InHand:RemoveFromHand(character: Model, argumentData)
-	local CharacterVitalsService = require(script.Parent)
+	local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
 	local toolId = argumentData.ToolId
 
 	if CharacterVitalsService.CharacterVitals[character].InHand == toolId then

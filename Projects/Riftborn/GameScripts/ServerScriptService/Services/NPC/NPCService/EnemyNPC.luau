@@ -1,3 +1,4 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 return function(npc)
 	if not npc then
 		warn("Invalid NPC")
@@ -7,14 +8,14 @@ return function(npc)
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local ServerScriptService = game:GetService("ServerScriptService")
 
-	local Animations = require(ReplicatedStorage.Modules.Core.Animations)
-	local MobData = require(ReplicatedStorage.Modules.Data.MobData)
+	local Animations = ModuleLoader:Load("Shared", "Animations")
+	local MobData = ModuleLoader:Load("Shared", "MobData")
 	local uiModules = ReplicatedStorage.Modules.UI2
 
-	local AIService = require(ServerScriptService.Services.NPC.AIService)
-	local CharacterVitalsService = require(ServerScriptService.Services.Combat.CharacterVitalsService)
+	local AIService = ModuleLoader:Load("Server", "AIService")
+	local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
 
-	local GameEvents = require(ReplicatedStorage.Modules.Core.GameEvents)
+	local GameEvents = ModuleLoader:Load("Shared", "GameEvents")
 	local npcHumanoid = npc:WaitForChild("Humanoid")
 	local animator: Animator = npcHumanoid.Animator
 

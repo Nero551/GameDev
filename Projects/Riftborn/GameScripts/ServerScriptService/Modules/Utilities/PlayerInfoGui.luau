@@ -1,11 +1,11 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local PlayerInfo = {}
 
 function PlayerInfo:UpdateInfo(player, char)
 	---Player Info GUI---
-	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local TweenService = game:GetService("TweenService")
-	local DataService = require(game.ServerScriptService.Services.Profile.DataService)
-	local uiModules = ReplicatedStorage.Modules.UI2
+	local DataService = ModuleLoader:Load("Server", "DataService")
+	local HPChangerUI = ModuleLoader:Load("Shared", "HPChangerUI")
 
 	if not player then return end
 
@@ -21,7 +21,6 @@ function PlayerInfo:UpdateInfo(player, char)
 	char:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(function()
 		if tick() - lastUpdate > 0.1 then -- 20 FPS limit
 			lastUpdate = tick()
-			local HPChangerUI = require(uiModules.HPChangerUI)
 			HPChangerUI(hpBG, char)
 		end
 	end)

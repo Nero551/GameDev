@@ -1,8 +1,9 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local MovementConfig = require(ReplicatedStorage.Modules.Configs.MovementConfig)
-local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
-local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local MovementConfig = ModuleLoader:Load("Shared", "MovementConfig")
+local ActionVerifier = ModuleLoader:Load("Shared", "ActionVerifier")
+local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
+local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
 local CanDoAction = {}
 
 function CanDoAction:CanRun(AIData)

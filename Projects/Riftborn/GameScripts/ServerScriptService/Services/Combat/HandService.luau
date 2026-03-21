@@ -1,6 +1,7 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
-local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
+local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
+local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
 local HandService = {}
 
 function HandService:PutInHand(player:Player,toolId)

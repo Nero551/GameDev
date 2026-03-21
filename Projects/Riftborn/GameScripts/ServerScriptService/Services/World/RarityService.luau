@@ -1,6 +1,7 @@
-local ItemDataBase  = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
-local DataService = require(game.ServerScriptService.Services.Profile.DataService)
-local RarityData = require(game.ReplicatedStorage.Modules.Data.RarityData)
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local ItemDataBase  = ModuleLoader:Load("Shared", "ItemDataBase")
+local DataService = ModuleLoader:Load("Server", "DataService")
+local RarityData = ModuleLoader:Load("Shared", "RarityData")
 
 local RarityService = {}
 

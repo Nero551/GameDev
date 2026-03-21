@@ -1,16 +1,15 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
 local  Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
-local ServerScriptService = game:GetService("ServerScriptService")
 
-local StateService = require(ServerScriptService.Services.Core.StateService)
-local StateChecker = require(ReplicatedStorage.Modules.Helpers.StateChecker)
-local StatusAilmentsData = require(ReplicatedStorage.Modules.Data.StatusAilmentsData)
-local StatService = require(ServerScriptService.Services.Profile.StatService)
-local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
+local StateService = ModuleLoader:Load("Server", "StateService")
+local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
+local StatusAilmentsData = ModuleLoader:Load("Shared", "StatusAilmentsData")
+local StatService = ModuleLoader:Load("Server", "StatService")
+local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
 
-local Connections = require(ReplicatedStorage.Modules.Core.Connections)
+local Connections = ModuleLoader:Load("Shared", "Connections")
 
 local AilmentService = {}
 

@@ -1,11 +1,12 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 
 local ServerScriptService = game:GetService("ServerScriptService")
 local Players = game:GetService("Players")
 
-local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
-local DataService = require(ServerScriptService.Services.Profile.DataService)
-local CharacterVitalsService = require(ServerScriptService.Services.Combat.CharacterVitalsService)
-local StatService = require(ServerScriptService.Services.Profile.StatService)
+local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
+local DataService = ModuleLoader:Load("Server", "DataService")
+local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
+local StatService = ModuleLoader:Load("Server", "StatService")
 
 local HitApplier = {}
 

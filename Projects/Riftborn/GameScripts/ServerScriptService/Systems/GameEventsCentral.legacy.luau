@@ -1,18 +1,19 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local modules = ReplicatedStorage.Modules
 local Services = game.ServerScriptService.Services
 
-local MobData = require(ReplicatedStorage.Modules.Data.MobData)
-local GameEvents = require(modules.Core.GameEvents)
+local MobData = ModuleLoader:Load("Shared", "MobData")
+local GameEvents = ModuleLoader:Load("Shared", "GameEvents")
 
-local QuestService = require(Services.Profile.QuestService)
-local InventoryService = require(Services.Profile.InventoryService)
-local CurrencyService =  require(Services.Profile.CurrencyService)
-local LevelService = require(Services.Profile.LevelService)
-local StatsService =  require(Services.Profile.StatService)
-local RewardsService = require(Services.World.RewardsService)
-local EquipService = require(Services.Profile.EquipService)
-local BuffService = require(Services.Profile.BuffService)
+local QuestService = ModuleLoader:Load("Server", "QuestService")
+local InventoryService = ModuleLoader:Load("Server", "InventoryService")
+local CurrencyService =  ModuleLoader:Load("Server", "CurrencyService")
+local LevelService = ModuleLoader:Load("Server", "LevelService")
+local StatsService =  ModuleLoader:Load("Server", "StatService")
+local RewardsService = ModuleLoader:Load("Server", "RewardsService")
+local EquipService = ModuleLoader:Load("Server", "EquipService")
+local BuffService = ModuleLoader:Load("Server", "BuffService")
 
 
 GameEvents.AddBuff.Event:Connect(function(player, data, ID)

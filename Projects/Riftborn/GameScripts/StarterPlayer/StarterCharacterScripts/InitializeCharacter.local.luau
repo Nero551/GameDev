@@ -1,3 +1,4 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local CharacterModule = require(ReplicatedStorage.Modules.Client.Character)
+local CharacterModule = ModuleLoader:Load("Client", "Character")
 CharacterModule:Init()

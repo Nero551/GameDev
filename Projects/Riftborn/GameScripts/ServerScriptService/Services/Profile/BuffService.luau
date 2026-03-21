@@ -1,8 +1,9 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local DataService = require(game.ServerScriptService.Services.Profile.DataService)
-local StatService = require(script.Parent.StatService)
-local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
-local TitleData = require(ReplicatedStorage.Modules.Data.TitleData)
+local DataService = ModuleLoader:Load("Server", "DataService")
+local StatService = ModuleLoader:Load("Server", "StatService")
+local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
+local TitleData = ModuleLoader:Load("Shared", "TitleData")
 
 local BuffService = {}
 

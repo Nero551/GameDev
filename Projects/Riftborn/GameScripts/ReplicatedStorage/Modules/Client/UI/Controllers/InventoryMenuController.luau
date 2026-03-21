@@ -1,12 +1,13 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
-local AbilityData = require(ReplicatedStorage.Modules.Data.AbilityData)
-local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
-local RarityData = require(ReplicatedStorage.Modules.Data.RarityData)
-local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
-local UIHelper = require(ReplicatedStorage.Modules.Client.UI.UIHelper)
-local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
+local AbilityData = ModuleLoader:Load("Shared", "AbilityData")
+local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
+local RarityData = ModuleLoader:Load("Shared", "RarityData")
+local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
+local UIHelper = ModuleLoader:Load("Client", "UIHelper")
+local UIManager = ModuleLoader:Load("Client", "UIManager")
 
 local InventoryMenuController = {}
 
@@ -283,5 +284,7 @@ function InventoryMenuController:Equip()
 		unequipButton.Visible = false
 	end)
 end
+
+
 
 return InventoryMenuController

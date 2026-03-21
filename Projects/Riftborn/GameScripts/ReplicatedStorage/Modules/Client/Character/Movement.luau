@@ -1,10 +1,11 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
 return function()
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
 	local TweenService = game:GetService("TweenService")
-local ActionVerifier = require(ReplicatedStorage.Modules.Helpers.ActionVerifier)
+local ActionVerifier = ModuleLoader:Load("Shared", "ActionVerifier")
 
 	local Player = game:GetService("Players").LocalPlayer
 	local character = Player.Character or Player.CharacterAdded:Wait()
@@ -12,9 +13,9 @@ local ActionVerifier = require(ReplicatedStorage.Modules.Helpers.ActionVerifier)
 
 	local modules =  ReplicatedStorage.Modules
 
-	local Connections = require(ReplicatedStorage.Modules.Core.Connections)
-	local StateChecker = require(ReplicatedStorage.Modules.Helpers.StateChecker)
-	local MovementConfig = require(modules.Configs.MovementConfig)
+	local Connections = ModuleLoader:Load("Shared", "Connections")
+	local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
+	local MovementConfig = ModuleLoader:Load("Shared", "MovementConfig")
 
 	local DashConfig = MovementConfig.DashConfig
 	local camera = workspace.CurrentCamera

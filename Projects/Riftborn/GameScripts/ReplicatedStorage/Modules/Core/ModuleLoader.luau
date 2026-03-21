@@ -1,18 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local ServerScriptService = game:GetService("ServerScriptService")
-
----@class ModuleLoader
----@field Server table<string, any>
----@field Client table<string, any>
----@field Shared table<string, any>
 local ModuleLoader = {}
-
-local moduleInstances = {
-	Server = {},
-	Shared = {},
-	Client = {},
-}
 
 local cachedModules = {
 	Server = {},
@@ -20,53 +9,46 @@ local cachedModules = {
 	Client = {},
 }
 
-local function RegisterModule(bucketName, module)
-	if module:IsA("ModuleScript") then
-		moduleInstances[bucketName][module.Name] = module
-	end
-end
-
 for _, module in ServerScriptService:GetDescendants() do
-	RegisterModule("Server", module)
+	if module:IsA("ModuleScript") then
+		cachedModules.Server[module.Name] = module
+	end
 end
 
 for _, module in ReplicatedStorage.Modules:GetDescendants() do
-	if string.find(module:GetFullName(), ".Client.") then
-		RegisterModule("Client", module)
-	else
-		RegisterModule("Shared", module)
+	if module:IsA("ModuleScript") then
+		if string.find(module:GetFullName(), "Client") then
+			cachedModules.Client[module.Name] = module
+		else
+			cachedModules.Shared[module.Name] = module
+		end
 	end
 end
 
----@generic T
----@param type "Server"|"Client"|"Shared"
----@param moduleName string
----@return T
-function ModuleLoader:Load(moduleType, moduleName)
-	if moduleType == "Server" and not RunService:IsServer() then
-		return warn("Attempted to load a server module from the client:", moduleName)
+print(cachedModules)
+
+function ModuleLoader:Load(type, moduleName)
+	if type == "Server" then
+		if RunService:IsServer() then
+			if cachedModules.Server[moduleName] then
+				return require(cachedModules.Server[moduleName])
+			end
+		end
+	end
+	if type == "Client" then
+		if RunService:IsClient() then
+			if cachedModules.Client[moduleName] then
+				return require(cachedModules.Client[moduleName])
+			end
+		end
+	end
+	if type == "Shared" then
+		if cachedModules.Shared[moduleName] then
+			return require(cachedModules.Shared[moduleName])
+		end
 	end
 
-	if moduleType == "Client" and not RunService:IsClient() then
-		return warn("Attempted to load a client module from the server:", moduleName)
-	end
-
-	local cached = cachedModules[moduleType]
-	if not cached then
-		return warn("Invalid module type:", moduleType)
-	end
-
-	if cached[moduleName] then
-		return cached[moduleName]
-	end
-
-	local module = moduleInstances[moduleType][moduleName]
-	if not module then
-		return warn("Module doesn't exist:", moduleType, moduleName)
-	end
-
-	cached[moduleName] = require(module)
-	return cached[moduleName]
+	return warn("Module Doesn't Exist")
 end
 
 return ModuleLoader

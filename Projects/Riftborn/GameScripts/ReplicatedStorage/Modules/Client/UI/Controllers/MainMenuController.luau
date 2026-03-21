@@ -1,10 +1,11 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local Lighting = game:GetService("Lighting")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 
-local UIHelper = require(ReplicatedStorage.Modules.Client.UI.UIHelper)
-local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
+local UIHelper = ModuleLoader:Load("Client", "UIHelper")
+local UIManager = ModuleLoader:Load("Client", "UIManager")
 
 local MainMenuController = {}
 

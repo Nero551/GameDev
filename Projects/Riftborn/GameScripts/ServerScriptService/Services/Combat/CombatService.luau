@@ -1,4 +1,5 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
 --CombatService
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Debris = game:GetService("Debris")
@@ -6,15 +7,15 @@ local Debris = game:GetService("Debris")
 local assets = ReplicatedStorage.Assets
 local modules = ReplicatedStorage.Modules
 
-local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
 
-local ActionVerifier = require(modules.Helpers.ActionVerifier)
-local StateService = require(game.ServerScriptService.Services.Core.StateService)
-local StateChecker = require(modules.Helpers.StateChecker)
-local HitApplier = require(game.ServerScriptService.Modules.Utilities.HitApplier)
-local Animations = require(modules.Core.Animations)
+local ActionVerifier = ModuleLoader:Load("Shared", "ActionVerifier")
+local StateService = ModuleLoader:Load("Server", "StateService")
+local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
+local HitApplier = ModuleLoader:Load("Server", "HitApplier")
+local Animations = ModuleLoader:Load("Shared", "Animations")
 
-local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
+local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
 
 local CombatService = {
 	hitTypes = {}
@@ -37,7 +38,7 @@ end
 ---------requiring HitTypes
 for _,module  in game.ServerScriptService.Modules.HitTypes:GetChildren() do
 	if module:IsA("ModuleScript") then
-		CombatService.hitTypes[module.Name] = require(module)
+		CombatService.hitTypes[module.Name] = ModuleLoader:Load("Server", module.Name)
 	end
 end
 

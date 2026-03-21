@@ -1,10 +1,11 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local ItemDatabase = {}
 
 ItemDatabase.Sources = {
-	Weapons   = require(script.WeaponData).Weapons,
-	Materials = require(script.MaterialData).Materials,
-	Armors    = require(script.ArmorData).Armors,
-	Resources = require(script.ResourceData).Resources
+	Weapons = ModuleLoader:Load("Shared", "WeaponData").Weapons,
+	Materials = ModuleLoader:Load("Shared", "MaterialData").Materials,
+	Armors = ModuleLoader:Load("Shared", "ArmorData").Armors,
+	Resources = ModuleLoader:Load("Shared", "ResourceData").Resources
 }
 
 function ItemDatabase:GetItemData(item)

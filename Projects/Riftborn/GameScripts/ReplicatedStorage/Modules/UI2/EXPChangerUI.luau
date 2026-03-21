@@ -1,4 +1,5 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
 return function(expBG, levelFrame)
 	local TweenService = game:GetService("TweenService")
 	local EXPFill = expBG.EXPFill

@@ -1,9 +1,10 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local Mana = {}
 
 
 
 function Mana:ModifyMana(character:Model?, argumentData)
-	local CharacterVitalsService = require(script.Parent)
+	local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
 	local manaData = CharacterVitalsService:GetVital(character, "Mana")
 	local ManaChange = argumentData.ManaChange
 	
@@ -11,7 +12,7 @@ function Mana:ModifyMana(character:Model?, argumentData)
 end
 
 function Mana:ModifyMaxMana(character:Model?, argumentData)
-	local CharacterVitalsService = require(script.Parent)
+	local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
 	local manaData = CharacterVitalsService:GetVital(character, "Mana")
 	local maxMana = argumentData.MaxMana
 	

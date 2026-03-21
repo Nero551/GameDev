@@ -1,5 +1,6 @@
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
-local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
+local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
 
 
 local RegenService = {}

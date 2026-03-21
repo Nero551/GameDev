@@ -1,9 +1,10 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 
 return function(npc)
 	local PathfindingService = game:GetService("PathfindingService")
-	local StateService = require(game.ServerScriptService.Services.Core.StateService)
+	local StateService = ModuleLoader:Load("Server", "StateService")
 	
-	local AIService = require(script.Parent)
+	local AIService = ModuleLoader:Load("Server", "AIService")
 	
 	local AIData = AIService.ActiveAIs[npc]
 	if not AIData then return end

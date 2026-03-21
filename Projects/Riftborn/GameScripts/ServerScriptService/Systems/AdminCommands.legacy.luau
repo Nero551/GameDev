@@ -1,10 +1,11 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local modules =  ReplicatedStorage.Modules
 
-local AdminCmdsService = require(game.ServerScriptService.Services.Core.AdminCmdsService)
+local AdminCmdsService = ModuleLoader:Load("Server", "AdminCmdsService")
 
-local ADMIN_IDS = require(modules.Data.AdminIDs)
+local ADMIN_IDS = ModuleLoader:Load("Shared", "AdminIDs")
 
 ---COMMANDS---
 NetworkingService:OnServerEvent("AdminCommand", function(player, msg)

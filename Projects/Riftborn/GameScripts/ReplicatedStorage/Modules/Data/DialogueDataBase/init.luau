@@ -1,3 +1,4 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local DialogueDataBase = {}
 
 DialogueDataBase.Sources = {}
@@ -19,7 +20,7 @@ function DialogueDataBase:GetDialogueData(Dialogue)
 		for _,dialogue:ModuleScript? in pairs(category) do
 
 			if dialogue.Name == Dialogue then
-				local DialogueData = require(dialogue)
+				local DialogueData = ModuleLoader:Load("Shared", dialogue.Name)
 				return DialogueData
 			end
 		end

@@ -1,9 +1,10 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local QuestData = require(ReplicatedStorage.Modules.Data.QuestData)
-local GameEvents = require(ReplicatedStorage.Modules.Core.GameEvents)
-local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
-local DataService = require(script.Parent.DataService)
+local QuestData = ModuleLoader:Load("Shared", "QuestData")
+local GameEvents = ModuleLoader:Load("Shared", "GameEvents")
+local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
+local DataService = ModuleLoader:Load("Server", "DataService")
 
 local QuestService = {}
 

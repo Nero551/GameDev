@@ -1,4 +1,5 @@
-local StateChecker = require(script.Parent.StateChecker)
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
 
 local ActionVerifier = {}
 

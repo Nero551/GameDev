@@ -1,3 +1,4 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 return function(tool)
 	--toolloader
 	if tool:GetAttribute("ToolLoaded", true) then
@@ -13,7 +14,7 @@ return function(tool)
 	local humanoid = character:WaitForChild("Humanoid", math.huge)
 	local animator = humanoid.Animator
 
-	local Animations = require(ReplicatedStorage.Modules.Core.Animations)
+	local Animations = ModuleLoader:Load("Shared", "Animations")
 	local animsFolder = assets.Weapons[tool.Name].Animations
 	Animations:loadAnims(animator , animsFolder)
 	

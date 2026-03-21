@@ -1,6 +1,7 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 return function(npc)
-	local AIService = require(script.Parent)
-	local AbilityService = require(game.ServerScriptService.Services.Combat.AbilityService)
+	local AIService = ModuleLoader:Load("Server", "AIService")
+	local AbilityService = ModuleLoader:Load("Server", "AbilityService")
 	
 	local AIData = AIService.ActiveAIs[npc]
 	if not AIData then return end

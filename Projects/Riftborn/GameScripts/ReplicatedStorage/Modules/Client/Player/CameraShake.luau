@@ -1,9 +1,10 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
 return function()
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local RunService = game:GetService("RunService")
 	local Players = game:GetService("Players")
-	local Connections = require(ReplicatedStorage.Modules.Core.Connections)
+	local Connections = ModuleLoader:Load("Shared", "Connections")
 	local player = Players.LocalPlayer
 	local char = player.Character or player.CharacterAdded:Wait()
 	local camera = workspace.CurrentCamera

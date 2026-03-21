@@ -1,10 +1,11 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
 return function(questMenu)
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local TweenService = game:GetService("TweenService")
 	local remotes = ReplicatedStorage.Remotes
 
-	local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+	local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
 	
 
 	local questTemplate = ReplicatedStorage.Assets.GUI.Quest

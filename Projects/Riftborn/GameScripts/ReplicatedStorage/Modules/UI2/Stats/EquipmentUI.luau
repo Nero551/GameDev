@@ -1,11 +1,12 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
 return function(Icons, EquipmentFolder)
 	local ReplicatedStorage =game:GetService("ReplicatedStorage")
 	local TweenService = game:GetService("TweenService")
 	local Player = game:GetService("Players").LocalPlayer
-	local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+	local ItemDataBase = ModuleLoader:Load("Shared", "ItemDataBase")
 	local playerStats = Player:WaitForChild("PlayerStats")
-	local FormulaApplier = require(ReplicatedStorage.Modules.Helpers.FormulaApplier)
+	local FormulaApplier = ModuleLoader:Load("Shared", "FormulaApplier")
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 

@@ -1,9 +1,10 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 --DefualtHit
 
 local Debris = game:GetService("Debris")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local StateChecker = require(ReplicatedStorage.Modules.Helpers.StateChecker)
-local DynamicLight = require(ReplicatedStorage.Modules.Helpers.DynamicLight)
+local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
+local DynamicLight = ModuleLoader:Load("Shared", "DynamicLight")
 
 local assets = ReplicatedStorage:WaitForChild("Assets")
 

@@ -1,12 +1,13 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local StateHandler = require(game.ServerScriptService.Modules.Utilities.StateHandler)
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
-local Animations = require(ReplicatedStorage.Modules.Core.Animations)
-local Connections = require(ReplicatedStorage.Modules.Core.Connections)
-local AbilityData = require(ReplicatedStorage.Modules.Data.AbilityData)
-local MobData = require(ReplicatedStorage.Modules.Data.MobData)
+local StateHandler = ModuleLoader:Load("Server", "StateHandler")
+local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
+local Animations = ModuleLoader:Load("Shared", "Animations")
+local Connections = ModuleLoader:Load("Shared", "Connections")
+local AbilityData = ModuleLoader:Load("Shared", "AbilityData")
+local MobData = ModuleLoader:Load("Shared", "MobData")
 
-local StateService = require(game.ServerScriptService.Services.Core.StateService)
+local StateService = ModuleLoader:Load("Server", "StateService")
 
 local AIService = {}
 AIService.ActiveAIs = {}
@@ -15,13 +16,13 @@ AIService.Brains = {}
 
 for _,module in script:GetChildren() do
 	if module:IsA("ModuleScript") then
-		ActionModules[module.Name] = require(module)
+		ActionModules[module.Name] = ModuleLoader:Load("Server", module.Name)
 	end
 end
 
 for _,module in script.Brains:GetChildren() do
 	if module:IsA("ModuleScript") then
-		AIService.Brains[module.Name] = require(module)
+		AIService.Brains[module.Name] = ModuleLoader:Load("Server", module.Name)
 	end
 end
 

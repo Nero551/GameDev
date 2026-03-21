@@ -1,9 +1,10 @@
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
 --DefualtHit
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local assets = ReplicatedStorage:WaitForChild("Assets")
-local StateChecker = require(ReplicatedStorage.Modules.Helpers.StateChecker)
+local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
 
 return function(arguementData:any)
 	local target:Model = arguementData.Target

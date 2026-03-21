@@ -1,16 +1,17 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
+local ModuleLoader = require(game:GetService("ReplicatedStorage").Modules.Core.ModuleLoader)
+local NetworkingService = ModuleLoader:Load("Shared", "NetworkingService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
 local assets = ReplicatedStorage.Assets
-local Connections = require(ReplicatedStorage.Modules.Core.Connections)
-local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
-local StateService = require(game.ServerScriptService.Services.Core.StateService)
-local ActionVerifier =  require(ReplicatedStorage.Modules.Helpers.ActionVerifier)
-local MovementConfig = require(ReplicatedStorage.Modules.Configs.MovementConfig)
+local Connections = ModuleLoader:Load("Shared", "Connections")
+local StateChecker = ModuleLoader:Load("Shared", "StateChecker")
+local StateService = ModuleLoader:Load("Server", "StateService")
+local ActionVerifier =  ModuleLoader:Load("Shared", "ActionVerifier")
+local MovementConfig = ModuleLoader:Load("Shared", "MovementConfig")
 
-local Animations = require(ReplicatedStorage.Modules.Core.Animations)
-local CharacterVitalsService = require(script.Parent.CharacterVitalsService)
+local Animations = ModuleLoader:Load("Shared", "Animations")
+local CharacterVitalsService = ModuleLoader:Load("Server", "CharacterVitalsService")
 
 local DashConfig = MovementConfig.DashConfig
 local wallJumpConfig = MovementConfig.WallRunConfig
