@@ -4,8 +4,8 @@ function PlayerInfo:UpdateInfo(player, char)
 	---Player Info GUI---
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local TweenService = game:GetService("TweenService")
-	local DataService = require(game.ServerScriptService.Services.DataService)
-	local uiModules = ReplicatedStorage.Modules.UI
+	local DataService = require(game.ServerScriptService.Services.Profile.DataService)
+	local uiModules = ReplicatedStorage.Modules.UI2
 
 	if not player then return end
 

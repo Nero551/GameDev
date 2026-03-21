@@ -1,18 +1,18 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local modules = ReplicatedStorage.Modules
-local Services = script.Parent.Parent.Services
+local Services = game.ServerScriptService.Services
 
 local MobData = require(ReplicatedStorage.Modules.Data.MobData)
-local GameEvents = require(modules.GameEvents)
+local GameEvents = require(modules.Core.GameEvents)
 
-local QuestService = require(Services.QuestService)
-local InventoryService = require(Services.InventoryService)
-local CurrencyService =  require(Services.CurrencyService)
-local LevelService = require(Services.LevelService)
-local StatsService =  require(Services.StatService)
-local RewardsService = require(Services.RewardsService)
-local EquipService = require(Services.EquipService)
-local BuffService = require(Services.BuffService)
+local QuestService = require(Services.Profile.QuestService)
+local InventoryService = require(Services.Profile.InventoryService)
+local CurrencyService =  require(Services.Profile.CurrencyService)
+local LevelService = require(Services.Profile.LevelService)
+local StatsService =  require(Services.Profile.StatService)
+local RewardsService = require(Services.World.RewardsService)
+local EquipService = require(Services.Profile.EquipService)
+local BuffService = require(Services.Profile.BuffService)
 
 
 GameEvents.AddBuff.Event:Connect(function(player, data, ID)

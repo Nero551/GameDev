@@ -4,7 +4,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
 	local TweenService = game:GetService("TweenService")
-local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
+local StateChecker = require(ReplicatedStorage.Modules.Helpers.StateChecker)
 
 	local player = Players.LocalPlayer
 	local camera = workspace.CurrentCamera

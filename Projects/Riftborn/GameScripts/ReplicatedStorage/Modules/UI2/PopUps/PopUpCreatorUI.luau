@@ -1,4 +1,4 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
 return function()
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local Player = game:GetService("Players").LocalPlayer

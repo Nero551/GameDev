@@ -1,6 +1,6 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
-local Connections = require(ReplicatedStorage.Modules.Connections)
+local Connections = require(ReplicatedStorage.Modules.Core.Connections)
 return function()
 	
 	local Player = game:GetService("Players").LocalPlayer

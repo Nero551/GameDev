@@ -1,4 +1,4 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
 return function(questMenu, abandonQuestButton)
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local TweenService = game:GetService("TweenService")

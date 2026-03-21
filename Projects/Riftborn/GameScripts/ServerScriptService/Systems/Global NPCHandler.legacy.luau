@@ -1,7 +1,7 @@
 local RunService = game:GetService("RunService")
 local ServerScriptService = game:GetService("ServerScriptService")
-local NPCService = require(ServerScriptService.Services.NPCService)
-local AIService = require(script.Parent.Parent.Services.AIService)
+local NPCService = require(ServerScriptService.Services.NPC.NPCService)
+local AIService = require(game.ServerScriptService.Services.NPC.AIService)
 
 for _,NPC in workspace.World.Live.ActiveNPCS:GetDescendants() do
 	if NPC:IsA("Model") then

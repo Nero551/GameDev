@@ -1,13 +1,13 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
 local Players = game:GetService("Players")
 local LocalizationService = game:GetService("LocalizationService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local EquipService = require(script.Parent.Parent.Services.EquipService)
-local StatService = require(script.Parent.Parent.Services.StatService)
-local QuestService = require(script.Parent.Parent.Services.QuestService)
-local TitleService = require(script.Parent.Parent.Services.TitleService)
-local DialogueService = require(script.Parent.Parent.Services.DialogueService)
+local EquipService = require(game.ServerScriptService.Services.Profile.EquipService)
+local StatService = require(game.ServerScriptService.Services.Profile.StatService)
+local QuestService = require(game.ServerScriptService.Services.Profile.QuestService)
+local TitleService = require(game.ServerScriptService.Services.Profile.TitleService)
+local DialogueService = require(game.ServerScriptService.Services.NPC.DialogueService)
 
 local QuestData = require(ReplicatedStorage.Modules.Data.QuestData)
 

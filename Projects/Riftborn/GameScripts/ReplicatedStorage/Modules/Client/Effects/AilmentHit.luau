@@ -3,7 +3,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local assets = ReplicatedStorage:WaitForChild("Assets")
-local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
+local StateChecker = require(ReplicatedStorage.Modules.Helpers.StateChecker)
 
 return function(arguementData:any)
 	local target:Model = arguementData.Target

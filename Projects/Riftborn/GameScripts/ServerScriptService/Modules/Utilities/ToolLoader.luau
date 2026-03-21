@@ -13,7 +13,7 @@ return function(tool)
 	local humanoid = character:WaitForChild("Humanoid", math.huge)
 	local animator = humanoid.Animator
 
-	local Animations = require(ReplicatedStorage.Modules.Animations)
+	local Animations = require(ReplicatedStorage.Modules.Core.Animations)
 	local animsFolder = assets.Weapons[tool.Name].Animations
 	Animations:loadAnims(animator , animsFolder)
 	

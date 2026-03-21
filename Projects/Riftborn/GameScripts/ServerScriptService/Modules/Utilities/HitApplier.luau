@@ -2,9 +2,10 @@
 local ServerScriptService = game:GetService("ServerScriptService")
 local Players = game:GetService("Players")
 
-local StateChecker = require(game.ReplicatedStorage.Modules.StateChecker)
-local DataService = require(ServerScriptService.Services.DataService)
-local CharacterVitalsService = require(ServerScriptService.Services.CharacterVitalsService)
+local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
+local DataService = require(ServerScriptService.Services.Profile.DataService)
+local CharacterVitalsService = require(ServerScriptService.Services.Combat.CharacterVitalsService)
+local StatService = require(ServerScriptService.Services.Profile.StatService)
 
 local HitApplier = {}
 
@@ -32,13 +33,13 @@ function HitApplier:ApplyHit(argumentData)
 	local targetDefenseStat = 0
 	if player then
 		local playerStats = DataService:GetTable(player,"Stats")
-		playerDamageStat = playerStats[weaponData.Type].Final
-		playerCriticalDamageStat = playerStats.CriticalDamage.Percent + weaponData.CriticalDamage + 1
-		playerCriticalRateStat = (playerStats.CriticalRate.Percent + weaponData.CriticalRate) * 100
+		playerDamageStat = playerStats.MainStats[weaponData.Type].Final
+		playerCriticalDamageStat = StatService:GetStat(player, "CriticalDamage").Percent + weaponData.CriticalDamage + 1
+		playerCriticalRateStat = (StatService:GetStat(player, "CriticalRate").Percent + weaponData.CriticalRate) * 100
 	end
 	
 	if Players:GetPlayerFromCharacter(targetHit) then
-		targetDefenseStat = DataService:GetTable(Players:GetPlayerFromCharacter(targetHit), "Stats").Defense.Final 
+		targetDefenseStat = StatService:GetStat(Players:GetPlayerFromCharacter(targetHit), "Defense").Final 
 	end
 
 	---BlockBreakCounter---

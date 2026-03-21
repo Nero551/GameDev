@@ -5,10 +5,10 @@ return function()
 	local RunService = game:GetService("RunService")
 	local Player = game:GetService("Players").LocalPlayer
 	local modules =  ReplicatedStorage.Modules
-	local ActionVerifier = require(ReplicatedStorage.Modules.ActionVerifier)
-	local Connections = require(ReplicatedStorage.Modules.Connections)
-	local NetworkingService = require(ReplicatedStorage.Modules.NetworkingService)
-	local StateChecker = require(modules.StateChecker)
+	local ActionVerifier = require(ReplicatedStorage.Modules.Helpers.ActionVerifier)
+	local Connections = require(ReplicatedStorage.Modules.Core.Connections)
+	local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
+	local StateChecker = require(modules.Helpers.StateChecker)
 	local character = Player.Character or Player.CharacterAdded:Wait()
 
 	local statusFolder = character:WaitForChild("Status", math.huge)

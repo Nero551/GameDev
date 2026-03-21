@@ -4,17 +4,17 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
 local StateHandler = require(ServerScriptService.Modules.Utilities.StateHandler)
-local CharacterVitalsService = require(ServerScriptService.Services.CharacterVitalsService)
-local HandService = require(ServerScriptService.Services.HandService)
-local Connections = require(ReplicatedStorage.Modules.Connections)
-local NetworkingService = require(ReplicatedStorage.Modules.NetworkingService)
-local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
-local StateService = require(ServerScriptService.Services.StateService)
-local MovementService = require(script.Parent.Parent.Services.MovementService)
-local CombatService = require(script.Parent.Parent.Services.CombatService)
-local RegenService = require(script.Parent.Parent.Services.RegenService)
-local AbilityService = require(script.Parent.Parent.Services.AbilityService)
-local TimeService = require(script.Parent.Parent.Services.TimeService)
+local CharacterVitalsService = require(ServerScriptService.Services.Combat.CharacterVitalsService)
+local HandService = require(ServerScriptService.Services.Combat.HandService)
+local Connections = require(ReplicatedStorage.Modules.Core.Connections)
+local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
+local StateChecker = require(ReplicatedStorage.Modules.Helpers.StateChecker)
+local StateService = require(ServerScriptService.Services.Core.StateService)
+local MovementService = require(game.ServerScriptService.Services.Combat.MovementService)
+local CombatService = require(game.ServerScriptService.Services.Combat.CombatService)
+local RegenService = require(game.ServerScriptService.Services.Combat.RegenService)
+local AbilityService = require(game.ServerScriptService.Services.Combat.AbilityService)
+local TimeService = require(game.ServerScriptService.Services.World.TimeService)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 local elapsed = 0
@@ -64,7 +64,7 @@ Players.PlayerAdded:Connect(function(player)
 end)
 ---Destroying Status For Player On Leave---
 Players.PlayerRemoving:Connect(function(player)
-	if not player.character then return end 
+	if not player.Character then return end 
 	StateService:Destroy(player.Character)
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -136,6 +136,5 @@ end)
 
 
 ----------------------------------------------------------------------------------------------------------------------------------
-
 
 

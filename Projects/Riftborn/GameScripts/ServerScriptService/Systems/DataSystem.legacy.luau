@@ -1,18 +1,22 @@
 local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
 local StarterGui = game:GetService("StarterGui")
-local CurrencyService = require(ServerScriptService.Services.CurrencyService)
-local DataService = require(script.Parent.Parent.Services.DataService)
-local StatService = require(script.Parent.Parent.Services.StatService)
-local LevelService = require(script.Parent.Parent.Services.LevelService)
-local EquipService = require(script.Parent.Parent.Services.EquipService)
-local InventoryService = require(script.Parent.Parent.Services.InventoryService)
-local QuestService = require(script.Parent.Parent.Services.QuestService)
-local TitleService = require(script.Parent.Parent.Services.TitleService)
-local BuffService = require(script.Parent.Parent.Services.BuffService)
-local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVitalsService)
+local ModuleLoader = require(ReplicatedStorage.Modules.Core.ModuleLoader)
+local CurrencyService = require(ServerScriptService.Services.Profile.CurrencyService)
+local DataService = require(game.ServerScriptService.Services.Profile.DataService)
+local StatService = require(game.ServerScriptService.Services.Profile.StatService)
+local LevelService = require(game.ServerScriptService.Services.Profile.LevelService)
+local EquipService = require(game.ServerScriptService.Services.Profile.EquipService)
+local InventoryService = require(game.ServerScriptService.Services.Profile.InventoryService)
+local QuestService = require(game.ServerScriptService.Services.Profile.QuestService)
+local TitleService = require(game.ServerScriptService.Services.Profile.TitleService)
+local BuffService = require(game.ServerScriptService.Services.Profile.BuffService)
+local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 
-local Connections = require(game.ReplicatedStorage.Modules.Connections)
+local StateService = ModuleLoader:Load("Server", "StateService")
+print(StateService)
+local Connections = require(game.ReplicatedStorage.Modules.Core.Connections)
 
 local function Setup(player: Player, character)
 	local playerGui = player:WaitForChild("PlayerGui")
@@ -49,7 +53,7 @@ end
 ---Load Data---
 Players.PlayerAdded:Connect(function(player)
 	local playerData = DataService:Load(player)
-	if player.character then
+	if player.Character then
 		Setup(player, player.Character)
 	end
 	player.CharacterAdded:Connect(function(character)

@@ -1,20 +1,20 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
+local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.Core.NetworkingService)
 --StatusAilment HitType
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Debris = game:GetService("Debris")
 
 local modules = (ReplicatedStorage.Modules)
-local FormulaApplier = require(ReplicatedStorage.Modules.FormulaApplier)
-local StateChecker = require(modules.StateChecker)
+local FormulaApplier = require(ReplicatedStorage.Modules.Helpers.FormulaApplier)
+local StateChecker = require(modules.Helpers.StateChecker)
 local ItemDataBase = require(modules.Data.ItemDataBase)
 local KnockbackPull = require(script.Parent.Parent.Utilities.KnockbackPull)
-local StateService = require(game.ServerScriptService.Services.StateService)
-local Animations = require(modules.Animations)
+local StateService = require(game.ServerScriptService.Services.Core.StateService)
+local Animations = require(modules.Core.Animations)
 local StatusAilmentsData = require(modules.Data.StatusAilmentsData)
 
-local AilmentService = require(script.Parent.Parent.Parent.Services.AilmentService)
-local CharacterVitalsService = require(script.Parent.Parent.Parent.Services.CharacterVitalsService)
+local AilmentService = require(game.ServerScriptService.Services.Combat.AilmentService)
+local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 
 
 return function(argumentData)

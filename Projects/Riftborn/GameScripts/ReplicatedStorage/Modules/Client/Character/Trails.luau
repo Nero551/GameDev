@@ -4,7 +4,7 @@ return function()
 	local Player = game:GetService("Players").LocalPlayer
 	local character = Player.Character or Player.CharacterAdded:Wait()
 
-	local StateChecker = require(game.ReplicatedStorage.Modules.StateChecker)
+	local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 
 	local _stepConnection = RunService.RenderStepped:Connect(function()
 		---Trails---

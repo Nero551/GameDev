@@ -1,0 +1,150 @@
+local DataStoreService = game:GetService("DataStoreService")
+
+local store_Name = "PlayerData_V1"
+local playerStore = DataStoreService:GetDataStore(store_Name)
+
+local DataService = {}
+
+DataService.PlayerDatas = {}
+
+function DataService:GetDefaultData()
+	local DefaultData = {
+		Inventory = {
+			["weapon_0000000001"] = {
+				Amount = 1,
+			},
+			["armor_0000000001"] = {
+				Amount = 1,
+			},
+		},
+		Equipped = {
+			Melee = "weapon_0000000001",
+			Sword = nil,
+			RiftBorn = nil,
+			Helmet = nil,
+			ChestPlate = nil,
+			Leggings = nil,
+			Boots = nil,
+		},
+		Stats = {
+			MainStats = {
+				Health = { Base = 20, FlatBuff = 1, FlatStatPoint = 0, Percent = 1, Final = 0 },
+				Mana = { Base = 20, FlatBuff = 1, FlatStatPoint = 0, Percent = 1, Final = 0 },
+				Melee = { Base = 10, FlatBuff = 1, FlatStatPoint = 0, Percent = 1, Final = 0 },
+				Sword = { Base = 10, FlatBuff = 1, FlatStatPoint = 0, Percent = 1, Final = 0 },
+				RiftBorn = { Base = 10, FlatBuff = 1, FlatStatPoint = 0, Percent = 1, Final = 0 },
+			},
+			SideStats = {
+				Defense = { Base = 0, FlatBuff = 1, FlatStatPoint = 0, Percent = 1, Final = 0 },
+				CriticalDamage = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 1, Final = 0 },
+				CriticalRate = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+			},
+		},
+		Level = {
+			CurrentLevel = 1,
+			RequiredEXP = 100,
+			CurrentEXP = 0,
+			StatPoints = 0,
+		},
+		Currency = {
+			Yen = 0,
+			Fracta = 0,
+		},
+		ItemPity = {},
+
+		Quests = {
+			ActiveQuests = {},
+			CompletedQuests = {},
+			TrackedQuest = nil,
+		},
+		Titles = {
+			Titles = {},
+			ActiveTitle = nil,
+		},
+		Buffs = {},
+	}
+
+	return DefaultData
+end
+
+local function deepCopy(tbl)
+	if type(tbl) ~= "table" then
+		return tbl
+	end
+	local copy = {}
+	for k, v in pairs(tbl) do
+		if type(v) == "table" then
+			copy[k] = deepCopy(v)
+		else
+			copy[k] = v
+		end
+	end
+	return copy
+end
+
+local function ValidateData(playerData)
+	local defaultData = DataService:GetDefaultData()
+
+	for key, defaultValue in pairs(defaultData) do
+		if playerData[key] == nil then
+			-- If missing, add the default
+			playerData[key] = defaultValue
+		elseif type(defaultValue) == "table" then
+			-- If it’s a nested table, recursively validate
+			for nestedKey, nestedValue in pairs(defaultValue) do
+				if playerData[key][nestedKey] == nil then
+					playerData[key][nestedKey] = nestedValue
+				end
+			end
+		end
+	end
+	return playerData
+end
+
+function DataService:GetTable(player, name)
+	if not player then
+		warn("Player Is Nil")
+		return nil
+	end
+	return DataService.PlayerDatas[player][name]
+end
+---LoadData---
+function DataService:Load(player)
+	local key = "Player_" .. player.UserId
+
+	local success = pcall(function()
+		DataService.PlayerDatas[player] = playerStore:GetAsync(key)
+	end)
+
+	if not success or not DataService.PlayerDatas[player] then
+		DataService.PlayerDatas[player] = DataService:GetDefaultData()
+	end
+
+	-- Validate the data
+	DataService.PlayerDatas[player] = ValidateData(DataService.PlayerDatas[player])
+
+	return DataService.PlayerDatas[player]
+end
+
+---SaveData---
+function DataService:Save(player)
+	local key = "Player_" .. player.UserId
+	local success, err = pcall(function()
+		playerStore:UpdateAsync(key, function(oldData)
+			oldData = oldData or DataService:GetDefaultData()
+			return deepCopy(DataService.PlayerDatas[player])
+		end)
+	end)
+	if not success then
+		warn("Failed to save data for", player.Name, err)
+		return
+	end
+	return
+end
+
+function DataService:Delete(player: Player)
+	local key = "Player_" .. player.UserId
+	playerStore:RemoveAsync(key)
+end
+
+return DataService
