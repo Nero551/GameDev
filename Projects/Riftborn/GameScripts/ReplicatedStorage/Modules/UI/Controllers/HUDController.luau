@@ -120,15 +120,31 @@ function HUDController:Tools()
 	local char = player.Character or player.CharacterAdded:Wait()
 	local equipped = player:WaitForChild("Equipped")
 	local Keys = {
-		["One"] = "Melee",
-		["Two"] = "Sword",
-		["Three"] = "Grimiore",
-		["Four"] = "RiftBorn",
+		["Melee"] = "One",
+		["Sword"] = "Two",
+		["Grimiore"] = "Three",
+		["RiftBorn"] = "Four",
 	}
 
 	local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-	local selectedSlot = nil
+	local function UpdateToolSelection()
+		local inHand = char:GetAttribute("InHand")
+
+		for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
+			if slot:IsA("ImageButton") then
+				local type = equipped:FindFirstChild(slot.Name:split("Slot")[1])
+
+				TweenService:Create(slot, info, { Size = UDim2.fromScale(0.175, 0.953) }):Play()
+				TweenService:Create(slot.Border, info, { ImageColor3 = Color3.fromRGB(116, 116, 116) }):Play()
+
+				if type and type:GetAttribute("Equipped") == inHand then
+					TweenService:Create(slot, info, { Size = UDim2.fromScale(0.181, 1.16) }):Play()
+					TweenService:Create(slot.Border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+				end
+			end
+		end
+	end
 
 	local function UpdateTools()
 		for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
@@ -148,6 +164,8 @@ function HUDController:Tools()
 				end
 			end
 		end
+
+		UpdateToolSelection()
 	end
 
 	for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
@@ -159,20 +177,13 @@ function HUDController:Tools()
 				if type then
 					local itemID = type:GetAttribute("Equipped")
 					if char:GetAttribute("InHand") == itemID then
-						print("nice")
-						selectedSlot = nil
 						NetworkingService:FireToServer("RequestRemoveFromHand", itemID)
 					else
-						selectedSlot = slot
+						if char:GetAttribute("InHand") ~= "" then
+							NetworkingService:FireToServer("RequestRemoveFromHand", itemID)
+						end
 						NetworkingService:FireToServer("RequestPutInHand", itemID)
 					end
-				end
-				if slot == selectedSlot then
-					TweenService:Create(slot, info, { Size = UDim2.fromScale(0.181, 1.16) }):Play()
-					TweenService:Create(slot.Border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-				else
-					TweenService:Create(slot, info, { Size = UDim2.fromScale(0.175, 0.953) }):Play()
-					TweenService:Create(slot.Border, info, { ImageColor3 = Color3.fromRGB(116, 116, 116) }):Play()
 				end
 			end)
 		end
@@ -182,32 +193,30 @@ function HUDController:Tools()
 		if proc then
 			return
 		end
-		for key, type in pairs(Keys) do
-			local item = equipped:FindFirstChild(type)
-			local slot = UIManager:GetUI("HUD", type .. "Slot")
-			if inp.KeyCode.Name == key and item and slot then
-				local itemID = item:GetAttribute("Equipped")
-				if char:GetAttribute("InHand") == itemID then
-					selectedSlot = nil
-					NetworkingService:FireToServer("RequestRemoveFromHand", itemID)
-				else
-					selectedSlot = slot
-					NetworkingService:FireToServer("RequestPutInHand", itemID)
+
+		for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
+			if slot:IsA("ImageButton") then
+				local type = equipped:FindFirstChild(slot.Name:split("Slot")[1])
+				if type and inp.KeyCode.Name == Keys[type.Name] then
+					local itemID = type:GetAttribute("Equipped")
+					if char:GetAttribute("InHand") == itemID then
+						NetworkingService:FireToServer("RequestRemoveFromHand", itemID)
+					else
+						if char:GetAttribute("InHand") ~= "" then
+							NetworkingService:FireToServer("RequestRemoveFromHand", itemID)
+						end
+						NetworkingService:FireToServer("RequestPutInHand", itemID)
+					end
 				end
-			end
-			if slot == selectedSlot then
-				TweenService:Create(slot, info, { Size = UDim2.fromScale(0.181, 1.16) }):Play()
-				TweenService:Create(slot.Border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-			else
-				TweenService:Create(slot, info, { Size = UDim2.fromScale(0.175, 0.953) }):Play()
-				TweenService:Create(slot.Border, info, { ImageColor3 = Color3.fromRGB(116, 116, 116) }):Play()
 			end
 		end
 	end)
 
 	UpdateTools()
+	UpdateToolSelection()
 	equipped.ChildAdded:Connect(UpdateTools)
 	equipped.ChildRemoved:Connect(UpdateTools)
+	char:GetAttributeChangedSignal("InHand"):Connect(UpdateToolSelection)
 end
 
 function HUDController:Abilities()

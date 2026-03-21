@@ -75,7 +75,6 @@ function InventoryMenuController:Inventory()
 				ReplicatedStorage.Assets.GUI.Icons[itemData.Rarity .. "Item"],
 				"ItemScrollingFrame"
 			)
-			print("nice", itemSlot)
 			itemSlot.Name = itemID
 			UIHelper:ClickEffects(itemSlot)
 			UIHelper:HoverEffects(itemSlot)
@@ -114,7 +113,7 @@ function InventoryMenuController:Inventory()
 				for _, ability in abilitiesFrame:GetChildren() do
 					if ability:IsA("Frame") then
 						local abilityLetter = ability.AbilityIcon.AbilityLetter.Text
-						local abilityData = AbilityData:GetAbilityData(itemData.Name .. abilityLetter)
+						local abilityData = AbilityData:GetAbilityData(itemData.Name,abilityLetter)
 						if not abilityData then
 							ability.Visible = false
 						else

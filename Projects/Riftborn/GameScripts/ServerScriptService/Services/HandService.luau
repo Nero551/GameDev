@@ -21,6 +21,7 @@ end
 function HandService:RemoveFromHand(player:Player,toolId)
 	local char = player.Character or player.CharacterAdded:Wait()
 	local toolData = ItemDataBase:GetItemData(toolId)
+    
 	if CharacterVitalsService:GetVital(char, "InHand") == toolId then
 		CharacterVitalsService:ModifyVital(char, "InHand", "RemoveFromHand", {
 			["ToolId"] = toolId,
@@ -29,7 +30,7 @@ function HandService:RemoveFromHand(player:Player,toolId)
 		local tool = char:FindFirstChild(toolData.Name)
 		if tool then
 			tool.Parent = player.Backpack
-		end
+		end    
 	end
 end
 
