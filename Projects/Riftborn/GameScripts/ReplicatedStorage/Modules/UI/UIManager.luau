@@ -71,6 +71,9 @@ function UIManager:Init()
 				then
 					continue
 				else
+					if UIManager.Screens[screen.Name][child.Name] then
+						warn("Duplicate Name Exists For:",child.Name)
+					end
 					UIManager.Screens[screen.Name][child.Name] = child
 				end
 			end
@@ -133,6 +136,21 @@ function UIManager:CreateUI(screenName, name, class, parent, properties)
 
 	UIManager.Screens[screenName][name] = ui
 	return UIManager.Screens[screenName][name]
+end
+
+function UIManager:CloneUI(screenName,name,ui,parentName)
+	if UIManager.Screens[screenName] then
+		local parentInstance = UIManager.Screens[screenName][parentName]
+		if not parentInstance then 
+			return
+		end
+		local clone:Instance = ui:Clone()
+		clone.Parent = parentInstance
+		clone.Name = name
+		UIManager.Screens[screenName][name] = clone
+		return clone
+	end
+	return
 end
 
 function UIManager:DestroyUI(screenName, name)

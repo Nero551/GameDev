@@ -2,6 +2,9 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local UIHelper = {}
 
+local hoverSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Hover
+local clickSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Click
+
 function UIHelper:RotateGradient(gradient)
 	if gradient and gradient:IsA("UIGradient") then
 		local info = TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true)
@@ -27,7 +30,6 @@ function UIHelper:HoverEffects(ui)
 		scale = Instance.new("UIScale")
 		scale.Parent = ui
 	end
-	local hoverSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Hover
 	ui.MouseEnter:Connect(function()
 		TweenService:Create(scale, info, { Scale = 1.1 }):Play()
 		hoverSound:Play()
@@ -45,7 +47,6 @@ function UIHelper:ClickEffects(ui)
 		scale = Instance.new("UIScale")
 		scale.Parent = ui
 	end
-	local clickSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Click
 	ui.MouseButton1Click:Connect(function()
 		clickSound:Play()
 	end)
@@ -56,6 +57,10 @@ function UIHelper:ClickEffects(ui)
 	ui.MouseButton1Up:Connect(function()
 		TweenService:Create(scale, info, {Scale = 1.1}):Play()
 	end)
+end
+
+function UIHelper:SelectedEffects(ui)
+
 end
 
 return UIHelper

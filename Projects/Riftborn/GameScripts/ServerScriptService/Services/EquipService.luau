@@ -123,7 +123,7 @@ function EquipService:EquipItem(player: Player, itemID)
 	local value = folder:FindFirstChild(itemType)
 	if not value then
 		value = Instance.new("StringValue")
-		value.Name = type
+		value.Name = itemType
 		value.Parent = folder
 	end
 	value:SetAttribute("Equipped", itemID)
@@ -186,7 +186,7 @@ function EquipService:UnEquipItem(player: Player, itemID)
 	local folder = player:FindFirstChild("Equipped")
 	local value = folder:FindFirstChild(itemType)
 	if value then
-		value = nil
+		value:Destroy()
 	end
 	GameEvents.UpdateMana:Fire(player)
 end
