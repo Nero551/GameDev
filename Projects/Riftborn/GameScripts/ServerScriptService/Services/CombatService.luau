@@ -23,9 +23,11 @@ local CombatService = {
 local function GetValidTool(tool, character)
 	if tool and tool:GetAttribute("ToolLoaded") then return tool end
 	
-	local foundTool = character:FindFirstChildWhichIsA("Tool")
-	if foundTool and foundTool:GetAttribute("ToolLoaded") then
-		if ItemDataBase:GetItemData(foundTool:GetAttribute("ID")) then
+	local inHand = CharacterVitalsService:GetVital(character, "InHand")
+	local itemData = ItemDataBase:GetItemData(inHand)
+	if itemData then
+		local foundTool = character:FindFirstChild(itemData.Name)
+		if foundTool and foundTool:GetAttribute("ToolLoaded")  then
 			return foundTool
 		end
 	end

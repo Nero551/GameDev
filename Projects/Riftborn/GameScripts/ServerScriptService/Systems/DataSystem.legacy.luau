@@ -1,6 +1,6 @@
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 local Players = game:GetService("Players")
 local ServerScriptService = game:GetService("ServerScriptService")
+local StarterGui = game:GetService("StarterGui")
 local CurrencyService = require(ServerScriptService.Services.CurrencyService)
 local DataService = require(script.Parent.Parent.Services.DataService)
 local StatService = require(script.Parent.Parent.Services.StatService)
@@ -14,17 +14,12 @@ local CharacterVitalsService = require(script.Parent.Parent.Services.CharacterVi
 
 local Connections = require(game.ReplicatedStorage.Modules.Connections)
 
-local clientReady = {}
-NetworkingService:OnServerEvent("ClientReady", function(player)
-	clientReady[player] = true
-end)
+local function Setup(player: Player, character)
+	local playerGui = player:WaitForChild("PlayerGui")
 
-local function Setup(player:Player, character)
 	repeat
 		task.wait()
-	until clientReady[player]
-
-	player.PlayerGui:WaitForChild("MenusGUI"):WaitForChild("StatsMenu"):WaitForChild("Spells")
+	until #playerGui:GetDescendants() >= #StarterGui:GetDescendants()
 
 	StatService:SetupStats(player)
 	LevelService:SetupLevel(player)
@@ -39,16 +34,15 @@ local function Setup(player:Player, character)
 	BuffService:UpdateBuffs(player)
 
 	CharacterVitalsService:Create(character)
-	
+
 	CharacterVitalsService:ModifyVital(character, "Health", "ModifyHealth", {
-		["HealthChange"] = CharacterVitalsService.CharacterVitals[character].Health.MaxHealth - 
-			CharacterVitalsService.CharacterVitals[character].Health.CurrentHealth
-		
+		["HealthChange"] = CharacterVitalsService.CharacterVitals[character].Health.MaxHealth
+			- CharacterVitalsService.CharacterVitals[character].Health.CurrentHealth,
 	})
 
-	CharacterVitalsService:ModifyVital(character, "Mana", "ModifyMana",{
-		["ManaChange"] = CharacterVitalsService.CharacterVitals[character].Mana.MaxMana -
-			CharacterVitalsService.CharacterVitals[character].Mana.CurrentMana
+	CharacterVitalsService:ModifyVital(character, "Mana", "ModifyMana", {
+		["ManaChange"] = CharacterVitalsService.CharacterVitals[character].Mana.MaxMana
+			- CharacterVitalsService.CharacterVitals[character].Mana.CurrentMana,
 	})
 end
 
@@ -56,22 +50,20 @@ end
 Players.PlayerAdded:Connect(function(player)
 	local playerData = DataService:Load(player)
 	if player.character then
-		Setup(player,player.Character)	
+		Setup(player, player.Character)
 	end
 	player.CharacterAdded:Connect(function(character)
-		Setup(player,character)
+		Setup(player, character)
 	end)
 	print(playerData)
 end)
 
 ---Save Data---
 Players.PlayerRemoving:Connect(function(player)
-
 	DataService:Save(player)
-	clientReady[player] = nil
-	
+
 	local char = player.Character
-	
+
 	Connections:CleanupConnections(char)
 end)
 
@@ -80,7 +72,7 @@ game:BindToClose(function()
 	for _, player in ipairs(Players:GetPlayers()) do
 		DataService:Save(player)
 	end
-	
+
 	task.wait(2)
 end)
 

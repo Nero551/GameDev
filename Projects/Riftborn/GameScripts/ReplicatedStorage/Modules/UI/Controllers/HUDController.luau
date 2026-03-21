@@ -101,6 +101,21 @@ function HUDController:EXPBar()
 	requiredEXP:GetAttributeChangedSignal("Amount"):Connect(UpdateEXP)
 end
 
+function HUDController:Flashstep()
+	local char = player.Character or player.CharacterAdded:Wait()
+	local chargeText = UIManager:GetUI("HUD", "FlashStepCharge")
+	local function UpdateFlashstep()
+		local currentFlashStep = char:GetAttribute("FlashStep_CurrentFlashStep")
+		local maxFlashStep = char:GetAttribute("FlashStep_MaxFlashStep")
+		if currentFlashStep and maxFlashStep then
+			chargeText.Text = "Flashstep " .. currentFlashStep .. " / " .. maxFlashStep
+		end
+	end
+	UpdateFlashstep()
+	char:GetAttributeChangedSignal("FlashStep_CurrentFlashStep"):Connect(UpdateFlashstep)
+	char:GetAttributeChangedSignal("FlashStep_MaxFlashStep"):Connect(UpdateFlashstep)
+end
+
 function HUDController:Tools()
 	local char = player.Character or player.CharacterAdded:Wait()
 	local equipped = player:WaitForChild("Equipped")
@@ -426,7 +441,6 @@ function HUDController:Dialogue()
 		PlayLine(speaker, dialogueData.Text)
 
 		if dialogueData.Options then
-
 			for option, optioninfo in pairs(dialogueData.Options) do
 				local optionButton = ReplicatedStorage.Assets.GUI.DialogueOption:Clone()
 				optionButton.Name = option
@@ -489,7 +503,6 @@ function HUDController:TrackedQuest()
 	trackQuestbutton.MouseButton1Up:Connect(function()
 		SizeIncrease(scale)
 	end)
-	
 end
 
 function HUDController:Time()
@@ -497,7 +510,6 @@ function HUDController:Time()
 	timeText.Text = Lighting.TimeOfDay
 
 	Lighting:GetPropertyChangedSignal("TimeOfDay"):Connect(function()
-
 		local splits = Lighting.TimeOfDay:split(":")
 		local hour = tonumber(splits[1])
 		local minute = tonumber(splits[2])
@@ -768,8 +780,8 @@ function HUDController:MainMenuButton()
 	local stroke = button.Parent:FindFirstChild("RGBStroke")
 	UIHelper:RotateGradient(stroke:FindFirstChild("UIGradient"))
 
-	local MainMenu = UIManager:GetUI("MenusGUI", "MainMenu")
-	local texture = UIManager:GetUI("MenusGUI", "Texture")
+	local MainMenu = UIManager:GetUI("MainMenu", "MainMenu")
+	local texture = UIManager:GetUI("MainMenu", "Texture")
 	local Lighting = game:GetService("Lighting")
 	local blur = Lighting.Blur
 
@@ -797,26 +809,30 @@ function HUDController:MainMenuButton()
 
 	local function OpenMenu()
 		MainMenu.Visible = true
+		UIManager:SetActiveScreen("MainMenu")
 		local info = TweenInfo.new(0.2, Enum.EasingStyle.Cubic, Enum.EasingDirection.Out)
 		TweenService:Create(MainMenu, info, { Size = UDim2.fromScale(0.4, 0.9) }):Play()
 	end
 
 	local function CloseMenu()
+		UIManager:SetActiveScreen("HUD")
 		local info = TweenInfo.new(0.2, Enum.EasingStyle.Cubic, Enum.EasingDirection.Out)
-		TweenService:Create(MainMenu, info, { Size = UDim2.fromScale(0, 0) }):Play()
-		MainMenu.Visible = false
+		local tween = TweenService:Create(MainMenu, info, { Size = UDim2.fromScale(0, 0) })
+		tween:Play()
+		tween.Completed:Connect(function()
+			MainMenu.Visible = false
+		end)
 	end
 
 	button.MouseButton1Click:Connect(function()
-		if MainMenu.Size == UDim2.fromScale(0, 0) then
+		if UIManager.ActiveScreen ~= "MainMenu" then
 			OpenMenu()
 			BackgroundBlurTweenIn()
-		elseif MainMenu.Size == UDim2.fromScale(0.4, 0.9) then
+		else
 			CloseMenu()
 			BackgroundBlurTweenOut()
 		end
 	end)
-
 end
 
 return HUDController

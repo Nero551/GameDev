@@ -112,7 +112,7 @@ NetworkingService:OnServerEvent("Block", function(player:Player, boolean:boolean
 end)
 
 ---Client Requests to Attack---
-NetworkingService:OnServerEvent("Attack", function(player:Player, argumentData)
+NetworkingService:OnServerEvent("Attack", function(player:Player)
 	local character = player.Character or player.CharacterAdded:Wait()
 	CombatService:Attack(character, nil, player)
 end)

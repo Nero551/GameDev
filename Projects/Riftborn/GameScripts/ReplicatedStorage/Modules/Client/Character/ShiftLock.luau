@@ -11,9 +11,7 @@ local StateChecker = require(ReplicatedStorage.Modules.StateChecker)
 	local character = player.Character or player.CharacterAdded:Wait()
 	local humanoid:Humanoid = character:WaitForChild("Humanoid")
 	local root = character:WaitForChild("HumanoidRootPart")
-	local crosshair = player.PlayerGui.ShiftLock.Crosshair
-
-
+	local crosshair = player:WaitForChild("PlayerGui").HUD.Crosshair
 
 	-- SETTINGS
 	local SHIFT_OFFSET = Vector3.new(1.75, 0, 0)

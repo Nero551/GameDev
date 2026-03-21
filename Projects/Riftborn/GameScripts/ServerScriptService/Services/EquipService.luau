@@ -1,5 +1,7 @@
 local ServerStorage = game:GetService("ServerStorage")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerScriptService = game:GetService("ServerScriptService")
+local ToolLoader = require(ServerScriptService.Modules.Utilities.ToolLoader)
 local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 local GameEvents = require(ReplicatedStorage.Modules.GameEvents)
 
@@ -80,7 +82,9 @@ function EquipService:EquipItem(player: Player, itemID)
 					end
 				end
 
+
 				tool.Parent = player.Backpack
+				ToolLoader(tool)
 				if itemData.Buffs then
 					GameEvents.AddBuff:Fire(player, itemData, itemID)
 				end
@@ -227,6 +231,7 @@ function EquipService:LoadEquippedItems(player: Player)
 				if not tool then
 					tool = ServerStorage.Tools[itemType]:FindFirstChild(itemData.Name):Clone()
 					tool.Parent = player.Backpack
+					ToolLoader(tool)
 				end
 			elseif
 				itemData.Type == "Helmet"

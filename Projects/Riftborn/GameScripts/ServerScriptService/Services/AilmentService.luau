@@ -58,7 +58,7 @@ function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 				HealthChange = -ailmentDamage
 			})
 			if playerAttacker then
-				NetworkingService:FireToClient(playerAttacker, "ShowDamage", ailmentDamage, false,false,false, ailmentName, ailmentData)
+				NetworkingService:FireToClient(playerAttacker, "ShowDamage", ailmentDamage, false,false,false, ailmentName)
 			end
 			StateService:AddState(targetHit,
 			 ailmentData.State,
@@ -107,7 +107,7 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 			})
 
 			if playerAttacker then
-				NetworkingService:FireToClient(playerAttacker, "ShowDamage", ailmentDamage, false,false,false, ailmentName, ailmentData)
+				NetworkingService:FireToClient(playerAttacker, "ShowDamage", ailmentDamage, false,false,false, ailmentName)
 			end
 			StateService:AddState(targetHit, ailmentData.State,
 				StateService.Status[targetHit][ailmentData.State].Duration - dt,
@@ -141,7 +141,7 @@ function AilmentService:Freeze(attacker, targetHit, ailmentName, normalDamage)
 	end))
 	
 	if playerAttacker then
-		NetworkingService:FireToClient(playerAttacker, "ShowDamage", ailmentDamage, false,false,false, ailmentName, ailmentData)
+		NetworkingService:FireToClient(playerAttacker, "ShowDamage", ailmentDamage, false,false,false, ailmentName)
 	end
 end
 

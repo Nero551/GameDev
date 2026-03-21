@@ -1,5 +1,4 @@
 local StarterGui = game:GetService("StarterGui")
-local NetworkingService = require(game:GetService("ReplicatedStorage").Modules.NetworkingService)
 
 local Character = {}
 
@@ -13,7 +12,6 @@ end
 
 
 function Character:Init()
-	print("nice")
 	local Player = game:GetService("Players").LocalPlayer
 	local playerGui = Player:WaitForChild("PlayerGui")
 
@@ -24,7 +22,6 @@ function Character:Init()
 	for moduleName,module in  pairs(cachedModules) do
 		module()
 	end
-	NetworkingService:FireToServer("ClientReady")
 end
 
 

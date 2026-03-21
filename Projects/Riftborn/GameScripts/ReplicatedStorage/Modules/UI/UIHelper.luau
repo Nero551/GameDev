@@ -1,6 +1,5 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
-local UIManager = require(script.Parent.UIManager)
 local UIHelper = {}
 
 function UIHelper:RotateGradient(gradient)
@@ -10,12 +9,23 @@ function UIHelper:RotateGradient(gradient)
 	end
 end
 
+function UIHelper:Rotate(ui)
+	local info = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+	ui.MouseEnter:Connect(function()
+		TweenService:Create(ui, info, { Rotation = -8 }):Play()
+	end)
+	ui.MouseLeave:Connect(function()
+		TweenService:Create(ui, info, { Rotation = 0 }):Play()
+	end)
+end
+
 function UIHelper:HoverEffects(ui)
 	if not ui then return end
 	local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	local scale = ui:FindFirstChildWhichIsA("UIScale")
 	if not scale then
-		scale = UIManager:CreateUI("HUD", "UIScale", "UIScale", ui.Name, {})
+		scale = Instance.new("UIScale")
+		scale.Parent = ui
 	end
 	local hoverSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Hover
 	ui.MouseEnter:Connect(function()
@@ -32,7 +42,8 @@ function UIHelper:ClickEffects(ui)
 	local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	local scale = ui:FindFirstChildWhichIsA("UIScale")
 	if not scale then
-		scale = UIManager:CreateUI("HUD", "UIScale", "UIScale", ui.Name, {})
+		scale = Instance.new("UIScale")
+		scale.Parent = ui
 	end
 	local clickSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Click
 	ui.MouseButton1Click:Connect(function()

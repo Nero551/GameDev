@@ -1,0 +1,5 @@
+local InventoryMenuController = {}
+
+
+
+return InventoryMenuController

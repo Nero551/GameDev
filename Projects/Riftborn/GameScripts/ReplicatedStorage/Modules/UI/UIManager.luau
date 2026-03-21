@@ -5,6 +5,7 @@ local UIManager = {}
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
+UIManager.ActiveScreen = "HUD"
 UIManager.Screens = {}
 UIManager.Controllers = {}
 UIManager.AcceptableClasses = {
@@ -111,8 +112,8 @@ function UIManager:CreateUI(screenName, name, class, parent, properties)
 	end
 
 	local parentInstance = UIManager.Screens[screenName][parent]
-	if not parentInstance or not parentInstance:IsA("Instance") then
-		warn("Parent:", parent, "doesn't exist or isn't an Instance")
+	if not parentInstance then
+		warn("Parent:", parent, "doesn't exist")
 		return
 	end
 
@@ -147,8 +148,25 @@ function UIManager:GetUI(screenName, name)
 	if UIManager.Screens[screenName] and UIManager.Screens[screenName][name] then
 		return UIManager.Screens[screenName][name]
 	end
-	warn("UI:",name,"Doesn't Exist")
+	warn("UI:", name, "Doesn't Exist", { debug.traceback() })
 	return
+end
+
+function UIManager:GetScreen(screenName)
+	if UIManager.Screens[screenName] then
+		local screen = playerGui:FindFirstChild(screenName)
+		if screen then
+			return screen
+		end
+	end
+	return warn("Screen Doesn't Exist")
+end
+
+function UIManager:SetActiveScreen(screenName)
+	if UIManager.Screens[screenName] then
+		UIManager.ActiveScreen = screenName
+	end
+	print(UIManager.ActiveScreen, {debug.traceback()})
 end
 
 return UIManager
