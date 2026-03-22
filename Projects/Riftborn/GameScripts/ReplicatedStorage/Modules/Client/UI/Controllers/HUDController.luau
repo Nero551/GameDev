@@ -16,89 +16,19 @@ local HUDController = {}
 
 local player = Players.LocalPlayer
 
-function HUDController:HealthBar()
-	local char = player.Character or player.CharacterAdded:Wait()
-	local healthBG: ImageLabel = UIManager:GetUI("HUD", "HealthBG")
-	local healthFill: ImageLabel = UIManager:GetUI("HUD", "HealthFill")
-	local healthText: TextLabel = UIManager:GetUI("HUD", "HealthText")
-	local healthNumber: TextLabel = UIManager:GetUI("HUD", "HealthNumber")
-	local Stroke = healthBG:FindFirstChild("Stroke")
-
-	UIHelper:RotateGradient(healthFill:FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(Stroke:FindFirstChild("UIGradient"))
-
-	local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-	local info2 = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-
-	local function UpdateHealth()
-		local currentHealth = char:GetAttribute("Health_CurrentHealth")
-		local maxHealth = char:GetAttribute("Health_MaxHealth")
-		TweenService:Create(healthFill, info, { Size = UDim2.fromScale(currentHealth / maxHealth, 1) }):Play()
-		healthNumber.Text = math.round(currentHealth) .. "/" .. math.round(maxHealth)
-
-		if maxHealth / 3 > currentHealth then
-			TweenService:Create(healthNumber, info2, { TextColor3 = Color3.fromRGB(255, 140, 150) }):Play()
-			TweenService:Create(healthText, info2, { TextColor3 = Color3.fromRGB(255, 140, 150) }):Play()
-		else
-			TweenService:Create(healthNumber, info2, { TextColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-			TweenService:Create(healthText, info2, { TextColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-		end
-	end
-
-	char:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(UpdateHealth)
-	char:GetAttributeChangedSignal("Health_MaxHealth"):Connect(UpdateHealth)
+function HUDController:Health()
+	local HealthBar = require(ReplicatedStorage.Modules.Client.UI.Components.HealthBar)
+	HealthBar("HUD")
 end
 
 function HUDController:ManaBar()
-	local char = player.Character or player.CharacterAdded:Wait()
-	local ManaBG = UIManager:GetUI("HUD", "ManaBG")
-	local ManaFill = UIManager:GetUI("HUD", "ManaFill")
-	local ManaNumber = UIManager:GetUI("HUD", "ManaNumber")
-	local Stroke = ManaBG:FindFirstChild("Stroke")
-
-	UIHelper:RotateGradient(ManaFill:FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(Stroke:FindFirstChild("UIGradient"))
-
-	local function UpdateMana()
-		local CurrentMana = char:GetAttribute("Mana_CurrentMana")
-		local MaxMana = char:GetAttribute("Mana_MaxMana")
-		local info = TweenInfo.new(0.04, Enum.EasingStyle.Exponential, Enum.EasingDirection.InOut)
-		TweenService:Create(ManaFill, info, { Size = UDim2.fromScale(CurrentMana / MaxMana, 1) }):Play()
-		ManaNumber.Text = math.round(CurrentMana) .. "/" .. math.round(MaxMana)
-	end
-
-	UpdateMana()
-	char:GetAttributeChangedSignal("Mana_CurrentMana"):Connect(UpdateMana)
-	char:GetAttributeChangedSignal("Mana_MaxMana"):Connect(UpdateMana)
+	local ManaBar = require(ReplicatedStorage.Modules.Client.UI.Components.ManaBar)
+	ManaBar("HUD")
 end
 
 function HUDController:EXPBar()
-	local level = player:WaitForChild("PlayerLevel")
-	local currentEXP = level:FindFirstChild("CurrentEXP")
-	local requiredEXP = level:FindFirstChild("RequiredEXP")
-
-	local expBG = UIManager:GetUI("HUD", "EXPBG")
-	local expFill = UIManager:GetUI("HUD", "EXPFill")
-	local expNumber = UIManager:GetUI("HUD", "EXPNumber")
-	local stroke = expBG:FindFirstChild("Stroke")
-
-	UIHelper:RotateGradient(expFill:FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(stroke:FindFirstChild("UIGradient"))
-
-	local function UpdateEXP()
-		local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		local ratio = currentEXP:GetAttribute("Amount") / requiredEXP:GetAttribute("Amount")
-		ratio = math.clamp(ratio, 0, 1)
-
-		TweenService:Create(expFill, info, { Size = UDim2.fromScale(ratio, 1) }):Play()
-		expNumber.Text = math.round(currentEXP:GetAttribute("Amount"))
-			.. " / "
-			.. math.round(requiredEXP:GetAttribute("Amount"))
-	end
-
-	UpdateEXP()
-	currentEXP:GetAttributeChangedSignal("Amount"):Connect(UpdateEXP)
-	requiredEXP:GetAttributeChangedSignal("Amount"):Connect(UpdateEXP)
+	local EXPBar = require(ReplicatedStorage.Modules.Client.UI.Components.EXPBar)
+	EXPBar("HUD")
 end
 
 function HUDController:Flashstep()
@@ -383,7 +313,7 @@ function HUDController:Level()
 	UIHelper:RotateGradient(outerStroke:FindFirstChild("UIGradient"))
 
 	local levelNumber = UIManager:GetUI("HUD", "LevelNumber")
-	local CurrentLevel: Instance = player:WaitForChild("PlayerLevel").CurrentLevel
+	local CurrentLevel: Instance = player:WaitForChild("Level").CurrentLevel
 
 	levelNumber.Text = CurrentLevel:GetAttribute("Amount")
 	CurrentLevel:GetAttributeChangedSignal("Amount"):Connect(function()

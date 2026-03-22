@@ -6,12 +6,12 @@ local LevelService = {}
 
 function LevelService:SetupLevel(player)
 	local playerLevel = DataService:GetTable(player, "Level")
-	local LevelFolder = player:FindFirstChild("PlayerLevel")
+	local LevelFolder = player:FindFirstChild("Level")
 	
 	if not LevelFolder then
 		LevelFolder = Instance.new("Folder")
 		LevelFolder.Parent = player
-		LevelFolder.Name = "PlayerLevel"
+		LevelFolder.Name = "Level"
 	end	
 
 	for stat,v in pairs(playerLevel) do
@@ -27,7 +27,7 @@ end
 
 function LevelService:IncreaseEXP(player , EXP)
 	local playerLevel = DataService:GetTable(player , "Level")
-	local LevelFolder = player:WaitForChild("PlayerLevel")
+	local LevelFolder = player:WaitForChild("Level")
 	playerLevel.CurrentEXP  += EXP
 	
 	local maxLevel = 3000

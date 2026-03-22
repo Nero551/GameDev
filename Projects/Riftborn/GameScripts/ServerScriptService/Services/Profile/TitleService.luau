@@ -1,5 +1,4 @@
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TitleData = require(game.ReplicatedStorage.Modules.Data.TitleData)
 local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
 local DataService = require(game.ServerScriptService.Services.Profile.DataService)
@@ -22,6 +21,7 @@ function TitleService:SetupTitles(player)
 		activeTitle.Parent = TitlesFolder
 		activeTitle.Name = "ActiveTitle"
 	end
+	activeTitle:SetAttribute("ID", playerTitles.ActiveTitle or "")
 	activeTitle.Value = playerTitles.ActiveTitle or ""
 
 	for titleID,titleInfo in pairs(playerTitles) do
@@ -80,7 +80,8 @@ function TitleService:EquipTitle(player, titleID)
 		GameEvents.AddBuff:Fire(player, titleData, titleID)
 	end
 
-	player.PlayerTitles.ActiveTitle.Value = playerTitles.ActiveTitle or ""
+	player.PlayerTitles.ActiveTitle:SetAttribute("ID", playerTitles.ActiveTitle or "")
+
 end
 
 function TitleService:UnEquipTitle(player)
@@ -99,7 +100,7 @@ function TitleService:UnEquipTitle(player)
 	end
 
 	playerTitles.ActiveTitle = nil
-	player.PlayerTitles.ActiveTitle.Value = ""
+	player.PlayerTitles.ActiveTitle:SetAttribute("ID", playerTitles.ActiveTitle or "")
 end
 
 return TitleService

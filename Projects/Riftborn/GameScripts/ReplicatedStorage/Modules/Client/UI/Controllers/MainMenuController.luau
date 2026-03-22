@@ -1,5 +1,4 @@
 local Lighting = game:GetService("Lighting")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 
@@ -104,7 +103,5 @@ function MainMenuController:MainMenu()
 		end
 	end)
 end
-
-
 
 return MainMenuController

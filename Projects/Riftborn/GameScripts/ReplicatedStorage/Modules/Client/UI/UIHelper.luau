@@ -63,4 +63,21 @@ function UIHelper:SelectedEffects(ui)
 
 end
 
+function UIHelper:CreateGradient(colorTable)
+	if typeof(colorTable) ~= "table" then
+		return
+	end
+
+	local keypoints = {}
+	table.sort(colorTable, function(a, b)
+		return a.Position < b.Position
+	end)
+	for _, color in ipairs(colorTable) do
+		local r, g, b = color.Color:match("(%d+),%s*(%d+),%s*(%d+)")
+		local c3 = Color3.fromRGB(tonumber(r), tonumber(g), tonumber(b))
+		table.insert(keypoints, ColorSequenceKeypoint.new(color.Position, c3))
+	end
+	return ColorSequence.new(keypoints)
+end
+
 return UIHelper
