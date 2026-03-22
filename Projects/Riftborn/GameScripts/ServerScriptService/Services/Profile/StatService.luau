@@ -68,7 +68,6 @@ function StatService:SetupStats(player:Player)
 				statFolder = Instance.new("Folder")
 				statFolder.Name = statType
 				statFolder.Parent = folder
-				print(statType,stat)
 				for valueType,value in pairs(stat) do
 					local valueInstance = statFolder:FindFirstChild(valueType) 
 					if not valueInstance then

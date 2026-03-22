@@ -1,7 +1,6 @@
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local Players = game:GetService("Players")
 local LocalizationService = game:GetService("LocalizationService")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local EquipService = require(game.ServerScriptService.Services.Profile.EquipService)
 local StatService = require(game.ServerScriptService.Services.Profile.StatService)

@@ -12,6 +12,9 @@ for _,module in ipairs(script:GetChildren()) do
 	
 end
 
+local syncTimers = {}
+local SYNC_RATE = 0.05
+
 local function SyncAttributes(character: Model?, vitalsTable)
 	if not character then return end
 
@@ -111,12 +114,11 @@ function CharacterVitalsService:ModifyVital(character,vital, funcName , argument
 		end
 	end
 	
-	SyncAttributes(character, CharacterVitalsService.CharacterVitals[character])
-	
-	local player = Players:GetPlayerFromCharacter(character)
-	if player then
+	local now = tick()
+	if not syncTimers[character] or now - syncTimers[character] >= SYNC_RATE then
+		syncTimers[character] = now
+		SyncAttributes(character, CharacterVitalsService.CharacterVitals[character])
 	end
-
 end
 
 return CharacterVitalsService

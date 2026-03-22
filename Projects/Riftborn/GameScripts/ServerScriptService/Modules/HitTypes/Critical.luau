@@ -3,7 +3,6 @@ local NetworkingService = require(game.ReplicatedStorage.Modules.Core.Networking
 local Debris = game:GetService("Debris")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local modules = (ReplicatedStorage.Modules)
 local StateService = require(game.ServerScriptService.Services.Core.StateService)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
@@ -55,17 +54,15 @@ return function(argumentData)
 	
 	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit" , {
 		["Target"] = targetHit ,
-		["WeaponUsed"] = weaponUsed.Name,
+		["Weapon"] = weaponUsed,
 	})
 	
 --[[	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "CriticalHit" , {
 		["Target"] = targetHit ,
 		["WeaponUsed"] = weaponUsed.Name,
 	})
-]]
-	
+]]	
 	if abilityData then
-		
 		AbilityDamage = FormulaApplier:AbilityDamage({
 			["AbilityData"] = abilityData,
 			["TargetDefenseStat"] = targetDefenseStat,
@@ -78,10 +75,11 @@ return function(argumentData)
 			["HealthChange"] = -AbilityDamage
 			
 		})
-		
-		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound" , {
-			["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Abilities.Hit."..tostring(abilityLetter) ,
-			["Parent"] = targetHRP
+		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
+			["Sound"] = ReplicatedStorage.Assets.Weapons
+				:FindFirstChild(weaponUsed.Name).Sounds.Abilties.Hit
+				:FindFirstChild(tostring(abilityLetter)),
+			["Parent"] = targetHRP,
 		})
 		
 		Animations:GetAnimation(
@@ -107,10 +105,12 @@ return function(argumentData)
 
 			})
 
-			NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound" , {
-				["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Hit."..tostring(comboStringNumber) ,
+			NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
+				["Sound"] = ReplicatedStorage.Assets.Weapons
+					:FindFirstChild(weaponUsed.Name).Sounds.Hit
+					:FindFirstChild(tostring(comboStringNumber)),
 				["Parent"] = targetHRP,
-				["Volume"] = 2
+				["Volume"] = 2,
 			})
 
 
@@ -135,14 +135,10 @@ return function(argumentData)
 		else
 			KnockbackPull:ApplyKnockback(targetHit, attacker, 11)
 			KnockbackPull:ApplyPull(targetHit,attacker,11)
-
-
 		end	
-			
 	end	
 
 	if player then
-		
 		NetworkingService:FireToClient(player , "Hitstop", 0.06)
 		
 		if AbilityDamage then

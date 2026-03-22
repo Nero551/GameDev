@@ -9,7 +9,7 @@ local assets = ReplicatedStorage:WaitForChild("Assets")
 
 return function(arguementData:any)
 	local target:Model = arguementData.Target
-	local weaponUsed :string = arguementData.weaponUsed
+	local weaponUsed = arguementData.Weapon
 	local blockCounter = arguementData.BlockCounter
 	
 	

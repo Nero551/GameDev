@@ -63,14 +63,14 @@ return function(npc)
 				
 				if not AIData.Target then break end
 				
-				local part = Instance.new("Part")
-				part.Material = "Neon"
-				part.Anchored = true
-				part.CanCollide = false
-				part.Shape = "Ball"
-				part.Position = waypoint.Position
-				part.Parent = workspace.World.PathFinding
-				game.Debris:AddItem(part, 5)
+				-- local part = Instance.new("Part")
+				-- part.Material = "Neon"
+				-- part.Anchored = true
+				-- part.CanCollide = false
+				-- part.Shape = "Ball"
+				-- part.Position = waypoint.Position
+				-- part.Parent = workspace.World.PathFinding
+				-- game.Debris:AddItem(part, 5)
 				
 				if (originalTargetPos - AIData.Target.Position).Magnitude > 10 or os.clock() - AIData.NeedsRepath  > 3 then
 					break

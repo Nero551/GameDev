@@ -2,7 +2,6 @@ local NetworkingService = require(game.ReplicatedStorage.Modules.Core.Networking
 --Defualt HitType
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local modules = (ReplicatedStorage.Modules)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
@@ -11,9 +10,7 @@ local FormulaApplier = require(game.ReplicatedStorage.Modules.Helpers.FormulaApp
 local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 
-
 return function(argumentData)
-	
 	local targetHit = argumentData.TargetHit
 	local abilityData = argumentData.AbilityData
 	local weaponUsed = argumentData.WeaponUsed
@@ -21,76 +18,77 @@ return function(argumentData)
 	local playerDamageStat = argumentData.PlayerDamageStat
 	local npcDamage = argumentData.NPCDamage
 	local player = argumentData.Player
-	
-	local targetHumanoid:Humanoid = targetHit:FindFirstChild("Humanoid")
-	if not targetHumanoid then return end
+
+	local targetHumanoid: Humanoid = targetHit:FindFirstChild("Humanoid")
+	if not targetHumanoid then
+		return
+	end
 	local animator = targetHumanoid:FindFirstChild("Animator")
-	
-	if StateChecker:CheckState(targetHit, "Invulnerable") then return end
+
+	if StateChecker:CheckState(targetHit, "Invulnerable") then
+		return
+	end
 	local M1Damage
 	local AbilityDamage
-	
+
 	if abilityData then
 		AbilityDamage = FormulaApplier:AbilityDamage({
 			["AbilityData"] = abilityData,
 			["TargetDefenseStat"] = targetDefenseStat,
 			["PlayerDamageStat"] = playerDamageStat,
-			["NPCDamage"] = npcDamage,	
-			["Blocked"] = true
+			["NPCDamage"] = npcDamage,
+			["Blocked"] = true,
 		})
-		
+
 		CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
-			["HealthChange"] = -AbilityDamage
-
+			["HealthChange"] = -AbilityDamage,
 		})
 
-		NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "Sound" , {
-			["SoundName"] = "Shared.Sounds.AbilityBlock",
-			["Parent"] = targetHit.HumanoidRootPart
+		NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "Sound", {
+			["Sound"] = ReplicatedStorage.Assets.Shared.Sounds.AbilityBlock,
+			["Parent"] = targetHit.HumanoidRootPart,
 		})
 	else
 		local foundWeaponData = ItemDataBase:GetItemData(weaponUsed:GetAttribute("ID"))
-		if  foundWeaponData then
-			
+		if foundWeaponData then
 			M1Damage = FormulaApplier:M1Damage({
 				["NPCDamage"] = npcDamage,
 				["PlayerDamageStat"] = playerDamageStat,
 				["TargetDefenseStat"] = targetDefenseStat,
 				["FoundWeaponData"] = foundWeaponData,
 				["Blocked"] = true,
-
 			})
-			
+
 			CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
-				["HealthChange"] = -M1Damage
-
+				["HealthChange"] = -M1Damage,
 			})
 
-			local randomNumber =  math.random(1,4)
-			NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "Sound" , {
-				["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Blocked."..tostring(randomNumber) ,
-				["Parent"] = targetHit.HumanoidRootPart
+			local randomNumber = math.random(1, 4)
+			NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "Sound", {
+				["Sound"] = ReplicatedStorage.Assets.Weapons
+					:FindFirstChild(weaponUsed.Name).Sounds.Blocked
+					:FindFirstChild(tostring(randomNumber)),
+				["Parent"] = targetHit.HumanoidRootPart,
 			})
-		end	
-	end
-	
-	NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "BlockedHit" , {
-		["Target"] = targetHit ,
-		["weaponUsed"] = weaponUsed.Name,
-		["BlockCounter"] = CharacterVitalsService:GetVital(targetHit, "BlockCounter")
-	})
-	
-	task.spawn(function()
-		local randomShrug = math.random(1,2)
-		Animations:GetAnimation(animator, "Shared.Character.BlockReactions.BlockShrug"..tostring(randomShrug)):Play()
-	end)
-	
-	if player then
-		if AbilityDamage then
-			NetworkingService:FireToClient(player , "ShowDamage", AbilityDamage, false, true)
-		else
-			NetworkingService:FireToClient(player , "ShowDamage", M1Damage, false, true)
 		end
 	end
-	
+
+	NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "BlockedHit", {
+		["Target"] = targetHit,
+		["Weapon"] = weaponUsed,
+		["BlockCounter"] = CharacterVitalsService:GetVital(targetHit, "BlockCounter"),
+	})
+
+	task.spawn(function()
+		local randomShrug = math.random(1, 2)
+		Animations:GetAnimation(animator, "Shared.Character.BlockReactions.BlockShrug" .. tostring(randomShrug)):Play()
+	end)
+
+	if player then
+		if AbilityDamage then
+			NetworkingService:FireToClient(player, "ShowDamage", AbilityDamage, false, true)
+		else
+			NetworkingService:FireToClient(player, "ShowDamage", M1Damage, false, true)
+		end
+	end
 end

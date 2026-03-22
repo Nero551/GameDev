@@ -1,4 +1,3 @@
-local ServerScriptService = game:GetService("ServerScriptService")
 local Players = game:GetService("Players")
 
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
@@ -60,7 +59,7 @@ function HitApplier:ApplyHit(argumentData)
 
 		else
 			---Do Blocked HitType----
-			CharacterVitalsService:ModifyVital(targetHit, "Combat", "ModifyBlockCounter", {["BlockCounterChange"] = 1 or abilityBlockDetoriation})			
+			CharacterVitalsService:ModifyVital(targetHit, "Combat", "ModifyBlockCounter", {["BlockCounterChange"] = abilityBlockDetoriation or 1 })			
 			
 			hitTypes["Blocked"]({
 				["Attacker"] = character,

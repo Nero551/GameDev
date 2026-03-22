@@ -7,12 +7,12 @@ local assets = ReplicatedStorage:WaitForChild("Assets")
 
 return function(arguementData:any)
 	local target:Model = arguementData.Target
-	local weaponUsed:string = arguementData.WeaponUsed
+	local weaponUsed = arguementData.Weapon
 	
 	if target and weaponUsed then
 		local rootPart = target:FindFirstChild("HumanoidRootPart")
 		if rootPart then
-			local clone =  assets.Weapons[weaponUsed].Effects.HitEffect:Clone()
+			local clone =  assets.Weapons[weaponUsed.Name].Effects.HitEffect:Clone()
 			clone.Parent = rootPart
 			for _,v in clone:GetDescendants() do
 				if v:IsA("ParticleEmitter") then

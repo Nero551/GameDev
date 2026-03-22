@@ -2,7 +2,6 @@
 
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local modules = (ReplicatedStorage.Modules)
 local StateService = require(game.ServerScriptService.Services.Core.StateService)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
@@ -30,14 +29,13 @@ return function(argumentData)
 		StateService:AddState(targetHit, "In Combat", 20)
 		
 		NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "Sound" , {
-			["SoundName"] = "Shared.Sounds.BlockBreak" , 
+			["Sound"] = ReplicatedStorage.Assets.Shared.Sounds.BlockBreak , 
 			["Parent"] = targetHit.HumanoidRootPart
 		})
 		
 		NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "BlockBreakHit" , {
 			["Target"] = targetHit ,
-			["weaponUsed"] = weaponUsed.Name,
-			["Duration"] = 1.5,
+			["Weapon"] = weaponUsed,
 		})
 		
 		Animations:GetAnimation(animator, "Shared.Character.BlockBreak"):Play()	

@@ -1,10 +1,8 @@
 return function()
 		
-	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
 	local Player = game:GetService("Players").LocalPlayer
-	local modules =  ReplicatedStorage.Modules
 	local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
 	local Connections = require(game.ReplicatedStorage.Modules.Core.Connections)
 	local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)

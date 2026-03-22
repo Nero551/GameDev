@@ -5,8 +5,6 @@ return function()
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local  modules = ReplicatedStorage:WaitForChild("Modules")
 
-	local remotes = ReplicatedStorage:WaitForChild("Remotes")
-
 	local cachedEffects = {}
 
 	for  _, module in modules.Client.Effects:GetChildren() do

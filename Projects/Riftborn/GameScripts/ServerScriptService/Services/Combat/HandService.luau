@@ -1,4 +1,3 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 local HandService = {}

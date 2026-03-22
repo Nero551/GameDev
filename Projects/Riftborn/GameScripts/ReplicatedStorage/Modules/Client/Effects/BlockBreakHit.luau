@@ -7,9 +7,8 @@ local assets = ReplicatedStorage:WaitForChild("Assets")
 local effects = assets.Shared.Effects
 
 return function(arguementData:any)
-	local target:Model = arguementData.Target
-	local weaponUsed :string = arguementData.weaponUsed
-	local  duration:number = arguementData.Duration
+	local target = arguementData.Target
+	local weaponUsed = arguementData.Weapon
 	
 	if target and weaponUsed then
 		task.spawn(function()
@@ -42,14 +41,14 @@ return function(arguementData:any)
 		
 		clone.Parent = target
 		
-		task.delay(duration , function()
+		task.delay(1.5 , function()
 			for _, eff in clone:GetDescendants() do
 				 if eff:IsA("ParticleEmitter")  then
 						eff.Enabled = false
 						
 				 end
 			end
-			Debris:AddItem(clone , 1.5)
+			clone:Destroy()
 		end)
 		
 		

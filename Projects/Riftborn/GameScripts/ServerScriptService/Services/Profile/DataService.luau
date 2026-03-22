@@ -112,11 +112,12 @@ end
 function DataService:Load(player)
 	local key = "Player_" .. player.UserId
 
-	local success = pcall(function()
+	local success,err = pcall(function()
 		DataService.PlayerDatas[player] = playerStore:GetAsync(key)
 	end)
 
 	if not success or not DataService.PlayerDatas[player] then
+		warn("DataLoad Failed For",player.Name,":",err)
 		DataService.PlayerDatas[player] = DataService:GetDefaultData()
 	end
 
@@ -141,10 +142,4 @@ function DataService:Save(player)
 	end
 	return
 end
-
-function DataService:Delete(player: Player)
-	local key = "Player_" .. player.UserId
-	playerStore:RemoveAsync(key)
-end
-
 return DataService
