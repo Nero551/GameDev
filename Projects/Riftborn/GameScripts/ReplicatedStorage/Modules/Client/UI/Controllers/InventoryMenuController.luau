@@ -5,7 +5,7 @@ local ReturnButton = require(ReplicatedStorage.Modules.Client.UI.Components.Retu
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local RarityData = require(game.ReplicatedStorage.Modules.Data.RarityData)
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
-local UIHelper = require(game.ReplicatedStorage.Modules.Client.UI.UIHelper)
+local UIHelper = require(game.ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(game.ReplicatedStorage.Modules.Client.UI.UIManager)
 
 local InventoryMenuController = {}
@@ -191,6 +191,7 @@ function InventoryMenuController:Inventory()
 end
 
 function InventoryMenuController:Equip()
+	local equipped = player:WaitForChild("Equipped")
 	local itemFrame = UIManager:GetUI("InventoryMenu", "ItemScrollingFrame")
 	local infoFrame = UIManager:GetUI("InventoryMenu", "InfoFrame")
 	local box = infoFrame:FindFirstChild("Equip")
@@ -215,11 +216,6 @@ function InventoryMenuController:Equip()
 	equipButton.MouseButton1Click:Connect(function()
 		local itemID = infoFrame:GetAttribute("ItemID")
 		NetworkingService:FireToServer("EquipItem", itemID)
-
-		local icon = itemFrame:FindFirstChild(itemID)
-		if icon then
-			icon:FindFirstChild("EquippedIcon").Visible = true
-		end
 		TweenService:Create(equipButton, info, { TextTransparency = 1 }):Play()
 		TweenService:Create(unequipButton, info, { TextTransparency = 0 }):Play()
 		task.wait(0.0625)
@@ -231,15 +227,25 @@ function InventoryMenuController:Equip()
 		local itemID = infoFrame:GetAttribute("ItemID")
 		NetworkingService:FireToServer("UnequipItem", itemID)
 
-		local icon = itemFrame:FindFirstChild(itemID)
-		if icon then
-			icon:FindFirstChild("EquippedIcon").Visible = false
-		end
 		TweenService:Create(equipButton, info, { TextTransparency = 0 }):Play()
 		TweenService:Create(unequipButton, info, { TextTransparency = 1 }):Play()
 		task.wait(0.0625)
 		equipButton.Visible = true
 		unequipButton.Visible = false
+	end)
+
+	equipped.ChildAdded:Connect(function(child)
+		local icon = itemFrame:FindFirstChild(child:GetAttribute("Equipped"))
+		if icon then
+			icon:FindFirstChild("EquippedIcon").Visible = true
+		end
+	end)
+
+	equipped.ChildRemoved:Connect(function(child)
+		local icon = itemFrame:FindFirstChild(child:GetAttribute("Equipped"))
+		if icon then
+			icon:FindFirstChild("EquippedIcon").Visible = false
+		end
 	end)
 end
 
@@ -351,7 +357,6 @@ function InventoryMenuController:Filter()
 				if filterType ~= "All" then
 					for _, iconFrame in itemFrame:GetChildren() do
 						if iconFrame:IsA("ImageButton") then
-
 							local iconType = nil
 
 							local itemData = ItemDataBase:GetItemData(iconFrame.Name)
@@ -378,7 +383,7 @@ function InventoryMenuController:Filter()
 								end
 							end
 							if iconType == filterType then
-								iconFrame.Visible = true							
+								iconFrame.Visible = true
 							else
 								iconFrame.Visible = false
 							end
@@ -389,6 +394,7 @@ function InventoryMenuController:Filter()
 		end
 	end
 end
+
 
 
 return InventoryMenuController

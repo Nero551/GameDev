@@ -9,7 +9,7 @@ local AbilityData = require(game.ReplicatedStorage.Modules.Data.AbilityData)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
-local UIHelper = require(game.ReplicatedStorage.Modules.Client.UI.UIHelper)
+local UIHelper = require(game.ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(game.ReplicatedStorage.Modules.Client.UI.UIManager)
 
 local HUDController = {}

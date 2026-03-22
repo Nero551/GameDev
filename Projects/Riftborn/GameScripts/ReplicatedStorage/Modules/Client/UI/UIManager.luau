@@ -9,6 +9,7 @@ UIManager.ActiveScreen = "HUD"
 UIManager.Screens = {}
 UIManager.Controllers = {}
 UIManager.AcceptableClasses = {
+	Folder = true,
 	BillboardGui = true,
 	CanvasGroup = true,
 	Frame = true,

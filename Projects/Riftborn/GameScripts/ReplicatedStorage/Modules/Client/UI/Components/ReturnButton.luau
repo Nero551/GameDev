@@ -1,7 +1,7 @@
 return function(menu, returnButton)
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local TweenService = game:GetService("TweenService")
-	local UIHelper = require(ReplicatedStorage.Modules.Client.UI.UIHelper)
+	local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 	local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
 	local mainMenu = UIManager:GetUI("MainMenu", "MainMenu")
 

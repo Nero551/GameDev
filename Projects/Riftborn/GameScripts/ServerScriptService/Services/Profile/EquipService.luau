@@ -1,6 +1,4 @@
 local ServerStorage = game:GetService("ServerStorage")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local ServerScriptService = game:GetService("ServerScriptService")
 local ToolLoader = require(game.ServerScriptService.Modules.Utilities.ToolLoader)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
@@ -121,11 +119,12 @@ function EquipService:EquipItem(player: Player, itemID)
 
 	local folder = player:FindFirstChild("Equipped")
 	local value = folder:FindFirstChild(itemType)
-	if not value then
-		value = Instance.new("StringValue")
-		value.Name = itemType
-		value.Parent = folder
+	if value then
+		value:Destroy()
 	end
+	value = Instance.new("StringValue")
+	value.Name = itemType
+	value.Parent = folder
 	value:SetAttribute("Equipped", itemID)
 	GameEvents.UpdateMana:Fire(player)
 end

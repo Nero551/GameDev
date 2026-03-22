@@ -63,19 +63,13 @@ function StatService:SetupStats(player:Player)
 			folder.Parent = statsFolder
 		end
 		for statType,stat in pairs(table) do
-			local statFolder = folder:FindFirstChild(statType)
-			if not statFolder then
-				statFolder = Instance.new("Folder")
-				statFolder.Name = statType
-				statFolder.Parent = folder
+			local statValue = folder:FindFirstChild(statType)
+			if not statValue then
+				statValue = Instance.new("StringValue")
+				statValue.Name = statType
+				statValue.Parent = folder
 				for valueType,value in pairs(stat) do
-					local valueInstance = statFolder:FindFirstChild(valueType) 
-					if not valueInstance then
-						valueInstance = Instance.new("IntValue")
-						valueInstance.Name = valueType
-						valueInstance.Value = value
-						valueInstance.Parent = statFolder
-					end
+					statValue:SetAttribute(valueType, value)
 				end
 			end
 		end
@@ -100,12 +94,10 @@ function StatService:UpdateStats(player:Player)
 		for statType,stat in pairs(table) do
 			stat.FlatStatPoint = math.clamp(stat.FlatStatPoint, 0, 3000)
 			stat.Final = (stat.Base + stat.FlatStatPoint + stat.FlatBuff) * (1 + stat.Percent)
-			local statFolder = player:WaitForChild("Stats"):WaitForChild(type):WaitForChild(statType)
-			statFolder.Base.Value = stat.Base
-			statFolder.Percent.Value = stat.Percent
-			statFolder.FlatBuff.Value = stat.FlatBuff
-			statFolder.FlatStatPoint.Value = stat.FlatStatPoint
-			statFolder.Final.Value = stat.Final
+			local statValue = player:WaitForChild("Stats"):WaitForChild(type):WaitForChild(statType)
+			for type,value in pairs(stat) do
+				statValue:SetAttribute(type,value)
+			end
 		end	
 	end
 	ApplyHealth(player)
