@@ -55,7 +55,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 
 ---Client Requests to Accept Quest---
-NetworkingService:OnServerEvent("AcceptQuest", function(player, QuestName)
+NetworkingService:OnServerEvent("AcceptQuest", function(player, questID)
 end)
 
 
@@ -67,8 +67,7 @@ end)
 
 
 ---Client Requests to Track Quest---
-NetworkingService:OnServerEvent("TrackQuest", function(player:Player, questName)
-	local questID = QuestData:GetQuestID(questName)
+NetworkingService:OnServerEvent("TrackQuest", function(player:Player, questID)
 	QuestService:TrackQuest(player, questID)
 end)
 

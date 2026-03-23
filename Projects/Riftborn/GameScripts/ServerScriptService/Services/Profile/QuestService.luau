@@ -10,7 +10,6 @@ local function SetUpdates(player: Player)
 	local playerQuests = DataService:GetTable(player, "Quests")
 	local folder = player:FindFirstChild("Quests")
 	folder:FindFirstChild("TrackedQuest"):SetAttribute("ID", (playerQuests.TrackedQuest or ""))
-
 	for questID, activeQuest in pairs(playerQuests.ActiveQuests) do
 		local questFolder = folder:FindFirstChild("ActiveQuests"):FindFirstChild(questID)
 		if not questFolder then
@@ -126,7 +125,6 @@ function QuestService:AcceptQuest(player: Player, questID)
 	})
 
 	SetUpdates(player)
-	NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
 end
 
 -----------------------------------------------------------------------------------------------------------------------------
@@ -222,7 +220,7 @@ function QuestService:CheckQuestCompletion(player: Player, questID)
 
 	for objectiveNumber, objective in pairs(quest.Progress) do
 		if objective.Current < objective.Required then
-			NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
+			SetUpdates(player)
 			return false
 		end
 	end

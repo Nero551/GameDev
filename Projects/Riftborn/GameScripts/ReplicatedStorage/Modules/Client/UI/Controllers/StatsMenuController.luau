@@ -657,6 +657,14 @@ function StatsMenuController:Titles()
 	titles.ActiveTitle:GetAttributeChangedSignal("ID"):Connect(ActiveTitle)
 end
 
-function StatsMenuController:Armory() end
+function StatsMenuController:Armory()
+
+end
+
+
+function StatsMenuController:RandomGradients()
+	local texture = UIManager:GetUI("StatsMenu", "Texture")
+	UIHelper:RotateGradient(texture:FindFirstChild("UIGradient"))
+end
 
 return StatsMenuController

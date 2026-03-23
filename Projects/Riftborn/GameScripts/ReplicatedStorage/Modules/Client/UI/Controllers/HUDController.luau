@@ -363,7 +363,7 @@ function HUDController:Dialogue()
 		skipLine = true
 	end
 
-	NetworkingService:OnClientEvent("ShowDialogue", function(speaker,text, options, ended)
+	NetworkingService:OnClientEvent("ShowDialogue", function(speaker, text, options, ended)
 		if ended then
 			DialogueFrame.Visible = false
 			SpeakerName.Text = ""
@@ -403,6 +403,7 @@ function HUDController:TrackedQuest()
 	local trackedQuest = Quests:FindFirstChild("TrackedQuest")
 	local trackedQuestFrame = UIManager:GetUI("HUD", "TrackedQuestFrame")
 	local trackQuestButton = trackedQuestFrame:FindFirstChild("TrackQuestButton")
+	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 	local innerStroke = trackedQuestFrame:FindFirstChild("InnerStroke")
 	local outerStroke = trackedQuestFrame:FindFirstChild("OuterStroke")
@@ -410,13 +411,18 @@ function HUDController:TrackedQuest()
 	UIHelper:RotateGradient(outerStroke:FindFirstChild("UIGradient"))
 
 	trackQuestButton.MouseButton1Click:Connect(function()
-		local questName = trackedQuestFrame.TrackedQuestName.Text
-		NetworkingService:FireToServer("TrackQuest", questName)
+		NetworkingService:FireToServer("TrackQuest", trackedQuest:GetAttribute("ID"))
 	end)
 	UIHelper:ClickEffects(trackQuestButton)
 	UIHelper:HoverEffects(trackQuestButton)
 
 	local function UpdateTracked()
+		for _, objective in trackedQuestFrame.TrackedQuestProgress:GetChildren() do
+			if objective:IsA("Frame") then
+				objective:Destroy()
+			end
+		end
+
 		local trackedQuestID = trackedQuest:GetAttribute("ID")
 		if trackedQuestID then
 			local trackedQuestData = QuestData.Quests[trackedQuestID]
@@ -424,6 +430,52 @@ function HUDController:TrackedQuest()
 				trackedQuestFrame.Visible = true
 				trackedQuestFrame:FindFirstChild("TrackedQuestName").Text = trackedQuestData.Name
 
+				for _, objective in Quests:FindFirstChild("ActiveQuests"):FindFirstChild(trackedQuestID):GetChildren() do
+					local function UpdateObjectives()
+						local objectiveNumber = objective.Name
+						local objectiveFrame = trackedQuestFrame.TrackedQuestProgress:FindFirstChild(objectiveNumber)
+						if not objectiveFrame then
+							objectiveFrame = UIManager:CloneUI(
+								"HUD",
+								objectiveNumber,
+								ReplicatedStorage.Assets.UI.Quest.QuestProgress.ObjectiveTemplate,
+								"TrackedQuestProgress"
+							)
+							objectiveFrame.Visible = true
+						end
+
+						if objective:GetAttribute("Item") then
+							objectiveFrame.ProgressText.Text = objective:GetAttribute("ObjectiveType")
+								.. " "
+								.. objective:GetAttribute("Item")
+								.. " "
+								.. tostring(objective:GetAttribute("Current"))
+								.. " / "
+								.. tostring(objective:GetAttribute("Required"))
+						elseif objective:GetAttribute("Mob") then
+							objectiveFrame.ProgressText.Text = objective:GetAttribute("ObjectiveType")
+								.. " "
+								.. objective:GetAttribute("Mob")
+								.. " "
+								.. tostring(objective:GetAttribute("Current"))
+								.. " / "
+								.. tostring(objective:GetAttribute("Required"))
+						end
+						TweenService
+							:Create(objectiveFrame.ProgressBarBG.ProgressBar, info, {
+								Size = UDim2.fromScale(
+									math.min(objective:GetAttribute("Current") / objective:GetAttribute("Required")),
+									1
+								),
+							})
+							:Play()
+					end
+					UpdateObjectives()
+					local conn
+					if not conn then
+						conn = objective.AttributeChanged:Connect(UpdateObjectives)						
+					end
+				end
 			else
 				trackedQuestFrame.Visible = false
 			end
@@ -710,7 +762,7 @@ function HUDController:MainMenuButton()
 
 	local MainMenu = UIManager:GetUI("MainMenu", "MainMenu")
 	local texture = UIManager:GetUI("MainMenu", "Texture")
-	
+
 	local blur = Lighting.Blur
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
@@ -763,4 +815,37 @@ function HUDController:MainMenuButton()
 	end)
 end
 
+function HUDController:AdminPanel()
+	local adminFrame = UIManager:GetUI("HUD", "AdminFrame")
+	local textBox = adminFrame:FindFirstChild("TextBox")
+	local button = adminFrame:FindFirstChild("Button")
+	
+	UIHelper:ClickEffects(button)
+	UIHelper:HoverEffects(button)
+	UIHelper:RotateGradient(textBox:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
+
+	textBox.FocusLost:Connect(function(enterPressed)
+		if enterPressed then
+			NetworkingService:FireToServer("AdminCommand", textBox.Text)
+		end
+	end)
+
+	local AdminIDs = require(game.ReplicatedStorage.Modules.Data.AdminIDs)
+	local Player = game:GetService("Players").LocalPlayer
+	if not AdminIDs[Player.UserId] then
+		adminFrame.Visible = false
+		return
+	end
+	adminFrame.Visible = true
+	textBox.Visible = false
+	button.Visible = true
+
+	button.MouseButton1Click:Connect(function()
+		if textBox.Visible == true then
+			textBox.Visible = false
+		else
+			textBox.Visible = true
+		end
+	end)
+end
 return HUDController

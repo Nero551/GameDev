@@ -22,7 +22,7 @@ function UIHelper:Rotate(ui)
 	end)
 end
 
-function UIHelper:HoverEffects(ui)
+function UIHelper:HoverEffects(ui, leave,enter)
 	if not ui then return end
 	local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	local scale = ui:FindFirstChildWhichIsA("UIScale")
@@ -31,15 +31,15 @@ function UIHelper:HoverEffects(ui)
 		scale.Parent = ui
 	end
 	ui.MouseEnter:Connect(function()
-		TweenService:Create(scale, info, { Scale = 1.1 }):Play()
+		TweenService:Create(scale, info, { Scale = (enter or 1.1) }):Play()
 		hoverSound:Play()
 	end)
 	ui.MouseLeave:Connect(function()
-		TweenService:Create(scale, info, {Scale = 1}):Play()
+		TweenService:Create(scale, info, {Scale = (leave or 1)}):Play()
 	end)
 end
 
-function UIHelper:ClickEffects(ui)
+function UIHelper:ClickEffects(ui, down,up)
 	if not ui then return end
 	local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	local scale = ui:FindFirstChildWhichIsA("UIScale")
@@ -52,10 +52,10 @@ function UIHelper:ClickEffects(ui)
 	end)
 
 	ui.MouseButton1Down:Connect(function()
-		TweenService:Create(scale, info, { Scale = 0.975 }):Play()
+		TweenService:Create(scale, info, { Scale = (down or 0.975) }):Play()
 	end)
 	ui.MouseButton1Up:Connect(function()
-		TweenService:Create(scale, info, {Scale = 1.1}):Play()
+		TweenService:Create(scale, info, {Scale = (up or 1.1)}):Play()
 	end)
 end
 

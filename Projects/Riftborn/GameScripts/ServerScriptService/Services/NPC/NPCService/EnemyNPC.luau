@@ -5,11 +5,9 @@ return function(npc)
 	end
 	local Debris = game:GetService("Debris")
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
-	local ServerScriptService = game:GetService("ServerScriptService")
 
 	local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 	local MobData = require(game.ReplicatedStorage.Modules.Data.MobData)
-	local uiModules = ReplicatedStorage.Modules.UI2
 
 	local AIService = require(game.ServerScriptService.Services.NPC.AIService)
 	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
@@ -33,7 +31,6 @@ return function(npc)
 	---NPC Info GUI---
 	local npcInfo = npc.NPCInfo
 	npcInfo.Enabled = true
-	local hpBG = npcInfo.NPCHealth
 	npcInfo.Adornee = npc.Head
 
 	--local HPChangerUI = require(uiModules.HPChangerUI)
