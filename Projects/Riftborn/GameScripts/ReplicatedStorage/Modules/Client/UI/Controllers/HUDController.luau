@@ -762,7 +762,6 @@ function HUDController:MainMenuButton()
 
 	local MainMenu = UIManager:GetUI("MainMenu", "MainMenu")
 	local texture = UIManager:GetUI("MainMenu", "Texture")
-
 	local blur = Lighting.Blur
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)

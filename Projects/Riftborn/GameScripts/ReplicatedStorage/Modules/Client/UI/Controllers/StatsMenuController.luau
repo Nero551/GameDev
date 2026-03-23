@@ -687,13 +687,17 @@ function StatsMenuController:Armory()
 	local unequipButton = equipIcon:FindFirstChild("UnEquipButton")
 
 	for _, abilitySlot in abiltiesFrame:GetChildren() do
-		UIHelper:RotateGradient(
-			abilitySlot:FindFirstChild("AbilityIcon"):FindFirstChild("RGBSTroke"):FindFirstChild("UIGradient")
-		)
+		if abilitySlot:IsA("Frame") then
+			UIHelper:RotateGradient(
+				abilitySlot:FindFirstChild("AbilityIcon"):FindFirstChild("RGBStroke"):FindFirstChild("UIGradient")
+			)		
+		end
 	end
 
 	for _,statSlot in statsFrame:GetChildren() do
-		UIHelper:RotateGradient(statSlot:FindFirstCshild("UIStroke"):FindFirstChild("UIGradient"))
+		if statSlot:IsA("Frame") then
+			UIHelper:RotateGradient(statSlot:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))		
+		end
 	end
 
 	UIHelper:RotateGradient(equipIcon:FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
@@ -777,7 +781,6 @@ function StatsMenuController:Armory()
 			)
 			UIHelper:ClickEffects(itemSlot)
 			UIHelper:HoverEffects(itemSlot)
-			print(itemSlot:GetFullName())
 			local border = itemSlot:FindFirstChild("Border")
 			UIHelper:RotateGradient(border:FindFirstChild("UIGradient"))
 
@@ -872,6 +875,7 @@ function StatsMenuController:Armory()
 
 				---If Item Is A Weapon---
 				if string.find(itemID, "weapon") then
+					infoMastery.Text = "Mastery: "..tostring(descendant:GetAttribute("Mastery"))
 					infoMastery.Visible = true
 					abiltiesFrame.Visible = true
 					---If Item Is An Armor
@@ -957,5 +961,6 @@ function StatsMenuController:RandomGradients()
 	local texture = UIManager:GetUI("StatsMenu", "Texture")
 	UIHelper:RotateGradient(texture:FindFirstChild("UIGradient"))
 end
+
 
 return StatsMenuController

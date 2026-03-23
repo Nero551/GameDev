@@ -117,6 +117,7 @@ function InventoryMenuController:Inventory()
 				---If Item Is A Weapon---
 				if infoType.Text == "Sword" or infoType.Text == "Melee" then
 					equipIcon.Visible = true
+					infoMastery.Text = "Mastery: "..tostring(descendant:GetAttribute("Mastery"))
 					infoMastery.Visible = true
 					---If Item Is An Armor
 				elseif

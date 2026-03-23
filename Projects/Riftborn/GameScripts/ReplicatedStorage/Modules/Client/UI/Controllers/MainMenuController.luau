@@ -31,6 +31,7 @@ function MainMenuController:Buttons()
 			ui.MouseButton1Click:Connect(function()
 				MainMenu.Visible = false
 				UIManager:SetActiveScreen(frame.Parent.Name)
+				UIManager:GetScreen("HUD").Enabled = false
 				frame.Visible = true
 				TweenService:Create(frame, info, { Size = UDim2.fromScale(1, 1) }):Play()
 
@@ -60,6 +61,7 @@ function MainMenuController:Buttons()
 				local tween = TweenService:Create(frame, info, { Size = UDim2.fromScale(0, 0) })
 				tween:Play()
 				tween.Completed:Connect(function()
+					UIManager:GetScreen("HUD").Enabled = true
 					frame.Visible = false
 				end)
 			end)
@@ -88,11 +90,13 @@ function MainMenuController:MainMenu()
 				tween:Play()
 				tween.Completed:Connect(function()
 					MainMenu.Visible = false
+					UIManager:GetScreen("HUD").Enabled = true
 				end)
 
 				TweenService:Create(blur, info2, { Size = 0 }):Play()
 				TweenService:Create(Texture, info2, { ImageTransparency = 1 }):Play()
 			else
+				UIManager:GetScreen("HUD").Enabled = true
 				UIManager:SetActiveScreen("MainMenu")
 				MainMenu.Visible = true
 				TweenService:Create(MainMenu, info, { Size = UDim2.fromScale(0.4, 0.9) }):Play()
@@ -103,5 +107,4 @@ function MainMenuController:MainMenu()
 		end
 	end)
 end
-
 return MainMenuController

@@ -439,4 +439,7 @@ function QuestMenuController:RandomGradients()
 	UIHelper:RotateGradient(texture:FindFirstChild("UIGradient"))
 end
 
+
+
+
 return QuestMenuController

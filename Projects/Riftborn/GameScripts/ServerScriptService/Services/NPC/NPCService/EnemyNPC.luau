@@ -28,7 +28,7 @@ return function(npc)
 		weld.Part0 = npc:FindFirstChild("Right Arm")
 	end
 
-	---NPC Info GUI---
+	---NPC Info GUI---m
 	local npcInfo = npc.NPCInfo
 	npcInfo.Enabled = true
 	npcInfo.Adornee = npc.Head

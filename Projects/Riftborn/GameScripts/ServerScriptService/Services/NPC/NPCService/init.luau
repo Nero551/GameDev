@@ -1,5 +1,5 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local MobData = require(game.ReplicatedStorage.Modules.Data.MobData)
+local MobData = require(ReplicatedStorage.Modules.Data.MobData)
 
 local NPCService = {}
 
@@ -12,18 +12,21 @@ NPCService.SpawnedNPCS = {
 }
 
 function NPCService:RegisterNPC(NPC)
-
+    
     if NPC:IsA("Model") then
-        local npcType = MobData.Mobs[NPC.Name].Type
-        if NPCService.SpawnedNPCS[npcType][NPC] then return end
-		NPC:SetAttribute("Type", npcType)
-        NPC:SetAttribute("Active", true)
-		NPCService.SpawnedNPCS[npcType][NPC] = {
-            ["Active"] = true,
-            ["Type"] = npcType,
-            
-		}
-		require(script[npcType .. "NPC"])(NPC)
+        if MobData.Mobs[NPC.Name] then
+			local npcType = MobData.Mobs[NPC.Name].Type
+			if NPCService.SpawnedNPCS[npcType][NPC] then
+				return
+			end
+			NPC:SetAttribute("Type", npcType)
+			NPC:SetAttribute("Active", true)
+			NPCService.SpawnedNPCS[npcType][NPC] = {
+				["Active"] = true,
+				["Type"] = npcType,
+			}
+			require(script[npcType .. "NPC"])(NPC)
+        end     
 	end
 end
 

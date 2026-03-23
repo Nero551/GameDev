@@ -8,10 +8,12 @@ local DataService = {}
 DataService.PlayerDatas = {}
 
 function DataService:GetDefaultData()
+	
 	local DefaultData = {
 		Inventory = {
 			["weapon_0000000001"] = {
 				Amount = 1,
+				Mastery = 1,
 			},
 			["armor_0000000001"] = {
 				Amount = 1,
