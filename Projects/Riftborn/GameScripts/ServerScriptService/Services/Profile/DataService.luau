@@ -14,6 +14,8 @@ function DataService:GetDefaultData()
 			["weapon_0000000001"] = {
 				Amount = 1,
 				Mastery = 1,
+				EXPRequired = 100,
+				EXPAcquired = 0,
 			},
 			["armor_0000000001"] = {
 				Amount = 1,

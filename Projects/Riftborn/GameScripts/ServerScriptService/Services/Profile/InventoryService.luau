@@ -26,6 +26,8 @@ function InventoryService:SetupInventory(player)
 		value:SetAttribute("Name", itemData.Name)
 		value:SetAttribute("Amount", itemInfo.Amount)
 		value:SetAttribute("Mastery", itemInfo.Mastery)
+		value:SetAttribute("EXPRequired", itemInfo.EXPRequired)
+		value:SetAttribute("EXPAcquired", itemInfo.EXPAcquired)
 	end
 end
 
@@ -81,7 +83,8 @@ function InventoryService:AddItem(itemID: string, amount: number, player: Player
 	value:SetAttribute("Name", itemData.Name)
 	value:SetAttribute("Amount", inventory[itemID].Amount)
 	value:SetAttribute("Mastery", inventory[itemID].Mastery)
-
+	value:SetAttribute("EXPRequired", inventory[itemID].EXPRequired)
+	value:SetAttribute("EXPAcquired", inventory[itemID].EXPAcquired)
 	GameEvents.ItemChanged:Fire(player)
 	return inventory[itemID]
 end
@@ -119,6 +122,8 @@ function InventoryService:RemoveItem(itemID: string, amount: number, player)
 			value:SetAttribute("Name", itemData.Name)
 			value:SetAttribute("Amount", inventory[itemID].Amount)
 			value:SetAttribute("Mastery", inventory[itemID].Mastery)
+			value:SetAttribute("EXPRequired", inventory[itemID].EXPRequired)
+			value:SetAttribute("EXPAcquired", inventory[itemID].EXPAcquired)
 		end
 	end
 
