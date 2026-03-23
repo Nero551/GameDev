@@ -19,7 +19,6 @@ local function Setup(player: Player, character)
 	repeat
 		task.wait()
 	until #playerGui:GetDescendants() >= #StarterGui:GetDescendants()
-
 	StatService:SetupStats(player)
 	LevelService:SetupLevel(player)
 	InventoryService:SetupInventory(player)
@@ -28,6 +27,7 @@ local function Setup(player: Player, character)
 	TitleService:SetupTitles(player)
 	CurrencyService:SetupCurrencies(player)
 
+	QuestService:SetupQuests(player)
 	QuestService:SyncQuestsWithQuestData(player)
 
 	BuffService:UpdateBuffs(player)

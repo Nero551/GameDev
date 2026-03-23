@@ -142,4 +142,9 @@ function DataService:Save(player)
 	end
 	return
 end
+
+function DataService:Delete(player: Player)
+	local key = "Player_" .. player.UserId
+	playerStore:RemoveAsync(key)
+end
 return DataService

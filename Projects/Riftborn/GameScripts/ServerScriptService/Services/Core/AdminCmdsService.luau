@@ -27,6 +27,7 @@ local AdminCmdsService = {}
 function AdminCmdsService:DeleteData(msgParts)
 	local playerWanted = FindPlayerByPartialName(msgParts[2])
 	if not playerWanted then return end
+	DataService:Delete(playerWanted)
 	DataService.PlayerDatas[playerWanted] = nil
 	playerWanted:Kick("Your data has been deleted. Rejoin.")
 end

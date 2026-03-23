@@ -1,5 +1,4 @@
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local QuestData = require(game.ReplicatedStorage.Modules.Data.QuestData)
 local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
@@ -7,28 +6,101 @@ local DataService = require(game.ServerScriptService.Services.Profile.DataServic
 
 local QuestService = {}
 
------------------------------------------------------------------------------------------------------------------------------
-function QuestService:AcceptQuest(player:Player, questID)
+local function SetUpdates(player: Player)
 	local playerQuests = DataService:GetTable(player, "Quests")
-	if playerQuests.ActiveQuests[questID] then  return end
-	local  questData =  QuestData.Quests[questID]
-	if not questData then return end
-	
-	
+	local folder = player:FindFirstChild("Quests")
+	folder:FindFirstChild("TrackedQuest"):SetAttribute("ID", (playerQuests.TrackedQuest or ""))
+
+	for questID, activeQuest in pairs(playerQuests.ActiveQuests) do
+		local questFolder = folder:FindFirstChild("ActiveQuests"):FindFirstChild(questID)
+		if not questFolder then
+			questFolder = Instance.new("Folder")
+			questFolder.Name = questID
+			questFolder.Parent = folder:FindFirstChild("ActiveQuests")
+		end
+		questFolder:SetAttribute("Completed", activeQuest.Completed)
+		for index, objective in ipairs(activeQuest.Progress) do
+			local value = questFolder:FindFirstChild(index)
+			if not value then
+				value = Instance.new("StringValue")
+				value.Name = index
+				value.Parent = questFolder
+			end
+			for infoName, v in pairs(objective) do
+				value:SetAttribute(infoName, v)
+			end
+		end
+	end
+
+	for questID, completedQuest in pairs(playerQuests.CompletedQuests) do
+		local questFolder = folder:FindFirstChild("CompletedQuests"):FindFirstChild(questID)
+		if not questFolder then
+			questFolder = Instance.new("Folder")
+			questFolder.Name = questID
+			questFolder.Parent = folder:FindFirstChild("CompletedQuests")
+		end
+
+		if folder:FindFirstChild("ActiveQuests"):FindFirstChild(questID) and not playerQuests.ActiveQuests[questID] then
+			folder:FindFirstChild("ActiveQuests"):FindFirstChild(questID):Destroy()
+		end
+		questFolder:SetAttribute("Completed", completedQuest.Completed)
+		for index, objective in ipairs(completedQuest.Progress) do
+			local value = questFolder:FindFirstChild(index)
+			if not value then
+				value = Instance.new("StringValue")
+				value.Name = index
+				value.Parent = questFolder
+			end
+			for infoName, v in pairs(objective) do
+				value:SetAttribute(infoName, v)
+			end
+		end
+	end
+end
+
+function QuestService:SetupQuests(player: Player)
+	local folder = player:FindFirstChild("Quests")
+	if not folder then
+		folder = Instance.new("Folder")
+		folder.Name = "Quests"
+		folder.Parent = player
+
+		local activeQuestsFolder = Instance.new("Folder")
+		activeQuestsFolder.Name = "ActiveQuests"
+		activeQuestsFolder.Parent = folder
+
+		local completedQuestsFolder = Instance.new("Folder")
+		completedQuestsFolder.Name = "CompletedQuests"
+		completedQuestsFolder.Parent = folder
+
+		local trackedQuest = Instance.new("StringValue")
+		trackedQuest.Name = "TrackedQuest"
+		trackedQuest.Parent = folder
+	end
+
+	SetUpdates(player)
+end
+
+-----------------------------------------------------------------------------------------------------------------------------
+function QuestService:AcceptQuest(player: Player, questID)
+	local playerQuests = DataService:GetTable(player, "Quests")
+	if playerQuests.ActiveQuests[questID] then
+		return
+	end
+	local questData = QuestData.Quests[questID]
+	if not questData then
+		return
+	end
+
 	playerQuests.ActiveQuests[questID] = {
 		Progress = {},
-		Name = questData.Name,
-		Completed = false,	
-		QuestType = questData.QuestType,
-		QuestDescription = questData.Description,
-		Rewards = questData.Rewards
+		Completed = false,
 	}
 	for objectiveNumber, objective in ipairs(questData.Objectives) do
-		
 		if objective.ObjectiveType == "Collect" then
 			playerQuests.ActiveQuests[questID].Progress[objectiveNumber] = {
 				Item = objective.Item,
-				CurrentProgress = 0,
+				Current = 0,
 				Required = objective.Required,
 				ObjectiveType = objective.ObjectiveType,
 			}
@@ -36,106 +108,106 @@ function QuestService:AcceptQuest(player:Player, questID)
 		if objective.ObjectiveType == "Kill" then
 			playerQuests.ActiveQuests[questID].Progress[objectiveNumber] = {
 				Mob = objective.Mob,
-				CurrentProgress = 0,
+				Current = 0,
 				Required = objective.Required,
 				ObjectiveType = objective.ObjectiveType,
 			}
 		end
-		
-	end	
-	
+	end
+
 	QuestService:ProgressQuest(player)
-	
+
 	if playerQuests.TrackedQuest == nil then
 		QuestService:TrackQuest(player, questID)
 	end
-	
-NetworkingService:FireToClient(player, "PopUp", {
-	["QuestName"] = questData.Name
-})
-NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
-end
 
-
------------------------------------------------------------------------------------------------------------------------------
-function QuestService:AbandonQuest(player:Player, questID)
-	local playerQuests = DataService:GetTable(player, "Quests")
-	if not playerQuests then  return end
-	local questName
-	if playerQuests.ActiveQuests[questID] then
-	questName = playerQuests.ActiveQuests[questID].Name
-	playerQuests.ActiveQuests[questID] = nil
-	end
-	if playerQuests.TrackedQuest == questID  then
-		playerQuests.TrackedQuest = nil
-	end
-	
-	
 	NetworkingService:FireToClient(player, "PopUp", {
-		["QuestName"] = questName,
-		["QuestAbandonded"] = true
+		["QuestName"] = questData.Name,
 	})
+
+	SetUpdates(player)
 	NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
 end
 
+-----------------------------------------------------------------------------------------------------------------------------
+function QuestService:AbandonQuest(player: Player, questID)
+	local playerQuests = DataService:GetTable(player, "Quests")
+	if not playerQuests then
+		return
+	end
+	local questName
+	if playerQuests.ActiveQuests[questID] then
+		local questData = QuestData.Quests[questID]
+		if not questData then
+			return
+		end
+		questName = questData.Name
+		playerQuests.ActiveQuests[questID] = nil
+	end
+	if playerQuests.TrackedQuest == questID then
+		playerQuests.TrackedQuest = nil
+	end
+
+	NetworkingService:FireToClient(player, "PopUp", {
+		["QuestName"] = questName,
+		["QuestAbandonded"] = true,
+	})
+	SetUpdates(player)
+end
 
 -----------------------------------------------------------------------------------------------------------------------------
-function QuestService:TrackQuest(player:Player, questID)
+function QuestService:TrackQuest(player: Player, questID)
 	local playerQuests = DataService:GetTable(player, "Quests")
 	if playerQuests.ActiveQuests[questID] then
-		if  playerQuests.TrackedQuest == questID then 
+		if playerQuests.TrackedQuest == questID then
 			playerQuests.TrackedQuest = nil
 		else
 			playerQuests.TrackedQuest = questID
 		end
-
-	elseif  playerQuests.CompletedQuests[questID] then
+	elseif playerQuests.CompletedQuests[questID] then
 		playerQuests.TrackedQuest = nil
 	end
-	
-	NetworkingService:FireToClient(player , "UpdateQuests", playerQuests)
+
+	SetUpdates(player)
 end
 
-
 -----------------------------------------------------------------------------------------------------------------------------
-function QuestService:ProgressQuest(player:Player, mobKilled)
+function QuestService:ProgressQuest(player: Player, mobKilled)
 	local playerQuests = DataService:GetTable(player, "Quests")
 	local quests = playerQuests.ActiveQuests
 	if quests then
-		for  questID,quest in pairs(quests) do
+		for questID, quest in pairs(quests) do
 			for objectiveNumber, objective in pairs(quest.Progress) do
-
-				QuestService[objective.ObjectiveType.."Type"](QuestService, objective,
-				 {
+				QuestService[objective.ObjectiveType .. "Type"](QuestService, objective, {
 					["Player"] = player,
 					["MobKilled"] = mobKilled,
 				})
 			end
 		end
 	end
-	NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
+	SetUpdates(player)
 end
 
 -- * Add custom  functions for each objective Type.
 function QuestService:CollectType(objective, argumentData)
 	local player = argumentData.Player
 
-	local playerInventory = DataService:GetTable(player ,"Inventory")
+	local playerInventory = DataService:GetTable(player, "Inventory")
 	if objective.ObjectiveType == "Collect" then
-		local _,itemID = ItemDataBase:GetItemData(objective.Item)
+		local _, itemID = ItemDataBase:GetItemData(objective.Item)
 		if playerInventory[itemID] then
-			objective.CurrentProgress = math.min(playerInventory[itemID].Amount, objective.Required)
+			objective.Current = math.min(playerInventory[itemID].Amount, objective.Required)
 		else
-			objective.CurrentProgress = 0
+			objective.Current = 0
 		end
-	end	
+	end
 end
 
 function QuestService:KillType(objective, argumentData)
 	local mobKilled = argumentData.MobKilled
 	if mobKilled then
 		if mobKilled == objective.Mob then
-			objective.CurrentProgress = math.min(objective.CurrentProgress + 1,objective.Required)
+			objective.Current = math.min(objective.Current + 1, objective.Required)
 		end
 	end
 end
@@ -144,77 +216,73 @@ end
 function QuestService:CheckQuestCompletion(player: Player, questID)
 	local playerQuests = DataService:GetTable(player, "Quests")
 	local quest = playerQuests.ActiveQuests[questID]
-	if not quest then return end
-	
+	if not quest then
+		return
+	end
+
 	for objectiveNumber, objective in pairs(quest.Progress) do
-		if objective.CurrentProgress < objective.Required then
+		if objective.Current < objective.Required then
 			NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
 			return false
 		end
 	end
-	
+
 	quest.Completed = true
 	QuestService:CompleteQuest(player, questID)
 	return true
 end
 
-
 -----------------------------------------------------------------------------------------------------------------------------
-function QuestService:CompleteQuest(player:Player, questID)
+function QuestService:CompleteQuest(player: Player, questID)
 	local playerQuests = DataService:GetTable(player, "Quests")
 	local playerEquipped = DataService:GetTable(player, "Equipped")
-	
+
 	local quest = playerQuests.ActiveQuests[questID]
-	if not quest then  return end
+	if not quest then
+		return
+	end
 	local questData = QuestData.Quests[questID]
-	if  not questData then return end
-	
+	if not questData then
+		return
+	end
+
 	if quest.Completed == true then
-		for objectiveNumber,objective in pairs(quest.Progress) do
+		for objectiveNumber, objective in pairs(quest.Progress) do
 			if objective.Item then
-				local _,itemID = ItemDataBase:GetItemData(objective.Item)
+				local _, itemID = ItemDataBase:GetItemData(objective.Item)
 				if playerEquipped[itemID] then
 					return
 				end
 				if questData.ConsumesItems then
-					GameEvents.RemoveItem:Fire(itemID, objective.Required,player)
+					GameEvents.RemoveItem:Fire(itemID, objective.Required, player)
 				end
-			end	
+			end
 		end
-		
+
 		playerQuests.TrackedQuest = nil
-		playerQuests.CompletedQuests[questID] = questData
+		playerQuests.CompletedQuests[questID] = playerQuests.ActiveQuests[questID]
 		playerQuests.ActiveQuests[questID] = nil
 		GameEvents.GiveRewards:Fire(player, questData.Rewards, true)
 		NetworkingService:FireToClient(player, "PopUp", {
 			["QuestName"] = questData.Name,
-			["QuestCompleted"] = true
-		})		
-		NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
-		return true
-	else
-		NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
-		return false
-	end	
+			["QuestCompleted"] = true,
+		})
+	end
+	SetUpdates(player)
+	return
 end
 
-
 -----------------------------------------------------------------------------------------------------------------------------
-function QuestService:SyncQuestsWithQuestData(player:Player)
+function QuestService:SyncQuestsWithQuestData(player: Player)
 	local playerQuests = DataService:GetTable(player, "Quests")
 	for questID, quest in pairs(playerQuests.ActiveQuests) do
 		local questData = QuestData.Quests[questID]
-		quest.Name = questData.Name
-		quest.QuestDescription = questData.Description
-		quest.QuestType = questData.QuestType
-		quest.Rewards = questData.Rewards
 		for objectiveIndex, objective in pairs(quest.Progress) do
 			objective.Required = questData.Objectives[objectiveIndex].Required
 		end
 	end
-	NetworkingService:FireToClient(player, "UpdateQuests", playerQuests)
+	SetUpdates(player)
 end
-
 
 -----------------------------------------------------------------------------------------------------------------------------
 return QuestService

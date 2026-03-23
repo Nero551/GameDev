@@ -12,6 +12,7 @@ function LevelService:SetupLevel(player)
 		LevelFolder = Instance.new("Folder")
 		LevelFolder.Parent = player
 		LevelFolder.Name = "Level"
+		LevelService:IncreaseEXP(player, 0)
 	end	
 
 	for stat,v in pairs(playerLevel) do
@@ -24,7 +25,6 @@ function LevelService:SetupLevel(player)
 		value:SetAttribute("Amount", v)
 	end
 
-	LevelService:IncreaseEXP(player, 0)
 end
 
 function LevelService:IncreaseEXP(player , EXP)
@@ -74,9 +74,11 @@ function LevelService:IncreaseEXP(player , EXP)
 		value:SetAttribute("Amount", v)
 	end
 	
-	NetworkingService:FireToClient(player, "PopUp", {
-		["EXP"] = EXP
-	})
+	if EXP ~= 0 then
+		NetworkingService:FireToClient(player, "PopUp", {
+			["EXP"] = EXP,
+		})
+	end
 end
 
 return LevelService

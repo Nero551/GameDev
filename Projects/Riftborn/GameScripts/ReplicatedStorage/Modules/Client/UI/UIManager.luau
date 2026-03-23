@@ -21,19 +21,6 @@ UIManager.AcceptableClasses = {
 	TextBox = true,
 	TextButton = true,
 	TextLabel = true,
-	UIAspectRatioConstraint = true,
-	UICorner = true,
-	UIFlexItem = true,
-	UIGradient = true,
-	UIGridLayout = true,
-	UIListLayout = true,
-	UIPadding = true,
-	UIPageLayout = true,
-	UIScale = true,
-	UISizeConstraint = true,
-	UIStroke = true,
-	UITableLayout = true,
-	UITextSizeConstraint = true,
 	VideoFrame = true,
 	ViewportFrame = true,
 }
@@ -54,29 +41,10 @@ function UIManager:Init()
 				if not UIManager.AcceptableClasses[child.ClassName] then
 					continue
 				end
-
-				if
-					child:IsA("UIStroke")
-					or child:IsA("UIGradient")
-					or child:IsA("UIScale")
-					or child:IsA("UICorner")
-					or child:IsA("UIAspectRatioConstraint")
-					or child:IsA("UISizeConstraint")
-					or child:IsA("UITextSizeConstraint")
-					or child:IsA("UIListLayout")
-					or child:IsA("UIGridLayout")
-					or child:IsA("UITableLayout")
-					or child:IsA("UIPageLayout")
-					or child:IsA("UIPadding")
-					or child:IsA("UIFlexItem")
-				then
-					continue
-				else
-					-- if UIManager.Screens[screen.Name][child.Name] then
-					-- 	warn("Duplicate Name Exists For:",child.Name)
-					-- end
-					UIManager.Screens[screen.Name][child.Name] = child
+				if UIManager.Screens[screen.Name][child.Name] then
+				--	warn("Duplicate Name Exists For:", child.Name)
 				end
+				UIManager.Screens[screen.Name][child.Name] = child
 			end
 		end
 	end
@@ -139,13 +107,13 @@ function UIManager:CreateUI(screenName, name, class, parent, properties)
 	return UIManager.Screens[screenName][name]
 end
 
-function UIManager:CloneUI(screenName,name,ui,parentName)
+function UIManager:CloneUI(screenName, name, ui, parentName)
 	if UIManager.Screens[screenName] then
 		local parentInstance = UIManager.Screens[screenName][parentName]
-		if not parentInstance then 
+		if not parentInstance then
 			return
 		end
-		local clone:Instance = ui:Clone()
+		local clone: Instance = ui:Clone()
 		clone.Parent = parentInstance
 		clone.Name = name
 		UIManager.Screens[screenName][name] = clone
@@ -185,7 +153,7 @@ function UIManager:SetActiveScreen(screenName)
 	if UIManager.Screens[screenName] then
 		UIManager.ActiveScreen = screenName
 	end
-	print(UIManager.ActiveScreen, {debug.traceback()})
+	print(UIManager.ActiveScreen, { debug.traceback() })
 end
 
 return UIManager

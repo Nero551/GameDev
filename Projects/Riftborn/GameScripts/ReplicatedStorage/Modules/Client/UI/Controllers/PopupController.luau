@@ -65,7 +65,7 @@ function PopupController:Creator()
 		end
 
 		---EXP---
-		if popupInfo.EXP and popupInfo.EXP ~= 0 then
+		if popupInfo.EXP then
 			popup.PopUpText.RichText = true
 			popup.PopUpText.Text = 'Obtained <font color="#fff131">' .. popupInfo.EXP .. " EXP </font>"
 		end

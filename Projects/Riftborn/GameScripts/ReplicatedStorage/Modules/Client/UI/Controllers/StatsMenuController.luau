@@ -131,8 +131,8 @@ function StatsMenuController:Overview()
 	---Title---
 	local activeTitle: StringValue = Player:WaitForChild("Titles"):FindFirstChild("ActiveTitle")
 	local titleText = UIManager:GetUI("StatsMenu", "Overview"):FindFirstChild("Info"):FindFirstChild("Title")
-    UIHelper:RotateGradient(titleText:FindFirstChild("UIGradient",16))
-    local function Title()
+	UIHelper:RotateGradient(titleText:FindFirstChild("UIGradient", 16))
+	local function Title()
 		local titleData = TitleData.Titles[activeTitle:GetAttribute("ID")]
 		if not titleData then
 			titleText.Text = "No Title"
@@ -423,49 +423,59 @@ function StatsMenuController:Stats()
 			end
 		end
 	end
-	for _, stat in playerStats:FindFirstChild("MainStats"):GetChildren() do
-		local function StatPointsRefresh()
-			local statPoints = stat:GetAttribute("FlatStatPoint")
-			for _, statFrame in statSections:GetChildren() do
-				if statFrame:IsA("Frame") then
-					if statFrame.Name == stat.Name then
-						statFrame.StatNumber.Text = statPoints
-						if statPoints == 3000 then
-							statFrame.MaxedStatText.Visible = true
-						else
-							statFrame.MaxedStatText.Visible = false
-						end
+	for _, catagory in playerStats:GetChildren() do
+		for _,stat in catagory:GetChildren() do
+			local function StatDetailsRefresh()
+				local total = stat:GetAttribute("Final")
+				local statPoints = stat:GetAttribute("FlatStatPoint")
+				local flatBonuses = stat:GetAttribute("FlatBuff")
+				local percentBonuses = (stat:GetAttribute("Percent") * 100) .. "%"
+				for _, detailFrame in statDetailsFrame:GetDescendants() do
+					if not detailFrame:IsA("Frame") then
+                        continue
 					end
+					if detailFrame.Name ~= stat.Name then
+						continue
+					end
+					local totalText: TextLabel = detailFrame.StatDetailNumbers.Total
+					local statPointsText: TextLabel = detailFrame.StatDetailNumbers.StatPoint
+					local flatBonusesText: TextLabel = detailFrame.StatDetailNumbers.FlatBonus
+					local percentBonusesText: TextLabel = detailFrame.StatDetailNumbers.PercentBonus
+					totalText.Text = total
+					statPointsText.Text = statPoints
+					flatBonusesText.Text = flatBonuses
+					percentBonusesText.Text = percentBonuses
 				end
 			end
-		end
+			local function StatPointsRefresh()
+				if stat.Parent.Name ~= "MainStats" then
+                    return
+				end
 
-		local function StatDetailsRefresh()
-			local total = stat:GetAttribute("Final")
-			local statPoints = stat:GetAttribute("FlatStatPoint")
-			local flatBonuses = stat:GetAttribute("FlatBuff")
-			local percentBonuses = (stat:GetAttribute("Percent") * 100) .. "%"
-			for _, detailFrame in statDetailsFrame:GetDescendants() do
-				if detailFrame:IsA("Frame") then
-					if detailFrame.Name == stat.Name then
-						local totalText: TextLabel = detailFrame.StatDetailNumbers.Total
-						local statPointsText: TextLabel = detailFrame.StatDetailNumbers.StatPoint
-						local flatBonusesText: TextLabel = detailFrame.StatDetailNumbers.FlatBonus
-						local percentBonusesText: TextLabel = detailFrame.StatDetailNumbers.PercentBonus
-						totalText.Text = total
-						statPointsText.Text = statPoints
-						flatBonusesText.Text = flatBonuses
-						percentBonusesText.Text = percentBonuses
+				local statPoints = stat:GetAttribute("FlatStatPoint")
+				for _, statFrame in statSections:GetChildren() do
+					if not statFrame:IsA("Frame") then
+						continue
+					end
+					if statFrame.Name ~= stat.Name then
+						continue
+					end
+					statFrame.StatNumber.Text = statPoints
+					if statPoints == 3000 then
+						statFrame.MaxedStatText.Visible = true
+					else
+						statFrame.MaxedStatText.Visible = false
 					end
 				end
 			end
-		end
-		StatDetailsRefresh()
-		StatPointsRefresh()
-		stat.AttributeChanged:Connect(function()
+
 			StatDetailsRefresh()
 			StatPointsRefresh()
-		end)
+			stat.AttributeChanged:Connect(function()
+				StatDetailsRefresh()
+				StatPointsRefresh()
+			end)
+		end
 	end
 
 	local confirmPopUp
@@ -559,7 +569,7 @@ function StatsMenuController:Titles()
 			if titleData.Color then
 				titleSlot:FindFirstChild("TitleName"):FindFirstChild("UIGradient").Color = titleData.Color
 			end
-            UIHelper:RotateGradient(titleSlot:FindFirstChild("TitleName"):FindFirstChild("UIGradient"), 16)
+			UIHelper:RotateGradient(titleSlot:FindFirstChild("TitleName"):FindFirstChild("UIGradient"), 16)
 
 			for stat, buff in pairs(titleData.Buffs) do
 				if buff.Percent then
@@ -584,22 +594,27 @@ function StatsMenuController:Titles()
 				end
 			end
 
-
 			local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-            local equipButton = titleSlot:FindFirstChild("Equip"):FindFirstChild("EquipButton")
+			local equipButton = titleSlot:FindFirstChild("Equip"):FindFirstChild("EquipButton")
 			local unequipButton = titleSlot:FindFirstChild("Equip"):FindFirstChild("UnEquipButton")
 
-            UIHelper:ClickEffects(equipButton)
-            UIHelper:ClickEffects(unequipButton)
-            UIHelper:HoverEffects(titleSlot:FindFirstChild("Equip"))
-            UIHelper:RotateGradient(titleSlot:FindFirstChild("Equip"):FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
+			UIHelper:ClickEffects(equipButton)
+			UIHelper:ClickEffects(unequipButton)
+			UIHelper:HoverEffects(titleSlot:FindFirstChild("Equip"))
+			UIHelper:RotateGradient(
+				titleSlot:FindFirstChild("Equip"):FindFirstChild("RGBStroke"):FindFirstChild("UIGradient")
+			)
 
 			titleSlot:FindFirstChild("Equip").MouseEnter:Connect(function()
-				TweenService:Create(titleSlot:FindFirstChild("Equip"), info, { ImageColor3 = Color3.fromRGB(55, 67, 122) }):Play()
+				TweenService
+					:Create(titleSlot:FindFirstChild("Equip"), info, { ImageColor3 = Color3.fromRGB(55, 67, 122) })
+					:Play()
 			end)
 
 			titleSlot:FindFirstChild("Equip").MouseLeave:Connect(function()
-				TweenService:Create(titleSlot:FindFirstChild("Equip"), info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+				TweenService
+					:Create(titleSlot:FindFirstChild("Equip"), info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
+					:Play()
 			end)
 
 			---Equip Title---
@@ -611,7 +626,6 @@ function StatsMenuController:Titles()
 			unequipButton.MouseButton1Click:Connect(function()
 				NetworkingService:FireToServer("UnEquipTitle", titleID)
 			end)
-
 		end
 	end
 
@@ -625,7 +639,7 @@ function StatsMenuController:Titles()
 		UpdateUI(descendant, true)
 	end)
 
-    local function ActiveTitle()
+	local function ActiveTitle()
 		for _, title in titles:GetChildren() do
 			local titleSlot = scrollingFrame:FindFirstChild(title.Name)
 			if titleSlot then
@@ -638,13 +652,11 @@ function StatsMenuController:Titles()
 				end
 			end
 		end
-    end
-    ActiveTitle()
+	end
+	ActiveTitle()
 	titles.ActiveTitle:GetAttributeChangedSignal("ID"):Connect(ActiveTitle)
 end
 
-function StatsMenuController:Armory() 
-    
-end
+function StatsMenuController:Armory() end
 
 return StatsMenuController

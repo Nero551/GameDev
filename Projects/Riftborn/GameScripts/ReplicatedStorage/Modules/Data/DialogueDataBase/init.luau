@@ -2,7 +2,7 @@ local DialogueDataBase = {}
 
 DialogueDataBase.Sources = {}
 
-for _,type in script.Parent:GetChildren() do
+for _,type in script:GetChildren() do
 	if type:IsA("Folder") then
 		DialogueDataBase.Sources[type] = {}
 
@@ -16,7 +16,7 @@ end
 
 function DialogueDataBase:GetDialogueData(Dialogue)
 	for _, category in pairs(DialogueDataBase.Sources) do
-		for _,dialogue:ModuleScript? in pairs(category) do
+		for _,dialogue:ModuleScript in pairs(category) do
 
 			if dialogue.Name == Dialogue then
 				local DialogueData = require(dialogue)

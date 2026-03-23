@@ -4,7 +4,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
-
+local QuestData = require(ReplicatedStorage.Modules.Data.QuestData)
 local AbilityData = require(game.ReplicatedStorage.Modules.Data.AbilityData)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
@@ -363,7 +363,7 @@ function HUDController:Dialogue()
 		skipLine = true
 	end
 
-	NetworkingService:OnClientEvent("ShowDialogue", function(speaker, dialogueData, ended)
+	NetworkingService:OnClientEvent("ShowDialogue", function(speaker,text, options, ended)
 		if ended then
 			DialogueFrame.Visible = false
 			SpeakerName.Text = ""
@@ -377,12 +377,12 @@ function HUDController:Dialogue()
 			end
 		end
 
-		PlayLine(speaker, dialogueData.Text)
+		PlayLine(speaker, text)
 
-		if dialogueData.Options then
-			for option, optioninfo in pairs(dialogueData.Options) do
+		if options then
+			for option, optioninfo in pairs(options) do
 				local optionButton =
-					UIManager:CloneUI("HUD", option, ReplicatedStorage.Assets.GUI.DialogueOption, "OptionFrame")
+					UIManager:CloneUI("HUD", option, ReplicatedStorage.Assets.UI.DialogueOption, "OptionFrame")
 				UIHelper:RotateGradient(optionButton:FindFirstChild("UIGradient"))
 				UIHelper:RotateGradient(optionButton:FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
 				optionButton.Text.Text = optioninfo.Text
@@ -398,51 +398,39 @@ function HUDController:Dialogue()
 end
 
 function HUDController:TrackedQuest()
-	local trackQuestbutton = UIManager:GetUI("HUD", "TrackQuestButton")
+	local player = Players.LocalPlayer
+	local Quests = player:WaitForChild("Quests")
+	local trackedQuest = Quests:FindFirstChild("TrackedQuest")
+	local trackedQuestFrame = UIManager:GetUI("HUD", "TrackedQuestFrame")
+	local trackQuestButton = trackedQuestFrame:FindFirstChild("TrackQuestButton")
 
-	local innerStroke = trackQuestbutton.Parent:FindFirstChild("InnerStroke")
-	local outerStroke = trackQuestbutton.Parent:FindFirstChild("OuterStroke")
+	local innerStroke = trackedQuestFrame:FindFirstChild("InnerStroke")
+	local outerStroke = trackedQuestFrame:FindFirstChild("OuterStroke")
 	UIHelper:RotateGradient(innerStroke:FindFirstChild("UIGradient"))
 	UIHelper:RotateGradient(outerStroke:FindFirstChild("UIGradient"))
 
-	trackQuestbutton.MouseButton1Click:Connect(function()
-		local questName = trackQuestbutton.Parent.TrackedQuestName.Text
+	trackQuestButton.MouseButton1Click:Connect(function()
+		local questName = trackedQuestFrame.TrackedQuestName.Text
 		NetworkingService:FireToServer("TrackQuest", questName)
 	end)
+	UIHelper:ClickEffects(trackQuestButton)
+	UIHelper:HoverEffects(trackQuestButton)
 
-	---Looks BS---
-	local function SizeIncrease(scale: UIScale)
-		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		TweenService:Create(scale, info, { Scale = 1.025 }):Play()
+	local function UpdateTracked()
+		local trackedQuestID = trackedQuest:GetAttribute("ID")
+		if trackedQuestID then
+			local trackedQuestData = QuestData.Quests[trackedQuestID]
+			if trackedQuestData then
+				trackedQuestFrame.Visible = true
+				trackedQuestFrame:FindFirstChild("TrackedQuestName").Text = trackedQuestData.Name
+
+			else
+				trackedQuestFrame.Visible = false
+			end
+		end
 	end
-
-	local function SizeDecrease(scale: UIScale)
-		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		TweenService:Create(scale, info, { Scale = 1 }):Play()
-	end
-
-	local function SizeClickDecrease(scale: UIScale)
-		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-		TweenService:Create(scale, info, { Scale = 0.975 }):Play()
-	end
-
-	local scale = trackQuestbutton.UIScale
-
-	trackQuestbutton.MouseEnter:Connect(function()
-		SizeIncrease(scale)
-	end)
-
-	trackQuestbutton.MouseLeave:Connect(function()
-		SizeDecrease(scale)
-	end)
-
-	trackQuestbutton.MouseButton1Down:Connect(function()
-		SizeClickDecrease(scale)
-	end)
-
-	trackQuestbutton.MouseButton1Up:Connect(function()
-		SizeIncrease(scale)
-	end)
+	UpdateTracked()
+	trackedQuest:GetAttributeChangedSignal("ID"):Connect(UpdateTracked)
 end
 
 function HUDController:Time()
@@ -722,7 +710,7 @@ function HUDController:MainMenuButton()
 
 	local MainMenu = UIManager:GetUI("MainMenu", "MainMenu")
 	local texture = UIManager:GetUI("MainMenu", "Texture")
-	local Lighting = game:GetService("Lighting")
+	
 	local blur = Lighting.Blur
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
