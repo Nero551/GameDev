@@ -1,5 +1,3 @@
-local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
-
 local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
 local DataService = require(game.ServerScriptService.Services.Profile.DataService)
 local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
@@ -90,12 +88,12 @@ end
 ---Update Stats---
 function StatService:UpdateStats(player:Player)
 	local playerStats = DataService:GetTable(player, "Stats")
-	for type, table in pairs(playerStats) do
-		for statType,stat in pairs(table) do
-			stat.FlatStatPoint = math.clamp(stat.FlatStatPoint, 0, 3000)
-			stat.Final = (stat.Base + stat.FlatStatPoint + stat.FlatBuff) * (1 + stat.Percent)
-			local statValue = player:WaitForChild("Stats"):WaitForChild(type):WaitForChild(statType)
-			for type,value in pairs(stat) do
+	for catagory, t in pairs(playerStats) do
+		for statType,statTable in pairs(t) do
+			statTable.FlatStatPoint = math.clamp(statTable.FlatStatPoint, 0, 3000)
+			statTable.Final = (statTable.Base + statTable.FlatStatPoint + statTable.FlatBuff) * (1 + statTable.Percent)
+			local statValue = player:WaitForChild("Stats"):WaitForChild(catagory):WaitForChild(statType)
+			for type,value in pairs(statTable) do
 				statValue:SetAttribute(type,value)
 			end
 		end	
@@ -116,12 +114,10 @@ function StatService:AllocateStatPoint(player:Player, statType, amount)
 	end
 	if amount > playerLevel.StatPoints then
 		amount = playerLevel.StatPoints
-
 	end
 	playerLevel.StatPoints -= amount
 	playerStats.MainStats[statType].FlatStatPoint += amount
 	StatService:UpdateStats(player)
-	NetworkingService:FireToClient(player , "UpdateEXP", playerLevel)
 end
 
 
@@ -137,7 +133,6 @@ function StatService:ResetStats(player:Player)
 	playerStats.MainStats.Mana.FlatStatPoint = 0
 	playerStats.MainStats.RiftBorn.FlatStatPoint = 0
 	StatService:UpdateStats(player)
-	NetworkingService:FireToClient(player , "UpdateEXP", playerLevel)
 end
 
 ---Apply Item Buffs---

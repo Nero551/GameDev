@@ -23,6 +23,8 @@ function LevelService:SetupLevel(player)
 		end
 		value:SetAttribute("Amount", v)
 	end
+
+	LevelService:IncreaseEXP(player, 0)
 end
 
 function LevelService:IncreaseEXP(player , EXP)
@@ -47,7 +49,7 @@ function LevelService:IncreaseEXP(player , EXP)
 				playerLevel.RequiredEXP = math.floor(100 * (playerLevel.CurrentLevel ^ 1.9))
 				playerLevel.StatPoints += 4
 				NetworkingService:FireToClient(player, "PopUp", {
-					["Level"] = playerLevel
+					["Level"] = playerLevel.CurrentLevel
 				})
 			end
 			for stat, v in pairs(playerLevel) do

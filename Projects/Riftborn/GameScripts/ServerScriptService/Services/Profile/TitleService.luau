@@ -24,8 +24,8 @@ function TitleService:SetupTitles(player)
 	activeTitle:SetAttribute("ID", playerTitles.ActiveTitle or "")
 	activeTitle.Value = playerTitles.ActiveTitle or ""
 
-	for titleID,titleInfo in pairs(playerTitles) do
-		local titleData = TitleData:GetTitleID(titleID)
+	for titleID,titleInfo in pairs(playerTitles.Titles) do
+		local titleData = TitleData.Titles[titleID]
 		if not titleData then return end
 		local value = TitlesFolder:FindFirstChild(titleID)
 		if not value then
@@ -47,7 +47,7 @@ function TitleService:GetTitle(player, titleID)
 		playerTitles.Titles[titleID] = {}
 	end
 	
-	local titlesFolder = player.Titles
+	local titlesFolder = player:WaitForChild("Titles")
 	local value = titlesFolder:FindFirstChild(titleID)
 	if not value then
 		value = Instance.new("StringValue")
@@ -67,7 +67,7 @@ function TitleService:EquipTitle(player, titleID)
 	if not playerTitles.Titles[titleID] then
 		return
 	end
-	local titleData = TitleData[titleID]
+	local titleData = TitleData.Titles[titleID]
 	if not titleData then
 		return
 	end
@@ -80,7 +80,7 @@ function TitleService:EquipTitle(player, titleID)
 		GameEvents.AddBuff:Fire(player, titleData, titleID)
 	end
 
-	player.PlayerTitles.ActiveTitle:SetAttribute("ID", playerTitles.ActiveTitle or "")
+	player.Titles.ActiveTitle:SetAttribute("ID", playerTitles.ActiveTitle or "")
 
 end
 
@@ -90,7 +90,7 @@ function TitleService:UnEquipTitle(player)
 		return
 	end
 	local titleID = playerTitles.ActiveTitle
-	local titleData = TitleData[titleID]
+	local titleData = TitleData.Titles[titleID]
 	if not titleData then
 		return
 	end
@@ -100,7 +100,7 @@ function TitleService:UnEquipTitle(player)
 	end
 
 	playerTitles.ActiveTitle = nil
-	player.PlayerTitles.ActiveTitle:SetAttribute("ID", playerTitles.ActiveTitle or "")
+	player.Titles.ActiveTitle:SetAttribute("ID", playerTitles.ActiveTitle or "")
 end
 
 return TitleService

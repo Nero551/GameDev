@@ -26,7 +26,7 @@ local function GetSize(...)
 end
 
 local function Debug(remoteName,...)
-	warn(remoteName, GetSize(...),{debug.traceback()})
+	warn(remoteName, GetSize(...),{debug.traceback()}, {...})
 end
 
 local function AssertServer()

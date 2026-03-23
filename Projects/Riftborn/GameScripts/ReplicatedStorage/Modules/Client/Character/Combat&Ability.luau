@@ -26,7 +26,9 @@ return function()
 		end	
 	end)
 
+	local elapsed = 0
 	Connections:AddConnection(character, "Character", "Block & Attack",RunService.RenderStepped:Connect(function(deltaTime: number)
+		elapsed += deltaTime
 		------Death Handler------
 		if StateChecker:CheckState(character, "Dead") then
 			Connections:RemoveConnection(character, "Character", "Block & Attack")
@@ -39,11 +41,11 @@ return function()
 		and not StateChecker:CheckState(character, "Attacking") and ActionVerifier:CanAttack(character)  then
 			
 			local tool = character:FindFirstChildWhichIsA("Tool")
-			if tool then
+			if tool and elapsed > 0.2 then
+				elapsed = 0
 				NetworkingService:FireToServer("Attack")
 			end
 		end
-
 		------Blocking------
 		if UserInputService:IsKeyDown(Enum.KeyCode.F) and ActionVerifier:CanBlock(character) then
 			local tool = character:FindFirstChildWhichIsA("Tool")

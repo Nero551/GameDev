@@ -20,12 +20,12 @@ function PopupController:Creator()
 		if not popupInfo then
 			return
 		end
+		local popup = popupTemplate:Clone()
+		popup.Parent = popupsFrame
 
 		if popupInfo.TitleData then
 			local titleData = popupInfo.TitleData
 
-			local AcquiredTitlePopup = popupTemplate:Clone()
-			AcquiredTitlePopup.Parent = popupsFrame
 			local colors = titleData.Color
 
 			if colors then
@@ -40,26 +40,24 @@ function PopupController:Creator()
 					math.floor(color.B * 255)
 				)
 
-				AcquiredTitlePopup.PopUpText.RichText = true
-				AcquiredTitlePopup.PopUpText.Text = 'Acquired Title <font color="'
+				popup.PopUpText.RichText = true
+				popup.PopUpText.Text = 'Acquired Title <font color="'
 					.. hexColor
 					.. '">'
 					.. titleData.Name
 					.. "</font>"
 			else
-				AcquiredTitlePopup.PopUpText.Text = "Acquired Title " .. titleData.Name
+				popup.PopUpText.Text = "Acquired Title " .. titleData.Name
 			end
 		end
 
 		---No Mana For Ability---
 		if popupInfo.AbilityName and popupInfo.RequiredMana then
-			local NoManaPopup = popupTemplate:Clone()
-			NoManaPopup.PopUpText.Text = "Not Enough Mana For ["
+			popup.PopUpText.Text = "Not Enough Mana For ["
 				.. popupInfo.AbilityName
 				.. "] ("
 				.. popupInfo.RequiredMana
 				.. ")"
-			NoManaPopup.Parent = popupsFrame
 		end
 
 		if not popupInfo.Level then
@@ -68,28 +66,24 @@ function PopupController:Creator()
 
 		---EXP---
 		if popupInfo.EXP and popupInfo.EXP ~= 0 then
-			local obtainedExpPopup = popupTemplate:Clone()
-			obtainedExpPopup.PopUpText.Text = 'Obtained <font color="#fff131">' .. popupInfo.EXP .. " EXP </font>"
-			obtainedExpPopup.Parent = popupsFrame
+			popup.PopUpText.RichText = true
+			popup.PopUpText.Text = 'Obtained <font color="#fff131">' .. popupInfo.EXP .. " EXP </font>"
 		end
 
 		---Level Up---
 		if popupInfo.Level then
-			local levelPopup = popupTemplate:Clone()
-			levelPopup.PopUpText.Text = "Leveled Up (" .. popupInfo.Level.CurrentLevel .. ")"
-			levelPopup.PopUpText.TextColor3 = Color3.fromHex("#fff131")
-			levelPopup.Parent = popupsFrame
+			popup.PopUpText.Text = "Leveled Up (" .. popupInfo.Level .. ")"
+			popup.PopUpText.TextColor3 = Color3.fromHex("#fff131")
 			ReplicatedStorage.Assets.Shared.Sounds.LevelUp:Play()
 
 			---Item Drop---
 		elseif popupInfo.ItemName and popupInfo.ItemRarity and popupInfo.ItemAmount then
-			local obtainedItemPopup = ReplicatedStorage.Assets.UI.PopUp:Clone()
-			obtainedItemPopup.PopUpText.RichText = true
+			popup.PopUpText.RichText = true
 
 			local itemRarityColor = RarityData[popupInfo.ItemRarity].Color
 
 			if popupInfo.ItemAmount ~= 1 then
-				obtainedItemPopup.PopUpText.Text = "Obtained "
+				popup.PopUpText.Text = "Obtained "
 					.. popupInfo.ItemAmount
 					.. ' <font color="'
 					.. itemRarityColor
@@ -97,60 +91,51 @@ function PopupController:Creator()
 					.. popupInfo.ItemName
 					.. "</font>"
 			else
-				obtainedItemPopup.PopUpText.Text = 'Obtained <font color="'
+				popup.PopUpText.Text = 'Obtained <font color="'
 					.. itemRarityColor
 					.. '">'
 					.. popupInfo.ItemName
 					.. "</font>"
 			end
-			obtainedItemPopup.Parent = popupsFrame
 
 			---Currency Drop---
 		elseif popupInfo.Currency and popupInfo.CurrencyAmount then
-			local obtainedCurrencyPopup = popupTemplate:Clone()
-			obtainedCurrencyPopup.PopUpText.RichText = true
-			obtainedCurrencyPopup.PopUpText.Text = "Obtained " .. popupInfo.CurrencyAmount .. " " .. popupInfo.Currency
+			popup.PopUpText.RichText = true
+			popup.PopUpText.Text = "Obtained " .. popupInfo.CurrencyAmount .. " " .. popupInfo.Currency
 			if popupInfo.Currency == "Yen" then
-				obtainedCurrencyPopup.PopUpText.Text = 'Obtained <font color="#ffcf21">'
+				popup.PopUpText.Text = 'Obtained <font color="#ffcf21">'
 					.. popupInfo.CurrencyAmount
 					.. " "
 					.. popupInfo.Currency
 					.. "</font>"
 			elseif popupInfo.Currency == "Fracta" then
-				obtainedCurrencyPopup.PopUpText.Text = 'Obtained <font color="#c022ff">'
+				popup.PopUpText.Text = 'Obtained <font color="#c022ff">'
 					.. popupInfo.CurrencyAmount
 					.. " "
 					.. popupInfo.Currency
 					.. "</font>"
 			end
-			obtainedCurrencyPopup.Parent = popupsFrame
 
 			---Quest---
 		elseif popupInfo.QuestName then
 			---Quest Completed---
 			if popupInfo.QuestCompleted == true then
-				local completedQuestPopup = popupTemplate:Clone()
-				completedQuestPopup.PopUpText.RichText = true
-				completedQuestPopup.PopUpText.Text = 'Completed Quest  <font color="#4bff8d">"'
+				popup.PopUpText.RichText = true
+				popup.PopUpText.Text = 'Completed Quest  <font color="#4bff8d">"'
 					.. popupInfo.QuestName
 					.. '"</font>'
-				completedQuestPopup.Parent = popupsFrame
 				---Quest Abandoned---
 			elseif popupInfo.QuestAbandonded == true then
-				local AbandonedQuestPopup = popupTemplate:Clone()
-				AbandonedQuestPopup.PopUpText.RichText = true
-				AbandonedQuestPopup.PopUpText.Text = 'Abandoned Quest <font color = "#ff030b">"'
+				popup.PopUpText.RichText = true
+				popup.PopUpText.Text = 'Abandoned Quest <font color = "#ff030b">"'
 					.. popupInfo.QuestName
 					.. '"</font>'
-				AbandonedQuestPopup.Parent = popupsFrame
 			else
 				---Quest Accepted---
-				local AcceptedQuestPopup = popupTemplate:Clone()
-				AcceptedQuestPopup.PopUpText.RichText = true
-				AcceptedQuestPopup.PopUpText.Text = 'Accepted Quest  <font color="#4bff8d">"'
+				popup.PopUpText.RichText = true
+				popup.PopUpText.Text = 'Accepted Quest  <font color="#4bff8d">"'
 					.. popupInfo.QuestName
 					.. '"</font>'
-				AcceptedQuestPopup.Parent = popupsFrame
 			end
 		end
 	end)

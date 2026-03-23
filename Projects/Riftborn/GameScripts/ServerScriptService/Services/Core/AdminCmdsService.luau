@@ -1,5 +1,3 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local modules =  ReplicatedStorage.Modules
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local TitleData = require(game.ReplicatedStorage.Modules.Data.TitleData)
 local DataService = require(game.ServerScriptService.Services.Profile.DataService)
@@ -29,7 +27,6 @@ local AdminCmdsService = {}
 function AdminCmdsService:DeleteData(msgParts)
 	local playerWanted = FindPlayerByPartialName(msgParts[2])
 	if not playerWanted then return end
-	DataService:Delete(playerWanted)
 	DataService.PlayerDatas[playerWanted] = nil
 	playerWanted:Kick("Your data has been deleted. Rejoin.")
 end
@@ -88,10 +85,8 @@ function AdminCmdsService:RemoveItem(msgParts)
 	for i = 3, itemPartsEnd do
 		table.insert(itemNameParts, msgParts[i])
 	end
-	print(table.concat(itemNameParts, " "))
 	local itemName = table.concat(itemNameParts, " ")
 	itemName = CapitalizeWords(itemName)
-	print(itemName)
 	local  itemData,itemID = ItemDataBase:GetItemData(itemName)
 	if not itemData or not itemID then
 		warn("Couldn't Find "..itemName)

@@ -381,10 +381,11 @@ function HUDController:Dialogue()
 
 		if dialogueData.Options then
 			for option, optioninfo in pairs(dialogueData.Options) do
-				local optionButton = ReplicatedStorage.Assets.GUI.DialogueOption:Clone()
-				optionButton.Name = option
+				local optionButton =
+					UIManager:CloneUI("HUD", option, ReplicatedStorage.Assets.GUI.DialogueOption, "OptionFrame")
+				UIHelper:RotateGradient(optionButton:FindFirstChild("UIGradient"))
+				UIHelper:RotateGradient(optionButton:FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
 				optionButton.Text.Text = optioninfo.Text
-				optionButton.Parent = DialogueFrame.OptionFrame
 				optionButton.MouseButton1Click:Connect(function()
 					NetworkingService:FireToServer("SelectDialogueOption", option)
 				end)

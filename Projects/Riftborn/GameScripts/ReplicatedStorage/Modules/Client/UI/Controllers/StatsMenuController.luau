@@ -1,5 +1,7 @@
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
+local ConfirmPopup = require(ReplicatedStorage.Modules.Client.UI.Components.ConfirmPopup)
 local EXPBar = require(ReplicatedStorage.Modules.Client.UI.Components.EXPBar)
 local HealthBar = require(ReplicatedStorage.Modules.Client.UI.Components.HealthBar)
 local ManaBar = require(ReplicatedStorage.Modules.Client.UI.Components.ManaBar)
@@ -129,7 +131,8 @@ function StatsMenuController:Overview()
 	---Title---
 	local activeTitle: StringValue = Player:WaitForChild("Titles"):FindFirstChild("ActiveTitle")
 	local titleText = UIManager:GetUI("StatsMenu", "Overview"):FindFirstChild("Info"):FindFirstChild("Title")
-	local function Title()
+    UIHelper:RotateGradient(titleText:FindFirstChild("UIGradient",16))
+    local function Title()
 		local titleData = TitleData.Titles[activeTitle:GetAttribute("ID")]
 		if not titleData then
 			titleText.Text = "No Title"
@@ -245,7 +248,12 @@ function StatsMenuController:Overview()
 					continue
 				end
 
-				local icon = ReplicatedStorage.Assets.UI.Icons:FindFirstChild(itemData.Rarity .. "Item"):Clone()
+				local icon = UIManager:CloneUI(
+					"StatsMenu",
+					itemID,
+					ReplicatedStorage.Assets.UI.Icons:FindFirstChild(itemData.Rarity .. "Item"),
+					frame.Name
+				)
 				icon:FindFirstChild("OwnedAmount"):Destroy()
 				icon:FindFirstChild("NameText"):Destroy()
 				icon:FindFirstChild("Border"):Destroy()
@@ -351,14 +359,292 @@ function StatsMenuController:Overview()
 	equipped.ChildAdded:Connect(UpdateEquipment)
 end
 
-function StatsMenuController:Stats() end
+function StatsMenuController:Stats()
+	local player = game:GetService("Players").LocalPlayer
+	local playerStats = player:WaitForChild("Stats")
+	local playerLevel = player:WaitForChild("Level")
+	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+	local resetButton = UIManager:GetUI("StatsMenu", "ResetStatsButton")
+	local statDetailsFrame = UIManager:GetUI("StatsMenu", "StatDetailsFrame"):FindFirstChild("Stats")
+	local statPointsFrame = UIManager:GetUI("StatsMenu", "StatPointsFrame")
+	local statSections = statPointsFrame:FindFirstChild("StatSections")
+
+	UIHelper:ClickEffects(resetButton)
+	UIHelper:HoverEffects(resetButton)
+	UIHelper:RotateGradient(statDetailsFrame.Parent:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
+	UIHelper:RotateGradient(resetButton:FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
+	UIHelper:RotateGradient(statPointsFrame:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
+	UIHelper:RotateGradient(
+		statPointsFrame:FindFirstChild("Amount"):FindFirstChild("RGBStroke"):FindFirstChild("UIGradient")
+	)
+
+	statPointsFrame:FindFirstChild("AvailablePoints").Text = "Points: "
+		.. playerLevel:FindFirstChild("StatPoints"):GetAttribute("Amount")
+	playerLevel:FindFirstChild("StatPoints"):GetAttributeChangedSignal("Amount"):Connect(function()
+		statPointsFrame:FindFirstChild("AvailablePoints").Text = "Points: "
+			.. playerLevel:FindFirstChild("StatPoints"):GetAttribute("Amount")
+	end)
+
+	for _, statFrame in statSections:GetChildren() do
+		if statFrame:IsA("Frame") then
+			UIHelper:RotateGradient(statFrame:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
+			local allocateButton = statFrame:FindFirstChild("AllocateButton")
+			UIHelper:ClickEffects(allocateButton)
+			UIHelper:HoverEffects(allocateButton)
+			UIHelper:RotateGradient(allocateButton:FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
+			allocateButton.MouseButton1Click:Connect(function()
+				local amount = statPointsFrame.Amount.AmountText.Text
+				if tonumber(amount) == nil then
+					amount = 1
+				end
+				NetworkingService:FireToServer("AllocateStatPoint", statFrame.Name, tonumber(amount))
+			end)
+			allocateButton.MouseEnter:Connect(function()
+				TweenService:Create(allocateButton["+"], info, { TextColor3 = Color3.fromRGB(255, 154, 213) }):Play()
+				TweenService:Create(allocateButton.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 154, 213) })
+					:Play()
+				TweenService:Create(allocateButton, info, { ImageColor3 = Color3.fromRGB(26, 21, 38) }):Play()
+			end)
+
+			allocateButton.MouseLeave:Connect(function()
+				TweenService:Create(allocateButton["+"], info, { TextColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+				TweenService:Create(allocateButton.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
+					:Play()
+				TweenService:Create(allocateButton, info, { ImageColor3 = Color3.fromRGB(30, 36, 66) }):Play()
+			end)
+		end
+	end
+
+	for _, detailFrame in statDetailsFrame:GetDescendants() do
+		if detailFrame:IsA("Frame") then
+			if detailFrame:FindFirstChild("StatCatagory") then
+				UIHelper:RotateGradient(detailFrame:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
+			end
+		end
+	end
+	for _, stat in playerStats:FindFirstChild("MainStats"):GetChildren() do
+		local function StatPointsRefresh()
+			local statPoints = stat:GetAttribute("FlatStatPoint")
+			for _, statFrame in statSections:GetChildren() do
+				if statFrame:IsA("Frame") then
+					if statFrame.Name == stat.Name then
+						statFrame.StatNumber.Text = statPoints
+						if statPoints == 3000 then
+							statFrame.MaxedStatText.Visible = true
+						else
+							statFrame.MaxedStatText.Visible = false
+						end
+					end
+				end
+			end
+		end
+
+		local function StatDetailsRefresh()
+			local total = stat:GetAttribute("Final")
+			local statPoints = stat:GetAttribute("FlatStatPoint")
+			local flatBonuses = stat:GetAttribute("FlatBuff")
+			local percentBonuses = (stat:GetAttribute("Percent") * 100) .. "%"
+			for _, detailFrame in statDetailsFrame:GetDescendants() do
+				if detailFrame:IsA("Frame") then
+					if detailFrame.Name == stat.Name then
+						local totalText: TextLabel = detailFrame.StatDetailNumbers.Total
+						local statPointsText: TextLabel = detailFrame.StatDetailNumbers.StatPoint
+						local flatBonusesText: TextLabel = detailFrame.StatDetailNumbers.FlatBonus
+						local percentBonusesText: TextLabel = detailFrame.StatDetailNumbers.PercentBonus
+						totalText.Text = total
+						statPointsText.Text = statPoints
+						flatBonusesText.Text = flatBonuses
+						percentBonusesText.Text = percentBonuses
+					end
+				end
+			end
+		end
+		StatDetailsRefresh()
+		StatPointsRefresh()
+		stat.AttributeChanged:Connect(function()
+			StatDetailsRefresh()
+			StatPointsRefresh()
+		end)
+	end
+
+	local confirmPopUp
+	local confirmConnection
+
+	local function GetConfirmPopup()
+		if confirmPopUp and confirmPopUp.Parent then
+			return confirmPopUp
+		end
+
+		confirmPopUp = ConfirmPopup()
+
+		confirmPopUp:GetPropertyChangedSignal("Visible"):Connect(function()
+			if confirmPopUp.Visible then
+				TweenService:Create(resetButton.ResetText, info, { TextColor3 = Color3.fromRGB(255, 154, 213) }):Play()
+				TweenService:Create(resetButton.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 154, 213) }):Play()
+				TweenService:Create(resetButton, info, { ImageColor3 = Color3.fromRGB(60, 49, 88) }):Play()
+			else
+				TweenService:Create(resetButton.ResetText, info, { TextColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+				TweenService:Create(resetButton.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+				TweenService:Create(resetButton, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+			end
+		end)
+
+		return confirmPopUp
+	end
+
+	resetButton.MouseButton1Click:Connect(function()
+		local popup = GetConfirmPopup()
+		local confirmButton = popup:FindFirstChild("ConfirmButton")
+
+		popup.TextLabel.Text = "Reset Stats?"
+		popup.Visible = true
+		TweenService:Create(popup, info, { Size = UDim2.fromScale(0.262, 0.49) }):Play()
+
+		if confirmConnection then
+			confirmConnection:Disconnect()
+		end
+
+		confirmConnection = confirmButton.MouseButton1Click:Connect(function()
+			NetworkingService:FireToServer("ResetStatPoints")
+			popup.Visible = false
+			popup:Destroy()
+		end)
+	end)
+
+	resetButton.MouseEnter:Connect(function()
+		if confirmPopUp and not confirmPopUp.Visible then
+			TweenService:Create(resetButton, info, { ImageColor3 = Color3.fromRGB(87, 107, 194) }):Play()
+		end
+	end)
+
+	resetButton.MouseLeave:Connect(function()
+		if confirmPopUp and not confirmPopUp.Visible then
+			TweenService:Create(resetButton, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+		end
+	end)
+end
 
 function StatsMenuController:Spells() end
 
 function StatsMenuController:RiftBorn() end
 
-function StatsMenuController:Armory() end
+function StatsMenuController:Titles()
+	local player = Players.LocalPlayer
+	local titles = player:WaitForChild("Titles")
+	local titleSelection = UIManager:GetUI("StatsMenu", "TitlesSelection")
+	local scrollingFrame = UIManager:GetUI("StatsMenu", "TitleScrollingFrame")
 
-function StatsMenuController:Titles() end
+	UIHelper:RotateGradient(scrollingFrame:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
+	UIHelper:RotateGradient(titleSelection:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
+
+	local function UpdateUI(descendant, remove)
+		local titleID = descendant.Name
+		local titleData = TitleData.Titles[titleID]
+		if not titleData then
+			return
+		end
+
+		local titleSlot = scrollingFrame:FindFirstChild(titleID)
+		if remove and titleSlot then
+			titleSlot:Destroy()
+		end
+
+		if not titleSlot then
+			titleSlot =
+				UIManager:CloneUI("StatsMenu", titleID, ReplicatedStorage.Assets.UI.Title, "TitleScrollingFrame")
+			UIHelper:RotateGradient(titleSlot:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
+
+			titleSlot.TitleName.Text = titleData.Name
+			if titleData.Color then
+				titleSlot:FindFirstChild("TitleName"):FindFirstChild("UIGradient").Color = titleData.Color
+			end
+            UIHelper:RotateGradient(titleSlot:FindFirstChild("TitleName"):FindFirstChild("UIGradient"), 16)
+
+			for stat, buff in pairs(titleData.Buffs) do
+				if buff.Percent then
+					local buffText = titleSlot.TitleBuffs:FindFirstChild(stat .. "Percent")
+					if not buffText then
+						buffText = titleSlot.TitleBuffs.Template:Clone()
+						buffText.Name = stat .. buff.Percent
+						buffText.Visible = true
+						buffText.Parent = titleSlot.TitleBuffs
+						buffText.Text = "+" .. (buff.Percent * 100) .. "% " .. stat
+					end
+				end
+				if buff.Flat then
+					local buffText = titleSlot.TitleBuffs:FindFirstChild(stat .. "Flat")
+					if not buffText then
+						buffText = titleSlot.TitleBuffs.Template:Clone()
+						buffText.Name = stat .. buff.Flat
+						buffText.Visible = true
+						buffText.Parent = titleSlot.TitleBuffs
+						buffText.Text = "+" .. buff.Flat .. " " .. stat
+					end
+				end
+			end
+
+
+			local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+            local equipButton = titleSlot:FindFirstChild("Equip"):FindFirstChild("EquipButton")
+			local unequipButton = titleSlot:FindFirstChild("Equip"):FindFirstChild("UnEquipButton")
+
+            UIHelper:ClickEffects(equipButton)
+            UIHelper:ClickEffects(unequipButton)
+            UIHelper:HoverEffects(titleSlot:FindFirstChild("Equip"))
+            UIHelper:RotateGradient(titleSlot:FindFirstChild("Equip"):FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
+
+			titleSlot:FindFirstChild("Equip").MouseEnter:Connect(function()
+				TweenService:Create(titleSlot:FindFirstChild("Equip"), info, { ImageColor3 = Color3.fromRGB(55, 67, 122) }):Play()
+			end)
+
+			titleSlot:FindFirstChild("Equip").MouseLeave:Connect(function()
+				TweenService:Create(titleSlot:FindFirstChild("Equip"), info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+			end)
+
+			---Equip Title---
+			equipButton.MouseButton1Click:Connect(function()
+				NetworkingService:FireToServer("EquipTitle", titleID)
+			end)
+
+			---unEquip Title---
+			unequipButton.MouseButton1Click:Connect(function()
+				NetworkingService:FireToServer("UnEquipTitle", titleID)
+			end)
+
+		end
+	end
+
+	for _, descendant in titles:GetDescendants() do
+		UpdateUI(descendant)
+	end
+	titles.DescendantAdded:Connect(function(descendant)
+		UpdateUI(descendant)
+	end)
+	titles.DescendantRemoving:Connect(function(descendant)
+		UpdateUI(descendant, true)
+	end)
+
+    local function ActiveTitle()
+		for _, title in titles:GetChildren() do
+			local titleSlot = scrollingFrame:FindFirstChild(title.Name)
+			if titleSlot then
+				if titles.ActiveTitle:GetAttribute("ID") == title.Name then
+					titleSlot:FindFirstChild("Equip"):FindFirstChild("EquipButton").Visible = false
+					titleSlot:FindFirstChild("Equip"):FindFirstChild("UnEquipButton").Visible = true
+				else
+					titleSlot:FindFirstChild("Equip"):FindFirstChild("EquipButton").Visible = true
+					titleSlot:FindFirstChild("Equip"):FindFirstChild("UnEquipButton").Visible = false
+				end
+			end
+		end
+    end
+    ActiveTitle()
+	titles.ActiveTitle:GetAttributeChangedSignal("ID"):Connect(ActiveTitle)
+end
+
+function StatsMenuController:Armory() 
+    
+end
 
 return StatsMenuController

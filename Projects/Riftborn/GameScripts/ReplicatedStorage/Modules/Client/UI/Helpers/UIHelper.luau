@@ -5,9 +5,9 @@ local UIHelper = {}
 local hoverSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Hover
 local clickSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Click
 
-function UIHelper:RotateGradient(gradient)
+function UIHelper:RotateGradient(gradient, duration)
 	if gradient and gradient:IsA("UIGradient") then
-		local info = TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true)
+		local info = TweenInfo.new((duration or 5), Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true)
 		TweenService:Create(gradient, info, { Rotation = 405 }):Play()
 	end
 end
