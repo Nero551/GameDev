@@ -10,6 +10,7 @@ local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
 local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
 local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+local RarityData = require(ReplicatedStorage.Modules.Data.RarityData)
 local TitleData = require(ReplicatedStorage.Modules.Data.TitleData)
 local FormulaApplier = require(ReplicatedStorage.Modules.Helpers.FormulaApplier)
 local StatsMenuController = {}
@@ -424,7 +425,7 @@ function StatsMenuController:Stats()
 		end
 	end
 	for _, catagory in playerStats:GetChildren() do
-		for _,stat in catagory:GetChildren() do
+		for _, stat in catagory:GetChildren() do
 			local function StatDetailsRefresh()
 				local total = stat:GetAttribute("Final")
 				local statPoints = stat:GetAttribute("FlatStatPoint")
@@ -432,7 +433,7 @@ function StatsMenuController:Stats()
 				local percentBonuses = (stat:GetAttribute("Percent") * 100) .. "%"
 				for _, detailFrame in statDetailsFrame:GetDescendants() do
 					if not detailFrame:IsA("Frame") then
-                        continue
+						continue
 					end
 					if detailFrame.Name ~= stat.Name then
 						continue
@@ -449,7 +450,7 @@ function StatsMenuController:Stats()
 			end
 			local function StatPointsRefresh()
 				if stat.Parent.Name ~= "MainStats" then
-                    return
+					return
 				end
 
 				local statPoints = stat:GetAttribute("FlatStatPoint")
@@ -658,9 +659,194 @@ function StatsMenuController:Titles()
 end
 
 function StatsMenuController:Armory()
+	local player = Players.LocalPlayer
+	local inventory = player:WaitForChild("Inventory")
+	local equipped = player:WaitForChild("Equipped")
+	local armory = UIManager:GetUI("StatsMenu", "Armory")
+	local armoryList = armory:FindFirstChild("ArmoryList")
+	local armoryInfo = armory:FindFirstChild("ArmoryInfo")
 
+	UIHelper:RotateGradient(armoryInfo:FindFirstChild("InnerStroke"):FindFirstChild("UIGradient"))
+	UIHelper:RotateGradient(armoryInfo:FindFirstChild("OuterStroke"):FindFirstChild("UIGradient"))
+	UIHelper:RotateGradient(armoryList:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
+	UIHelper:RotateGradient(armoryList:FindFirstChild("Search"):FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
+
+	local itemFrame = armoryList:FindFirstChild("ArmoryScrollingFrame")
+	local infoImage = armoryInfo.ItemImage
+	local infoName = armoryInfo.ItemName
+	local infoType = armoryInfo.ItemType
+	local infoRarity = armoryInfo.ItemRarity
+	local infoDescription = armoryInfo.Description
+	local abiltiesFrame = armoryInfo:FindFirstChild("Abilties")
+	local statsFrame = armoryInfo:FindFirstChild("Stats")
+	local infoMastery = armoryInfo.ItemMastery
+	local equipIcon = armoryInfo:FindFirstChild("Equip")
+	local equipButton = equipIcon:FindFirstChild("EquipButton")
+	local unequipButton = equipIcon:FindFirstChild("UnEquipButton")
+
+	local IconSelected = nil
+	local PrevIconSelected = nil
+
+	armoryInfo.Visible = false
+
+	for _, itemSlot in itemFrame:GetChildren() do
+		if itemSlot:IsA("ImageButton") then
+			itemSlot:Destroy()
+		end
+	end
+	local function UpdateUI(descendant: Instance, remove)
+		local itemID = descendant.Name
+
+		if not string.find(itemID, "weapon") and not string.find(itemID, "armor") then
+			print(itemID)
+			return
+		end
+		local itemData = ItemDataBase:GetItemData(itemID)
+
+		local itemSlot = itemFrame:FindFirstChild(itemID)
+		if itemSlot and remove then
+			itemSlot:Destroy()
+			return
+		end
+
+		if not itemSlot then
+			itemSlot = UIManager:CloneUI(
+				"StatsMenu",
+				itemID,
+				ReplicatedStorage.Assets.UI.Icons[itemData.Rarity .. "Item"],
+				"ArmoryScrollingFrame"
+			)
+			UIHelper:ClickEffects(itemSlot)
+			UIHelper:HoverEffects(itemSlot)
+			print(itemSlot:GetFullName())
+			local border = itemSlot:FindFirstChild("Border")
+			UIHelper:RotateGradient(border:FindFirstChild("UIGradient"))
+
+			local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+			itemSlot.MouseEnter:Connect(function()
+				itemSlot.ImageColor3 = Color3.fromHex("#eeeeee")
+				if IconSelected ~= itemSlot then
+					TweenService:Create(border, info, { ImageColor3 = Color3.fromRGB(71, 88, 158) }):Play()
+				end
+			end)
+
+			itemSlot.MouseLeave:Connect(function()
+				itemSlot.ImageColor3 = Color3.fromHex("#ffffff")
+				if IconSelected ~= itemSlot then
+					TweenService:Create(border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+				end
+			end)
+
+			itemSlot.MouseButton1Click:Connect(function()
+				PrevIconSelected = IconSelected
+				IconSelected = itemSlot
+				if IconSelected ~= nil then
+					TweenService:Create(IconSelected.Border, info, { ImageColor3 = Color3.fromRGB(114, 142, 255) })
+						:Play()
+				end
+				if PrevIconSelected ~= nil and PrevIconSelected ~= IconSelected then
+					TweenService:Create(PrevIconSelected.Border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
+						:Play()
+				end
+
+				---Info Setup---
+				
+				armoryInfo:SetAttribute("ItemName", itemData.Name)
+				armoryInfo:SetAttribute("ItemID", itemID)
+				infoImage.Image = itemData.Icon
+				infoName.Text = itemData.Name
+				infoName.TextColor3 = Color3.fromHex(RarityData[itemData.Rarity].Color)
+				infoType.Text = itemData.Type
+				infoRarity.Text = itemData.Rarity
+				infoRarity.TextColor3 = Color3.fromHex(RarityData[itemData.Rarity].Color)
+				armoryInfo.Visible = true
+				infoDescription.Text = itemData.Description
+				equipIcon.Visible = true
+				statsFrame.Visible = true
+
+				---If Item Is A Weapon---
+				if string.find(itemID, "weapon") then
+					infoMastery.Visible = true
+					abiltiesFrame.Visible = true
+					---If Item Is An Armor
+				elseif string.find(itemID, "armor") then
+					infoMastery.Visible = false
+					abiltiesFrame.Visible = false
+				end
+
+				if
+					equipped:FindFirstChild(itemData.Type)
+					and equipped:FindFirstChild(itemData.Type):GetAttribute("Equipped") == itemID
+				then
+					TweenService:Create(equipButton, info, { TextTransparency = 1 }):Play()
+					TweenService:Create(unequipButton, info, { TextTransparency = 0 }):Play()
+					equipButton.Visible = false
+					unequipButton.Visible = true
+				else
+					TweenService:Create(equipButton, info, { TextTransparency = 0 }):Play()
+					TweenService:Create(unequipButton, info, { TextTransparency = 1 }):Play()
+					equipButton.Visible = true
+					unequipButton.Visible = false
+				end
+			end)
+		end
+		local equippedIcon = itemSlot:FindFirstChild("EquippedIcon")
+		itemSlot.NameText.Text = itemData.Name
+		itemSlot.Icon.Image = itemData.Icon
+		if itemSlot.OwnedAmount then
+			itemSlot.OwnedAmount:Destroy()
+		end
+		if
+			equipped:FindFirstChild(itemData.Type)
+			and equipped:FindFirstChild(itemData.Type):GetAttribute("Equipped") == itemID
+		then
+			equippedIcon.Visible = true
+		else
+			equippedIcon.Visible = false
+		end
+	end
+
+	for _, descendant in inventory:GetDescendants() do
+		UpdateUI(descendant)
+	end
+
+	inventory.DescendantAdded:Connect(function(descendant)
+		UpdateUI(descendant)
+	end)
+
+	inventory.DescendantRemoving:Connect(function(descendant)
+		UpdateUI(descendant, true)
+	end)
+
+	---Search---
+	local searchBox = UIManager:GetUI("StatsMenu", "SearchBox")
+	UIHelper:RotateGradient(searchBox.Parent:FindFirstChild("UIGradient"))
+	UIHelper:RotateGradient(searchBox.Parent:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
+
+	searchBox:GetPropertyChangedSignal("Text"):Connect(function()
+		local text = searchBox.Text:lower()
+
+		for _, icon in itemFrame:GetChildren() do
+			if icon:IsA("ImageButton") then
+				local itemName = icon.NameText.Text:lower()
+
+				if text == "" then
+					icon.Visible = true
+				else
+					icon.Visible = false
+
+					for word in string.gmatch(itemName, "%S+") do
+						if string.sub(word, 1, #text) == text then
+							icon.Visible = true
+							break
+						end
+					end
+				end
+			end
+		end
+	end)
 end
-
 
 function StatsMenuController:RandomGradients()
 	local texture = UIManager:GetUI("StatsMenu", "Texture")
