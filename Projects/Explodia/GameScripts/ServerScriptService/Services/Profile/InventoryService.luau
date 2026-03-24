@@ -16,14 +16,12 @@ function InventoryService:SetupInventory(player)
 
 	local Inventory = DataService:GetTable(player, "Inventory")
 	for itemID, itemInfo in pairs(Inventory) do
-		local itemData = ItemDataBase:GetItemData(itemID)
 		local value = Folder:FindFirstChild(itemID)
 		if not value then
 			value = Instance.new("StringValue")
 			value.Name = itemID
 			value.Parent = Folder
 		end
-		value:SetAttribute("Name", itemData.Name)
 		value:SetAttribute("Amount", itemInfo.Amount)
 		value:SetAttribute("Mastery", itemInfo.Mastery)
 		value:SetAttribute("EXPRequired", itemInfo.EXPRequired)
@@ -80,7 +78,6 @@ function InventoryService:AddItem(itemID: string, amount: number, player: Player
 		value.Name = itemID
 		value.Parent = player:FindFirstChild("Inventory")
 	end
-	value:SetAttribute("Name", itemData.Name)
 	value:SetAttribute("Amount", inventory[itemID].Amount)
 	value:SetAttribute("Mastery", inventory[itemID].Mastery)
 	value:SetAttribute("EXPRequired", inventory[itemID].EXPRequired)
@@ -92,8 +89,6 @@ end
 ------Remove An Item------
 function InventoryService:RemoveItem(itemID: string, amount: number, player)
 	local inventory = DataService:GetTable(player, "Inventory")
-	local itemData = ItemDataBase:GetItemData(itemID)
-
 	if not inventory then
 		return
 	end
@@ -119,7 +114,6 @@ function InventoryService:RemoveItem(itemID: string, amount: number, player)
 		end
 	else
 		if value then
-			value:SetAttribute("Name", itemData.Name)
 			value:SetAttribute("Amount", inventory[itemID].Amount)
 			value:SetAttribute("Mastery", inventory[itemID].Mastery)
 			value:SetAttribute("EXPRequired", inventory[itemID].EXPRequired)

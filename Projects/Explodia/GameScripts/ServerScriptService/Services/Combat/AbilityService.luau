@@ -1,6 +1,8 @@
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Debris = game:GetService("Debris")
+local ServerScriptService = game:GetService("ServerScriptService")
+local DataService = require(ServerScriptService.Services.Core.DataService)
 local assets = ReplicatedStorage.Assets
 
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
@@ -24,6 +26,7 @@ for _, module in game.ServerScriptService.Modules.HitTypes:GetChildren() do
 end
 
 function AbilityService:UseAbility(player: Player?, character, tool: Tool, mouse, input, letter, npcDamage)
+	local inventory = DataService:GetTable(player, "Inventory")
 	if not tool then
 		return
 	end
@@ -56,6 +59,12 @@ function AbilityService:UseAbility(player: Player?, character, tool: Tool, mouse
 			})
 			return
 		end
+		if inventory[tool:GetAttribute("ID")] then
+			if inventory[tool:GetAttribute("ID")].Mastery < abilityData.AbilityMastery then
+				return
+			end
+		end
+
 		NetworkingService:FireToClient(player, "CameraShake", 0.25)
 		playerMana.CurrentMana = playerMana.CurrentMana - abilityData.Mana
 	end

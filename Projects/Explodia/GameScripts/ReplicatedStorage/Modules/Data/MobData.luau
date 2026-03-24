@@ -27,6 +27,7 @@ MobData.Mobs = {
 			["Yen"] = 1000,
 			["Fracta"] = 20,
 			["EXP"] = 2000,
+			["MasteryEXP"] = 20000,
 			ItemDrops = {
 				["Blue Crystal"] = {Amount =  1},
 				["Flaming Tails"] = {Amount =  1},

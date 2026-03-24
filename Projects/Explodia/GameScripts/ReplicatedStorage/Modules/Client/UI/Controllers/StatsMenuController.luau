@@ -690,13 +690,13 @@ function StatsMenuController:Armory()
 		if abilitySlot:IsA("Frame") then
 			UIHelper:RotateGradient(
 				abilitySlot:FindFirstChild("AbilityIcon"):FindFirstChild("RGBStroke"):FindFirstChild("UIGradient")
-			)		
+			)
 		end
 	end
 
-	for _,statSlot in statsFrame:GetChildren() do
+	for _, statSlot in statsFrame:GetChildren() do
 		if statSlot:IsA("Frame") then
-			UIHelper:RotateGradient(statSlot:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))		
+			UIHelper:RotateGradient(statSlot:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
 		end
 	end
 
@@ -750,14 +750,13 @@ function StatsMenuController:Armory()
 	local IconSelected = nil
 	local PrevIconSelected = nil
 
-	armoryInfo.Visible = false
-
 	for _, itemSlot in itemFrame:GetChildren() do
 		if itemSlot:IsA("ImageButton") then
 			itemSlot:Destroy()
 		end
 	end
 	local function UpdateUI(descendant: Instance, remove)
+		armoryInfo.Visible = false
 		local itemID = descendant.Name
 
 		if not string.find(itemID, "weapon") and not string.find(itemID, "armor") then
@@ -875,7 +874,7 @@ function StatsMenuController:Armory()
 
 				---If Item Is A Weapon---
 				if string.find(itemID, "weapon") then
-					infoMastery.Text = "Mastery: "..tostring(descendant:GetAttribute("Mastery"))
+					infoMastery.Text = "Mastery: " .. tostring(descendant:GetAttribute("Mastery"))
 					infoMastery.Visible = true
 					abiltiesFrame.Visible = true
 					---If Item Is An Armor
@@ -903,8 +902,8 @@ function StatsMenuController:Armory()
 		local equippedIcon = itemSlot:FindFirstChild("EquippedIcon")
 		itemSlot.NameText.Text = itemData.Name
 		itemSlot.Icon.Image = itemData.Icon
-		if itemSlot.OwnedAmount then
-			itemSlot.OwnedAmount:Destroy()
+		if itemSlot:FindFirstChild("OwnedAmount") then
+			itemSlot:FindFirstChild("OwnedAmount"):Destroy()
 		end
 		if
 			equipped:FindFirstChild(itemData.Type)
@@ -917,6 +916,9 @@ function StatsMenuController:Armory()
 	end
 
 	for _, descendant in inventory:GetDescendants() do
+		descendant.AttributeChanged:Connect(function()
+			UpdateUI(descendant)
+		end)
 		UpdateUI(descendant)
 	end
 
@@ -961,6 +963,8 @@ function StatsMenuController:RandomGradients()
 	local texture = UIManager:GetUI("StatsMenu", "Texture")
 	UIHelper:RotateGradient(texture:FindFirstChild("UIGradient"))
 end
+
+
 
 
 return StatsMenuController

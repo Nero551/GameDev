@@ -1,6 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
+local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local RarityData = require(game.ReplicatedStorage.Modules.Data.RarityData)
 
@@ -23,6 +24,22 @@ function PopupController:Creator()
 		local popup = popupTemplate:Clone()
 		popup.Parent = popupsFrame
 
+		if popupInfo.Mastery and popupInfo.ID then
+			popup.PopUpText.RichText = true
+			popup.PopUpText.Text = 'Masteried up <font color="#fff131">'
+				.. popupInfo.Mastery
+				.. " EXP </font> for"
+				.. ItemDataBase:GetItemData(popupInfo.ID).Name
+		end
+
+		if popupInfo.MasteryEXP and popupInfo.ID then
+			popup.PopUpText.RichText = true
+			popup.PopUpText.Text = 'Obtained <font color="#fff131">'
+				.. popupInfo.MasteryEXP
+				.. " EXP </font> for"
+				.. ItemDataBase:GetItemData(popupInfo.ID).Name
+		end
+
 		if popupInfo.TitleData then
 			local titleData = popupInfo.TitleData
 
@@ -41,11 +58,7 @@ function PopupController:Creator()
 				)
 
 				popup.PopUpText.RichText = true
-				popup.PopUpText.Text = 'Acquired Title <font color="'
-					.. hexColor
-					.. '">'
-					.. titleData.Name
-					.. "</font>"
+				popup.PopUpText.Text = 'Acquired Title <font color="' .. hexColor .. '">' .. titleData.Name .. "</font>"
 			else
 				popup.PopUpText.Text = "Acquired Title " .. titleData.Name
 			end
@@ -121,21 +134,15 @@ function PopupController:Creator()
 			---Quest Completed---
 			if popupInfo.QuestCompleted == true then
 				popup.PopUpText.RichText = true
-				popup.PopUpText.Text = 'Completed Quest  <font color="#4bff8d">"'
-					.. popupInfo.QuestName
-					.. '"</font>'
+				popup.PopUpText.Text = 'Completed Quest  <font color="#4bff8d">"' .. popupInfo.QuestName .. '"</font>'
 				---Quest Abandoned---
 			elseif popupInfo.QuestAbandonded == true then
 				popup.PopUpText.RichText = true
-				popup.PopUpText.Text = 'Abandoned Quest <font color = "#ff030b">"'
-					.. popupInfo.QuestName
-					.. '"</font>'
+				popup.PopUpText.Text = 'Abandoned Quest <font color = "#ff030b">"' .. popupInfo.QuestName .. '"</font>'
 			else
 				---Quest Accepted---
 				popup.PopUpText.RichText = true
-				popup.PopUpText.Text = 'Accepted Quest  <font color="#4bff8d">"'
-					.. popupInfo.QuestName
-					.. '"</font>'
+				popup.PopUpText.Text = 'Accepted Quest  <font color="#4bff8d">"' .. popupInfo.QuestName .. '"</font>'
 			end
 		end
 	end)
@@ -165,6 +172,5 @@ function PopupController:Destroyer()
 		end
 	end)
 end
-
 
 return PopupController

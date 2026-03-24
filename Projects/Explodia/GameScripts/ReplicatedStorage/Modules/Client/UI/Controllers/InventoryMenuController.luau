@@ -50,6 +50,7 @@ function InventoryMenuController:Inventory()
 		end
 	end
 	local function UpdateUI(descendant: Instance, remove)
+		infoFrame.Visible = false
 		local itemID = descendant.Name
 		local itemData = ItemDataBase:GetItemData(itemID)
 
@@ -162,12 +163,6 @@ function InventoryMenuController:Inventory()
 		itemSlot.OwnedAmount.Text = descendant:GetAttribute("Amount")
 		itemSlot.Icon.Image = itemData.Icon
 
-		descendant.AttributeChanged:Connect(function()
-			itemSlot.NameText.Text = itemData.Name
-			itemSlot.OwnedAmount.Text = descendant:GetAttribute("Amount")
-			itemSlot.Icon.Image = itemData.Icon
-		end)
-
 		if
 			equipped:FindFirstChild(itemData.Type)
 			and equipped:FindFirstChild(itemData.Type):GetAttribute("Equipped") == itemID
@@ -179,6 +174,9 @@ function InventoryMenuController:Inventory()
 	end
 
 	for _, descendant in inventory:GetDescendants() do
+		descendant.AttributeChanged:Connect(function()
+			UpdateUI(descendant)
+		end)
 		UpdateUI(descendant)
 	end
 
