@@ -1,6 +1,6 @@
+local BuffService = require(script.Parent.BuffService)
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local TitleData = require(game.ReplicatedStorage.Modules.Data.TitleData)
-local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
 local DataService = require(game.ServerScriptService.Services.Core.DataService)
 
 local TitleService = {}
@@ -24,7 +24,7 @@ function TitleService:SetupTitles(player)
 	activeTitle:SetAttribute("ID", playerTitles.ActiveTitle or "")
 	activeTitle.Value = playerTitles.ActiveTitle or ""
 
-	for titleID,titleInfo in pairs(playerTitles.Titles) do
+	for titleID in pairs(playerTitles.Titles) do
 		local titleData = TitleData.Titles[titleID]
 		if not titleData then return end
 		local value = TitlesFolder:FindFirstChild(titleID)
@@ -77,7 +77,7 @@ function TitleService:EquipTitle(player, titleID)
 	playerTitles.ActiveTitle = titleID
 	local buffs = titleData.Buffs
 	if buffs then
-		GameEvents.AddBuff:Fire(player, titleData, titleID)
+		BuffService:AddBuff(player, titleData, titleID)
 	end
 
 	player.Titles.ActiveTitle:SetAttribute("ID", playerTitles.ActiveTitle or "")
@@ -96,7 +96,7 @@ function TitleService:UnEquipTitle(player)
 	end
 	local buffs = titleData.Buffs
 	if buffs then
-		GameEvents.RemoveBuff:Fire(player, titleData, titleID)
+		BuffService:RemoveBuff(player, titleData, titleID)
 	end
 
 	playerTitles.ActiveTitle = nil

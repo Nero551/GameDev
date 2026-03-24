@@ -1,5 +1,4 @@
 local RunService = game:GetService("RunService")
-local ServerScriptService = game:GetService("ServerScriptService")
 
 local StateChecker = {}
 

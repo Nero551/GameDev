@@ -41,7 +41,7 @@ local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker
 	end
 
 
-	conn = RunService.RenderStepped:Connect(function(dt)
+	conn = RunService.RenderStepped:Connect(function()
 
 		if StateChecker:CheckState(char, "Dead") then
 			if not conn then return end

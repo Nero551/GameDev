@@ -1,4 +1,3 @@
-local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
 local DataService = require(game.ServerScriptService.Services.Core.DataService)
 local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 
@@ -17,7 +16,7 @@ local function ApplyHealth(player:Player)
 	local maxHealth = math.max(MIN_HEALTH, finalHealth * HEALTH_PER_POINT)
 	
 	CharacterVitalsService:ModifyVital(char, "Health" ,"ModifyMaxHealth", {
-		["MaxHealth"] = maxHealth	
+		["MaxHealth"] = maxHealth
 	})
 	
 end
@@ -75,7 +74,7 @@ end
 
 function StatService:GetStat(player:Player, stat)
 	local playerStats = DataService:GetTable(player, "Stats")
-	for type,table in pairs(playerStats) do
+	for _, table in pairs(playerStats) do
 		if table[stat] then
 			return table[stat]
 		end
@@ -98,7 +97,6 @@ function StatService:UpdateStats(player:Player)
 	end
 	ApplyHealth(player)
 	ApplyMana(player)
-	GameEvents.UpdateMana:Fire(player)
 end
 
 ---Allocate Statpoint---
@@ -125,7 +123,7 @@ function StatService:ResetStats(player:Player)
 	local playerStats = DataService:GetTable(player, "Stats")
 	
 	playerLevel.StatPoints = (playerLevel.CurrentLevel - 1) * 4
-	for statType, stat in pairs(playerStats.MainStats) do
+	for _, stat in pairs(playerStats.MainStats) do
 		stat.FlatStatPoint = 0
 	end
 	StatService:UpdateStats(player)
@@ -153,8 +151,8 @@ end
 ---Reset Buffs---
 function StatService:ResetBuffs(player:Player)
 	local playerStats = DataService:GetTable(player, "Stats")
-	for type, table in pairs(playerStats) do
-		for statType, stat in pairs(table) do
+	for _, table in pairs(playerStats) do
+		for _, stat in pairs(table) do
 			stat.FlatBuff = 0
 			stat.Percent = 0
 		end

@@ -15,7 +15,7 @@ function Player:Init()
 		task.wait()
 	until #playerGui:GetDescendants() >= #StarterGui:GetDescendants()
 
-	for moduleName, module in pairs(cachedModules) do
+	for _, module in pairs(cachedModules) do
 		module()
 	end
 end

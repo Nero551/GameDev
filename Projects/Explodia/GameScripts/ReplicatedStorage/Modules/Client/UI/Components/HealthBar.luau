@@ -3,9 +3,10 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
+
 return function(menu)
 	local player = Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
+	local char = player.Character or player.CharacterAdded:Wait()
 	local healthBG = UIManager:GetUI(menu, "HealthBG")
 	local healthFill: ImageLabel = healthBG:FindFirstChild("HealthFill")
 	local healthText: TextLabel = healthBG:FindFirstChild("HealthText")
@@ -33,6 +34,7 @@ local char = player.Character or player.CharacterAdded:Wait()
 		end
 	end
 
+	UpdateHealth()
 	char:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(UpdateHealth)
 	char:GetAttributeChangedSignal("Health_MaxHealth"):Connect(UpdateHealth)
 end

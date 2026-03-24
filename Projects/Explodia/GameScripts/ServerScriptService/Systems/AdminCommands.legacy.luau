@@ -1,7 +1,4 @@
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local modules =  ReplicatedStorage.Modules
-
 local AdminCmdsService = require(game.ServerScriptService.Services.Core.AdminCmdsService)
 
 local ADMIN_IDS = require(game.ReplicatedStorage.Modules.Data.AdminIDs)

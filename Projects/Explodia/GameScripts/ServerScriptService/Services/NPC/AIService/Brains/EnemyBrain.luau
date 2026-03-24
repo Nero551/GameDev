@@ -1,4 +1,3 @@
-local ServerScriptService = game:GetService("ServerScriptService")
 local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 local CanDoAction = require(game.ServerScriptService.Services.NPC.AIService.CanDoAction)
 return function(npc)

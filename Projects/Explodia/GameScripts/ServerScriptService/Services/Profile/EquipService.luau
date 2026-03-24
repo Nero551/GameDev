@@ -1,7 +1,7 @@
 local ServerStorage = game:GetService("ServerStorage")
+local BuffService = require(script.Parent.BuffService)
 local ToolLoader = require(game.ServerScriptService.Modules.Utilities.ToolLoader)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
-local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
 local DataService = require(game.ServerScriptService.Services.Core.DataService)
 
 local EquipService = {}
@@ -56,7 +56,7 @@ function EquipService:EquipItem(player: Player, itemID)
 					if anotherTool:IsA("Tool") then
 						local anotherToolData = ItemDataBase:GetItemData(anotherTool:GetAttribute("ID"))
 						if anotherToolData.Buffs then
-							GameEvents.RemoveBuff:Fire(player, anotherToolData, anotherTool:GetAttribute("ID"))
+							BuffService:RemoveBuff(player, anotherToolData, anotherTool:GetAttribute("ID"))
 						end
 						anotherTool:Destroy()
 					end
@@ -69,7 +69,7 @@ function EquipService:EquipItem(player: Player, itemID)
 					if anotherTool:IsA("Tool") then
 						local anotherToolData = ItemDataBase:GetItemData(anotherTool:GetAttribute("ID"))
 						if anotherToolData.Buffs then
-							GameEvents.RemoveBuff:Fire(player, anotherToolData, anotherTool:GetAttribute("ID"))
+							BuffService:RemoveBuff(player, anotherToolData, anotherTool:GetAttribute("ID"))
 						end
 						anotherTool:Destroy()
 					end
@@ -78,11 +78,10 @@ function EquipService:EquipItem(player: Player, itemID)
 					end
 				end
 
-
 				tool.Parent = player.Backpack
 				ToolLoader(tool)
 				if itemData.Buffs then
-					GameEvents.AddBuff:Fire(player, itemData, itemID)
+					BuffService:AddBuff(player, itemData, itemID)
 				end
 			end
 		elseif
@@ -99,14 +98,14 @@ function EquipService:EquipItem(player: Player, itemID)
 					if anotherArmor:GetAttribute("Type") == itemType then
 						local anotherArmorData = ItemDataBase:GetItemData(anotherArmor:GetAttribute("ID"))
 						if anotherArmorData.Buffs then
-							GameEvents.RemoveBuff:Fire(player, anotherArmorData, anotherArmor:GetAttribute("ID"))
+							BuffService:RemoveBuff(player, anotherArmorData, anotherArmor:GetAttribute("ID"))
 						end
 						anotherArmor:Destroy()
 					end
 				end
 				armor.Parent = char
 				if itemData.Buffs then
-					GameEvents.AddBuff:Fire(player, itemData, itemID)
+					BuffService:AddBuff(player, itemData, itemID)
 				end
 			end
 		end
@@ -124,7 +123,6 @@ function EquipService:EquipItem(player: Player, itemID)
 	value.Name = itemType
 	value.Parent = folder
 	value:SetAttribute("Equipped", itemID)
-	GameEvents.UpdateMana:Fire(player)
 end
 
 ---UnEquip Item---
@@ -177,7 +175,7 @@ function EquipService:UnEquipItem(player: Player, itemID)
 				warn("Armor: " .. itemData.Name .. " Not Found")
 			end
 		end
-		GameEvents.RemoveBuff:Fire(player, itemData, itemID)
+		BuffService:RemoveBuff(player, itemData, itemID)
 	end
 	equippedItems[itemType] = nil
 	local folder = player:FindFirstChild("Equipped")
@@ -185,7 +183,6 @@ function EquipService:UnEquipItem(player: Player, itemID)
 	if value then
 		value:Destroy()
 	end
-	GameEvents.UpdateMana:Fire(player)
 end
 
 ---Load Equipped Items---
@@ -204,54 +201,29 @@ function EquipService:LoadEquippedItems(player: Player)
 		---If  A Weapon---
 		local itemData = ItemDataBase:GetItemData(itemID)
 		if itemData then
-			if
-				itemData.Type == "Melee"
-				or itemData.Type == "Sword"
-				or itemData.Type == "Grimiore"
-				or itemData.Type == "RiftBorn"
-			then
-				if itemData.Buffs then
-					GameEvents.AddBuff:Fire(player, itemData, itemID)
-				end
-
-				itemType = itemData.Type
-
-				--Check For Another Tool With Same Type--
-				for _, anotherTool in player.Backpack:GetChildren() do
-					if anotherTool:GetAttribute("Type") == itemType then
-						anotherTool:Destroy()
-					end
-				end
+			if string.find(itemID, "weapon") then
 
 				---Cloning Equipped Tools---
 				local tool = player.Backpack:FindFirstChild(itemData.Name)
 				if not tool then
-					tool = ServerStorage.Tools[itemType]:FindFirstChild(itemData.Name):Clone()
+					tool = ServerStorage.Tools[itemData.Type]:FindFirstChild(itemData.Name):Clone()
 					tool.Parent = player.Backpack
 					ToolLoader(tool)
 				end
-			elseif
-				itemData.Type == "Helmet"
-				or itemData.Type == "ChestPlate"
-				or itemData.Type == "Leggings"
-				or itemData.Type == "Boots"
-			then
-				if itemData.Buffs then
-					GameEvents.AddBuff:Fire(player, itemData, itemID)
-				end
-				itemType = itemData.Type
+			elseif string.find(itemID, "armor") then
 
 				---Cloning Equipped Armor---
 				local armor = char:FindFirstChild(itemData.Name)
 				if not armor then
-					armor = ServerStorage.Armors[itemType]:FindFirstChild(itemData.Name):Clone()
+					armor = ServerStorage.Armors[itemData.Type]:FindFirstChild(itemData.Name):Clone()
 					armor.Parent = char
 				end
 			end
+			if itemData.Buffs then
+				BuffService:AddBuff(player, itemData, itemID)
+			end
 		end
 	end
-
-	GameEvents.UpdateMana:Fire(player)
 end
 
 return EquipService

@@ -104,7 +104,7 @@ function AIService:StateUpdater(npc,dt)
 	if not AIData then return end
 	
 	if AIData.State == "Dead" then
-		for animName,anim in pairs(Animations.loadedAnimations[npc]) do
+		for _, anim in pairs(Animations.loadedAnimations[npc]) do
 			if anim.IsPlaying then
 				anim:Stop()
 			end

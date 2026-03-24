@@ -24,7 +24,7 @@ Players.PlayerAdded:Connect(function(player)
 	end
 end)
 
-Players.playerRemoving:Connect(function(player)
+Players.playerRemoving:Connect(function()
 	ServerData.Players = Players:GetPlayers()
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 
 ---Client Requests to Accept Quest---
-NetworkingService:OnServerEvent("AcceptQuest", function(player, questID)
+NetworkingService:OnServerEvent("AcceptQuest", function()
 end)
 
 

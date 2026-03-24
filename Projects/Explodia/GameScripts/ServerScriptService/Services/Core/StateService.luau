@@ -1,4 +1,3 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local Connections = require(game.ReplicatedStorage.Modules.Core.Connections)
 local StateService = {}

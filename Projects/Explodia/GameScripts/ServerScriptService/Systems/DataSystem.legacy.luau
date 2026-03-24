@@ -26,11 +26,10 @@ local function Setup(player: Player, character)
 	LevelService:SetupLevel(player)
 	TitleService:SetupTitles(player)
 	CurrencyService:SetupCurrencies(player)
+	BuffService:UpdateBuffs(player)
 
 	QuestService:SetupQuests(player)
 	QuestService:SyncQuestsWithQuestData(player)
-
-	BuffService:UpdateBuffs(player)
 
 	CharacterVitalsService:Create(character)
 
@@ -47,14 +46,13 @@ end
 
 ---Load Data---
 Players.PlayerAdded:Connect(function(player)
-	local playerData = DataService:Load(player)
+	print(DataService:Load(player))
 	if player.Character then
 		Setup(player, player.Character)
 	end
 	player.CharacterAdded:Connect(function(character)
 		Setup(player, character)
 	end)
-	print(playerData)
 end)
 
 ---Save Data---

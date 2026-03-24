@@ -8,8 +8,6 @@ function PlayerInfo:UpdateInfo(player, char)
 	if not player then return end
 
 	local playerInfo = char.PlayerInfo
-	local hpBG = playerInfo.PlayerHealth
-
 	playerInfo.Adornee = char.Head
 	playerInfo.PlayerToHideFrom = player
 

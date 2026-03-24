@@ -1,6 +1,8 @@
+local ServerScriptService = game:GetService("ServerScriptService")
+local RewardsService = require(ServerScriptService.Services.World.RewardsService)
+local InventoryService = require(script.Parent.InventoryService)
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local QuestData = require(game.ReplicatedStorage.Modules.Data.QuestData)
-local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local DataService = require(game.ServerScriptService.Services.Core.DataService)
 
@@ -175,7 +177,7 @@ function QuestService:ProgressQuest(player: Player, mobKilled)
 	local quests = playerQuests.ActiveQuests
 	if quests then
 		for questID, quest in pairs(quests) do
-			for objectiveNumber, objective in pairs(quest.Progress) do
+			for _, objective in pairs(quest.Progress) do
 				QuestService[objective.ObjectiveType .. "Type"](QuestService, objective, {
 					["Player"] = player,
 					["MobKilled"] = mobKilled,
@@ -218,7 +220,7 @@ function QuestService:CheckQuestCompletion(player: Player, questID)
 		return
 	end
 
-	for objectiveNumber, objective in pairs(quest.Progress) do
+	for _, objective in pairs(quest.Progress) do
 		if objective.Current < objective.Required then
 			SetUpdates(player)
 			return false
@@ -245,14 +247,14 @@ function QuestService:CompleteQuest(player: Player, questID)
 	end
 
 	if quest.Completed == true then
-		for objectiveNumber, objective in pairs(quest.Progress) do
+		for _, objective in pairs(quest.Progress) do
 			if objective.Item then
 				local _, itemID = ItemDataBase:GetItemData(objective.Item)
 				if playerEquipped[itemID] then
 					return
 				end
 				if questData.ConsumesItems then
-					GameEvents.RemoveItem:Fire(itemID, objective.Required, player)
+					InventoryService:RemoveItem(itemID, objective.Required, player)
 				end
 			end
 		end
@@ -260,7 +262,7 @@ function QuestService:CompleteQuest(player: Player, questID)
 		playerQuests.TrackedQuest = nil
 		playerQuests.CompletedQuests[questID] = playerQuests.ActiveQuests[questID]
 		playerQuests.ActiveQuests[questID] = nil
-		GameEvents.GiveRewards:Fire(player, questData.Rewards, true)
+		RewardsService:GiveRewards(player, questData.Rewards, true)
 		NetworkingService:FireToClient(player, "PopUp", {
 			["QuestName"] = questData.Name,
 			["QuestCompleted"] = true,

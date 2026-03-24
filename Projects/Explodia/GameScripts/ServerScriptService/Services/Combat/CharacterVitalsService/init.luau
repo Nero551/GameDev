@@ -1,22 +1,18 @@
-local Players = game:GetService("Players")
-
 local CharacterVitalsService = {}
 
 CharacterVitalsService.CharacterVitals = {}
 CharacterVitalsService.cachedModules = {}
 
-for _,module in ipairs(script:GetChildren()) do
+for _, module in ipairs(script:GetChildren()) do
 	if module:IsA("ModuleScript") then
 		CharacterVitalsService.cachedModules[module.Name] = require(module)
 	end
-	
 end
 
-local syncTimers = {}
-local SYNC_RATE = 0.05
-
 local function SyncAttributes(character: Model?, vitalsTable)
-	if not character then return end
+	if not character then
+		return
+	end
 
 	-- Recursive function to flatten tables and set attributes
 	local function FlattenAndSet(prefix, tbl)
@@ -31,17 +27,15 @@ local function SyncAttributes(character: Model?, vitalsTable)
 			end
 		end
 	end
-	
+
 	FlattenAndSet(nil, vitalsTable)
 end
 
-
-
-function CharacterVitalsService:Create(character)	
+function CharacterVitalsService:Create(character)
 	if CharacterVitalsService.CharacterVitals[character] then
 		return CharacterVitalsService.CharacterVitals[character]
 	end
-		
+
 	CharacterVitalsService.CharacterVitals[character] = {
 		Health = {
 			CurrentHealth = 100,
@@ -51,15 +45,14 @@ function CharacterVitalsService:Create(character)
 		Mana = {
 			CurrentMana = 100,
 			MaxMana = 100,
-			ManaRegen = 1
+			ManaRegen = 1,
 		},
 
 		FlashStep = {
 			CurrentFlashStep = 3,
 			MaxFlashStep = 3,
-			
 		},
-		
+
 		InHand = "",
 		WalkSpeed = 10,
 		JumpPower = 50,
@@ -67,15 +60,11 @@ function CharacterVitalsService:Create(character)
 		BlockCounter = 0,
 		LastCombo = 0,
 		LastSwing = 0,
-		SwingNumber = 0
+		SwingNumber = 0,
 	}
-	
+
 	SyncAttributes(character, CharacterVitalsService.CharacterVitals[character])
-	
-	local player = Players:GetPlayerFromCharacter(character)
-	if player then
-	end
-	
+
 	return CharacterVitalsService.CharacterVitals[character]
 end
 
@@ -89,36 +78,29 @@ function CharacterVitalsService:GetVital(character, vitalName)
 	if not CharacterVitalsService.CharacterVitals[character] then
 		CharacterVitalsService:Create(character)
 	end
-	
+
 	if CharacterVitalsService.CharacterVitals[character][vitalName] then
 		return CharacterVitalsService.CharacterVitals[character][vitalName]
 	end
 	return
 end
 
-function CharacterVitalsService:ModifyVital(character,vital, funcName , argumentData)	
-	
-
+function CharacterVitalsService:ModifyVital(character, vital, funcName, argumentData)
 	if not CharacterVitalsService.CharacterVitals[character] then
 		CharacterVitalsService:Create(character)
 	end
-		
+
 	local vitalModule = CharacterVitalsService.cachedModules[vital]
-	
+
 	if vitalModule then
-		local func =  vitalModule[funcName]
+		local func = vitalModule[funcName]
 		if typeof(func) == "function" then
 			func(vitalModule, character, argumentData)
 		else
 			warn("Invalid vital modification:", vital, funcName)
 		end
 	end
-	
-	local now = tick()
-	if not syncTimers[character] or now - syncTimers[character] >= SYNC_RATE then
-		syncTimers[character] = now
-		SyncAttributes(character, CharacterVitalsService.CharacterVitals[character])
-	end
+	SyncAttributes(character, CharacterVitalsService.CharacterVitals[character])
 end
 
 return CharacterVitalsService

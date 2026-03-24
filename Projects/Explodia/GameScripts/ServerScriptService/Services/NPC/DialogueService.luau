@@ -1,6 +1,7 @@
+local ServerScriptService = game:GetService("ServerScriptService")
+local QuestService = require(ServerScriptService.Services.Profile.QuestService)
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local DialogueDataBase = require(game.ReplicatedStorage.Modules.Data.DialogueDataBase)
-local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
 
 local DialogueService = {}
 
@@ -70,7 +71,7 @@ function DialogueService:SelectDialogueOption(player, optionNumber)
 
 		if action == "AcceptQuest" then
 			local questID = option.Quest
-			GameEvents.AcceptQuest:Fire(player, questID)
+			QuestService:AcceptQuest(player, questID)
 		end
 	end
 end

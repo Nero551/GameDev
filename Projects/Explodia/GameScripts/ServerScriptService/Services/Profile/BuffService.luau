@@ -12,9 +12,7 @@ function BuffService:UpdateBuffs(player)
 		local data = ItemDataBase:GetItemData(buffID) or TitleData.Titles[buffID]
 		if not data then return end
 		if  data.Buffs then 
-			buffInfo.Buffs = data.Buffs
-			buffInfo.Type = data.Type or nil
-			StatService:ApplyBuffs(player, buffInfo.Buffs)
+			StatService:ApplyBuffs(player, data.Buffs)
 		else
 			playerBuffs[buffID] = nil
 		end		
@@ -24,10 +22,7 @@ end
 function BuffService:AddBuff(player:Player, data, ID)
 	local playerBuffs = DataService:GetTable(player, "Buffs")
 	if not data.Buffs then return end
-	if  playerBuffs[ID] then return end
 	playerBuffs[ID] = {
-		Type = data.Type,
-		Buffs = data.Buffs,
 		Duration = data.Duration or nil
 	}
 	BuffService:UpdateBuffs(player)
