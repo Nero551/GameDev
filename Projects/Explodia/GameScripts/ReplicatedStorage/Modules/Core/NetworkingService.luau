@@ -26,7 +26,10 @@ local function GetSize(...)
 end
 
 local function Debug(remoteName,...)
-	warn(remoteName, GetSize(...),{debug.traceback()}, {...})
+	if not RunService:IsStudio() then 
+		return
+	end
+	print(remoteName, GetSize(...),{debug.traceback()}, {...})
 end
 
 local function AssertServer()

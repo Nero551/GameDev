@@ -231,8 +231,10 @@ function CombatService:Block(character, boolean, tool: Tool?)
 		end
 
 		character.Status.ChildAdded:Once(function(child)
-			if not tool or not ActionVerifier:CanBlock(character) then
-				StopBlocking()
+			if StateChecker:CheckState(character,"Blocking") then
+				if not tool or not ActionVerifier:CanBlock(character) then
+					StopBlocking()
+				end			
 			end
 		end)
 

@@ -2,8 +2,7 @@ local ServerStorage = game:GetService("ServerStorage")
 local ToolLoader = require(game.ServerScriptService.Modules.Utilities.ToolLoader)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
-
-local DataService = require(game.ServerScriptService.Services.Profile.DataService)
+local DataService = require(game.ServerScriptService.Services.Core.DataService)
 
 local EquipService = {}
 
@@ -49,7 +48,6 @@ function EquipService:EquipItem(player: Player, itemID)
 			or itemData.Type == "Grimiore"
 			or itemData.Type == "RiftBorn"
 		then
-			print(itemData)
 			itemType = itemData.Type
 			local tool: Tool? = ServerStorage.Tools[itemType]:FindFirstChild(itemData.Name):Clone()
 			if tool then

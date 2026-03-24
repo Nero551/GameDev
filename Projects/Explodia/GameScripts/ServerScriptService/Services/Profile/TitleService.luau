@@ -1,7 +1,7 @@
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local TitleData = require(game.ReplicatedStorage.Modules.Data.TitleData)
 local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
-local DataService = require(game.ServerScriptService.Services.Profile.DataService)
+local DataService = require(game.ServerScriptService.Services.Core.DataService)
 
 local TitleService = {}
 

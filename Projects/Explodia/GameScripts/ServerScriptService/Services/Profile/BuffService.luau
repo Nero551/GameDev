@@ -1,5 +1,4 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local DataService = require(game.ServerScriptService.Services.Profile.DataService)
+local DataService = require(game.ServerScriptService.Services.Core.DataService)
 local StatService = require(game.ServerScriptService.Services.Profile.StatService)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local TitleData = require(game.ReplicatedStorage.Modules.Data.TitleData)

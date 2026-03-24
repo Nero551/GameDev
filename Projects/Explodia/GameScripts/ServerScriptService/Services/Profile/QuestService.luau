@@ -2,7 +2,7 @@ local NetworkingService = require(game.ReplicatedStorage.Modules.Core.Networking
 local QuestData = require(game.ReplicatedStorage.Modules.Data.QuestData)
 local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
-local DataService = require(game.ServerScriptService.Services.Profile.DataService)
+local DataService = require(game.ServerScriptService.Services.Core.DataService)
 
 local QuestService = {}
 

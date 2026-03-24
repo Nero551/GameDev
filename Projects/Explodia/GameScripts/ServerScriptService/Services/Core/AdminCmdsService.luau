@@ -1,6 +1,6 @@
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local TitleData = require(game.ReplicatedStorage.Modules.Data.TitleData)
-local DataService = require(game.ServerScriptService.Services.Profile.DataService)
+local DataService = require(game.ServerScriptService.Services.Core.DataService)
 local InventoryService = require(game.ServerScriptService.Services.Profile.InventoryService)
 local TitleService = require(game.ServerScriptService.Services.Profile.TitleService)
 local LevelService = require(game.ServerScriptService.Services.Profile.LevelService)

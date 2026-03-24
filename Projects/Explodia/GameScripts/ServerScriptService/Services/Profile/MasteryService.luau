@@ -1,6 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerScriptService = game:GetService("ServerScriptService")
+local DataService = require(ServerScriptService.Services.Core.DataService)
 local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
-local DataService = require(script.Parent.DataService)
 local MasteryService = {}
 
 function MasteryService:IncreaseMastery(player: Player, itemID, masteryEXP)

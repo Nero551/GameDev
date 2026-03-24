@@ -1,7 +1,7 @@
 local Players = game:GetService("Players")
 
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
-local DataService = require(game.ServerScriptService.Services.Profile.DataService)
+local DataService = require(game.ServerScriptService.Services.Core.DataService)
 local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 local StatService = require(game.ServerScriptService.Services.Profile.StatService)
 

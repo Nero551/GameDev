@@ -3,8 +3,7 @@ local PlayerInfo = {}
 function PlayerInfo:UpdateInfo(player, char)
 	---Player Info GUI---
 	local TweenService = game:GetService("TweenService")
-	local DataService = require(game.ServerScriptService.Services.Profile.DataService)
-	local HPChangerUI = require(game.ReplicatedStorage.Modules.UI2.HPChangerUI)
+	local DataService = require(game.ServerScriptService.Services.Core.DataService)
 
 	if not player then return end
 
@@ -20,7 +19,6 @@ function PlayerInfo:UpdateInfo(player, char)
 	char:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(function()
 		if tick() - lastUpdate > 0.1 then -- 20 FPS limit
 			lastUpdate = tick()
-			HPChangerUI(hpBG, char)
 		end
 	end)
 

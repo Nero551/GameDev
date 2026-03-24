@@ -42,7 +42,7 @@ end
 
 function ActionVerifier:CanAbility(character, abilityLetter)
 	if StateChecker:CheckState(character, "Stunned", "Attacking", "Dashing",
-		"Flashstep", "Blocking", "Frozen","FlashStepEndLag" ,"DashEndLag", "Frozen", "BlockBroken") then
+		"Flashstep", "Blocking", "Frozen","FlashStepEndLag" ,"DashEndLag", "BlockBroken") then
 		return false
 	end
 	

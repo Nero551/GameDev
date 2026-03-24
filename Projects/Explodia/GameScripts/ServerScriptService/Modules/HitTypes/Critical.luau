@@ -127,9 +127,6 @@ return function(argumentData)
 			------EndLag Setup------
 			StateService:AddState(attacker , "NoMove", .5)
 			StateService:AddState(attacker , "NoPunch", 1)
-			------EndLag Setup------
-			StateService:AddState(attacker , "NoMove", .5)
-			StateService:AddState(attacker , "NoPunch", 1)
 
 			KnockbackPull:ApplyKnockback(targetHit,attacker,90)
 		else

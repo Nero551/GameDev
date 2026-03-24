@@ -30,7 +30,7 @@ return function(npc)
 		AgentCanJump = true,
 		WaypointSpacing = 5,
 	})
-	if os.clock() - AIData.NeedsRepath > 3 then
+	if os.clock() - AIData.NeedsRepath > 2 then
 		AIData.Moving = false 
 		AIData.NeedsRepath = 0
 	end
@@ -72,7 +72,7 @@ return function(npc)
 				-- part.Parent = workspace.World.PathFinding
 				-- game.Debris:AddItem(part, 5)
 				
-				if (originalTargetPos - AIData.Target.Position).Magnitude > 10 or os.clock() - AIData.NeedsRepath  > 3 then
+				if (originalTargetPos - AIData.Target.Position).Magnitude > 10 or os.clock() - AIData.NeedsRepath  > 2 then
 					break
 				end
 				humanoid:MoveTo(waypoint.Position)

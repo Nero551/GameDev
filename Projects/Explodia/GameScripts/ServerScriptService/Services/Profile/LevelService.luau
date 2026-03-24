@@ -1,5 +1,5 @@
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
-local DataService = require(game.ServerScriptService.Services.Profile.DataService)
+local DataService = require(game.ServerScriptService.Services.Core.DataService)
 
 local LevelService = {}
 

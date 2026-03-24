@@ -12,7 +12,7 @@ end
 
 function FormulaApplier:BlockedHitFormula(data, npcDamage, targetDefenseStat, playerDamageStat)
 	
-	local base1 = (npcDamage or data.Damage) * (100 / (100 + targetDefenseStat))
+	local base1 = (npcDamage or data.Damage) * (100 / (100 + targetDefenseStat)) * 0.1
 	local base2 = (1 + data.Damage / 100) * (npcDamage or playerDamageStat) * (100 / (100 + targetDefenseStat)) * 0.1
 
 	local blockedDamage = math.max(base1, base2)

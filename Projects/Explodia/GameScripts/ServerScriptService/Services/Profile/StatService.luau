@@ -1,5 +1,5 @@
 local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
-local DataService = require(game.ServerScriptService.Services.Profile.DataService)
+local DataService = require(game.ServerScriptService.Services.Core.DataService)
 local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
 
 
@@ -38,8 +38,6 @@ local function ApplyMana(player:Player)
 	})
 	
 end
-
-
 
 ---Setup Stats---
 function StatService:SetupStats(player:Player)
@@ -127,11 +125,9 @@ function StatService:ResetStats(player:Player)
 	local playerStats = DataService:GetTable(player, "Stats")
 	
 	playerLevel.StatPoints = (playerLevel.CurrentLevel - 1) * 4
-	playerStats.MainStats.Health.FlatStatPoint = 0 
-	playerStats.MainStats.Sword.FlatStatPoint = 0 
-	playerStats.MainStats.Melee.FlatStatPoint = 0 
-	playerStats.MainStats.Mana.FlatStatPoint = 0
-	playerStats.MainStats.RiftBorn.FlatStatPoint = 0
+	for statType, stat in pairs(playerStats.MainStats) do
+		stat.FlatStatPoint = 0
+	end
 	StatService:UpdateStats(player)
 end
 

@@ -32,15 +32,15 @@ function DataService:GetDefaultData()
 		},
 		Stats = {
 			MainStats = {
-				Health = { Base = 20, FlatBuff = 1, FlatStatPoint = 0, Percent = 1, Final = 0 },
-				Mana = { Base = 20, FlatBuff = 1, FlatStatPoint = 0, Percent = 1, Final = 0 },
-				Melee = { Base = 10, FlatBuff = 1, FlatStatPoint = 0, Percent = 1, Final = 0 },
-				Sword = { Base = 10, FlatBuff = 1, FlatStatPoint = 0, Percent = 1, Final = 0 },
-				RiftBorn = { Base = 10, FlatBuff = 1, FlatStatPoint = 0, Percent = 1, Final = 0 },
+				Health = { Base = 20, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				Mana = { Base = 20, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				Melee = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				Sword = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				RiftBorn = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
 			},
 			SideStats = {
-				Defense = { Base = 0, FlatBuff = 1, FlatStatPoint = 0, Percent = 1, Final = 0 },
-				CriticalDamage = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 1, Final = 0 },
+				Defense = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				CriticalDamage = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
 				CriticalRate = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
 			},
 		},
@@ -120,8 +120,11 @@ function DataService:Load(player)
 		DataService.PlayerDatas[player] = playerStore:GetAsync(key)
 	end)
 
+	if not success then
+		warn("DataLoad Failed For", player.Name, ":", err)
+
+	end
 	if not success or not DataService.PlayerDatas[player] then
-		warn("DataLoad Failed For",player.Name,":",err)
 		DataService.PlayerDatas[player] = DataService:GetDefaultData()
 	end
 
