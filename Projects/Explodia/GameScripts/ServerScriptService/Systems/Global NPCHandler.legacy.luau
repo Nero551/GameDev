@@ -4,7 +4,7 @@ local AIService = require(game.ServerScriptService.Services.NPC.AIService)
 
 for _,NPC in workspace.World.Live.ActiveNPCS:GetDescendants() do
 	if NPC:IsA("Model") then
-		NPCService:RegisterNPC(NPC)
+		NPCService:RegisterNPC(NPC, 10)
 	end
 end
 

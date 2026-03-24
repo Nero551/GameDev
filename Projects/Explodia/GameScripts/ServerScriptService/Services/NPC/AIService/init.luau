@@ -57,13 +57,6 @@ function AIService:CreateAI(npc)
 		Animations:LoadAnimations(npc.Humanoid, ReplicatedStorage.Assets.Weapons[itemData.Name].Animations)
 	end
 
-	VitalsService:Create(npc)
-	VitalsService:ModifyVital(npc, "Health", "ModifyMaxHealth", {
-		["MaxHealth"] = mobData.Health,
-	})
-	VitalsService:ModifyVital(npc, "Health", "ModifyHealth", {
-		["HealthChange"] = mobData.Health,
-	})
 	StateService:Create(npc)
 	AIService.ActiveAIs[npc] = {
 		Root = npc:WaitForChild("HumanoidRootPart"),
@@ -75,7 +68,6 @@ function AIService:CreateAI(npc)
 		Target = nil,
 		AggroList = {}, -- (does nothing  yet)
 		DamageTaken = {}, -- (does nothing  yet)
-		Drops = mobData.Drops,
 
 		DetectionRange = mobData.DetectionRange,
 		AttackRange = mobData.AttackRange,
@@ -87,7 +79,6 @@ function AIService:CreateAI(npc)
 		RunSpeed = mobData.RunSpeed,
 
 		LastAttackSeenTime = 0,
-		Damage = mobData.Damage,
 
 		Abilities = AbilityData:GetAbilityData(itemData.Name),
 		ChosenAbility = nil,

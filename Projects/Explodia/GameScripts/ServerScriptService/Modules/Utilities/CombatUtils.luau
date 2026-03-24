@@ -10,12 +10,7 @@ local StatService = require(ServerScriptService.Services.Profile.StatService)
 local CombatUtils = {}
 
 
-CombatUtils.HitTypes = {}
-for _, module in game.ServerScriptService.Modules.HitTypes:GetChildren() do
-	if module:IsA("ModuleScript") then
-		CombatUtils.HitTypes[module.Name] = require(module)
-	end
-end
+CombatUtils.HitTypes = nil
 
 function CombatUtils:ApplyKnockback(target, attacker, force)
 	local targetHRP = target:WaitForChild("HumanoidRootPart")
@@ -68,6 +63,14 @@ function CombatUtils:ApplyPull(target, attacker, force)
 end
 
 function CombatUtils:ApplyHit(argumentData)
+    if not CombatUtils.HitTypes then
+        CombatUtils.HitTypes = {}
+		for _, module in game.ServerScriptService.Modules.HitTypes:GetChildren() do
+			if module:IsA("ModuleScript") then
+				CombatUtils.HitTypes[module.Name] = require(module)
+			end
+		end
+    end
 	local targetHit = argumentData.TargetHit
 	local attacker = argumentData.Attacker
 	local tool = argumentData.Tool

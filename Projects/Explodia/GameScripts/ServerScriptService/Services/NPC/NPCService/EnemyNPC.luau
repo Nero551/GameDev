@@ -5,10 +5,11 @@ return function(npc)
 	end
 
 	local Debris = game:GetService("Debris")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local ServerScriptService = game:GetService("ServerScriptService")
-local ServerStorage = game:GetService("ServerStorage")
-local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+	local ServerStorage = game:GetService("ServerStorage")
+local NPCService = require(script.Parent)
+	local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 	local ToolLoader = require(ServerScriptService.Modules.Utilities.ToolLoader)
 	local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 	local MobData = require(game.ReplicatedStorage.Modules.Data.MobData)
@@ -40,7 +41,7 @@ local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 	--local HPChangerUI = require(uiModules.HPChangerUI)
 	--HPChangerUI(hpBG, npc)
 
-	npcInfo.NPCLevel.LevelText.Text = mobData.Level
+	npcInfo.NPCLevel.LevelText.Text = NPCService.SpawnedNPCS.Enemy[npc].Level
 	npcInfo.NPCName.Text = npc.Name
 
 	---When NPC Die---

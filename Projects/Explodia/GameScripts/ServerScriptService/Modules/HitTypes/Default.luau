@@ -7,7 +7,6 @@ local CombatUtils = require(ServerScriptService.Modules.Utilities.CombatUtils)
 local StateService = require(game.ServerScriptService.Services.Core.StateService)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
-local KnockbackPull = require(game.ServerScriptService.Modules.Utilities.KnockbackPull)
 local FormulaApplier = require(game.ReplicatedStorage.Modules.Helpers.FormulaApplier)
 local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 

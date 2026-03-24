@@ -1,13 +1,12 @@
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
---Defualt HitType
+--BlackFlashg HitType
 local Debris = game:GetService("Debris")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerScriptService = game:GetService("ServerScriptService")
+local CombatUtils = require(ServerScriptService.Modules.Utilities.CombatUtils)
 
-local modules = (ReplicatedStorage.Modules)
 local StateService = require(game.ServerScriptService.Services.Core.StateService)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
-local KnockbackPull = require(game.ServerScriptService.Modules.Utilities.KnockbackPull)
 local FormulaApplier = require(game.ReplicatedStorage.Modules.Helpers.FormulaApplier)
 local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
@@ -124,10 +123,10 @@ return function(argumentData)
 			StateService:AddState(attacker , "NoMove", .5)
 			StateService:AddState(attacker , "NoPunch", 1)
 
-			KnockbackPull:ApplyKnockback(targetHit,attacker,90)
+			CombatUtils:ApplyKnockback(targetHit,attacker,90)
 		else
-			KnockbackPull:ApplyKnockback(targetHit, attacker, 11)
-			KnockbackPull:ApplyPull(targetHit,attacker,11)
+			CombatUtils:ApplyKnockback(targetHit, attacker, 11)
+			CombatUtils:ApplyPull(targetHit,attacker,11)
 		end	
 			
 	end	

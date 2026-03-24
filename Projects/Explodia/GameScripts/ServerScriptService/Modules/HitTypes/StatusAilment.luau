@@ -6,7 +6,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local FormulaApplier = require(game.ReplicatedStorage.Modules.Helpers.FormulaApplier)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
-local KnockbackPull = require(game.ServerScriptService.Modules.Utilities.KnockbackPull)
+local ServerScriptService = game:GetService("ServerScriptService")
+local CombatUtils = require(ServerScriptService.Modules.Utilities.CombatUtils)
 local StateService = require(game.ServerScriptService.Services.Core.StateService)
 local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 local StatusAilmentsData = require(game.ReplicatedStorage.Modules.Data.StatusAilmentsData)
@@ -99,10 +100,10 @@ return function(argumentData)
 			StateService:AddState(attacker, "NoMove", 0.5)
 			StateService:AddState(attacker, "NoPunch", 1)
 
-			KnockbackPull:ApplyKnockback(targetHit, attacker, 90)
+			CombatUtils:ApplyKnockback(targetHit, attacker, 90)
 		else
-			KnockbackPull:ApplyKnockback(targetHit, attacker, 11)
-			KnockbackPull:ApplyPull(targetHit, attacker, 11)
+			CombatUtils:ApplyKnockback(targetHit, attacker, 11)
+			CombatUtils:ApplyPull(targetHit, attacker, 11)
 		end
 	end
 

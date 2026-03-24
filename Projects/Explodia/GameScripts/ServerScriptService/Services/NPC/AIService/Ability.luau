@@ -8,5 +8,5 @@ return function(npc)
 	AIService:AcquireTarget(npc)
 	if not AIData.Target then return end
 	if not AIData.ChosenAbility then return end
-	AbilityService:UseAbility(nil, npc, AIData.Tool,nil,nil, AIData.ChosenAbility , AIData.Damage)
+	AbilityService:UseAbility(nil, npc, AIData.Tool,nil,nil, AIData.ChosenAbility)
 end
