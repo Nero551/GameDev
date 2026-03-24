@@ -6,7 +6,7 @@ local StateService = require(game.ServerScriptService.Services.Core.StateService
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 local StatusAilmentsData = require(game.ReplicatedStorage.Modules.Data.StatusAilmentsData)
 local StatService = require(game.ServerScriptService.Services.Profile.StatService)
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
 local Connections = require(game.ReplicatedStorage.Modules.Core.Connections)
 
@@ -53,7 +53,7 @@ function AilmentService:Burn(attacker,targetHit,ailmentName, normalDamage)
 		if StateService.Status[targetHit][ailmentData.State] and
 		 StateService.Status[targetHit][ailmentData.State].LastProc >= ailmentData.ProcEvery then
 
-			CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+			VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 				HealthChange = -ailmentDamage
 			})
 			if playerAttacker then
@@ -74,7 +74,7 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 	
 	local playerAttacker = Players:GetPlayerFromCharacter(attacker)
 	local ailmentData = StatusAilmentsData.Ailments[ailmentName]
-	local targetHealth =  CharacterVitalsService:GetVital(targetHit ,"Health")
+	local targetHealth =  VitalsService:GetVital(targetHit ,"Health")
 	local ailmentDamage = normalDamage * ailmentData.DamagePercent
 
 	StateService:AddState(targetHit, ailmentData.State, ailmentData.BaseDuration, {
@@ -97,11 +97,11 @@ function AilmentService:Bleed(attacker, targetHit, ailmentName, normalDamage)
 
 		if StateService.Status[targetHit][ailmentData.State].LastProc >= ailmentData.ProcEvery then
 
-			CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+			VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 				HealthChange = -ailmentDamage
 			})
 
-			CharacterVitalsService:ModifyVital(attacker, "Health", "ModifyHealth", {
+			VitalsService:ModifyVital(attacker, "Health", "ModifyHealth", {
 				["HealthChange"] = targetHealth.MaxHealth / 200
 			})
 
@@ -126,7 +126,7 @@ function AilmentService:Freeze(attacker, targetHit, ailmentName, normalDamage)
 
 	StateService:AddState(targetHit, ailmentData.State, ailmentData.BaseDuration)
 
-	CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+	VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 		HealthChange = -ailmentDamage
 	})
 	

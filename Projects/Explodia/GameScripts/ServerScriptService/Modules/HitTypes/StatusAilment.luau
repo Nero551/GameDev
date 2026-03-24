@@ -12,7 +12,7 @@ local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 local StatusAilmentsData = require(game.ReplicatedStorage.Modules.Data.StatusAilmentsData)
 
 local AilmentService = require(game.ServerScriptService.Services.Combat.AilmentService)
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
 return function(argumentData)
 	local targetHit = argumentData.TargetHit
@@ -28,8 +28,6 @@ return function(argumentData)
 	local statusAilments = argumentData.StatusAilments
 
 	local targetHumanoid: Humanoid = targetHit:WaitForChild("Humanoid")
-	local animator = targetHumanoid:FindFirstChild("Animator")
-
 	local targetHRP = targetHit:WaitForChild("HumanoidRootPart")
 	if not targetHumanoid then
 		return
@@ -63,11 +61,11 @@ return function(argumentData)
 			["NPCDamage"] = npcDamage,
 		})
 
-		CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+		VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 			["HealthChange"] = -AbilityDamage,
 		})
 
-		Animations:GetAnimation(animator, "Shared.Character.AbilityHitReactions." .. abilityData.HitReaction):Play()
+		Animations:GetAnimation(targetHumanoid, "Shared.Character.AbilityHitReactions." .. abilityData.HitReaction):Play()
 		StateService:AddState(targetHit, "Stunned", 0.2)
 	else
 		local foundWeaponData = ItemDataBase:GetItemData(weaponUsed:GetAttribute("ID"))
@@ -79,7 +77,7 @@ return function(argumentData)
 				["FoundWeaponData"] = foundWeaponData,
 			})
 
-			CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+			VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 				["HealthChange"] = -M1Damage,
 			})
 
@@ -90,7 +88,7 @@ return function(argumentData)
 			})
 
 			local hitReactionAnim =
-				Animations:GetAnimation(animator, "Shared.Character.HitReactions." .. tostring(comboStringNumber))
+				Animations:GetAnimation(targetHumanoid, "Shared.Character.HitReactions." .. tostring(comboStringNumber))
 			hitReactionAnim:Play()
 			StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.1)
 		end

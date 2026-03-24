@@ -3,16 +3,16 @@ local Mana = {}
 
 
 function Mana:ModifyMana(character:Model?, argumentData)
-	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
-	local manaData = CharacterVitalsService:GetVital(character, "Mana")
+	local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
+	local manaData = VitalsService:GetVital(character, "Mana")
 	local ManaChange = argumentData.ManaChange
 	
 	manaData.CurrentMana = math.min(manaData.CurrentMana + ManaChange,	manaData.MaxMana)
 end
 
 function Mana:ModifyMaxMana(character:Model?, argumentData)
-	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
-	local manaData = CharacterVitalsService:GetVital(character, "Mana")
+	local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
+	local manaData = VitalsService:GetVital(character, "Mana")
 	local maxMana = argumentData.MaxMana
 	
 	manaData.MaxMana = maxMana

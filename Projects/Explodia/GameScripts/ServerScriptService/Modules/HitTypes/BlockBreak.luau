@@ -19,7 +19,6 @@ return function(argumentData)
 	if  foundWeaponData then
 		local targetHumanoid:Humanoid = targetHit:FindFirstChild("Humanoid")
 		if not targetHumanoid then return end
-		local animator = targetHumanoid:FindFirstChild("Animator")
 		
 		StateService:AddState(targetHit , "Stunned" , 1.5)
 		StateService:AddState(targetHit , "BlockBroken", 1.5)
@@ -38,7 +37,7 @@ return function(argumentData)
 			["Weapon"] = weaponUsed,
 		})
 		
-		Animations:GetAnimation(animator, "Shared.Character.BlockBreak"):Play()	
+		Animations:GetAnimation(targetHumanoid, "Shared.Character.BlockBreak"):Play()
 		--print("[BlockBreak] HitType Reached","From",attacker ,"To",targetHit ,"With", weaponUsed)
 	end
 

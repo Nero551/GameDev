@@ -3,14 +3,14 @@ return function(npc)
 	
 	local AIService = require(game.ServerScriptService.Services.NPC.AIService)
 	local AIData = AIService.ActiveAIs[npc]
-	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+	local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 	if not AIData then return end
 	local humanoid:Humanoid = npc:WaitForChild("Humanoid")
 
 	AIService:AcquireTarget(npc)
 	if not AIData.Target then return end
 
-	CharacterVitalsService:ModifyVital(npc, "Movement", "ModifyWalkSpeed", {
+	VitalsService:ModifyVital(npc, "Movement", "ModifyWalkSpeed", {
 		["WalkSpeed"] = AIData.WalkSpeed	
 	})
 	if not AIData.WalkAnimation.IsPlaying then

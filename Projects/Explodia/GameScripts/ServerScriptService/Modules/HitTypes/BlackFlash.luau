@@ -10,7 +10,7 @@ local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local KnockbackPull = require(game.ServerScriptService.Modules.Utilities.KnockbackPull)
 local FormulaApplier = require(game.ReplicatedStorage.Modules.Helpers.FormulaApplier)
 local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
 return function(argumentData)
 	
@@ -28,8 +28,6 @@ return function(argumentData)
 	local abilityLetter = argumentData.AbilityLetter
 	
 	local targetHumanoid:Humanoid = targetHit:WaitForChild("Humanoid")
-	local animator = targetHumanoid:FindFirstChild("Animator")
-	
 	local targetHRP = targetHit:WaitForChild("HumanoidRootPart")
 	if not  targetHumanoid then return end
 	if StateChecker:CheckState(targetHit, "Invulnerable") then return end
@@ -76,7 +74,7 @@ return function(argumentData)
 			["BlackFlash"] = true,
 		})
 		
-		CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+		VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 			["HealthChange"] = -AbilityDamage
 
 		})
@@ -88,7 +86,7 @@ return function(argumentData)
 
 		
 		Animations:GetAnimation(
-			animator, "Shared.Character.AbilityHitReactions."..abilityData.HitReaction
+			targetHumanoid, "Shared.Character.AbilityHitReactions."..abilityData.HitReaction
 		):Play()
 
 	else
@@ -106,14 +104,14 @@ return function(argumentData)
 
 			})	
 			
-			CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+			VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 				["HealthChange"] = -M1Damage
 
 			})
 
 
 			local hitReactionAnim = Animations:GetAnimation(
-				animator, "Shared.Character.HitReactions."..tostring(comboStringNumber)
+				targetHumanoid, "Shared.Character.HitReactions."..tostring(comboStringNumber)
 			)
 			hitReactionAnim:Play()
 			StateService:AddState(targetHit , "Stunned" , hitReactionAnim.Length + 0.1)

@@ -1,4 +1,4 @@
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 
 
@@ -6,12 +6,12 @@ local RegenService = {}
 local elapsedFlashStep = {}
 local elapsedBlock = {}
 function RegenService:ManaRegen(dt)
-	for character, data in pairs(CharacterVitalsService.CharacterVitals) do
+	for character, data in pairs(VitalsService.CharacterVitals) do
 		if data.Mana.CurrentMana < data.Mana.MaxMana then
 
 			local dm = dt*data.Mana.ManaRegen
 
-			CharacterVitalsService:ModifyVital(character, "Mana", "ModifyMana", {
+			VitalsService:ModifyVital(character, "Mana", "ModifyMana", {
 				["ManaChange"] = dm
 			})
 		end
@@ -19,7 +19,7 @@ function RegenService:ManaRegen(dt)
 end
 
 function RegenService:HealthRegen(dt)
-	for character, data in pairs(CharacterVitalsService.CharacterVitals) do
+	for character, data in pairs(VitalsService.CharacterVitals) do
 		if data.Health.CurrentHealth < data.Health.MaxHealth then
 
 			local dh
@@ -29,7 +29,7 @@ function RegenService:HealthRegen(dt)
 				dh = dt*data.Health.HealthRegen
 			end
 
-			CharacterVitalsService:ModifyVital(character, "Health", "ModifyHealth", {
+			VitalsService:ModifyVital(character, "Health", "ModifyHealth", {
 				["HealthChange"] = dh
 			})
 		end
@@ -39,10 +39,10 @@ end
 
 function RegenService:FlashStepRegen(dt)
 	local cooldown = 15
-	for character, data in pairs(CharacterVitalsService.CharacterVitals) do
+	for character, data in pairs(VitalsService.CharacterVitals) do
 		elapsedFlashStep[character] = (elapsedFlashStep[character] or 0) + dt
 		if data.FlashStep.CurrentFlashStep < data.FlashStep.MaxFlashStep and elapsedFlashStep[character] >= cooldown then
-			CharacterVitalsService:ModifyVital(character, "Movement", "ModifyFlashStep", { FlashStepChange = 1 })
+			VitalsService:ModifyVital(character, "Movement", "ModifyFlashStep", { FlashStepChange = 1 })
 			elapsedFlashStep[character] = 0
 		end
 	end
@@ -50,9 +50,9 @@ end
 	
 function RegenService:BlockCounterRegen(dt)
 	local cooldown = 5
-	for character, data in pairs(CharacterVitalsService.CharacterVitals) do
+	for character, data in pairs(VitalsService.CharacterVitals) do
 		
-		if CharacterVitalsService:GetVital(character, "BlockCounter") > 0 then
+		if VitalsService:GetVital(character, "BlockCounter") > 0 then
 			if not StateChecker:CheckState(character,"Blocking") then
 				elapsedBlock[character] = (elapsedBlock[character] or 0) + dt
 			else
@@ -60,7 +60,7 @@ function RegenService:BlockCounterRegen(dt)
 			end
 
 			if elapsedBlock[character] >= cooldown then
-				CharacterVitalsService:ModifyVital(character , "Combat", "ModifyBlockCounter", { ["BlockCounterChange"] = 0 })
+				VitalsService:ModifyVital(character , "Combat", "ModifyBlockCounter", { ["BlockCounterChange"] = 0 })
 				elapsedBlock[character] = 0
 			end
 			

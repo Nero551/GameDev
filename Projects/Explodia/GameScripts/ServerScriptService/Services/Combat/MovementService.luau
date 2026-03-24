@@ -11,7 +11,7 @@ local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVeri
 local MovementConfig = require(game.ReplicatedStorage.Modules.Configs.MovementConfig)
 
 local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
 local DashConfig = MovementConfig.DashConfig
 local wallJumpConfig = MovementConfig.WallRunConfig
@@ -23,8 +23,7 @@ function MovementService:LoadSharedAnimations()
 	game.Players.PlayerAdded:Connect(function(player)
 		player.CharacterAdded:Connect(function(character)
 			local humanoid = character:WaitForChild("Humanoid")
-			local animator = humanoid.Animator
-			Animations:loadAnims(animator, assets.Shared)
+			Animations:LoadAnimations(humanoid, assets.Shared)
 		end)
 	end)
 end
@@ -52,7 +51,7 @@ function MovementService:Dash(player, direction: Vector3?, IsShiftLockOff, npcTa
 	local directionName
 
 	if IsShiftLockOff or npcTarget then
-		local dashAnim: AnimationTrack = Animations:GetAnimation(humanoid.Animator, "Shared.Animations.Dashes.Forward")
+		local dashAnim: AnimationTrack = Animations:GetAnimation(humanoid, "Shared.Animations.Dashes.Forward")
 
 		StateService:AddState(character, "Dashing", dashAnim.Length)
 		---Animation---
@@ -94,7 +93,7 @@ function MovementService:Dash(player, direction: Vector3?, IsShiftLockOff, npcTa
 		end
 
 		local dashAnim: AnimationTrack =
-			Animations:GetAnimation(humanoid.Animator, "Shared.Animations.Dashes." .. directionName)
+			Animations:GetAnimation(humanoid, "Shared.Animations.Dashes." .. directionName)
 
 		StateService:AddState(character, "Dashing", dashAnim.Length)
 		---Animation---
@@ -167,7 +166,7 @@ function MovementService:Dash(player, direction: Vector3?, IsShiftLockOff, npcTa
 end
 
 function MovementService:FlashStep(character)
-	local playerFlashStep = CharacterVitalsService:GetVital(character, "FlashStep")
+	local playerFlashStep = VitalsService:GetVital(character, "FlashStep")
 	local flashstepCharge = playerFlashStep.CurrentFlashStep
 	if not ActionVerifier:CanFlashstep(character, flashstepCharge) then
 		return
@@ -177,7 +176,7 @@ function MovementService:FlashStep(character)
 	StateService:AddState(character, "Invulnerable", flashStepConfig.FlashstepDuration)
 	StateService:AddState(character, "FlashStep", flashStepConfig.FlashstepDuration)
 
-	CharacterVitalsService:ModifyVital(character, "Movement", "ModifyFlashStep", {
+	VitalsService:ModifyVital(character, "Movement", "ModifyFlashStep", {
 		["FlashStepChange"] = -1,
 	})
 

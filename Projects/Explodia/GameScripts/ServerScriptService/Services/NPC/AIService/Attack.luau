@@ -9,5 +9,5 @@ return function(npc)
 	if not AIData.Target then return end
 	
 	AIData.Humanoid:MoveTo(AIData.Target.Position)
-	CombatService:Attack(npc, AIData.Tool, nil, AIData.Damage)
+	CombatService:Attack(npc)
 end

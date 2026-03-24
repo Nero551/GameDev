@@ -224,6 +224,7 @@ function EquipService:LoadEquippedItems(player: Player)
 			end
 		end
 	end
+
 end
 
 return EquipService

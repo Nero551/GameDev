@@ -3,32 +3,36 @@ return function(npc)
 		warn("Invalid NPC")
 		return
 	end
-	local Debris = game:GetService("Debris")
-	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+	local Debris = game:GetService("Debris")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local ServerScriptService = game:GetService("ServerScriptService")
+local ServerStorage = game:GetService("ServerStorage")
+local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+	local ToolLoader = require(ServerScriptService.Modules.Utilities.ToolLoader)
 	local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 	local MobData = require(game.ReplicatedStorage.Modules.Data.MobData)
 
 	local AIService = require(game.ServerScriptService.Services.NPC.AIService)
-	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+	local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
 	local GameEvents = require(game.ReplicatedStorage.Modules.Core.GameEvents)
 	local npcHumanoid = npc:WaitForChild("Humanoid")
-	local animator: Animator = npcHumanoid.Animator
 
 	local mobData = MobData.Mobs[npc.Name]
-	local toolName = mobData.Tool.Name
 
+	local itemData = ItemDataBase:GetItemData(mobData.Tool)
+	if itemData then
+		local tool = ServerStorage:FindFirstChild("Tools"):FindFirstChild(itemData.Type):FindFirstChild(itemData.Name)
+		if tool then
+			local clone = tool:Clone()
+			clone.Parent = npc
+			ToolLoader(clone)
+		end
+	end
 	AIService:CreateAI(npc)
 
-	if ReplicatedStorage.Assets.Weapons[toolName].Model:FindFirstChild(toolName .. "_Equipped") then
-		local toolModel: Model = ReplicatedStorage.Assets.Weapons[toolName].Model[toolName .. "_Equipped"]:Clone()
-		toolModel.Parent = npc
-		local weld = toolModel:FindFirstChildWhichIsA("Motor6D")
-		weld.Part0 = npc:FindFirstChild("Right Arm")
-	end
-
-	---NPC Info GUI---m
+	---NPC Info GUI---
 	local npcInfo = npc.NPCInfo
 	npcInfo.Enabled = true
 	npcInfo.Adornee = npc.Head
@@ -40,13 +44,13 @@ return function(npc)
 	npcInfo.NPCName.Text = npc.Name
 
 	---When NPC Die---
-	local deathAnimation = Animations:GetAnimation(animator, "Shared.Character.Death")
+	local deathAnimation = Animations:GetAnimation(npcHumanoid, "Shared.Character.Death")
 	local alreadyDead = false
 	npc:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(function()
 		if alreadyDead == true then
 			return
 		end
-		if CharacterVitalsService:GetVital(npc, "Health").CurrentHealth <= 0 then
+		if VitalsService:GetVital(npc, "Health").CurrentHealth <= 0 then
 			alreadyDead = true
 			npcInfo.Enabled = false
 			deathAnimation:Play()

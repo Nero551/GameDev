@@ -1,5 +1,5 @@
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
 local StateHandler = {}
 
@@ -52,16 +52,16 @@ function StateHandler:HandleStates(character:Model ,dt, runSpeed)
 	end
 	
 	---Applying---
-	if CharacterVitalsService:GetVital(character , "WalkSpeed") ~= finalWalkSpeed then
+	if VitalsService:GetVital(character , "WalkSpeed") ~= finalWalkSpeed then
 		
-		CharacterVitalsService:ModifyVital(character, "Movement", "ModifyWalkSpeed", {
+		VitalsService:ModifyVital(character, "Movement", "ModifyWalkSpeed", {
 			["WalkSpeed"] = finalWalkSpeed
 			
 		})		
 	end
 
-	if CharacterVitalsService:GetVital(character , "JumpPower") ~= finalJumpPower then
-		CharacterVitalsService:ModifyVital(character, "Movement", "ModifyJumpPower", {
+	if VitalsService:GetVital(character , "JumpPower") ~= finalJumpPower then
+		VitalsService:ModifyVital(character, "Movement", "ModifyJumpPower", {
 			["JumpPower"] = finalJumpPower
 
 		})	

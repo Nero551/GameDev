@@ -1,4 +1,4 @@
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 local CanDoAction = require(game.ServerScriptService.Services.NPC.AIService.CanDoAction)
 return function(npc)
     local AIService = require(game.ServerScriptService.Services.NPC.AIService)
@@ -7,7 +7,7 @@ return function(npc)
 	if not AIData then return end
 	AIService:AcquireTarget(npc)
 
-	if CharacterVitalsService:GetVital(npc, "Health").CurrentHealth <= 0 then
+	if VitalsService:GetVital(npc, "Health").CurrentHealth <= 0 then
 		AIData.State = "Dead"
 		return
 	end

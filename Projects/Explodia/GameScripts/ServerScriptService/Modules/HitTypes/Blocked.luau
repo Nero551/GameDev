@@ -8,7 +8,7 @@ local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 
 local FormulaApplier = require(game.ReplicatedStorage.Modules.Helpers.FormulaApplier)
 local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
 return function(argumentData)
 	local targetHit = argumentData.TargetHit
@@ -23,8 +23,6 @@ return function(argumentData)
 	if not targetHumanoid then
 		return
 	end
-	local animator = targetHumanoid:FindFirstChild("Animator")
-
 	if StateChecker:CheckState(targetHit, "Invulnerable") then
 		return
 	end
@@ -40,7 +38,7 @@ return function(argumentData)
 			["Blocked"] = true,
 		})
 
-		CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+		VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 			["HealthChange"] = -AbilityDamage,
 		})
 
@@ -59,7 +57,7 @@ return function(argumentData)
 				["Blocked"] = true,
 			})
 
-			CharacterVitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+			VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 				["HealthChange"] = -M1Damage,
 			})
 
@@ -76,12 +74,12 @@ return function(argumentData)
 	NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "BlockedHit", {
 		["Target"] = targetHit,
 		["Weapon"] = weaponUsed,
-		["BlockCounter"] = CharacterVitalsService:GetVital(targetHit, "BlockCounter"),
+		["BlockCounter"] = VitalsService:GetVital(targetHit, "BlockCounter"),
 	})
 
 	task.spawn(function()
 		local randomShrug = math.random(1, 2)
-		Animations:GetAnimation(animator, "Shared.Character.BlockReactions.BlockShrug" .. tostring(randomShrug)):Play()
+		Animations:GetAnimation(targetHumanoid, "Shared.Character.BlockReactions.BlockShrug" .. tostring(randomShrug)):Play()
 	end)
 
 	if player then

@@ -9,44 +9,41 @@ local InventoryService = require(game.ServerScriptService.Services.Profile.Inven
 local QuestService = require(game.ServerScriptService.Services.Profile.QuestService)
 local TitleService = require(game.ServerScriptService.Services.Profile.TitleService)
 local BuffService = require(game.ServerScriptService.Services.Profile.BuffService)
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
 local Connections = require(game.ReplicatedStorage.Modules.Core.Connections)
 
 local function Setup(player: Player, character)
-	local playerGui = player:WaitForChild("PlayerGui")
-
-	repeat
-		task.wait()
-	until #playerGui:GetDescendants() >= #StarterGui:GetDescendants()
 	StatService:SetupStats(player)
 	LevelService:SetupLevel(player)
 	InventoryService:SetupInventory(player)
 	EquipService:SetupEquipped(player)
-	LevelService:SetupLevel(player)
 	TitleService:SetupTitles(player)
 	CurrencyService:SetupCurrencies(player)
 	BuffService:UpdateBuffs(player)
-
 	QuestService:SetupQuests(player)
 	QuestService:SyncQuestsWithQuestData(player)
 
-	CharacterVitalsService:Create(character)
-
-	CharacterVitalsService:ModifyVital(character, "Health", "ModifyHealth", {
-		["HealthChange"] = CharacterVitalsService.CharacterVitals[character].Health.MaxHealth
-			- CharacterVitalsService.CharacterVitals[character].Health.CurrentHealth,
+	VitalsService:Create(character)
+	VitalsService:ModifyVital(character, "Health", "ModifyHealth", {
+		["HealthChange"] = VitalsService.CharacterVitals[character].Health.MaxHealth
+			- VitalsService.CharacterVitals[character].Health.CurrentHealth,
 	})
 
-	CharacterVitalsService:ModifyVital(character, "Mana", "ModifyMana", {
-		["ManaChange"] = CharacterVitalsService.CharacterVitals[character].Mana.MaxMana
-			- CharacterVitalsService.CharacterVitals[character].Mana.CurrentMana,
+	VitalsService:ModifyVital(character, "Mana", "ModifyMana", {
+		["ManaChange"] = VitalsService.CharacterVitals[character].Mana.MaxMana
+			- VitalsService.CharacterVitals[character].Mana.CurrentMana,
 	})
 end
 
 ---Load Data---
 Players.PlayerAdded:Connect(function(player)
+	local playerGui = player:WaitForChild("PlayerGui")
 	print(DataService:Load(player))
+	repeat
+		task.wait()
+	until #playerGui:GetDescendants() >= #StarterGui:GetDescendants()
+
 	if player.Character then
 		Setup(player, player.Character)
 	end

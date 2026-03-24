@@ -1,19 +1,8 @@
-local function GetTool(toolName)
-	for _,item:Tool in game.ServerStorage.Tools:GetDescendants() do
-		if item:IsA("Tool") then
-			if item.Name == toolName then
-				return item
-			end
-		end
-	end
-	return
-end
-
 local MobData = {}
 MobData.Mobs = {
 	["Zombie"] = {
 		Type = "Enemy",
-		Tool = GetTool("Fist"),
+		Tool = "weapon_0000000001", -- Fist
 		Level = 1200,
 		Wander = true,
 		WanderRadius = 50,

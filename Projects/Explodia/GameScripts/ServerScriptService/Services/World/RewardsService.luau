@@ -1,5 +1,5 @@
 local ServerScriptService = game:GetService("ServerScriptService")
-local CharacterVitalsService = require(ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(ServerScriptService.Services.Combat.VitalsService)
 local CurrencyService = require(ServerScriptService.Services.Profile.CurrencyService)
 local InventoryService = require(ServerScriptService.Services.Profile.InventoryService)
 local LevelService = require(ServerScriptService.Services.Profile.LevelService)
@@ -12,7 +12,7 @@ function RewardsService:GiveRewards(player, Rewards, quest: boolean)
 	local character = player.Character or player.CharacterAdded:Wait()
 	if Rewards then
 		if Rewards.MasteryEXP then
-			local inHand = CharacterVitalsService:GetVital(character, "InHand")
+			local inHand = VitalsService:GetVital(character, "InHand")
 			if ItemDataBase:GetItemData(inHand) then
 				MasteryService:IncreaseMastery(player, inHand, Rewards.MasteryEXP)
 			end

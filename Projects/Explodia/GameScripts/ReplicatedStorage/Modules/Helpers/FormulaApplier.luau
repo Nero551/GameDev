@@ -1,7 +1,7 @@
 
 local FormulaApplier = {}
 
-function FormulaApplier:DefaultHitFormula(data, npcDamage, targetDefenseStat, playerDamageStat)
+function FormulaApplier:DefaultHitFormula(data, targetDefenseStat, playerDamageStat)
 	
 	local base1 = (npcDamage or data.Damage) * (100 / (100 + targetDefenseStat))
 	local base2 = (1 + data.Damage / 100) * (npcDamage or playerDamageStat) * (100 / (100 + targetDefenseStat))
@@ -10,7 +10,7 @@ function FormulaApplier:DefaultHitFormula(data, npcDamage, targetDefenseStat, pl
 	return math.floor(defaultDamage)
 end
 
-function FormulaApplier:BlockedHitFormula(data, npcDamage, targetDefenseStat, playerDamageStat)
+function FormulaApplier:BlockedHitFormula(data, targetDefenseStat, playerDamageStat)
 	
 	local base1 = (npcDamage or data.Damage) * (100 / (100 + targetDefenseStat)) * 0.1
 	local base2 = (1 + data.Damage / 100) * (npcDamage or playerDamageStat) * (100 / (100 + targetDefenseStat)) * 0.1
@@ -39,7 +39,6 @@ end
 
 function FormulaApplier:M1Damage(argumentData)
 
-	local npcDamage = argumentData.NPCDamage
 	local blocked = argumentData.Blocked
 	local playerDamageStat  = argumentData.PlayerDamageStat
 	local targetDefenseStat = argumentData.TargetDefenseStat
@@ -51,7 +50,7 @@ function FormulaApplier:M1Damage(argumentData)
 	
 	---If target Blocking---
 	if blocked then
-		M1Damage = FormulaApplier:BlockedHitFormula(foundWeaponData, npcDamage, targetDefenseStat, playerDamageStat)
+		M1Damage = FormulaApplier:BlockedHitFormula(foundWeaponData, targetDefenseStat, playerDamageStat)
 
 	elseif playerCriticalDamageStat then
 
@@ -67,7 +66,7 @@ function FormulaApplier:M1Damage(argumentData)
 		end
 	else
 		---Default---
-		M1Damage = FormulaApplier:DefaultHitFormula(foundWeaponData, npcDamage, targetDefenseStat, playerDamageStat)
+		M1Damage = FormulaApplier:DefaultHitFormula(foundWeaponData, targetDefenseStat, playerDamageStat)
 	end	
 	
 	return M1Damage

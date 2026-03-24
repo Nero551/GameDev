@@ -1,8 +1,8 @@
 local Health = {}
 
 function Health:ModifyHealth(character:Model?, argumentData)
-	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
-	local healthData = CharacterVitalsService:GetVital(character, "Health")
+	local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
+	local healthData = VitalsService:GetVital(character, "Health")
 	local healthChange = argumentData.HealthChange
 	
 	healthData.CurrentHealth = math.clamp(healthData.CurrentHealth + healthChange, 0 , healthData.MaxHealth)
@@ -10,8 +10,8 @@ function Health:ModifyHealth(character:Model?, argumentData)
 end
 
 function Health:ModifyMaxHealth(character:Model?, argumentData)
-	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
-	local healthData = CharacterVitalsService:GetVital(character, "Health")
+	local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
+	local healthData = VitalsService:GetVital(character, "Health")
 	
 	local maxHealth = argumentData.MaxHealth
 	
@@ -28,8 +28,8 @@ end
 
 
 function Health:Apply(character)
-	local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
-	local healthData = CharacterVitalsService:GetVital(character, "Health")
+	local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
+	local healthData = VitalsService:GetVital(character, "Health")
 	local humanoid:Humanoid = character:FindFirstChild("Humanoid")
 	if not humanoid then return end
 	

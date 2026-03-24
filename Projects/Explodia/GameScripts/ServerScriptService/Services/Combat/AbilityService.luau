@@ -2,6 +2,7 @@ local NetworkingService = require(game.ReplicatedStorage.Modules.Core.Networking
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Debris = game:GetService("Debris")
 local ServerScriptService = game:GetService("ServerScriptService")
+local CombatUtils = require(ServerScriptService.Modules.Utilities.CombatUtils)
 local DataService = require(ServerScriptService.Services.Core.DataService)
 local assets = ReplicatedStorage.Assets
 
@@ -10,10 +11,9 @@ local AbilityData = require(game.ReplicatedStorage.Modules.Data.AbilityData)
 
 local StateService = require(game.ServerScriptService.Services.Core.StateService)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
 local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
-local HitApplier = require(game.ServerScriptService.Modules.Utilities.HitApplier)
 
 local AbilityService = {
 	hitTypes = {},
@@ -25,7 +25,7 @@ for _, module in game.ServerScriptService.Modules.HitTypes:GetChildren() do
 	end
 end
 
-function AbilityService:UseAbility(player: Player?, character, tool: Tool, mouse, input, letter, npcDamage)
+function AbilityService:UseAbility(player: Player?, character, tool: Tool, mouse, input, letter)
 	local inventory = DataService:GetTable(player, "Inventory")
 	if not tool then
 		return
@@ -50,7 +50,7 @@ function AbilityService:UseAbility(player: Player?, character, tool: Tool, mouse
 	local sounds = assets.Shared.Sounds
 
 	if player then
-		local playerMana = CharacterVitalsService:GetVital(character, "Mana")
+		local playerMana = VitalsService:GetVital(character, "Mana")
 		if playerMana.CurrentMana < abilityData.Mana then
 			sounds.Error:Play()
 			NetworkingService:FireToClient(player, "PopUp", {
@@ -75,7 +75,7 @@ function AbilityService:UseAbility(player: Player?, character, tool: Tool, mouse
 	---Animation---
 	local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 	local animation: AnimationTrack =
-		Animations:GetAnimation(humanoid.Animator, "Weapons." .. tool.Name .. ".Animations.Abilities." .. abilityletter)
+		Animations:GetAnimation(humanoid, "Weapons." .. tool.Name .. ".Animations.Abilities." .. abilityletter)
 	if not animation then
 		warn("Animation Not Found")
 		print(Animations.loadedAnimations)
@@ -141,12 +141,10 @@ function AbilityService:UseAbility(player: Player?, character, tool: Tool, mouse
 					if targetHumanoid and not hit[targetHumanoid] then
 						hit[targetHumanoid] = true
 						for Hit = 0, abilityData.Hits, 1 do
-							HitApplier:ApplyHit({
-								["Player"] = player,
+							CombatUtils:ApplyHit({
 								["WeaponData"] = weaponData,
 								["TargetHit"] = targetHit,
 								["Tool"] = tool,
-								["NPCDamage"] = npcDamage,
 								["HitTypes"] = AbilityService.hitTypes,
 								["Character"] = character,
 								["AbilityData"] = abilityData,

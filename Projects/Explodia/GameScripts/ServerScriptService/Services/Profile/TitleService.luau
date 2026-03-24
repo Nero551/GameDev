@@ -6,8 +6,9 @@ local DataService = require(game.ServerScriptService.Services.Core.DataService)
 local TitleService = {}
 
 function TitleService:SetupTitles(player)
+	print("Reached")
 	local playerTitles = DataService:GetTable(player, "Titles")
-	local TitlesFolder = player:FindFirstChild("PlayerTitles")
+	local TitlesFolder = player:FindFirstChild("Titles")
 
 	if not TitlesFolder then
 		TitlesFolder = Instance.new("Folder")

@@ -1,5 +1,5 @@
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 local HandService = {}
 
 function HandService:PutInHand(player:Player,toolId)
@@ -7,7 +7,7 @@ function HandService:PutInHand(player:Player,toolId)
     local humanoid:Humanoid = char:WaitForChild("Humanoid")
     local toolData = ItemDataBase:GetItemData(toolId)
     if not char:FindFirstChild(toolData.Name) then
-        CharacterVitalsService:ModifyVital(char, "InHand", "PutInHand",{
+        VitalsService:ModifyVital(char, "InHand", "PutInHand",{
             ["ToolId"] = toolId
         })
         local tool = player.Backpack:FindFirstChild(toolData.Name)
@@ -21,8 +21,8 @@ function HandService:RemoveFromHand(player:Player,toolId)
 	local char = player.Character or player.CharacterAdded:Wait()
 	local toolData = ItemDataBase:GetItemData(toolId)
     
-	if CharacterVitalsService:GetVital(char, "InHand") == toolId then
-		CharacterVitalsService:ModifyVital(char, "InHand", "RemoveFromHand", {
+	if VitalsService:GetVital(char, "InHand") == toolId then
+		VitalsService:ModifyVital(char, "InHand", "RemoveFromHand", {
 			["ToolId"] = toolId,
 		})
 

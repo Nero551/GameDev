@@ -2,7 +2,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local MovementConfig = require(game.ReplicatedStorage.Modules.Configs.MovementConfig)
 local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 local CanDoAction = {}
 
 function CanDoAction:CanRun(AIData)
@@ -40,7 +40,7 @@ function CanDoAction:CanFlashstep(AIData)
 	local distance = (AIData.Root.Position - AIData.Target.Position).Magnitude
 	if distance <= AIData.DetectionRange and distance >= AIData.DetectionRange/2 and 
 		ActionVerifier:CanFlashstep(AIData.Humanoid.Parent,
-			CharacterVitalsService:GetVital(AIData.Humanoid.Parent, "FlashStep").CurrentFlashStep) then
+			VitalsService:GetVital(AIData.Humanoid.Parent, "FlashStep").CurrentFlashStep) then
 		return true
 	end	
 	return false

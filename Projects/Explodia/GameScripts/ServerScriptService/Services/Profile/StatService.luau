@@ -1,5 +1,5 @@
 local DataService = require(game.ServerScriptService.Services.Core.DataService)
-local CharacterVitalsService = require(game.ServerScriptService.Services.Combat.CharacterVitalsService)
+local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
 
 local StatService = {}
@@ -15,7 +15,7 @@ local function ApplyHealth(player:Player)
 
 	local maxHealth = math.max(MIN_HEALTH, finalHealth * HEALTH_PER_POINT)
 	
-	CharacterVitalsService:ModifyVital(char, "Health" ,"ModifyMaxHealth", {
+	VitalsService:ModifyVital(char, "Health" ,"ModifyMaxHealth", {
 		["MaxHealth"] = maxHealth
 	})
 	
@@ -32,7 +32,7 @@ local function ApplyMana(player:Player)
 
 	local maxMana = math.max(MIN_MANA,finalMana * MANA_PER_POINT)
 
-	CharacterVitalsService:ModifyVital(char, "Mana", "ModifyMaxMana", {
+	VitalsService:ModifyVital(char, "Mana", "ModifyMaxMana", {
 		["MaxMana"] = maxMana,
 	})
 	
