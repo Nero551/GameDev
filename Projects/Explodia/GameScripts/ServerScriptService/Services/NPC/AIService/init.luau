@@ -1,4 +1,6 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerScriptService = game:GetService("ServerScriptService")
+local CombatService = require(ServerScriptService.Services.Combat.CombatService)
 local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 local StateHandler = require(game.ServerScriptService.Modules.Utilities.StateHandler)
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
@@ -112,6 +114,7 @@ function AIService:StateUpdater(npc, updateRate)
 				anim:Stop()
 			end
 		end
+		CombatService:Died(npc)
 		AIService:DestroyAI(npc)
 		return
 	end

@@ -13,7 +13,8 @@ function ActionVerifier:CanSprint(character)
 				"NoMove",
 				"Stunned",
 				"NoSprint",
-				"BlockBroken"
+				"BlockBroken",
+				"Dead"
 			)
 		then
 			return true
@@ -33,7 +34,8 @@ function ActionVerifier:CanWalk(character)
 				"Stunned",
 				"NoSprint",
 				"Sprinting",
-				"BlockBroken"
+				"BlockBroken",
+				"Dead"
 			)
 		then
 			return true
@@ -57,7 +59,8 @@ function ActionVerifier:CanAttack(character)
 			"Casting",
 			"Frozen",
 			"BlockBroken",
-			"ComboCooldown"
+			"ComboCooldown",
+			"Dead"
 		)
 	then
 		return false
@@ -77,7 +80,8 @@ function ActionVerifier:CanBlock(character)
 			"FlashStepEndLag",
 			"DashEndLag",
 			"Frozen",
-			"BlockBroken"
+			"BlockBroken",
+			"Dead"
 		)
 	then
 		return false
@@ -97,7 +101,8 @@ function ActionVerifier:CanAbility(character, abilityLetter)
 			"Frozen",
 			"FlashStepEndLag",
 			"DashEndLag",
-			"BlockBroken"
+			"BlockBroken",
+			"Dead"
 		)
 	then
 		return false
@@ -122,7 +127,8 @@ function ActionVerifier:CanDash(character)
 			"DashCoolDown",
 			"FlashStep",
 			"Frozen",
-			"BlockBroken"
+			"BlockBroken",
+			"Dead"
 		)
 	then
 		return false
@@ -142,7 +148,8 @@ function ActionVerifier:CanFlashstep(character, flashstepCharge)
 			"FlashStepEndLag",
 			"FlashStep",
 			"Frozen",
-			"BlockBroken"
+			"BlockBroken",
+			"Dead"
 		) or flashstepCharge == 0
 	then
 		return false
@@ -169,7 +176,8 @@ function ActionVerifier:CanWallRun(character: Model)
 			"FlashStep",
 			"FlashStepEndLag",
 			"Frozen",
-			"BlockBroken"
+			"BlockBroken",
+			"Dead"
 		)
 	then
 		local rayparams = RaycastParams.new()
