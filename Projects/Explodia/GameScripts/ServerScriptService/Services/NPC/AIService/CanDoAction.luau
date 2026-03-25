@@ -1,4 +1,3 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local MovementConfig = require(game.ReplicatedStorage.Modules.Configs.MovementConfig)
 local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
@@ -26,7 +25,7 @@ function CanDoAction:CanDash(AIData)
 		rayparams.FilterDescendantsInstances = {AIData.Target.Parent}
 
 		local result = workspace:Raycast(AIData.Root.Position,
-		 AIData.Root.CFrame.LookVector*MovementConfig.DashConfig.MaxDashDistance, rayparams)
+		 AIData.Root.CFrame.LookVector*MovementConfig.DashConfig.StudsPerSecond, rayparams)
 		if result then
 			return true
 		end

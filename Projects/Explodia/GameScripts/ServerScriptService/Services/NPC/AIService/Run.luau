@@ -50,7 +50,6 @@ return function(npc)
 		local originalTargetPos
 		if AIData.Target then
 			 originalTargetPos = AIData.Target.Position
-
 		end
 		
 		for _,waypoint:PathWaypoint in ipairs(path:GetWaypoints()) do
@@ -72,7 +71,7 @@ return function(npc)
 				-- part.Parent = workspace.World.PathFinding
 				-- game.Debris:AddItem(part, 5)
 				
-				if (originalTargetPos - AIData.Target.Position).Magnitude > 10 or os.clock() - AIData.NeedsRepath  > 2 then
+				if (originalTargetPos - AIData.Target.Position).Magnitude > 8 or os.clock() - AIData.NeedsRepath  > 4 then
 					break
 				end
 				humanoid:MoveTo(waypoint.Position)

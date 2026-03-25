@@ -135,20 +135,12 @@ function MovementService:Dash(character, direction: Vector3, shiftLockState)
 					local forward = character.HumanoidRootPart.CFrame.LookVector
 					local right = character.HumanoidRootPart.CFrame.RightVector
 
-					-- flatten
 					forward = Vector3.new(forward.X, 0, forward.Z).Unit
 					right = Vector3.new(right.X, 0, right.Z).Unit
 
-					-- direction is already camera-based from client
-					local dir = Vector3.new(direction.X, 0, direction.Z)
 
-					if dir.Magnitude > 0 then
-						dir = dir.Unit
-					end
-
-					-- convert camera direction into character-relative space
-					local forwardDot = dir:Dot(forward)
-					local rightDot = dir:Dot(right)
+					local forwardDot = direction:Dot(forward)
+					local rightDot = direction:Dot(right)
 
 					local finalDir = (forward * forwardDot + right * rightDot)
 

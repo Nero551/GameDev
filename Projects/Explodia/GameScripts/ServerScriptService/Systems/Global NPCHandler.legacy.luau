@@ -25,7 +25,7 @@ elapsed =  elapsed + dt
 	elapsed = 0
 	
 	for npc,AIData in AIService.ActiveAIs do
-		AIService:StateUpdater(npc, dt)
+		AIService:StateUpdater(npc, updateRate)
 		AIService.Brains[AIData.Type.."Brain"](npc)
 	end
 end)
