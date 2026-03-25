@@ -4,16 +4,11 @@ return function()
 	local RunService = game:GetService("RunService")
 	local TweenService = game:GetService("TweenService")
 	local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
-
 	local Player = game:GetService("Players").LocalPlayer
 	local character = Player.Character or Player.CharacterAdded:Wait()
 	local humanoid: Humanoid = character:WaitForChild("Humanoid")
-
+	local hrp: Part = character:WaitForChild("HumanoidRootPart")
 	local Connections = require(game.ReplicatedStorage.Modules.Core.Connections)
-	local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
-	local MovementConfig = require(game.ReplicatedStorage.Modules.Configs.MovementConfig)
-
-	local DashConfig = MovementConfig.DashConfig
 	local camera = workspace.CurrentCamera
 
 	local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
@@ -33,9 +28,17 @@ return function()
 
 	------------------------------------------------------MovementAbilties-------------------------------------------------------
 
-	local function getDashDirection()
-		local dashDirection = humanoid.MoveDirection
-		return dashDirection.Unit
+	local function GetMoveDirection()
+		local MoveDirection = humanoid.MoveDirection
+		return Vector3.new(MoveDirection.X, 0, MoveDirection.Z).Unit
+	end
+
+	local function GetShiftLockState()
+		if UserInputService.MouseBehavior == Enum.MouseBehavior.LockCenter then
+			return 1
+		else
+			return 0
+		end
 	end
 
 	UserInputService.InputBegan:Connect(function(input)
@@ -51,72 +54,11 @@ return function()
 				NetworkingService:FireToServer("FlashStep")
 			else
 				---Dashing---
-				local direction = getDashDirection()
+				local direction = GetMoveDirection()
 				if direction and ActionVerifier:CanDash(character) then
-					local IsShiftLockOff = UserInputService.MouseBehavior ~= Enum.MouseBehavior.LockCenter
-					NetworkingService:FireToServer("Dash", direction, IsShiftLockOff)
+					NetworkingService:FireToServer("Dash", direction, GetShiftLockState())
 				end
 			end
 		end
-	end)
-
-	---Dash Movement---
-	local dashConnection
-	NetworkingService:OnClientEvent("Dash", function(direction, IsShiftLockOff)
-		---Dash Movement---
-		local maxDashDistance = DashConfig.MaxDashDistance
-		local root: Part = character:FindFirstChild("HumanoidRootPart")
-
-		local rayParams = RaycastParams.new()
-		rayParams.FilterType = Enum.RaycastFilterType.Exclude
-		rayParams.FilterDescendantsInstances = { character }
-
-		if dashConnection then
-			dashConnection:Disconnect()
-			dashConnection = nil
-		end
-		dashConnection = RunService.Heartbeat:Connect(function(dt)
-			if not StateChecker:CheckState(character, "Dashing") then
-				dashConnection:Disconnect()
-				dashConnection = nil
-				return
-			end
-			local directionVector: Vector3
-
-			if not IsShiftLockOff then
-				local camRight = Vector3.new(camera.CFrame.RightVector.X, 0, camera.CFrame.RightVector.Z)
-				local camLook = Vector3.new(camera.CFrame.LookVector.X, 0, camera.CFrame.LookVector.Z)
-
-				if direction == "Right" then
-					directionVector = camRight
-				elseif direction == "Left" then
-					directionVector = -camRight
-				elseif direction == "Back" then
-					directionVector = -camLook
-				elseif direction == "Forward" then
-					directionVector = camLook
-				elseif direction == "Forward-Right" then
-					directionVector = camLook + camRight
-				elseif direction == "Forward-Left" then
-					directionVector = camLook - camRight
-				elseif direction == "Back-Right" then
-					directionVector = -camLook + camRight
-				elseif direction == "Back-Left" then
-					directionVector = -camLook - camRight
-				end
-				directionVector = Vector3.new(directionVector.X, 0, directionVector.Z).Unit
-			else
-				directionVector = Vector3.new(
-					character.HumanoidRootPart.CFrame.LookVector.X,
-					0,
-					character.HumanoidRootPart.CFrame.LookVector.Z
-				).Unit
-			end
-
-			local rayResult = workspace:Raycast(root.Position, directionVector * maxDashDistance * dt, rayParams)
-			if rayResult then
-			end
-			root.CFrame = root.CFrame + (directionVector * maxDashDistance * dt)
-		end)
 	end)
 end

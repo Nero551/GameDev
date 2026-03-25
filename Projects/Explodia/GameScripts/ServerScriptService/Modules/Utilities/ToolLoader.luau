@@ -3,7 +3,6 @@ return function(tool)
 	if tool:GetAttribute("ToolLoaded", true) then
 		return
 	end
-	print("nice")
 
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local assets = ReplicatedStorage.Assets

@@ -5,6 +5,12 @@ local TitleData = require(game.ReplicatedStorage.Modules.Data.TitleData)
 
 local BuffService = {}
 
+function BuffService:SetupBuffs(player)
+	---Coming Soon
+
+	BuffService:UpdateBuffs(player)
+end
+
 function BuffService:UpdateBuffs(player)
 	StatService:ResetBuffs(player)
 	local playerBuffs = DataService:GetTable(player, "Buffs")

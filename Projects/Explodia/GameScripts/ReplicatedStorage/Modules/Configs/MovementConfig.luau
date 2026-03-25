@@ -1,7 +1,7 @@
 local MovementConfig = {}
 
 MovementConfig.DashConfig = {
-	MaxDashDistance = 60,
+	StudsPerSecond = 80,
 	DashCooldown = 1.5,
 }
 

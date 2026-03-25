@@ -1,7 +1,7 @@
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
-local Character = require(ReplicatedStorage.Modules.Client.Character)
 
 local assets = ReplicatedStorage.Assets
 local Connections = require(game.ReplicatedStorage.Modules.Core.Connections)
@@ -37,26 +37,22 @@ function MovementService:Sprint(character)
 	end
 end
 
-function MovementService:Dash(player, direction: Vector3?, IsShiftLockOff, npcTarget, npc)
-	local character = npc
-	if not npc then
-		character = player.Character or player.CharacterAdded:Wait()
-	end
-
+function MovementService:Dash(character, direction: Vector3, shiftLockState)
 	if not ActionVerifier:CanDash(character) then
 		return
 	end
 
+	local player = Players:GetPlayerFromCharacter(character)
 	local humanoid = character:WaitForChild("Humanoid")
 	local directionName
 
-	if IsShiftLockOff or npcTarget then
-		local dashAnim: AnimationTrack = Animations:GetAnimation(humanoid, "Shared.Animations.Dashes.Forward")
-
-		StateService:AddState(character, "Dashing", dashAnim.Length)
+	if shiftLockState == 0 or not player then
 		---Animation---
+		local dashAnim: AnimationTrack = Animations:GetAnimation(humanoid, "Shared.Animations.Dashes.Forward")
 		dashAnim:Play()
-
+		dashAnim:AdjustSpeed(2)
+		dashAnim.Looped = false
+		StateService:AddState(character, "Dashing", dashAnim.Length / 2)
 		---VFX---
 		NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "DashVFX", {
 			["Dir"] = "Forward",
@@ -92,13 +88,12 @@ function MovementService:Dash(player, direction: Vector3?, IsShiftLockOff, npcTa
 			directionName = "Forward-Left"
 		end
 
-		local dashAnim: AnimationTrack =
-			Animations:GetAnimation(humanoid, "Shared.Animations.Dashes." .. directionName)
-
-		StateService:AddState(character, "Dashing", dashAnim.Length)
 		---Animation---
+		local dashAnim: AnimationTrack = Animations:GetAnimation(humanoid, "Shared.Animations.Dashes." .. directionName)
 		dashAnim:Play()
+		dashAnim:AdjustSpeed(2)
 		dashAnim.Looped = false
+		StateService:AddState(character, "Dashing", dashAnim.Length / 2)
 
 		---VFX---
 		NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "DashVFX", {
@@ -113,53 +108,62 @@ function MovementService:Dash(player, direction: Vector3?, IsShiftLockOff, npcTa
 		["Sound"] = assets.Shared.Sounds.Dash,
 	})
 
-	---If NPC---
-	if npcTarget then
-		---Dash Movement---
-		local maxDashDistance = DashConfig.MaxDashDistance
-		local root: Part = character:FindFirstChild("HumanoidRootPart")
+	local dashVelocity = Instance.new("LinearVelocity")
+	local root = character:FindFirstChild("HumanoidRootPart")
+	dashVelocity.MaxForce = math.huge
+	dashVelocity.Attachment0 = root:FindFirstChildWhichIsA("Attachment") or Instance.new("Attachment", root)
+	dashVelocity.Parent = root
 
-		local rayParams = RaycastParams.new()
-		rayParams.FilterType = Enum.RaycastFilterType.Exclude
-		rayParams.FilterDescendantsInstances = { character }
-
-		Connections:AddConnection(
-			character,
-			"Character",
-			"Dash",
-			RunService.Heartbeat:Connect(function(dt)
-				if not StateChecker:CheckState(character, "Dashing") then
-					StateService:AddState(character, "DashCoolDown", DashConfig.DashCooldown)
-					Connections:RemoveConnection(character, "Character", "Dash")
-					return
-				end
-				local directionVector: Vector3
-
-				local targetRoot = npcTarget.HumanoidRootPart
-				directionVector = targetRoot.Position - root.Position
-				directionVector = Vector3.new(directionVector.X, 0, directionVector.Z).Unit
-
-				local rayResult =
-					workspace:Raycast(root.Position, directionVector * maxDashDistance * dt * 2, rayParams)
-				if rayResult then
-					Connections:RemoveConnection(Character, "Character", "Dash")
-					StateService:RemoveState(character, "Dashing")
-				end
-				root.CFrame = root.CFrame + (directionVector * maxDashDistance * dt)
-			end)
-		)
-	else
-		---If Player Then Let Client Handle Movement---
-		NetworkingService:FireToClient(player, "Dash", directionName, IsShiftLockOff)
-	end
 	Connections:AddConnection(
 		character,
 		"Character",
-		"DashCD",
-		RunService.Heartbeat:Connect(function()
+		"Dash",
+		RunService.Heartbeat:Connect(function(dt)
 			if not StateChecker:CheckState(character, "Dashing") then
-				Connections:RemoveConnection(character, "Character", "DashCD")
+				dashVelocity:Destroy()
 				StateService:AddState(character, "DashCoolDown", DashConfig.DashCooldown)
+				Connections:RemoveConnection(character, "Character", "Dash")
+				return
+			end
+			print(StateService.Status[character].Dashing.Duration)
+
+			if player then
+				if shiftLockState == 0 then
+					dashVelocity.VectorVelocity = character.HumanoidRootPart.CFrame.LookVector
+						* DashConfig.StudsPerSecond
+				else
+					local forward = character.HumanoidRootPart.CFrame.LookVector
+					local right = character.HumanoidRootPart.CFrame.RightVector
+
+					-- flatten
+					forward = Vector3.new(forward.X, 0, forward.Z).Unit
+					right = Vector3.new(right.X, 0, right.Z).Unit
+
+					-- direction is already camera-based from client
+					local dir = Vector3.new(direction.X, 0, direction.Z)
+
+					if dir.Magnitude > 0 then
+						dir = dir.Unit
+					end
+
+					-- convert camera direction into character-relative space
+					local forwardDot = dir:Dot(forward)
+					local rightDot = dir:Dot(right)
+
+					local finalDir = (forward * forwardDot + right * rightDot)
+
+					if finalDir.Magnitude > 0 then
+						finalDir = finalDir.Unit
+					end
+
+					dashVelocity.VectorVelocity = finalDir * DashConfig.StudsPerSecond
+				end
+			else
+				dashVelocity.VectorVelocity = Vector3.new(
+					(direction - root.Position).X,
+					0,
+					(direction - root.Position).Z
+				).Unit * DashConfig.StudsPerSecond
 			end
 		end)
 	)

@@ -79,6 +79,7 @@ function QuestService:SetupQuests(player: Player)
 		trackedQuest.Parent = folder
 	end
 
+	QuestService:SyncQuestsWithQuestData(player)
 	SetUpdates(player)
 end
 

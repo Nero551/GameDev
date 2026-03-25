@@ -36,7 +36,7 @@ RunService.Heartbeat:Connect(function(dt)
 					Connections:RemoveConnection(character, "Character", "StateHandler")
 					continue
 				end
-				StateHandler:HandleStates(character, dt)
+				StateHandler:HandleStates(character, updateRate)
 			end
 		end
 	end
@@ -79,7 +79,8 @@ end)
 
 ---Client Requests to Dash---
 NetworkingService:OnServerEvent("Dash", function(player: Player, direction, IsShiftLockOff)
-	MovementService:Dash(player, direction, IsShiftLockOff)
+	local character = player.Character or player.CharacterAdded:Wait()
+	MovementService:Dash(character, direction, IsShiftLockOff)
 end)
 
 ---Client Requests to Flashstep---
