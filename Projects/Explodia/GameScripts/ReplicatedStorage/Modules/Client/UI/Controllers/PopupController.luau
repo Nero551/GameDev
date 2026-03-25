@@ -36,7 +36,7 @@ function PopupController:Creator()
 			popup.PopUpText.RichText = true
 			popup.PopUpText.Text = 'Obtained <font color="#fff131">'
 				.. popupInfo.MasteryEXP
-				.. " EXP </font> for"
+				.. " EXP </font> For "
 				.. ItemDataBase:GetItemData(popupInfo.ID).Name
 		end
 
@@ -161,13 +161,13 @@ function PopupController:Destroyer()
 	popupsFrame.ChildAdded:Connect(function()
 		for _, popup in popupsFrame:GetChildren() do
 			if popup:IsA("Frame") then
-				task.wait(2)
+				task.wait(1)
 				local tween = TweenService:Create(popup, info, { Size = UDim2.fromScale(0.3, 0.046) })
 				tween:Play()
 				tween.Completed:Connect(function()
 					popup:Destroy()
 				end)
-				task.wait(2)
+				task.wait(1)
 			end
 		end
 	end)

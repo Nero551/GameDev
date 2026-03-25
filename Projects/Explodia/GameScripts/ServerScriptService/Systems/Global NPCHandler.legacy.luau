@@ -1,20 +1,22 @@
 local RunService = game:GetService("RunService")
+local ServerScriptService = game:GetService("ServerScriptService")
+local Arena = require(ServerScriptService.Services.World.Gamemodes.Arena)
 local NPCService = require(game.ServerScriptService.Services.NPC.NPCService)
 local AIService = require(game.ServerScriptService.Services.NPC.AIService)
 
 for _,NPC in workspace.World.Live.ActiveNPCS:GetDescendants() do
 	if NPC:IsA("Model") then
-		NPCService:RegisterNPC(NPC, 10)
+		NPCService:RegisterNPC(NPC)
 	end
 end
 
-workspace.World.Live.ActiveNPCS.DescendantAdded:Connect(function(descendant)
-	NPCService:RegisterNPC(descendant)
-end)
+-- workspace.World.Live.ActiveNPCS.DescendantAdded:Connect(function(descendant)
+-- 	NPCService:RegisterNPC(descendant)
+-- end)
 
-workspace.World.Live.ActiveNPCS.DescendantRemoving:Connect(function(descendant)
-	NPCService:UnRegisterNPC(descendant)
-end)
+-- workspace.World.Live.ActiveNPCS.DescendantRemoving:Connect(function(descendant)
+-- 	NPCService:UnRegisterNPC(descendant)
+-- end)
 
 local updateRate = 0.05
 local elapsed = 0
@@ -29,3 +31,5 @@ elapsed =  elapsed + dt
 		AIService.Brains[AIData.Type.."Brain"](npc)
 	end
 end)
+
+Arena:Init()

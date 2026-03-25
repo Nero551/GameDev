@@ -1,0 +1,3 @@
+local Gamemodes = {}
+
+return Gamemodes

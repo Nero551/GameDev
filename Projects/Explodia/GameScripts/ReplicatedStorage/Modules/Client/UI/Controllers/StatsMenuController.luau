@@ -815,7 +815,7 @@ function StatsMenuController:Armory()
 				for _, ability in abiltiesFrame:GetChildren() do
 					if ability:IsA("Frame") then
 						local abilityLetter = ability.AbilityIcon.AbilityLetter.Text
-						local abilityData = AbilityData:GetAbilityData(itemData.Name .. abilityLetter)
+						local abilityData = AbilityData:GetAbilityData(itemData.Name, abilityLetter)
 						if not abilityData then
 							ability.Visible = false
 						else

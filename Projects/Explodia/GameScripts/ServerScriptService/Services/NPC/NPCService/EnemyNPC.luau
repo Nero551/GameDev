@@ -8,7 +8,6 @@ return function(npc)
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local ServerScriptService = game:GetService("ServerScriptService")
 	local ServerStorage = game:GetService("ServerStorage")
-local NPCService = require(script.Parent)
 	local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 	local ToolLoader = require(ServerScriptService.Modules.Utilities.ToolLoader)
 	local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
@@ -33,16 +32,16 @@ local NPCService = require(script.Parent)
 	end
 	AIService:CreateAI(npc)
 
-	---NPC Info GUI---
-	local npcInfo = npc.NPCInfo
-	npcInfo.Enabled = true
-	npcInfo.Adornee = npc.Head
+	-- ---NPC Info GUI---
+	-- local npcInfo = npc.NPCInfo
+	-- npcInfo.Enabled = true
+	-- npcInfo.Adornee = npc.Head
 
-	--local HPChangerUI = require(uiModules.HPChangerUI)
-	--HPChangerUI(hpBG, npc)
+	-- --local HPChangerUI = require(uiModules.HPChangerUI)
+	-- --HPChangerUI(hpBG, npc)
 
-	npcInfo.NPCLevel.LevelText.Text = NPCService.SpawnedNPCS.Enemy[npc].Level
-	npcInfo.NPCName.Text = npc.Name
+	-- npcInfo.NPCLevel.LevelText.Text = NPCService.SpawnedNPCS.Enemy[npc].Level
+	-- npcInfo.NPCName.Text = npc.Name
 
 	---When NPC Die---
 	local deathAnimation = Animations:GetAnimation(npcHumanoid, "Shared.Character.Death")
@@ -52,16 +51,32 @@ local NPCService = require(script.Parent)
 			return
 		end
 		if VitalsService:GetVital(npc, "Health").CurrentHealth <= 0 then
+			npcHumanoid.BreakJointsOnDeath = false
 			alreadyDead = true
-			npcInfo.Enabled = false
+			--npcInfo.Enabled = false
 			deathAnimation:Play()
 			for _, KillerHit in npcHumanoid:GetChildren() do
 				if KillerHit.Name == "KillerHit" and KillerHit:IsA("ObjectValue") then
 					local KillerPlayer = KillerHit.Value
-					GameEvents.MobKilled:Fire(KillerPlayer, npc.Name)
+					GameEvents.MobKilled:Fire(KillerPlayer, npc)
 				end
 			end
-			Debris:AddItem(npc, 10)
+
+			local attachment = npc.HumanoidRootPart:FindFirstChild("Ragdoll Attachment")
+			if not attachment then
+				attachment = Instance.new("Attachment")
+				attachment.Parent = npc.HumanoidRootPart
+				attachment.Name = "Ragdoll Attachment"
+			end
+			local ragdoll = Instance.new("LinearVelocity")
+			ragdoll.Parent = npc.HumanoidRootPart
+			ragdoll.Attachment0 = attachment
+			ragdoll.MaxForce = math.huge
+			ragdoll.RelativeTo = Enum.ActuatorRelativeTo.World
+			ragdoll.VectorVelocity = npc.HumanoidRootPart.CFrame.LookVector * 5
+
+			Debris:AddItem(ragdoll, 0.1)
+			Debris:AddItem(npc, 15)
 		end
 	end)
 end

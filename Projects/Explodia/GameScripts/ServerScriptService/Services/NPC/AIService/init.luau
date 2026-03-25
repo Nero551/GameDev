@@ -119,7 +119,7 @@ function AIService:StateUpdater(npc, updateRate)
 	if ActionModules[AIData.State] then
 		ActionModules[AIData.State](npc)
 	end
-	StateHandler:HandleStates(npc, 0.05, AIData.RunSpeed)
+	StateHandler:HandleStates(npc, updateRate, AIData.RunSpeed)
 end
 
 function AIService:DestroyAI(npc)
