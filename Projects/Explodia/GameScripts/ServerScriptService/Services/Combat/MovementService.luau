@@ -74,21 +74,21 @@ function MovementService:Dash(player, direction: Vector3?, IsShiftLockOff, npcTa
 		local angle = math.atan2(rightDot, forwardDot)
 		angle = math.deg(angle)
 
-		if angle > -22.5 and angle <= 22.5 then
+		if angle >= -22.5 and angle <= 22.5 then
 			directionName = "Forward"
-		elseif angle > 22.5 and angle <= 67.5 then
+		elseif angle > 22.5 and angle < 67.5 then
 			directionName = "Forward-Right"
-		elseif angle > 67.5 and angle <= 112.5 then
+		elseif angle >= 67.5 and angle <= 112.5 then
 			directionName = "Right"
-		elseif angle > 112.5 and angle <= 157.5 then
+		elseif angle > 112.5 and angle < 157.5 then
 			directionName = "Back-Right"
-		elseif angle > 157.5 or angle <= -157.5 then
+		elseif angle >= 157.5 or angle <= -157.5 then
 			directionName = "Back"
-		elseif angle > -157.5 and angle <= -112.5 then
+		elseif angle > -157.5 and angle < -112.5 then
 			directionName = "Back-Left"
-		elseif angle > -112.5 and angle <= -67.5 then
+		elseif angle >= -112.5 and angle <= -67.5 then
 			directionName = "Left"
-		elseif angle > -67.5 and angle <= -22.5 then
+		elseif angle > -67.5 and angle < -22.5 then
 			directionName = "Forward-Left"
 		end
 

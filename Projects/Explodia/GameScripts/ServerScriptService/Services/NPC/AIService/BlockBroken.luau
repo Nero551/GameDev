@@ -5,5 +5,5 @@ return function(npc)
 	local AIData = AIService.ActiveAIs[npc]
 	if not AIData then return end
 	AIData.LastAttackSeenTime = 0
-	CombatService:Block(npc, false, AIData.Tool)
+	CombatService:Block(npc, 0)
 end

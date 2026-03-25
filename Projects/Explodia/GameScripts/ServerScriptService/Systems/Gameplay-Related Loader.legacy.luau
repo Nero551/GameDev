@@ -19,13 +19,12 @@ local elapsed = 0
 local updateRate = 0.05
 ---Regen Stuff , Time Cycle and Handling States---
 RunService.Heartbeat:Connect(function(dt)
-	
 	RegenService:ManaRegen(dt)
 	RegenService:HealthRegen(dt)
 	RegenService:FlashStepRegen(dt)
 	RegenService:BlockCounterRegen(dt)
 	TimeService:TimeCycle(dt)
-	
+
 	elapsed += dt
 	if elapsed > updateRate then
 		elapsed = 0
@@ -33,11 +32,11 @@ RunService.Heartbeat:Connect(function(dt)
 			local character = player.Character
 			if character then
 				------Death Handler------
-				if StateChecker:CheckState(character,"Dead") then
+				if StateChecker:CheckState(character, "Dead") then
 					Connections:RemoveConnection(character, "Character", "StateHandler")
 					continue
 				end
-				StateHandler:HandleStates(character,dt)		
+				StateHandler:HandleStates(character, dt)
 			end
 		end
 	end
@@ -58,11 +57,14 @@ Players.PlayerAdded:Connect(function(player)
 	end)
 	player.CharacterRemoving:Connect(function(character)
 		VitalsService:Cleanup(character)
+		Connections:CleanupConnections(character, "Character")
 	end)
 end)
 ---Destroying Status For Player On Leave---
 Players.PlayerRemoving:Connect(function(player)
-	if not player.Character then return end 
+	if not player.Character then
+		return
+	end
 	StateService:Destroy(player.Character)
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -70,28 +72,27 @@ end)
 MovementService:LoadSharedAnimations()
 
 ---Client Requests to Sprint---
-NetworkingService:OnServerEvent("Sprint", function(player:Player)
+NetworkingService:OnServerEvent("Sprint", function(player: Player)
 	local character = player.Character or player.CharacterAdded:Wait()
 	MovementService:Sprint(character)
 end)
 
 ---Client Requests to Dash---
-NetworkingService:OnServerEvent("Dash", function(player:Player, direction, IsShiftLockOff)
+NetworkingService:OnServerEvent("Dash", function(player: Player, direction, IsShiftLockOff)
 	MovementService:Dash(player, direction, IsShiftLockOff)
 end)
 
 ---Client Requests to Flashstep---
-NetworkingService:OnServerEvent("FlashStep", function(player:Player)
+NetworkingService:OnServerEvent("FlashStep", function(player: Player)
 	local character = player.Character or player.CharacterAdded:Wait()
 	MovementService:FlashStep(character)
 end)
 
 ---Client Requests to WallRun---
-NetworkingService:OnServerEvent("WallRun", function(player:Player)
+NetworkingService:OnServerEvent("WallRun", function(player: Player)
 	local character = player.Character or player.CharacterAdded:Wait()
 	MovementService:WallRun(character)
 end)
-
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -104,35 +105,31 @@ Players.PlayerAdded:Connect(function(player)
 end)
 
 ---Client Requests to Block---
-NetworkingService:OnServerEvent("Block", function(player:Player, boolean:boolean)
+NetworkingService:OnServerEvent("Block", function(player: Player, boolean: boolean)
 	local character = player.Character or player.CharacterAdded:Wait()
-	CombatService:Block(character, boolean, nil)
+	CombatService:Block(character, boolean)
 end)
 
 ---Client Requests to Attack---
-NetworkingService:OnServerEvent("Attack", function(player:Player)
+NetworkingService:OnServerEvent("Attack", function(player: Player)
 	local character = player.Character or player.CharacterAdded:Wait()
 	CombatService:Attack(character)
 end)
 
-NetworkingService:OnServerEvent("RequestPutInHand", function(player,toolId)
+NetworkingService:OnServerEvent("RequestPutInHand", function(player, toolId)
 	HandService:PutInHand(player, toolId)
 end)
 
-NetworkingService:OnServerEvent("RequestRemoveFromHand", function(player,toolId)
+NetworkingService:OnServerEvent("RequestRemoveFromHand", function(player, toolId)
 	HandService:RemoveFromHand(player, toolId)
 end)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
 ---Client Requests to use Ability---
-NetworkingService:OnServerEvent("Ability", function(player:Player, mouse , input)
+NetworkingService:OnServerEvent("Ability", function(player: Player, mouse, letter)
 	local char = player.Character or player.CharacterAdded:Wait()
-	local tool = char:FindFirstChildWhichIsA("Tool")
-	AbilityService:UseAbility(player ,char , tool, mouse, input)
+	AbilityService:UseAbility(char, letter, mouse)
 end)
 
-
 ----------------------------------------------------------------------------------------------------------------------------------
-
-

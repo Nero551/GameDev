@@ -301,11 +301,11 @@ function StatsMenuController:Overview()
 						end
 					else
 						if itemData.Damage and playerStats.MainStats[type] then
-							local M1Damage = FormulaApplier:M1Damage({
-								PlayerDamageStat = playerStats.MainStats[type]:GetAttribute("Final"),
-								FoundWeaponData = itemData,
-								TargetDefenseStat = 0,
-							})
+							local M1Damage = FormulaApplier:DefaultDamage(
+								itemData.Damage,
+								playerStats.MainStats[type]:GetAttribute("Final"),
+								0
+							)
 							popup.FinalImportantStat.Text = M1Damage .. " ATK"
 						elseif itemData.CriticalRate then
 							popup.FinalImportantStat.Text = (
@@ -963,8 +963,5 @@ function StatsMenuController:RandomGradients()
 	local texture = UIManager:GetUI("StatsMenu", "Texture")
 	UIHelper:RotateGradient(texture:FindFirstChild("UIGradient"))
 end
-
-
-
 
 return StatsMenuController

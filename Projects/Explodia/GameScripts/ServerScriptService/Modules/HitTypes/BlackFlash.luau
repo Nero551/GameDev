@@ -1,145 +1,101 @@
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
---BlackFlashg HitType
-local Debris = game:GetService("Debris")
+--Defualt HitType
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
+local AbilityData = require(ReplicatedStorage.Modules.Data.AbilityData)
 local CombatUtils = require(ServerScriptService.Modules.Utilities.CombatUtils)
-
 local StateService = require(game.ServerScriptService.Services.Core.StateService)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local FormulaApplier = require(game.ReplicatedStorage.Modules.Helpers.FormulaApplier)
 local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
+
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
 return function(argumentData)
-	
 	local targetHit = argumentData.TargetHit
 	local attacker = argumentData.Attacker
-	local player = argumentData.Player
-	local abilityData = argumentData.AbilityData
 	local weaponUsed = argumentData.WeaponUsed
 	local targetDefenseStat = argumentData.TargetDefenseStat
 	local playerDamageStat = argumentData.PlayerDamageStat
-	local npcDamage = argumentData.NPCDamage
+	local CriticalDamageStat = argumentData.CriticalDamageStat
 	local comboStringNumber = argumentData.ComboStringNumber
 	local lastHit = argumentData.LastHit
-	local playerCriticalDamageStat = argumentData.PlayerCriticalDamageStat
+	local Damage = argumentData.Damage
 	local abilityLetter = argumentData.AbilityLetter
-	
-	local targetHumanoid:Humanoid = targetHit:WaitForChild("Humanoid")
+	local playerAttacker = Players:GetPlayerFromCharacter(attacker)
+	local targetHumanoid: Humanoid = targetHit:WaitForChild("Humanoid")
 	local targetHRP = targetHit:WaitForChild("HumanoidRootPart")
-	if not  targetHumanoid then return end
-	if StateChecker:CheckState(targetHit, "Invulnerable") then return end
-
-	local M1Damage
-	local AbilityDamage
-	
+	if not targetHumanoid then
+		return
+	end
+	if StateChecker:CheckState(targetHit, "Invulnerable") then
+		return
+	end
 	StateService:AddState(attacker, "In Combat", 20)
 	StateService:AddState(targetHit, "In Combat", 20)
-	
-	local killerHit = targetHumanoid:FindFirstChild("KillerHit")
-	if killerHit and killerHit.Value == player then
-		killerHit:Destroy()
-	end
-	killerHit = Instance.new("ObjectValue")
-	killerHit.Parent = targetHumanoid
-	killerHit.Value = player
-	killerHit.Name = "KillerHit"	
-	Debris:AddItem(killerHit, 30)
-	
-	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit" , {
-		["Target"] = targetHit ,
-		["WeaponUsed"] = weaponUsed.Name,
+
+	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
+		["Target"] = targetHit,
+		["Weapon"] = weaponUsed,
 	})
-	
-	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "BlackFlashHit",{
-		["Target"] = targetHit ,
+
+	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "BlackFlashHit", {
+		["Target"] = targetHit,
 	})
-	
-	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound",{
+
+	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
 		["Parent"] = targetHumanoid,
-		["SoundName"] = "Shared.Sounds.BlackFlash"
+		["SoundName"] = ReplicatedStorage.Assets.Shared.Sounds.BlackFlash,
 	})
-	
-	
-	if abilityData then
-		
-		AbilityDamage = FormulaApplier:AbilityDamage({
-			["NPCDamage"] = npcDamage,	
-			["AbilityData"] = abilityData,
-			["TargetDefenseStat"] = targetDefenseStat,
-			["PlayerDamageStat"] = playerDamageStat,
-			["PlayerCriticalDamageStat"] = playerCriticalDamageStat,
-			["BlackFlash"] = true,
-		})
-		
-		VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
-			["HealthChange"] = -AbilityDamage
 
+	Damage = FormulaApplier:BlackFlashDamage(Damage, playerDamageStat, targetDefenseStat, CriticalDamageStat)
+	VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+		["HealthChange"] = -Damage,
+	})
+	if abilityLetter then
+		local abilityData = AbilityData:GetAbilityData(weaponUsed.Name, abilityLetter)
+		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
+			["Sound"] = ReplicatedStorage.Assets.Weapons
+				:FindFirstChild(weaponUsed.Name).Sounds.Abilities.Hit
+				:FindFirstChild(tostring(abilityLetter)),
+			["Parent"] = targetHRP,
+			["Volume"] = 2,
 		})
-		
-		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound" , {
-			["SoundName"] = "Weapons."..weaponUsed.Name..".Sounds.Abilities.Hit."..tostring(abilityLetter) ,
-			["Parent"] = targetHRP
-		})
-
-		
-		Animations:GetAnimation(
-			targetHumanoid, "Shared.Character.AbilityHitReactions."..abilityData.HitReaction
-		):Play()
-
+		local hitReactionAnim =
+			Animations:GetAnimation(targetHumanoid, "Shared.Character.AbilityHitReactions." .. abilityData.HitReaction)
+		hitReactionAnim:Play()
+		StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.5)
 	else
-		
-		local foundWeaponData = ItemDataBase:GetItemData(weaponUsed:GetAttribute("ID")) 
+		local foundWeaponData = ItemDataBase:GetItemData(weaponUsed:GetAttribute("ID"))
 		if foundWeaponData then
-			M1Damage = FormulaApplier:M1Damage({
-				["NPCDamage"] = npcDamage,
-				["PlayerDamageStat"] = playerDamageStat,
-				["TargetDefenseStat"] = targetDefenseStat,
-				["FoundWeaponData"] = foundWeaponData,
-				["PlayerCriticalDamageStat"] = playerCriticalDamageStat,
-				["AbilityData"] = abilityData,
-				["BlackFlash"] = true,
-
-			})	
-			
-			VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
-				["HealthChange"] = -M1Damage
-
+			NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
+				["Sound"] = ReplicatedStorage.Assets.Weapons
+					:FindFirstChild(weaponUsed.Name).Sounds.Hit
+					:FindFirstChild(tostring(comboStringNumber)),
+				["Parent"] = targetHRP,
 			})
 
-
-			local hitReactionAnim = Animations:GetAnimation(
-				targetHumanoid, "Shared.Character.HitReactions."..tostring(comboStringNumber)
-			)
+			local hitReactionAnim =
+				Animations:GetAnimation(targetHumanoid, "Shared.Character.HitReactions." .. tostring(comboStringNumber))
 			hitReactionAnim:Play()
-			StateService:AddState(targetHit , "Stunned" , hitReactionAnim.Length + 0.1)
+			StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.5)
 		end
-		
+
 		------Control KnockBack------
 		if lastHit then
-
-			------EndLag Setup------
-			StateService:AddState(attacker , "NoMove", .5)
-			StateService:AddState(attacker , "NoPunch", 1)
-
-			CombatUtils:ApplyKnockback(targetHit,attacker,90)
+			StateService:AddState(attacker, "NoMove", 0.5)
+			StateService:AddState(attacker, "NoPunch", 1)
+			CombatUtils:ApplyKnockback(targetHit, attacker, 90)
 		else
 			CombatUtils:ApplyKnockback(targetHit, attacker, 11)
-			CombatUtils:ApplyPull(targetHit,attacker,11)
-		end	
-			
-	end	
-
-	if player then
-		
-		NetworkingService:FireToClient(player , "Hitstop", 0.1)
-		
-		if AbilityDamage then
-			NetworkingService:FireToClient(player , "ShowDamage", AbilityDamage, false, false , true)
-		else
-			NetworkingService:FireToClient(player , "ShowDamage", M1Damage, false, false, true)
+			CombatUtils:ApplyPull(targetHit, attacker, 11)
 		end
 	end
 
+	if playerAttacker then
+		NetworkingService:FireToClient(playerAttacker, "Hitstop", 0.1)
+		NetworkingService:FireToClient(playerAttacker, "ShowDamage", Damage, false, false,true)
+	end
 end

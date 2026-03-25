@@ -100,7 +100,7 @@ function StatService:UpdateStats(player:Player)
 end
 
 ---Allocate Statpoint---
-function StatService:AllocateStatPoint(player:Player, statType, amount)
+function StatService:AllocateStatPoint(player, statType, amount)
 	local playerLevel = DataService:GetTable(player, "Level")
 	local playerStats = DataService:GetTable(player, "Stats")
 	
@@ -113,6 +113,7 @@ function StatService:AllocateStatPoint(player:Player, statType, amount)
 	end
 	playerLevel.StatPoints -= amount
 	playerStats.MainStats[statType].FlatStatPoint += amount
+	player:WaitForChild("Level"):FindFirstChild("StatPoints"):SetAttribute("Amount", playerLevel.StatPoints)
 	StatService:UpdateStats(player)
 end
 

@@ -1,15 +1,14 @@
 return function()
 	local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
 	local TweenService = game:GetService("TweenService")
-local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
+	local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 
 	local player = Players.LocalPlayer
 	local camera = workspace.CurrentCamera
 	local character = player.Character or player.CharacterAdded:Wait()
-	local humanoid:Humanoid = character:WaitForChild("Humanoid")
+	local humanoid: Humanoid = character:WaitForChild("Humanoid")
 	local root = character:WaitForChild("HumanoidRootPart")
 	local crosshair = player:WaitForChild("PlayerGui").HUD.Crosshair
 
@@ -30,18 +29,17 @@ local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker
 	end
 
 	local function setShiftLock(state)
-		if shiftLocked == state then return end -- avoid double toggles
+		if shiftLocked == state then
+			return
+		end -- avoid double toggles
 		shiftLocked = state
 
 		if offsetTween then
 			offsetTween:Cancel()
 		end
 
-		offsetTween = TweenService:Create(
-			humanoid,
-			TWEEN_INFO,
-			{CameraOffset = state and SHIFT_OFFSET or Vector3.zero}
-		)
+		offsetTween =
+			TweenService:Create(humanoid, TWEEN_INFO, { CameraOffset = state and SHIFT_OFFSET or Vector3.zero })
 		offsetTween:Play()
 
 		humanoid.AutoRotate = not state
@@ -53,13 +51,12 @@ local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker
 
 	setShiftLock(false)
 
-
 	RunService.RenderStepped:Connect(function(dt)
 		if StateChecker:CheckState(character, "Dead") then
 			setShiftLock(false)
 			return
 		end
-		
+
 		-- Shiftlock active behavior
 		if character:FindFirstChildWhichIsA("Tool") then
 			setShiftLock(true)
@@ -74,13 +71,12 @@ local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker
 				local target = CFrame.lookAt(root.Position, root.Position + flatLook)
 				root.CFrame = root.CFrame:Lerp(target, dt * 12)
 			end
-			
+
 			---Disable---
 		else
 			setShiftLock(false)
 		end
 	end)
-
 
 	UserInputService.WindowFocusReleased:Connect(function()
 		if shiftLocked then

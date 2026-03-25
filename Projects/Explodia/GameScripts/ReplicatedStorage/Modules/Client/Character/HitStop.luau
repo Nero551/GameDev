@@ -5,13 +5,16 @@ return function()
 	local player = Players.LocalPlayer
 
 	NetworkingService:OnClientEvent("Hitstop", function(duration)
-
 		local character = player.Character
-		if not character then return end
+		if not character then
+			return
+		end
 
 		local humanoid = character:FindFirstChildOfClass("Humanoid")
-		local animator:Animator = humanoid.Animator
-		if not humanoid then return end
+		local animator: Animator = humanoid.Animator
+		if not humanoid then
+			return
+		end
 
 		-- Get all playing animation tracks
 		local tracks = animator:GetPlayingAnimationTracks()

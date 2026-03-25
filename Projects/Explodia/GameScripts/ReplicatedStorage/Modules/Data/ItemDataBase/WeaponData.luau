@@ -10,16 +10,17 @@ WeaponData.Weapons = {
 		Rarity = "Common",
 		Description = "Can't even hit your target berarebones? noob.",
 		StatusAilments = {
-			ProcChance = 1,
+			ProcChance = 0,
 			Effects = {
 				"Burn",
 			},
 		},
-		Damage = 5,
+		MinDamage = 5,
+		MaxDamage = 10,
 		Hitbox = Vector3.new(5,5.5,4),
 		ComboCooldown = 2,
 		ComboResetTime = 2,
-		CriticalRate = 0.1,
+		CriticalRate = 10,
 		CriticalDamage = 1,
 		Stackable = false,
 	}
@@ -51,7 +52,7 @@ WeaponData.Weapons = {
 		Hitbox = Vector3.new(5,5.5,4),
 		ComboCooldown = 2,
 		ComboResetTime = 2,
-		CriticalRate = 0.25,
+		CriticalRate = 4,
 		CriticalDamage = 1,
 		Stackable = false,
 	}

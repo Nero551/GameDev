@@ -1,47 +1,46 @@
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 --Defualt HitType
-
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local StateService = require(game.ServerScriptService.Services.Core.StateService)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
-
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
-
 local FormulaApplier = require(game.ReplicatedStorage.Modules.Helpers.FormulaApplier)
 local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
+
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
 return function(argumentData)
 	local targetHit = argumentData.TargetHit
-	local abilityData = argumentData.AbilityData
+	local attacker = argumentData.Attacker
 	local weaponUsed = argumentData.WeaponUsed
 	local targetDefenseStat = argumentData.TargetDefenseStat
 	local playerDamageStat = argumentData.PlayerDamageStat
-	local npcDamage = argumentData.NPCDamage
-	local player = argumentData.Player
+	local Damage = argumentData.Damage
+	local abilityLetter = argumentData.AbilityLetter
 
-	local targetHumanoid: Humanoid = targetHit:FindFirstChild("Humanoid")
+	local playerAttacker = Players:GetPlayerFromCharacter(attacker)
+	local targetHumanoid: Humanoid = targetHit:WaitForChild("Humanoid")
+	local targetHRP = targetHit:WaitForChild("HumanoidRootPart")
 	if not targetHumanoid then
 		return
 	end
 	if StateChecker:CheckState(targetHit, "Invulnerable") then
 		return
 	end
-	local M1Damage
-	local AbilityDamage
+	StateService:AddState(attacker, "In Combat", 20)
+	StateService:AddState(targetHit, "In Combat", 20)
 
-	if abilityData then
-		AbilityDamage = FormulaApplier:AbilityDamage({
-			["AbilityData"] = abilityData,
-			["TargetDefenseStat"] = targetDefenseStat,
-			["PlayerDamageStat"] = playerDamageStat,
-			["NPCDamage"] = npcDamage,
-			["Blocked"] = true,
-		})
+	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
+		["Target"] = targetHit,
+		["Weapon"] = weaponUsed,
+	})
 
-		VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
-			["HealthChange"] = -AbilityDamage,
-		})
-
+	Damage = FormulaApplier:BlockedDamage(Damage, playerDamageStat, targetDefenseStat)
+	VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
+		["HealthChange"] = -Damage,
+	})
+	if abilityLetter then
 		NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "Sound", {
 			["Sound"] = ReplicatedStorage.Assets.Shared.Sounds.AbilityBlock,
 			["Parent"] = targetHit.HumanoidRootPart,
@@ -49,18 +48,6 @@ return function(argumentData)
 	else
 		local foundWeaponData = ItemDataBase:GetItemData(weaponUsed:GetAttribute("ID"))
 		if foundWeaponData then
-			M1Damage = FormulaApplier:M1Damage({
-				["NPCDamage"] = npcDamage,
-				["PlayerDamageStat"] = playerDamageStat,
-				["TargetDefenseStat"] = targetDefenseStat,
-				["FoundWeaponData"] = foundWeaponData,
-				["Blocked"] = true,
-			})
-
-			VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
-				["HealthChange"] = -M1Damage,
-			})
-
 			local randomNumber = math.random(1, 4)
 			NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "Sound", {
 				["Sound"] = ReplicatedStorage.Assets.Weapons
@@ -79,14 +66,11 @@ return function(argumentData)
 
 	task.spawn(function()
 		local randomShrug = math.random(1, 2)
-		Animations:GetAnimation(targetHumanoid, "Shared.Character.BlockReactions.BlockShrug" .. tostring(randomShrug)):Play()
+		Animations:GetAnimation(targetHumanoid, "Shared.Character.BlockReactions.BlockShrug" .. tostring(randomShrug))
+			:Play()
 	end)
 
-	if player then
-		if AbilityDamage then
-			NetworkingService:FireToClient(player, "ShowDamage", AbilityDamage, false, true)
-		else
-			NetworkingService:FireToClient(player, "ShowDamage", M1Damage, false, true)
-		end
+	if playerAttacker then
+		NetworkingService:FireToClient(playerAttacker, "ShowDamage", Damage,false,true)
 	end
 end

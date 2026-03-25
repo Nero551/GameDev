@@ -2,13 +2,15 @@ local Debris = game:GetService("Debris")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
+local AbilityData = require(ReplicatedStorage.Modules.Data.AbilityData)
 local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+local MobData = require(ReplicatedStorage.Modules.Data.MobData)
 local VitalsService = require(ServerScriptService.Services.Combat.VitalsService)
 local StateChecker = require(ReplicatedStorage.Modules.Helpers.StateChecker)
 local DataService = require(ServerScriptService.Services.Core.DataService)
+local NPCService = require(ServerScriptService.Services.NPC.NPCService)
 local StatService = require(ServerScriptService.Services.Profile.StatService)
 local CombatUtils = {}
-
 
 CombatUtils.HitTypes = nil
 
@@ -63,41 +65,51 @@ function CombatUtils:ApplyPull(target, attacker, force)
 end
 
 function CombatUtils:ApplyHit(argumentData)
-    if not CombatUtils.HitTypes then
-        CombatUtils.HitTypes = {}
+	if not CombatUtils.HitTypes then
+		CombatUtils.HitTypes = {}
 		for _, module in game.ServerScriptService.Modules.HitTypes:GetChildren() do
 			if module:IsA("ModuleScript") then
 				CombatUtils.HitTypes[module.Name] = require(module)
 			end
 		end
-    end
+	end
 	local targetHit = argumentData.TargetHit
 	local attacker = argumentData.Attacker
 	local tool = argumentData.Tool
 	local trueSwingNumber = argumentData.TrueSwingNumber
-
-	local abilityData = argumentData.AbilityData
 	local abilityLetter = argumentData.AbilityLetter
 
-	local playerDamageStat
-	local playerCriticalDamageStat
-	local playerCriticalRateStat
-	local targetDefenseStat = 0
-
-    local weaponData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
+	local abilityData = AbilityData:GetAbilityData(tool.Name, abilityLetter)
+	local weaponData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
 	local playerAttacker = Players:GetPlayerFromCharacter(attacker)
 	local playerTarget = Players:GetPlayerFromCharacter(targetHit)
+
+	local StatusAilments = (abilityData and abilityData.StatusAilments) or weaponData.StatusAilments
+	local Damage
+
+	local playerDamageStat = 1
+	local CriticalDamageStat = weaponData.CriticalDamage
+	local CriticalRateStat = weaponData.CriticalRate
+	local targetDefenseStat = 0
+
+	local mobData = MobData.Mobs[attacker.Name]
+	if mobData then
+		local npcData = NPCService.SpawnedNPCS[mobData.Type][attacker]
+		if npcData then
+			Damage = math.random(npcData.MinDamage, npcData.MaxDamage)
+		end
+	end
 
 	if playerAttacker then
 		local playerStats = DataService:GetTable(playerAttacker, "Stats")
 		playerDamageStat = playerStats.MainStats[weaponData.Type].Final
-		playerCriticalDamageStat = StatService:GetStat(playerAttacker, "CriticalDamage").Percent
-			+ weaponData.CriticalDamage
-			+ 1
-		playerCriticalRateStat = (StatService:GetStat(playerAttacker, "CriticalRate").Percent + weaponData.CriticalRate)
-			* 100
+		CriticalDamageStat += StatService:GetStat(playerAttacker, "CriticalDamage").Percent
+		CriticalRateStat += StatService:GetStat(playerAttacker, "CriticalRate").Percent
+		Damage = math.random(
+			(abilityData.MinDamage or weaponData.MinDamage),
+			(abilityData.MaxDamage or weaponData.MaxDamage)
+		)
 	end
-
 	if playerTarget then
 		targetDefenseStat = StatService:GetStat(playerTarget, "Defense").Final
 	end
@@ -108,7 +120,7 @@ function CombatUtils:ApplyHit(argumentData)
 		return
 	end
 
-    CombatUtils:AddKillerHit(playerAttacker, targetHit)
+	CombatUtils:AddKillerHit(playerAttacker, targetHit)
 
 	local isBlocking = StateChecker:CheckState(targetHit, "Blocking")
 	if isBlocking then
@@ -116,12 +128,7 @@ function CombatUtils:ApplyHit(argumentData)
 		local blockCounter = VitalsService:GetVital(targetHit, "BlockCounter")
 
 		if blockCounter == 4 then
-			VitalsService:ModifyVital(
-				targetHit,
-				"Combat",
-				"ModifyBlockCounter",
-				{ ["BlockCounterChange"] = 0 }
-			)
+			VitalsService:ModifyVital(targetHit, "Combat", "ModifyBlockCounter", { ["BlockCounterChange"] = 0 })
 			CombatUtils.HitTypes["BlockBreak"]({
 				["Attacker"] = attacker,
 				["TargetHit"] = targetHit,
@@ -139,21 +146,22 @@ function CombatUtils:ApplyHit(argumentData)
 			CombatUtils.HitTypes["Blocked"]({
 				["Attacker"] = attacker,
 				["TargetHit"] = targetHit,
-				["AbilityData"] = abilityData,
 				["AbilityLetter"] = abilityLetter,
 				["WeaponUsed"] = tool,
 				["TargetDefenseStat"] = targetDefenseStat,
+				["Damage"] = Damage,
 				["PlayerDamageStat"] = playerDamageStat,
 			})
 		end
 	else
-		if playerCriticalDamageStat and playerCriticalRateStat and math.random(0, 100) <= playerCriticalRateStat then
+		if CriticalDamageStat and CriticalRateStat and math.random(0, 100) <= (CriticalRateStat * 100) then
 			---BlackFlash HitType---
 			if
-				playerCriticalRateStat >= 150
-				and math.random(0, 500) <= playerCriticalRateStat - 150
-				and not abilityData
+				(CriticalRateStat * 100) >= 150
+				and math.random(0, 100) <= (CriticalRateStat * 100) - 150
+				and not abilityLetter
 			then
+				print(CriticalRateStat)
 				CombatUtils.HitTypes["BlackFlash"]({
 					["Attacker"] = attacker,
 					["TargetHit"] = targetHit,
@@ -162,8 +170,8 @@ function CombatUtils:ApplyHit(argumentData)
 					["LastHit"] = (trueSwingNumber == 5 and true or false),
 					["PlayerDamageStat"] = playerDamageStat,
 					["TargetDefenseStat"] = targetDefenseStat,
-					["PlayerCriticalDamageStat"] = playerCriticalDamageStat,
-					["AbilityData"] = abilityData,
+					["CriticalDamageStat"] = CriticalDamageStat,
+					["Damage"] = Damage,
 					["AbilityLetter"] = abilityLetter,
 				})
 			else
@@ -176,17 +184,14 @@ function CombatUtils:ApplyHit(argumentData)
 					["LastHit"] = (trueSwingNumber == 5 and true or false),
 					["PlayerDamageStat"] = playerDamageStat,
 					["TargetDefenseStat"] = targetDefenseStat,
-					["PlayerCriticalDamageStat"] = playerCriticalDamageStat,
-					["AbilityData"] = abilityData,
+					["CriticalDamageStat"] = CriticalDamageStat,
+					["Damage"] = Damage,
 					["AbilityLetter"] = abilityLetter,
 				})
 			end
 		else
 			---Status Ailment HitType---
-			if (abilityData and abilityData.StatusAilments) or weaponData.StatusAilments
-					and math.random(0, 100) <= (((abilityData and abilityData.StatusAilments.ProcChance) or weaponData.StatusAilments.ProcChance) * 100)
-					and not abilityData
-			then
+			if StatusAilments and math.random(0, 100) <= StatusAilments.ProcChance * 100 then
 				CombatUtils.HitTypes["StatusAilment"]({
 					["Attacker"] = attacker,
 					["TargetHit"] = targetHit,
@@ -195,10 +200,9 @@ function CombatUtils:ApplyHit(argumentData)
 					["LastHit"] = (trueSwingNumber == 5 and true or false),
 					["PlayerDamageStat"] = playerDamageStat,
 					["TargetDefenseStat"] = targetDefenseStat,
-					["AbilityData"] = abilityData,
 					["AbilityLetter"] = abilityLetter,
-					["StatusAilments"] = (abilityData and abilityData.StatusAilments.Effects)
-						or weaponData.StatusAilments.Effects,
+					["Damage"] = Damage,
+					["StatusAilments"] = StatusAilments.Effects,
 				})
 			else
 				-----Defualt HitType---
@@ -210,7 +214,7 @@ function CombatUtils:ApplyHit(argumentData)
 					["LastHit"] = (trueSwingNumber == 5 and true or false),
 					["PlayerDamageStat"] = playerDamageStat,
 					["TargetDefenseStat"] = targetDefenseStat,
-					["AbilityData"] = abilityData,
+					["Damage"] = Damage,
 					["AbilityLetter"] = abilityLetter,
 				})
 			end
@@ -218,7 +222,7 @@ function CombatUtils:ApplyHit(argumentData)
 	end
 end
 
-function CombatUtils:AddKillerHit(playerAttacker,targetHit)
+function CombatUtils:AddKillerHit(playerAttacker, targetHit)
 	local killerHit = targetHit:WaitForChild("Humanoid"):FindFirstChild("KillerHit")
 	if killerHit and killerHit.Value == playerAttacker then
 		killerHit:Destroy()

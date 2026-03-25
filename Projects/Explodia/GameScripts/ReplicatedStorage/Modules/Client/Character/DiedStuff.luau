@@ -1,13 +1,12 @@
 return function()
-		
 	local Player = game:GetService("Players").LocalPlayer
 	local char = Player.Character or Player.CharacterAdded:Wait()
 	local humanoid = char:WaitForChild("Humanoid")
-	local root:Part = char:WaitForChild("HumanoidRootPart")
+	local root: Part = char:WaitForChild("HumanoidRootPart")
 
 	local Debris = game:GetService("Debris")
 
-	local animator:Animator = humanoid.Animator
+	local animator: Animator = humanoid.Animator
 	local deathAnimation = animator:LoadAnimation(game.ReplicatedStorage.Assets.Shared.Character.Death)
 
 	humanoid.BreakJointsOnDeath = false
@@ -21,7 +20,7 @@ return function()
 			attachment.Name = "Ragdoll Attachment"
 		end
 
-		local ragdoll = Instance.new("LinearVelocity")	
+		local ragdoll = Instance.new("LinearVelocity")
 		ragdoll.Parent = root
 		ragdoll.Attachment0 = attachment
 		ragdoll.MaxForce = math.huge
@@ -29,6 +28,5 @@ return function()
 		ragdoll.VectorVelocity = root.CFrame.LookVector * 5
 
 		Debris:AddItem(ragdoll, 0.1)
-
 	end)
 end

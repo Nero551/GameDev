@@ -516,6 +516,7 @@ end
 function HUDController:DamageCounter()
 	local damageFrame = UIManager:GetUI("HUD", "DamageFrame")
 	local TweenService = game:GetService("TweenService")
+local StatusAilmentsData = require(ReplicatedStorage.Modules.Data.StatusAilmentsData)
 	local damageText = damageFrame.DamageNumber
 	local comboDuration = damageFrame.ComboDuration
 	local ExtraText = damageFrame.ExtraText
@@ -660,7 +661,8 @@ function HUDController:DamageCounter()
 		end)
 	end
 
-	local function AilmentTween(ailmentName, ailmentData)
+	local function AilmentTween(ailmentName)
+		local ailmentData = StatusAilmentsData.Ailments[ailmentName]
 		ExtraText.Text = ailmentName
 		ExtraText.Visible = true
 		ExtraImage.Visible = true
@@ -714,7 +716,7 @@ function HUDController:DamageCounter()
 
 	NetworkingService:OnClientEvent(
 		"ShowDamage",
-		function(damage, critical, blocked, blackFlash, ailmentName, ailmentData)
+		function(damage, critical, blocked, blackFlash, ailmentName)
 			damageFrame.Visible = true
 
 			---ComboDuration---
@@ -737,8 +739,8 @@ function HUDController:DamageCounter()
 				CriticalTween()
 			elseif blocked == true then
 				BlockedTween()
-			elseif ailmentName and ailmentData then
-				AilmentTween(ailmentName, ailmentData)
+			elseif ailmentName then
+				AilmentTween(ailmentName)
 			else
 				DefualtTween()
 			end

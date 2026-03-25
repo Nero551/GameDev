@@ -1,5 +1,4 @@
 return function()
-		
 	local UserInputService = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
 	local Player = game:GetService("Players").LocalPlayer
@@ -13,46 +12,57 @@ return function()
 
 	local proc = false
 
-	local abilityKeys = {Z = "AbilityZ", X = "AbilityX", C = "AbilityC", V = "AbilityV", B = "AbilityB"}
+	local abilityKeys = { Z = "AbilityZ", X = "AbilityX", C = "AbilityC", V = "AbilityV", B = "AbilityB" }
 
-
-	UserInputService.InputBegan:Connect(function(input,processed)
+	UserInputService.InputBegan:Connect(function(input, processed)
 		proc = processed
-		if processed then return end
-
-		---Abilties---
-		if abilityKeys[input.KeyCode.Name] then				
-			NetworkingService:FireToServer("Ability", Player:GetMouse().Hit.Position, input.KeyCode.Name)
-		end	
-	end)
-
-	Connections:AddConnection(character, "Character", "Block & Attack",RunService.RenderStepped:Connect(function(deltaTime: number)
-		------Death Handler------
-		if StateChecker:CheckState(character, "Dead") then
-			Connections:RemoveConnection(character, "Character", "Block & Attack")
+		if processed then
 			return
 		end
 
-		if proc then return end
-		------M1------
-		if UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) 
-		and not StateChecker:CheckState(character, "Attacking") and ActionVerifier:CanAttack(character)  then
-			NetworkingService:FireToServer("Attack")
+		---Abilties---
+		if abilityKeys[input.KeyCode.Name] then
+			NetworkingService:FireToServer("Ability", Player:GetMouse().Hit.Position, input.KeyCode.Name)
 		end
-		------Blocking------
-		if UserInputService:IsKeyDown(Enum.KeyCode.F) and ActionVerifier:CanBlock(character) then
-			local tool = character:FindFirstChildWhichIsA("Tool")
+	end)
 
-			if tool and StateChecker:CheckState(character, "Blocking")
-				and statusFolder:FindFirstChild("Blocking"):GetAttribute("weaponName") ~= tool.Name then
-				NetworkingService:FireToServer("Block", false)
-
-			elseif not StateChecker:CheckState(character, "Blocking") then
-				NetworkingService:FireToServer("Block", true)
+	Connections:AddConnection(
+		character,
+		"Character",
+		"Block & Attack",
+		RunService.RenderStepped:Connect(function(deltaTime: number)
+			------Death Handler------
+			if StateChecker:CheckState(character, "Dead") then
+				Connections:RemoveConnection(character, "Character", "Block & Attack")
+				return
 			end
 
-		elseif StateChecker:CheckState(character, "Blocking") then
-			NetworkingService:FireToServer("Block", false)	
-		end
-	end))
+			if proc then
+				return
+			end
+			local tool = character:FindFirstChildWhichIsA("Tool")
+			------M1------
+			if
+				UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)
+				and not StateChecker:CheckState(character, "Attacking")
+				and ActionVerifier:CanAttack(character)
+				and tool
+			then
+				NetworkingService:FireToServer("Attack")
+			end
+			------Blocking------
+			if UserInputService:IsKeyDown(Enum.KeyCode.F) and ActionVerifier:CanBlock(character) and tool then
+				if
+					StateChecker:CheckState(character, "Blocking")
+					and statusFolder:FindFirstChild("Blocking"):GetAttribute("weaponName") ~= tool.Name
+				then
+					NetworkingService:FireToServer("Block", 0)
+				elseif not StateChecker:CheckState(character, "Blocking") and ActionVerifier:CanBlock(character) then
+					NetworkingService:FireToServer("Block", 1)
+				end
+			elseif StateChecker:CheckState(character, "Blocking") then
+				NetworkingService:FireToServer("Block", 0)
+			end
+		end)
+	)
 end

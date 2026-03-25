@@ -36,9 +36,7 @@ return function(argumentData)
 			["Target"] = targetHit ,
 			["Weapon"] = weaponUsed,
 		})
-		
 		Animations:GetAnimation(targetHumanoid, "Shared.Character.BlockBreak"):Play()
-		--print("[BlockBreak] HitType Reached","From",attacker ,"To",targetHit ,"With", weaponUsed)
 	end
 
 

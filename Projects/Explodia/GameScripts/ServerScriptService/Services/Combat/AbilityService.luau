@@ -1,12 +1,12 @@
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Debris = game:GetService("Debris")
+local Players = game:GetService("Players")
 local ServerScriptService = game:GetService("ServerScriptService")
 local CombatUtils = require(ServerScriptService.Modules.Utilities.CombatUtils)
 local DataService = require(ServerScriptService.Services.Core.DataService)
 local assets = ReplicatedStorage.Assets
 
-local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local AbilityData = require(game.ReplicatedStorage.Modules.Data.AbilityData)
 
 local StateService = require(game.ServerScriptService.Services.Core.StateService)
@@ -15,44 +15,32 @@ local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsSer
 
 local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
 
-local AbilityService = {
-	hitTypes = {},
-}
+local AbilityService = {}
 
-for _, module in game.ServerScriptService.Modules.HitTypes:GetChildren() do
-	if module:IsA("ModuleScript") then
-		AbilityService.hitTypes[module.Name] = require(module)
-	end
-end
-
-function AbilityService:UseAbility(player: Player?, character, tool: Tool, mouse, input, letter)
-	local inventory = DataService:GetTable(player, "Inventory")
+function AbilityService:UseAbility(character, abilityLetter, mouse)
+	local player = Players:GetPlayerFromCharacter(character)
+	local tool = character:FindFirstChildWhichIsA("Tool")
 	if not tool then
 		return
 	end
 
-	local abilityletter = input or letter
-
-	if not ActionVerifier:CanAbility(character, abilityletter) then
+	if not ActionVerifier:CanAbility(character, abilityLetter) then
 		return
 	end
 
 	local humanoid = character:WaitForChild("Humanoid")
-	local abilityData = AbilityData:GetAbilityData(tool.Name, abilityletter)
+	local abilityData = AbilityData:GetAbilityData(tool.Name, abilityLetter)
 
 	if not abilityData then
-		print("Ability data not found for:", tool.Name .. abilityletter)
+		print("Ability data not found for:", tool.Name .. abilityLetter)
 		return
 	end
 
-	local weaponData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
-
-	local sounds = assets.Shared.Sounds
-
 	if player then
+		local inventory = DataService:GetTable(player, "Inventory")
 		local playerMana = VitalsService:GetVital(character, "Mana")
 		if playerMana.CurrentMana < abilityData.Mana then
-			sounds.Error:Play()
+			assets.Shared.Sounds.Error:Play()
 			NetworkingService:FireToClient(player, "PopUp", {
 				["AbilityName"] = abilityData.AbilityName,
 				["RequiredMana"] = abilityData.Mana,
@@ -61,6 +49,10 @@ function AbilityService:UseAbility(player: Player?, character, tool: Tool, mouse
 		end
 		if inventory[tool:GetAttribute("ID")] then
 			if inventory[tool:GetAttribute("ID")].Mastery < abilityData.AbilityMastery then
+				NetworkingService:FireToClient(player, "PopUp", {
+					["Mastery"] = inventory[tool:GetAttribute("ID")].Mastery,
+					["RequiredMastery"] = abilityData.AbilityMaster,
+				})
 				return
 			end
 		end
@@ -75,16 +67,15 @@ function AbilityService:UseAbility(player: Player?, character, tool: Tool, mouse
 	---Animation---
 	local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 	local animation: AnimationTrack =
-		Animations:GetAnimation(humanoid, "Weapons." .. tool.Name .. ".Animations.Abilities." .. abilityletter)
+		Animations:GetAnimation(humanoid, "Weapons." .. tool.Name .. ".Animations.Abilities." .. abilityLetter)
 	if not animation then
 		warn("Animation Not Found")
-		print(Animations.loadedAnimations)
 		return
 	end
 	animation:Play()
 
 	---Ability States---
-	StateService:AddState(character, "Ability" .. abilityletter .. " Cooldown", cooldownTime)
+	StateService:AddState(character, "Ability" .. abilityLetter .. " Cooldown", cooldownTime)
 	StateService:AddState(character, "Invulnerable", 0.2)
 	StateService:AddState(character, "Casting", animation.Length)
 
@@ -110,14 +101,14 @@ function AbilityService:UseAbility(player: Player?, character, tool: Tool, mouse
 
 		---VFX---
 		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "AbilityVFX", {
-			["VFX"] = assets.Weapons[tool.Name].Effects.Abilities[abilityletter],
+			["VFX"] = assets.Weapons[tool.Name].Effects.Abilities[abilityLetter],
 			["HitBoxName"] = hitboxClone.Name,
 			["Caster"] = character,
 		})
 
 		---Sound---
 		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "AbilitySound", {
-			["SoundName"] = "Weapons." .. tool.Name .. ".Sounds.Abilities.Activate." .. abilityletter,
+			["Sound"] = assets.Weapons:FindFirstChild(tool.Name).Sounds.Abilities.Activate:FindFirstChild(abilityLetter),
 			["HitBoxName"] = hitboxClone.Name,
 		})
 
@@ -142,13 +133,10 @@ function AbilityService:UseAbility(player: Player?, character, tool: Tool, mouse
 						hit[targetHumanoid] = true
 						for Hit = 0, abilityData.Hits, 1 do
 							CombatUtils:ApplyHit({
-								["WeaponData"] = weaponData,
+								["Attacker"] = character,
 								["TargetHit"] = targetHit,
 								["Tool"] = tool,
-								["HitTypes"] = AbilityService.hitTypes,
-								["Character"] = character,
-								["AbilityData"] = abilityData,
-								["AbilityLetter"] = abilityletter,
+								["AbilityLetter"] = abilityLetter,
 							})
 							task.wait(abilityData.TimeBtwnHits)
 						end
