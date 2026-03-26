@@ -64,12 +64,13 @@ function AIService:CreateAI(npc)
 		Root = npc:WaitForChild("HumanoidRootPart"),
 		Humanoid = npc:WaitForChild("Humanoid"),
 		Type = mobData.Type,
-
-		State = "Idle",
 		Tool = mobData.Tool,
+		State = "Idle",
+
 		Target = nil,
 		AggroList = {}, -- (does nothing  yet)
 		DamageTaken = {}, -- (does nothing  yet)
+		LastAttackSeenTime = 0,
 
 		DetectionRange = mobData.DetectionRange,
 		AttackRange = mobData.AttackRange,
@@ -77,10 +78,10 @@ function AIService:CreateAI(npc)
 
 		Moving = false,
 		NeedsRepath = 0,
+		Path = nil,
+
 		WalkSpeed = mobData.WalkSpeed,
 		RunSpeed = mobData.RunSpeed,
-
-		LastAttackSeenTime = 0,
 
 		Abilities = AbilityData:GetAbilityData(itemData.Name),
 		ChosenAbility = nil,
@@ -89,12 +90,10 @@ function AIService:CreateAI(npc)
 			npc.Humanoid,
 			"Weapons." .. itemData.Name .. ".Animations.Idle" or "Shared.Animations.Idle.Default"
 		),
-
 		WalkAnimation = Animations:GetAnimation(
 			npc.Humanoid,
 			"Weapons." .. itemData.Name .. ".Animations.Walk" or "Shared.Animations.Walk.Default"
 		),
-
 		RunAnimation = Animations:GetAnimation(
 			npc.Humanoid,
 			"Weapons." .. itemData.Name .. ".Animations.Run" or "Shared.Animations.Run.Default"

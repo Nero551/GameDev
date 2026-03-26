@@ -8,7 +8,7 @@ function CanDoAction:CanRun(AIData)
 	if not AIData then return false end
 	if not AIData.Target then return false end
 	local distance = (AIData.Root.Position - AIData.Target.Position).Magnitude
-	if distance <= AIData.DetectionRange and AIData.Humanoid.WalkSpeed > 0 then
+	if distance <= AIData.DetectionRange and AIData.Humanoid.WalkSpeed > 0 and not AIData.Moving then
 		return true
 	end
 	return false

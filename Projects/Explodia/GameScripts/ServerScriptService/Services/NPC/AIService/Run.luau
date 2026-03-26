@@ -3,7 +3,6 @@ return function(npc)
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local StateChecker = require(ReplicatedStorage.Modules.Helpers.StateChecker)
 	local StateService = require(game.ServerScriptService.Services.Core.StateService)
-
 	local AIService = require(game.ServerScriptService.Services.NPC.AIService)
 
 	local AIData = AIService.ActiveAIs[npc]
@@ -32,57 +31,59 @@ return function(npc)
 		AIData.RunAnimation:Play()
 	end
 
-	local path = PathfindingService:CreatePath({
+	if AIData.Path then
+		AIData.Path:Destroy()
+		AIData.Path = nil
+	end
+
+	AIData.Path = PathfindingService:CreatePath({
 		AgentRadius = 2,
 		AgentHeight = 5,
 		AgentCanJump = true,
-		WaypointSpacing = 5,
+		WaypointSpacing = 4,
 	})
 	if os.clock() - AIData.NeedsRepath > 2 then
 		AIData.Moving = false
 		AIData.NeedsRepath = 0
 	end
+
 	if not AIData.Moving then
 		AIData.NeedsRepath = os.clock()
 		AIData.Moving = true
 
-		path:ComputeAsync(AIData.Root.Position, AIData.Target.Position)
+		AIData.Path:ComputeAsync(
+			AIData.Root.Position,
+			AIData.Target.Position + AIData.Target.Parent.Humanoid.MoveDirection * 13
+		)
 
-		if path.Status ~= Enum.PathStatus.Success then
+		if AIData.Path.Status ~= Enum.PathStatus.Success then
 			AIData.Moving = false
 			AIData.NeedsRepath = 0
 			print("Path Failed")
 			return
 		end
 
-		local originalTargetPos
-		if AIData.Target then
-			originalTargetPos = AIData.Target.Position
-		end
-
-		for _, waypoint: PathWaypoint in ipairs(path:GetWaypoints()) do
-			print(path:CheckOcclusionAsync(waypoint))
-
+		local waypoints = AIData.Path:GetWaypoints()
+		for _, waypoint: PathWaypoint in ipairs(waypoints) do
 			if waypoint.Action == Enum.PathWaypointAction.Jump then
 				humanoid.Jump = true
 			end
+			if not AIData.Target then
+				break
+			end
 
 			if (waypoint.Position - AIData.Root.Position).Magnitude > 5 then
-				if not AIData.Target then
-					break
-				end
-
-				-- local part = Instance.new("Part")
-				-- part.Material = "Neon"
-				-- part.Anchored = true
-				-- part.CanCollide = false
-				-- part.Shape = "Ball"
-				-- part.Position = waypoint.Position
-				-- part.Parent = workspace.World.PathFinding
-				-- game.Debris:AddItem(part, 5)
+				local part = Instance.new("Part")
+				part.Material = "Neon"
+				part.Anchored = true
+				part.CanCollide = false
+				part.Shape = "Ball"
+				part.Position = waypoint.Position
+				part.Parent = workspace.World.PathFinding
+				game.Debris:AddItem(part, 5)
 
 				if
-					(originalTargetPos - AIData.Target.Position).Magnitude > 8
+					(AIData.Target.Position - waypoints[#waypoints].Position).Magnitude > 15
 					or os.clock() - AIData.NeedsRepath > 4
 				then
 					break

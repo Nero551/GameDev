@@ -23,7 +23,6 @@ function StateService:Destroy(character)
 end
 
 function StateService:AddState(character, stateName, duration, attributes)
-    print(stateName)
 	if not character or not stateName then
 		return
 	end
