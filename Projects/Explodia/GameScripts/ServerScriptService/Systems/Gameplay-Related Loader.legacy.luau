@@ -20,6 +20,7 @@ local updateRate = 0.05
 ---Regen Stuff , Time Cycle and Handling States---
 RunService.Heartbeat:Connect(function(dt)
 	RegenService:ManaRegen(dt)
+	RegenService:StaminaRegen(dt)
 	RegenService:HealthRegen(dt)
 	RegenService:FlashStepRegen(dt)
 	RegenService:BlockCounterRegen(dt)

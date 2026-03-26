@@ -1,6 +1,6 @@
-local StatusAilmentsData = {}
+local StatusEffectsData = {}
 
-StatusAilmentsData.Ailments = {
+StatusEffectsData.StatusEffects = {
 	["Burn"] = {
 		State = "Burning",
 		Color = "#ff7a46",
@@ -27,4 +27,4 @@ StatusAilmentsData.Ailments = {
 	}
 }
 
-return StatusAilmentsData
+return StatusEffectsData

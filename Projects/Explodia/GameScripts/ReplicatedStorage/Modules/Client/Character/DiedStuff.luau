@@ -7,7 +7,7 @@ return function()
 	local Debris = game:GetService("Debris")
 
 	local animator: Animator = humanoid.Animator
-	local deathAnimation = animator:LoadAnimation(game.ReplicatedStorage.Assets.Shared.Character.Death)
+	local deathAnimation = animator:LoadAnimation(game.ReplicatedStorage.Assets.Shared.Core.Death.Animation)
 
 	humanoid.BreakJointsOnDeath = false
 	humanoid.Died:Connect(function()

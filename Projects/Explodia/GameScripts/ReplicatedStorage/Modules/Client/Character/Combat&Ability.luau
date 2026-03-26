@@ -8,7 +8,7 @@ return function()
 	local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 	local character = Player.Character or Player.CharacterAdded:Wait()
 
-	local statusFolder = character:WaitForChild("Status", math.huge)
+	local stateFolder = character:WaitForChild("State", math.huge)
 
 	local proc = false
 
@@ -54,7 +54,7 @@ return function()
 			if UserInputService:IsKeyDown(Enum.KeyCode.F) and ActionVerifier:CanBlock(character) and tool then
 				if
 					StateChecker:CheckState(character, "Blocking")
-					and statusFolder:FindFirstChild("Blocking"):GetAttribute("weaponName") ~= tool.Name
+					and stateFolder:FindFirstChild("Blocking"):GetAttribute("weaponName") ~= tool.Name
 				then
 					NetworkingService:FireToServer("Block", 0)
 				elseif not StateChecker:CheckState(character, "Blocking") and ActionVerifier:CanBlock(character) then

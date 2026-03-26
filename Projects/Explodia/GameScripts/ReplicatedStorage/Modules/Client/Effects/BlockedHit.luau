@@ -16,7 +16,7 @@ return function(arguementData:any)
 	if target and weaponUsed then
 		local rootPart = target:FindFirstChild("HumanoidRootPart")
 		if rootPart then
-			local clone =  assets.Shared.Effects.BlockEffects["Block"..tostring(blockCounter)]:Clone()
+			local clone =  assets.Shared.Combat.Block.BlockEffects["Block"..tostring(blockCounter)]:Clone()
 			clone.Parent = rootPart
 			for _,v in clone:GetDescendants() do
 				if v:IsA("ParticleEmitter") then

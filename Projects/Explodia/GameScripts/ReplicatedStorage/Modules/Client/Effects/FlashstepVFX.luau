@@ -1,10 +1,5 @@
---FlashstepVFX
-
 local Debris = game:GetService("Debris")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
-local assets = ReplicatedStorage:WaitForChild("Assets")
-local effects = assets.Shared.Effects
 
 return function(arguementData:any)
 	local character = arguementData.Character
@@ -13,6 +8,7 @@ return function(arguementData:any)
 		for _, part in character:GetDescendants() do
 			
 			if part:IsA("BasePart") and part.Name ~= "HumanoidRootPart" and not
+			 part:GetAttribute("StatusEffect") and not
 			 part:GetAttribute("Ailment") and not
 			 part:GetAttribute("WeaponHandle")  then
 
@@ -28,7 +24,7 @@ return function(arguementData:any)
 	---VFX--- 
 	local rootPart = character:FindFirstChild("HumanoidRootPart")
 	if rootPart then
-		local clone =  effects.CoreEffects.FlashStep:Clone()
+		local clone =  ReplicatedStorage.Assets.Shared.Movement.Flashstep.VFX:Clone()
 		clone.Parent = rootPart
 		for _,v in clone:GetDescendants() do
 			if v:IsA("ParticleEmitter") then
@@ -40,7 +36,7 @@ return function(arguementData:any)
 	end
 	
 	---Smoke---
-	local smoke = effects.CoreEffects.FlashStepSmoke:Clone()
+	local smoke = ReplicatedStorage.Assets.Shared.Movement.Flashstep.Smoke:Clone()
 	smoke.Parent = workspace.World.Effects
 	smoke.Position = character["Left Leg"].Position
 	for _, particle in  ipairs(smoke:GetDescendants()) do

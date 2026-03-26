@@ -1,49 +1,62 @@
 local DataService = require(game.ServerScriptService.Services.Core.DataService)
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
-
 local StatService = {}
 
-local function ApplyHealth(player:Player)
+local function ApplyHealth(player: Player)
 	local playerStats = DataService:GetTable(player, "Stats")
-	local playerHealthStats = playerStats.MainStats.Health
+	local vitStat = playerStats.MainStats.Vitality
 	local char = player.Character or player.CharacterAdded:Wait()
 
-	local finalHealth = playerHealthStats.Final
+	local finalHealth = vitStat.Final
 	local HEALTH_PER_POINT = 5
-	local MIN_HEALTH = playerHealthStats.Base * HEALTH_PER_POINT
+	local MIN_HEALTH = vitStat.Base * HEALTH_PER_POINT
 
 	local maxHealth = math.max(MIN_HEALTH, finalHealth * HEALTH_PER_POINT)
-	
-	VitalsService:ModifyVital(char, "Health" ,"ModifyMaxHealth", {
-		["MaxHealth"] = maxHealth
+
+	VitalsService:ModifyVital(char, "Health", "ModifyMaxHealth", {
+		["MaxHealth"] = maxHealth,
 	})
-	
 end
 
-local function ApplyMana(player:Player)
-	local playerStats = DataService:GetTable(player,"Stats")
+local function ApplyMana(player: Player)
+	local playerStats = DataService:GetTable(player, "Stats")
 	local char = player.Character or player.CharacterAdded:Wait()
-	local playerManaStats = playerStats.MainStats.Mana
-	
-	local finalMana = playerManaStats.Final
-	local MANA_PER_POINT = 5
-	local MIN_MANA = playerManaStats.Base * MANA_PER_POINT
+	local intStat = playerStats.MainStats.Intelligence
 
-	local maxMana = math.max(MIN_MANA,finalMana * MANA_PER_POINT)
+	local finalMana = intStat.Final
+	local MANA_PER_POINT = 5
+	local MIN_MANA = intStat.Base * MANA_PER_POINT
+
+	local maxMana = math.max(MIN_MANA, finalMana * MANA_PER_POINT)
 
 	VitalsService:ModifyVital(char, "Mana", "ModifyMaxMana", {
 		["MaxMana"] = maxMana,
 	})
-	
+end
+
+local function ApplyStamina(player: Player)
+	local playerStats = DataService:GetTable(player, "Stats")
+	local char = player.Character or player.CharacterAdded:Wait()
+	local agilityStat = playerStats.MainStats.Agility
+
+	local finalStamina = agilityStat.Final
+	local Stamina_PER_POINT = 5
+	local MIN_STAMINA = agilityStat.Base * Stamina_PER_POINT
+
+	local maxStamina = math.max(MIN_STAMINA, finalStamina * Stamina_PER_POINT)
+
+	VitalsService:ModifyVital(char, "Mana", "ModifyMaxStamina", {
+		["MaxStamina"] = maxStamina,
+	})
 end
 
 ---Setup Stats---
-function StatService:SetupStats(player:Player)
+function StatService:SetupStats(player: Player)
 	local playerStats = DataService:GetTable(player, "Stats")
-	
+
 	local statsFolder = player:FindFirstChild("Stats")
-	
+
 	if not statsFolder then
 		statsFolder = Instance.new("Folder")
 		statsFolder.Name = "Stats"
@@ -57,13 +70,13 @@ function StatService:SetupStats(player:Player)
 			folder.Name = type
 			folder.Parent = statsFolder
 		end
-		for statType,stat in pairs(table) do
+		for statType, stat in pairs(table) do
 			local statValue = folder:FindFirstChild(statType)
 			if not statValue then
 				statValue = Instance.new("StringValue")
 				statValue.Name = statType
 				statValue.Parent = folder
-				for valueType,value in pairs(stat) do
+				for valueType, value in pairs(stat) do
 					statValue:SetAttribute(valueType, value)
 				end
 			end
@@ -72,7 +85,7 @@ function StatService:SetupStats(player:Player)
 	StatService:UpdateStats(player)
 end
 
-function StatService:GetStat(player:Player, stat)
+function StatService:GetStat(player: Player, stat)
 	local playerStats = DataService:GetTable(player, "Stats")
 	for _, table in pairs(playerStats) do
 		if table[stat] then
@@ -83,31 +96,31 @@ function StatService:GetStat(player:Player, stat)
 end
 
 ---Update Stats---
-function StatService:UpdateStats(player:Player)
+function StatService:UpdateStats(player: Player)
 	local playerStats = DataService:GetTable(player, "Stats")
 	for catagory, t in pairs(playerStats) do
-		for statType,statTable in pairs(t) do
-			statTable.FlatStatPoint = math.clamp(statTable.FlatStatPoint, 0, 3000)
+		for statType, statTable in pairs(t) do
 			statTable.Final = (statTable.Base + statTable.FlatStatPoint + statTable.FlatBuff) * (1 + statTable.Percent)
 			local statValue = player:WaitForChild("Stats"):WaitForChild(catagory):WaitForChild(statType)
-			for type,value in pairs(statTable) do
-				statValue:SetAttribute(type,value)
+			for type, value in pairs(statTable) do
+				statValue:SetAttribute(type, value)
 			end
-		end	
+		end
 	end
 	ApplyHealth(player)
 	ApplyMana(player)
+	ApplyStamina(player)
 end
 
 ---Allocate Statpoint---
 function StatService:AllocateStatPoint(player, statType, amount)
 	local playerLevel = DataService:GetTable(player, "Level")
 	local playerStats = DataService:GetTable(player, "Stats")
-	
-	if 	playerLevel.StatPoints <= 0 or playerStats.MainStats[statType].FlatStatPoint  >= 3000  then return end
-	if playerStats.MainStats[statType].FlatStatPoint + amount > 3000 then
-		amount = 3000 - playerStats.MainStats[statType].FlatStatPoint
+
+	if playerLevel.StatPoints <= 0  then
+		return
 	end
+	
 	if amount > playerLevel.StatPoints then
 		amount = playerLevel.StatPoints
 	end
@@ -117,12 +130,11 @@ function StatService:AllocateStatPoint(player, statType, amount)
 	StatService:UpdateStats(player)
 end
 
-
 ---Reset Stats---
-function StatService:ResetStats(player:Player)
+function StatService:ResetStats(player: Player)
 	local playerLevel = DataService:GetTable(player, "Level")
 	local playerStats = DataService:GetTable(player, "Stats")
-	
+
 	playerLevel.StatPoints = (playerLevel.CurrentLevel - 1) * 4
 	for _, stat in pairs(playerStats.MainStats) do
 		stat.FlatStatPoint = 0
@@ -131,10 +143,12 @@ function StatService:ResetStats(player:Player)
 end
 
 ---Apply Item Buffs---
-function StatService:ApplyBuffs(player:Player,  buffs)
-	if not buffs then return end
+function StatService:ApplyBuffs(player: Player, buffs)
+	if not buffs then
+		return
+	end
 	local playerStats = DataService:GetTable(player, "Stats")
-	
+
 	for statType, buff in pairs(buffs) do
 		local stat = playerStats.MainStats[statType] or playerStats.SideStats[statType]
 		if stat then
@@ -150,7 +164,7 @@ function StatService:ApplyBuffs(player:Player,  buffs)
 end
 
 ---Reset Buffs---
-function StatService:ResetBuffs(player:Player)
+function StatService:ResetBuffs(player: Player)
 	local playerStats = DataService:GetTable(player, "Stats")
 	for _, table in pairs(playerStats) do
 		for _, stat in pairs(table) do

@@ -32,11 +32,11 @@ function DataService:GetDefaultData()
 		},
 		Stats = {
 			MainStats = {
-				Health = { Base = 20, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				Mana = { Base = 20, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				Melee = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				Sword = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				RiftBorn = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				Vitality = { Base = 20, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				Intelligence = { Base = 20, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				Strength = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				Dexterity = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				Agility = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
 			},
 			SideStats = {
 				Defense = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },

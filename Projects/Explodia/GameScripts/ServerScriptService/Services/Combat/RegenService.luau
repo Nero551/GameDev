@@ -5,6 +5,20 @@ local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker
 local RegenService = {}
 local elapsedFlashStep = {}
 local elapsedBlock = {}
+
+function RegenService:StaminaRegen(dt)
+	for character, data in pairs(VitalsService.CharacterVitals) do
+		if data.Stamina.CurrentStamina < data.Stamina.MaxStamina then
+
+			local dm = dt * data.Stamina.StaminaRegen
+
+			VitalsService:ModifyVital(character, "Stamina", "ModifyStamina", {
+				["StaminaChange"] = dm,
+			})
+		end
+	end
+end
+
 function RegenService:ManaRegen(dt)
 	for character, data in pairs(VitalsService.CharacterVitals) do
 		if data.Mana.CurrentMana < data.Mana.MaxMana then

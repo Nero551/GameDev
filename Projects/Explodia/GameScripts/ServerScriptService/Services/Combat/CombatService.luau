@@ -3,8 +3,7 @@ local NetworkingService = require(game.ReplicatedStorage.Modules.Core.Networking
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Debris = game:GetService("Debris")
 local Players = game:GetService("Players")
-local ServerScriptService = game:GetService("ServerScriptService")
-local CombatUtils = require(ServerScriptService.Modules.Utilities.CombatUtils)
+local HitService = require(script.Parent.HitService)
 local Connections = require(ReplicatedStorage.Modules.Core.Connections)
 local assets = ReplicatedStorage.Assets
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
@@ -114,34 +113,11 @@ function CombatService:Attack(character)
 		})
 		Debris:AddItem(hitboxClone, 0.35)
 
-		local params = OverlapParams.new()
-		params.FilterType = Enum.RaycastFilterType.Exclude
-		params.FilterDescendantsInstances = { character, workspace.World.Hitboxes }
-
-		---Damage---
-		local Targets = {}
-		for _, part in workspace:GetPartsInPart(hitboxClone, params) do
-			local target = part:FindFirstAncestorOfClass("Model")
-			local humanoid = target and target:FindFirstChild("Humanoid")
-			if target and humanoid and not Targets[target] then
-				Targets[target] = true
-			end
-		end
-
 		if Players:GetPlayerFromCharacter(character) then
 			NetworkingService:FireToClient(Players:GetPlayerFromCharacter(character), "CameraShake", 0.1)
 		end
-		for targetHit, _ in pairs(Targets) do
-			if StateChecker:CheckState(targetHit, "Invulnerable") then
-				continue
-			end
-			CombatUtils:ApplyHit({
-				["Attacker"] = character,
-				["TargetHit"] = targetHit,
-				["Tool"] = tool,
-				["TrueSwingNumber"] = trueSwingNumber,
-			})
-		end
+
+		HitService:Apply(character, weaponData,tool, hitboxClone,trueSwingNumber)
 	end)
 end
 
@@ -166,7 +142,7 @@ function CombatService:Block(character, boolean)
 			end
 
 			local function StopBlocking()
-				local blockingInstance = character:WaitForChild("Status"):FindFirstChild("Blocking")
+				local blockingInstance = character:WaitForChild("State"):FindFirstChild("Blocking")
 				if blockingInstance then
 					local weaponName = blockingInstance:GetAttribute("weaponName")
 					if weaponName then
@@ -179,7 +155,7 @@ function CombatService:Block(character, boolean)
 				end
 			end
 
-			character.Status.ChildAdded:Once(function(child)
+			character.State.ChildAdded:Once(function(child)
 				if StateChecker:CheckState(character, "Blocking") then
 					if not tool or not ActionVerifier:CanBlock(character) then
 						StopBlocking()

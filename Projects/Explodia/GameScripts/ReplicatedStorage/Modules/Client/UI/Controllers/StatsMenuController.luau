@@ -300,10 +300,10 @@ function StatsMenuController:Overview()
 							end
 						end
 					else
-						if itemData.Damage and playerStats.MainStats[type] then
+						if itemData.Damage and playerStats.MainStats.Strength then
 							local M1Damage = FormulaApplier:DefaultDamage(
 								itemData.Damage,
-								playerStats.MainStats[type]:GetAttribute("Final"),
+								playerStats.MainStats.Strength:GetAttribute("Final"),
 								0
 							)
 							popup.FinalImportantStat.Text = M1Damage .. " ATK"
@@ -815,13 +815,15 @@ function StatsMenuController:Armory()
 				for _, ability in abiltiesFrame:GetChildren() do
 					if ability:IsA("Frame") then
 						local abilityLetter = ability.AbilityIcon.AbilityLetter.Text
-						local abilityData = AbilityData:GetAbilityData(itemData.Name, abilityLetter)
-						if not abilityData then
-							ability.Visible = false
-						else
-							ability.Visible = true
-							ability.AbilityMastery.Text = abilityData.AbilityMastery
-							ability.AbilityName.Text = abilityData.AbilityName
+						if itemData.Abilities then
+							local abilityData = AbilityData:GetAbilityData(itemData.Abilities[abilityLetter])
+							if not abilityData then
+								ability.Visible = false
+							else
+								ability.Visible = true
+								ability.AbilityMastery.Text = abilityData.AbilityMastery
+								ability.AbilityName.Text = abilityData.AbilityName
+							end
 						end
 					end
 				end

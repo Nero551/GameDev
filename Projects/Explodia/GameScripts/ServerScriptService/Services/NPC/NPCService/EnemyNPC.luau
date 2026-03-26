@@ -44,7 +44,7 @@ return function(npc)
 	-- npcInfo.NPCName.Text = npc.Name
 
 	---When NPC Die---
-	local deathAnimation = Animations:GetAnimation(npcHumanoid, "Shared.Character.Death")
+	local deathAnimation = Animations:GetAnimation(npcHumanoid, "Shared.Core.Death.Animation")
 	local alreadyDead = false
 	npc:GetAttributeChangedSignal("Health_CurrentHealth"):Connect(function()
 		if alreadyDead == true then

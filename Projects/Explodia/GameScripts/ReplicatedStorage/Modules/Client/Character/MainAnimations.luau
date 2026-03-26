@@ -34,8 +34,8 @@ return function()
 	local currentWalk: AnimationTrack
 	local conn: RBXScriptConnection
 
-	if not Animations.loadedAnimations[char]["Shared.Animations.Idle.Default"].IsPlaying then
-		Animations:GetAnimation(humanoid, "Shared.Animations.Idle.Default"):Play()
+	if not Animations.loadedAnimations[char]["Shared.Movement.Main.Idle.Default"].IsPlaying then
+		Animations:GetAnimation(humanoid, "Shared.Movement.Main.Idle.Default"):Play()
 	end
 
 	conn = RunService.RenderStepped:Connect(function()
@@ -56,19 +56,19 @@ return function()
 				currentWalk = Animations:GetAnimation(humanoid, "Weapons." .. tool.Name .. ".Animations.Walk")
 			end
 		else
-			currentIdle = Animations:GetAnimation(humanoid, "Shared.Animations.Idle.Default")
-			currentRun = Animations:GetAnimation(humanoid, "Shared.Animations.Run.Default")
-			currentWalk = Animations:GetAnimation(humanoid, "Shared.Animations.Walk.Default")
+			currentIdle = Animations:GetAnimation(humanoid, "Shared.Movement.Main.Idle.Default")
+			currentRun = Animations:GetAnimation(humanoid, "Shared.Movement.Main.Run.Default")
+			currentWalk = Animations:GetAnimation(humanoid, "Shared.Movement.Main.Walk.Default")
 		end
 
 		---Jump Animation---
 		if humanoid:GetState() == Enum.HumanoidStateType.Jumping then
-			Animations:GetAnimation(humanoid, "Shared.Animations.Jump.Jump"):Play()
+			Animations:GetAnimation(humanoid, "Shared.Movement.Main.Jump.Default"):Play()
 		end
 
 		---Falling Animation---
 		if humanoid:GetState() == Enum.HumanoidStateType.Freefall then
-			Animations:GetAnimation(humanoid, "Shared.Animations.Fall.Fall"):Play()
+			Animations:GetAnimation(humanoid, "Shared.Movement.Main.Fall.Default"):Play()
 		end
 
 		---Landing Animation---
@@ -82,9 +82,9 @@ return function()
 		then
 			for name, anim in Animations.loadedAnimations[char] do
 				if
-					string.find(name, "Animations.Run")
-					or string.find(name, "Animations.Idle")
-					or string.find(name, "Animations.Walk")
+					string.find(name, "Run")
+					or string.find(name, "Idle")
+					or string.find(name, "Walk")
 				then
 					if anim.IsPlaying then
 						anim:Stop(0.2)

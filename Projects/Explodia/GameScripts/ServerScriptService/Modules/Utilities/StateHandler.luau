@@ -14,7 +14,7 @@ local statePriority = {
 	{ Name = "Dashing", WS = 0, JP = 0 },
 	{ Name = "FlashStepEndLag", WS = 0, JP = 0 },
 
-	---Status Ailments--
+	---Status Effects--
 	{ Name = "Frozen", WS = 0, JP = 0 },
 
 	-- Combat-related movement limitations
@@ -30,7 +30,7 @@ local statePriority = {
 
 function StateHandler:HandleStates(character: Model, updateRate, runSpeed)
 	local humanoid = character:WaitForChild("Humanoid")
-	local statusFolder = character:WaitForChild("Status")
+	local stateFolder = character:WaitForChild("State")
 
 	------StateHandler------
 	local finalWalkSpeed = 5
@@ -69,9 +69,9 @@ function StateHandler:HandleStates(character: Model, updateRate, runSpeed)
 	end
 
 	---Updating Durations---
-	for stateName, info in StateService.Status[character] do
+	for stateName, info in StateService.State[character] do
 		if info.Duration then
-			local stateValue = statusFolder:FindFirstChild(stateName)
+			local stateValue = stateFolder:FindFirstChild(stateName)
 			info.Duration -= updateRate
 			for attrName, Value in pairs(info) do
 				stateValue:SetAttribute(attrName, Value)

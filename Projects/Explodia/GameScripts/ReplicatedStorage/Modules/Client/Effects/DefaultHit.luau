@@ -5,16 +5,22 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local assets = ReplicatedStorage:WaitForChild("Assets")
 
-return function(arguementData:any)
-	local target:Model = arguementData.Target
+return function(arguementData: any)
+	local target: Model = arguementData.Target
 	local weaponUsed = arguementData.Weapon
-	
-	if target and weaponUsed then
+	local ability = arguementData.Ability
+
+	if target then
 		local rootPart = target:FindFirstChild("HumanoidRootPart")
 		if rootPart then
-			local clone =  assets.Weapons[weaponUsed.Name].Effects.HitEffect:Clone()
+			local clone
+			if weaponUsed then
+				clone = assets.Weapons[weaponUsed].Effects.HitEffect:Clone()
+			elseif ability then
+				clone = assets.Shared.Abilities[ability].HitEffect:Clone()
+			end
 			clone.Parent = rootPart
-			for _,v in clone:GetDescendants() do
+			for _, v in clone:GetDescendants() do
 				if v:IsA("ParticleEmitter") then
 					if v:GetAttribute("EmitDelay") and v:GetAttribute("EmitDelay") > 0 then
 						task.delay(v:GetAttribute("EmitDelay"), function()

@@ -3,14 +3,14 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Debris = game:GetService("Debris")
 local Players = game:GetService("Players")
 local ServerScriptService = game:GetService("ServerScriptService")
-local CombatUtils = require(ServerScriptService.Modules.Utilities.CombatUtils)
+local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+local HitService = require(script.Parent.HitService)
 local DataService = require(ServerScriptService.Services.Core.DataService)
 local assets = ReplicatedStorage.Assets
 
 local AbilityData = require(game.ReplicatedStorage.Modules.Data.AbilityData)
 
 local StateService = require(game.ServerScriptService.Services.Core.StateService)
-local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
 local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
@@ -29,7 +29,8 @@ function AbilityService:UseAbility(character, abilityLetter, mouse)
 	end
 
 	local humanoid = character:WaitForChild("Humanoid")
-	local abilityData = AbilityData:GetAbilityData(tool.Name, abilityLetter)
+	local weaponData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
+	local abilityData = AbilityData:GetAbilityData(weaponData.Abilities[abilityLetter])
 
 	if not abilityData then
 		print("Ability data not found for:", tool.Name .. abilityLetter)
@@ -38,27 +39,44 @@ function AbilityService:UseAbility(character, abilityLetter, mouse)
 
 	if player then
 		local inventory = DataService:GetTable(player, "Inventory")
-		local playerMana = VitalsService:GetVital(character, "Mana")
-		if playerMana.CurrentMana < abilityData.Mana then
-			assets.Shared.Sounds.Error:Play()
-			NetworkingService:FireToClient(player, "PopUp", {
-				["AbilityName"] = abilityData.AbilityName,
-				["RequiredMana"] = abilityData.Mana,
-			})
-			return
+		if abilityData.DamageType then
+			if abilityData.DamageType == "Physical" then
+				local playerStamina = VitalsService:GetVital(character, "Stamina")
+				if playerStamina.CurrentStamina < abilityData.Cost then
+					assets.Shared.MenuSounds.Error:Play()
+					NetworkingService:FireToClient(player, "PopUp", {
+						["AbilityName"] = abilityData.AbilityName,
+						["RequiredStamina"] = abilityData.Cost,
+					})
+					return
+				end
+			elseif abilityData.DamageType == "Magic" then
+				local playerMana = VitalsService:GetVital(character, "Mana")
+				if playerMana.CurrentMana < abilityData.Cost then
+					assets.Shared.MenuSounds.Error:Play()
+					NetworkingService:FireToClient(player, "PopUp", {
+						["AbilityName"] = abilityData.AbilityName,
+						["RequiredMana"] = abilityData.Mana,
+					})
+					return
+				end
+			end
 		end
+
 		if inventory[tool:GetAttribute("ID")] then
 			if inventory[tool:GetAttribute("ID")].Mastery < abilityData.AbilityMastery then
 				NetworkingService:FireToClient(player, "PopUp", {
 					["Mastery"] = inventory[tool:GetAttribute("ID")].Mastery,
-					["RequiredMastery"] = abilityData.AbilityMaster,
+					["RequiredMastery"] = abilityData.AbilityMastery,
 				})
 				return
 			end
 		end
 
 		NetworkingService:FireToClient(player, "CameraShake", 0.25)
-		playerMana.CurrentMana = playerMana.CurrentMana - abilityData.Mana
+		VitalsService:ModifyVital(character, "Mana", "ModifyMana", {
+			["ManaChange"] = -abilityData.Mana,
+		})
 	end
 
 	---CoolDown---
@@ -101,51 +119,19 @@ function AbilityService:UseAbility(character, abilityLetter, mouse)
 
 		---VFX---
 		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "AbilityVFX", {
-			["VFX"] = assets.Weapons[tool.Name].Effects.Abilities[abilityLetter],
+			["VFX"] = assets.Shared.Abilities[weaponData.Abilities[abilityLetter]].VFX,
 			["HitBoxName"] = hitboxClone.Name,
 			["Caster"] = character,
 		})
 
 		---Sound---
 		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "AbilitySound", {
-			["Sound"] = assets.Weapons:FindFirstChild(tool.Name).Sounds.Abilities.Activate:FindFirstChild(abilityLetter),
+			["Sound"] = assets.Shared.Abilities[weaponData.Abilities[abilityLetter]].Activate,
 			["HitBoxName"] = hitboxClone.Name,
 		})
-
-		---Damage---
-		task.spawn(function()
-			local params = OverlapParams.new()
-			params.FilterType = Enum.RaycastFilterType.Exclude
-			params.FilterDescendantsInstances = { character, workspace.World.Hitboxes }
-
-			local hit = {}
-			local partsCollected = workspace:GetPartsInPart(hitboxClone, params)
-			for _, part in partsCollected do
-				if part.Parent and part.Parent:FindFirstChild("Humanoid") then
-					local targetHit = part.Parent
-
-					if StateChecker:CheckState(targetHit, "Invulnerable") then
-						continue
-					end
-
-					local targetHumanoid: Humanoid = targetHit:FindFirstChild("Humanoid")
-					if targetHumanoid and not hit[targetHumanoid] then
-						hit[targetHumanoid] = true
-						for Hit = 0, abilityData.Hits, 1 do
-							CombatUtils:ApplyHit({
-								["Attacker"] = character,
-								["TargetHit"] = targetHit,
-								["Tool"] = tool,
-								["AbilityLetter"] = abilityLetter,
-							})
-							task.wait(abilityData.TimeBtwnHits)
-						end
-					end
-				end
-			end
-		end)
-
 		Debris:AddItem(hitboxClone, 1)
+		---Damage---
+		HitService:Apply(character, abilityData, tool, hitboxClone)
 	end)
 end
 

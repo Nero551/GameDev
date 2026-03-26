@@ -190,7 +190,11 @@ function HUDController:Abilities()
 		end
 
 		for abilityKey, data in pairs(bars) do
-			local abilityData = AbilityData:GetAbilityData(tool.Name, abilityKey)
+			local itemData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
+			if not itemData.Abilities then
+				return
+			end
+			local abilityData = AbilityData:GetAbilityData(itemData.Abilties[abilityKey])
 			local weaponData = ItemDataBase:GetItemData(tool.Name)
 			if not abilityData then
 				data.bar.Visible = false
@@ -251,7 +255,7 @@ end
 
 function HUDController:InCombat()
 	local char = player.Character or player.CharacterAdded:Wait()
-	local statusFolder = char:WaitForChild("Status")
+	local stateFolder = char:WaitForChild("State")
 	local inCombatText = UIManager:GetUI("HUD", "InCombatText")
 
 	local function UpdateCombatText()
@@ -261,37 +265,38 @@ function HUDController:InCombat()
 			inCombatText.Visible = false
 		end
 	end
-	statusFolder.ChildAdded:Connect(UpdateCombatText)
+	stateFolder.ChildAdded:Connect(UpdateCombatText)
 
-	statusFolder.ChildRemoved:Connect(UpdateCombatText)
+	stateFolder.ChildRemoved:Connect(UpdateCombatText)
 end
 
-function HUDController:Ailments()
+function HUDController:StatusEffects()
 	local char = player.Character or player.CharacterAdded:Wait()
-	local statusFolder = char:WaitForChild("Status")
-	local ailmentsFrame = UIManager:GetUI("HUD", "AilmentsFrame")
-	local function Ailments()
-		for _, ailmentIcon in ailmentsFrame:GetChildren() do
-			if not ailmentIcon:IsA("ImageLabel") then
+	local stateFolder = char:WaitForChild("State")
+	local screen = UIManager.Screens.HUD
+	local statusEffectsFrame = screen.StatusEffectsFrame or screen.AilmentsFrame
+	local function UpdateStatusEffects()
+		for _, statusEffectIcon in statusEffectsFrame:GetChildren() do
+			if not statusEffectIcon:IsA("ImageLabel") then
 				continue
 			end
-			if StateChecker:CheckState(char, ailmentIcon.Name) then
-				ailmentIcon.Visible = true
-				local state = statusFolder:FindFirstChild(ailmentIcon.Name)
+			if StateChecker:CheckState(char, statusEffectIcon.Name) then
+				statusEffectIcon.Visible = true
+				local state = stateFolder:FindFirstChild(statusEffectIcon.Name)
 				if state:GetAttribute("Duration") then
 					state:GetAttributeChangedSignal("Duration"):Connect(function()
-						ailmentIcon.Duration.Text = math.floor(state:GetAttribute("Duration"))
+						statusEffectIcon.Duration.Text = math.floor(state:GetAttribute("Duration"))
 					end)
-					ailmentIcon.Duration.Text = math.floor(state:GetAttribute("Duration"))
+					statusEffectIcon.Duration.Text = math.floor(state:GetAttribute("Duration"))
 				end
 			else
-				ailmentIcon.Visible = false
+				statusEffectIcon.Visible = false
 			end
 		end
 	end
-	Ailments()
-	statusFolder.ChildAdded:Connect(Ailments)
-	statusFolder.ChildRemoved:Connect(Ailments)
+	UpdateStatusEffects()
+	stateFolder.ChildAdded:Connect(UpdateStatusEffects)
+	stateFolder.ChildRemoved:Connect(UpdateStatusEffects)
 end
 
 function HUDController:Currencies()
@@ -516,7 +521,7 @@ end
 function HUDController:DamageCounter()
 	local damageFrame = UIManager:GetUI("HUD", "DamageFrame")
 	local TweenService = game:GetService("TweenService")
-local StatusAilmentsData = require(ReplicatedStorage.Modules.Data.StatusAilmentsData)
+	local StatusEffectsData = require(ReplicatedStorage.Modules.Data.StatusEffectsData)
 	local damageText = damageFrame.DamageNumber
 	local comboDuration = damageFrame.ComboDuration
 	local ExtraText = damageFrame.ExtraText
@@ -661,16 +666,18 @@ local StatusAilmentsData = require(ReplicatedStorage.Modules.Data.StatusAilments
 		end)
 	end
 
-	local function AilmentTween(ailmentName)
-		local ailmentData = StatusAilmentsData.Ailments[ailmentName]
-		ExtraText.Text = ailmentName
+	local function StatusEffectTween(statusEffectName)
+		local statusEffectData = StatusEffectsData.StatusEffects[statusEffectName]
+		local statusFrame = damageFrame.Parent.StatusFrame
+		local statusEffectsFrame = statusFrame.StatusEffectsFrame or statusFrame.AilmentsFrame
+		ExtraText.Text = statusEffectName
 		ExtraText.Visible = true
 		ExtraImage.Visible = true
 
-		ExtraImage.Image = damageFrame.Parent.StatusFrame.AilmentsFrame[ailmentData.State].Image
+		ExtraImage.Image = statusEffectsFrame[statusEffectData.State].Image
 		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-		local color = Color3.fromHex(ailmentData.Color)
+		local color = Color3.fromHex(statusEffectData.Color)
 
 		TweenService:Create(ExtraText, info, { TextColor3 = color }):Play()
 
@@ -716,7 +723,7 @@ local StatusAilmentsData = require(ReplicatedStorage.Modules.Data.StatusAilments
 
 	NetworkingService:OnClientEvent(
 		"ShowDamage",
-		function(damage, critical, blocked, blackFlash, ailmentName)
+		function(damage, critical, blocked, blackFlash, statusEffectName)
 			damageFrame.Visible = true
 
 			---ComboDuration---
@@ -739,8 +746,8 @@ local StatusAilmentsData = require(ReplicatedStorage.Modules.Data.StatusAilments
 				CriticalTween()
 			elseif blocked == true then
 				BlockedTween()
-			elseif ailmentName then
-				AilmentTween(ailmentName)
+			elseif statusEffectName then
+				StatusEffectTween(statusEffectName)
 			else
 				DefualtTween()
 			end

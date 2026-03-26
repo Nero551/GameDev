@@ -1,24 +1,25 @@
 local StateService = {}
-StateService.Status = {}
+StateService.State = {}
+StateService.Status = StateService.State
 
 function StateService:Create(character)
-	if not StateService.Status[character] then
-		StateService.Status[character] = {}
+	if not StateService.State[character] then
+		StateService.State[character] = {}
 	end
 
-	if not character:FindFirstChild("Status") then
+	if not character:FindFirstChild("State") then
 		local statusFolder = Instance.new("Folder")
-		statusFolder.Name = "Status"
+		statusFolder.Name = "State"
 		statusFolder.Parent = character
 	end
 end
 
 function StateService:Destroy(character)
-	if StateService.Status[character] then
-		StateService.Status[character] = nil
+	if StateService.State[character] then
+		StateService.State[character] = nil
 	end
-	if character:FindFirstChild("Status") then
-		character:FindFirstChild("Status"):Destroy()
+	if character:FindFirstChild("State") then
+		character:FindFirstChild("State"):Destroy()
 	end
 end
 
@@ -26,11 +27,11 @@ function StateService:AddState(character, stateName, duration, attributes)
 	if not character or not stateName then
 		return
 	end
-	if not StateService.Status[character] then
+	if not StateService.State[character] then
 		StateService:Create(character)
 	end
-	local charStatus = StateService.Status[character]
-	local statusFolder = character:WaitForChild("Status")
+	local charStatus = StateService.State[character]
+	local statusFolder = character:WaitForChild("State")
 	local stateValue = statusFolder:FindFirstChild(stateName)
 
 	charStatus[stateName] = {
@@ -52,15 +53,15 @@ function StateService:AddState(character, stateName, duration, attributes)
 end
 
 function StateService:RemoveState(character, stateName)
-	if StateService.Status[character] then
-		StateService.Status[character][stateName] = nil
+	if StateService.State[character] then
+		StateService.State[character][stateName] = nil
 	else
 		StateService:Create(character)
 	end
 
-	local statusFolder = character:FindFirstChild("Status")
-	if statusFolder then
-		local stateValue = statusFolder:FindFirstChild(stateName)
+	local stateFolder = character:FindFirstChild("State")
+	if stateFolder then
+		local stateValue = stateFolder:FindFirstChild(stateName)
 		if stateValue then
 			stateValue:Destroy()
 		end

@@ -11,23 +11,23 @@ function StateChecker:CheckState(character, ...)
 
 	if RunService:IsServer() then
 		local StateService = require(game.ServerScriptService.Services.Core.StateService)
-		if not StateService.Status[character] then
+		if not StateService.State[character] then
 			return
 		end
 
 		for _, stateName in pairs(statusToCheck) do
-			if StateService.Status[character][stateName] then
+			if StateService.State[character][stateName] then
 				return true
 			end
 		end
 	elseif RunService:IsClient() then
-		local statusFolder = character:FindFirstChild("Status")
-		if not statusFolder then
+		local stateFolder = character:FindFirstChild("State")
+		if not stateFolder then
 			return
 		end
 
 		for _, stateName in pairs(statusToCheck) do
-			if statusFolder:FindFirstChild(stateName) then
+			if stateFolder:FindFirstChild(stateName) then
 				return true
 			end
 		end

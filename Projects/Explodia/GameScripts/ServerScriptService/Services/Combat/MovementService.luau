@@ -89,7 +89,8 @@ function MovementService:Dash(character, direction: Vector3, shiftLockState)
 		end
 
 		---Animation---
-		local dashAnim: AnimationTrack = Animations:GetAnimation(humanoid, "Shared.Animations.Dashes." .. directionName)
+		local dashAnim: AnimationTrack =
+			Animations:GetAnimation(humanoid, "Shared.Movement.Dash.DashAnimations." .. directionName)
 		dashAnim:Play()
 		dashAnim:AdjustSpeed(2)
 		dashAnim.Looped = false
@@ -105,7 +106,7 @@ function MovementService:Dash(character, direction: Vector3, shiftLockState)
 
 	---Sound---
 	NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "Sound", {
-		["Sound"] = assets.Shared.Sounds.Dash,
+		["Sound"] = assets.Shared.Movement.Dash.Sound,
 	})
 
 	local dashVelocity = Instance.new("LinearVelocity")
@@ -125,8 +126,6 @@ function MovementService:Dash(character, direction: Vector3, shiftLockState)
 				Connections:RemoveConnection(character, "Character", "Dash")
 				return
 			end
-			print(StateService.Status[character].Dashing.Duration)
-
 			if player then
 				if shiftLockState == 0 then
 					dashVelocity.VectorVelocity = character.HumanoidRootPart.CFrame.LookVector
@@ -137,7 +136,6 @@ function MovementService:Dash(character, direction: Vector3, shiftLockState)
 
 					forward = Vector3.new(forward.X, 0, forward.Z).Unit
 					right = Vector3.new(right.X, 0, right.Z).Unit
-
 
 					local forwardDot = direction:Dot(forward)
 					local rightDot = direction:Dot(right)
@@ -167,7 +165,7 @@ function MovementService:FlashStep(character)
 	if not ActionVerifier:CanFlashstep(character, flashstepCharge) then
 		return
 	end
-	local statusFolder = character:WaitForChild("Status")
+	local stateFolder = character:WaitForChild("State")
 
 	StateService:AddState(character, "Invulnerable", flashStepConfig.FlashstepDuration)
 	StateService:AddState(character, "FlashStep", flashStepConfig.FlashstepDuration)
@@ -176,7 +174,7 @@ function MovementService:FlashStep(character)
 		["FlashStepChange"] = -1,
 	})
 
-	if statusFolder:FindFirstChild("FlashStep") then
+	if stateFolder:FindFirstChild("FlashStep") then
 		task.delay(flashStepConfig.FlashstepDuration, function()
 			StateService:AddState(character, "FlashStepEndLag", flashStepConfig.FlashstepEndlag)
 		end)
@@ -188,7 +186,7 @@ function MovementService:FlashStep(character)
 
 		---Sound---
 		NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "Sound", {
-			["Sound"] = assets.Shared.Sounds.FlashStep,
+			["Sound"] = assets.Shared.Movement.Flashstep.Sound,
 		})
 	end
 	return flashstepCharge

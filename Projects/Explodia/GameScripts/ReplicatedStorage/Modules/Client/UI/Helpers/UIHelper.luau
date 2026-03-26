@@ -2,8 +2,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local UIHelper = {}
 
-local hoverSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Hover
-local clickSound = ReplicatedStorage.Assets.Shared.Sounds.MenuSounds.Click
+local hoverSound = ReplicatedStorage.Assets.Shared.MenuSounds.Hover
+local clickSound = ReplicatedStorage.Assets.Shared.MenuSounds.Click
 
 function UIHelper:RotateGradient(gradient, duration)
 	if gradient and gradient:IsA("UIGradient") then

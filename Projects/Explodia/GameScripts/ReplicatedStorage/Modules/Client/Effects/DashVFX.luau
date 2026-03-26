@@ -3,16 +3,13 @@
 local Debris = game:GetService("Debris")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local assets = ReplicatedStorage.Assets
-local effects = assets.Shared.Effects
-
 return function(arguementData:any)
 	local direction = arguementData.Dir
 	local rootPart = arguementData.HRP
 	local dashTime = arguementData.DashT
 				
 	if rootPart then
-		local clone =  effects.DashEffects[direction]:Clone()
+		local clone =  ReplicatedStorage.Assets.Shared.Movement.Dash.DashEffects[direction]:Clone()
 		clone.Parent = rootPart
 		local weld = Instance.new("Weld")
 		weld.Part0 = rootPart

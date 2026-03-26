@@ -47,6 +47,11 @@ function VitalsService:Create(character)
 			MaxMana = 100,
 			ManaRegen = 1,
 		},
+		Stamina = {
+			CurrentStamina = 100,
+			MaxStamina = 100,
+			StaminaRegen = 1,
+		},
 
 		FlashStep = {
 			CurrentFlashStep = 3,

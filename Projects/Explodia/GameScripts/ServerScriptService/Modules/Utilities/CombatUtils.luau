@@ -64,174 +64,19 @@ function CombatUtils:ApplyPull(target, attacker, force)
 	Debris:AddItem(pullVelocity, 0.13)
 end
 
-function CombatUtils:ApplyHit(argumentData)
-	if not CombatUtils.HitTypes then
-		CombatUtils.HitTypes = {}
-		for _, module in game.ServerScriptService.Modules.HitTypes:GetChildren() do
-			if module:IsA("ModuleScript") then
-				CombatUtils.HitTypes[module.Name] = require(module)
-			end
-		end
-	end
-	local targetHit = argumentData.TargetHit
-	local attacker = argumentData.Attacker
-	local tool = argumentData.Tool
-	local trueSwingNumber = argumentData.TrueSwingNumber
-	local abilityLetter = argumentData.AbilityLetter
-
-	local abilityData = AbilityData:GetAbilityData(tool.Name, abilityLetter)
-	local weaponData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
+function CombatUtils:AddKillerHit(attacker, targetHit)
 	local playerAttacker = Players:GetPlayerFromCharacter(attacker)
-	local playerTarget = Players:GetPlayerFromCharacter(targetHit)
-
-	local StatusAilments = (abilityData and abilityData.StatusAilments) or weaponData.StatusAilments
-	local Damage
-
-	local playerDamageStat = 1
-	local CriticalDamageStat = weaponData.CriticalDamage
-	local CriticalRateStat = weaponData.CriticalRate
-	local targetDefenseStat = 0
-
-	local mobData = MobData.Mobs[attacker.Name]
-	if mobData then
-		local npcData = NPCService.SpawnedNPCS[mobData.Type][attacker]
-		if npcData then
-			Damage = math.random(npcData.MinDamage, npcData.MaxDamage)
-		end
-	end
-
 	if playerAttacker then
-		local playerStats = DataService:GetTable(playerAttacker, "Stats")
-		playerDamageStat = playerStats.MainStats[weaponData.Type].Final
-		CriticalDamageStat += StatService:GetStat(playerAttacker, "CriticalDamage").Percent
-		CriticalRateStat += StatService:GetStat(playerAttacker, "CriticalRate").Percent
-		Damage = math.random(
-			(abilityData.MinDamage or weaponData.MinDamage),
-			(abilityData.MaxDamage or weaponData.MaxDamage)
-		)
-	end
-	if playerTarget then
-		targetDefenseStat = StatService:GetStat(playerTarget, "Defense").Final
-	end
-
-	---BlockBreakCounter---
-	local status = targetHit:FindFirstChild("Status")
-	if not status then
-		return
-	end
-
-	CombatUtils:AddKillerHit(playerAttacker, targetHit)
-
-	local isBlocking = StateChecker:CheckState(targetHit, "Blocking")
-	if isBlocking then
-		---BlockBreak---
-		local blockCounter = VitalsService:GetVital(targetHit, "BlockCounter")
-
-		if blockCounter == 4 then
-			VitalsService:ModifyVital(targetHit, "Combat", "ModifyBlockCounter", { ["BlockCounterChange"] = 0 })
-			CombatUtils.HitTypes["BlockBreak"]({
-				["Attacker"] = attacker,
-				["TargetHit"] = targetHit,
-				["WeaponUsed"] = tool,
-			})
-		else
-			---Do Blocked HitType----
-			VitalsService:ModifyVital(
-				targetHit,
-				"Combat",
-				"ModifyBlockCounter",
-				{ ["BlockCounterChange"] = abilityData.BlockDetoriation or 1 }
-			)
-
-			CombatUtils.HitTypes["Blocked"]({
-				["Attacker"] = attacker,
-				["TargetHit"] = targetHit,
-				["AbilityLetter"] = abilityLetter,
-				["WeaponUsed"] = tool,
-				["TargetDefenseStat"] = targetDefenseStat,
-				["Damage"] = Damage,
-				["PlayerDamageStat"] = playerDamageStat,
-			})
+		local killerHit = targetHit:WaitForChild("Humanoid"):FindFirstChild("KillerHit")
+		if killerHit and killerHit.Value == playerAttacker then
+			killerHit:Destroy()
 		end
-	else
-		if CriticalDamageStat and CriticalRateStat and math.random(0, 100) <= (CriticalRateStat * 100) then
-			---BlackFlash HitType---
-			if
-				(CriticalRateStat * 100) >= 150
-				and math.random(0, 100) <= (CriticalRateStat * 100) - 150
-				and not abilityLetter
-			then
-				print(CriticalRateStat)
-				CombatUtils.HitTypes["BlackFlash"]({
-					["Attacker"] = attacker,
-					["TargetHit"] = targetHit,
-					["WeaponUsed"] = tool,
-					["ComboStringNumber"] = trueSwingNumber,
-					["LastHit"] = (trueSwingNumber == 5 and true or false),
-					["PlayerDamageStat"] = playerDamageStat,
-					["TargetDefenseStat"] = targetDefenseStat,
-					["CriticalDamageStat"] = CriticalDamageStat,
-					["Damage"] = Damage,
-					["AbilityLetter"] = abilityLetter,
-				})
-			else
-				---Critical HitType---
-				CombatUtils.HitTypes["Critical"]({
-					["Attacker"] = attacker,
-					["TargetHit"] = targetHit,
-					["WeaponUsed"] = tool,
-					["ComboStringNumber"] = trueSwingNumber,
-					["LastHit"] = (trueSwingNumber == 5 and true or false),
-					["PlayerDamageStat"] = playerDamageStat,
-					["TargetDefenseStat"] = targetDefenseStat,
-					["CriticalDamageStat"] = CriticalDamageStat,
-					["Damage"] = Damage,
-					["AbilityLetter"] = abilityLetter,
-				})
-			end
-		else
-			---Status Ailment HitType---
-			if StatusAilments and math.random(0, 100) <= StatusAilments.ProcChance * 100 then
-				CombatUtils.HitTypes["StatusAilment"]({
-					["Attacker"] = attacker,
-					["TargetHit"] = targetHit,
-					["WeaponUsed"] = tool,
-					["ComboStringNumber"] = trueSwingNumber,
-					["LastHit"] = (trueSwingNumber == 5 and true or false),
-					["PlayerDamageStat"] = playerDamageStat,
-					["TargetDefenseStat"] = targetDefenseStat,
-					["AbilityLetter"] = abilityLetter,
-					["Damage"] = Damage,
-					["StatusAilments"] = StatusAilments.Effects,
-				})
-			else
-				-----Defualt HitType---
-				CombatUtils.HitTypes["Default"]({
-					["Attacker"] = attacker,
-					["TargetHit"] = targetHit,
-					["WeaponUsed"] = tool,
-					["ComboStringNumber"] = trueSwingNumber,
-					["LastHit"] = (trueSwingNumber == 5 and true or false),
-					["PlayerDamageStat"] = playerDamageStat,
-					["TargetDefenseStat"] = targetDefenseStat,
-					["Damage"] = Damage,
-					["AbilityLetter"] = abilityLetter,
-				})
-			end
-		end
+		killerHit = Instance.new("ObjectValue")
+		killerHit.Parent = targetHit:WaitForChild("Humanoid")
+		killerHit.Value = playerAttacker
+		killerHit.Name = "KillerHit"
+		Debris:AddItem(killerHit, 30)
 	end
-end
-
-function CombatUtils:AddKillerHit(playerAttacker, targetHit)
-	local killerHit = targetHit:WaitForChild("Humanoid"):FindFirstChild("KillerHit")
-	if killerHit and killerHit.Value == playerAttacker then
-		killerHit:Destroy()
-	end
-	killerHit = Instance.new("ObjectValue")
-	killerHit.Parent = targetHit:WaitForChild("Humanoid")
-	killerHit.Value = playerAttacker
-	killerHit.Name = "KillerHit"
-	Debris:AddItem(killerHit, 30)
 end
 
 return CombatUtils

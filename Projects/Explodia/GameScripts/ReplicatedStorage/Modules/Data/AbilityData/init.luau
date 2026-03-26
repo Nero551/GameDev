@@ -8,24 +8,11 @@ for _, module in script:GetDescendants() do
 	end
 end
 
-
-
-function abilityData:GetAbilityData(weapon, abilityLetter)
-	
-	if abilityData.storedData[weapon] then
-		if not abilityLetter then
-			return abilityData.storedData[weapon]
-		end
-		
-		if abilityData.storedData[weapon][abilityLetter] then
-			return abilityData.storedData[weapon][abilityLetter]
-		end
+function abilityData:GetAbilityData(abilityName)
+	if abilityData.storedData[abilityName] then
+		return abilityData.storedData[abilityName]
 	end
 	return
 end
-
-
-
-
 
 return abilityData

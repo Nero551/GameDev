@@ -65,12 +65,21 @@ function PopupController:Creator()
 		end
 
 		---No Mana For Ability---
-		if popupInfo.AbilityName and popupInfo.RequiredMana then
-			popup.PopUpText.Text = "Not Enough Mana For ["
-				.. popupInfo.AbilityName
-				.. "] ("
-				.. popupInfo.RequiredMana
-				.. ")"
+		if popupInfo.AbilityName then
+			if  popupInfo.RequiredMana then
+				popup.PopUpText.Text = "Not Enough Mana For ["
+					.. popupInfo.AbilityName
+					.. "] ("
+					.. popupInfo.RequiredMana
+					.. ")"
+			elseif popupInfo.RequiredStamina then
+				popup.PopUpText.Text = "Not Enough Stamina For ["
+					.. popupInfo.AbilityName
+					.. "] ("
+					.. popupInfo.RequiredStamina
+					.. ")"
+						
+			end
 		end
 
 		if not popupInfo.Level then

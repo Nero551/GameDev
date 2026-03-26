@@ -44,7 +44,6 @@ function Animations:GetAnimation(humanoid, animation)
 		if  animInstance then 
 			if animInstance:IsA("Animation") then
 				Animations.loadedAnimations[character][animation] = animator:LoadAnimation(animInstance)
-				
 			end
 		end
 	end

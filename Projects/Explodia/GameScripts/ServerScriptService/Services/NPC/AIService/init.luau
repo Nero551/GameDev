@@ -83,7 +83,11 @@ function AIService:CreateAI(npc)
 		WalkSpeed = mobData.WalkSpeed,
 		RunSpeed = mobData.RunSpeed,
 
-		Abilities = AbilityData:GetAbilityData(itemData.Name),
+		Abilities = {
+			-- AbilityData:GetAbilityData(itemData.Abilities.Z),
+			-- AbilityData:GetAbilityData(itemData.Abilities.X),
+			-- AbilityData:GetAbilityData(itemData.Abilities.C),
+		},
 		ChosenAbility = nil,
 
 		IdleAnimation = Animations:GetAnimation(

@@ -11,7 +11,7 @@ return function(arguementData:any)
 	if target  then
 		local rootPart = target:FindFirstChild("HumanoidRootPart")
 		if rootPart then
-			local clone =  assets.Shared.Effects.BlackFlashEffect:Clone()
+			local clone =  assets.Shared.Combat.BlackFlash.VFX:Clone()
 			clone.Parent = rootPart
 			local weld = Instance.new("Weld")
 			weld.Part0 = clone

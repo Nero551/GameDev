@@ -12,7 +12,7 @@ return function(arguementData:any)
 	if target and weaponUsed then
 		local rootPart = target:FindFirstChild("HumanoidRootPart")
 		if rootPart then
-			local clone =  assets.Shared.Effects.CriticalHitEffect:Clone()
+			local clone =  assets.Shared.Combat.Critical.VFX:Clone()
 			clone.Parent = rootPart
 			for _,v in clone:GetDescendants() do
 				if v:IsA("ParticleEmitter") then
