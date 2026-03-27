@@ -8,30 +8,19 @@ return function(menu)
 	local player = Players.LocalPlayer
 	local char = player.Character or player.CharacterAdded:Wait()
 	local healthBG = UIManager:GetUI(menu, "HealthBG")
-	local healthFill: ImageLabel = healthBG:FindFirstChild("HealthFill")
-	local healthText: TextLabel = healthBG:FindFirstChild("HealthText")
-	local healthNumber: TextLabel = healthBG:FindFirstChild("HealthNumber")
-	local Stroke = healthBG:FindFirstChild("Stroke")
+	local healthFill = healthBG:FindFirstChild("HealthFill")
+	local healthNumber = healthBG:FindFirstChild("HealthNumber")
 
-	UIHelper:RotateGradient(healthFill:FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(Stroke:FindFirstChild("UIGradient"))
+	UIHelper:RotateGradient(healthFill:FindFirstChild("UIGradient"), 16)
+	UIHelper:RotateGradient(healthBG:FindFirstChild("MainStroke"):FindFirstChild("UIGradient"), 16)
 
 	local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-	local info2 = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 	local function UpdateHealth()
 		local currentHealth = char:GetAttribute("Health_CurrentHealth")
 		local maxHealth = char:GetAttribute("Health_MaxHealth")
 		TweenService:Create(healthFill, info, { Size = UDim2.fromScale(currentHealth / maxHealth, 1) }):Play()
 		healthNumber.Text = math.round(currentHealth) .. "/" .. math.round(maxHealth)
-
-		if maxHealth / 3 > currentHealth then
-			TweenService:Create(healthNumber, info2, { TextColor3 = Color3.fromRGB(255, 140, 150) }):Play()
-			TweenService:Create(healthText, info2, { TextColor3 = Color3.fromRGB(255, 140, 150) }):Play()
-		else
-			TweenService:Create(healthNumber, info2, { TextColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-			TweenService:Create(healthText, info2, { TextColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-		end
 	end
 
 	UpdateHealth()

@@ -10,7 +10,7 @@ end
 
 function Stamina:ModifyMaxStamina(character: Model?, argumentData)
 	local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
-	local staminaData = VitalsService:GetVital(character, "Mana")
+	local staminaData = VitalsService:GetVital(character, "Stamina")
 	local maxStamina = argumentData.MaxStamina
 
 	staminaData.MaxStamina = maxStamina

@@ -45,9 +45,9 @@ WeaponData.Weapons = {
 		CriticalDamage = 1,
 		Stackable = false,
 		Abilties = {
-			Z = "Dimensional Cut",
-			X = "Dimensional Slash",
-			C = "Dimensional Spin",
+			Z = "ability_0000000001",
+			X = "ability_0000000002",
+			C = "ability_0000000003",
 		},
 	},
 	------Sword------

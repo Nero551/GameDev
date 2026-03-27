@@ -48,7 +48,7 @@ function MovementService:Dash(character, direction: Vector3, shiftLockState)
 
 	if shiftLockState == 0 or not player then
 		---Animation---
-		local dashAnim: AnimationTrack = Animations:GetAnimation(humanoid, "Shared.Animations.Dashes.Forward")
+		local dashAnim: AnimationTrack = Animations:GetAnimation(humanoid, "Shared.Movement.Dash.DashAnimations.Forward")
 		dashAnim:Play()
 		dashAnim:AdjustSpeed(2)
 		dashAnim.Looped = false

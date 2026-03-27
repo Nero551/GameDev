@@ -6,6 +6,7 @@ local EXPBar = require(ReplicatedStorage.Modules.Client.UI.Components.EXPBar)
 local HealthBar = require(ReplicatedStorage.Modules.Client.UI.Components.HealthBar)
 local ManaBar = require(ReplicatedStorage.Modules.Client.UI.Components.ManaBar)
 local ReturnButton = require(ReplicatedStorage.Modules.Client.UI.Components.ReturnButton)
+local StaminaBar = require(ReplicatedStorage.Modules.Client.UI.Components.StaminaBar)
 local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
 local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
@@ -22,28 +23,21 @@ function StatsMenuController:TopBar()
 	local StatsMenu = UIManager:GetUI("StatsMenu", "StatsMenu")
 	local sectionButtons = UIManager:GetUI("StatsMenu", "SectionButtons")
 	local isSliding = false
-	UIHelper:RotateGradient(topBar:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
 
-	ReturnButton(UIManager:GetUI("StatsMenu", "StatsMenu"), UIManager:GetUI("StatsMenu", "ReturnButton"))
+	--ReturnButton(UIManager:GetUI("StatsMenu", "StatsMenu"), UIManager:GetUI("StatsMenu", "ReturnButton"))
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 	for _, sectionButton in sectionButtons:GetChildren() do
-		if sectionButton:IsA("ImageButton") then
+		if sectionButton:IsA("TextButton") then
 			UIHelper:ClickEffects(sectionButton)
 			UIHelper:HoverEffects(sectionButton)
-			UIHelper:RotateGradient(sectionButton:FindFirstChild("UIGradient"))
-			UIHelper:RotateGradient(sectionButton:FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
 
-			local sectionNames = sectionButton.Name
-			local sectionMenus = StatsMenu:FindFirstChild(sectionNames)
+			local sectionName = sectionButton.Name
+			local sectionMenu = StatsMenu:FindFirstChild(sectionName)
 
 			sectionButton.MouseButton1Click:Connect(function()
-				local sectionName = sectionButton.Name
-				local sectionMenu = StatsMenu:FindFirstChild(sectionName)
-				if not sectionMenu then
-					return
-				end
+
 				for _, frame in StatsMenu:GetChildren() do
 					if frame:IsA("Frame") then
 						if frame.Name ~= "TopBar" then
@@ -69,36 +63,32 @@ function StatsMenuController:TopBar()
 
 			---Looks BS---
 			local function SectionSelected()
-				if sectionMenus.Position ~= UDim2.fromScale(-0.5, 0.558) then
-					TweenService:Create(sectionButton.SectionName, info, { TextColor3 = Color3.fromRGB(255, 154, 213) })
+				if sectionMenu.Position ~= UDim2.fromScale(-0.5, 0.558) then
+					TweenService:Create(sectionButton.TextLabel, info, { TextColor3 = Color3.fromRGB(22, 28, 51) })
 						:Play()
-					TweenService:Create(sectionButton.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 154, 213) })
-						:Play()
-					TweenService:Create(sectionButton, info, { ImageColor3 = Color3.fromRGB(60, 49, 88) }):Play()
-					TweenService:Create(sectionButton.SectionName, info, { TextStrokeTransparency = 0 }):Play()
+					TweenService:Create(sectionButton, info, { BackgroundColor3 = Color3.fromRGB(60, 49, 88) }):Play()
+					TweenService:Create(sectionButton.TextLabel, info, { TextStrokeTransparency = 0 }):Play()
 				else
-					TweenService:Create(sectionButton.SectionName, info, { TextColor3 = Color3.fromRGB(255, 255, 255) })
+					TweenService:Create(sectionButton.TextLabel, info, { TextColor3 = Color3.fromRGB(255, 255, 255) })
 						:Play()
-					TweenService:Create(sectionButton.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
-						:Play()
-					TweenService:Create(sectionButton, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-					TweenService:Create(sectionButton.SectionName, info, { TextStrokeTransparency = 1 }):Play()
+					TweenService:Create(sectionButton, info, { BackgroundColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+					TweenService:Create(sectionButton.TextLabel, info, { TextStrokeTransparency = 1 }):Play()
 				end
 			end
 			SectionSelected()
-			sectionMenus.Changed:Connect(function()
+			sectionMenu.Changed:Connect(function()
 				SectionSelected()
 			end)
 
 			sectionButton.MouseEnter:Connect(function()
-				if sectionMenus.Position == UDim2.fromScale(-0.5, 0.558) then
-					TweenService:Create(sectionButton, info, { ImageColor3 = Color3.fromRGB(87, 107, 194) }):Play()
+				if sectionMenu.Position == UDim2.fromScale(-0.5, 0.558) then
+					TweenService:Create(sectionButton, info, { BackgroundColor3 = Color3.fromRGB(87, 107, 194) }):Play()
 				end
 			end)
 
 			sectionButton.MouseLeave:Connect(function()
-				if sectionMenus.Position == UDim2.fromScale(-0.5, 0.558) then
-					TweenService:Create(sectionButton, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+				if sectionMenu.Position == UDim2.fromScale(-0.5, 0.558) then
+					TweenService:Create(sectionButton, info, { BackgroundColor3 = Color3.fromRGB(255, 255, 255) }):Play()
 				end
 			end)
 		end
@@ -119,16 +109,11 @@ end
 
 function StatsMenuController:Overview()
 	local Player = game:GetService("Players").LocalPlayer
-
-	----Info----
-	UIHelper:RotateGradient(
-		UIManager:GetUI("StatsMenu", "Info"):FindFirstChild("UIStroke"):FindFirstChild("UIGradient")
-	)
-
 	---Health,Mana,EXP---
 	HealthBar("StatsMenu")
 	ManaBar("StatsMenu")
 	EXPBar("StatsMenu")
+	StaminaBar("StatsMenu")
 
 	---Title---
 	local activeTitle: StringValue = Player:WaitForChild("Titles"):FindFirstChild("ActiveTitle")
@@ -152,10 +137,6 @@ function StatsMenuController:Overview()
 	activeTitle.AttributeChanged:Connect(Title)
 
 	--Level---
-	local level: ImageButton = UIManager:GetUI("StatsMenu", "Level")
-	local innerStroke = level:FindFirstChild("InnerStroke")
-	UIHelper:RotateGradient(innerStroke:FindFirstChild("UIGradient"))
-
 	local levelNumber = UIManager:GetUI("StatsMenu", "LevelNumber")
 	local CurrentLevel: Instance = Player:WaitForChild("Level").CurrentLevel
 
@@ -166,53 +147,25 @@ function StatsMenuController:Overview()
 
 	---Player Name---
 	local PlayerNameText = UIManager:GetUI("StatsMenu", "PlayerName")
-	UIHelper:RotateGradient(PlayerNameText.Parent:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
 	PlayerNameText.Text = Player.Name
 
 	---Important Stats---
 	local playerStats = Player:WaitForChild("Stats")
 	local importantStatsFrame = UIManager:GetUI("StatsMenu", "ImportantStats")
-	local maxStats = ReplicatedStorage.Values.MaxTotalStats.Value
-	local starMarks = {
-		maxStats * 0.05, --1st Star
-		maxStats * 0.15, --2st Star
-		maxStats * 0.35, --3st Star
-		maxStats * 0.6, --4st Star
-		maxStats * 1, --5st Star
-	}
 
 	local function TotalStatsRefresh(Stat)
 		local finalStat = Stat:GetAttribute("Final")
 		local StatFrame = importantStatsFrame:FindFirstChild("Stats"):FindFirstChild(Stat.Name)
 		if StatFrame then
-			UIHelper:RotateGradient(StatFrame:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
-			local starsFrame = StatFrame:FindFirstChild("Stars")
-			if starsFrame then
-				for i, starMark in ipairs(starMarks) do
-					if finalStat >= starMark then
-						starsFrame["Star" .. i].Visible = true
-					else
-						starsFrame["Star" .. i].Visible = false
-					end
-				end
-			else
-				local statsNumber = StatFrame:FindFirstChild("StatNumber")
-				if Stat.Name == "CriticalRate" or Stat.Name == "CriticalDamage" then
-					local percentStat = Stat:GetAttribute("Percent")
-					statsNumber.Text = (percentStat * 100) .. "%"
-				else
-					statsNumber.Text = finalStat
-				end
-			end
+			local statsNumber = StatFrame:FindFirstChild("StatNumber")
+			statsNumber.Text = finalStat
 		end
 	end
-	for _, catagory in playerStats:GetChildren() do
-		for _, Stat in catagory:GetChildren() do
+	for _, Stat in playerStats.MainStats:GetChildren() do
+		TotalStatsRefresh(Stat)
+		Stat.AttributeChanged:Connect(function()
 			TotalStatsRefresh(Stat)
-			Stat.AttributeChanged:Connect(function()
-				TotalStatsRefresh(Stat)
-			end)
-		end
+		end)
 	end
 
 	----Equipment----
@@ -225,8 +178,6 @@ function StatsMenuController:Overview()
 			for _, type in catagory:GetChildren() do
 				if type:IsA("Frame") then
 					UIHelper:HoverEffects(type)
-					UIHelper:RotateGradient(type:FindFirstChild("InnerStroke"):FindFirstChild("UIGradient"))
-					UIHelper:RotateGradient(type:FindFirstChild("OuterStroke"):FindFirstChild("UIGradient"))
 					Equipment[type.Name] = type
 				end
 			end

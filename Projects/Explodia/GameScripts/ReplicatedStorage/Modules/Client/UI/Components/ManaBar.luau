@@ -9,10 +9,9 @@ return function(menu)
 	local ManaBG = UIManager:GetUI(menu, "ManaBG")
 	local ManaFill = ManaBG:FindFirstChild("ManaFill")
 	local ManaNumber = ManaBG:FindFirstChild("ManaNumber")
-	local Stroke = ManaBG:FindFirstChild("Stroke")
 
-	UIHelper:RotateGradient(ManaFill:FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(Stroke:FindFirstChild("UIGradient"))
+	UIHelper:RotateGradient(ManaFill:FindFirstChild("UIGradient"),16)
+	UIHelper:RotateGradient(ManaBG:FindFirstChild("MainStroke"):FindFirstChild("UIGradient"), 16)
 
 	local function UpdateMana()
 		local CurrentMana = char:GetAttribute("Mana_CurrentMana")

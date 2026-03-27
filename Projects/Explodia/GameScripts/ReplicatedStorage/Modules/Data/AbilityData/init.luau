@@ -8,9 +8,11 @@ for _, module in script:GetDescendants() do
 	end
 end
 
-function abilityData:GetAbilityData(abilityName)
-	if abilityData.storedData[abilityName] then
-		return abilityData.storedData[abilityName]
+function abilityData:GetAbilityData(abilityID)
+	for moduleName,module in abilityData.storedData do
+		if module[abilityID] then
+			return module[abilityID]
+		end
 	end
 	return
 end

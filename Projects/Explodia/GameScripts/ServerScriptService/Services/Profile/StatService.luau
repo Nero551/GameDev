@@ -46,7 +46,7 @@ local function ApplyStamina(player: Player)
 
 	local maxStamina = math.max(MIN_STAMINA, finalStamina * Stamina_PER_POINT)
 
-	VitalsService:ModifyVital(char, "Mana", "ModifyMaxStamina", {
+	VitalsService:ModifyVital(char, "Stamina", "ModifyMaxStamina", {
 		["MaxStamina"] = maxStamina,
 	})
 end

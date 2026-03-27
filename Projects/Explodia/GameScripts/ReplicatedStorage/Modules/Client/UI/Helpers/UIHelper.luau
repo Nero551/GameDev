@@ -31,6 +31,7 @@ function UIHelper:HoverEffects(ui, leave,enter)
 		scale.Parent = ui
 	end
 	ui.MouseEnter:Connect(function()
+		
 		TweenService:Create(scale, info, { Scale = (enter or 1.1) }):Play()
 		hoverSound:Play()
 	end)

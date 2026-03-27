@@ -12,10 +12,8 @@ return function(menu)
 	local expBG = UIManager:GetUI(menu, "EXPBG")
 	local expFill = expBG:FindFirstChild("EXPFill")
 	local expNumber = expBG:FindFirstChild("EXPNumber")
-	local stroke = expBG:FindFirstChild("Stroke")
-
-	UIHelper:RotateGradient(expFill:FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(stroke:FindFirstChild("UIGradient"))
+	UIHelper:RotateGradient(expFill:FindFirstChild("UIGradient"),16)
+	UIHelper:RotateGradient(expBG:FindFirstChild("MainStroke"):FindFirstChild("UIGradient"), 16)
 
 	local function UpdateEXP()
 		local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
