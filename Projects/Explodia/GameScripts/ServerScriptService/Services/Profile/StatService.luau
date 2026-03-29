@@ -10,9 +10,7 @@ local function ApplyHealth(player: Player)
 
 	local finalHealth = vitStat.Final
 	local HEALTH_PER_POINT = 5
-	local MIN_HEALTH = vitStat.Base * HEALTH_PER_POINT
-
-	local maxHealth = math.max(MIN_HEALTH, finalHealth * HEALTH_PER_POINT)
+	local maxHealth = math.max(1, finalHealth * HEALTH_PER_POINT)
 
 	VitalsService:ModifyVital(char, "Health", "ModifyMaxHealth", {
 		["MaxHealth"] = maxHealth,
@@ -26,9 +24,8 @@ local function ApplyMana(player: Player)
 
 	local finalMana = intStat.Final
 	local MANA_PER_POINT = 5
-	local MIN_MANA = intStat.Base * MANA_PER_POINT
 
-	local maxMana = math.max(MIN_MANA, finalMana * MANA_PER_POINT)
+	local maxMana = math.max(1, finalMana * MANA_PER_POINT)
 
 	VitalsService:ModifyVital(char, "Mana", "ModifyMaxMana", {
 		["MaxMana"] = maxMana,
@@ -38,13 +35,12 @@ end
 local function ApplyStamina(player: Player)
 	local playerStats = DataService:GetTable(player, "Stats")
 	local char = player.Character or player.CharacterAdded:Wait()
-	local agilityStat = playerStats.MainStats.Agility
+	local strengthStat = playerStats.MainStats.Strength
 
-	local finalStamina = agilityStat.Final
+	local finalStrength = strengthStat.Final
 	local Stamina_PER_POINT = 5
-	local MIN_STAMINA = agilityStat.Base * Stamina_PER_POINT
 
-	local maxStamina = math.max(MIN_STAMINA, finalStamina * Stamina_PER_POINT)
+	local maxStamina = math.max(1, finalStrength * Stamina_PER_POINT)
 
 	VitalsService:ModifyVital(char, "Stamina", "ModifyMaxStamina", {
 		["MaxStamina"] = maxStamina,

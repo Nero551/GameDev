@@ -11,6 +11,7 @@ local NetworkingService = require(game.ReplicatedStorage.Modules.Core.Networking
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 local UIHelper = require(game.ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(game.ReplicatedStorage.Modules.Client.UI.UIManager)
+local StatusEffectsData = require(ReplicatedStorage.Modules.Data.StatusEffectsData)
 
 local HUDController = {}
 
@@ -21,14 +22,19 @@ function HUDController:Health()
 	HealthBar("HUD")
 end
 
-function HUDController:ManaBar()
+function HUDController:Mana()
 	local ManaBar = require(ReplicatedStorage.Modules.Client.UI.Components.ManaBar)
 	ManaBar("HUD")
 end
 
-function HUDController:EXPBar()
+function HUDController:EXP()
 	local EXPBar = require(ReplicatedStorage.Modules.Client.UI.Components.EXPBar)
 	EXPBar("HUD")
+end
+
+function HUDController:Stamina()
+	local StaminaBar = require(ReplicatedStorage.Modules.Client.UI.Components.StaminaBar)
+	StaminaBar("HUD")
 end
 
 function HUDController:Flashstep()
@@ -64,12 +70,9 @@ function HUDController:Tools()
 		for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
 			if slot:IsA("ImageButton") then
 				local type = equipped:FindFirstChild(slot.Name:split("Slot")[1])
-
-				TweenService:Create(slot, info, { Size = UDim2.fromScale(0.175, 0.953) }):Play()
 				TweenService:Create(slot.Border, info, { ImageColor3 = Color3.fromRGB(116, 116, 116) }):Play()
 
 				if type and type:GetAttribute("Equipped") == inHand then
-					TweenService:Create(slot, info, { Size = UDim2.fromScale(0.181, 1.16) }):Play()
 					TweenService:Create(slot.Border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
 				end
 			end
@@ -478,7 +481,7 @@ function HUDController:TrackedQuest()
 					UpdateObjectives()
 					local conn
 					if not conn then
-						conn = objective.AttributeChanged:Connect(UpdateObjectives)						
+						conn = objective.AttributeChanged:Connect(UpdateObjectives)
 					end
 				end
 			else
@@ -520,8 +523,6 @@ end
 
 function HUDController:DamageCounter()
 	local damageFrame = UIManager:GetUI("HUD", "DamageFrame")
-	local TweenService = game:GetService("TweenService")
-	local StatusEffectsData = require(ReplicatedStorage.Modules.Data.StatusEffectsData)
 	local damageText = damageFrame.DamageNumber
 	local comboDuration = damageFrame.ComboDuration
 	local ExtraText = damageFrame.ExtraText
@@ -721,44 +722,41 @@ function HUDController:DamageCounter()
 		end)
 	end
 
-	NetworkingService:OnClientEvent(
-		"ShowDamage",
-		function(damage, critical, blocked, blackFlash, statusEffectName)
-			damageFrame.Visible = true
+	NetworkingService:OnClientEvent("ShowDamage", function(damage, critical, blocked, blackFlash, statusEffectName)
+		damageFrame.Visible = true
 
-			---ComboDuration---
-			comboDuration.Visible = true
-			comboDuration.Size = UDim2.fromScale(1, 0.01)
-			local info = TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
-			local comboDurationTween = TweenService:Create(comboDuration, info, { Size = UDim2.fromScale(0, 0.01) })
-			comboDurationTween:Play()
-			comboDurationTween.Completed:Connect(function(playbackState)
-				if playbackState ~= Enum.PlaybackState.Cancelled then
-					damageFrame.Visible = false
-					damageText.Text = ""
-				end
-			end)
-
-			---Text---
-			if blackFlash == true then
-				BlackFlashTween()
-			elseif critical == true then
-				CriticalTween()
-			elseif blocked == true then
-				BlockedTween()
-			elseif statusEffectName then
-				StatusEffectTween(statusEffectName)
-			else
-				DefualtTween()
+		---ComboDuration---
+		comboDuration.Visible = true
+		comboDuration.Size = UDim2.fromScale(1, 0.01)
+		local info = TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+		local comboDurationTween = TweenService:Create(comboDuration, info, { Size = UDim2.fromScale(0, 0.01) })
+		comboDurationTween:Play()
+		comboDurationTween.Completed:Connect(function(playbackState)
+			if playbackState ~= Enum.PlaybackState.Cancelled then
+				damageFrame.Visible = false
+				damageText.Text = ""
 			end
+		end)
 
-			if tonumber(damageText.Text) then
-				damageText.Text = damage + tonumber(damageText.Text)
-			else
-				damageText.Text = damage
-			end
+		---Text---
+		if blackFlash == true then
+			BlackFlashTween()
+		elseif critical == true then
+			CriticalTween()
+		elseif blocked == true then
+			BlockedTween()
+		elseif statusEffectName then
+			StatusEffectTween(statusEffectName)
+		else
+			DefualtTween()
 		end
-	)
+
+		if tonumber(damageText.Text) then
+			damageText.Text = damage + tonumber(damageText.Text)
+		else
+			damageText.Text = damage
+		end
+	end)
 end
 
 function HUDController:MainMenuButton()
@@ -827,7 +825,7 @@ function HUDController:AdminPanel()
 	local adminFrame = UIManager:GetUI("HUD", "AdminFrame")
 	local textBox = adminFrame:FindFirstChild("TextBox")
 	local button = adminFrame:FindFirstChild("Button")
-	
+
 	UIHelper:ClickEffects(button)
 	UIHelper:HoverEffects(button)
 	UIHelper:RotateGradient(textBox:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))

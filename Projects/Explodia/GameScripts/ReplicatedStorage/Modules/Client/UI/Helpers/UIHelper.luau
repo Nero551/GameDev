@@ -1,3 +1,4 @@
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local UIHelper = {}
@@ -5,6 +6,29 @@ local UIHelper = {}
 local hoverSound = ReplicatedStorage.Assets.Shared.MenuSounds.Hover
 local clickSound = ReplicatedStorage.Assets.Shared.MenuSounds.Click
 
+UIHelper.Cache = {}
+
+for _, menu in Players.LocalPlayer.PlayerGui:GetChildren() do
+	UIHelper.Cache[menu] = {}
+
+	for _, descendant in menu:GetDescendants() do
+		if descendant:IsA("ImageButton") or descendant:IsA("ImageLabel") then
+			UIHelper.Cache[menu][descendant] = {
+				BackgroundTransparency = descendant.BackgroundTransparency,
+				ImageTransparency = descendant.ImageTransparency,
+			}
+		elseif descendant:IsA("Frame") or descendant:IsA("ScrollingFrame") then
+			UIHelper.Cache[menu][descendant] = {
+				BackgroundTransparency = descendant.BackgroundTransparency,
+			}
+		elseif descendant:IsA("TextLabel") or descendant:IsA("TextButton") then
+			UIHelper.Cache[menu][descendant] = {
+				BackgroundTransparency = descendant.BackgroundTransparency,
+				TextTransparency = descendant.TextTransparency,
+			}
+		end
+	end
+end
 function UIHelper:RotateGradient(gradient, duration)
 	if gradient and gradient:IsA("UIGradient") then
 		local info = TweenInfo.new((duration or 5), Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true)
@@ -22,26 +46,30 @@ function UIHelper:Rotate(ui)
 	end)
 end
 
-function UIHelper:HoverEffects(ui, leave,enter)
-	if not ui then return end
+function UIHelper:HoverEffects(ui, leave, enter)
+	if not ui then
+		return
+	end
 	local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
 	local scale = ui:FindFirstChildWhichIsA("UIScale")
 	if not scale then
 		scale = Instance.new("UIScale")
 		scale.Parent = ui
 	end
 	ui.MouseEnter:Connect(function()
-		
 		TweenService:Create(scale, info, { Scale = (enter or 1.1) }):Play()
 		hoverSound:Play()
 	end)
 	ui.MouseLeave:Connect(function()
-		TweenService:Create(scale, info, {Scale = (leave or 1)}):Play()
+		TweenService:Create(scale, info, { Scale = (leave or 1) }):Play()
 	end)
 end
 
-function UIHelper:ClickEffects(ui, down,up)
-	if not ui then return end
+function UIHelper:ClickEffects(ui, down, up)
+	if not ui then
+		return
+	end
 	local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	local scale = ui:FindFirstChildWhichIsA("UIScale")
 	if not scale then
@@ -56,12 +84,25 @@ function UIHelper:ClickEffects(ui, down,up)
 		TweenService:Create(scale, info, { Scale = (down or 0.975) }):Play()
 	end)
 	ui.MouseButton1Up:Connect(function()
-		TweenService:Create(scale, info, {Scale = (up or 1.1)}):Play()
+		TweenService:Create(scale, info, { Scale = (up or 1.1) }):Play()
 	end)
 end
 
-function UIHelper:SelectedEffects(ui)
+function UIHelper:ModifySize(ui: Instance, wantedScale)
+	local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+	local scale = ui:FindFirstChildWhichIsA("UIScale")
+	if not scale then
+		scale = Instance.new("UIScale")
+		scale.Parent = ui
+	end
+	TweenService:Create(scale, info, { Scale = tonumber(wantedScale) or 1 }):Play()
+end
 
+function UIHelper:SwitchGradients(UI_1, UI_2)
+	local grad_1 = UI_1:FindFirstChild("UIGradient")
+	local grad_2 = UI_2:FindFirstChild("UIGradient")
+	grad_2.Parent = UI_1
+	grad_1.Parent = UI_2
 end
 
 function UIHelper:CreateGradient(colorTable)
@@ -79,6 +120,54 @@ function UIHelper:CreateGradient(colorTable)
 		table.insert(keypoints, ColorSequenceKeypoint.new(color.Position, c3))
 	end
 	return ColorSequence.new(keypoints)
+end
+
+function UIHelper:FadeIn(menu)
+	local cache = UIHelper.Cache[menu]
+	if not cache then
+		return
+	end
+	menu.Enabled = true
+
+	for obj, props in pairs(cache) do
+		TweenService:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), props):Play()
+	end
+end
+function UIHelper:FadeOut(menu)
+	UIHelper.Cache[menu] = {}
+
+	for _, descendant in ipairs(menu:GetDescendants()) do
+		local goal = {}
+		local original = {}
+
+		if descendant:IsA("ImageButton") or descendant:IsA("ImageLabel") then
+			original.BackgroundTransparency = descendant.BackgroundTransparency
+			original.ImageTransparency = descendant.ImageTransparency
+
+			goal.BackgroundTransparency = 1
+			goal.ImageTransparency = 1
+		elseif descendant:IsA("Frame") or descendant:IsA("ScrollingFrame") then
+			original.BackgroundTransparency = descendant.BackgroundTransparency
+
+			goal.BackgroundTransparency = 1
+		elseif descendant:IsA("TextLabel") or descendant:IsA("TextButton") then
+			original.BackgroundTransparency = descendant.BackgroundTransparency
+			original.TextTransparency = descendant.TextTransparency
+
+			goal.BackgroundTransparency = 1
+			goal.TextTransparency = 1
+		end
+
+		if next(original) then
+			UIHelper.Cache[menu][descendant] = original
+
+			TweenService:Create(descendant, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), goal)
+				:Play()
+		end
+	end
+
+	task.wait(0.15)
+	menu.Enabled = false
 end
 
 return UIHelper

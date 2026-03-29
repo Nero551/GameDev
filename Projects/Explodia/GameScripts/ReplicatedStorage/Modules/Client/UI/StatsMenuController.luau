@@ -64,7 +64,7 @@ function StatsMenuController:TopBar()
 			---Looks BS---
 			local function SectionSelected()
 				if sectionMenu.Position ~= UDim2.fromScale(-0.5, 0.558) then
-					TweenService:Create(sectionButton.TextLabel, info, { TextColor3 = Color3.fromRGB(22, 28, 51) })
+					TweenService:Create(sectionButton.TextLabel, info, { TextColor3 = Color3.fromRGB(221, 211, 22) })
 						:Play()
 					TweenService:Create(sectionButton, info, { BackgroundColor3 = Color3.fromRGB(60, 49, 88) }):Play()
 					TweenService:Create(sectionButton.TextLabel, info, { TextStrokeTransparency = 0 }):Play()
@@ -261,7 +261,7 @@ function StatsMenuController:Overview()
 						elseif itemData.CriticalRate then
 							popup.FinalImportantStat.Text = (
 								itemData.CriticalRate
-								* playerStats.SideStats.CriticalRate:GetAttrribute("Percent")
+								* playerStats.SideStats.CriticalRate:GetAttribute("Percent")
 								* 100
 							) .. " %CR"
 						elseif itemData.CriticalDamage then
@@ -318,19 +318,13 @@ function StatsMenuController:Stats()
 	local playerLevel = player:WaitForChild("Level")
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-	local resetButton = UIManager:GetUI("StatsMenu", "ResetStatsButton")
+	local resetButton = UIManager:GetUI("StatsMenu", "ResetButton")
 	local statDetailsFrame = UIManager:GetUI("StatsMenu", "StatDetailsFrame"):FindFirstChild("Stats")
 	local statPointsFrame = UIManager:GetUI("StatsMenu", "StatPointsFrame")
 	local statSections = statPointsFrame:FindFirstChild("StatSections")
 
 	UIHelper:ClickEffects(resetButton)
 	UIHelper:HoverEffects(resetButton)
-	UIHelper:RotateGradient(statDetailsFrame.Parent:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(resetButton:FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(statPointsFrame:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(
-		statPointsFrame:FindFirstChild("Amount"):FindFirstChild("RGBStroke"):FindFirstChild("UIGradient")
-	)
 
 	statPointsFrame:FindFirstChild("AvailablePoints").Text = "Points: "
 		.. playerLevel:FindFirstChild("StatPoints"):GetAttribute("Amount")
@@ -341,30 +335,22 @@ function StatsMenuController:Stats()
 
 	for _, statFrame in statSections:GetChildren() do
 		if statFrame:IsA("Frame") then
-			UIHelper:RotateGradient(statFrame:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
 			local allocateButton = statFrame:FindFirstChild("AllocateButton")
 			UIHelper:ClickEffects(allocateButton)
 			UIHelper:HoverEffects(allocateButton)
-			UIHelper:RotateGradient(allocateButton:FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
 			allocateButton.MouseButton1Click:Connect(function()
-				local amount = statPointsFrame.Amount.AmountText.Text
+				local amount = statPointsFrame.AmountBox.Amount.Text
 				if tonumber(amount) == nil then
 					amount = 1
 				end
 				NetworkingService:FireToServer("AllocateStatPoint", statFrame.Name, tonumber(amount))
 			end)
 			allocateButton.MouseEnter:Connect(function()
-				TweenService:Create(allocateButton["+"], info, { TextColor3 = Color3.fromRGB(255, 154, 213) }):Play()
-				TweenService:Create(allocateButton.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 154, 213) })
-					:Play()
-				TweenService:Create(allocateButton, info, { ImageColor3 = Color3.fromRGB(26, 21, 38) }):Play()
+				UIHelper:SwitchColors(allocateButton, allocateButton.TextLabel)
 			end)
 
 			allocateButton.MouseLeave:Connect(function()
-				TweenService:Create(allocateButton["+"], info, { TextColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-				TweenService:Create(allocateButton.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
-					:Play()
-				TweenService:Create(allocateButton, info, { ImageColor3 = Color3.fromRGB(30, 36, 66) }):Play()
+				UIHelper:SwitchColors(allocateButton, allocateButton.TextLabel)
 			end)
 		end
 	end
@@ -372,7 +358,6 @@ function StatsMenuController:Stats()
 	for _, detailFrame in statDetailsFrame:GetDescendants() do
 		if detailFrame:IsA("Frame") then
 			if detailFrame:FindFirstChild("StatCatagory") then
-				UIHelper:RotateGradient(detailFrame:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
 			end
 		end
 	end
@@ -414,11 +399,6 @@ function StatsMenuController:Stats()
 						continue
 					end
 					statFrame.StatNumber.Text = statPoints
-					if statPoints == 3000 then
-						statFrame.MaxedStatText.Visible = true
-					else
-						statFrame.MaxedStatText.Visible = false
-					end
 				end
 			end
 
@@ -431,8 +411,8 @@ function StatsMenuController:Stats()
 		end
 	end
 
-	local confirmPopUp
-	local confirmConnection
+	local confirmPopUp = nil
+	local confirmConnection = nil
 
 	local function GetConfirmPopup()
 		if confirmPopUp and confirmPopUp.Parent then
@@ -443,13 +423,9 @@ function StatsMenuController:Stats()
 
 		confirmPopUp:GetPropertyChangedSignal("Visible"):Connect(function()
 			if confirmPopUp.Visible then
-				TweenService:Create(resetButton.ResetText, info, { TextColor3 = Color3.fromRGB(255, 154, 213) }):Play()
-				TweenService:Create(resetButton.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 154, 213) }):Play()
-				TweenService:Create(resetButton, info, { ImageColor3 = Color3.fromRGB(60, 49, 88) }):Play()
+				UIHelper:SwitchColors(resetButton, resetButton.ResetText)
 			else
-				TweenService:Create(resetButton.ResetText, info, { TextColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-				TweenService:Create(resetButton.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-				TweenService:Create(resetButton, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+				UIHelper:SwitchColors(resetButton, resetButton.ResetText)
 			end
 		end)
 
@@ -462,7 +438,7 @@ function StatsMenuController:Stats()
 
 		popup.TextLabel.Text = "Reset Stats?"
 		popup.Visible = true
-		TweenService:Create(popup, info, { Size = UDim2.fromScale(0.262, 0.49) }):Play()
+		TweenService:Create(popup, info, { Size = UDim2.fromScale(0.262, 0.49)}):Play()
 
 		if confirmConnection then
 			confirmConnection:Disconnect()
@@ -470,21 +446,8 @@ function StatsMenuController:Stats()
 
 		confirmConnection = confirmButton.MouseButton1Click:Connect(function()
 			NetworkingService:FireToServer("ResetStatPoints")
-			popup.Visible = false
 			popup:Destroy()
 		end)
-	end)
-
-	resetButton.MouseEnter:Connect(function()
-		if confirmPopUp and not confirmPopUp.Visible then
-			TweenService:Create(resetButton, info, { ImageColor3 = Color3.fromRGB(87, 107, 194) }):Play()
-		end
-	end)
-
-	resetButton.MouseLeave:Connect(function()
-		if confirmPopUp and not confirmPopUp.Visible then
-			TweenService:Create(resetButton, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-		end
 	end)
 end
 

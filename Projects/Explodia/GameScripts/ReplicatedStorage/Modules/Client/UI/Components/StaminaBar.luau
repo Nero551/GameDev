@@ -1,7 +1,6 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
-local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
 
 return function(menu)
@@ -11,8 +10,6 @@ return function(menu)
 	local staminaFill = staminaBG:FindFirstChild("StaminaFill")
 	local staminaNumber = staminaBG:FindFirstChild("StaminaNumber")
 
-	UIHelper:RotateGradient(staminaFill:FindFirstChild("UIGradient"),16)
-	UIHelper:RotateGradient(staminaBG:FindFirstChild("MainStroke"):FindFirstChild("UIGradient"), 16)
 
 	local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 

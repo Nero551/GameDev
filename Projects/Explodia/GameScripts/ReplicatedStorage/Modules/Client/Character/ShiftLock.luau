@@ -1,8 +1,10 @@
 return function()
 	local Players = game:GetService("Players")
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local UserInputService = game:GetService("UserInputService")
 	local RunService = game:GetService("RunService")
 	local TweenService = game:GetService("TweenService")
+	local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
 	local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 
 	local player = Players.LocalPlayer
@@ -52,7 +54,7 @@ return function()
 	setShiftLock(false)
 
 	RunService.RenderStepped:Connect(function(dt)
-		if StateChecker:CheckState(character, "Dead") then
+		if StateChecker:CheckState(character, "Dead") or UIManager.ActiveScreen ~= "HUD" then
 			setShiftLock(false)
 			return
 		end

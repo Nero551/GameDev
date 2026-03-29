@@ -32,8 +32,8 @@ function DataService:GetDefaultData()
 		},
 		Stats = {
 			MainStats = {
-				Vitality = { Base = 20, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				Intelligence = { Base = 20, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				Vitality = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				Intelligence = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
 				Strength = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
 				Dexterity = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
 				Agility = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },

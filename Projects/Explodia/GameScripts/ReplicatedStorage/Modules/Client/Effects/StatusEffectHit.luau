@@ -14,7 +14,7 @@ return function(arguementData:any)
 		if rootPart then
 			local clone = rootPart:FindFirstChild(statusEffectName)
 			if not clone then
-				clone = assets.Shared.Combat.StatusEffects.StatusEffectEffects[statusEffectName]:Clone()
+				clone = assets.Shared.Combat.StatusEffects.StatusEffectsVFX[statusEffectName]:Clone()
 				clone.Parent = rootPart
 				local weld = Instance.new("Weld")
 				weld.Part0 = clone

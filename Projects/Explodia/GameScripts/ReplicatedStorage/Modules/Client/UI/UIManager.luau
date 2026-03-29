@@ -1,5 +1,11 @@
+local Lighting = game:GetService("Lighting")
 local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StarterGui = game:GetService("StarterGui")
+local TweenService = game:GetService("TweenService")
+local blur: BlurEffect = Lighting.Blur
+
+local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = {}
 
 local player = Players.LocalPlayer
@@ -42,7 +48,7 @@ function UIManager:Init()
 					continue
 				end
 				if UIManager.Screens[screen.Name][child.Name] then
-				--	warn("Duplicate Name Exists For:", child.Name)
+					--	warn("Duplicate Name Exists For:", child.Name)
 				end
 				UIManager.Screens[screen.Name][child.Name] = child
 			end
@@ -151,9 +157,23 @@ end
 
 function UIManager:SetActiveScreen(screenName)
 	if UIManager.Screens[screenName] then
-		UIManager.ActiveScreen = screenName
+		if UIManager.ActiveScreen ~= screenName then
+			if UIManager.ActiveScreen and UIManager:GetScreen(UIManager.ActiveScreen) then
+				UIHelper:FadeOut(UIManager:GetScreen(UIManager.ActiveScreen))
+			end
+			UIManager.ActiveScreen = screenName
+			UIHelper:FadeIn(UIManager:GetScreen(screenName))
+		end
 	end
-	print(UIManager.ActiveScreen, { debug.traceback() })
+
+	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+	if UIManager.ActiveScreen == "MainMenu" then
+		TweenService:Create(blur, info, { Size = 24 }):Play()
+	else
+		TweenService:Create(blur, info, { Size = 0 }):Play()
+	end
+	print(UIManager.ActiveScreen, { debug.traceback()})
 end
 
 return UIManager

@@ -56,7 +56,13 @@ function StatusEffectsService:Burn(attacker, targetHit, statusEffectName, normal
 				StateService.State[targetHit][statusEffectData.State]
 				and StateService.State[targetHit][statusEffectData.State].LastProc >= statusEffectData.ProcEvery
 			then
-				DamageService[statusEffectName .. "Damage"](DamageService, attacker, targetHit, normalDamage, targetDefense)
+				DamageService[statusEffectName .. "Damage"](
+					DamageService,
+					attacker,
+					targetHit,
+					normalDamage,
+					targetDefense
+				)
 				StateService:AddState(
 					targetHit,
 					statusEffectData.State,
@@ -71,7 +77,7 @@ function StatusEffectsService:Burn(attacker, targetHit, statusEffectName, normal
 	)
 end
 
-function StatusEffectsService:Bleed(attacker, targetHit, statusEffectName, normalDamage,targetDefense)
+function StatusEffectsService:Bleed(attacker, targetHit, statusEffectName, normalDamage, targetDefense)
 	local statusEffectData = StatusEffectsData.StatusEffects[statusEffectName]
 	local targetHealth = VitalsService:GetVital(targetHit, "Health")
 
@@ -101,7 +107,13 @@ function StatusEffectsService:Bleed(attacker, targetHit, statusEffectName, norma
 			)
 
 			if StateService.State[targetHit][statusEffectData.State].LastProc >= statusEffectData.ProcEvery then
-				DamageService[statusEffectName .. "Damage"](DamageService, attacker, targetHit, normalDamage,targetDefense)
+				DamageService[statusEffectName .. "Damage"](
+					DamageService,
+					attacker,
+					targetHit,
+					normalDamage,
+					targetDefense
+				)
 				VitalsService:ModifyVital(attacker, "Health", "ModifyHealth", {
 					["HealthChange"] = targetHealth.MaxHealth / 200,
 				})
@@ -119,11 +131,11 @@ function StatusEffectsService:Bleed(attacker, targetHit, statusEffectName, norma
 	)
 end
 
-function StatusEffectsService:Freeze(attacker, targetHit, statusEffectName, normalDamage,targetDefense)
+function StatusEffectsService:Freeze(attacker, targetHit, statusEffectName, normalDamage, targetDefense)
 	local statusEffectData = StatusEffectsData.StatusEffects[statusEffectName]
 
 	StateService:AddState(targetHit, statusEffectData.State, statusEffectData.BaseDuration)
-	DamageService[statusEffectName .. "Damage"](DamageService, attacker, targetHit, normalDamage,targetDefense)
+	DamageService[statusEffectName .. "Damage"](DamageService, attacker, targetHit, normalDamage, targetDefense)
 
 	Connections:AddConnection(
 		targetHit,
