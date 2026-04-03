@@ -11,22 +11,18 @@ local QuestData = require(ReplicatedStorage.Modules.Data.QuestData)
 local QuestMenuController = {}
 
 function QuestMenuController:TopBar()
-	local topBar = UIManager:GetUI("QuestMenu", "TopBar")
 	local questList = UIManager:GetUI("QuestMenu", "QuestScrollingFrame")
 	local Filters = UIManager:GetUI("QuestMenu", "QuestFilters")
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-	UIHelper:RotateGradient(topBar:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
-	ReturnButton(UIManager:GetUI("QuestMenu", "QuestMenu"), topBar:FindFirstChild("ReturnButton"))
+	ReturnButton("QuestMenu")
 
 	local filterSelected = nil
 	local prevFilterSelected = nil
 	for _, filter in Filters:GetChildren() do
-		if filter:IsA("ImageButton") then
+		if filter:IsA("TextButton") then
 			UIHelper:ClickEffects(filter)
 			UIHelper:HoverEffects(filter)
-			UIHelper:RotateGradient(filter:FindFirstChild("UIGradient"))
-			UIHelper:RotateGradient(filter:FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
 
 			filter.MouseButton1Click:Connect(function()
 				prevFilterSelected = filterSelected
@@ -34,25 +30,16 @@ function QuestMenuController:TopBar()
 
 				if filterSelected ~= nil then
 					TweenService
-						:Create(filterSelected["FilterType"], info, { TextColor3 = Color3.fromRGB(255, 154, 213) })
+						:Create(filterSelected["TextLabel"], info, { TextColor3 = Color3.fromRGB(255, 154, 213) })
 						:Play()
-					TweenService:Create(filterSelected.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 154, 213) })
-						:Play()
-					TweenService:Create(filterSelected, info, { ImageColor3 = Color3.fromRGB(60, 49, 88) }):Play()
+					TweenService:Create(filterSelected, info, { BackgroundColor3 = Color3.fromRGB(60, 49, 88) }):Play()
 					if prevFilterSelected ~= nil then
 						if prevFilterSelected ~= filterSelected then
 							TweenService
-								:Create(prevFilterSelected, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
-								:Play()
-							TweenService
-								:Create(
-									prevFilterSelected.RGBStroke,
-									info,
-									{ ImageColor3 = Color3.fromRGB(255, 255, 255) }
-								)
+								:Create(prevFilterSelected, info, { BackgroundColor3 = Color3.fromRGB(255, 255, 255) })
 								:Play()
 							TweenService:Create(
-								prevFilterSelected["FilterType"],
+								prevFilterSelected["TextLabel"],
 								info,
 								{ TextColor3 = Color3.fromRGB(255, 255, 255) }
 							):Play()
@@ -61,7 +48,7 @@ function QuestMenuController:TopBar()
 				end
 
 				---Filter---
-				local filterType = filter.FilterType.Text:gsub("s$", "")
+				local filterType = filter.Name:split("Quests")[1].." Quest"
 				for _, questSlot in questList:GetChildren() do
 					if questSlot:IsA("ImageButton") then
 						questSlot.Visible = true
@@ -79,13 +66,13 @@ function QuestMenuController:TopBar()
 
 			filter.MouseEnter:Connect(function()
 				if filterSelected ~= filter then
-					TweenService:Create(filter, info, { ImageColor3 = Color3.fromRGB(87, 107, 194) }):Play()
+					TweenService:Create(filter, info, { BackgroundColor3 = Color3.fromRGB(87, 107, 194) }):Play()
 				end
 			end)
 
 			filter.MouseLeave:Connect(function()
 				if filterSelected ~= filter then
-					TweenService:Create(filter, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+					TweenService:Create(filter, info, { BackgroundColor3 = Color3.fromRGB(255, 255, 255) }):Play()
 				end
 			end)
 		end
@@ -97,9 +84,6 @@ function QuestMenuController:Quests()
 	local Quests = player:WaitForChild("Quests")
 	local questList = UIManager:GetUI("QuestMenu", "QuestScrollingFrame")
 	local questInfo = UIManager:GetUI("QuestMenu", "QuestInfo")
-
-	UIHelper:RotateGradient(questInfo:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(questList.Parent.Parent:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	local questSelected = nil
@@ -126,8 +110,8 @@ function QuestMenuController:Quests()
 			if not questSlot then
 				questSlot =
 					UIManager:CloneUI("QuestMenu", questID, ReplicatedStorage.Assets.UI.Quest, "QuestScrollingFrame")
-				questSlot.QuestName.Text = questData.Name
-				questSlot.QuestType.Text = questData.QuestType
+				questSlot.QuestName.TextLabel.Text = questData.Name
+				questSlot.QuestType.TextLabel.Text = questData.QuestType
 				UIHelper:RotateGradient(questSlot:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
 				UIHelper:ClickEffects(questSlot, 0.975, 1.03)
 				UIHelper:HoverEffects(questSlot, 1, 1.025)
@@ -184,13 +168,11 @@ function QuestMenuController:Quests()
 
 				questSlot.MouseEnter:Connect(function()
 					if questSelected ~= questSlot then
-						TweenService:Create(questSlot, info, { ImageColor3 = Color3.fromRGB(87, 107, 194) }):Play()
 					end
 				end)
 
 				questSlot.MouseLeave:Connect(function()
 					if questSelected ~= questSlot then
-						TweenService:Create(questSlot, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
 					end
 				end)
 
@@ -209,9 +191,9 @@ function QuestMenuController:Quests()
 					end
 
 					questInfo.Visible = true
-					questInfo.QuestName.Text = questSlot.QuestName.Text
+					questInfo.QuestName.TextLabel.Text = questSlot.QuestName.TextLabel.Text
 					questInfo.QuestDescription.Text = questData.Description
-					questInfo.QuestType.Text = questSlot.QuestType.Text
+					questInfo.QuestType.Text = questSlot.QuestType.TextLabel.Text
 
 					for _, objective in child:GetChildren() do
 						local objectiveNumber = objective.name
@@ -293,23 +275,11 @@ function QuestMenuController:Quests()
 					prevQuestSelected = questSelected
 					questSelected = questSlot
 					if questSelected ~= nil then
-						TweenService:Create(questSelected, info, { ImageColor3 = Color3.fromRGB(60, 49, 88) }):Play()
-						TweenService:Create(questSelected.UIStroke, info, { Color = Color3.fromRGB(114, 142, 255) })
-							:Play()
 
 						if prevQuestSelected ~= nil then
 							if prevQuestSelected ~= questSelected then
-								TweenService
-									:Create(prevQuestSelected, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
-									:Play()
+							
 								if prevQuestSelected:FindFirstChild("UIStroke") then
-									TweenService
-										:Create(
-											prevQuestSelected.UIStroke,
-											info,
-											{ Color = Color3.fromRGB(255, 255, 255) }
-										)
-										:Play()
 								end
 							end
 						end
@@ -362,8 +332,6 @@ function QuestMenuController:AbandonQuest()
 
 	UIHelper:HoverEffects(abandonQuestButton)
 	UIHelper:ClickEffects(abandonQuestButton)
-	UIHelper:RotateGradient(abandonQuestButton:FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(abandonQuestButton:FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
 
 	local confirmPopup
 	local confirmConnection
@@ -438,8 +406,5 @@ function QuestMenuController:RandomGradients()
 	local texture = UIManager:GetUI("QuestMenu", "Texture")
 	UIHelper:RotateGradient(texture:FindFirstChild("UIGradient"))
 end
-
-
-
 
 return QuestMenuController

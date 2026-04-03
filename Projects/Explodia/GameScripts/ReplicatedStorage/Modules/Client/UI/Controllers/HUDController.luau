@@ -361,7 +361,7 @@ function HUDController:Dialogue()
 		while i < length do
 			i += 1
 			DialogueText.Text = string.sub(line, 1, i)
-			ReplicatedStorage.Assets.Shared.Sounds.DialogueSound:Play()
+			ReplicatedStorage.Assets.Shared.MenuSounds.DialogueSound:Play()
 			if skipLine then
 				DialogueText.Text = line
 				break

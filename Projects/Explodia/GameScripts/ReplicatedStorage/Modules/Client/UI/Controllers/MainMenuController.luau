@@ -214,4 +214,9 @@ function MainMenuController:MainMenu()
 		end
 	end)
 end
+
+function MainMenuController:Titles()
+	
+end
+
 return MainMenuController
