@@ -142,6 +142,7 @@ function UIHelper:FadeIn(menu)
 	if not cache then
 		return
 	end
+	task.wait(0.5)
 	menu.Enabled = true
 
 	for obj, props in pairs(cache) do
@@ -181,7 +182,7 @@ function UIHelper:FadeOut(menu)
 		end
 	end
 
-	task.wait(0.15)
+	task.wait(0.2)
 	menu.Enabled = false
 end
 

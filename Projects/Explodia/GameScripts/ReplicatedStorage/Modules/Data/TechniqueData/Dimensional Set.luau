@@ -1,6 +1,6 @@
 local DimensionalSet = {
 
-	["ability_0000000001"] = {
+	["technique_0000000001"] = {
 		OnMouse = false,
 		HitReaction = "1",
 		BlockBreak = true,
@@ -18,12 +18,15 @@ local DimensionalSet = {
 			Intelligence = 0.75,
 			Dexterity = 0.25,
 		},
+		WeaponType = {
+			"Sword",
+		},
 		DamageType = "Magic",
 		Cost = 100,
 		AbilityName = "Dimensional Cut",
 		AbilityMastery = 0,
 	},
-	["ability_0000000002"] = {
+	["technique_0000000002"] = {
 		OnMouse = false,
 		HitReaction = "1",
 		BlockBreak = false,
@@ -41,12 +44,15 @@ local DimensionalSet = {
 			Intelligence = 0.75,
 			Strength = 0.25,
 		},
+		WeaponType = {
+			"Sword",
+		},
 		DamageType = "Magic",
 		Cost = 200,
 		AbilityName = "Dimensional Slash",
 		AbilityMastery = 50,
 	},
-	["ability_0000000003"] = {
+	["technique_0000000003"] = {
 		OnMouse = false,
 		HitReaction = "1",
 		BlockBreak = false,
@@ -63,6 +69,9 @@ local DimensionalSet = {
 		Scaling = {
 			Intelligence = 0.75,
 			Agility = 0.25,
+		},
+		WeaponType = {
+			"Sword",
 		},
 		DamageType = "Physical",
 		Cost = 10,

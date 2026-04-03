@@ -32,8 +32,8 @@ return function(npc)
 		return
 	end
 
-	if CanDoAction:CanAbility(AIData) then
-		AIData.State = "Ability"
+	if CanDoAction:CanTechnique(AIData) then
+		AIData.State = "Technique"
 		return
 	end
 

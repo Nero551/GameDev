@@ -4,7 +4,7 @@ local TweenService = game:GetService("TweenService")
 local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
 local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
-local AbilityData = require(ReplicatedStorage.Modules.Data.AbilityData)
+local TechniqueData = require(ReplicatedStorage.Modules.Data.TechniqueData)
 local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 local RarityData = require(ReplicatedStorage.Modules.Data.RarityData)
 local ArmoryMenuController = {}
@@ -144,15 +144,15 @@ function ArmoryMenuController:Armory()
 				---Info Setup---
 				for _, ability in abiltiesFrame:GetChildren() do
 					if ability:IsA("Frame") then
-						local abilityLetter = ability.AbilityLetter.Text
+						local techniqueLetter = ability.AbilityLetter.Text
 						if itemData.Abilities then
-							local abilityData = AbilityData:GetAbilityData(itemData.Abilities[abilityLetter])
-							if not abilityData then
+							local techniqueData = TechniqueData:GetTechniqueData(itemData.Abilities[techniqueLetter])
+							if not techniqueData then
 								ability.Visible = false
 							else
 								ability.Visible = true
-								ability.AbilityMastery.Text = abilityData.AbilityMastery
-								ability.AbilityName.Text = abilityData.AbilityName
+								ability.AbilityMastery.Text = techniqueData.AbilityMastery
+								ability.AbilityName.Text = techniqueData.AbilityName
 							end
 						else
 							ability.Visible = false

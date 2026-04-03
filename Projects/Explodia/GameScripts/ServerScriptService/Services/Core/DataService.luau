@@ -8,7 +8,6 @@ local DataService = {}
 DataService.PlayerDatas = {}
 
 function DataService:GetDefaultData()
-	
 	local DefaultData = {
 		Inventory = {
 			["weapon_0000000001"] = {
@@ -66,6 +65,11 @@ function DataService:GetDefaultData()
 			ActiveTitle = nil,
 		},
 		Buffs = {},
+
+		Techniques = {
+			Obtained = {},
+			Equipped = {},
+		},
 	}
 
 	return DefaultData
@@ -116,13 +120,12 @@ end
 function DataService:Load(player)
 	local key = "Player_" .. player.UserId
 
-	local success,err = pcall(function()
+	local success, err = pcall(function()
 		DataService.PlayerDatas[player] = playerStore:GetAsync(key)
 	end)
 
 	if not success then
 		warn("DataLoad Failed For", player.Name, ":", err)
-
 	end
 	if not success or not DataService.PlayerDatas[player] then
 		DataService.PlayerDatas[player] = DataService:GetDefaultData()

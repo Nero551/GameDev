@@ -11,7 +11,7 @@ local StateService = require(game.ServerScriptService.Services.Core.StateService
 local MovementService = require(game.ServerScriptService.Services.Combat.MovementService)
 local CombatService = require(game.ServerScriptService.Services.Combat.CombatService)
 local RegenService = require(game.ServerScriptService.Services.Combat.RegenService)
-local AbilityService = require(game.ServerScriptService.Services.Combat.AbilityService)
+local TechniqueService = require(game.ServerScriptService.Services.Combat.TechniqueService)
 local TimeService = require(game.ServerScriptService.Services.World.TimeService)
 
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -128,10 +128,10 @@ end)
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
----Client Requests to use Ability---
+---Client Requests to use Technique---
 NetworkingService:OnServerEvent("Ability", function(player: Player, mouse, letter)
 	local char = player.Character or player.CharacterAdded:Wait()
-	AbilityService:UseAbility(char, letter, mouse)
+	TechniqueService:UseTechnique(char, letter, mouse)
 end)
 
 ----------------------------------------------------------------------------------------------------------------------------------

@@ -5,7 +5,7 @@ local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local QuestData = require(ReplicatedStorage.Modules.Data.QuestData)
-local AbilityData = require(game.ReplicatedStorage.Modules.Data.AbilityData)
+local TechniqueData = require(game.ReplicatedStorage.Modules.Data.TechniqueData)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
@@ -197,15 +197,15 @@ function HUDController:Abilities()
 			if not itemData.Abilities then
 				return
 			end
-			local abilityData = AbilityData:GetAbilityData(itemData.Abilties[abilityKey])
+			local techniqueData = TechniqueData:GetTechniqueData(itemData.Abilties[abilityKey])
 			local weaponData = ItemDataBase:GetItemData(tool.Name)
-			if not abilityData then
+			if not techniqueData then
 				data.bar.Visible = false
 				continue
 			end
 
 			data.bar.Visible = true
-			data.nameLabel.Text = abilityData.AbilityName
+			data.nameLabel.Text = techniqueData.AbilityName
 			local cdStateName = "Ability" .. abilityKey .. " Cooldown"
 			local onCooldown = StateChecker:CheckState(char, cdStateName)
 			if onCooldown and data.cdActive and data.cdEndTime then
@@ -216,11 +216,11 @@ function HUDController:Abilities()
 			if onCooldown and not data.cdActive then
 				data.cdActive = true
 				data.cdBar.Visible = true
-				data.cdEndTime = time() + abilityData.AbilityCooldown
+				data.cdEndTime = time() + techniqueData.AbilityCooldown
 
 				local tween = TweenService:Create(
 					data.cdBar,
-					TweenInfo.new(abilityData.AbilityCooldown, Enum.EasingStyle.Linear),
+					TweenInfo.new(techniqueData.AbilityCooldown, Enum.EasingStyle.Linear),
 					{ Size = UDim2.fromScale(0, 0.87) }
 				)
 

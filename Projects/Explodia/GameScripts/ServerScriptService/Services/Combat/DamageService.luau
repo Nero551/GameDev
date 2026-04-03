@@ -1,6 +1,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
+local StatusEffectsData = require(ReplicatedStorage.Modules.Data.StatusEffectsData)
 local VitalsService = require(script.Parent.VitalsService)
 local DamageService = {}
 
@@ -62,14 +63,14 @@ end
 
 function DamageService:BurnDamage(attacker, targetHit, baseDamage, targetDefense)
 	VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
-		["HealthChange"] = baseDamage,
+		["HealthChange"] = baseDamage * StatusEffectsData.StatusEffects.Burn.DamagePercent,
 	})
 
 	if Players:GetPlayerFromCharacter(attacker) then
 		NetworkingService:FireToClient(
 			Players:GetPlayerFromCharacter(attacker),
 			"ShowDamage",
-			baseDamage,
+			baseDamage * StatusEffectsData.StatusEffects.Burn.DamagePercent,
 			false,
 			false,
 			false,
@@ -80,14 +81,14 @@ end
 
 function DamageService:BleedDamage(attacker, targetHit, baseDamage, targetDefense)
 	VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
-		["HealthChange"] = baseDamage,
+		["HealthChange"] = baseDamage * StatusEffectsData.StatusEffects.Bleed.DamagePercent,
 	})
 
 	if Players:GetPlayerFromCharacter(attacker) then
 		NetworkingService:FireToClient(
 			Players:GetPlayerFromCharacter(attacker),
 			"ShowDamage",
-			baseDamage,
+			baseDamage * StatusEffectsData.StatusEffects.Bleed.DamagePercent,
 			false,
 			false,
 			false,
@@ -98,14 +99,14 @@ end
 
 function DamageService:FreezeDamage(attacker,targetHit,baseDamage,targetDefense)
 	VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
-		["HealthChange"] = baseDamage,
+		["HealthChange"] = baseDamage * StatusEffectsData.StatusEffects.Freeze.DamagePercent,
 	})
 
 	if Players:GetPlayerFromCharacter(attacker) then
 		NetworkingService:FireToClient(
 			Players:GetPlayerFromCharacter(attacker),
 			"ShowDamage",
-			baseDamage,
+			baseDamage * StatusEffectsData.StatusEffects.Freeze.DamagePercent,
 			false,
 			false,
 			false,

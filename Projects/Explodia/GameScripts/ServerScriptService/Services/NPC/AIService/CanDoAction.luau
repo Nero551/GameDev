@@ -55,28 +55,28 @@ function CanDoAction:CanAttack(AIData)
 	return false
 end
 
-function CanDoAction:CanAbility(AIData)
+function CanDoAction:CanTechnique(AIData)
 	if not AIData then return false end
-	if not AIData.Abilities then return false end
+	if not AIData.Techniques then return false end
 	if not AIData.Target then return false end
 	local highestDamage = 0
 	local distance = (AIData.Root.Position - AIData.Target.Position).Magnitude
 	
-	for letter,AbilityData in  AIData.Abilities do
-		if distance <= (math.abs(AbilityData.HitBoxPosition.Z) + (AbilityData.HitBoxSize.Z/2)) and 
-			ActionVerifier:CanAbility(AIData.Humanoid.Parent, letter) then
-			if AbilityData.Damage * (AbilityData.Hits or 1) > highestDamage then
-				highestDamage = AbilityData.Damage * (AbilityData.Hits or 1)
-				AIData.ChosenAbility  = letter
+	for letter, techniqueData in  AIData.Techniques do
+		if distance <= (math.abs(techniqueData.HitBoxPosition.Z) + (techniqueData.HitBoxSize.Z/2)) and 
+			ActionVerifier:CanTechnique(AIData.Humanoid.Parent, letter) then
+			if techniqueData.Damage * (techniqueData.Hits or 1) > highestDamage then
+				highestDamage = techniqueData.Damage * (techniqueData.Hits or 1)
+				AIData.ChosenTechnique = letter
 			end
 		end	
 	end
 	
-	local ability = AIData.Abilities[AIData.ChosenAbility]
-	if not ability then return false end
+	local technique = AIData.Techniques[AIData.ChosenTechnique]
+	if not technique then return false end
 	if not StateChecker:CheckState(AIData.Target.Parent, "Attacking") and
-		ActionVerifier:CanAbility(AIData.Humanoid.Parent, AIData.ChosenAbility) and
-		distance <= (math.abs(ability.HitBoxPosition.Z) + (ability.HitBoxSize.Z/2)) then
+		ActionVerifier:CanTechnique(AIData.Humanoid.Parent, AIData.ChosenTechnique) and
+		distance <= (math.abs(technique.HitBoxPosition.Z) + (technique.HitBoxSize.Z/2)) then
 		return true
 	end	
 	return false

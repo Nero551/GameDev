@@ -6,7 +6,7 @@ local StateHandler = require(game.ServerScriptService.Modules.Utilities.StateHan
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 local Connections = require(game.ReplicatedStorage.Modules.Core.Connections)
-local AbilityData = require(game.ReplicatedStorage.Modules.Data.AbilityData)
+local TechniqueData = require(game.ReplicatedStorage.Modules.Data.TechniqueData)
 local MobData = require(game.ReplicatedStorage.Modules.Data.MobData)
 
 local StateService = require(game.ServerScriptService.Services.Core.StateService)
@@ -83,12 +83,12 @@ function AIService:CreateAI(npc)
 		WalkSpeed = mobData.WalkSpeed,
 		RunSpeed = mobData.RunSpeed,
 
-		Abilities = {
-			-- AbilityData:GetAbilityData(itemData.Abilities.Z),
-			-- AbilityData:GetAbilityData(itemData.Abilities.X),
-			-- AbilityData:GetAbilityData(itemData.Abilities.C),
+		Techniques = {
+			-- TechniqueData:GetTechniqueData(itemData.Abilities.Z),
+			-- TechniqueData:GetTechniqueData(itemData.Abilities.X),
+			-- TechniqueData:GetTechniqueData(itemData.Abilities.C),
 		},
-		ChosenAbility = nil,
+		ChosenTechnique = nil,
 
 		IdleAnimation = Animations:GetAnimation(
 			npc.Humanoid,

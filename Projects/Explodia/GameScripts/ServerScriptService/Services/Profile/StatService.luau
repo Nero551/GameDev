@@ -3,7 +3,7 @@ local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsSer
 
 local StatService = {}
 
-local function ApplyHealth(player: Player)
+local function ApplyVitality(player: Player)
 	local playerStats = DataService:GetTable(player, "Stats")
 	local vitStat = playerStats.MainStats.Vitality
 	local char = player.Character or player.CharacterAdded:Wait()
@@ -17,7 +17,7 @@ local function ApplyHealth(player: Player)
 	})
 end
 
-local function ApplyMana(player: Player)
+local function ApplyIntelligence(player: Player)
 	local playerStats = DataService:GetTable(player, "Stats")
 	local char = player.Character or player.CharacterAdded:Wait()
 	local intStat = playerStats.MainStats.Intelligence
@@ -32,7 +32,7 @@ local function ApplyMana(player: Player)
 	})
 end
 
-local function ApplyStamina(player: Player)
+local function ApplyStrength(player: Player)
 	local playerStats = DataService:GetTable(player, "Stats")
 	local char = player.Character or player.CharacterAdded:Wait()
 	local strengthStat = playerStats.MainStats.Strength
@@ -45,6 +45,31 @@ local function ApplyStamina(player: Player)
 	VitalsService:ModifyVital(char, "Stamina", "ModifyMaxStamina", {
 		["MaxStamina"] = maxStamina,
 	})
+end
+
+local function ApplyDexterity(player:Player)
+	-- local playerStats = DataService:GetTable(player, "Stats")
+	-- local dexStat = playerStats.MainStats.Dexterity
+	-- local finalDex = dexStat.Final
+
+	-- local crit
+	-- local maxCritChance = math.max(, finalDex * .02)
+end
+
+local function ApplyAgility(player:Player)
+	-- local playerStats = DataService:GetTable(player, "Stats")
+	-- local agiStat = playerStats.MainStats.Agility
+	-- local char = player.Character or player.CharacterAdded:Wait()
+
+	-- local finalAGI = agiStat.Final
+	-- local SPEED_PER_POINT = .05
+	-- local maxSpeed = math.max(1, finalAGI * SPEED_PER_POINT)
+
+	-- VitalsService:ModifyVital(char, "Movement", "ModifyWalkSpeed", {
+	-- 	["WalkSpeed"] = maxSpeed
+	-- })
+
+	-- print(maxSpeed)
 end
 
 ---Setup Stats---
@@ -103,9 +128,11 @@ function StatService:UpdateStats(player: Player)
 			end
 		end
 	end
-	ApplyHealth(player)
-	ApplyMana(player)
-	ApplyStamina(player)
+	ApplyVitality(player)
+	ApplyIntelligence(player)
+	ApplyStrength(player)
+	ApplyAgility(player)
+	ApplyDexterity(player)
 end
 
 ---Allocate Statpoint---
