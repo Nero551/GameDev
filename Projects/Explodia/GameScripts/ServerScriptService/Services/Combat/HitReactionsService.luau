@@ -139,7 +139,7 @@ function HitReactionsService:BlockBreak(attacker, targetHit, data)
 	NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "BlockBreakHit", {
 		["Target"] = targetHit,
 	})
-	Animations:GetAnimation(targetHumanoid, "Shared.Character.BlockBreak"):Play()
+	Animations:GetAnimation(targetHumanoid, "Shared.Combat.BlockBreak.Animation"):Play()
 end
 
 function HitReactionsService:Critical(attacker, targetHit, data, trueSwingNumber)

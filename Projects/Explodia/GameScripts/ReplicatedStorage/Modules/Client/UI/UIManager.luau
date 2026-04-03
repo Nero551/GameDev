@@ -11,7 +11,7 @@ local UIManager = {}
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
-UIManager.ActiveScreen = "HUD"
+UIManager.ActiveScreen = nil
 UIManager.Screens = {}
 UIManager.Controllers = {}
 UIManager.AcceptableClasses = {
@@ -55,6 +55,8 @@ function UIManager:Init()
 		end
 	end
 
+	UIManager:SetActiveScreen("HUD")
+
 	for _, controller in script.Parent.Controllers:GetChildren() do
 		if controller:IsA("ModuleScript") then
 			UIManager.Controllers[controller.Name] = require(controller)
@@ -68,8 +70,6 @@ function UIManager:Init()
 			end
 		end
 	end
-	print("Controllers:", UIManager.Controllers)
-	print("Screens:", UIManager.Screens)
 end
 
 function UIManager:CreateUI(screenName, name, class, parent, properties)

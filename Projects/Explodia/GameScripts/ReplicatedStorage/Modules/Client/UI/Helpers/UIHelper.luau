@@ -105,6 +105,21 @@ function UIHelper:SwitchGradients(UI_1, UI_2)
 	grad_1.Parent = UI_2
 end
 
+--TODO add selection effects , it will save so much messy code--
+---TODO add hoverColor and ClickColor , will also save so much messy code--
+
+function UIHelper:HoverColor(ui, property, enterColor, leaveColor, info)
+	info = info or TweenInfo.new(0.0625, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out)
+	if typeof(enterColor) == "Color3" and typeof(leaveColor) == "Color3" then
+		ui.MouseEnter:Connect(function()
+			TweenService:Create(ui, info, { [property] = enterColor }):Play()
+		end)
+		ui.MouseLeave:Connect(function()
+			TweenService:Create(ui, info, { [property] = leaveColor }):Play()
+		end)
+	end
+end
+
 function UIHelper:CreateGradient(colorTable)
 	if typeof(colorTable) ~= "table" then
 		return

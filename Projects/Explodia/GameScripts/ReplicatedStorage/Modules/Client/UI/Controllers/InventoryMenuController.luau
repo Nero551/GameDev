@@ -12,6 +12,104 @@ local InventoryMenuController = {}
 
 local player = Players.LocalPlayer
 
+function InventoryMenuController:TopBar()
+	ReturnButton("InventoryMenu")
+
+	local itemFrame = UIManager:GetUI("InventoryMenu", "ItemScrollingFrame")
+	local Filters = UIManager:GetUI("InventoryMenu", "Filters")
+	local filterSelected = nil
+	local prevFilterSelected = nil
+	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+	for _, filter in Filters:GetChildren() do
+		if filter:IsA("TextButton") then
+			UIHelper:ClickEffects(filter)
+			UIHelper:HoverEffects(filter)
+
+			filter.MouseEnter:Connect(function()
+				if filterSelected ~= filter then
+					TweenService:Create(filter, info, { BackgroundColor3 = Color3.fromRGB(87, 107, 194) }):Play()
+				end
+			end)
+
+			filter.MouseLeave:Connect(function()
+				if filterSelected ~= filter then
+					TweenService:Create(filter, info, { BackgroundColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+				end
+			end)
+
+			filter.MouseButton1Click:Connect(function()
+				prevFilterSelected = filterSelected
+				filterSelected = filter
+
+				if filterSelected ~= nil then
+					TweenService
+						:Create(filterSelected["FilterType"], info, { TextColor3 = Color3.fromRGB(255, 154, 213) })
+						:Play()
+					TweenService:Create(filterSelected, info, { BackgroundColor3 = Color3.fromRGB(60, 49, 88) }):Play()
+					if prevFilterSelected ~= nil then
+						if prevFilterSelected ~= filterSelected then
+							TweenService
+								:Create(prevFilterSelected, info, { BackgroundColor3 = Color3.fromRGB(255, 255, 255) })
+								:Play()
+							TweenService:Create(
+								prevFilterSelected["FilterType"],
+								info,
+								{ TextColor3 = Color3.fromRGB(255, 255, 255) }
+							):Play()
+						end
+					end
+				end
+				---Filter---
+				local filterType = filter.FilterType.Text
+
+				for _, iconFrame in itemFrame:GetChildren() do
+					if iconFrame:IsA("ImageButton") then
+						iconFrame.Visible = true
+					end
+				end
+
+				if filterType ~= "All" then
+					for _, iconFrame in itemFrame:GetChildren() do
+						if iconFrame:IsA("ImageButton") then
+							local iconType = nil
+
+							local itemData = ItemDataBase:GetItemData(iconFrame.Name)
+							if itemData then
+								if
+									itemData.Type == "Helmet"
+									or itemData.Type == "ChestPlate"
+									or itemData.Type == "Leggings"
+									or itemData.Type == "Boots"
+								then
+									iconType = "Armor"
+								end
+								if itemData.Type == "Sword" then
+									iconType = "Sword"
+								end
+								if itemData.Type == "Melee" then
+									iconType = "Melee"
+								end
+								if itemData.Type == "Grimore" then
+									iconType = "Grimore"
+								end
+								if itemData.Type == "Material" or itemData.Type == "Resource" then
+									iconType = "Material"
+								end
+							end
+							if iconType == filterType then
+								iconFrame.Visible = true
+							else
+								iconFrame.Visible = false
+							end
+						end
+					end
+				end
+			end)
+		end
+	end
+end
+
 function InventoryMenuController:Inventory()
 	local inventory = player:WaitForChild("Inventory")
 	local equipped = player:WaitForChild("Equipped")
@@ -19,7 +117,7 @@ function InventoryMenuController:Inventory()
 	local itemFrame = UIManager:GetUI("InventoryMenu", "ItemScrollingFrame")
 	local infoFrame = UIManager:GetUI("InventoryMenu", "InfoFrame")
 	local infoImage = infoFrame.ItemImage
-	local infoName = infoFrame.ItemName
+	local infoName = infoFrame.ItemName.TextLabel
 	local infoType = infoFrame.ItemType
 	local infoRarity = infoFrame.ItemRarity
 	local infoAmountOwned = infoFrame.ItemAmountOwned
@@ -32,17 +130,7 @@ function InventoryMenuController:Inventory()
 	local IconSelected = nil
 	local PrevIconSelected = nil
 
-	ReturnButton(UIManager:GetUI("InventoryMenu", "InventoryMenu"), UIManager:GetUI("InventoryMenu", "ReturnButton"))
-
 	infoFrame.Visible = false
-
-	local infoNameStroke = infoName:FindFirstChild("UIStroke")
-	local innerStroke = infoFrame:FindFirstChild("InnerStroke")
-	local outerStroke = infoFrame:FindFirstChild("OuterStroke")
-
-	UIHelper:RotateGradient(infoNameStroke:FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(innerStroke:FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(outerStroke:FindFirstChild("UIGradient"))
 
 	for _, itemSlot in itemFrame:GetChildren() do
 		if itemSlot:IsA("ImageButton") then
@@ -79,14 +167,14 @@ function InventoryMenuController:Inventory()
 			itemSlot.MouseEnter:Connect(function()
 				itemSlot.ImageColor3 = Color3.fromHex("#eeeeee")
 				if IconSelected ~= itemSlot then
-					TweenService:Create(border, info, { ImageColor3 = Color3.fromRGB(71, 88, 158) }):Play()
+					TweenService:Create(border, info, { ImageColor3 = Color3.fromRGB(200, 200, 200) }):Play()
 				end
 			end)
 
 			itemSlot.MouseLeave:Connect(function()
 				itemSlot.ImageColor3 = Color3.fromHex("#ffffff")
 				if IconSelected ~= itemSlot then
-					TweenService:Create(border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+					TweenService:Create(border, info, { ImageColor3 = Color3.fromRGB(145, 145, 145) }):Play()
 				end
 			end)
 
@@ -94,11 +182,11 @@ function InventoryMenuController:Inventory()
 				PrevIconSelected = IconSelected
 				IconSelected = itemSlot
 				if IconSelected ~= nil then
-					TweenService:Create(IconSelected.Border, info, { ImageColor3 = Color3.fromRGB(114, 142, 255) })
+					TweenService:Create(IconSelected.Border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
 						:Play()
 				end
 				if PrevIconSelected ~= nil and PrevIconSelected ~= IconSelected then
-					TweenService:Create(PrevIconSelected.Border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
+					TweenService:Create(PrevIconSelected.Border, info, { ImageColor3 = Color3.fromRGB(145, 145, 145) })
 						:Play()
 				end
 
@@ -115,19 +203,13 @@ function InventoryMenuController:Inventory()
 				infoFrame.Visible = true
 				infoDescription.Text = itemData.Description
 
+				equipIcon.Visible = true
 				---If Item Is A Weapon---
-				if infoType.Text == "Sword" or infoType.Text == "Melee" then
-					equipIcon.Visible = true
-					infoMastery.Text = "Mastery: "..tostring(descendant:GetAttribute("Mastery"))
+				if string.find(infoFrame:GetAttribute("ItemID"), "weapon") then
+					infoMastery.Text = "Mastery: " .. tostring(descendant:GetAttribute("Mastery"))
 					infoMastery.Visible = true
 					---If Item Is An Armor
-				elseif
-					infoType.Text == "Helmet"
-					or infoType.Text == "ChestPlate"
-					or infoType.Text == "Leggings"
-					or infoType.Text == "Boots"
-				then
-					equipIcon.Visible = true
+				elseif string.find(infoFrame:GetAttribute("ItemID"), "armor") then
 					infoMastery.Visible = false
 				else
 					---If Item Is A Material---
@@ -196,10 +278,8 @@ function InventoryMenuController:Equip()
 	local box = infoFrame:FindFirstChild("Equip")
 	local equipButton = box:FindFirstChild("EquipButton")
 	local unequipButton = box:FindFirstChild("UnEquipButton")
-	local RGBStroke = box:FindFirstChild("RGBStroke")
 	local info = TweenInfo.new(0.0625, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out)
 
-	UIHelper:RotateGradient(RGBStroke:FindFirstChild("UIGradient"))
 	UIHelper:HoverEffects(box)
 	UIHelper:ClickEffects(equipButton)
 	UIHelper:ClickEffects(unequipButton)
@@ -252,9 +332,6 @@ function InventoryMenuController:Search()
 	local itemFrame = UIManager:GetUI("InventoryMenu", "ItemScrollingFrame")
 	local searchBox = UIManager:GetUI("InventoryMenu", "SearchBox")
 
-	UIHelper:RotateGradient(searchBox.Parent:FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(searchBox.Parent:FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
-
 	searchBox:GetPropertyChangedSignal("Text"):Connect(function()
 		local text = searchBox.Text:lower()
 
@@ -285,115 +362,5 @@ function InventoryMenuController:RandomGradients()
 	UIHelper:RotateGradient(topBar:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
 	UIHelper:RotateGradient(Texture:FindFirstChild("UIGradient"))
 end
-
-function InventoryMenuController:Filter()
-	-- local Filters =
-	local itemFrame = UIManager:GetUI("InventoryMenu", "ItemScrollingFrame")
-	local Filters = UIManager:GetUI("InventoryMenu", "Filters")
-	local filterSelected = nil
-	local prevFilterSelected = nil
-	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-
-	for _, filter in Filters:GetChildren() do
-		if filter:IsA("ImageButton") then
-			UIHelper:ClickEffects(filter)
-			UIHelper:HoverEffects(filter)
-			UIHelper:RotateGradient(filter:FindFirstChild("UIGradient"))
-			UIHelper:RotateGradient(filter:FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
-
-			filter.MouseEnter:Connect(function()
-				if filterSelected ~= filter then
-					TweenService:Create(filter, info, { ImageColor3 = Color3.fromRGB(87, 107, 194) }):Play()
-				end
-			end)
-
-			filter.MouseLeave:Connect(function()
-				if filterSelected ~= filter then
-					TweenService:Create(filter, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-				end
-			end)
-
-			filter.MouseButton1Click:Connect(function()
-				prevFilterSelected = filterSelected
-				filterSelected = filter
-
-				if filterSelected ~= nil then
-					TweenService
-						:Create(filterSelected["FilterType"], info, { TextColor3 = Color3.fromRGB(255, 154, 213) })
-						:Play()
-					TweenService:Create(filterSelected.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 154, 213) })
-						:Play()
-					TweenService:Create(filterSelected, info, { ImageColor3 = Color3.fromRGB(60, 49, 88) }):Play()
-					if prevFilterSelected ~= nil then
-						if prevFilterSelected ~= filterSelected then
-							TweenService
-								:Create(prevFilterSelected, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
-								:Play()
-							TweenService
-								:Create(
-									prevFilterSelected.RGBStroke,
-									info,
-									{ ImageColor3 = Color3.fromRGB(255, 255, 255) }
-								)
-								:Play()
-							TweenService:Create(
-								prevFilterSelected["FilterType"],
-								info,
-								{ TextColor3 = Color3.fromRGB(255, 255, 255) }
-							):Play()
-						end
-					end
-				end
-				---Filter---
-				local filterType = filter.FilterType.Text
-
-				for _, iconFrame in itemFrame:GetChildren() do
-					if iconFrame:IsA("ImageButton") then
-						iconFrame.Visible = true
-					end
-				end
-
-				if filterType ~= "All" then
-					for _, iconFrame in itemFrame:GetChildren() do
-						if iconFrame:IsA("ImageButton") then
-							local iconType = nil
-
-							local itemData = ItemDataBase:GetItemData(iconFrame.Name)
-							if itemData then
-								if
-									itemData.Type == "Helmet"
-									or itemData.Type == "ChestPlate"
-									or itemData.Type == "Leggings"
-									or itemData.Type == "Boots"
-								then
-									iconType = "Armor"
-								end
-								if itemData.Type == "Sword" then
-									iconType = "Sword"
-								end
-								if itemData.Type == "Melee" then
-									iconType = "Melee"
-								end
-								if itemData.Type == "Grimore" then
-									iconType = "Grimore"
-								end
-								if itemData.Type == "Material" or itemData.Type == "Resource" then
-									iconType = "Material"
-								end
-							end
-							if iconType == filterType then
-								iconFrame.Visible = true
-							else
-								iconFrame.Visible = false
-							end
-						end
-					end
-				end
-			end)
-		end
-	end
-end
-
-
 
 return InventoryMenuController
