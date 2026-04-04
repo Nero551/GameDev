@@ -1,4 +1,6 @@
+local Players = game:GetService("Players")
 local ServerScriptService = game:GetService("ServerScriptService")
+local DataService = require(ServerScriptService.Services.Core.DataService)
 local StateService = require(ServerScriptService.Services.Core.StateService)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
@@ -49,6 +51,15 @@ function StateHandler:HandleStates(character: Model, updateRate, runSpeed)
 		end
 	end
 
+	---Apply Agility---
+	if Players:GetPlayerFromCharacter(character) then
+		local agility = DataService:GetTable(Players:GetPlayerFromCharacter(character), "Stats")
+		if agility then
+			agility = agility.MainStats.Agility.Final
+			finalWalkSpeed += (agility * 0.005) + (8 * (agility / (agility + 150)))
+			finalJumpPower += (agility * 0.005) + (8 * (agility / (agility + 150)))
+		end
+	end
 	---Applying---
 	if VitalsService:GetVital(character, "WalkSpeed") ~= finalWalkSpeed then
 		VitalsService:ModifyVital(character, "Movement", "ModifyWalkSpeed", {

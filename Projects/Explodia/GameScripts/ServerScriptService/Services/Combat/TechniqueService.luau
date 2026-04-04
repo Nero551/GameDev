@@ -1,21 +1,22 @@
-local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Debris = game:GetService("Debris")
 local Players = game:GetService("Players")
 local ServerScriptService = game:GetService("ServerScriptService")
-local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+
+local assets = ReplicatedStorage.Assets
+local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local HitService = require(script.Parent.HitService)
 local DataService = require(ServerScriptService.Services.Core.DataService)
-local assets = ReplicatedStorage.Assets
-
-local TechniqueData = require(game.ReplicatedStorage.Modules.Data.TechniqueData)
-
 local StateService = require(game.ServerScriptService.Services.Core.StateService)
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
-
 local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
 
+local TechniqueData = require(game.ReplicatedStorage.Modules.Data.TechniqueData)
+local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+
 local TechniqueService = {}
+
+TechniqueService.TechniqueLetters = { "Z", "X", "C", "V", "B" }
 
 function TechniqueService:SetupTechniques(player)
 	local techniques = DataService:GetTable(player, "Techniques")
@@ -56,13 +57,6 @@ function TechniqueService:SetupTechniques(player)
 	end
 end
 
-function TechniqueService:CheckWeaponType(weaponData, techniqueData)
-	if techniqueData.WeaponType[weaponData.Type] then
-		return true
-	end
-	return
-end
-
 function TechniqueService:ObtainTechnique(player, techniqueID)
 	local techniques = DataService:GetTable(player, "Techniques")
 	local techniqueData = TechniqueData:GetTechniqueData(techniqueID)
@@ -74,7 +68,6 @@ function TechniqueService:ObtainTechnique(player, techniqueID)
 	end
 
 	table.insert(techniques.Obtained, techniqueID)
-
 
 	local obtained = player:FindFirstChild("Techniques"):FindFirstChild("Obtained")
 	local value = obtained:FindFirstChild(techniqueID)
@@ -96,13 +89,28 @@ function TechniqueService:RemoveTechnique(player, techniqueID)
 	end
 	local obtained = player:FindFirstChild("Techniques"):FindFirstChild("Obtained")
 	local value = obtained:FindFirstChild(techniqueID)
-	if  value then
+	if value then
 		value:Destroy()
 	end
 end
 
 function TechniqueService:UnEquipTechnique(player, techniqueID)
 	local techniques = DataService:GetTable(player, "Techniques")
+	local techniqueData = TechniqueData:GetTechniqueData(techniqueID)
+
+	if not techniqueData then
+		return
+	end
+
+	for _, weaponType in ipairs(techniqueData.WeaponType) do
+		if techniques.Equipped[weaponType] then
+			for letter,wantedTechniqueID in pairs(techniques.Equipped[weaponType]) do
+				if wantedTechniqueID == techniqueID then
+					techniques.Equipped[weaponType][letter] = nil
+				end
+			end	
+		end
+	end
 
 	if techniques.Equipped[techniqueID] then
 		techniques.Equipped[techniqueID] = nil
@@ -127,9 +135,22 @@ function TechniqueService:EquipTechnique(player, techniqueID)
 		return
 	end
 
+	local count = 0
+	for _ in pairs(techniques.Equipped) do
+		count += 1
+	end
+	if count >= 12 then
+		return
+	end
+
 	for _, weaponType in ipairs(techniqueData.WeaponType) do
 		if Equipped[weaponType] then
-			techniques.Equipped[techniqueID] = Equipped[weaponType]
+			techniques.Equipped[weaponType] = techniques.Equipped[weaponType] or {}
+			for _, techniqueLetter in ipairs(TechniqueService.TechniqueLetters) do
+				if not techniques.Equipped[weaponType][techniqueLetter] then
+					techniques.Equipped[weaponType][techniqueLetter] = techniqueID
+				end
+			end
 		end
 	end
 
@@ -162,54 +183,66 @@ function TechniqueService:UseTechnique(character, techniqueLetter, mouse)
 		return
 	end
 
-	if not TechniqueService:CheckWeaponType(weaponData, techniqueData) then
+	if not techniqueData.WeaponType[weaponData.Type] then
 		return
 	end
 
+	--local techniqueID =
+
 	if player then
 		local inventory = DataService:GetTable(player, "Inventory")
+		local techniques = DataService:GetTable(player, "Techniques")
+
+		if not techniques.Equipped[weaponData.Abilities[techniqueLetter]] then
+			return
+		end
+
+		---Taking Mana/Stamina---
 		if techniqueData.DamageType then
 			if techniqueData.DamageType == "Physical" then
 				local playerStamina = VitalsService:GetVital(character, "Stamina")
 				if playerStamina.CurrentStamina < techniqueData.Cost then
 					assets.Shared.MenuSounds.Error:Play()
 					NetworkingService:FireToClient(player, "PopUp", {
-						["AbilityName"] = techniqueData.AbilityName,
+						["TechniqueName"] = techniqueData.TechniqueName,
 						["RequiredStamina"] = techniqueData.Cost,
 					})
 					return
 				end
+				VitalsService:ModifyVital(character, "Stamina", "ModifyStamina", {
+					["StaminaChange"] = -techniqueData.Cost,
+				})
 			elseif techniqueData.DamageType == "Magic" then
 				local playerMana = VitalsService:GetVital(character, "Mana")
 				if playerMana.CurrentMana < techniqueData.Cost then
 					assets.Shared.MenuSounds.Error:Play()
 					NetworkingService:FireToClient(player, "PopUp", {
-						["AbilityName"] = techniqueData.AbilityName,
-						["RequiredMana"] = techniqueData.Mana,
+						["TechniqueName"] = techniqueData.TechniqueName,
+						["RequiredMana"] = techniqueData.Cost,
 					})
 					return
 				end
+				VitalsService:ModifyVital(character, "Mana", "ModifyMana", {
+					["ManaChange"] = -techniqueData.Cost,
+				})
 			end
 		end
 
 		if inventory[tool:GetAttribute("ID")] then
-			if inventory[tool:GetAttribute("ID")].Mastery < techniqueData.AbilityMastery then
+			if inventory[tool:GetAttribute("ID")].Mastery < techniqueData.Mastery then
 				NetworkingService:FireToClient(player, "PopUp", {
 					["Mastery"] = inventory[tool:GetAttribute("ID")].Mastery,
-					["RequiredMastery"] = techniqueData.AbilityMastery,
+					["RequiredMastery"] = techniqueData.Mastery,
 				})
 				return
 			end
 		end
 
 		NetworkingService:FireToClient(player, "CameraShake", 0.25)
-		VitalsService:ModifyVital(character, "Mana", "ModifyMana", {
-			["ManaChange"] = -techniqueData.Mana,
-		})
 	end
 
 	---CoolDown---
-	local cooldownTime = techniqueData.AbilityCooldown
+	local cooldownTime = techniqueData.Cooldown
 
 	---Animation---
 	local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
@@ -232,12 +265,12 @@ function TechniqueService:UseTechnique(character, techniqueLetter, mouse)
 		---HitBox---
 		local hitboxClone = assets.HitboxTemplate:Clone()
 		if techniqueData.OnMouse and mouse then
-			hitboxClone.Name = techniqueData.AbilityName .. " Hitbox"
+			hitboxClone.Name = techniqueData.TechniqueName .. " Hitbox"
 			hitboxClone.Size = techniqueData.HitBoxSize
 			hitboxClone.Position = mouse
 			hitboxClone.Parent = workspace.World.Hitboxes
 		else
-			hitboxClone.Name = techniqueData.AbilityName .. " Hitbox"
+			hitboxClone.Name = techniqueData.TechniqueName .. " Hitbox"
 			hitboxClone.Size = techniqueData.HitBoxSize
 			hitboxClone.Position = hrp.Position
 				+ techniqueData.HitBoxPosition
@@ -259,12 +292,10 @@ function TechniqueService:UseTechnique(character, techniqueLetter, mouse)
 			["HitBoxName"] = hitboxClone.Name,
 		})
 		Debris:AddItem(hitboxClone, 1)
+
 		---Damage---
 		HitService:Apply(character, techniqueData, tool, hitboxClone)
 	end)
 end
-
-
-
 
 return TechniqueService

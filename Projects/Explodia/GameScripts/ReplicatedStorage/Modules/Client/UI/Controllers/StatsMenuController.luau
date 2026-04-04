@@ -23,7 +23,6 @@ function StatsMenuController:TopBar()
 			UIHelper:ClickEffects(sectionButton)
 			UIHelper:HoverEffects(sectionButton)
 
-			
 			local sectionName = sectionButton.Name:split("Button")[1]
 			local sectionMenu = StatsMenu:FindFirstChild(sectionName)
 			print(sectionName)
@@ -107,7 +106,7 @@ function StatsMenuController:Stats()
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 	local resetButton = UIManager:GetUI("StatsMenu", "ResetButton")
-	local statDetailsFrame = UIManager:GetUI("StatsMenu", "StatDetailsFrame"):FindFirstChild("Stats")
+	local statDetailsFrame = UIManager:GetUI("StatsMenu", "StatDetailsFrame")
 	local statPointsFrame = UIManager:GetUI("StatsMenu", "StatPointsFrame")
 	local statSections = statPointsFrame:FindFirstChild("StatSections")
 
@@ -139,34 +138,28 @@ function StatsMenuController:Stats()
 		end
 	end
 
-	for _, detailFrame in statDetailsFrame:GetDescendants() do
-		if detailFrame:IsA("Frame") then
-			if detailFrame:FindFirstChild("StatCatagory") then
-			end
-		end
-	end
 	for _, catagory in playerStats:GetChildren() do
 		for _, stat in catagory:GetChildren() do
 			local function StatDetailsRefresh()
-				local total = stat:GetAttribute("Final")
-				local statPoints = stat:GetAttribute("FlatStatPoint")
-				local flatBonuses = stat:GetAttribute("FlatBuff")
-				local percentBonuses = (stat:GetAttribute("Percent") * 100) .. "%"
-				for _, detailFrame in statDetailsFrame:GetDescendants() do
-					if not detailFrame:IsA("Frame") then
-						continue
+				local detailFrame = statDetailsFrame:FindFirstChild(stat.Name)
+				if not detailFrame then
+					detailFrame = UIManager:CloneUI(
+						"StatsMenu",
+						stat.Name,
+						ReplicatedStorage.Assets.UI.StatDetailTemplate,
+						"StatDetailsFrame"
+					)
+					detailFrame.StatCatagory.Text = stat.Name
+				end
+				for boost, val in stat:GetAttributes() do
+					local textLabel = detailFrame:FindFirstChild("Details"):FindFirstChild(boost)
+					if not textLabel then
+						textLabel = detailFrame:FindFirstChild("Details"):FindFirstChild("Final"):Clone()
+						textLabel.Name = boost
+						textLabel.Parent = detailFrame:FindFirstChild("Details")
 					end
-					if detailFrame.Name ~= stat.Name then
-						continue
-					end
-					local totalText: TextLabel = detailFrame.StatDetailNumbers.Total
-					local statPointsText: TextLabel = detailFrame.StatDetailNumbers.StatPoint
-					local flatBonusesText: TextLabel = detailFrame.StatDetailNumbers.FlatBonus
-					local percentBonusesText: TextLabel = detailFrame.StatDetailNumbers.PercentBonus
-					totalText.Text = total
-					statPointsText.Text = statPoints
-					flatBonusesText.Text = flatBonuses
-					percentBonusesText.Text = percentBonuses
+					textLabel.Visible = true
+					textLabel.Text = boost..":  "..val
 				end
 			end
 			local function StatPointsRefresh()

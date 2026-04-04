@@ -8,7 +8,7 @@ local assets = ReplicatedStorage:WaitForChild("Assets")
 return function(arguementData: any)
 	local target: Model = arguementData.Target
 	local weaponUsed = arguementData.Weapon
-	local ability = arguementData.Ability
+	local technique = arguementData.Technique
 
 	if target then
 		local rootPart = target:FindFirstChild("HumanoidRootPart")
@@ -16,8 +16,8 @@ return function(arguementData: any)
 			local clone
 			if weaponUsed then
 				clone = assets.Weapons[weaponUsed].Effects.HitEffect:Clone()
-			elseif ability then
-				clone = assets.Shared.Abilities[ability].HitEffect:Clone()
+			elseif technique then
+				clone = assets.Shared.Abilities[technique].HitEffect:Clone()
 			end
 			clone.Parent = rootPart
 			for _, v in clone:GetDescendants() do

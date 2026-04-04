@@ -1,6 +1,6 @@
 local RunService = game:GetService("RunService")
 local ServerScriptService = game:GetService("ServerScriptService")
-local Arena = require(ServerScriptService.Services.World.Gamemodes.Arena)
+local Arena = require(ServerScriptService.Services.World.GamemodeService.Arena)
 local NPCService = require(game.ServerScriptService.Services.NPC.NPCService)
 local AIService = require(game.ServerScriptService.Services.NPC.AIService)
 

@@ -34,13 +34,13 @@ function DataService:GetDefaultData()
 				Vitality = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
 				Intelligence = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
 				Strength = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				Dexterity = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				Agility = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				Dexterity = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				Agility = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
 			},
-			SideStats = {
+			SubStats = {
 				Defense = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				CriticalDamage = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				CriticalRate = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+				CriticalDamage = { DexterityPercentBonus = 0, Percent = 0, Final = 0 },
+				CriticalChance = { DexterityPercentBonus = 0, Percent = 0, Final = 0 },
 			},
 		},
 		Level = {
@@ -111,8 +111,12 @@ end
 
 function DataService:GetTable(player, name)
 	if not player then
-		warn("Player Is Nil")
-		return nil
+		warn("Player is nil", {debug.traceback()})
+		return
+	end
+	if not DataService.PlayerDatas[player] then
+		warn("Data Doesn't Exist For", player, {debug.traceback()})
+		return
 	end
 	return DataService.PlayerDatas[player][name]
 end

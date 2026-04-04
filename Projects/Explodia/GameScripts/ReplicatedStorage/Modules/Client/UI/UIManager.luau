@@ -5,6 +5,7 @@ local StarterGui = game:GetService("StarterGui")
 local TweenService = game:GetService("TweenService")
 local blur: BlurEffect = Lighting.Blur
 
+local DefaultProperties = require(ReplicatedStorage.Modules.Client.UI.Helpers.DefaultProperties)
 local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = {}
 
@@ -95,6 +96,16 @@ function UIManager:CreateUI(screenName, name, class, parent, properties)
 		return
 	end
 
+	for property,value in pairs(DefaultProperties[class]) do
+		local _, error = pcall(function()
+			ui[property] = value
+		end)
+		if error then
+			warn("Property or Value is invalid")
+			continue
+		end
+	end
+	
 	properties = typeof(properties) == "table" and properties or {}
 	for property, value in pairs(properties) do
 		local _, error = pcall(function()

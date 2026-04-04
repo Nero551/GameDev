@@ -205,7 +205,7 @@ function HUDController:Abilities()
 			end
 
 			data.bar.Visible = true
-			data.nameLabel.Text = techniqueData.AbilityName
+			data.nameLabel.Text = techniqueData.TechniqueName
 			local cdStateName = "Ability" .. abilityKey .. " Cooldown"
 			local onCooldown = StateChecker:CheckState(char, cdStateName)
 			if onCooldown and data.cdActive and data.cdEndTime then
@@ -216,11 +216,11 @@ function HUDController:Abilities()
 			if onCooldown and not data.cdActive then
 				data.cdActive = true
 				data.cdBar.Visible = true
-				data.cdEndTime = time() + techniqueData.AbilityCooldown
+				data.cdEndTime = time() + techniqueData.Cooldown
 
 				local tween = TweenService:Create(
 					data.cdBar,
-					TweenInfo.new(techniqueData.AbilityCooldown, Enum.EasingStyle.Linear),
+					TweenInfo.new(techniqueData.Cooldown, Enum.EasingStyle.Linear),
 					{ Size = UDim2.fromScale(0, 0.87) }
 				)
 

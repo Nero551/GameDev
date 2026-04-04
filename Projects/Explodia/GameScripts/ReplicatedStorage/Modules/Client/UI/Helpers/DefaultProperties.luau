@@ -13,16 +13,16 @@ DefaultProperties.Frame = {
 }
 
 DefaultProperties.TextLabel = {
-	AnchorPoint = Vector2.new(0.5, 0.5),
-	Size = UDim2.fromScale(1, 0.3),
+	AnchorPoint = Vector2.new(0, 0),
+	Size = UDim2.fromScale(1, 1),
 	Position = UDim2.fromScale(0.5, 0.5),
 	ZIndex = 1,
 	BackgroundTransparency = 1,
 	TextStrokeColor3 = Color3.fromRGB(0, 0, 0),
-	TextColor3 = Color3.fromRGB(255, 255, 255),
+	TextColor3 = Color3.fromRGB(240,235,216),
 	TextXAlignment = Enum.TextXAlignment.Center,
 	TextYAlignment = Enum.TextYAlignment.Center,
-	FontFace = Font.new("rbxasset://fonts/families/Rajdhani.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal),
+	FontFace = Font.new("rbxasset://fonts/families/Jura.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal),
 	TextScaled = true,
 	Text = "",
 	Visible = true,

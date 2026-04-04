@@ -23,13 +23,13 @@ function HitReactionsService:Default(attacker, targetHit, data, trueSwingNumber)
 	StateService:AddState(attacker, "In Combat", 20)
 	StateService:AddState(targetHit, "In Combat", 20)
 
-	if data.AbilityName then
+	if data.TechniqueName then
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
 			["Target"] = targetHit,
-			["Ability"] = data.Name,
+			["Technique"] = data.TechniqueName,
 		})
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
-			["Sound"] = ReplicatedStorage.Assets.Shared.Abilities[data.AbilityName].Hit,
+			["Sound"] = ReplicatedStorage.Assets.Shared.Abilities[data.TechniqueName].Hit,
 			["Parent"] = targetHRP,
 		})
 		local hitReactionAnim =
@@ -155,13 +155,13 @@ function HitReactionsService:Critical(attacker, targetHit, data, trueSwingNumber
 	StateService:AddState(attacker, "In Combat", 20)
 	StateService:AddState(targetHit, "In Combat", 20)
 
-	if data.AbilityName then
+	if data.TechniqueName then
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
 			["Target"] = targetHit,
-			["Ability"] = data.Name,
+			["Technique"] = data.TechniqueName,
 		})
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
-			["Sound"] = ReplicatedStorage.Assets.Shared.Abilities[data.AbilityName].Hit,
+			["Sound"] = ReplicatedStorage.Assets.Shared.Abilities[data.TechniqueName].Hit,
 			["Parent"] = targetHRP,
 			["Volume"] = 2,
 		})
@@ -225,10 +225,10 @@ function HitReactionsService:BlackFlash(attacker, targetHit, data, trueSwingNumb
 		["SoundName"] = ReplicatedStorage.Assets.Shared.Combat.BlackFlash.Sound,
 	})
 
-	if data.AbilityName then
+	if data.TechniqueName then
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
 			["Target"] = targetHit,
-			["Ability"] = data.Name,
+			["Technique"] = data.TechniqueName,
 		})
 		local hitReactionAnim =
 			Animations:GetAnimation(targetHumanoid, "Shared.Abilities.AbilityHitReactions." .. data.HitReaction)
@@ -281,13 +281,13 @@ function HitReactionsService:StatusEffect(attacker, targetHit, data, trueSwingNu
 	StateService:AddState(attacker, "In Combat", 20)
 	StateService:AddState(targetHit, "In Combat", 20)
 
-	if data.AbilityName then
+	if data.TechniqueName then
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
 			["Target"] = targetHit,
-			["Ability"] = data.Name,
+			["Technique"] = data.TechniqueName,
 		})
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
-			["Sound"] = ReplicatedStorage.Assets.Shared.Abilities[data.AbilityName].Hit,
+			["Sound"] = ReplicatedStorage.Assets.Shared.Abilities[data.TechniqueName].Hit,
 			["Parent"] = targetHRP,
 		})
 		local hitReactionAnim =

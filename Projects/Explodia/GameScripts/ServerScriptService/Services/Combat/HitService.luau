@@ -19,7 +19,7 @@ function HitService:Apply(attacker, data, tool, hitbox, trueSwingNumber)
 	local playerAttacker = Players:GetPlayerFromCharacter(attacker)
 	local totalScaling = 0
 	local critDamage = data.CriticalDamage or 0
-	local critRate = data.CriticalRate or 0
+	local critChance = data.CriticalChance or 0
 	local targetDefense = 0
 	if playerAttacker then
 		for statType, value in pairs(data.Scaling) do
@@ -28,8 +28,10 @@ function HitService:Apply(attacker, data, tool, hitbox, trueSwingNumber)
 				totalScaling += stat.Final * value
 			end
 		end
-		critDamage += StatService:GetStat(playerAttacker, "CriticalDamage").Percent
-		critRate += StatService:GetStat(playerAttacker, "CriticalRate").Percent
+
+		critDamage += StatService:GetStat(playerAttacker, "CriticalDamage").Final
+		critChance += StatService:GetStat(playerAttacker, "CriticalChance").Final
+
 		baseDamage = math.random(data.MinDamage, data.MaxDamage)
 	end
 
@@ -84,13 +86,9 @@ function HitService:Apply(attacker, data, tool, hitbox, trueSwingNumber)
 					damage = DamageService:BlockedDamage(attacker, targetHit, baseDamage, totalScaling, targetDefense)
 				end
 			else
-				if critRate and critDamage and math.random(0, 100) <= (critRate * 100) then
+				if critChance and critDamage and math.random(0, 1) <= critChance then
 					---BlackFlash HitType---
-					if
-						(critRate * 100) >= 150
-						and math.random(0, 100) <= (critRate * 100) - 150
-						and not data.AbilityName
-					then
+					if critChance >= 1.5 and math.random(0, 5) <= critChance - 1.5 and not data.TechniqueName then
 						HitReactionsService:BlackFlash(attacker, targetHit, data, trueSwingNumber)
 						damage = DamageService:BlackFlashDamage(
 							attacker,

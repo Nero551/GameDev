@@ -64,17 +64,17 @@ function PopupController:Creator()
 			end
 		end
 
-		---No Mana For Ability---
-		if popupInfo.AbilityName then
+		---No Mana/Stamina For Technique---
+		if popupInfo.TechniqueName then
 			if  popupInfo.RequiredMana then
 				popup.PopUpText.Text = "Not Enough Mana For ["
-					.. popupInfo.AbilityName
+					.. popupInfo.TechniqueName
 					.. "] ("
 					.. popupInfo.RequiredMana
 					.. ")"
 			elseif popupInfo.RequiredStamina then
 				popup.PopUpText.Text = "Not Enough Stamina For ["
-					.. popupInfo.AbilityName
+					.. popupInfo.TechniqueName
 					.. "] ("
 					.. popupInfo.RequiredStamina
 					.. ")"
@@ -96,7 +96,7 @@ function PopupController:Creator()
 		if popupInfo.Level then
 			popup.PopUpText.Text = "Leveled Up (" .. popupInfo.Level .. ")"
 			popup.PopUpText.TextColor3 = Color3.fromHex("#fff131")
-			ReplicatedStorage.Assets.Shared.Sounds.LevelUp:Play()
+			ReplicatedStorage.Assets.Shared.MenuSounds.LevelUp:Play()
 
 			---Item Drop---
 		elseif popupInfo.ItemName and popupInfo.ItemRarity and popupInfo.ItemAmount then

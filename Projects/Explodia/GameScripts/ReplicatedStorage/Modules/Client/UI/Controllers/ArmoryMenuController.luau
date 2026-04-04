@@ -151,8 +151,8 @@ function ArmoryMenuController:Armory()
 								ability.Visible = false
 							else
 								ability.Visible = true
-								ability.AbilityMastery.Text = techniqueData.AbilityMastery
-								ability.AbilityName.Text = techniqueData.AbilityName
+								ability.AbilityMastery.Text = techniqueData.Mastery
+								ability.AbilityName.Text = techniqueData.TechniqueName
 							end
 						else
 							ability.Visible = false

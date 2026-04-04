@@ -1,3 +1,4 @@
+local LevelService = require(script.Parent.LevelService)
 local DataService = require(game.ServerScriptService.Services.Core.DataService)
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 
@@ -47,29 +48,12 @@ local function ApplyStrength(player: Player)
 	})
 end
 
-local function ApplyDexterity(player:Player)
-	-- local playerStats = DataService:GetTable(player, "Stats")
-	-- local dexStat = playerStats.MainStats.Dexterity
-	-- local finalDex = dexStat.Final
+local function ApplyDexterity(player: Player)
+	local playerStats = DataService:GetTable(player, "Stats")
+	local dexStat = playerStats.MainStats.Dexterity
 
-	-- local crit
-	-- local maxCritChance = math.max(, finalDex * .02)
-end
-
-local function ApplyAgility(player:Player)
-	-- local playerStats = DataService:GetTable(player, "Stats")
-	-- local agiStat = playerStats.MainStats.Agility
-	-- local char = player.Character or player.CharacterAdded:Wait()
-
-	-- local finalAGI = agiStat.Final
-	-- local SPEED_PER_POINT = .05
-	-- local maxSpeed = math.max(1, finalAGI * SPEED_PER_POINT)
-
-	-- VitalsService:ModifyVital(char, "Movement", "ModifyWalkSpeed", {
-	-- 	["WalkSpeed"] = maxSpeed
-	-- })
-
-	-- print(maxSpeed)
+	playerStats.SubStats.CriticalChance.DexterityPercentBonus = dexStat.Final * 0.0002
+	playerStats.SubStats.CriticalDamage.DexterityPercentBonus = dexStat.Final * 0.0002
 end
 
 ---Setup Stats---
@@ -119,19 +103,32 @@ end
 ---Update Stats---
 function StatService:UpdateStats(player: Player)
 	local playerStats = DataService:GetTable(player, "Stats")
-	for catagory, t in pairs(playerStats) do
-		for statType, statTable in pairs(t) do
-			statTable.Final = (statTable.Base + statTable.FlatStatPoint + statTable.FlatBuff) * (1 + statTable.Percent)
+
+	for catagory, stats in pairs(playerStats) do
+		for statType, statTable in pairs(stats) do
 			local statValue = player:WaitForChild("Stats"):WaitForChild(catagory):WaitForChild(statType)
-			for type, value in pairs(statTable) do
-				statValue:SetAttribute(type, value)
+			statTable.Final = 0
+			local percentTotal = 0
+
+			for boost, val in pairs(statTable) do
+				if boost ~= "Final" then
+					if string.find(boost, "Percent") then
+						percentTotal += val or 0
+					else
+						statTable.Final += val or 0
+					end
+
+					statValue:SetAttribute(boost, val)
+				end
 			end
+			statTable.Final *= (1 + percentTotal)
+
+			statValue:SetAttribute("Final", statTable.Final)
 		end
 	end
 	ApplyVitality(player)
 	ApplyIntelligence(player)
 	ApplyStrength(player)
-	ApplyAgility(player)
 	ApplyDexterity(player)
 end
 
@@ -140,10 +137,10 @@ function StatService:AllocateStatPoint(player, statType, amount)
 	local playerLevel = DataService:GetTable(player, "Level")
 	local playerStats = DataService:GetTable(player, "Stats")
 
-	if playerLevel.StatPoints <= 0  then
+	if playerLevel.StatPoints <= 0 then
 		return
 	end
-	
+
 	if amount > playerLevel.StatPoints then
 		amount = playerLevel.StatPoints
 	end
@@ -151,6 +148,7 @@ function StatService:AllocateStatPoint(player, statType, amount)
 	playerStats.MainStats[statType].FlatStatPoint += amount
 	player:WaitForChild("Level"):FindFirstChild("StatPoints"):SetAttribute("Amount", playerLevel.StatPoints)
 	StatService:UpdateStats(player)
+	LevelService:IncreaseEXP(player, 0)
 end
 
 ---Reset Stats---
@@ -163,6 +161,7 @@ function StatService:ResetStats(player: Player)
 		stat.FlatStatPoint = 0
 	end
 	StatService:UpdateStats(player)
+	LevelService:IncreaseEXP(player, 0)
 end
 
 ---Apply Item Buffs---

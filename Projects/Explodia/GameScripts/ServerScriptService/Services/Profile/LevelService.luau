@@ -6,12 +6,12 @@ local LevelService = {}
 function LevelService:SetupLevel(player)
 	local playerLevel = DataService:GetTable(player, "Level")
 	local LevelFolder = player:FindFirstChild("Level")
+	LevelService:IncreaseEXP(player, 0)
 
 	if not LevelFolder then
 		LevelFolder = Instance.new("Folder")
 		LevelFolder.Parent = player
 		LevelFolder.Name = "Level"
-		LevelService:IncreaseEXP(player, 0)
 	end
 
 	for stat, v in pairs(playerLevel) do

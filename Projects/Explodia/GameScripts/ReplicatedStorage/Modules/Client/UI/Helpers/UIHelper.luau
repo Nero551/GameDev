@@ -142,13 +142,14 @@ function UIHelper:FadeIn(menu)
 	if not cache then
 		return
 	end
-	task.wait(0.5)
+	task.wait(0.2)
 	menu.Enabled = true
 
 	for obj, props in pairs(cache) do
 		TweenService:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), props):Play()
 	end
 end
+
 function UIHelper:FadeOut(menu)
 	UIHelper.Cache[menu] = {}
 
