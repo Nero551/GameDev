@@ -21,13 +21,18 @@ function DataService:GetDefaultData()
 			},
 		},
 		Equipped = {
-			Melee = "weapon_0000000001",
-			Sword = nil,
-			RiftBorn = nil,
-			Helmet = nil,
-			ChestPlate = nil,
-			Leggings = nil,
-			Boots = nil,
+			Weapons = {
+				Melee = "weapon_0000000001",
+				Blade = nil,
+				Grimiore = nil,
+				RiftBorn = nil,
+			},
+			Armor = {
+				Helmet = nil,
+				ChestPlate = nil,
+				Leggings = nil,
+				Boots = nil,
+			},
 		},
 		Stats = {
 			MainStats = {
@@ -111,11 +116,11 @@ end
 
 function DataService:GetTable(player, name)
 	if not player then
-		warn("Player is nil", {debug.traceback()})
+		warn("Player is nil", { debug.traceback() })
 		return
 	end
 	if not DataService.PlayerDatas[player] then
-		warn("Data Doesn't Exist For", player, {debug.traceback()})
+		warn("Data Doesn't Exist For", player, { debug.traceback() })
 		return
 	end
 	return DataService.PlayerDatas[player][name]

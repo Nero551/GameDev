@@ -15,7 +15,6 @@ local TechniqueData = require(game.ReplicatedStorage.Modules.Data.TechniqueData)
 local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 
 local TechniqueService = {}
-
 TechniqueService.TechniqueLetters = { "Z", "X", "C", "V", "B" }
 
 function TechniqueService:SetupTechniques(player)
@@ -163,7 +162,7 @@ function TechniqueService:EquipTechnique(player, techniqueID)
 	end
 end
 
-function TechniqueService:UseTechnique(character, techniqueLetter, mouse)
+function TechniqueService:UseTechnique(character, techniqueID, mouse)
 	local player = Players:GetPlayerFromCharacter(character)
 	local tool = character:FindFirstChildWhichIsA("Tool")
 	if not tool then
@@ -172,14 +171,14 @@ function TechniqueService:UseTechnique(character, techniqueLetter, mouse)
 
 	local humanoid = character:WaitForChild("Humanoid")
 	local weaponData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
-	local techniqueData = TechniqueData:GetTechniqueData(weaponData.Abilities[techniqueLetter])
+	local techniqueData = TechniqueData:GetTechniqueData(techniqueID)
 
-	if not ActionVerifier:CanTechnique(character, techniqueLetter) then
+	if not ActionVerifier:CanTechnique(character, techniqueID) then
 		return
 	end
 
 	if not techniqueData then
-		print("Technique data not found for:", tool.Name .. techniqueLetter)
+		print("Technique data not found for:", techniqueData.TechniqueName)
 		return
 	end
 
@@ -187,15 +186,8 @@ function TechniqueService:UseTechnique(character, techniqueLetter, mouse)
 		return
 	end
 
-	--local techniqueID =
-
 	if player then
 		local inventory = DataService:GetTable(player, "Inventory")
-		local techniques = DataService:GetTable(player, "Techniques")
-
-		if not techniques.Equipped[weaponData.Abilities[techniqueLetter]] then
-			return
-		end
 
 		---Taking Mana/Stamina---
 		if techniqueData.DamageType then
@@ -247,7 +239,7 @@ function TechniqueService:UseTechnique(character, techniqueLetter, mouse)
 	---Animation---
 	local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 	local animation: AnimationTrack =
-		Animations:GetAnimation(humanoid, "Weapons." .. tool.Name .. ".Animations.Abilities." .. techniqueLetter)
+		Animations:GetAnimation(humanoid, "Shared.Techniques."..techniqueData.TechniqueName..".Animation")
 	if not animation then
 		warn("Animation Not Found")
 		return
@@ -255,7 +247,7 @@ function TechniqueService:UseTechnique(character, techniqueLetter, mouse)
 	animation:Play()
 
 	---Ability States---
-	StateService:AddState(character, "Ability" .. techniqueLetter .. " Cooldown", cooldownTime)
+	StateService:AddState(character, "Ability" .. techniqueID .. " Cooldown", cooldownTime)
 	StateService:AddState(character, "Invulnerable", 0.2)
 	StateService:AddState(character, "Casting", animation.Length)
 
@@ -281,14 +273,14 @@ function TechniqueService:UseTechnique(character, techniqueLetter, mouse)
 
 		---VFX---
 		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "AbilityVFX", {
-			["VFX"] = assets.Shared.Abilities[weaponData.Abilities[techniqueLetter]].VFX,
+			["VFX"] = assets.Shared.Techniques[techniqueData.TechniqueName].VFX,
 			["HitBoxName"] = hitboxClone.Name,
 			["Caster"] = character,
 		})
 
 		---Sound---
 		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "AbilitySound", {
-			["Sound"] = assets.Shared.Abilities[weaponData.Abilities[techniqueLetter]].Activate,
+			["Sound"] = assets.Shared.Techniques[techniqueData.TechniqueName].Activate,
 			["HitBoxName"] = hitboxClone.Name,
 		})
 		Debris:AddItem(hitboxClone, 1)

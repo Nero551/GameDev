@@ -52,7 +52,9 @@ function StateHandler:HandleStates(character: Model, updateRate, runSpeed)
 	end
 
 	---Apply Agility---
-	if Players:GetPlayerFromCharacter(character) then
+	if
+		Players:GetPlayerFromCharacter(character) and DataService.PlayerDatas[Players:GetPlayerFromCharacter(character)]
+	then
 		local agility = DataService:GetTable(Players:GetPlayerFromCharacter(character), "Stats")
 		if agility then
 			agility = agility.MainStats.Agility.Final

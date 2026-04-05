@@ -1,6 +1,10 @@
 local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
+local ServerScriptService = game:GetService("ServerScriptService")
 
+local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+local DataService = require(ServerScriptService.Services.Core.DataService)
 local StateHandler = require(game.ServerScriptService.Modules.Utilities.StateHandler)
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 local HandService = require(game.ServerScriptService.Services.Combat.HandService)
@@ -131,7 +135,14 @@ end)
 ---Client Requests to use Technique---
 NetworkingService:OnServerEvent("Ability", function(player: Player, mouse, letter)
 	local char = player.Character or player.CharacterAdded:Wait()
-	TechniqueService:UseTechnique(char, letter, mouse)
+	local techniques = DataService:GetTable(player, "Techniques")
+	local tool = char:FindFirstChildWhichIsA("Tool")
+
+	TechniqueService:UseTechnique(
+		char,
+		techniques.Equipped[ItemDataBase:GetItemData(tool:GetAttribute("ID")).Type][letter],
+		mouse
+	)
 end)
 
 ----------------------------------------------------------------------------------------------------------------------------------

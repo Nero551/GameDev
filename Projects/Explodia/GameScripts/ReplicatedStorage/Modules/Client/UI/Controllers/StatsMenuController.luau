@@ -25,7 +25,6 @@ function StatsMenuController:TopBar()
 
 			local sectionName = sectionButton.Name:split("Button")[1]
 			local sectionMenu = StatsMenu:FindFirstChild(sectionName)
-			print(sectionName)
 
 			sectionButton.MouseButton1Click:Connect(function()
 				for _, frame in StatsMenu:GetChildren() do

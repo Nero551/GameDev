@@ -17,7 +17,7 @@ return function(arguementData: any)
 			if weaponUsed then
 				clone = assets.Weapons[weaponUsed].Effects.HitEffect:Clone()
 			elseif technique then
-				clone = assets.Shared.Abilities[technique].HitEffect:Clone()
+				clone = assets.Shared.Techniques[technique].HitEffect:Clone()
 			end
 			clone.Parent = rootPart
 			for _, v in clone:GetDescendants() do

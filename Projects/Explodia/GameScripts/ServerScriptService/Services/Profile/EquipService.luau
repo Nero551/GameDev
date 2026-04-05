@@ -15,14 +15,22 @@ function EquipService:SetupEquipped(player)
 		folder.Parent = player
 	end
 
-	for type, itemID in pairs(EquippedItems) do
-		local value = folder:FindFirstChild(type)
-		if not value then
-			value = Instance.new("StringValue")
-			value.Name = type
-			value.Parent = folder
+	for catagory, tbl in pairs(EquippedItems) do
+		local catagoryFolder = folder:FindFirstChild(catagory)
+		if not catagoryFolder then
+			catagoryFolder = Instance.new("Folder")
+			catagoryFolder.Name = catagory
+			catagoryFolder.Parent = folder
 		end
-		value:SetAttribute("Equipped", itemID)
+		for type, itemID in pairs(tbl) do
+			local value = folder:FindFirstChild(type)
+			if not value then
+				value = Instance.new("StringValue")
+				value.Name = type
+				value.Parent = folder:FindFirstChild(catagory)
+			end
+			value:SetAttribute("Equipped", itemID)
+		end
 	end
 	EquipService:LoadEquippedItems(player)
 end
@@ -31,25 +39,32 @@ end
 function EquipService:EquipItem(player: Player, itemID)
 	local inventory = DataService:GetTable(player, "Inventory")
 	local equippedItems = DataService:GetTable(player, "Equipped")
+	local folder = player:FindFirstChild("Equipped")
 	---Must own the Item---
 	if not inventory[itemID] then
 		warn(itemID .. " Not Found In Inventory")
 		return
 	end
 	local char = player.Character or player.CharacterAdded:Wait()
-	local itemType = nil
 
 	---If A Weapon---
 	local itemData = ItemDataBase:GetItemData(itemID)
 	if itemData then
-		if
-			itemData.Type == "Melee"
-			or itemData.Type == "Sword"
-			or itemData.Type == "Grimiore"
-			or itemData.Type == "RiftBorn"
-		then
-			itemType = itemData.Type
-			local tool: Tool? = ServerStorage.Tools[itemType]:FindFirstChild(itemData.Name):Clone()
+		if string.find(itemID, "weapon") then
+			if equippedItems.Weapons[itemData.Type] ~= itemID then
+				equippedItems.Weapons[itemData.Type] = itemID
+			end
+			local value = folder:FindFirstChild("Weapons"):FindFirstChild(itemData.Type)
+
+			if value then
+				value:Destroy()
+			end
+			value = Instance.new("StringValue")
+			value.Name = itemData.Type
+			value.Parent = folder:FindFirstChild("Weapons")
+			value:SetAttribute("Equipped", itemID)
+
+			local tool: Tool? = ServerStorage.Tools[itemData.Type]:FindFirstChild(itemData.Name):Clone()
 			if tool then
 				--Check For Another Tool With Same Type--
 				for _, anotherTool in char:GetChildren() do
@@ -80,22 +95,26 @@ function EquipService:EquipItem(player: Player, itemID)
 
 				tool.Parent = player.Backpack
 				ToolLoader(tool)
-				if itemData.Buffs then
-					BuffService:AddBuff(player, itemData, itemID)
-				end
 			end
-		elseif
-			itemData.Type == "Helmet"
-			or itemData.Type == "ChestPlate"
-			or itemData.Type == "Leggings"
-			or itemData.Type == "Boots"
-		then
-			itemType = itemData.Type
-			local armor: Part? = ServerStorage.Armors[itemType]:FindFirstChild(itemData.Name):Clone()
+		elseif string.find(itemID, "armor") then
+			if equippedItems.Armor[itemData.Type] ~= itemID then
+				equippedItems.Armor[itemData.Type] = itemID
+			end
+			local value = folder:FindFirstChild("Armor"):FindFirstChild(itemData.Type)
+
+			if value then
+				value:Destroy()
+			end
+			value = Instance.new("StringValue")
+			value.Name = itemData.Type
+			value.Parent = folder:FindFirstChild("Armor")
+			value:SetAttribute("Equipped", itemID)
+
+			local armor: Part? = ServerStorage.Armors[itemData.Type]:FindFirstChild(itemData.Name):Clone()
 			if armor then
 				--Check For Another Armor With Same Type--
 				for _, anotherArmor in char:GetChildren() do
-					if anotherArmor:GetAttribute("Type") == itemType then
+					if anotherArmor:GetAttribute("Type") == itemData.Type then
 						local anotherArmorData = ItemDataBase:GetItemData(anotherArmor:GetAttribute("ID"))
 						if anotherArmorData.Buffs then
 							BuffService:RemoveBuff(player, anotherArmorData, anotherArmor:GetAttribute("ID"))
@@ -104,25 +123,12 @@ function EquipService:EquipItem(player: Player, itemID)
 					end
 				end
 				armor.Parent = char
-				if itemData.Buffs then
-					BuffService:AddBuff(player, itemData, itemID)
-				end
 			end
 		end
+		if itemData.Buffs then
+			BuffService:AddBuff(player, itemData, itemID)
+		end
 	end
-	if equippedItems[itemType] ~= itemID then
-		equippedItems[itemType] = itemID
-	end
-
-	local folder = player:FindFirstChild("Equipped")
-	local value = folder:FindFirstChild(itemType)
-	if value then
-		value:Destroy()
-	end
-	value = Instance.new("StringValue")
-	value.Name = itemType
-	value.Parent = folder
-	value:SetAttribute("Equipped", itemID)
 end
 
 ---UnEquip Item---
@@ -190,41 +196,40 @@ function EquipService:LoadEquippedItems(player: Player)
 	local inventory = DataService:GetTable(player, "Inventory")
 	local equippedItems = DataService:GetTable(player, "Equipped")
 
-	for itemType, itemID in equippedItems do
-		---Must own the Item---
-		if not inventory[itemID] then
-			warn(itemID .. " Not Found In Inventory")
-			continue
-		end
-		local char = player.Character or player.CharacterAdded:Wait()
-
-		---If  A Weapon---
-		local itemData = ItemDataBase:GetItemData(itemID)
-		if itemData then
-			if string.find(itemID, "weapon") then
-
-				---Cloning Equipped Tools---
-				local tool = player.Backpack:FindFirstChild(itemData.Name)
-				if not tool then
-					tool = ServerStorage.Tools[itemData.Type]:FindFirstChild(itemData.Name):Clone()
-					tool.Parent = player.Backpack
-					ToolLoader(tool)
-				end
-			elseif string.find(itemID, "armor") then
-
-				---Cloning Equipped Armor---
-				local armor = char:FindFirstChild(itemData.Name)
-				if not armor then
-					armor = ServerStorage.Armors[itemData.Type]:FindFirstChild(itemData.Name):Clone()
-					armor.Parent = char
-				end
+	for catagory, tbl in pairs(equippedItems) do
+		for itemType, itemID in pairs(tbl) do
+			---Must own the Item---
+			if not inventory[itemID] then
+				warn(itemID .. " Not Found In Inventory")
+				continue
 			end
-			if itemData.Buffs then
-				BuffService:AddBuff(player, itemData, itemID)
+			local char = player.Character or player.CharacterAdded:Wait()
+
+			---If  A Weapon---
+			local itemData = ItemDataBase:GetItemData(itemID)
+			if itemData then
+				if string.find(itemID, "weapon") then
+					---Cloning Equipped Tools---
+					local tool = player.Backpack:FindFirstChild(itemData.Name)
+					if not tool then
+						tool = ServerStorage.Tools[itemData.Type]:FindFirstChild(itemData.Name):Clone()
+						tool.Parent = player.Backpack
+						ToolLoader(tool)
+					end
+				elseif string.find(itemID, "armor") then
+					---Cloning Equipped Armor---
+					local armor = char:FindFirstChild(itemData.Name)
+					if not armor then
+						armor = ServerStorage.Armors[itemData.Type]:FindFirstChild(itemData.Name):Clone()
+						armor.Parent = char
+					end
+				end
+				if itemData.Buffs then
+					BuffService:AddBuff(player, itemData, itemID)
+				end
 			end
 		end
 	end
-
 end
 
 return EquipService

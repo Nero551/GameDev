@@ -1,3 +1,4 @@
+local FileManagerService = game:GetService("FileManagerService")
 local Lighting = game:GetService("Lighting")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -57,7 +58,7 @@ function HUDController:Tools()
 	local equipped = player:WaitForChild("Equipped")
 	local Keys = {
 		["Melee"] = "One",
-		["Sword"] = "Two",
+		["Blade"] = "Two",
 		["Grimiore"] = "Three",
 		["RiftBorn"] = "Four",
 	}
@@ -69,7 +70,7 @@ function HUDController:Tools()
 
 		for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
 			if slot:IsA("ImageButton") then
-				local type = equipped:FindFirstChild(slot.Name:split("Slot")[1])
+				local type = equipped:FindFirstChild("Weapons"):FindFirstChild(slot.Name:split("Slot")[1])
 				TweenService:Create(slot.Border, info, { ImageColor3 = Color3.fromRGB(116, 116, 116) }):Play()
 
 				if type and type:GetAttribute("Equipped") == inHand then
@@ -85,7 +86,7 @@ function HUDController:Tools()
 				slot.Visible = false
 			end
 		end
-		for _, child in equipped:GetChildren() do
+		for _, child in equipped:FindFirstChild("Weapons"):GetChildren() do
 			local itemID = child:GetAttribute("Equipped")
 			if string.find(itemID, "weapon") then
 				local itemData = ItemDataBase:GetItemData(itemID)
@@ -106,7 +107,7 @@ function HUDController:Tools()
 			UIHelper:RotateGradient(slot.Border.UIGradient)
 
 			slot.MouseButton1Click:Connect(function()
-				local type = equipped:FindFirstChild(slot.Name:split("Slot")[1])
+				local type = equipped:FindFirstChild("Weapons"):FindFirstChild(slot.Name:split("Slot")[1])
 				if type then
 					local itemID = type:GetAttribute("Equipped")
 					if char:GetAttribute("InHand") == itemID then
@@ -129,7 +130,7 @@ function HUDController:Tools()
 
 		for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
 			if slot:IsA("ImageButton") then
-				local type = equipped:FindFirstChild(slot.Name:split("Slot")[1])
+				local type = equipped:FindFirstChild("Weapons"):FindFirstChild(slot.Name:split("Slot")[1])
 				if type and inp.KeyCode.Name == Keys[type.Name] then
 					local itemID = type:GetAttribute("Equipped")
 					if char:GetAttribute("InHand") == itemID then

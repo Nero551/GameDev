@@ -196,7 +196,7 @@ function InventoryMenuController:Inventory()
 				infoImage.Image = itemData.Icon
 				infoName.Text = itemData.Name
 				infoName.TextColor3 = Color3.fromHex(RarityData[itemData.Rarity].Color)
-				infoType.Text = itemData.Type
+				infoType.Text = itemData.SubType
 				infoRarity.Text = itemData.Rarity
 				infoRarity.TextColor3 = Color3.fromHex(RarityData[itemData.Rarity].Color)
 				infoAmountOwned.Text = "Owned: " .. tostring(descendant:GetAttribute("Amount"))
