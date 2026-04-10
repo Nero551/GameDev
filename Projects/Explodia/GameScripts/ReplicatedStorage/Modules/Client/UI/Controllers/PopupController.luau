@@ -24,12 +24,18 @@ function PopupController:Creator()
 		local popup = popupTemplate:Clone()
 		popup.Parent = popupsFrame
 
-		if popupInfo.Mastery and popupInfo.ID then
-			popup.PopUpText.RichText = true
-			popup.PopUpText.Text = 'Masteried up <font color="#fff131">'
-				.. popupInfo.Mastery
-				.. " EXP </font> for"
-				.. ItemDataBase:GetItemData(popupInfo.ID).Name
+		if popupInfo.Mastery then
+			if popupInfo.ID then
+				popup.PopUpText.RichText = true
+				popup.PopUpText.Text = 'Masteried up <font color="#fff131">'
+					.. popupInfo.Mastery
+					.. " EXP </font> for"
+					.. ItemDataBase:GetItemData(popupInfo.ID).Name
+			elseif popupInfo.RequiredMastery then
+				popup.PopUpText.Text = "You Require "
+					.. (tonumber(popupInfo.RequiredMastery) :: number - tonumber(popupInfo.Mastery) :: number)
+					.. " To Use This Technique"
+			end
 		end
 
 		if popupInfo.MasteryEXP and popupInfo.ID then
@@ -66,7 +72,7 @@ function PopupController:Creator()
 
 		---No Mana/Stamina For Technique---
 		if popupInfo.TechniqueName then
-			if  popupInfo.RequiredMana then
+			if popupInfo.RequiredMana then
 				popup.PopUpText.Text = "Not Enough Mana For ["
 					.. popupInfo.TechniqueName
 					.. "] ("
@@ -78,11 +84,10 @@ function PopupController:Creator()
 					.. "] ("
 					.. popupInfo.RequiredStamina
 					.. ")"
-						
 			end
 		end
 
-		if not popupInfo.Level then
+		if popupInfo.Level then
 			---Play Drop Sound---
 		end
 

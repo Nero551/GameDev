@@ -58,7 +58,7 @@ function VitalsService:Create(character)
 			MaxFlashStep = 3,
 		},
 
-		InHand = "",
+		ActiveHand = "",
 		WalkSpeed = 10,
 		JumpPower = 50,
 

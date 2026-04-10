@@ -37,10 +37,6 @@ return function(tool)
 			weld.Part0 = character:FindFirstChild("Right Arm")
 		end
 
-		equipedModel.Changed:Connect(function()
-			equipedModel:FindFirstChild(tool.Name)
-		end)
-
 		equipedModel:SetAttribute("EquipState", false)
 		unEquippedModel:SetAttribute("EquipState", false)
 

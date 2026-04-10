@@ -2,7 +2,7 @@ local MobData = {}
 MobData.Mobs = {
 	["Zombie"] = {
 		Type = "Enemy",
-		Tool = "weapon_0000000001", -- Fist
+		Tool = "weapon_0000000002", -- Cid Sword
 		Wander = true,
 		WanderRadius = 50,
 		DetectionRange = 100,
@@ -13,6 +13,11 @@ MobData.Mobs = {
 		MaxDamage = 2.2,
 		MinHealth = 100,
 		MaxHealth = 150,
+		Techniques = {
+			"technique_0000000001",
+			"technique_0000000002",
+			"technique_0000000003",
+		},
 		Drops = {
 			["Yen"] = 1000,
 			["Fracta"] = 20,

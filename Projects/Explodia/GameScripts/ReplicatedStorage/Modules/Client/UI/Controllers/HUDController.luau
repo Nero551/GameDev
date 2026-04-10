@@ -1,8 +1,6 @@
-local FileManagerService = game:GetService("FileManagerService")
 local Lighting = game:GetService("Lighting")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local QuestData = require(ReplicatedStorage.Modules.Data.QuestData)
@@ -56,72 +54,58 @@ end
 function HUDController:Tools()
 	local char = player.Character or player.CharacterAdded:Wait()
 	local equipped = player:WaitForChild("Equipped")
-	local Keys = {
-		["Melee"] = "One",
-		["Blade"] = "Two",
-		["Grimiore"] = "Three",
-		["RiftBorn"] = "Four",
-	}
+	local keybinds = player:FindFirstChild("Keybinds")
 
 	local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 	local function UpdateToolSelection()
-		local inHand = char:GetAttribute("InHand")
+		local activeHand = char:GetAttribute("ActiveHand")
 
 		for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
-			if slot:IsA("ImageButton") then
-				local type = equipped:FindFirstChild("Weapons"):FindFirstChild(slot.Name:split("Slot")[1])
-				TweenService:Create(slot.Border, info, { ImageColor3 = Color3.fromRGB(116, 116, 116) }):Play()
+			if slot:IsA("Frame") then
+				local catagory = equipped:FindFirstChild("Weapons"):FindFirstChild(slot.Name)
+				TweenService:Create(slot.UIStroke, info, { Color = Color3.fromRGB(116, 116, 116) }):Play()
 
-				if type and type:GetAttribute("Equipped") == inHand then
-					TweenService:Create(slot.Border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
+				if catagory and catagory:GetAttribute("ItemID") == activeHand then
+					TweenService:Create(slot.UIStroke, info, { Color = Color3.fromRGB(255, 255, 255) }):Play()
 				end
 			end
 		end
 	end
 
 	local function UpdateTools()
-		for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
-			if slot:IsA("ImageButton") then
-				slot.Visible = false
+		for _, catagory in equipped:FindFirstChild("Weapons"):GetChildren() do
+			local itemID = catagory:GetAttribute("ItemID")
+			local itemData = ItemDataBase:GetItemData(itemID)
+			local slot = UIManager:GetUI("HUD", catagory.Name)
+			if slot then
+				slot.Visible = true
+				slot.TextWBackground.TextLabel.Text = itemData.Name
 			end
 		end
-		for _, child in equipped:FindFirstChild("Weapons"):GetChildren() do
-			local itemID = child:GetAttribute("Equipped")
-			if string.find(itemID, "weapon") then
-				local itemData = ItemDataBase:GetItemData(itemID)
-				local slot: ImageButton = UIManager:GetUI("HUD", itemData.Type .. "Slot")
-				if slot then
-					local icon: ImageLabel = UIManager:GetUI("HUD", itemData.Type .. "Icon")
-					slot.Visible = true
-					icon.Image = itemData.Icon
-				end
-			end
-		end
-
 		UpdateToolSelection()
 	end
 
-	for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
-		if slot:IsA("ImageButton") then
-			UIHelper:RotateGradient(slot.Border.UIGradient)
+	-- for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
+	-- 	if slot:IsA("ImageButton") then
+	-- 		UIHelper:RotateGradient(slot.Border.UIGradient)
 
-			slot.MouseButton1Click:Connect(function()
-				local type = equipped:FindFirstChild("Weapons"):FindFirstChild(slot.Name:split("Slot")[1])
-				if type then
-					local itemID = type:GetAttribute("Equipped")
-					if char:GetAttribute("InHand") == itemID then
-						NetworkingService:FireToServer("RequestRemoveFromHand", itemID)
-					else
-						if char:GetAttribute("InHand") ~= "" then
-							NetworkingService:FireToServer("RequestRemoveFromHand", itemID)
-						end
-						NetworkingService:FireToServer("RequestPutInHand", itemID)
-					end
-				end
-			end)
-		end
-	end
+	-- 		slot.MouseButton1Click:Connect(function()
+	-- 			local type = equipped:FindFirstChild("Weapons"):FindFirstChild(slot.Name:split("Slot")[1])
+	-- 			if type then
+	-- 				local itemID = type:GetAttribute("Equipped")
+	-- 				if char:GetAttribute("InHand") == itemID then
+	-- 					NetworkingService:FireToServer("RequestRemoveFromHand", itemID)
+	-- 				else
+	-- 					if char:GetAttribute("InHand") ~= "" then
+	-- 						NetworkingService:FireToServer("RequestRemoveFromHand", itemID)
+	-- 					end
+	-- 					NetworkingService:FireToServer("RequestPutInHand", itemID)
+	-- 				end
+	-- 			end
+	-- 		end)
+	-- 	end
+	-- end
 
 	UserInputService.InputBegan:Connect(function(inp, proc)
 		if proc then
@@ -129,17 +113,12 @@ function HUDController:Tools()
 		end
 
 		for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
-			if slot:IsA("ImageButton") then
-				local type = equipped:FindFirstChild("Weapons"):FindFirstChild(slot.Name:split("Slot")[1])
-				if type and inp.KeyCode.Name == Keys[type.Name] then
-					local itemID = type:GetAttribute("Equipped")
-					if char:GetAttribute("InHand") == itemID then
-						NetworkingService:FireToServer("RequestRemoveFromHand", itemID)
-					else
-						if char:GetAttribute("InHand") ~= "" then
-							NetworkingService:FireToServer("RequestRemoveFromHand", itemID)
-						end
-						NetworkingService:FireToServer("RequestPutInHand", itemID)
+			if slot:IsA("Frame") then
+				local val = equipped:FindFirstChild("Weapons"):FindFirstChild(slot.Name)
+				if val then
+					local itemID = val:GetAttribute("ItemID")
+					if itemID and inp.KeyCode.Name == keybinds:GetAttribute(slot.Name) then
+						NetworkingService:FireToServer("SetActiveHand", itemID)
 					end
 				end
 			end
@@ -148,113 +127,107 @@ function HUDController:Tools()
 
 	UpdateTools()
 	UpdateToolSelection()
-	equipped.ChildAdded:Connect(UpdateTools)
-	equipped.ChildRemoved:Connect(UpdateTools)
-	char:GetAttributeChangedSignal("InHand"):Connect(UpdateToolSelection)
+	equipped.Weapons.ChildAdded:Connect(UpdateTools)
+	equipped.Weapons.ChildRemoved:Connect(UpdateTools)
+	char:GetAttributeChangedSignal("ActiveHand"):Connect(UpdateToolSelection)
 end
 
-function HUDController:Abilities()
+function HUDController:Techniques()
 	local char = player.Character or player.CharacterAdded:Wait()
-	local bars = {}
-	local abilityUI = UIManager:GetUI("HUD", "AbilityFrame")
+	local stateFolder = char:WaitForChild("State")
+	local techniques = player:FindFirstChild("Techniques")
+	local equippedTechsFrame = UIManager:GetUI("HUD", "TechniquesFrame")
+	local keybinds = player:FindFirstChild("Keybinds")
 
-	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+	local TechSlots = {}
+	local Keys = {}
 
-	-- cache UI
-	for _, ui in abilityUI:GetChildren() do
-		if ui:IsA("ImageLabel") then
-			local innerStroke = ui:FindFirstChild("InnerStroke")
-			UIHelper:RotateGradient(innerStroke:FindFirstChild("UIGradient"))
-			local abilityKey = ui.Name:split("AbilityBar")[2]
-			bars[abilityKey] = {
-				bar = ui,
-				cdBar = ui:WaitForChild("CDBar"),
-				nameLabel = ui:WaitForChild("AbilityName"),
-				cdActive = false,
-				cdText = ui:WaitForChild("CDText"),
-				cdEndTime = nil,
-				abilityLetter = ui:WaitForChild("AbilityLetter"),
-				innerStroke = innerStroke,
-			}
+	for _, techSlot in equippedTechsFrame:GetChildren() do
+		TechSlots[techSlot.Name] = techSlot
+	end
 
-			ui.Visible = false
-			bars[abilityKey].cdBar.Visible = false
-			bars[abilityKey].cdBar.Size = UDim2.fromScale(-0.97, 0.87)
+	local function UpdateKeys()
+		for _, techSlot in equippedTechsFrame:GetChildren() do
+			if keybinds:GetAttribute(techSlot.Name) then
+				Keys[keybinds:GetAttribute(techSlot.Name)] = techSlot.Name
+				techSlot.Letter.Text = keybinds:GetAttribute(techSlot.Name)
+			end
 		end
 	end
 
-	-- update loop
-	RunService.RenderStepped:Connect(function()
-		local tool = char:FindFirstChildWhichIsA("Tool")
-		if not tool then
-			for _, bar in pairs(bars) do
-				bar.bar.Visible = false
-			end
+	---Use Techniques---
+	UserInputService.InputBegan:Connect(function(inp, proc)
+		if proc then
 			return
 		end
 
-		for abilityKey, data in pairs(bars) do
-			local itemData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
-			if not itemData.Abilities then
-				return
-			end
-			local techniqueData = TechniqueData:GetTechniqueData(itemData.Abilties[abilityKey])
-			local weaponData = ItemDataBase:GetItemData(tool.Name)
-			if not techniqueData then
-				data.bar.Visible = false
-				continue
-			end
-
-			data.bar.Visible = true
-			data.nameLabel.Text = techniqueData.TechniqueName
-			local cdStateName = "Ability" .. abilityKey .. " Cooldown"
-			local onCooldown = StateChecker:CheckState(char, cdStateName)
-			if onCooldown and data.cdActive and data.cdEndTime then
-				local remaining = math.max(0, data.cdEndTime - time())
-				data.cdText.Text = string.format("%.1f", remaining)
-			end
-
-			if onCooldown and not data.cdActive then
-				data.cdActive = true
-				data.cdBar.Visible = true
-				data.cdEndTime = time() + techniqueData.Cooldown
-
-				local tween = TweenService:Create(
-					data.cdBar,
-					TweenInfo.new(techniqueData.Cooldown, Enum.EasingStyle.Linear),
-					{ Size = UDim2.fromScale(0, 0.87) }
-				)
-
-				tween:Play()
-				tween.Completed:Once(function()
-					data.cdActive = false
-					data.cdBar.Visible = false
-					data.cdBar.Size = UDim2.fromScale(-0.97, 0.87)
-					data.cdText.Text = ""
-					data.cdEndTime = nil
-				end)
-			end
-
-			---Looks BS---
-			if weaponData.Type == "Sword" then
-				TweenService:Create(data.nameLabel, info, { TextColor3 = Color3.fromHex("#ffe134") }):Play()
-				TweenService:Create(data.abilityLetter, info, { TextColor3 = Color3.fromHex("#ffe134") }):Play()
-				TweenService:Create(data.innerStroke, info, { ImageColor3 = Color3.fromHex("#ffe134") }):Play()
-			elseif weaponData.Type == "Melee" then
-				TweenService:Create(data.nameLabel, info, { TextColor3 = Color3.fromHex("#ff2c30") }):Play()
-				TweenService:Create(data.abilityLetter, info, { TextColor3 = Color3.fromHex("#ff2c30") }):Play()
-				TweenService:Create(data.innerStroke, info, { ImageColor3 = Color3.fromHex("#ff2c30") }):Play()
-			elseif weaponData.Type == "Grimiore" then
-				TweenService:Create(data.nameLabel, info, { TextColor3 = Color3.fromHex("#1cd9ff") }):Play()
-				TweenService:Create(data.abilityLetter, info, { TextColor3 = Color3.fromHex("#1cd9ff") }):Play()
-				TweenService:Create(data.innerStroke, info, { ImageColor3 = Color3.fromHex("#1cd9ff") }):Play()
-			elseif weaponData.Type == "RiftBorn" then
-				TweenService:Create(data.nameLabel, info, { TextColor3 = Color3.fromHex("#b520ff") }):Play()
-				TweenService:Create(data.abilityLetter, info, { TextColor3 = Color3.fromHex("#b520ff") }):Play()
-				TweenService:Create(data.innerStroke, info, { ImageColor3 = Color3.fromHex("#b520ff") }):Play()
-			end
+		if Keys[inp.KeyCode.Name] then
+			NetworkingService:FireToServer(
+				"Technique",
+				tonumber(Keys[inp.KeyCode.Name]:split("Technique")[2]),
+				player:GetMouse().Hit.Position
+			)
 		end
 	end)
+
+	local function UpdateCooldowns()
+		for _, techSlot in equippedTechsFrame:GetChildren() do
+			if techSlot:IsA("TextButton") then
+				if StateChecker:CheckState(char, techSlot.Name .. " Cooldown") then
+					local state = stateFolder:FindFirstChild(techSlot.Name .. " Cooldown")
+					local techniqueData = TechniqueData:GetTechniqueData(
+						techniques.Equipped:FindFirstChild(techSlot.Name:split("Technique")[2]):GetAttribute("TechniqueID")
+					)
+					techSlot.TechniqueName.Visible = false
+					techSlot.CDTime.Visible = true
+					techSlot.CDBox.Visible = true
+					if state:GetAttribute("Duration") then
+						state:GetAttributeChangedSignal("Duration"):Connect(function()
+							techSlot.CDTime.Text = math.round(state:GetAttribute("Duration"))
+							TweenService:Create(
+								techSlot.CDBox,
+								TweenInfo.new(0.05, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+								{ Size = UDim2.fromScale(1, (state:GetAttribute("Duration") / techniqueData.Cooldown)) }
+							):Play()
+						end)
+						techSlot.CDTime.Text = math.round(state:GetAttribute("Duration"))
+					end
+				else
+					techSlot.TechniqueName.Visible = true
+					techSlot.CDTime.Visible = false
+					techSlot.CDBox.Visible = false
+				end
+			end
+		end
+	end
+
+	local function UpdateTechniques()
+		for _, equippedTech in equippedTechsFrame:GetChildren() do
+			if equippedTech:IsA("TextButton") then
+				local techSlot = techniques.Equipped:FindFirstChild(equippedTech.Name:split("Technique")[2])
+				if techSlot then
+					local techniqueID = techSlot:GetAttribute("TechniqueID")
+					local techniqueData = TechniqueData:GetTechniqueData(techniqueID)
+					if techniqueData then
+						equippedTech.TechniqueName.Text = techniqueData.TechniqueName
+					end
+				else
+					equippedTech.TechniqueName.Text = ""
+				end
+			end
+		end
+	end
+
+	UpdateTechniques()
+	techniques.Equipped.ChildAdded:Connect(UpdateTechniques)
+	techniques.Equipped.ChildRemoved:Connect(UpdateTechniques)
+
+	UpdateKeys()
+	keybinds.AttributeChanged:Connect(UpdateKeys)
+
+	UpdateCooldowns()
+	stateFolder.ChildAdded:Connect(UpdateCooldowns)
+	stateFolder.ChildRemoved:Connect(UpdateCooldowns)
 end
 
 function HUDController:InCombat()
@@ -793,4 +766,5 @@ function HUDController:AdminPanel()
 		end
 	end)
 end
+
 return HUDController

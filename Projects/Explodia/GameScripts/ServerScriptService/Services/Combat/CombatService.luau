@@ -37,12 +37,12 @@ end
 
 function CombatService:Attack(character)
 	local humanoid = character:WaitForChild("Humanoid")
-	local tool = character:FindFirstChildWhichIsA("Tool")
+	local itemID = VitalsService:GetVital(character, "ActiveHand")
 
-	if not ActionVerifier:CanAttack(character) or not tool then
+	if not ActionVerifier:CanAttack(character) or itemID == "" then
 		return
 	end
-	local weaponData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
+	local weaponData = ItemDataBase:GetItemData(itemID)
 
 	--Playing Animations
 	local lastSwing = VitalsService:GetVital(character, "LastSwing")
@@ -74,7 +74,7 @@ function CombatService:Attack(character)
 
 	VitalsService:ModifyVital(character, "Combat", "ModifyLastSwing", { LastSwingChange = os.clock() })
 
-	local swingName = "Weapons." .. tool.Name .. ".Animations.Swings.L" .. tostring(trueSwingNumber)
+	local swingName = "Weapons." .. weaponData.Name .. ".Animations.Swings.L" .. tostring(trueSwingNumber)
 
 	local animationToPlay = Animations:GetAnimation(humanoid, swingName)
 
@@ -108,7 +108,7 @@ function CombatService:Attack(character)
 
 		NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "Sound", {
 			["Sound"] = assets.Weapons
-				:FindFirstChild(tool.Name).Sounds.Swings
+				:FindFirstChild(weaponData.Name).Sounds.Swings
 				:FindFirstChild(tostring(trueSwingNumber)),
 		})
 		Debris:AddItem(hitboxClone, 0.35)
@@ -117,58 +117,59 @@ function CombatService:Attack(character)
 			NetworkingService:FireToClient(Players:GetPlayerFromCharacter(character), "CameraShake", 0.1)
 		end
 
-		HitService:Apply(character, weaponData,tool, hitboxClone,trueSwingNumber)
+		HitService:Apply(character, weaponData, hitboxClone, trueSwingNumber)
 	end)
 end
 
 function CombatService:Block(character, boolean)
-		local humanoid = character:FindFirstChild("Humanoid")
-		if humanoid then
-			local tool = character:FindFirstChildWhichIsA("Tool")
-			local function StartBlocking()
-				if not ActionVerifier:CanBlock(character) or not tool then
-					return
-				end
-				--Block--
-				local foundData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
-				if foundData then
-					StateService:AddState(character, "Blocking", nil, { ["weaponName"] = tool.Name })
-
-					------Block Animations------
-					local blockAnim: AnimationTrack =
-						Animations:GetAnimation(humanoid, "Weapons." .. tool.Name .. ".Animations.Block.Idle")
-					blockAnim:Play()
-				end
+	local humanoid = character:FindFirstChild("Humanoid")
+	if humanoid then
+		local function StartBlocking()
+			local itemID = VitalsService:GetVital(character, "ActiveHand")
+			local weaponData = ItemDataBase:GetItemData(itemID)
+			if not ActionVerifier:CanBlock(character) or itemID == "" then
+				return
 			end
+			--Block--
+			local foundData = ItemDataBase:GetItemData(itemID)
+			if foundData then
+				StateService:AddState(character, "Blocking", nil, { ["weaponName"] = weaponData.Name })
 
-			local function StopBlocking()
-				local blockingInstance = character:WaitForChild("State"):FindFirstChild("Blocking")
-				if blockingInstance then
-					local weaponName = blockingInstance:GetAttribute("weaponName")
-					if weaponName then
-						Animations:GetAnimation(humanoid, "Weapons." .. weaponName .. ".Animations.Block.Idle")
-						Animations:GetAnimation(humanoid, "Weapons." .. weaponName .. ".Animations.Block.Idle"):Stop(0.1)
-					end
-					StateService:RemoveState(character, "Blocking")
-
-					StateService:AddState(character, "NoBlock", 0.3)
-				end
-			end
-
-			character.State.ChildAdded:Once(function(child)
-				if StateChecker:CheckState(character, "Blocking") then
-					if not tool or not ActionVerifier:CanBlock(character) then
-						StopBlocking()
-					end
-				end
-			end)
-
-			if boolean == 1 then
-				StartBlocking()
-			elseif boolean == 0 then
-				StopBlocking()
+				------Block Animations------
+				local blockAnim: AnimationTrack =
+					Animations:GetAnimation(humanoid, "Weapons." .. weaponData.Name .. ".Animations.Block.Idle")
+				blockAnim:Play()
 			end
 		end
+
+		local function StopBlocking()
+			local blockingInstance = character:WaitForChild("State"):FindFirstChild("Blocking")
+			if blockingInstance then
+				local weaponName = blockingInstance:GetAttribute("weaponName")
+				if weaponName then
+					Animations:GetAnimation(humanoid, "Weapons." .. weaponName .. ".Animations.Block.Idle")
+					Animations:GetAnimation(humanoid, "Weapons." .. weaponName .. ".Animations.Block.Idle"):Stop(0.1)
+				end
+				StateService:RemoveState(character, "Blocking")
+
+				StateService:AddState(character, "NoBlock", 0.3)
+			end
+		end
+
+		character.State.ChildAdded:Once(function(child)
+			if StateChecker:CheckState(character, "Blocking") then
+				if VitalsService:GetVital(character, "ActiveHand") == "" or not ActionVerifier:CanBlock(character) then
+					StopBlocking()
+				end
+			end
+		end)
+
+		if boolean == 1 then
+			StartBlocking()
+		elseif boolean == 0 then
+			StopBlocking()
+		end
+	end
 end
 
 return CombatService

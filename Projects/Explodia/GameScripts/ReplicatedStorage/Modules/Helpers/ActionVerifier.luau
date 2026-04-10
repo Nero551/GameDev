@@ -89,10 +89,11 @@ function ActionVerifier:CanBlock(character)
 	return true
 end
 
-function ActionVerifier:CanTechnique(character, techniqueLetter)
+function ActionVerifier:CanTechnique(character, techniqueSlot)
 	if
 		StateChecker:CheckState(
 			character,
+			 "Technique" .. techniqueSlot .. " Cooldown",
 			"Stunned",
 			"Attacking",
 			"Dashing",
@@ -105,10 +106,6 @@ function ActionVerifier:CanTechnique(character, techniqueLetter)
 			"Dead"
 		)
 	then
-		return false
-	end
-
-	if techniqueLetter and StateChecker:CheckState(character, "Ability" .. techniqueLetter .. " Cooldown") then
 		return false
 	end
 

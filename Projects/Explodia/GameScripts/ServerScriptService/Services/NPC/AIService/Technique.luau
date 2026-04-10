@@ -8,5 +8,5 @@ return function(npc)
 	AIService:AcquireTarget(npc)
 	if not AIData.Target then return end
 	if not AIData.ChosenTechnique then return end
-	TechniqueService:UseTechnique(npc, AIData.ChosenTechnique, nil)
+	TechniqueService:UseTechnique(npc, AIData.ChosenTechnique)
 end

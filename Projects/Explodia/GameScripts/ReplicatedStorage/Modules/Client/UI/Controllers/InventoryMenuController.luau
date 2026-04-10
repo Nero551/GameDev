@@ -308,24 +308,26 @@ function InventoryMenuController:Equip()
 
 		TweenService:Create(equipButton, info, { TextTransparency = 0 }):Play()
 		TweenService:Create(unequipButton, info, { TextTransparency = 1 }):Play()
-		task.wait(0.0625)
+
+		task.wait(info.Time)
 		equipButton.Visible = true
 		unequipButton.Visible = false
 	end)
 
-	equipped.ChildAdded:Connect(function(child)
-		local icon = itemFrame:FindFirstChild(child:GetAttribute("Equipped"))
-		if icon then
-			icon:FindFirstChild("EquippedIcon").Visible = true
-		end
-	end)
-
-	equipped.ChildRemoved:Connect(function(child)
-		local icon = itemFrame:FindFirstChild(child:GetAttribute("Equipped"))
-		if icon then
-			icon:FindFirstChild("EquippedIcon").Visible = false
-		end
-	end)
+	for _, catagory in equipped:GetChildren() do
+		catagory.ChildAdded:Connect(function(child)
+			local icon = itemFrame:FindFirstChild(child:GetAttribute("ItemID"))
+			if icon then
+				icon:FindFirstChild("EquippedIcon").Visible = true
+			end
+		end)
+		catagory.ChildRemoved:Connect(function(child)
+			local icon = itemFrame:FindFirstChild(child:GetAttribute("ItemID"))
+			if icon then
+				icon:FindFirstChild("EquippedIcon").Visible = false
+			end
+		end)
+	end
 end
 
 function InventoryMenuController:Search()

@@ -67,7 +67,12 @@ function UIManager:Init()
 	for _, controller in UIManager.Controllers do
 		for _, value in controller do
 			if typeof(value) == "function" then
-				value(controller)
+				local _,err = pcall(function()
+					value(controller)					
+				end)
+				if err then
+					warn("Error Occured When Called Function:", err,{debug.traceback()})					
+				end
 			end
 		end
 	end

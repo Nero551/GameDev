@@ -1,13 +1,10 @@
 local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local ServerScriptService = game:GetService("ServerScriptService")
 
-local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
-local DataService = require(ServerScriptService.Services.Core.DataService)
+local EquipService = require(ServerScriptService.Services.Profile.EquipService)
 local StateHandler = require(game.ServerScriptService.Modules.Utilities.StateHandler)
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
-local HandService = require(game.ServerScriptService.Services.Combat.HandService)
 local Connections = require(game.ReplicatedStorage.Modules.Core.Connections)
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
@@ -58,6 +55,7 @@ end)
 ---Creating Status For Player On Spawn---
 Players.PlayerAdded:Connect(function(player)
 	player.CharacterAdded:Connect(function(character)
+		VitalsService:Create(character)
 		StateService:Create(character)
 	end)
 	player.CharacterRemoving:Connect(function(character)
@@ -100,8 +98,6 @@ NetworkingService:OnServerEvent("WallRun", function(player: Player)
 	MovementService:WallRun(character)
 end)
 
-----------------------------------------------------------------------------------------------------------------------------------
-
 ---Death and Spawn---
 Players.PlayerAdded:Connect(function(player)
 	player.CharacterAdded:Connect(function(character)
@@ -122,27 +118,13 @@ NetworkingService:OnServerEvent("Attack", function(player: Player)
 	CombatService:Attack(character)
 end)
 
-NetworkingService:OnServerEvent("RequestPutInHand", function(player, toolId)
-	HandService:PutInHand(player, toolId)
+---Client Requests To Change Item In Active Hand
+NetworkingService:OnServerEvent("SetActiveHand", function(player, toolId)
+	EquipService:SetActiveHand(player, toolId)
 end)
-
-NetworkingService:OnServerEvent("RequestRemoveFromHand", function(player, toolId)
-	HandService:RemoveFromHand(player, toolId)
-end)
-
-----------------------------------------------------------------------------------------------------------------------------------
 
 ---Client Requests to use Technique---
-NetworkingService:OnServerEvent("Ability", function(player: Player, mouse, letter)
+NetworkingService:OnServerEvent("Technique", function(player: Player, slot, mouse)
 	local char = player.Character or player.CharacterAdded:Wait()
-	local techniques = DataService:GetTable(player, "Techniques")
-	local tool = char:FindFirstChildWhichIsA("Tool")
-
-	TechniqueService:UseTechnique(
-		char,
-		techniques.Equipped[ItemDataBase:GetItemData(tool:GetAttribute("ID")).Type][letter],
-		mouse
-	)
+	TechniqueService:UseTechnique(char, slot, mouse)
 end)
-
-----------------------------------------------------------------------------------------------------------------------------------

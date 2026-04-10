@@ -1,4 +1,6 @@
 local DataStoreService = game:GetService("DataStoreService")
+local ServerScriptService = game:GetService("ServerScriptService")
+local DefualtPlayerData = require(ServerScriptService.Modules.DefualtPlayerData)
 
 local store_Name = "PlayerData_V1"
 local playerStore = DataStoreService:GetDataStore(store_Name)
@@ -6,79 +8,6 @@ local playerStore = DataStoreService:GetDataStore(store_Name)
 local DataService = {}
 
 DataService.PlayerDatas = {}
-
-function DataService:GetDefaultData()
-	local DefaultData = {
-		Inventory = {
-			["weapon_0000000001"] = {
-				Amount = 1,
-				Mastery = 1,
-				EXPRequired = 100,
-				EXPAcquired = 0,
-			},
-			["armor_0000000001"] = {
-				Amount = 1,
-			},
-		},
-		Equipped = {
-			Weapons = {
-				Melee = "weapon_0000000001",
-				Blade = nil,
-				Grimiore = nil,
-				RiftBorn = nil,
-			},
-			Armor = {
-				Helmet = nil,
-				ChestPlate = nil,
-				Leggings = nil,
-				Boots = nil,
-			},
-		},
-		Stats = {
-			MainStats = {
-				Vitality = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				Intelligence = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				Strength = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				Dexterity = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				Agility = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-			},
-			SubStats = {
-				Defense = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-				CriticalDamage = { DexterityPercentBonus = 0, Percent = 0, Final = 0 },
-				CriticalChance = { DexterityPercentBonus = 0, Percent = 0, Final = 0 },
-			},
-		},
-		Level = {
-			CurrentLevel = 1,
-			RequiredEXP = 100,
-			CurrentEXP = 0,
-			StatPoints = 0,
-		},
-		Currency = {
-			Yen = 0,
-			Fracta = 0,
-		},
-		ItemPity = {},
-
-		Quests = {
-			ActiveQuests = {},
-			CompletedQuests = {},
-			TrackedQuest = nil,
-		},
-		Titles = {
-			Titles = {},
-			ActiveTitle = nil,
-		},
-		Buffs = {},
-
-		Techniques = {
-			Obtained = {},
-			Equipped = {},
-		},
-	}
-
-	return DefaultData
-end
 
 local function deepCopy(tbl)
 	if type(tbl) ~= "table" then
@@ -96,9 +25,7 @@ local function deepCopy(tbl)
 end
 
 local function ValidateData(playerData)
-	local defaultData = DataService:GetDefaultData()
-
-	for key, defaultValue in pairs(defaultData) do
+	for key, defaultValue in pairs(DefualtPlayerData) do
 		if playerData[key] == nil then
 			-- If missing, add the default
 			playerData[key] = defaultValue
@@ -137,7 +64,7 @@ function DataService:Load(player)
 		warn("DataLoad Failed For", player.Name, ":", err)
 	end
 	if not success or not DataService.PlayerDatas[player] then
-		DataService.PlayerDatas[player] = DataService:GetDefaultData()
+		DataService.PlayerDatas[player] = DefualtPlayerData
 	end
 
 	-- Validate the data
@@ -151,7 +78,7 @@ function DataService:Save(player)
 	local key = "Player_" .. player.UserId
 	local success, err = pcall(function()
 		playerStore:UpdateAsync(key, function(oldData)
-			oldData = oldData or DataService:GetDefaultData()
+			oldData = oldData or DefualtPlayerData
 			return deepCopy(DataService.PlayerDatas[player])
 		end)
 	end)

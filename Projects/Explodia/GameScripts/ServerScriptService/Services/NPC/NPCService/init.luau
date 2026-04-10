@@ -40,7 +40,7 @@ function NPCService:RegisterNPC(NPC, level)
 					NPCService.SpawnedNPCS[npcType][NPC].Drops[drop] = math.round(amount * ((level or 1) / 3.5))
 				end
 			end
-
+			
 			NPC:SetAttribute("Type", npcType)
 			NPC:SetAttribute("Active", true)
 			NPC:SetAttribute("Level", NPCService.SpawnedNPCS[npcType][NPC].Level)

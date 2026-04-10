@@ -13,7 +13,7 @@ local HitReactionsService = require(script.Parent.HitReactionsService)
 local VitalsService = require(script.Parent.VitalsService)
 local HitService = {}
 
-function HitService:Apply(attacker, data, tool, hitbox, trueSwingNumber)
+function HitService:Apply(attacker, data, hitbox, trueSwingNumber)
 	local baseDamage = 0
 
 	local playerAttacker = Players:GetPlayerFromCharacter(attacker)

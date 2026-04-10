@@ -1,7 +1,11 @@
 local Players = game:GetService("Players")
 local LocalizationService = game:GetService("LocalizationService")
+local ServerScriptService = game:GetService("ServerScriptService")
 local StarterGui = game:GetService("StarterGui")
 
+local TechniqueService = require(ServerScriptService.Services.Combat.TechniqueService)
+local AdminCmdsService = require(ServerScriptService.Services.Core.AdminCmdsService)
+local KeybindsService = require(ServerScriptService.Services.Profile.KeybindsService)
 local EquipService = require(game.ServerScriptService.Services.Profile.EquipService)
 local StatService = require(game.ServerScriptService.Services.Profile.StatService)
 local QuestService = require(game.ServerScriptService.Services.Profile.QuestService)
@@ -34,7 +38,12 @@ end)
 Players.playerRemoving:Connect(function()
 	ServerData.Players = Players:GetPlayers()
 end)
-----------------------------------------------------------------------------------------------------------------------------------
+
+---Admin Command---
+NetworkingService:OnServerEvent("AdminCommand", function(player, msg)
+	AdminCmdsService:SelectCommand(player, msg)
+end)
+
 
 ---Client Requests to Equip Item---
 NetworkingService:OnServerEvent("EquipItem", function(player, itemID)
@@ -46,8 +55,15 @@ NetworkingService:OnServerEvent("UnequipItem", function(player, itemID)
 	EquipService:UnEquipItem(player, itemID)
 end)	
 
+---Client Requests to Equip Technique---
+NetworkingService:OnServerEvent("EquipTechnique", function(player, techniqueID)
+	TechniqueService:EquipTechnique(player, techniqueID)
+end)
 
-----------------------------------------------------------------------------------------------------------------------------------
+---Client Requests To UnEquip Technique---
+NetworkingService:OnServerEvent("UnequipTechnique", function(player, techniqueID)
+	TechniqueService:UnEquipTechnique(player, techniqueID)
+end)
 
 ---Client Requests To Allocate Stat Point---
 NetworkingService:OnServerEvent("AllocateStatPoint", function(player:Player, StatType, amount)
@@ -59,12 +75,9 @@ NetworkingService:OnServerEvent("ResetStatPoints", function(player)
 	StatService:ResetStats(player)
 end)
 
-----------------------------------------------------------------------------------------------------------------------------------
-
 ---Client Requests to Accept Quest---
 NetworkingService:OnServerEvent("AcceptQuest", function()
 end)
-
 
 ---Client Requests to Abandon Quest---
 NetworkingService:OnServerEvent("AbandonQuest", function(player, questName)
@@ -72,26 +85,20 @@ NetworkingService:OnServerEvent("AbandonQuest", function(player, questName)
 	QuestService:AbandonQuest(player, questID)
 end)
 
-
 ---Client Requests to Track Quest---
 NetworkingService:OnServerEvent("TrackQuest", function(player:Player, questID)
 	QuestService:TrackQuest(player, questID)
 end)
 
-
-----------------------------------------------------------------------------------------------------------------------------------
 ---Client Requests to Equip Title---
 NetworkingService:OnServerEvent("EquipTitle", function(player, titleID)
 	TitleService:EquipTitle(player, titleID)
 end)
 
-
 ---Client Requests to UnEquip Title---
 NetworkingService:OnServerEvent("UnEquipTitle", function(player)
 	TitleService:UnEquipTitle(player)
 end)
-
-----------------------------------------------------------------------------------------------------------------------------------
 
 ---Client Requests to Conitnue Dialogue---
 NetworkingService:OnServerEvent("ContinueDialogue", function(player:Player)
@@ -104,6 +111,8 @@ NetworkingService:OnServerEvent("SelectDialogueOption", function(player:Player,o
 end)
 
 local function Setup(player: Player, character)
+	KeybindsService:SetupKeybinds(player)
+	TechniqueService:SetupTechniques(player)
 	StatService:SetupStats(player)
 	LevelService:SetupLevel(player)
 	InventoryService:SetupInventory(player)

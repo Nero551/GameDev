@@ -7,16 +7,16 @@ local assets = ReplicatedStorage.Assets
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 local HitService = require(script.Parent.HitService)
 local DataService = require(ServerScriptService.Services.Core.DataService)
+local AIService = require(ServerScriptService.Services.NPC.AIService)
 local StateService = require(game.ServerScriptService.Services.Core.StateService)
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
 
+local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 local TechniqueData = require(game.ReplicatedStorage.Modules.Data.TechniqueData)
 local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 
 local TechniqueService = {}
-TechniqueService.TechniqueLetters = { "Z", "X", "C", "V", "B" }
-
 function TechniqueService:SetupTechniques(player)
 	local techniques = DataService:GetTable(player, "Techniques")
 	local folder = player:FindFirstChild("Techniques")
@@ -45,13 +45,13 @@ function TechniqueService:SetupTechniques(player)
 		end
 	end
 
-	for techniqueID, weaponID in ipairs(techniques.Equipped) do
-		local value = equipped:FindFirstChild(techniqueID)
+	for slotNumber, techniqueID in ipairs(techniques.Equipped) do
+		local value = equipped:FindFirstChild(slotNumber)
 		if not value then
 			value = Instance.new("StringValue")
-			value.Name = techniqueID
+			value.Name = slotNumber
 			value.Parent = equipped
-			value:SetAttribute("WeaponID", weaponID)
+			value:SetAttribute("TechniqueID", techniqueID)
 		end
 	end
 end
@@ -62,8 +62,11 @@ function TechniqueService:ObtainTechnique(player, techniqueID)
 	if not techniqueData then
 		return
 	end
-	if techniques.Obtained[techniqueID] then
-		return
+
+	for _, obtainedTech in ipairs(techniques.Obtained) do
+		if obtainedTech == techniqueID then
+			return
+		end
 	end
 
 	table.insert(techniques.Obtained, techniqueID)
@@ -77,22 +80,6 @@ function TechniqueService:ObtainTechnique(player, techniqueID)
 	end
 end
 
-function TechniqueService:RemoveTechnique(player, techniqueID)
-	local techniques = DataService:GetTable(player, "Techniques")
-	if techniques.Obtained[techniqueID] then
-		table.remove(techniques.Obtained, techniqueID)
-	end
-
-	if techniques.Equipped[techniqueID] then
-		TechniqueService:UnEquipTechnique(player, techniqueID)
-	end
-	local obtained = player:FindFirstChild("Techniques"):FindFirstChild("Obtained")
-	local value = obtained:FindFirstChild(techniqueID)
-	if value then
-		value:Destroy()
-	end
-end
-
 function TechniqueService:UnEquipTechnique(player, techniqueID)
 	local techniques = DataService:GetTable(player, "Techniques")
 	local techniqueData = TechniqueData:GetTechniqueData(techniqueID)
@@ -101,93 +88,101 @@ function TechniqueService:UnEquipTechnique(player, techniqueID)
 		return
 	end
 
-	for _, weaponType in ipairs(techniqueData.WeaponType) do
-		if techniques.Equipped[weaponType] then
-			for letter,wantedTechniqueID in pairs(techniques.Equipped[weaponType]) do
-				if wantedTechniqueID == techniqueID then
-					techniques.Equipped[weaponType][letter] = nil
-				end
-			end	
+	local slotNumber = table.find(techniques.Equipped, techniqueID)
+
+	if slotNumber then
+		table.remove(techniques.Equipped, slotNumber)
+		local equipped = player:FindFirstChild("Techniques"):FindFirstChild("Equipped")
+		local value = equipped:FindFirstChild(tostring(slotNumber))
+		if value then
+			value:Destroy()
 		end
 	end
 
-	if techniques.Equipped[techniqueID] then
-		techniques.Equipped[techniqueID] = nil
-	end
 
-	local equipped = player:FindFirstChild("Techniques"):FindFirstChild("Equipped")
-	local value = equipped:FindFirstChild(techniqueID)
-	if value then
-		value:Destroy()
-	end
 end
 
 function TechniqueService:EquipTechnique(player, techniqueID)
 	local techniques = DataService:GetTable(player, "Techniques")
 	local techniqueData = TechniqueData:GetTechniqueData(techniqueID)
-	local Equipped = DataService:GetTable(player, "Equipped")
 
-	if not techniqueData then
-		return
-	end
-	if not table.find(techniques.Obtained, techniqueID) then
+	if not techniqueData or not table.find(techniques.Obtained, techniqueID) then
 		return
 	end
 
-	local count = 0
-	for _ in pairs(techniques.Equipped) do
-		count += 1
-	end
-	if count >= 12 then
+	if #techniques.Equipped >= 12 then
 		return
 	end
-
-	for _, weaponType in ipairs(techniqueData.WeaponType) do
-		if Equipped[weaponType] then
-			techniques.Equipped[weaponType] = techniques.Equipped[weaponType] or {}
-			for _, techniqueLetter in ipairs(TechniqueService.TechniqueLetters) do
-				if not techniques.Equipped[weaponType][techniqueLetter] then
-					techniques.Equipped[weaponType][techniqueLetter] = techniqueID
-				end
-			end
-		end
+	if table.find(techniques.Equipped, techniqueID) then
+		return
 	end
+	table.insert(techniques.Equipped, techniqueID)
+	local slotNumber = table.find(techniques.Equipped, techniqueID)
 
 	local equipped = player:FindFirstChild("Techniques"):FindFirstChild("Equipped")
-	local value = equipped:FindFirstChild(techniqueID)
+	local value = equipped:FindFirstChild(slotNumber)
 	if not value then
 		value = Instance.new("StringValue")
-		value.Name = techniqueID
+		value.Name = slotNumber
 		value.Parent = equipped
 	end
+	value:SetAttribute("TechniqueID", techniqueID)
+
+	print(techniques)
 end
 
-function TechniqueService:UseTechnique(character, techniqueID, mouse)
+function TechniqueService:UseTechnique(character, techniqueSlot, mouse)
 	local player = Players:GetPlayerFromCharacter(character)
-	local tool = character:FindFirstChildWhichIsA("Tool")
-	if not tool then
+
+	local techniqueID
+	if player then
+		local techniques = DataService:GetTable(player, "Techniques")
+		techniqueID = techniques.Equipped[techniqueSlot]
+	else
+		techniqueID = AIService.ActiveAIs[character] and AIService.ActiveAIs[character].Techniques[techniqueSlot]
+	end
+	if not techniqueID then
 		return
 	end
 
 	local humanoid = character:WaitForChild("Humanoid")
-	local weaponData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
+	local itemData = ItemDataBase:GetItemData(VitalsService:GetVital(character, "ActiveHand"))
 	local techniqueData = TechniqueData:GetTechniqueData(techniqueID)
 
-	if not ActionVerifier:CanTechnique(character, techniqueID) then
+	if not itemData then
+		print("Weapon Data not found for Currently Active Hand", VitalsService:GetVital(character, "ActiveHand"))
 		return
 	end
-
 	if not techniqueData then
-		print("Technique data not found for:", techniqueData.TechniqueName)
+		print("Technique data not found for:", techniqueID)
+		return
+	end
+	if not ActionVerifier:CanTechnique(character, techniqueSlot) then
 		return
 	end
 
-	if not techniqueData.WeaponType[weaponData.Type] then
+	if not table.find(techniqueData.AllowedWeaponSubTypes, itemData.SubType) then
 		return
 	end
 
 	if player then
-		local inventory = DataService:GetTable(player, "Inventory")
+		--local inventory = DataService:GetTable(player, "Inventory")
+		local techniques = DataService:GetTable(player, "Techniques")
+
+		if not table.find(techniques.Equipped, techniqueID) or not table.find(techniques.Obtained, techniqueID) then
+			return
+		end
+
+		---Checking Mastery---
+		-- if inventory[VitalsService:GetVital(character, "ActiveHand")] then
+		-- 	if inventory[VitalsService:GetVital(character, "ActiveHand")].Mastery < techniqueData.Mastery then
+		-- 		NetworkingService:FireToClient(player, "PopUp", {
+		-- 			["Mastery"] = inventory[VitalsService:GetVital(character, "ActiveHand")].Mastery,
+		-- 			["RequiredMastery"] = techniqueData.Mastery,
+		-- 		})
+		-- 		return
+		-- 	end
+		-- end
 
 		---Taking Mana/Stamina---
 		if techniqueData.DamageType then
@@ -220,26 +215,12 @@ function TechniqueService:UseTechnique(character, techniqueID, mouse)
 			end
 		end
 
-		if inventory[tool:GetAttribute("ID")] then
-			if inventory[tool:GetAttribute("ID")].Mastery < techniqueData.Mastery then
-				NetworkingService:FireToClient(player, "PopUp", {
-					["Mastery"] = inventory[tool:GetAttribute("ID")].Mastery,
-					["RequiredMastery"] = techniqueData.Mastery,
-				})
-				return
-			end
-		end
-
 		NetworkingService:FireToClient(player, "CameraShake", 0.25)
 	end
 
-	---CoolDown---
-	local cooldownTime = techniqueData.Cooldown
-
 	---Animation---
-	local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
-	local animation: AnimationTrack =
-		Animations:GetAnimation(humanoid, "Shared.Techniques."..techniqueData.TechniqueName..".Animation")
+	local animation =
+		Animations:GetAnimation(humanoid, "Shared.Techniques." .. techniqueData.TechniqueName .. ".Animation")
 	if not animation then
 		warn("Animation Not Found")
 		return
@@ -247,7 +228,7 @@ function TechniqueService:UseTechnique(character, techniqueID, mouse)
 	animation:Play()
 
 	---Ability States---
-	StateService:AddState(character, "Ability" .. techniqueID .. " Cooldown", cooldownTime)
+	StateService:AddState(character, "Technique" .. techniqueSlot .. " Cooldown", techniqueData.Cooldown)
 	StateService:AddState(character, "Invulnerable", 0.2)
 	StateService:AddState(character, "Casting", animation.Length)
 
@@ -272,21 +253,21 @@ function TechniqueService:UseTechnique(character, techniqueID, mouse)
 		end
 
 		---VFX---
-		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "AbilityVFX", {
+		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "TechniqueVFX", {
 			["VFX"] = assets.Shared.Techniques[techniqueData.TechniqueName].VFX,
 			["HitBoxName"] = hitboxClone.Name,
 			["Caster"] = character,
 		})
 
 		---Sound---
-		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "AbilitySound", {
+		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "TechniqueSound", {
 			["Sound"] = assets.Shared.Techniques[techniqueData.TechniqueName].Activate,
 			["HitBoxName"] = hitboxClone.Name,
 		})
-		Debris:AddItem(hitboxClone, 1)
+		Debris:AddItem(hitboxClone, animation.Length)
 
 		---Damage---
-		HitService:Apply(character, techniqueData, tool, hitboxClone)
+		HitService:Apply(character, techniqueData, hitboxClone)
 	end)
 end
 
