@@ -8,94 +8,7 @@ local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingServi
 local StatsMenuController = {}
 
 function StatsMenuController:TopBar()
-	local topBar = UIManager:GetUI("StatsMenu", "TopBar")
-	local menuName = topBar:FindFirstChild("MenuName")
-	local StatsMenu = UIManager:GetUI("StatsMenu", "StatsMenu")
-	local sectionButtons = UIManager:GetUI("StatsMenu", "SectionButtons")
-	local isSliding = false
-
 	ReturnButton("StatsMenu")
-
-	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-
-	for _, sectionButton in sectionButtons:GetChildren() do
-		if sectionButton:IsA("TextButton") then
-			UIHelper:ClickEffects(sectionButton)
-			UIHelper:HoverEffects(sectionButton)
-
-			local sectionName = sectionButton.Name:split("Button")[1]
-			local sectionMenu = StatsMenu:FindFirstChild(sectionName)
-
-			sectionButton.MouseButton1Click:Connect(function()
-				for _, frame in StatsMenu:GetChildren() do
-					if frame:IsA("Frame") then
-						if frame.Name ~= "TopBar" then
-							if frame.Name ~= sectionName then
-								frame.Visible = false
-								frame.Position = UDim2.fromScale(-0.5, 0.558)
-							end
-						end
-					end
-				end
-				sectionMenu.Visible = true
-				if isSliding then
-					return
-				end
-				isSliding = true
-				local info = TweenInfo.new(0.2, Enum.EasingStyle.Cubic, Enum.EasingDirection.Out)
-				local tween = TweenService:Create(sectionMenu, info, { Position = UDim2.fromScale(0.5, 0.558) })
-				tween:Play()
-				tween.Completed:Connect(function()
-					isSliding = false
-				end)
-			end)
-
-			---Looks BS---
-			local function SectionSelected()
-				if sectionMenu.Position ~= UDim2.fromScale(-0.5, 0.558) then
-					TweenService:Create(sectionButton.TextLabel, info, { TextColor3 = Color3.fromRGB(221, 211, 22) })
-						:Play()
-					TweenService:Create(sectionButton, info, { BackgroundColor3 = Color3.fromRGB(60, 49, 88) }):Play()
-					TweenService:Create(sectionButton.TextLabel, info, { TextStrokeTransparency = 0 }):Play()
-				else
-					TweenService:Create(sectionButton.TextLabel, info, { TextColor3 = Color3.fromRGB(255, 255, 255) })
-						:Play()
-					TweenService:Create(sectionButton, info, { BackgroundColor3 = Color3.fromRGB(255, 255, 255) })
-						:Play()
-					TweenService:Create(sectionButton.TextLabel, info, { TextStrokeTransparency = 1 }):Play()
-				end
-			end
-			SectionSelected()
-			sectionMenu.Changed:Connect(function()
-				SectionSelected()
-			end)
-
-			sectionButton.MouseEnter:Connect(function()
-				if sectionMenu.Position == UDim2.fromScale(-0.5, 0.558) then
-					TweenService:Create(sectionButton, info, { BackgroundColor3 = Color3.fromRGB(87, 107, 194) }):Play()
-				end
-			end)
-
-			sectionButton.MouseLeave:Connect(function()
-				if sectionMenu.Position == UDim2.fromScale(-0.5, 0.558) then
-					TweenService:Create(sectionButton, info, { BackgroundColor3 = Color3.fromRGB(255, 255, 255) })
-						:Play()
-				end
-			end)
-		end
-	end
-
-	for _, sectionMenu in StatsMenu:GetChildren() do
-		if sectionMenu:IsA("Frame") then
-			if sectionMenu.Name ~= "TopBar" then
-				sectionMenu.Changed:Connect(function()
-					if sectionMenu.Visible == true then
-						menuName.Text = sectionMenu.Name
-					end
-				end)
-			end
-		end
-	end
 end
 
 function StatsMenuController:Stats()
@@ -158,7 +71,7 @@ function StatsMenuController:Stats()
 						textLabel.Parent = detailFrame:FindFirstChild("Details")
 					end
 					textLabel.Visible = true
-					textLabel.Text = boost..":  "..val
+					textLabel.Text = boost .. ":  " .. val
 				end
 			end
 			local function StatPointsRefresh()
@@ -223,11 +136,6 @@ function StatsMenuController:Stats()
 			popup:Destroy()
 		end)
 	end)
-end
-
-function StatsMenuController:RandomGradients()
-	local texture = UIManager:GetUI("StatsMenu", "Texture")
-	UIHelper:RotateGradient(texture:FindFirstChild("UIGradient"))
 end
 
 return StatsMenuController

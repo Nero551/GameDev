@@ -199,18 +199,16 @@ function HUDController:Techniques()
 					if state:GetAttribute("Duration") then
 						state:GetAttributeChangedSignal("Duration"):Connect(function()
 							techSlot.CDTime.Text = math.round(state:GetAttribute("Duration"))
-							TweenService
-								:Create(
-									techSlot.CDBox,
-									TweenInfo.new(0.05, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-									{
-										Size = UDim2.fromScale(
-											1,
-											(state:GetAttribute("Duration") / techniqueData.Cooldown)
-										),
-									}
-								)
-								:Play()
+							TweenService:Create(
+								techSlot.CDBox,
+								TweenInfo.new(0.05, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+								{
+									Size = UDim2.fromScale(
+										1,
+										(state:GetAttribute("Duration") / techniqueData.Cooldown)
+									),
+								}
+							):Play()
 						end)
 						techSlot.CDTime.Text = math.round(state:GetAttribute("Duration"))
 					end

@@ -31,50 +31,12 @@ function ArmoryMenuController:Armory()
 	local equipButton = equipIcon:FindFirstChild("EquipButton")
 	local unequipButton = equipIcon:FindFirstChild("UnEquipButton")
 
-	UIHelper:HoverEffects(equipIcon)
-	UIHelper:ClickEffects(equipButton)
-	UIHelper:ClickEffects(unequipButton)
 	equipIcon.MouseEnter:Connect(function()
 		TweenService:Create(equipIcon, info, { ImageColor3 = Color3.fromRGB(55, 67, 122) }):Play()
 	end)
 
 	equipIcon.MouseLeave:Connect(function()
 		TweenService:Create(equipIcon, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-	end)
-
-	equipButton.MouseButton1Click:Connect(function()
-		local itemID = armoryInfo:GetAttribute("ItemID")
-		NetworkingService:FireToServer("EquipItem", itemID)
-		TweenService:Create(equipButton, info, { TextTransparency = 1 }):Play()
-		TweenService:Create(unequipButton, info, { TextTransparency = 0 }):Play()
-		task.wait(0.0625)
-		equipButton.Visible = false
-		unequipButton.Visible = true
-	end)
-
-	unequipButton.MouseButton1Click:Connect(function()
-		local itemID = armoryInfo:GetAttribute("ItemID")
-		NetworkingService:FireToServer("UnequipItem", itemID)
-
-		TweenService:Create(equipButton, info, { TextTransparency = 0 }):Play()
-		TweenService:Create(unequipButton, info, { TextTransparency = 1 }):Play()
-		task.wait(0.0625)
-		equipButton.Visible = true
-		unequipButton.Visible = false
-	end)
-
-	equipped.ChildAdded:Connect(function(child)
-		local icon = itemFrame:FindFirstChild(child:GetAttribute("Equipped"))
-		if icon then
-			icon:FindFirstChild("EquippedIcon").Visible = true
-		end
-	end)
-
-	equipped.ChildRemoved:Connect(function(child)
-		local icon = itemFrame:FindFirstChild(child:GetAttribute("Equipped"))
-		if icon then
-			icon:FindFirstChild("EquippedIcon").Visible = false
-		end
 	end)
 
 	local IconSelected = nil
@@ -219,7 +181,7 @@ function ArmoryMenuController:Armory()
 
 				if
 					equipped:FindFirstChild(itemData.Type)
-					and equipped:FindFirstChild(itemData.Type):GetAttribute("Equipped") == itemID
+					and equipped:FindFirstChild(itemData.Type):GetAttribute("ItemID") == itemID
 				then
 					TweenService:Create(equipButton, info, { TextTransparency = 1 }):Play()
 					TweenService:Create(unequipButton, info, { TextTransparency = 0 }):Play()
@@ -241,12 +203,33 @@ function ArmoryMenuController:Armory()
 		end
 		if
 			equipped:FindFirstChild(itemData.Type)
-			and equipped:FindFirstChild(itemData.Type):GetAttribute("Equipped") == itemID
+			and equipped:FindFirstChild(itemData.Type):GetAttribute("ItemID") == itemID
 		then
 			equippedIcon.Visible = true
 		else
 			equippedIcon.Visible = false
 		end
+	end
+
+	for _, catagory in equipped:GetChildren() do
+		for _, child in catagory:GetChildren() do
+			local icon = itemFrame:FindFirstChild(child:GetAttribute("ItemID"))
+			if icon then
+				icon:FindFirstChild("EquippedIcon").Visible = true
+			end
+		end
+		catagory.ChildAdded:Connect(function(child)
+			local icon = itemFrame:FindFirstChild(child:GetAttribute("ItemID"))
+			if icon then
+				icon:FindFirstChild("EquippedIcon").Visible = true
+			end
+		end)
+		catagory.ChildRemoved:Connect(function(child)
+			local icon = itemFrame:FindFirstChild(child:GetAttribute("ItemID"))
+			if icon then
+				icon:FindFirstChild("EquippedIcon").Visible = false
+			end
+		end)
 	end
 
 	for _, descendant in inventory:GetDescendants() do
@@ -262,6 +245,39 @@ function ArmoryMenuController:Armory()
 
 	inventory.DescendantRemoving:Connect(function(descendant)
 		UpdateUI(descendant, true)
+	end)
+end
+
+function ArmoryMenuController:Equip()
+	local armory = UIManager:GetUI("ArmoryMenu", "ArmoryMenu")
+	local armoryInfo = armory:FindFirstChild("ArmoryInfo")
+	local equipIcon = armoryInfo:FindFirstChild("Equip")
+	local equipButton = equipIcon:FindFirstChild("EquipButton")
+	local unequipButton = equipIcon:FindFirstChild("UnEquipButton")
+	local info = TweenInfo.new(0.0625, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out)
+
+	UIHelper:HoverEffects(equipIcon)
+	UIHelper:ClickEffects(equipButton)
+	UIHelper:ClickEffects(unequipButton)
+	equipButton.MouseButton1Click:Connect(function()
+		local itemID = armoryInfo:GetAttribute("ItemID")
+		NetworkingService:FireToServer("EquipItem", itemID)
+		TweenService:Create(equipButton, info, { TextTransparency = 1 }):Play()
+		TweenService:Create(unequipButton, info, { TextTransparency = 0 }):Play()
+		task.wait(0.0625)
+		equipButton.Visible = false
+		unequipButton.Visible = true
+	end)
+
+	unequipButton.MouseButton1Click:Connect(function()
+		local itemID = armoryInfo:GetAttribute("ItemID")
+		NetworkingService:FireToServer("UnequipItem", itemID)
+
+		TweenService:Create(equipButton, info, { TextTransparency = 0 }):Play()
+		TweenService:Create(unequipButton, info, { TextTransparency = 1 }):Play()
+		task.wait(0.0625)
+		equipButton.Visible = true
+		unequipButton.Visible = false
 	end)
 end
 

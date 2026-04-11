@@ -70,7 +70,7 @@ function UIHelper:ClickEffects(ui, down, up)
 	if not ui then
 		return
 	end
-	local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+	local info = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	local scale = ui:FindFirstChildWhichIsA("UIScale")
 	if not scale then
 		scale = Instance.new("UIScale")

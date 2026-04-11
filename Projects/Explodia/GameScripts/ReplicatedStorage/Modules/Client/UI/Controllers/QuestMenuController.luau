@@ -300,6 +300,11 @@ function QuestMenuController:Quests()
 				end
 			end
 			folder.ChildAdded:Connect(function(child)
+				for _, objective in child:GetChildren() do
+					objective.AttributeChanged:Connect(function()
+						UpdateUI(child)
+					end)
+				end
 				UpdateUI(child)
 			end)
 			folder.ChildRemoved:Connect(function(child)
@@ -400,11 +405,6 @@ function QuestMenuController:AbandonQuest()
 			TweenService:Create(abandonQuestButton, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
 		end
 	end)
-end
-
-function QuestMenuController:RandomGradients()
-	local texture = UIManager:GetUI("QuestMenu", "Texture")
-	UIHelper:RotateGradient(texture:FindFirstChild("UIGradient"))
 end
 
 return QuestMenuController

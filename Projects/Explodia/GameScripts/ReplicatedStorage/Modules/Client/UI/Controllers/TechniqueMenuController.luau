@@ -112,15 +112,6 @@ function TechniqueMenuController:Techniques()
 			end)
 		end
 		techniqueSlot.Text = techniqueData.TechniqueName
-
-		local equippedIcon = techniqueSlot:FindFirstChild("EquippedIcon")
-		for _, equippedTech in techniques.Equipped:GetChildren() do
-			if equippedTech:GetAttribute("TechniqueID") == techniqueID then
-				equippedIcon.Visible = true
-			else
-				equippedIcon.Visible = false
-			end
-		end
 	end
 
 	for _, child in techniques.Obtained:GetChildren() do
@@ -134,12 +125,28 @@ function TechniqueMenuController:Techniques()
 	techniques.Obtained.ChildRemoved:Connect(function(child)
 		UpdateUI(child, true)
 	end)
+
+	for _, child in techniques.Equipped:GetChildren() do
+		local slot = techniqueFrame:FindFirstChild(child:GetAttribute("TechniqueID"))
+		if slot then
+			slot:FindFirstChild("EquippedIcon").Visible = true
+		end
+	end
+	techniques.Equipped.ChildAdded:Connect(function(child)
+		local slot = techniqueFrame:FindFirstChild(child:GetAttribute("TechniqueID"))
+		if slot then
+			slot:FindFirstChild("EquippedIcon").Visible = true
+		end
+	end)
+	techniques.Equipped.ChildRemoved:Connect(function(child)
+		local slot = techniqueFrame:FindFirstChild(child:GetAttribute("TechniqueID"))
+		if slot then
+			slot:FindFirstChild("EquippedIcon").Visible = false
+		end
+	end)
 end
 
 function TechniqueMenuController:Equip()
-	local techniques = player:WaitForChild("Techniques")
-
-	local techniqueFrame = UIManager:GetUI("TechniquesMenu", "TechniquesScrollingFrame")
 	local infoFrame = UIManager:GetUI("TechniquesMenu", "InfoFrame")
 	local box = infoFrame:FindFirstChild("Equip")
 	local equipButton = box:FindFirstChild("EquipButton")
@@ -178,19 +185,6 @@ function TechniqueMenuController:Equip()
 		task.wait(info.Time)
 		equipButton.Visible = true
 		unequipButton.Visible = false
-	end)
-
-	techniques.Equipped.ChildAdded:Connect(function(child)
-		local slot = techniqueFrame:FindFirstChild(child:GetAttribute("TechniqueID"))
-		if slot then
-			slot:FindFirstChild("EquippedIcon").Visible = true
-		end
-	end)
-	techniques.Equipped.ChildRemoved:Connect(function(child)
-		local slot = techniqueFrame:FindFirstChild(child:GetAttribute("TechniqueID"))
-		if slot then
-			slot:FindFirstChild("EquippedIcon").Visible = false
-		end
 	end)
 end
 
@@ -240,17 +234,17 @@ function TechniqueMenuController:EquippedTechniques()
 	end
 
 	local function UpdateTechniques()
-		for _, equippedTech in equippedTechsFrame:GetChildren() do
-			if equippedTech:IsA("TextButton") then
-				local techSlot = techniques.Equipped:FindFirstChild(equippedTech.Name:split("Technique")[2])
-				if techSlot then
-					local techniqueID = techSlot:GetAttribute("TechniqueID")
-					local techniqueData = TechniqueData:GetTechniqueData(techniqueID)
-					if techniqueData then
-						equippedTech.TechniqueName.Text = techniqueData.TechniqueName
-					end
-				else
-					equippedTech.TechniqueName.Text = ""
+		for _, techSlot in equippedTechsFrame:GetChildren() do
+			techSlot.TechniqueName.Text = ""
+		end
+
+		for _, equippedTech in techniques.Equipped:GetChildren() do
+			local techSlot = equippedTechsFrame:FindFirstChild("Technique" .. equippedTech.Name)
+			if techSlot then
+				local techniqueID = equippedTech:GetAttribute("TechniqueID")
+				local techniqueData = TechniqueData:GetTechniqueData(techniqueID)
+				if techniqueData then
+					techSlot.TechniqueName.Text = techniqueData.TechniqueName
 				end
 			end
 		end

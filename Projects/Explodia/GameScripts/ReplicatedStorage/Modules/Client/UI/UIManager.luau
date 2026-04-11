@@ -67,11 +67,11 @@ function UIManager:Init()
 	for _, controller in UIManager.Controllers do
 		for _, value in controller do
 			if typeof(value) == "function" then
-				local _,err = pcall(function()
-					value(controller)					
+				local _, err = pcall(function()
+					value(controller)
 				end)
 				if err then
-					warn("Error Occured When Called Function:", err,{debug.traceback()})					
+					warn("Error Occured When Called Function:", err, { debug.traceback() })
 				end
 			end
 		end
@@ -101,7 +101,7 @@ function UIManager:CreateUI(screenName, name, class, parent, properties)
 		return
 	end
 
-	for property,value in pairs(DefaultProperties[class]) do
+	for property, value in pairs(DefaultProperties[class]) do
 		local _, error = pcall(function()
 			ui[property] = value
 		end)
@@ -110,7 +110,7 @@ function UIManager:CreateUI(screenName, name, class, parent, properties)
 			continue
 		end
 	end
-	
+
 	properties = typeof(properties) == "table" and properties or {}
 	for property, value in pairs(properties) do
 		local _, error = pcall(function()
@@ -177,6 +177,7 @@ function UIManager:SetActiveScreen(screenName)
 			if UIManager.ActiveScreen and UIManager:GetScreen(UIManager.ActiveScreen) then
 				UIHelper:FadeOut(UIManager:GetScreen(UIManager.ActiveScreen))
 			end
+			task.wait(0.2)
 			UIManager.ActiveScreen = screenName
 			UIHelper:FadeIn(UIManager:GetScreen(screenName))
 		end
@@ -184,12 +185,12 @@ function UIManager:SetActiveScreen(screenName)
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-	if UIManager.ActiveScreen == "MainMenu" then
-		TweenService:Create(blur, info, { Size = 24 }):Play()
-	else
+	if UIManager.ActiveScreen == "HUD" then
 		TweenService:Create(blur, info, { Size = 0 }):Play()
+	else
+		TweenService:Create(blur, info, { Size = 24 }):Play()
 	end
-	print(UIManager.ActiveScreen, { debug.traceback()})
+	-- print(UIManager.ActiveScreen, { debug.traceback() })
 end
 
 return UIManager

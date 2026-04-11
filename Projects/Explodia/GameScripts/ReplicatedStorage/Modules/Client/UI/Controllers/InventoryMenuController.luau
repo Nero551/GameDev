@@ -255,6 +255,22 @@ function InventoryMenuController:Inventory()
 		end
 	end
 
+	for _, catagory in equipped:GetChildren() do
+
+		catagory.ChildAdded:Connect(function(child)
+			local icon = itemFrame:FindFirstChild(child:GetAttribute("ItemID"))
+			if icon then
+				icon:FindFirstChild("EquippedIcon").Visible = true
+			end
+		end)
+		catagory.ChildRemoved:Connect(function(child)
+			local icon = itemFrame:FindFirstChild(child:GetAttribute("ItemID"))
+			if icon then
+				icon:FindFirstChild("EquippedIcon").Visible = false
+			end
+		end)
+	end
+
 	for _, descendant in inventory:GetDescendants() do
 		descendant.AttributeChanged:Connect(function()
 			UpdateUI(descendant)
@@ -272,8 +288,6 @@ function InventoryMenuController:Inventory()
 end
 
 function InventoryMenuController:Equip()
-	local equipped = player:WaitForChild("Equipped")
-	local itemFrame = UIManager:GetUI("InventoryMenu", "ItemScrollingFrame")
 	local infoFrame = UIManager:GetUI("InventoryMenu", "InfoFrame")
 	local box = infoFrame:FindFirstChild("Equip")
 	local equipButton = box:FindFirstChild("EquipButton")
@@ -313,21 +327,6 @@ function InventoryMenuController:Equip()
 		equipButton.Visible = true
 		unequipButton.Visible = false
 	end)
-
-	for _, catagory in equipped:GetChildren() do
-		catagory.ChildAdded:Connect(function(child)
-			local icon = itemFrame:FindFirstChild(child:GetAttribute("ItemID"))
-			if icon then
-				icon:FindFirstChild("EquippedIcon").Visible = true
-			end
-		end)
-		catagory.ChildRemoved:Connect(function(child)
-			local icon = itemFrame:FindFirstChild(child:GetAttribute("ItemID"))
-			if icon then
-				icon:FindFirstChild("EquippedIcon").Visible = false
-			end
-		end)
-	end
 end
 
 function InventoryMenuController:Search()
@@ -356,13 +355,6 @@ function InventoryMenuController:Search()
 			end
 		end
 	end)
-end
-
-function InventoryMenuController:RandomGradients()
-	local Texture = UIManager:GetUI("InventoryMenu", "InventoryMenu").Parent:FindFirstChild("Texture")
-	local topBar = UIManager:GetUI("InventoryMenu", "TopBar")
-	UIHelper:RotateGradient(topBar:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(Texture:FindFirstChild("UIGradient"))
 end
 
 return InventoryMenuController
