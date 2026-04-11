@@ -46,7 +46,7 @@ function UIHelper:Rotate(ui)
 	end)
 end
 
-function UIHelper:HoverEffects(ui, leave, enter)
+function UIHelper:HoverEffects(ui, enter, leave)
 	if not ui then
 		return
 	end
@@ -84,7 +84,7 @@ function UIHelper:ClickEffects(ui, down, up)
 		TweenService:Create(scale, info, { Scale = (down or 0.975) }):Play()
 	end)
 	ui.MouseButton1Up:Connect(function()
-		TweenService:Create(scale, info, { Scale = (up or 1.1) }):Play()
+		TweenService:Create(scale, info, { Scale = (up or 1) }):Play()
 	end)
 end
 
@@ -142,7 +142,6 @@ function UIHelper:FadeIn(menu)
 	if not cache then
 		return
 	end
-	task.wait(0.2)
 	menu.Enabled = true
 
 	for obj, props in pairs(cache) do

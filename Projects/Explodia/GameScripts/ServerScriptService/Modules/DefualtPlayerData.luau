@@ -65,21 +65,23 @@ local DefualtPlayerData = {
 		Equipped = {},
 	},
 
-	Keybinds = {
-		MainHand = Enum.KeyCode.One.Name,
-		OffHand = Enum.KeyCode.Two.Name,
-		Technique1 = Enum.KeyCode.Z.Name,
-		Technique2 = Enum.KeyCode.X.Name,
-		Technique3 = Enum.KeyCode.C.Name,
-		Technique4 = Enum.KeyCode.V.Name,
-		Technique5 = Enum.KeyCode.B.Name,
-		Technique6 = Enum.KeyCode.N.Name,
-		Technique7 = Enum.KeyCode.R.Name,
-		Technique8 = Enum.KeyCode.T.Name,
-		Technique9 = Enum.KeyCode.G.Name,
-		Technique10 = Enum.KeyCode.H.Name,
-		Technique11 = Enum.KeyCode.Y.Name,
-		Technique12 = Enum.KeyCode.U.Name,
+	Settings = {
+		Keybinds = {
+			MainHand = Enum.KeyCode.One.Name,
+			OffHand = Enum.KeyCode.Two.Name,
+			Technique1 = Enum.KeyCode.Z.Name,
+			Technique2 = Enum.KeyCode.X.Name,
+			Technique3 = Enum.KeyCode.C.Name,
+			Technique4 = Enum.KeyCode.V.Name,
+			Technique5 = Enum.KeyCode.B.Name,
+			Technique6 = Enum.KeyCode.N.Name,
+			Technique7 = Enum.KeyCode.R.Name,
+			Technique8 = Enum.KeyCode.T.Name,
+			Technique9 = Enum.KeyCode.G.Name,
+			Technique10 = Enum.KeyCode.H.Name,
+			Technique11 = Enum.KeyCode.Y.Name,
+			Technique12 = Enum.KeyCode.U.Name,
+		},
 	},
 }
 

@@ -233,7 +233,7 @@ end
 function TechniqueMenuController:EquippedTechniques()
 	local techniques = player:FindFirstChild("Techniques")
 	local equippedTechsFrame = UIManager:GetUI("TechniquesMenu", "EquippedTechniquesFrame")
-	local keybinds = player:FindFirstChild("Keybinds")
+	local keybinds = player:FindFirstChild("Settings"):FindFirstChild("Keybinds")
 
 	local function UpdateKeys()
 		for _, techSlot in equippedTechsFrame:GetChildren() do

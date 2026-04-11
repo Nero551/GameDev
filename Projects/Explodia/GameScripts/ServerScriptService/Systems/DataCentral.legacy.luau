@@ -6,6 +6,7 @@ local StarterGui = game:GetService("StarterGui")
 local TechniqueService = require(ServerScriptService.Services.Combat.TechniqueService)
 local AdminCmdsService = require(ServerScriptService.Services.Core.AdminCmdsService)
 local KeybindsService = require(ServerScriptService.Services.Profile.KeybindsService)
+local SettingsService = require(ServerScriptService.Services.Profile.SettingsService)
 local EquipService = require(game.ServerScriptService.Services.Profile.EquipService)
 local StatService = require(game.ServerScriptService.Services.Profile.StatService)
 local QuestService = require(game.ServerScriptService.Services.Profile.QuestService)
@@ -37,6 +38,11 @@ end)
 
 Players.playerRemoving:Connect(function()
 	ServerData.Players = Players:GetPlayers()
+end)
+
+---Client Requests To Change Keybind---
+NetworkingService:OnServerEvent("ChangeKeybind", function(player,keybind,key)
+	KeybindsService:ChangeKeybind(player, keybind, key)
 end)
 
 ---Admin Command---
@@ -111,7 +117,7 @@ NetworkingService:OnServerEvent("SelectDialogueOption", function(player:Player,o
 end)
 
 local function Setup(player: Player, character)
-	KeybindsService:SetupKeybinds(player)
+	SettingsService:SetupSettings(player)
 	TechniqueService:SetupTechniques(player)
 	StatService:SetupStats(player)
 	LevelService:SetupLevel(player)

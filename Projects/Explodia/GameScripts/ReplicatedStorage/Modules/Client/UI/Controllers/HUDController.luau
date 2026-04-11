@@ -54,7 +54,7 @@ end
 function HUDController:Tools()
 	local char = player.Character or player.CharacterAdded:Wait()
 	local equipped = player:WaitForChild("Equipped")
-	local keybinds = player:FindFirstChild("Keybinds")
+	local keybinds = player:FindFirstChild("Settings"):FindFirstChild("Keybinds")
 
 	local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
@@ -87,8 +87,7 @@ function HUDController:Tools()
 	end
 
 	-- for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
-	-- 	if slot:IsA("ImageButton") then
-	-- 		UIHelper:RotateGradient(slot.Border.UIGradient)
+	-- 	if slot:IsA("Frame") then
 
 	-- 		slot.MouseButton1Click:Connect(function()
 	-- 			local type = equipped:FindFirstChild("Weapons"):FindFirstChild(slot.Name:split("Slot")[1])
@@ -125,11 +124,25 @@ function HUDController:Tools()
 		end
 	end)
 
+	local function UpdateKeys()
+		for _, slot in UIManager:GetUI("HUD", "Tools"):GetChildren() do
+			if slot:IsA("Frame") then
+				if keybinds:GetAttribute(slot.Name) then
+					slot.Letter.Text = keybinds:GetAttribute(slot.Name)
+				end
+			end
+		end
+	end
+
 	UpdateTools()
-	UpdateToolSelection()
 	equipped.Weapons.ChildAdded:Connect(UpdateTools)
 	equipped.Weapons.ChildRemoved:Connect(UpdateTools)
+
+	UpdateToolSelection()
 	char:GetAttributeChangedSignal("ActiveHand"):Connect(UpdateToolSelection)
+
+	UpdateKeys()
+	keybinds.AttributeChanged:Connect(UpdateKeys)
 end
 
 function HUDController:Techniques()
@@ -137,7 +150,7 @@ function HUDController:Techniques()
 	local stateFolder = char:WaitForChild("State")
 	local techniques = player:FindFirstChild("Techniques")
 	local equippedTechsFrame = UIManager:GetUI("HUD", "TechniquesFrame")
-	local keybinds = player:FindFirstChild("Keybinds")
+	local keybinds = player:FindFirstChild("Settings"):FindFirstChild("Keybinds")
 
 	local TechSlots = {}
 	local Keys = {}
@@ -176,7 +189,9 @@ function HUDController:Techniques()
 				if StateChecker:CheckState(char, techSlot.Name .. " Cooldown") then
 					local state = stateFolder:FindFirstChild(techSlot.Name .. " Cooldown")
 					local techniqueData = TechniqueData:GetTechniqueData(
-						techniques.Equipped:FindFirstChild(techSlot.Name:split("Technique")[2]):GetAttribute("TechniqueID")
+						techniques.Equipped
+							:FindFirstChild(techSlot.Name:split("Technique")[2])
+							:GetAttribute("TechniqueID")
 					)
 					techSlot.TechniqueName.Visible = false
 					techSlot.CDTime.Visible = true
@@ -184,11 +199,18 @@ function HUDController:Techniques()
 					if state:GetAttribute("Duration") then
 						state:GetAttributeChangedSignal("Duration"):Connect(function()
 							techSlot.CDTime.Text = math.round(state:GetAttribute("Duration"))
-							TweenService:Create(
-								techSlot.CDBox,
-								TweenInfo.new(0.05, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-								{ Size = UDim2.fromScale(1, (state:GetAttribute("Duration") / techniqueData.Cooldown)) }
-							):Play()
+							TweenService
+								:Create(
+									techSlot.CDBox,
+									TweenInfo.new(0.05, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+									{
+										Size = UDim2.fromScale(
+											1,
+											(state:GetAttribute("Duration") / techniqueData.Cooldown)
+										),
+									}
+								)
+								:Play()
 						end)
 						techSlot.CDTime.Text = math.round(state:GetAttribute("Duration"))
 					end
