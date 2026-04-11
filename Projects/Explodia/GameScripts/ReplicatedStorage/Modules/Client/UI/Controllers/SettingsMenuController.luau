@@ -1,6 +1,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
+local ReturnButton = require(ReplicatedStorage.Modules.Client.UI.Components.ReturnButton)
 local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
 local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
@@ -8,8 +9,12 @@ local SettingsMenuController = {}
 
 local player = Players.LocalPlayer
 
+function SettingsMenuController:TopBar()
+	ReturnButton("SettingsMenu")
+end
+
 function SettingsMenuController:Options()
-	local settings = player:FindFirstChild("Settings")
+	local settings = player:WaitForChild("Settings")
 	local OptionsFrame = UIManager:GetUI("SettingsMenu", "Options")
 	local MainFrame = UIManager:GetUI("SettingsMenu", "Main")
 	for _, config in settings:GetChildren() do
@@ -45,7 +50,7 @@ end
 function SettingsMenuController:Keybinds()
 	local listeningForSlot = nil
 	local KeybindOrder = {}
-	local keybinds = player:FindFirstChild("Settings"):FindFirstChild("Keybinds")
+	local keybinds = player:WaitForChild("Settings"):WaitForChild("Keybinds")
 	local keybindsFrame = UIManager:GetUI("SettingsMenu", "KeybindsFrame")
 
 	for keybind, key in pairs(keybinds:GetAttributes()) do
@@ -95,7 +100,6 @@ function SettingsMenuController:Keybinds()
 				end
 			end
 		end
-
 		NetworkingService:FireToServer("ChangeKeybind", listeningForSlot.Name, inp.KeyCode.Name)
 		listeningForSlot = nil
 	end)

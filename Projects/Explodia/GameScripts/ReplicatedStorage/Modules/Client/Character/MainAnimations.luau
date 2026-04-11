@@ -46,14 +46,14 @@ return function()
 			conn:Disconnect()
 		end
 
-		local tool = char:FindFirstChildWhichIsA("Tool")
+		local tool = char:GetAttribute("ActiveHand")
 
-		if tool then
-			local weaponData = ItemDataBase:GetItemData(tool:GetAttribute("ID"))
-			if weaponData then
-				currentIdle = Animations:GetAnimation(humanoid, "Weapons." .. tool.Name .. ".Animations.Idle")
-				currentRun = Animations:GetAnimation(humanoid, "Weapons." .. tool.Name .. ".Animations.Run")
-				currentWalk = Animations:GetAnimation(humanoid, "Weapons." .. tool.Name .. ".Animations.Walk")
+		if tool ~= "" then
+			local toolData = ItemDataBase:GetItemData(tool)
+			if toolData then
+				currentIdle = Animations:GetAnimation(humanoid, "Weapons." .. toolData.Name .. ".Animations.Idle")
+				currentRun = Animations:GetAnimation(humanoid, "Weapons." .. toolData.Name .. ".Animations.Run")
+				currentWalk = Animations:GetAnimation(humanoid, "Weapons." .. toolData.Name .. ".Animations.Walk")
 			end
 		else
 			currentIdle = Animations:GetAnimation(humanoid, "Shared.Movement.Main.Idle.Default")
@@ -81,11 +81,7 @@ return function()
 			or humanoid:GetState() == Enum.HumanoidStateType.Landed
 		then
 			for name, anim in Animations.loadedAnimations[char] do
-				if
-					string.find(name, "Run")
-					or string.find(name, "Idle")
-					or string.find(name, "Walk")
-				then
+				if string.find(name, "Run") or string.find(name, "Idle") or string.find(name, "Walk") then
 					if anim.IsPlaying then
 						anim:Stop(0.2)
 					end

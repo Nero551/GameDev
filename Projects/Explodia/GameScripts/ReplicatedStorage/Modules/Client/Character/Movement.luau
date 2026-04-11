@@ -7,7 +7,7 @@ return function()
 	local Player = game:GetService("Players").LocalPlayer
 	local character = Player.Character or Player.CharacterAdded:Wait()
 	local humanoid: Humanoid = character:WaitForChild("Humanoid")
-	local hrp: Part = character:WaitForChild("HumanoidRootPart")
+	local keybinds = Player:WaitForChild("Settings"):WaitForChild("Keybinds")
 	local Connections = require(game.ReplicatedStorage.Modules.Core.Connections)
 	local camera = workspace.CurrentCamera
 
@@ -41,14 +41,17 @@ return function()
 		end
 	end
 
-	UserInputService.InputBegan:Connect(function(input)
+	UserInputService.InputBegan:Connect(function(input, proc)
+		if proc then
+			return
+		end
 		------Sprinting------
-		if input.KeyCode == Enum.KeyCode.LeftShift then
+		if input.KeyCode.Name == keybinds:GetAttribute("Sprint") then
 			NetworkingService:FireToServer("Sprint")
 		end
 
 		------Dashing & FlashStep------
-		if input.KeyCode == Enum.KeyCode.Q then
+		if input.KeyCode.Name == keybinds:GetAttribute("Dash") then
 			---FlashStep---
 			if UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
 				NetworkingService:FireToServer("FlashStep")

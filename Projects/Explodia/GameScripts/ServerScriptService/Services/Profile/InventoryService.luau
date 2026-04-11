@@ -48,9 +48,11 @@ function InventoryService:AddItem(itemID: string, amount: number, player: Player
 	-- Create entry if missing
 	if not inventory[itemID] then
 		inventory[itemID] = {
-			 Amount = 0,
-			 Mastery = 1, 
-			}
+			Amount = 0,
+			Mastery = 1,
+			EXPRequired = 100,
+			EXPAcquired = 0,
+		}
 	end
 
 	-- Handle stacking
@@ -82,6 +84,7 @@ function InventoryService:AddItem(itemID: string, amount: number, player: Player
 	value:SetAttribute("Mastery", inventory[itemID].Mastery)
 	value:SetAttribute("EXPRequired", inventory[itemID].EXPRequired)
 	value:SetAttribute("EXPAcquired", inventory[itemID].EXPAcquired)
+
 	GameEvents.ItemChanged:Fire(player)
 	return inventory[itemID]
 end
@@ -122,6 +125,6 @@ function InventoryService:RemoveItem(itemID: string, amount: number, player)
 	end
 
 	GameEvents.ItemChanged:Fire(player)
-	return true
+	return inventory[itemID]
 end
 return InventoryService

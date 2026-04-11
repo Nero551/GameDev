@@ -2,7 +2,6 @@ local DimensionalSet = {
 
 	["technique_0000000001"] = {
 		TechniqueName = "Dimensional Cut",
-		Icon = "rbxassetid://138987092801568",
 		Description = "A Slash That Cuts Through Dimensions.",
 
 		Cost = 10,
@@ -37,7 +36,6 @@ local DimensionalSet = {
 	},
 	["technique_0000000002"] = {
 		TechniqueName = "Dimensional Slash",
-		Icon = "rbxassetid://138987092801568",
 		Description = "",
 
 		Cost = 10,
@@ -72,7 +70,6 @@ local DimensionalSet = {
 	},
 	["technique_0000000003"] = {
 		TechniqueName = "Dimensional Spin",
-		Icon = "rbxassetid://138987092801568",
 		Description = "",
 
 		Cost = 10,

@@ -7,6 +7,7 @@ return function()
 	local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
 	local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 	local character = Player.Character or Player.CharacterAdded:Wait()
+	local keybinds = Player:WaitForChild("Settings"):WaitForChild("Keybinds")
 
 	local stateFolder = character:WaitForChild("State", math.huge)
 
@@ -41,7 +42,11 @@ return function()
 				NetworkingService:FireToServer("Attack")
 			end
 			------Blocking------
-			if UserInputService:IsKeyDown(Enum.KeyCode.F) and ActionVerifier:CanBlock(character) and tool then
+			if
+				UserInputService:IsKeyDown(Enum.KeyCode:FromName(keybinds:GetAttribute("Block")))
+				and ActionVerifier:CanBlock(character)
+				and tool
+			then
 				if
 					StateChecker:CheckState(character, "Blocking")
 					and stateFolder:FindFirstChild("Blocking"):GetAttribute("weaponName") ~= tool.Name

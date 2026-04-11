@@ -20,7 +20,6 @@ function TechniqueMenuController:Techniques()
 
 	local techniqueFrame = UIManager:GetUI("TechniquesMenu", "TechniquesScrollingFrame")
 	local infoFrame = UIManager:GetUI("TechniquesMenu", "InfoFrame")
-	local infoImage = infoFrame.Icon
 	local infoName = infoFrame.TechniqueName.TextLabel
 	local infoDamageType = infoFrame.DamageType
 	local infoDescription = infoFrame.Description
@@ -35,7 +34,7 @@ function TechniqueMenuController:Techniques()
 	infoFrame.Visible = false
 
 	for _, techniqueSlot in techniqueFrame:GetChildren() do
-		if techniqueSlot:IsA("ImageButton") then
+		if techniqueSlot:IsA("TextButton") then
 			techniqueSlot:Destroy()
 		end
 	end
@@ -66,14 +65,12 @@ function TechniqueMenuController:Techniques()
 			local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 			techniqueSlot.MouseEnter:Connect(function()
-				techniqueSlot.ImageColor3 = Color3.fromHex("#eeeeee")
 				if IconSelected ~= techniqueSlot then
 					TweenService:Create(border, info, { ImageColor3 = Color3.fromRGB(200, 200, 200) }):Play()
 				end
 			end)
 
 			techniqueSlot.MouseLeave:Connect(function()
-				techniqueSlot.ImageColor3 = Color3.fromHex("#ffffff")
 				if IconSelected ~= techniqueSlot then
 					TweenService:Create(border, info, { ImageColor3 = Color3.fromRGB(145, 145, 145) }):Play()
 				end
@@ -95,7 +92,6 @@ function TechniqueMenuController:Techniques()
 				infoFrame.Visible = true
 				infoFrame:SetAttribute("TechniqueName", techniqueSlot.Name)
 				infoFrame:SetAttribute("TechniqueID", techniqueID)
-				infoImage.Image = techniqueData.Icon
 				infoName.Text = techniqueData.TechniqueName
 				infoDescription.Text = techniqueData.Description
 				infoDamageType.Text = techniqueData.DamageType
@@ -115,6 +111,7 @@ function TechniqueMenuController:Techniques()
 				end
 			end)
 		end
+		techniqueSlot.Text = techniqueData.TechniqueName
 
 		local equippedIcon = techniqueSlot:FindFirstChild("EquippedIcon")
 		for _, equippedTech in techniques.Equipped:GetChildren() do
@@ -124,7 +121,6 @@ function TechniqueMenuController:Techniques()
 				equippedIcon.Visible = false
 			end
 		end
-		techniqueSlot.Image = techniqueData.Icon
 	end
 
 	for _, child in techniques.Obtained:GetChildren() do
@@ -206,7 +202,7 @@ function TechniqueMenuController:Search()
 		local text = searchBox.Text:lower()
 
 		for _, slot in techniqueFrame:GetChildren() do
-			if slot:IsA("Frame") then
+			if slot:IsA("TextButton") then
 				local techniqueData = TechniqueData:GetTechniqueData(slot.Name)
 				if not techniqueData then
 					continue

@@ -76,7 +76,7 @@ function EquipService:EquipItem(player: Player, itemID)
 	local folder = player:FindFirstChild("Equipped")
 	---Must own the Item---
 	if not inventory[itemID] then
-		warn(itemID , " Not Found In Inventory")
+		warn(itemID, " Not Found In Inventory")
 		return
 	end
 
@@ -217,6 +217,7 @@ end
 
 function EquipService:SetActiveHand(player: Player, itemID)
 	local char = player.Character or player.CharacterAdded:Wait()
+	local humanoid: Humanoid = char:WaitForChild("Humanoid")
 	local itemData = ItemDataBase:GetItemData(itemID)
 
 	if VitalsService:GetVital(char, "ActiveHand") == itemID then
@@ -234,7 +235,7 @@ function EquipService:SetActiveHand(player: Player, itemID)
 
 		local item = player.Backpack:FindFirstChild(itemData.Name)
 		if item then
-			item.Parent = char
+			humanoid:EquipTool(item)
 		end
 	end
 

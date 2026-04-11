@@ -9,6 +9,9 @@ local DefualtPlayerData = {
 		},
 		["armor_0000000001"] = {
 			Amount = 1,
+			Mastery = 1,
+			EXPRequired = 100,
+			EXPAcquired = 0,
 		},
 	},
 	Equipped = {
@@ -67,8 +70,11 @@ local DefualtPlayerData = {
 
 	Settings = {
 		Keybinds = {
+			Block = Enum.KeyCode.F.Name,
 			MainHand = Enum.KeyCode.One.Name,
 			OffHand = Enum.KeyCode.Two.Name,
+			Sprint = Enum.KeyCode.LeftShift.Name,
+			Dash = Enum.KeyCode.Q.Name,
 			Technique1 = Enum.KeyCode.Z.Name,
 			Technique2 = Enum.KeyCode.X.Name,
 			Technique3 = Enum.KeyCode.C.Name,

@@ -18,8 +18,13 @@ function Character:Init()
 		task.wait()
 	until #playerGui:GetDescendants() >= #StarterGui:GetDescendants()
 
-	for _, module in pairs(cachedModules) do
-		module()
+	for moduleName, module in pairs(cachedModules) do
+		local _,err = pcall(function()
+			module()
+		end)
+		if err then
+			warn("Module:",moduleName,"Failed To Load")
+		end
 	end
 end
 

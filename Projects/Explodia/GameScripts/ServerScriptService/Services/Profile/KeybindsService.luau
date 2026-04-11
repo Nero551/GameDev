@@ -12,17 +12,17 @@ function KeybindsService:SetupKeybinds(player)
 		config.Parent = player.Settings
 	end
 
+	for keybind, key in pairs(DefualtPlayerData.Settings.Keybinds) do
+		if not Keybinds[keybind] then
+			Keybinds[keybind] = key
+		end
+	end
+	
 	for keybind, key in pairs(Keybinds) do
 		if not DefualtPlayerData.Settings.Keybinds[keybind] then
 			Keybinds[keybind] = nil
 		end
 		config:SetAttribute(keybind, key)
-	end
-
-	for keybind, key in pairs(DefualtPlayerData.Settings.Keybinds) do
-		if not Keybinds[keybind] then
-			Keybinds[keybind] = key
-		end
 	end
 end
 
