@@ -3,7 +3,7 @@ MobData.Mobs = {
 	["Zombie"] = {
 		Type = "Enemy",
 		Tool = "weapon_0000000002", -- Cid Sword
-		Wander = true,
+		Wander = false,
 		WanderRadius = 50,
 		DetectionRange = 100,
 		AttackRange = 6,
@@ -29,6 +29,26 @@ MobData.Mobs = {
 				["Cid Sword"] = {Amount =  1},
 				["Vision Head"] = {Amount =  1},
 			}
+		}
+	}
+	,	
+		["Villager"] = {
+		Type = "Quest",
+		Tool = "weapon_0000000001", -- Fist
+		Wander = true,
+		WanderRadius = 100,
+		DetectionRange = 10,
+		AttackRange = 6,
+		WalkSpeed = 10,
+		RunSpeed = 24,
+		MinDamage = 0.8,
+		MaxDamage = 1,
+		MinHealth = 50,
+		MaxHealth = 100,
+		Drops = {
+			["Yen"] = 5,
+			["EXP"] = 50,
+			["MasteryEXP"] = 100,
 		}
 	}
 	,	

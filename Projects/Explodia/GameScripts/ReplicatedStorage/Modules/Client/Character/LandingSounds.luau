@@ -6,7 +6,7 @@ return function()
 	local root = char:WaitForChild("HumanoidRootPart")
 
 	local humanoid: Humanoid = char:WaitForChild("Humanoid")
-	local materialSounds = game.ReplicatedStorage.Assets.Shared.Core.LandingSounds
+	local materialSounds = game.ReplicatedStorage.Assets.Core.LandingSounds
 
 	local elapsed = 0
 	local minFalltime = 2

@@ -5,10 +5,13 @@ return function(npc)
 	end
 
 	local Debris = game:GetService("Debris")
+	local PlaceAssetIdsService = game:GetService("PlaceAssetIdsService")
+	local Players = game:GetService("Players")
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local ServerScriptService = game:GetService("ServerScriptService")
 	local ServerStorage = game:GetService("ServerStorage")
 	local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+	local StateChecker = require(ReplicatedStorage.Modules.Helpers.StateChecker)
 	local ToolLoader = require(ServerScriptService.Modules.Utilities.ToolLoader)
 	local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 	local MobData = require(game.ReplicatedStorage.Modules.Data.MobData)

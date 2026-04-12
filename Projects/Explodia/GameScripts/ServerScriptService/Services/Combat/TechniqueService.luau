@@ -98,8 +98,6 @@ function TechniqueService:UnEquipTechnique(player, techniqueID)
 			value:Destroy()
 		end
 	end
-
-
 end
 
 function TechniqueService:EquipTechnique(player, techniqueID)
@@ -189,7 +187,7 @@ function TechniqueService:UseTechnique(character, techniqueSlot, mouse)
 			if techniqueData.DamageType == "Physical" then
 				local playerStamina = VitalsService:GetVital(character, "Stamina")
 				if playerStamina.CurrentStamina < techniqueData.Cost then
-					assets.Shared.MenuSounds.Error:Play()
+					assets.MenuSounds.Error:Play()
 					NetworkingService:FireToClient(player, "PopUp", {
 						["TechniqueName"] = techniqueData.TechniqueName,
 						["RequiredStamina"] = techniqueData.Cost,
@@ -202,7 +200,7 @@ function TechniqueService:UseTechnique(character, techniqueSlot, mouse)
 			elseif techniqueData.DamageType == "Magic" then
 				local playerMana = VitalsService:GetVital(character, "Mana")
 				if playerMana.CurrentMana < techniqueData.Cost then
-					assets.Shared.MenuSounds.Error:Play()
+					assets.MenuSounds.Error:Play()
 					NetworkingService:FireToClient(player, "PopUp", {
 						["TechniqueName"] = techniqueData.TechniqueName,
 						["RequiredMana"] = techniqueData.Cost,
@@ -219,8 +217,7 @@ function TechniqueService:UseTechnique(character, techniqueSlot, mouse)
 	end
 
 	---Animation---
-	local animation =
-		Animations:GetAnimation(humanoid, "Shared.Techniques." .. techniqueData.TechniqueName .. ".Animation")
+	local animation = Animations:GetAnimation(humanoid, "Techniques." .. techniqueData.TechniqueName .. ".Animation")
 	if not animation then
 		warn("Animation Not Found")
 		return
@@ -254,14 +251,14 @@ function TechniqueService:UseTechnique(character, techniqueSlot, mouse)
 
 		---VFX---
 		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "TechniqueVFX", {
-			["VFX"] = assets.Shared.Techniques[techniqueData.TechniqueName].VFX,
+			["VFX"] = assets.Techniques[techniqueData.TechniqueName].VFX,
 			["HitBoxName"] = hitboxClone.Name,
 			["Caster"] = character,
 		})
 
 		---Sound---
 		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "TechniqueSound", {
-			["Sound"] = assets.Shared.Techniques[techniqueData.TechniqueName].Activate,
+			["Sound"] = assets.Techniques[techniqueData.TechniqueName].Activate,
 			["HitBoxName"] = hitboxClone.Name,
 		})
 		Debris:AddItem(hitboxClone, animation.Length)

@@ -73,7 +73,6 @@ function HitService:Apply(attacker, data, hitbox, trueSwingNumber)
 				if blockCounter == 4 then
 					VitalsService:ModifyVital(targetHit, "Combat", "ModifyBlockCounter", { ["BlockCounterChange"] = 0 })
 					HitReactionsService:BlockBreak(attacker, targetHit, data)
-					DamageService:BlockBreakDamage()
 				else
 					---Do Blocked HitType----
 					VitalsService:ModifyVital(
@@ -113,8 +112,13 @@ function HitService:Apply(attacker, data, hitbox, trueSwingNumber)
 				else
 					---Status Effect HitType---
 					if data.StatusEffects and math.random(0, 100) <= data.StatusEffects.ProcChance * 100 then
-						damage =
-							DamageService:DefaultDamage(attacker, targetHit, baseDamage, totalScaling, targetDefense)
+						damage = DamageService[data.DamageType .. "Damage"](
+							attacker,
+							targetHit,
+							baseDamage,
+							totalScaling,
+							targetDefense
+						)
 						local randomStatusEffect = math.random(1, #data.StatusEffects.Effects)
 						local statusEffectName = data.StatusEffects.Effects[randomStatusEffect]
 						local statusEffectData = StatusEffectsData.StatusEffects[statusEffectName]
@@ -133,8 +137,14 @@ function HitService:Apply(attacker, data, hitbox, trueSwingNumber)
 					else
 						-----Defualt HitType---
 						HitReactionsService:Default(attacker, targetHit, data, trueSwingNumber)
-						damage =
-							DamageService:DefaultDamage(attacker, targetHit, baseDamage, totalScaling, targetDefense)
+						damage = DamageService[data.DamageType .. "Damage"](
+							DamageService,
+							attacker,
+							targetHit,
+							baseDamage,
+							totalScaling,
+							targetDefense
+						)
 					end
 				end
 			end

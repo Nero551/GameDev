@@ -1,8 +1,5 @@
 return function()
-	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local RunService = game:GetService("RunService")
-
-	local assets = ReplicatedStorage.Assets
 	local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 	local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
 	local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
@@ -27,15 +24,13 @@ return function()
 	---MainStateAnimations---
 	local humanoid = char:WaitForChild("Humanoid")
 
-	Animations:LoadAnimations(humanoid, assets.Shared)
-
 	local currentIdle: AnimationTrack
 	local currentRun: AnimationTrack
 	local currentWalk: AnimationTrack
 	local conn: RBXScriptConnection
 
-	if not Animations.loadedAnimations[char]["Shared.Movement.Main.Idle.Default"].IsPlaying then
-		Animations:GetAnimation(humanoid, "Shared.Movement.Main.Idle.Default"):Play()
+	if not Animations.loadedAnimations[char]["Movement.Main.Idle.Default"].IsPlaying then
+		Animations:GetAnimation(humanoid, "Movement.Main.Idle.Default"):Play()
 	end
 
 	conn = RunService.RenderStepped:Connect(function()
@@ -56,19 +51,19 @@ return function()
 				currentWalk = Animations:GetAnimation(humanoid, "Weapons." .. toolData.Name .. ".Animations.Walk")
 			end
 		else
-			currentIdle = Animations:GetAnimation(humanoid, "Shared.Movement.Main.Idle.Default")
-			currentRun = Animations:GetAnimation(humanoid, "Shared.Movement.Main.Run.Default")
-			currentWalk = Animations:GetAnimation(humanoid, "Shared.Movement.Main.Walk.Default")
+			currentIdle = Animations:GetAnimation(humanoid, "Movement.Main.Idle.Default")
+			currentRun = Animations:GetAnimation(humanoid, "Movement.Main.Run.Default")
+			currentWalk = Animations:GetAnimation(humanoid, "Movement.Main.Walk.Default")
 		end
 
 		---Jump Animation---
 		if humanoid:GetState() == Enum.HumanoidStateType.Jumping then
-			Animations:GetAnimation(humanoid, "Shared.Movement.Main.Jump.Default"):Play()
+			Animations:GetAnimation(humanoid, "Movement.Main.Jump.Default"):Play()
 		end
 
 		---Falling Animation---
 		if humanoid:GetState() == Enum.HumanoidStateType.Freefall then
-			Animations:GetAnimation(humanoid, "Shared.Movement.Main.Fall.Default"):Play()
+			Animations:GetAnimation(humanoid, "Movement.Main.Fall.Default"):Play()
 		end
 
 		---Landing Animation---

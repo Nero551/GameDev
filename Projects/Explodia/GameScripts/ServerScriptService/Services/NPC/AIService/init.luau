@@ -76,6 +76,8 @@ function AIService:CreateAI(npc)
 
 		DetectionRange = mobData.DetectionRange,
 		AttackRange = mobData.AttackRange,
+
+		WanderTarget = nil,
 		WanderRadius = mobData.WanderRadius,
 
 		Moving = false,
@@ -90,15 +92,15 @@ function AIService:CreateAI(npc)
 
 		IdleAnimation = Animations:GetAnimation(
 			npc.Humanoid,
-			"Weapons." .. itemData.Name .. ".Animations.Idle" or "Shared.Animations.Idle.Default"
+			(itemData.Name and "Weapons." .. itemData.Name .. ".Animations.Idle") or "Movement.Main.Idle.Default"
 		),
 		WalkAnimation = Animations:GetAnimation(
 			npc.Humanoid,
-			"Weapons." .. itemData.Name .. ".Animations.Walk" or "Shared.Animations.Walk.Default"
+			(itemData.Name and "Weapons." .. itemData.Name .. ".Animations.Walk") or "Movement.Main.Walk.Default"
 		),
 		RunAnimation = Animations:GetAnimation(
 			npc.Humanoid,
-			"Weapons." .. itemData.Name .. ".Animations.Run" or "Shared.Animations.Run.Default"
+			(itemData.Name and "Weapons." .. itemData.Name .. ".Animations.Run") or "Movement.Main.Run.Default"
 		),
 	}
 end

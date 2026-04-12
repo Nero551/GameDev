@@ -75,7 +75,7 @@ function CombatUtils:AddKillerHit(attacker, targetHit)
 		killerHit.Parent = targetHit:WaitForChild("Humanoid")
 		killerHit.Value = playerAttacker
 		killerHit.Name = "KillerHit"
-		Debris:AddItem(killerHit, 30)
+		Debris:AddItem(killerHit, 300)
 	end
 end
 

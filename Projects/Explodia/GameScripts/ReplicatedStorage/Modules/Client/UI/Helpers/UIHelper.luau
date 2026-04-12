@@ -3,8 +3,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local UIHelper = {}
 
-local hoverSound = ReplicatedStorage.Assets.Shared.MenuSounds.Hover
-local clickSound = ReplicatedStorage.Assets.Shared.MenuSounds.Click
+local hoverSound = ReplicatedStorage.Assets.MenuSounds.Hover
+local clickSound = ReplicatedStorage.Assets.MenuSounds.Click
 
 UIHelper.Cache = {}
 

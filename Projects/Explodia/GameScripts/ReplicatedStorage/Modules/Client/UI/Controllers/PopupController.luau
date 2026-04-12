@@ -101,7 +101,7 @@ function PopupController:Creator()
 		if popupInfo.Level then
 			popup.PopUpText.Text = "Leveled Up (" .. popupInfo.Level .. ")"
 			popup.PopUpText.TextColor3 = Color3.fromHex("#fff131")
-			ReplicatedStorage.Assets.Shared.MenuSounds.LevelUp:Play()
+			ReplicatedStorage.Assets.MenuSounds.LevelUp:Play()
 
 			---Item Drop---
 		elseif popupInfo.ItemName and popupInfo.ItemRarity and popupInfo.ItemAmount then

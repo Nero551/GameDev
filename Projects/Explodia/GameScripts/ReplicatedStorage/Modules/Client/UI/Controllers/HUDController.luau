@@ -355,7 +355,7 @@ function HUDController:Dialogue()
 		while i < length do
 			i += 1
 			DialogueText.Text = string.sub(line, 1, i)
-			ReplicatedStorage.Assets.Shared.MenuSounds.DialogueSound:Play()
+			ReplicatedStorage.Assets.MenuSounds.DialogueSound:Play()
 			if skipLine then
 				DialogueText.Text = line
 				break
@@ -532,30 +532,6 @@ function HUDController:DamageCounter()
 	local BASE_ExtraText_SIZE = ExtraText.Size
 	local BASE_ExtraImage_SIZE = ExtraImage.Size
 
-	local function DefualtTween()
-		ExtraText.Visible = false
-		ExtraImage.Visible = false
-
-		local info = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-
-		local color = Color3.fromRGB(176, 176, 176)
-
-		TweenService:Create(comboDuration, info, { BackgroundColor3 = color }):Play()
-
-		TweenService:Create(damageText, info, {
-			TextColor3 = color,
-			Size = BASE_SIZE + UDim2.fromScale(0.05, 0.05),
-		}):Play()
-
-		task.delay(0.25, function()
-			local shrinkTween =
-				TweenService:Create(damageText, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-					Size = BASE_SIZE - UDim2.fromScale(0.05, 0.05),
-				})
-			shrinkTween:Play()
-		end)
-	end
-
 	local function BlockedTween()
 		ExtraText.Text = "BLOCKED"
 		ExtraImage.Visible = false
@@ -581,7 +557,6 @@ function HUDController:DamageCounter()
 			shrinkTween:Play()
 		end)
 	end
-
 	local function BlackFlashTween()
 		ExtraText.Text = "BLACK FLASH"
 		ExtraImage.Visible = false
@@ -620,7 +595,6 @@ function HUDController:DamageCounter()
 			shrinkCriticalTween:Play()
 		end)
 	end
-
 	local function CriticalTween()
 		ExtraText.Text = "CRITICAL"
 		ExtraText.Visible = true
@@ -660,7 +634,6 @@ function HUDController:DamageCounter()
 			shrinkCriticalTween:Play()
 		end)
 	end
-
 	local function StatusEffectTween(statusEffectName)
 		local statusEffectData = StatusEffectsData.StatusEffects[statusEffectName]
 		local statusFrame = damageFrame.Parent.StatusFrame
@@ -715,42 +688,94 @@ function HUDController:DamageCounter()
 			shrinkCriticalTween:Play()
 		end)
 	end
+	local function PhysicalTween()
+		ExtraText.Text = "PHYSICAL"
+		ExtraText.Visible = true
+		ExtraImage.Visible = false
 
-	NetworkingService:OnClientEvent("ShowDamage", function(damage, critical, blocked, blackFlash, statusEffectName)
-		damageFrame.Visible = true
+		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+		local color = Color3.fromRGB(204, 214, 6)
 
-		---ComboDuration---
-		comboDuration.Visible = true
-		comboDuration.Size = UDim2.fromScale(1, 0.01)
-		local info = TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
-		local comboDurationTween = TweenService:Create(comboDuration, info, { Size = UDim2.fromScale(0, 0.01) })
-		comboDurationTween:Play()
-		comboDurationTween.Completed:Connect(function(playbackState)
-			if playbackState ~= Enum.PlaybackState.Cancelled then
-				damageFrame.Visible = false
-				damageText.Text = ""
-			end
+		TweenService:Create(ExtraText, info, { TextColor3 = color }):Play()
+		TweenService:Create(comboDuration, info, { BackgroundColor3 = color }):Play()
+		TweenService:Create(damageText, info, {
+			TextColor3 = color,
+			Size = BASE_SIZE + UDim2.fromScale(0.05, 0.05),
+		}):Play()
+
+		task.delay(0.25, function()
+			local shrinkTween =
+				TweenService:Create(damageText, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+					Size = BASE_SIZE - UDim2.fromScale(0.05, 0.05),
+				})
+			shrinkTween:Play()
 		end)
+	end
+	local function MagicTween()
+		ExtraText.Text = "MAGIC"
+		ExtraText.Visible = true
+		ExtraImage.Visible = false
 
-		---Text---
-		if blackFlash == true then
-			BlackFlashTween()
-		elseif critical == true then
-			CriticalTween()
-		elseif blocked == true then
-			BlockedTween()
-		elseif statusEffectName then
-			StatusEffectTween(statusEffectName)
-		else
-			DefualtTween()
-		end
+		local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-		if tonumber(damageText.Text) then
-			damageText.Text = damage + tonumber(damageText.Text)
-		else
-			damageText.Text = damage
+		local color = Color3.fromRGB(152, 6, 214)
+
+		TweenService:Create(ExtraText, info, { TextColor3 = color }):Play()
+		TweenService:Create(comboDuration, info, { BackgroundColor3 = color }):Play()
+		TweenService:Create(damageText, info, {
+			TextColor3 = color,
+			Size = BASE_SIZE + UDim2.fromScale(0.05, 0.05),
+		}):Play()
+
+		task.delay(0.25, function()
+			local shrinkTween =
+				TweenService:Create(damageText, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+					Size = BASE_SIZE - UDim2.fromScale(0.05, 0.05),
+				})
+			shrinkTween:Play()
+		end)
+	end
+
+	NetworkingService:OnClientEvent(
+		"ShowDamage",
+		function(damage, critical, blocked, blackFlash, statusEffectName, magic, physical)
+			damageFrame.Visible = true
+
+			---ComboDuration---
+			comboDuration.Visible = true
+			comboDuration.Size = UDim2.fromScale(1, 0.01)
+			local info = TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+			local comboDurationTween = TweenService:Create(comboDuration, info, { Size = UDim2.fromScale(0, 0.01) })
+			comboDurationTween:Play()
+			comboDurationTween.Completed:Connect(function(playbackState)
+				if playbackState ~= Enum.PlaybackState.Cancelled then
+					damageFrame.Visible = false
+					damageText.Text = ""
+				end
+			end)
+
+			---Text---
+			if blackFlash then
+				BlackFlashTween()
+			elseif critical then
+				CriticalTween()
+			elseif blocked then
+				BlockedTween()
+			elseif statusEffectName then
+				StatusEffectTween(statusEffectName)
+			elseif magic then
+				MagicTween()
+			elseif physical then
+				PhysicalTween()
+			end
+
+			if tonumber(damageText.Text) then
+				damageText.Text = damage + tonumber(damageText.Text)
+			else
+				damageText.Text = damage
+			end
 		end
-	end)
+	)
 end
 
 function HUDController:AdminPanel()

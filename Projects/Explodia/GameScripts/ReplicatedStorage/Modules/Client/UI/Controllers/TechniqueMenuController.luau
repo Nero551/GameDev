@@ -235,7 +235,9 @@ function TechniqueMenuController:EquippedTechniques()
 
 	local function UpdateTechniques()
 		for _, techSlot in equippedTechsFrame:GetChildren() do
-			techSlot.TechniqueName.Text = ""
+			if techSlot:IsA("TextButton") then
+				techSlot.TechniqueName.Text = ""			
+			end
 		end
 
 		for _, equippedTech in techniques.Equipped:GetChildren() do

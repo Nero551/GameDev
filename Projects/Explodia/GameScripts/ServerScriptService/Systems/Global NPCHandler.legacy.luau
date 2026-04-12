@@ -31,5 +31,3 @@ elapsed =  elapsed + dt
 		AIService.Brains[AIData.Type.."Brain"](npc)
 	end
 end)
-
-Arena:Init()

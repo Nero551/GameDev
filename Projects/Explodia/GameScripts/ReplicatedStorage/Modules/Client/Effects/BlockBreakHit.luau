@@ -7,7 +7,7 @@ return function(arguementData: any)
 		task.spawn(function()
 			local rootPart = target:FindFirstChild("HumanoidRootPart")
 			if rootPart then
-				local clone = ReplicatedStorage.Assets.Shared.Combat.BlockBreak.VFX:Clone()
+				local clone = ReplicatedStorage.Assets.Combat.BlockBreak.VFX:Clone()
 				clone.Parent = rootPart
 				for _, v in clone:GetDescendants() do
 					if v:IsA("ParticleEmitter") then
@@ -24,7 +24,7 @@ return function(arguementData: any)
 			end
 		end)
 
-		local clone = ReplicatedStorage.Assets.Shared.Combat.BlockBreak.DizzyEffect:Clone()
+		local clone = ReplicatedStorage.Assets.Combat.BlockBreak.DizzyEffect:Clone()
 		clone.Parent = target
 		local weld = Instance.new("Weld")
 		weld.Part0 = target.Head

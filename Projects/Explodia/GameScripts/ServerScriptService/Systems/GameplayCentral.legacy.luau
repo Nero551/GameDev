@@ -72,7 +72,7 @@ Players.PlayerRemoving:Connect(function(player)
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 
-MovementService:LoadSharedAnimations()
+MovementService:LoadAnimations()
 
 ---Client Requests to Sprint---
 NetworkingService:OnServerEvent("Sprint", function(player: Player)

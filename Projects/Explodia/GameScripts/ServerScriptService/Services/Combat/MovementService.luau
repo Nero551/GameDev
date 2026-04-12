@@ -19,11 +19,11 @@ local flashStepConfig = MovementConfig.FlashstepConfig
 
 local MovementService = {}
 
-function MovementService:LoadSharedAnimations()
+function MovementService:LoadAnimations()
 	game.Players.PlayerAdded:Connect(function(player)
 		player.CharacterAdded:Connect(function(character)
 			local humanoid = character:WaitForChild("Humanoid")
-			Animations:LoadAnimations(humanoid, assets.Shared)
+			Animations:LoadAnimations(humanoid, assets)
 		end)
 	end)
 end
@@ -48,7 +48,7 @@ function MovementService:Dash(character, direction: Vector3, shiftLockState)
 
 	if shiftLockState == 0 or not player then
 		---Animation---
-		local dashAnim: AnimationTrack = Animations:GetAnimation(humanoid, "Shared.Movement.Dash.DashAnimations.Forward")
+		local dashAnim: AnimationTrack = Animations:GetAnimation(humanoid, "Movement.Dash.DashAnimations.Forward")
 		dashAnim:Play()
 		dashAnim:AdjustSpeed(2)
 		dashAnim.Looped = false
@@ -90,7 +90,7 @@ function MovementService:Dash(character, direction: Vector3, shiftLockState)
 
 		---Animation---
 		local dashAnim: AnimationTrack =
-			Animations:GetAnimation(humanoid, "Shared.Movement.Dash.DashAnimations." .. directionName)
+			Animations:GetAnimation(humanoid, "Movement.Dash.DashAnimations." .. directionName)
 		dashAnim:Play()
 		dashAnim:AdjustSpeed(2)
 		dashAnim.Looped = false
@@ -106,7 +106,7 @@ function MovementService:Dash(character, direction: Vector3, shiftLockState)
 
 	---Sound---
 	NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "Sound", {
-		["Sound"] = assets.Shared.Movement.Dash.Sound,
+		["Sound"] = assets.Movement.Dash.Sound,
 	})
 
 	local dashVelocity = Instance.new("LinearVelocity")
@@ -186,7 +186,7 @@ function MovementService:FlashStep(character)
 
 		---Sound---
 		NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "Sound", {
-			["Sound"] = assets.Shared.Movement.Flashstep.Sound,
+			["Sound"] = assets.Movement.Flashstep.Sound,
 		})
 	end
 	return flashstepCharge

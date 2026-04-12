@@ -4,8 +4,8 @@ local assets = ReplicatedStorage:WaitForChild("Assets")
 local StatusEffectsData = require(ReplicatedStorage.Modules.Data.StatusEffectsData)
 local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 
-return function(arguementData:any)
-	local target:Model = arguementData.Target
+return function(arguementData: any)
+	local target: Model = arguementData.Target
 	local statusEffectName = arguementData.StatusEffect
 	local state = StatusEffectsData.StatusEffects[statusEffectName].State
 
@@ -14,13 +14,13 @@ return function(arguementData:any)
 		if rootPart then
 			local clone = rootPart:FindFirstChild(statusEffectName)
 			if not clone then
-				clone = assets.Shared.Combat.StatusEffects.StatusEffectsVFX[statusEffectName]:Clone()
+				clone = assets.Combat.StatusEffects.StatusEffectsVFX[statusEffectName]:Clone()
 				clone.Parent = rootPart
 				local weld = Instance.new("Weld")
 				weld.Part0 = clone
 				weld.Part1 = rootPart
 				weld.Parent = clone
-				for _,v in clone:GetDescendants() do
+				for _, v in clone:GetDescendants() do
 					if v:IsA("ParticleEmitter") then
 						v.Enabled = true
 					end

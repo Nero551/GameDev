@@ -23,19 +23,22 @@ function HitReactionsService:Default(attacker, targetHit, data, trueSwingNumber)
 	StateService:AddState(attacker, "In Combat", 20)
 	StateService:AddState(targetHit, "In Combat", 20)
 
+	local hitReactionAnim = Animations:GetAnimation(
+		targetHumanoid,
+		"Combat.HitReactions." .. tostring(trueSwingNumber or (math.random(1, 5)))
+	)
+	hitReactionAnim:Play()
+	StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.1)
+
 	if data.TechniqueName then
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
 			["Target"] = targetHit,
 			["Technique"] = data.TechniqueName,
 		})
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
-			["Sound"] = ReplicatedStorage.Assets.Shared.Techniques[data.TechniqueName].Hit,
+			["Sound"] = ReplicatedStorage.Assets.Techniques[data.TechniqueName].Hit,
 			["Parent"] = targetHRP,
 		})
-		local hitReactionAnim =
-			Animations:GetAnimation(targetHumanoid, "Shared.Techniques.TechniqueHitReactions." .. data.HitReaction)
-		hitReactionAnim:Play()
-		StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.1)
 	else
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
 			["Target"] = targetHit,
@@ -47,11 +50,6 @@ function HitReactionsService:Default(attacker, targetHit, data, trueSwingNumber)
 				:FindFirstChild(tostring(trueSwingNumber)),
 			["Parent"] = targetHRP,
 		})
-
-		local hitReactionAnim =
-			Animations:GetAnimation(targetHumanoid, "Shared.Combat.HitReactions." .. tostring(trueSwingNumber))
-		hitReactionAnim:Play()
-		StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.1)
 
 		------Control KnockBack------
 		if trueSwingNumber == 5 then
@@ -71,7 +69,6 @@ end
 
 function HitReactionsService:Blocked(attacker, targetHit, data)
 	local targetHumanoid: Humanoid = targetHit:WaitForChild("Humanoid")
-	local targetHRP = targetHit:WaitForChild("HumanoidRootPart")
 	if not targetHumanoid then
 		return
 	end
@@ -83,14 +80,10 @@ function HitReactionsService:Blocked(attacker, targetHit, data)
 
 	if data then
 		NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "Sound", {
-			["Sound"] = ReplicatedStorage.Assets.Shared.Combat.Block.AbilityBlock,
+			["Sound"] = ReplicatedStorage.Assets.Combat.Block.AbilityBlock,
 			["Parent"] = targetHit.HumanoidRootPart,
 		})
 	else
-		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
-			["Target"] = targetHit,
-			["Weapon"] = data.Name,
-		})
 		local randomNumber = math.random(1, 4)
 		NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "Sound", {
 			["Sound"] = ReplicatedStorage.Assets.Weapons
@@ -102,14 +95,12 @@ function HitReactionsService:Blocked(attacker, targetHit, data)
 
 	NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "BlockedHit", {
 		["Target"] = targetHit,
-		["Weapon"] = data.Name,
 		["BlockCounter"] = VitalsService:GetVital(targetHit, "BlockCounter"),
 	})
 
 	task.spawn(function()
 		local randomShrug = math.random(1, 2)
-		Animations
-			:GetAnimation(targetHumanoid, "Shared.Combat.Block.BlockReactions.BlockShrug" .. tostring(randomShrug))
+		Animations:GetAnimation(targetHumanoid, "Combat.Block.BlockReactions.BlockShrug" .. tostring(randomShrug))
 			:Play()
 	end)
 end
@@ -132,14 +123,14 @@ function HitReactionsService:BlockBreak(attacker, targetHit, data)
 	StateService:AddState(targetHit, "In Combat", 20)
 
 	NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "Sound", {
-		["Sound"] = ReplicatedStorage.Assets.Shared.Combat.BlockBreak.Sound,
+		["Sound"] = ReplicatedStorage.Assets.Combat.BlockBreak.Sound,
 		["Parent"] = targetHit.HumanoidRootPart,
 	})
 
 	NetworkingService:FireInRange("ClientEffects", targetHit.HumanoidRootPart.Position, nil, "BlockBreakHit", {
 		["Target"] = targetHit,
 	})
-	Animations:GetAnimation(targetHumanoid, "Shared.Combat.BlockBreak.Animation"):Play()
+	Animations:GetAnimation(targetHumanoid, "Combat.BlockBreak.Animation"):Play()
 end
 
 function HitReactionsService:Critical(attacker, targetHit, data, trueSwingNumber)
@@ -155,20 +146,24 @@ function HitReactionsService:Critical(attacker, targetHit, data, trueSwingNumber
 	StateService:AddState(attacker, "In Combat", 20)
 	StateService:AddState(targetHit, "In Combat", 20)
 
+	local hitReactionAnim = Animations:GetAnimation(
+		targetHumanoid,
+		"Combat.HitReactions." .. tostring(trueSwingNumber or (math.random(1, 5)))
+	)
+	hitReactionAnim:Play()
+	StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.1)
+
 	if data.TechniqueName then
+		--TODO ADD Critical HIT EFFECT---
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
 			["Target"] = targetHit,
 			["Technique"] = data.TechniqueName,
 		})
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
-			["Sound"] = ReplicatedStorage.Assets.Shared.Techniques[data.TechniqueName].Hit,
+			["Sound"] = ReplicatedStorage.Assets.Techniques[data.TechniqueName].Hit,
 			["Parent"] = targetHRP,
 			["Volume"] = 2,
 		})
-		local hitReactionAnim =
-			Animations:GetAnimation(targetHumanoid, "Shared.Techniques.TechniqueHitReactions." .. data.HitReaction)
-		hitReactionAnim:Play()
-		StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.1)
 	else
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
 			["Target"] = targetHit,
@@ -181,11 +176,6 @@ function HitReactionsService:Critical(attacker, targetHit, data, trueSwingNumber
 			["Parent"] = targetHRP,
 			["Volume"] = 2,
 		})
-
-		local hitReactionAnim =
-			Animations:GetAnimation(targetHumanoid, "Shared.Combat.HitReactions." .. tostring(trueSwingNumber))
-		hitReactionAnim:Play()
-		StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.1)
 
 		------Control KnockBack------
 		if trueSwingNumber == 5 then
@@ -220,9 +210,16 @@ function HitReactionsService:BlackFlash(attacker, targetHit, data, trueSwingNumb
 		["Target"] = targetHit,
 	})
 
+	local hitReactionAnim = Animations:GetAnimation(
+		targetHumanoid,
+		"Combat.HitReactions." .. tostring(trueSwingNumber or (math.random(1, 5)))
+	)
+	hitReactionAnim:Play()
+	StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.1)
+
 	NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
 		["Parent"] = targetHumanoid,
-		["SoundName"] = ReplicatedStorage.Assets.Shared.Combat.BlackFlash.Sound,
+		["SoundName"] = ReplicatedStorage.Assets.Combat.BlackFlash.Sound,
 	})
 
 	if data.TechniqueName then
@@ -230,27 +227,11 @@ function HitReactionsService:BlackFlash(attacker, targetHit, data, trueSwingNumb
 			["Target"] = targetHit,
 			["Technique"] = data.TechniqueName,
 		})
-		local hitReactionAnim =
-			Animations:GetAnimation(targetHumanoid, "Shared.Techniques.TechniqueHitReactions." .. data.HitReaction)
-		hitReactionAnim:Play()
-		StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.1)
 	else
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
 			["Target"] = targetHit,
 			["Weapon"] = data.Name,
 		})
-		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
-			["Sound"] = ReplicatedStorage.Assets.Weapons
-				:FindFirstChild(data.Name).Sounds.Hit
-				:FindFirstChild(tostring(trueSwingNumber)),
-			["Parent"] = targetHRP,
-			["Volume"] = 2,
-		})
-
-		local hitReactionAnim =
-			Animations:GetAnimation(targetHumanoid, "Shared.Combat.HitReactions." .. tostring(trueSwingNumber))
-		hitReactionAnim:Play()
-		StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.1)
 
 		------Control KnockBack------
 		if trueSwingNumber == 5 then
@@ -281,19 +262,22 @@ function HitReactionsService:StatusEffect(attacker, targetHit, data, trueSwingNu
 	StateService:AddState(attacker, "In Combat", 20)
 	StateService:AddState(targetHit, "In Combat", 20)
 
+	local hitReactionAnim = Animations:GetAnimation(
+		targetHumanoid,
+		"Combat.HitReactions." .. tostring(trueSwingNumber or (math.random(1, 5)))
+	)
+	hitReactionAnim:Play()
+	StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.1)
+
 	if data.TechniqueName then
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
 			["Target"] = targetHit,
 			["Technique"] = data.TechniqueName,
 		})
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
-			["Sound"] = ReplicatedStorage.Assets.Shared.Techniques[data.TechniqueName].Hit,
+			["Sound"] = ReplicatedStorage.Assets.Techniques[data.TechniqueName].Hit,
 			["Parent"] = targetHRP,
 		})
-		local hitReactionAnim =
-			Animations:GetAnimation(targetHumanoid, "Shared.Techniques.TechniqueHitReactions." .. data.HitReaction)
-		hitReactionAnim:Play()
-		StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.1)
 	else
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "DefaultHit", {
 			["Target"] = targetHit,
@@ -305,11 +289,6 @@ function HitReactionsService:StatusEffect(attacker, targetHit, data, trueSwingNu
 				:FindFirstChild(tostring(trueSwingNumber)),
 			["Parent"] = targetHRP,
 		})
-
-		local hitReactionAnim =
-			Animations:GetAnimation(targetHumanoid, "Shared.Combat.HitReactions." .. tostring(trueSwingNumber))
-		hitReactionAnim:Play()
-		StateService:AddState(targetHit, "Stunned", hitReactionAnim.Length + 0.1)
 
 		------Control KnockBack------
 		if trueSwingNumber == 5 then
@@ -336,7 +315,7 @@ function HitReactionsService:StatusEffect(attacker, targetHit, data, trueSwingNu
 
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
 			["Parent"] = targetHRP,
-			["Sound"] = ReplicatedStorage.Assets.Shared.Combat.StatusEffects.StatusEffectSounds[statusEffectName],
+			["Sound"] = ReplicatedStorage.Assets.Combat.StatusEffects.StatusEffectSounds[statusEffectName],
 		})
 	end
 
