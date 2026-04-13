@@ -79,6 +79,7 @@ function AIService:CreateAI(npc)
 
 		WanderTarget = nil,
 		WanderRadius = mobData.WanderRadius,
+		WanderStop = nil,
 
 		Moving = false,
 		NeedsRepath = 0,
@@ -92,15 +93,15 @@ function AIService:CreateAI(npc)
 
 		IdleAnimation = Animations:GetAnimation(
 			npc.Humanoid,
-			(itemData.Name and "Weapons." .. itemData.Name .. ".Animations.Idle") or "Movement.Main.Idle.Default"
+			((itemData and "Weapons." .. itemData.Name .. ".Animations.Idle") or "Movement.Main.Idle.Default")
 		),
 		WalkAnimation = Animations:GetAnimation(
 			npc.Humanoid,
-			(itemData.Name and "Weapons." .. itemData.Name .. ".Animations.Walk") or "Movement.Main.Walk.Default"
+			((itemData and "Weapons." .. itemData.Name .. ".Animations.Walk") or "Movement.Main.Walk.Default")
 		),
 		RunAnimation = Animations:GetAnimation(
 			npc.Humanoid,
-			(itemData.Name and "Weapons." .. itemData.Name .. ".Animations.Run") or "Movement.Main.Run.Default"
+			((itemData and "Weapons." .. itemData.Name .. ".Animations.Run") or "Movement.Main.Run.Default")
 		),
 	}
 end

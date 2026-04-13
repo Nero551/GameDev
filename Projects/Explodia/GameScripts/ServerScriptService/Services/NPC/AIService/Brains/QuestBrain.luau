@@ -15,6 +15,8 @@ return function(npc)
 
 	if AIData.Target then
 		AIData.State = "Idle"
+		return
 	end
 	AIData.State = "Wander"
+	return
 end

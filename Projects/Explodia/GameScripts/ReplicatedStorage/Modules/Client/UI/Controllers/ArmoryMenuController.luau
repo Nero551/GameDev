@@ -52,7 +52,6 @@ function ArmoryMenuController:Armory()
 		local itemID = descendant.Name
 
 		if not string.find(itemID, "weapon") and not string.find(itemID, "armor") then
-			print(itemID)
 			return
 		end
 		local itemData = ItemDataBase:GetItemData(itemID)

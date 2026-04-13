@@ -9,23 +9,32 @@ return function(npc)
 	VitalsService:ModifyVital(npc, "Movement", "ModifyWalkSpeed", {
 		["WalkSpeed"] = AIData.WalkSpeed,
 	})
-	if not AIData.WalkAnimation.IsPlaying then
-		AIData.WalkAnimation:Play()
-	end
 
-	if not AIData.WanderTarget then
-		local radius = AIData.WanderRadius
-		AIData.WanderTarget = Vector3.new(math.random(-radius, radius), 0, math.random(-radius, radius))
-		AIData.Humanoid:MoveTo(AIData.WanderTarget)
-	end
+	if AIData.WanderTarget then
+		if (AIData.Root.Position - AIData.WanderTarget).Magnitude <= 3 then
+			print("nice")
+			if AIData.WalkAnimation.IsPlaying then
+				AIData.WalkAnimation:Stop()
+			end
+			if not AIData.IdleAnimation.IsPlaying then
+				AIData.IdleAnimation:Play()
+			end
 
-	if (AIData.Root.Position - AIData.WanderTarget).Magnitude < 3 then
-		AIData.WalkAnimation:Stop()
-		if not AIData.IdleAnimation.IsPlaying then
-			AIData.IdleAnimation:Play()
+			task.delay(4, function()
+				AIData.WanderTarget = nil
+			end)
+		else
+			if AIData.IdleAnimation.IsPlaying then
+				AIData.IdleAnimation:Stop()
+			end
+			if not AIData.WalkAnimation.IsPlaying then
+				AIData.WalkAnimation:Play()
+			end
+			AIData.Humanoid:MoveTo(AIData.WanderTarget)
 		end
-		task.delay(2, function()
-			AIData.WanderTarget = nil
-		end)
+	else
+		local radius = AIData.WanderRadius
+		local offset = Vector3.new(math.random(-radius, radius), 0, math.random(-radius, radius))
+		AIData.WanderTarget = AIData.Root.Position + offset
 	end
 end

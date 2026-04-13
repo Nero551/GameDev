@@ -35,11 +35,15 @@ function CombatService:Died(character)
 	)
 end
 
-function CombatService:Attack(character)
+--TODO When adding projectile attacks , split basic attack into two paths/functions
+--TODO Maybe even add ProjectileService
+--TODO one melee and other projectile , use same setup when adding HeavyAttack
+
+function CombatService:BasicAttack(character)
 	local humanoid = character:WaitForChild("Humanoid")
 	local itemID = VitalsService:GetVital(character, "ActiveHand")
 
-	if not ActionVerifier:CanAttack(character) or itemID == "" then
+	if not ActionVerifier:CanBasicAttack(character) or itemID == "" then
 		return
 	end
 	local weaponData = ItemDataBase:GetItemData(itemID)
@@ -120,6 +124,8 @@ function CombatService:Attack(character)
 		HitService:Apply(character, weaponData, hitboxClone, trueSwingNumber)
 	end)
 end
+
+function CombatService:HeavyAttack(character) end
 
 function CombatService:Block(character, boolean)
 	local humanoid = character:FindFirstChild("Humanoid")

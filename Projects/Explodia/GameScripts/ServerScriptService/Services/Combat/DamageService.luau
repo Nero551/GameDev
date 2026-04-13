@@ -5,7 +5,7 @@ local StatusEffectsData = require(ReplicatedStorage.Modules.Data.StatusEffectsDa
 local VitalsService = require(script.Parent.VitalsService)
 local DamageService = {}
 
-function DamageService:PhysicalDamage(attacker, targetHit, baseDamage, totalScaling, targetDefense)
+function DamageService:DefaultDamage(attacker, targetHit, baseDamage, totalScaling, targetDefense)
 	local targetHumanoid = targetHit:FindFirstChild("Humanoid")
 	if not targetHumanoid then
 		return
@@ -18,25 +18,7 @@ function DamageService:PhysicalDamage(attacker, targetHit, baseDamage, totalScal
 	})
 
 	if Players:GetPlayerFromCharacter(attacker) then
-		NetworkingService:FireToClient(Players:GetPlayerFromCharacter(attacker), "ShowDamage", damage,false,false,false,false,false,true)
-	end
-	return damage
-end
-
-function DamageService:MagicDamage(attacker, targetHit, baseDamage, totalScaling, targetDefense)
-	local targetHumanoid = targetHit:FindFirstChild("Humanoid")
-	if not targetHumanoid then
-		return
-	end
-
-	local damage = math.floor((baseDamage + baseDamage * (totalScaling ^ 1.1)) * (100 / (100 + targetDefense)))
-
-	VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
-		["HealthChange"] = -damage,
-	})
-
-	if Players:GetPlayerFromCharacter(attacker) then
-		NetworkingService:FireToClient(Players:GetPlayerFromCharacter(attacker), "ShowDamage", damage,false,false,false,false,true)
+		NetworkingService:FireToClient(Players:GetPlayerFromCharacter(attacker), "ShowDamage", damage)
 	end
 	return damage
 end
@@ -61,7 +43,7 @@ function DamageService:BlockedDamage(attacker, targetHit, baseDamage, totalScali
 		["HealthChange"] = -damage,
 	})
 	if Players:GetPlayerFromCharacter(attacker) then
-		NetworkingService:FireToClient(Players:GetPlayerFromCharacter(attacker), "ShowDamage", damage,false,true)
+		NetworkingService:FireToClient(Players:GetPlayerFromCharacter(attacker), "ShowDamage", damage, false, true)
 	end
 	return damage
 end
@@ -74,7 +56,14 @@ function DamageService:BlackFlashDamage(attacker, targetHit, baseDamage, totalSc
 		["HealthChange"] = -damage,
 	})
 	if Players:GetPlayerFromCharacter(attacker) then
-		NetworkingService:FireToClient(Players:GetPlayerFromCharacter(attacker), "ShowDamage", damage,false,false,true)
+		NetworkingService:FireToClient(
+			Players:GetPlayerFromCharacter(attacker),
+			"ShowDamage",
+			damage,
+			false,
+			false,
+			true
+		)
 	end
 	return damage
 end
@@ -115,7 +104,7 @@ function DamageService:BleedDamage(attacker, targetHit, baseDamage, targetDefens
 	end
 end
 
-function DamageService:FreezeDamage(attacker,targetHit,baseDamage,targetDefense)
+function DamageService:FreezeDamage(attacker, targetHit, baseDamage, targetDefense)
 	VitalsService:ModifyVital(targetHit, "Health", "ModifyHealth", {
 		["HealthChange"] = baseDamage * StatusEffectsData.StatusEffects.Freeze.DamagePercent,
 	})

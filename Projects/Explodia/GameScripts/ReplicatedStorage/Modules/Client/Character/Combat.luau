@@ -32,15 +32,24 @@ return function()
 				return
 			end
 			local tool = character:FindFirstChildWhichIsA("Tool")
-			------M1------
+			------Basic Attack------
 			if
 				UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)
-				and not StateChecker:CheckState(character, "Attacking")
-				and ActionVerifier:CanAttack(character)
+				and ActionVerifier:CanBasicAttack(character)
 				and tool
 			then
-				NetworkingService:FireToServer("Attack")
+				NetworkingService:FireToServer("BasicAttack")
 			end
+			------Heavy Attack------
+			--! Doesnot Work Right Now
+			if
+				UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
+				and ActionVerifier:CanHeavyAttack(character)
+				and tool
+			then
+				NetworkingService:FireToServer("HeavyAttack")
+			end
+
 			------Blocking------
 			if
 				UserInputService:IsKeyDown(Enum.KeyCode:FromName(keybinds:GetAttribute("Block")))

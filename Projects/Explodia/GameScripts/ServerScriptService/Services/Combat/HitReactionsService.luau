@@ -315,7 +315,9 @@ function HitReactionsService:StatusEffect(attacker, targetHit, data, trueSwingNu
 
 		NetworkingService:FireInRange("ClientEffects", targetHRP.Position, nil, "Sound", {
 			["Parent"] = targetHRP,
-			["Sound"] = ReplicatedStorage.Assets.Combat.StatusEffects.StatusEffectSounds[statusEffectName],
+			["Sound"] = ReplicatedStorage.Assets.Combat.StatusEffects.StatusEffectsSounds:FindFirstChild(
+				statusEffectName
+			),
 		})
 	end
 

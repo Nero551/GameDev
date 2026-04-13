@@ -1,123 +1,122 @@
 local QuestData = require(game.ReplicatedStorage.Modules.Data.QuestData)
 
-local QuestDialogueData = {}
+local QuestDialogueData = {
 
-QuestDialogueData["Start"] = {
-	Speaker = "Zombie",
-	Lines = {
-		{
-			Text =  "Ah, my back is killing me."
-		},
-		{
-			Text = "Ya know the shiny blue colored crystals?"
-		},
-		{
-			Text = "The cave is filled with those."
-		},
-		{
-			Text = "Go get me some.",
-			Options = {
-				{
-					Text = "Alright",
-					Action = "AcceptQuest",
-					Quest = QuestData:GetQuestID("Crystal Gathering")
+	--? Start phase
+	["Start"] = {
+		Speaker = "Villager",
+		Lines = {
+			{
+				Text = "Ah, my back is killing me.", --? First Line the VILLAGER Says
+			},
+			{
+				Text = "Ya know the shiny blue colored crystals?", --? Second
+			},
+			{
+				Text = "The cave is filled with those.", --? Third
+			},
+			{
+				Text = "Go get me some.", --? Fourth , this one gives two options to the player.
+				Options = {
+					--? Option1
+					{
+						Text = "Alright", --? Option1's text (wut u say)
+						Action = "AcceptQuest", --? What this action will do,dialogueService handles this
+						Quest = QuestData:GetQuestID("Crystal Gathering"), --?? Extra data to help dialogueService
+					},
+					--? Option2
+					{
+						Text = "No", --? Option2's text (wut u say)
+						Next = "Refused Quest", --? the name of the next dialogue set
+					},
 				},
-				{
-					Text = "No",
-					Next = "Refused Quest",
-
-				}
-			}
-		},	
-	}
-}
-QuestDialogueData["Accepted Quest"] = {
-	Speaker = "Zombie",
-	Lines = {
-		{
-			Text = "Good boy.",
-		}	
-	}
-}
-QuestDialogueData["Refused Quest"] = {
-	Speaker = "Zombie",
-	Lines = {
-		{
-			Text = "You suck.",
-		}	
-	}
-}
-
-
-
-QuestDialogueData["Middle"] = {
-	Speaker = "Zombie",
-	Lines = {
-		{
-			Text = "Why are you still here?",
-			Options = {
-				{
-					Text = "Where can i find the crystals?",
-					Next = "HelpingPlayer",
-				}
-			}
+			},
 		},
+	},
 
-	}
-}
-
-QuestDialogueData["HelpingPlayer"] = {
-	Speaker = "Zombie",
-	Lines = {
-		{
-			Text = "I told you dumbass , u find them in the cave.",
-			Options = {
-				{
-					Text = "Thanks. also dont be so mean.",
-					Next = "OrderingPlayer",
-				}
-			}
+	--? supporting phase/ dialogue set
+	["Accepted Quest"] = {
+		Speaker = "Villager",
+		Lines = {
+			{
+				Text = "Good boy.",
+			},
 		},
-	}
-}
+	},
 
-
-QuestDialogueData["OrderingPlayer"] = {
-	Speaker = "Zombie",
-	Lines = {
-		{
-			Text = "Now go get the crystals monkey."
-		}
-	}
-}
-
-QuestDialogueData["End"] = {
-	Speaker = "Zombie",
-	Lines = {
-		{
-			Text = "Oh, you actually got them.",
+	--? supporting phase/ dialogue set
+	--? Option2 in Start Phase leads to this
+	["Refused Quest"] = {
+		Speaker = "Villager",
+		Lines = {
+			{
+				Text = "You suck.",
+			},
 		},
-		{
-			Text = "I didn't expect you to actually get them.",
-		},
-		{
-			Text = "Well, thanks a lot traveler.",
-			Options = {
-				{
-					Text = "Need something else?",
-					Action = "ContinueDialogue"
+	},
+
+	--? Middle phase , same stuff just middle phase
+	["Middle"] = {
+		Speaker = "Villager",
+		Lines = {
+			{
+				Text = "Why are you still here?",
+				Options = {
+					{
+						Text = "Where can i find the crystals?",
+						Next = "HelpingPlayer", --? leads to helping player dialogue set
+					},
 				},
-				{
-					Text = "See ya",
-					Action = "EndDialogue"
-				}
-			}
+			},
 		},
-		{
-			Text = "Bye.",
-		}
-	}
+	},
 
+	--? supporting phase/ dialogue set
+	--? middle phase option 1 leads to this
+	--? u can nest supporting phases as shown down in option1 of helping player
+	["HelpingPlayer"] = {
+		Speaker = "Villager",
+		Lines = {
+			{
+				Text = "I told you dumbass , u find them in the cave.",
+				Options = {
+					{
+						Text = "Thanks. also dont be so mean.",
+						Next = "OrderingPlayer", --? yes supporting phases can lead to more supporting phases
+					},
+				},
+			},
+		},
+	},
+
+	--? supporting phase helping player leads to this
+	["OrderingPlayer"] = {
+		Speaker = "Villager",
+		Lines = {
+			{
+				Text = "Now go get the crystals monkey.",
+			},
+		},
+	},
+
+	--? End phase
+	["End"] = {
+		Speaker = "Villager",
+		Lines = {
+			{
+				Text = "Oh, you actually got them.",
+			},
+			{
+				Text = "I didn't expect you to actually get them.",
+			},
+			{
+				Text = "Well, thanks a lot traveler.",
+			},
+			{
+				Text = "Bye.",
+			},
+		},
+	},
 }
 
 return QuestDialogueData

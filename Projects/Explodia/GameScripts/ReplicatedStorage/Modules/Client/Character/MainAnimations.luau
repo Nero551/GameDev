@@ -1,4 +1,5 @@
 return function()
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local RunService = game:GetService("RunService")
 	local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker)
 	local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
@@ -8,6 +9,8 @@ return function()
 	local Player = game:GetService("Players").LocalPlayer
 	local char = Player.Character or Player.CharacterAdded:Wait()
 
+
+	
 	local function StopPreviousAnimation(current, Type)
 		local previousTime = 0
 		for animName, anim in pairs(Animations.loadedAnimations[char]) do
@@ -28,6 +31,9 @@ return function()
 	local currentRun: AnimationTrack
 	local currentWalk: AnimationTrack
 	local conn: RBXScriptConnection
+
+	Animations:LoadAnimations(humanoid, ReplicatedStorage.Assets)
+
 
 	if not Animations.loadedAnimations[char]["Movement.Main.Idle.Default"].IsPlaying then
 		Animations:GetAnimation(humanoid, "Movement.Main.Idle.Default"):Play()

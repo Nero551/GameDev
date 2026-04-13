@@ -10,13 +10,13 @@ for _,NPC in workspace.World.Live.ActiveNPCS:GetDescendants() do
 	end
 end
 
--- workspace.World.Live.ActiveNPCS.DescendantAdded:Connect(function(descendant)
--- 	NPCService:RegisterNPC(descendant)
--- end)
+workspace.World.Live.ActiveNPCS.DescendantAdded:Connect(function(descendant)
+	NPCService:RegisterNPC(descendant)
+end)
 
--- workspace.World.Live.ActiveNPCS.DescendantRemoving:Connect(function(descendant)
--- 	NPCService:UnRegisterNPC(descendant)
--- end)
+workspace.World.Live.ActiveNPCS.DescendantRemoving:Connect(function(descendant)
+	NPCService:UnRegisterNPC(descendant)
+end)
 
 local updateRate = 0.05
 local elapsed = 0

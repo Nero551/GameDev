@@ -78,7 +78,7 @@ function CanDoAction:CanAttack(AIData)
 		return false
 	end
 	local distance = (AIData.Root.Position - AIData.Target.Position).Magnitude
-	if distance <= AIData.AttackRange and ActionVerifier:CanAttack(AIData.Humanoid.Parent) then
+	if distance <= AIData.AttackRange and ActionVerifier:CanBasicAttack(AIData.Humanoid.Parent) then
 		return true
 	end
 	return false

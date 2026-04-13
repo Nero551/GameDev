@@ -1,4 +1,5 @@
 return function(npc)
+	print("nice")
 	if not npc then
 		warn("Invalid NPC")
 		return
@@ -9,7 +10,11 @@ return function(npc)
 	local ServerScriptService = game:GetService("ServerScriptService")
 	local ServerStorage = game:GetService("ServerStorage")
 	local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
+	local QuestData = require(ReplicatedStorage.Modules.Data.QuestData)
 	local ToolLoader = require(ServerScriptService.Modules.Utilities.ToolLoader)
+	local DataService = require(ServerScriptService.Services.Core.DataService)
+	local DialogueService = require(ServerScriptService.Services.NPC.DialogueService)
+	local QuestService = require(ServerScriptService.Services.Profile.QuestService)
 	local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 	local MobData = require(game.ReplicatedStorage.Modules.Data.MobData)
 
@@ -30,6 +35,9 @@ return function(npc)
 			ToolLoader(clone)
 		end
 	end
+
+	print("Nice")
+
 	AIService:CreateAI(npc)
 
 	-- ---NPC Info GUI---
@@ -42,6 +50,28 @@ return function(npc)
 
 	-- npcInfo.NPCLevel.LevelText.Text = NPCService.SpawnedNPCS.Enemy[npc].Level
 	-- npcInfo.NPCName.Text = npc.Name
+
+	local questID = QuestData:GetQuestID(mobData.Quest)
+	if questID then
+		local proximityPrompt = npc:FindFirstChild("ProximityPrompt")
+		if not proximityPrompt then
+			proximityPrompt = Instance.new("ProximityPrompt")
+			proximityPrompt.Parent = npc
+			proximityPrompt.HoldDuration = 1
+
+			proximityPrompt.Triggered:Connect(function(player)
+				if DataService:GetTable(player, "Quests").ActiveQuests[questID] then
+					if QuestService:CheckQuestCompletion(player, questID) == false then
+						DialogueService:PlayDialogue(player, mobData.Quest, "Middle")
+					else
+						DialogueService:PlayDialogue(player, mobData.Quest, "End")
+					end
+				else
+					DialogueService:PlayDialogue(player, mobData.Quest, "Start")
+				end
+			end)
+		end
+	end
 
 	---When NPC Die---
 	local deathAnimation = Animations:GetAnimation(npcHumanoid, "Core.Death.Animation")

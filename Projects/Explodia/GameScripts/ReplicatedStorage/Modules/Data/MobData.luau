@@ -34,9 +34,9 @@ MobData.Mobs = {
 	,	
 		["Villager"] = {
 		Type = "Quest",
-		Tool = "weapon_0000000001", -- Fist
+		Quest = "Crystal Gathering",
 		Wander = true,
-		WanderRadius = 100,
+		WanderRadius = 50,
 		DetectionRange = 10,
 		AttackRange = 6,
 		WalkSpeed = 10,

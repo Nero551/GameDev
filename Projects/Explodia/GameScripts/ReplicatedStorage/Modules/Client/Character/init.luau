@@ -23,7 +23,7 @@ function Character:Init()
 			module()
 		end)
 		if err then
-			warn("Module:",moduleName,"Failed To Load")
+			warn("Module:",moduleName,"Failed To Load",debug.traceback())
 		end
 	end
 end

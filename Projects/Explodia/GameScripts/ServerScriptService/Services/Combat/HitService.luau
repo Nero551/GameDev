@@ -112,13 +112,9 @@ function HitService:Apply(attacker, data, hitbox, trueSwingNumber)
 				else
 					---Status Effect HitType---
 					if data.StatusEffects and math.random(0, 100) <= data.StatusEffects.ProcChance * 100 then
-						damage = DamageService[data.DamageType .. "Damage"](
-							attacker,
-							targetHit,
-							baseDamage,
-							totalScaling,
-							targetDefense
-						)
+						damage =
+							DamageService:DefaultDamage(attacker, targetHit, baseDamage, totalScaling, targetDefense)
+
 						local randomStatusEffect = math.random(1, #data.StatusEffects.Effects)
 						local statusEffectName = data.StatusEffects.Effects[randomStatusEffect]
 						local statusEffectData = StatusEffectsData.StatusEffects[statusEffectName]
@@ -137,14 +133,8 @@ function HitService:Apply(attacker, data, hitbox, trueSwingNumber)
 					else
 						-----Defualt HitType---
 						HitReactionsService:Default(attacker, targetHit, data, trueSwingNumber)
-						damage = DamageService[data.DamageType .. "Damage"](
-							DamageService,
-							attacker,
-							targetHit,
-							baseDamage,
-							totalScaling,
-							targetDefense
-						)
+						damage =
+							DamageService:DefaultDamage(attacker, targetHit, baseDamage, totalScaling, targetDefense)
 					end
 				end
 			end

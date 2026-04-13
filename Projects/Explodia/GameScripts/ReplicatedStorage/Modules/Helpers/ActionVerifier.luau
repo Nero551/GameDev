@@ -44,7 +44,31 @@ function ActionVerifier:CanWalk(character)
 	return false
 end
 
-function ActionVerifier:CanAttack(character)
+function ActionVerifier:CanBasicAttack(character)
+	if
+		StateChecker:CheckState(
+			character,
+			"Attacking",
+			"Blocking",
+			"Stunned",
+			"NoPunch",
+			"Dashing",
+			"FlashStep",
+			"FlashStepEndLag",
+			"DashEndLag",
+			"Casting",
+			"Frozen",
+			"BlockBroken",
+			"ComboCooldown",
+			"Dead"
+		)
+	then
+		return false
+	end
+	return true
+end
+
+function ActionVerifier:CanHeavyAttack(character)
 	if
 		StateChecker:CheckState(
 			character,
@@ -93,7 +117,7 @@ function ActionVerifier:CanTechnique(character, techniqueSlot)
 	if
 		StateChecker:CheckState(
 			character,
-			 "Technique" .. techniqueSlot .. " Cooldown",
+			"Technique" .. techniqueSlot .. " Cooldown",
 			"Stunned",
 			"Attacking",
 			"Dashing",

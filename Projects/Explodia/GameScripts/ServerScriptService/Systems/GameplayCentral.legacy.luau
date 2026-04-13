@@ -112,10 +112,18 @@ NetworkingService:OnServerEvent("Block", function(player: Player, boolean: boole
 	CombatService:Block(character, boolean)
 end)
 
----Client Requests to Attack---
-NetworkingService:OnServerEvent("Attack", function(player: Player)
+
+--! Doesnot Work Right Now
+---Client Requests to Basic Attack---
+NetworkingService:OnServerEvent("BasicAttack", function(player: Player)
 	local character = player.Character or player.CharacterAdded:Wait()
-	CombatService:Attack(character)
+	CombatService:BasicAttack(character)
+end)
+
+---Client Requests to Heavy Attack---
+NetworkingService:OnServerEvent("HeavyAttack", function(player: Player)
+	local character = player.Character or player.CharacterAdded:Wait()
+	CombatService:HeavyAttack(character)
 end)
 
 ---Client Requests To Change Item In Active Hand
