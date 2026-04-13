@@ -326,17 +326,13 @@ end
 function HUDController:Dialogue()
 	local DialogueFrame = UIManager:GetUI("HUD", "DialogueFrame")
 
-	local stroke = DialogueFrame:FindFirstChild("UIStroke")
-	UIHelper:RotateGradient(stroke:FindFirstChild("UIGradient"))
-
 	local DialogueText = DialogueFrame.DialogueText
 	local SpeakerName = DialogueFrame.SpeakerName
-	local Texture = DialogueFrame.Texture
 
 	local skipLine = false
 	local canClick = true
 
-	Texture.MouseButton1Click:Connect(function()
+	DialogueFrame.ClickOverlay.MouseButton1Click:Connect(function()
 		if skipLine == true and canClick == true then
 			NetworkingService:FireToServer("ContinueDialogue", player)
 		end
@@ -345,7 +341,7 @@ function HUDController:Dialogue()
 
 	local function PlayLine(speaker, line)
 		DialogueFrame.Visible = true
-		SpeakerName.Text = speaker
+		SpeakerName.TextLabel.Text = speaker
 		DialogueText.Text = ""
 
 		skipLine = false
@@ -366,17 +362,17 @@ function HUDController:Dialogue()
 	end
 
 	NetworkingService:OnClientEvent("ShowDialogue", function(speaker, text, options, ended)
-		if ended then
-			DialogueFrame.Visible = false
-			SpeakerName.Text = ""
-			DialogueText.Text = ""
-			return
-		end
-
-		for _, optionButton in DialogueFrame.OptionFrame:GetChildren() do
-			if optionButton:IsA("ImageButton") then
+		for _, optionButton in DialogueFrame.OptionsFrame:GetChildren() do
+			if optionButton:IsA("TextButton") then
 				optionButton:Destroy()
 			end
+		end
+
+		if ended then
+			DialogueFrame.Visible = false
+			SpeakerName.TextLabel.Text = ""
+			DialogueText.Text = ""
+			return
 		end
 
 		PlayLine(speaker, text)
@@ -384,10 +380,8 @@ function HUDController:Dialogue()
 		if options then
 			for option, optioninfo in pairs(options) do
 				local optionButton =
-					UIManager:CloneUI("HUD", option, ReplicatedStorage.Assets.UI.DialogueOption, "OptionFrame")
-				UIHelper:RotateGradient(optionButton:FindFirstChild("UIGradient"))
-				UIHelper:RotateGradient(optionButton:FindFirstChild("RGBStroke"):FindFirstChild("UIGradient"))
-				optionButton.Text.Text = optioninfo.Text
+					UIManager:CloneUI("HUD", option, ReplicatedStorage.Assets.UI.DialogueOption, "OptionsFrame")
+				optionButton.TextLabel.Text = optioninfo.Text
 				optionButton.MouseButton1Click:Connect(function()
 					NetworkingService:FireToServer("SelectDialogueOption", option)
 				end)
@@ -407,11 +401,6 @@ function HUDController:TrackedQuest()
 	local trackQuestButton = trackedQuestFrame:FindFirstChild("TrackQuestButton")
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-	local innerStroke = trackedQuestFrame:FindFirstChild("InnerStroke")
-	local outerStroke = trackedQuestFrame:FindFirstChild("OuterStroke")
-	UIHelper:RotateGradient(innerStroke:FindFirstChild("UIGradient"))
-	UIHelper:RotateGradient(outerStroke:FindFirstChild("UIGradient"))
-
 	trackQuestButton.MouseButton1Click:Connect(function()
 		NetworkingService:FireToServer("TrackQuest", trackedQuest:GetAttribute("ID"))
 	end)
@@ -430,7 +419,7 @@ function HUDController:TrackedQuest()
 			local trackedQuestData = QuestData.Quests[trackedQuestID]
 			if trackedQuestData then
 				trackedQuestFrame.Visible = true
-				trackedQuestFrame:FindFirstChild("TrackedQuestName").Text = trackedQuestData.Name
+				trackedQuestFrame.TrackedQuestName.TextLabel.Text = trackedQuestData.Name
 
 				for _, objective in Quests:FindFirstChild("ActiveQuests"):FindFirstChild(trackedQuestID):GetChildren() do
 					local function UpdateObjectives()
@@ -523,6 +512,7 @@ function HUDController:DamageCounter()
 	local ExtraImage = damageFrame.ExtraImage
 
 	damageFrame.Visible = false
+	damageText.Text = ""
 	comboDuration.Visible = false
 	ExtraText.Visible = false
 	ExtraImage.Visible = false
@@ -712,8 +702,23 @@ function HUDController:DamageCounter()
 		end)
 	end
 
-	NetworkingService:OnClientEvent("ShowDamage", function(damage, critical, blocked, blackFlash, statusEffectName) 
+	NetworkingService:OnClientEvent("ShowDamage", function(damage, critical, blocked, blackFlash, statusEffectName)
 		damageFrame.Visible = true
+
+		---Text---
+		damageText.Text = damage + (tonumber(damageText.Text) or 0)
+
+		if blackFlash then
+			BlackFlashTween()
+		elseif critical then
+			CriticalTween()
+		elseif blocked then
+			BlockedTween()
+		elseif statusEffectName then
+			StatusEffectTween(statusEffectName)
+		else
+			DefaultTween()
+		end
 
 		---ComboDuration---
 		comboDuration.Visible = true
@@ -725,21 +730,6 @@ function HUDController:DamageCounter()
 			if playbackState ~= Enum.PlaybackState.Cancelled then
 				damageFrame.Visible = false
 				damageText.Text = ""
-			end
-
-			---Text---
-			damageText.Text = damage + (tonumber(damageText.Text) or 0)
-
-			if blackFlash then
-				BlackFlashTween()
-			elseif critical then
-				CriticalTween()
-			elseif blocked then
-				BlockedTween()
-			elseif statusEffectName then
-				StatusEffectTween(statusEffectName)
-			else 
-				DefaultTween()
 			end
 		end)
 	end)

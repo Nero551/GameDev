@@ -192,6 +192,10 @@ function MovementService:FlashStep(character)
 	return flashstepCharge
 end
 
+--TODO Make wallrun
+--TODO Make climbing
+--TODO Make air jump
+--TODO Make swimming
 function MovementService:WallRun(character)
 	if not ActionVerifier:CanWallRun(character) then
 		return

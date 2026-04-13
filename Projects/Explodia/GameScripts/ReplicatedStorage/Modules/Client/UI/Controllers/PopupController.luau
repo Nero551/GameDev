@@ -175,13 +175,13 @@ function PopupController:Destroyer()
 	popupsFrame.ChildAdded:Connect(function()
 		for _, popup in popupsFrame:GetChildren() do
 			if popup:IsA("Frame") then
-				task.wait(0.5)
+				task.wait(1)
 				local tween = TweenService:Create(popup, info, { Size = UDim2.fromScale(0.3, 0.046) })
 				tween:Play()
 				tween.Completed:Connect(function()
 					popup:Destroy()
 				end)
-				task.wait(0.5)
+				task.wait(1)
 			end
 		end
 	end)

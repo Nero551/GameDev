@@ -48,7 +48,7 @@ function QuestMenuController:TopBar()
 				end
 
 				---Filter---
-				local filterType = filter.Name:split("Quests")[1].." Quest"
+				local filterType = filter.Name:split("Quests")[1] .. " Quest"
 				for _, questSlot in questList:GetChildren() do
 					if questSlot:IsA("ImageButton") then
 						questSlot.Visible = true
@@ -113,8 +113,8 @@ function QuestMenuController:Quests()
 				questSlot.QuestName.TextLabel.Text = questData.Name
 				questSlot.QuestType.TextLabel.Text = questData.QuestType
 				UIHelper:RotateGradient(questSlot:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
-				UIHelper:ClickEffects(questSlot, 0.975, 1.03)
-				UIHelper:HoverEffects(questSlot, 1, 1.025)
+				UIHelper:ClickEffects(questSlot, 1.025, 0.975)
+				UIHelper:HoverEffects(questSlot, 1.025, 1)
 
 				UIHelper:ClickEffects(questSlot.TrackQuestButton)
 				UIHelper:HoverEffects(questSlot.TrackQuestButton)
@@ -275,10 +275,8 @@ function QuestMenuController:Quests()
 					prevQuestSelected = questSelected
 					questSelected = questSlot
 					if questSelected ~= nil then
-
 						if prevQuestSelected ~= nil then
 							if prevQuestSelected ~= questSelected then
-							
 								if prevQuestSelected:FindFirstChild("UIStroke") then
 								end
 							end

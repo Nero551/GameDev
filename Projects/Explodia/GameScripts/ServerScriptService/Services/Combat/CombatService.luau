@@ -5,7 +5,6 @@ local Debris = game:GetService("Debris")
 local Players = game:GetService("Players")
 local HitService = require(script.Parent.HitService)
 local Connections = require(ReplicatedStorage.Modules.Core.Connections)
-local assets = ReplicatedStorage.Assets
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
 local StateService = require(game.ServerScriptService.Services.Core.StateService)
@@ -79,7 +78,6 @@ function CombatService:BasicAttack(character)
 	VitalsService:ModifyVital(character, "Combat", "ModifyLastSwing", { LastSwingChange = os.clock() })
 
 	local swingName = "Weapons." .. weaponData.Name .. ".Animations.Swings.L" .. tostring(trueSwingNumber)
-
 	local animationToPlay = Animations:GetAnimation(humanoid, swingName)
 
 	--Attack States---
@@ -100,7 +98,7 @@ function CombatService:BasicAttack(character)
 		end
 
 		--Setting Hitbox
-		local hitboxClone = assets.HitboxTemplate:Clone()
+		local hitboxClone = ReplicatedStorage.Assets.HitboxTemplate:Clone()
 		hitboxClone.Name = "M1 Hitbox"
 		hitboxClone.Parent = workspace.World.Hitboxes
 		hitboxClone.Size = weaponData.Hitbox or Vector3.new(5, 5.5, 4)
@@ -111,9 +109,10 @@ function CombatService:BasicAttack(character)
 		weld.C0 = CFrame.new(0, 0, -3)
 
 		NetworkingService:FireInRange("ClientEffects", character.HumanoidRootPart.Position, nil, "Sound", {
-			["Sound"] = assets.Weapons
+			["Sound"] = ReplicatedStorage.Assets.Weapons
 				:FindFirstChild(weaponData.Name).Sounds.Swings
 				:FindFirstChild(tostring(trueSwingNumber)),
+			["Parent"] = character.HumanoidRootPart,
 		})
 		Debris:AddItem(hitboxClone, 0.35)
 

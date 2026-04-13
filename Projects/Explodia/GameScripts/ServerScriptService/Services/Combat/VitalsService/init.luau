@@ -59,7 +59,7 @@ function VitalsService:Create(character)
 		},
 
 		ActiveHand = "",
-		WalkSpeed = 10,
+		WalkSpeed = 5,
 		JumpPower = 50,
 
 		BlockCounter = 0,

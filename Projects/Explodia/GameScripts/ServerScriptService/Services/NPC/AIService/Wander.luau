@@ -11,8 +11,7 @@ return function(npc)
 	})
 
 	if AIData.WanderTarget then
-		if (AIData.Root.Position - AIData.WanderTarget).Magnitude <= 3 then
-			print("nice")
+		if (AIData.Root.Position - AIData.WanderTarget).Magnitude <= 10 then
 			if AIData.WalkAnimation.IsPlaying then
 				AIData.WalkAnimation:Stop()
 			end
