@@ -7,7 +7,7 @@ local DimensionalSet = {
 		Cost = 10,
 		Mastery = 0,
 
-		OnMouse = false,
+		Type = "Normal",
 		HitReaction = "1",
 
 		BlockBreak = true,
@@ -41,7 +41,7 @@ local DimensionalSet = {
 		Cost = 10,
 		Mastery = 50,
 
-		OnMouse = false,
+		Type = "Normal",
 		HitReaction = "1",
 
 		BlockBreak = false,
@@ -75,7 +75,7 @@ local DimensionalSet = {
 		Cost = 10,
 		Mastery = 100,
 
-		OnMouse = false,
+		Type = "Normal",
 		HitReaction = "1",
 
 		BlockBreak = false,

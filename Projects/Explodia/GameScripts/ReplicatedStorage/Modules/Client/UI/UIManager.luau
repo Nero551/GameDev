@@ -1,3 +1,4 @@
+local CollectionService = game:GetService("CollectionService")
 local Lighting = game:GetService("Lighting")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -10,6 +11,7 @@ local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = {}
 
 local player = Players.LocalPlayer
+local Theme = player:WaitForChild("Settings"):WaitForChild("Theme")
 local playerGui = player:WaitForChild("PlayerGui")
 
 UIManager.ActiveScreen = nil
@@ -39,6 +41,41 @@ function UIManager:WaitForLoad()
 	task.wait(0.25)
 end
 
+function UIManager:ApplyTheme()
+	for _, ui in CollectionService:GetTagged("Stroke") do
+		if ui:IsA("UIStroke") then
+			ui.Color = Theme:GetAttribute("Stroke")
+		end
+		if ui:IsA("ImageLabel") then
+			ui.ImageColor3 = Theme:GetAttribute("Stroke")
+		end
+	end
+
+	for _, ui in CollectionService:GetTagged("Surface_Panel") do
+		ui.BackgroundColor3 = Theme:GetAttribute("Surface_Panel")
+	end
+
+	for _, ui in CollectionService:GetTagged("Surface_SubPanel") do
+		ui.BackgroundColor3 = Theme:GetAttribute("Surface_SubPanel")
+	end
+
+	for _, ui in CollectionService:GetTagged("Surface_Background") do
+		ui.BackgroundColor3 = Theme:GetAttribute("Surface_Background")
+	end
+
+	for _, ui in CollectionService:GetTagged("Text_Background") do
+		ui.BackgroundColor3 = Theme:GetAttribute("Text_Background")
+	end
+
+	for _, ui in CollectionService:GetTagged("Text_Primary") do
+		ui.BackgroundColor3 = Theme:GetAttribute("Text_Primary")
+	end
+
+	for _, ui in CollectionService:GetTagged("Button_Background") do
+		ui.BackgroundColor3 = Theme:GetAttribute("Button_Background")
+	end
+end
+
 function UIManager:Init()
 	UIManager:WaitForLoad()
 	for _, screen in playerGui:GetChildren() do
@@ -65,17 +102,21 @@ function UIManager:Init()
 	end
 
 	for _, controller in UIManager.Controllers do
-		for _, value in controller do
+		for funcName, value in controller do
 			if typeof(value) == "function" then
 				local _, err = pcall(function()
 					value(controller)
 				end)
 				if err then
-					warn("Error Occured When Called Function:", err, { debug.traceback() })
+					warn("Error Occured When Called Function:", funcName, err, { debug.traceback() })
 				end
 			end
 		end
 	end
+	UIManager:ApplyTheme()
+	Theme.AttributeChanged:Connect(function()
+		UIManager:ApplyTheme()
+	end)
 end
 
 function UIManager:CreateUI(screenName, name, class, parent, properties)

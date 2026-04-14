@@ -23,13 +23,11 @@ Rarities["Epic"] = {
 Rarities["Legendary"] = {
 	Weight  = 5,
 	Color = "#ffa618",
-	Pity = 20
 }
 
 Rarities["Mythical"]  = {
 	Weight = 1,
 	Color = "#ff2f71",
-	Pity = 100
 
 }
 

@@ -145,7 +145,7 @@ function StatService:AllocateStatPoint(player, statType, amount)
 		amount = playerLevel.StatPoints
 	end
 	playerLevel.StatPoints -= amount
-	playerStats.MainStats[statType].FlatStatPoint += amount
+	playerStats.MainStats[statType].StatPoint += amount
 	player:WaitForChild("Level"):FindFirstChild("StatPoints"):SetAttribute("Amount", playerLevel.StatPoints)
 	StatService:UpdateStats(player)
 	LevelService:IncreaseEXP(player, 0)
@@ -158,7 +158,7 @@ function StatService:ResetStats(player: Player)
 
 	playerLevel.StatPoints = (playerLevel.CurrentLevel - 1) * 4
 	for _, stat in pairs(playerStats.MainStats) do
-		stat.FlatStatPoint = 0
+		stat.StatPoint = 0
 	end
 	StatService:UpdateStats(player)
 	LevelService:IncreaseEXP(player, 0)
@@ -172,10 +172,10 @@ function StatService:ApplyBuffs(player: Player, buffs)
 	local playerStats = DataService:GetTable(player, "Stats")
 
 	for statType, buff in pairs(buffs) do
-		local stat = playerStats.MainStats[statType] or playerStats.SideStats[statType]
+		local stat = playerStats.MainStats[statType] or playerStats.SubStats[statType]
 		if stat then
 			if buff.Flat then
-				stat.FlatBuff += buff.Flat
+				stat.Flat += buff.Flat
 			end
 			if buff.Percent then
 				stat.Percent += buff.Percent
@@ -190,7 +190,7 @@ function StatService:ResetBuffs(player: Player)
 	local playerStats = DataService:GetTable(player, "Stats")
 	for _, table in pairs(playerStats) do
 		for _, stat in pairs(table) do
-			stat.FlatBuff = 0
+			stat.Flat = 0
 			stat.Percent = 0
 		end
 	end

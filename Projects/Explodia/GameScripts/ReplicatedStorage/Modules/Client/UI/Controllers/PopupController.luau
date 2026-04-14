@@ -1,3 +1,4 @@
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
@@ -6,9 +7,10 @@ local NetworkingService = require(game.ReplicatedStorage.Modules.Core.Networking
 local RarityData = require(game.ReplicatedStorage.Modules.Data.RarityData)
 
 local PopupController = {}
+local player = Players.LocalPlayer
 
 function PopupController:Creator()
-	local popupTemplate = ReplicatedStorage.Assets.UI.PopUp
+	local popupTemplate = player.PlayerGui.UITemplates.PopUp
 	local popupsFrame = UIManager:GetUI("Popups", "Popups")
 
 	for _, oldPopup in popupsFrame:GetChildren() do

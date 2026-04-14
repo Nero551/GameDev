@@ -1,3 +1,4 @@
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
 
@@ -6,20 +7,24 @@ local HealthBar = require(ReplicatedStorage.Modules.Client.UI.Components.HealthB
 local ManaBar = require(ReplicatedStorage.Modules.Client.UI.Components.ManaBar)
 local ReturnButton = require(ReplicatedStorage.Modules.Client.UI.Components.ReturnButton)
 local StaminaBar = require(ReplicatedStorage.Modules.Client.UI.Components.StaminaBar)
+local ClickHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.ClickHelper)
+local HoverHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.HoverHelper)
 local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 local TitleData = require(ReplicatedStorage.Modules.Data.TitleData)
 local StateChecker = require(ReplicatedStorage.Modules.Helpers.StateChecker)
-local UIHelper = require(game.ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(game.ReplicatedStorage.Modules.Client.UI.UIManager)
 
 local MainMenuController = {}
+local player = Players.LocalPlayer
 
 function MainMenuController:Main()
 	local MainMenu = UIManager:GetUI("MainMenu", "MainMenu")
 	for _, button: ImageButton in MainMenu:FindFirstChild("Main"):GetChildren() do
 		if button:IsA("ImageButton") then
-			UIHelper:ClickEffects(button)
-			UIHelper:HoverEffects(button)
+			HoverHelper:SizeEffect(button)
+			HoverHelper:SoundEffect(button)
+			ClickHelper:SizeEffect(button)
+			ClickHelper:SoundEffect(button)
 
 			local name = button.Name:split("Button")[1]
 			local frame = UIManager:GetUI(name .. "Menu", name .. "Menu")
@@ -40,8 +45,10 @@ function MainMenuController:BottomBar()
 
 	for _, button: ImageButton in bottomBar:GetChildren() do
 		if button:IsA("ImageButton") then
-			UIHelper:ClickEffects(button)
-			UIHelper:HoverEffects(button)
+			HoverHelper:SizeEffect(button)
+			HoverHelper:SoundEffect(button)
+			ClickHelper:SizeEffect(button)
+			ClickHelper:SoundEffect(button)
 
 			local name = button.Name:split("Button")[1]
 			local frame = UIManager:GetUI(name .. "Menu", name .. "Menu")
@@ -125,10 +132,11 @@ function MainMenuController:Overview()
 
 	local Equipment = {}
 
-	local folder = UIManager:GetUI("MainMenu", "Equipment")
-	for _, box in folder:GetChildren() do
+	local frame = UIManager:GetUI("MainMenu", "Equipment")
+	for _, box in frame:GetDescendants() do
 		if box:IsA("ImageLabel") then
-			UIHelper:HoverEffects(box)
+			HoverHelper:SizeEffect(box)
+			HoverHelper:SoundEffect(box)
 			Equipment[box.Name] = box
 		end
 	end
@@ -140,8 +148,12 @@ function MainMenuController:Overview()
 			if box:FindFirstChildWhichIsA("ImageButton") then
 				box:FindFirstChildWhichIsA("ImageButton"):Destroy()
 			end
-			if equipped:FindFirstChild(type) and equipped:FindFirstChild(type):GetAttribute("Equipped") then
-				local itemID = equipped:FindFirstChild(type):GetAttribute("Equipped")
+
+			if
+				equipped:FindFirstChild(box.Parent.Name):FindFirstChild(type)
+				and equipped:FindFirstChild(box.Parent.Name):FindFirstChild(type):GetAttribute("ItemID")
+			then
+				local itemID = equipped:FindFirstChild(box.Parent.Name):FindFirstChild(type):GetAttribute("ItemID")
 				local itemData = ItemDataBase:GetItemData(itemID)
 				if not itemData then
 					continue
@@ -150,16 +162,19 @@ function MainMenuController:Overview()
 				local icon = UIManager:CloneUI(
 					"MainMenu",
 					itemID,
-					ReplicatedStorage.Assets.UI.Icons:FindFirstChild(itemData.Rarity .. "Item"),
+					player.PlayerGui.UITemplates.Icons:FindFirstChild(itemData.Rarity .. "Item"),
 					box.Name
 				)
 				icon:FindFirstChild("OwnedAmount"):Destroy()
 				icon:FindFirstChild("NameText"):Destroy()
+
 				icon.Name = itemID
 				icon.Icon.Image = itemData.Icon
 				icon.Parent = box
+				icon.ItemName.TextLabel.Text = itemData.Name
+				icon.OwnedAmount.Visible = false
 
-				box.ImageTransparency = 0
+				box.ImageTransparency = 1
 			end
 		end
 	end
@@ -215,8 +230,6 @@ function MainMenuController:MainMenu()
 	end)
 end
 
-function MainMenuController:Titles()
-	
-end
+function MainMenuController:Titles() end
 
 return MainMenuController

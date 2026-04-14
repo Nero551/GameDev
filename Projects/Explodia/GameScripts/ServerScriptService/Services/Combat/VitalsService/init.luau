@@ -14,7 +14,6 @@ local function SyncAttributes(character: Model?, vitalsTable)
 		return
 	end
 
-	-- Recursive function to flatten tables and set attributes
 	local function FlattenAndSet(prefix, tbl)
 		for key, value in pairs(tbl) do
 			local attrName = prefix and (prefix .. "_" .. key) or key

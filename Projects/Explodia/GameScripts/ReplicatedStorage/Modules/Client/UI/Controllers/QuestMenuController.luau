@@ -3,6 +3,9 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local ConfirmPopup = require(ReplicatedStorage.Modules.Client.UI.Components.ConfirmPopup)
 local ReturnButton = require(ReplicatedStorage.Modules.Client.UI.Components.ReturnButton)
+local ClickHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.ClickHelper)
+local HoverHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.HoverHelper)
+local SelectedHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.SelectedHelper)
 local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
 local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
@@ -13,44 +16,19 @@ local QuestMenuController = {}
 function QuestMenuController:TopBar()
 	local questList = UIManager:GetUI("QuestMenu", "QuestScrollingFrame")
 	local Filters = UIManager:GetUI("QuestMenu", "QuestFilters")
-	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-
 	ReturnButton("QuestMenu")
 
-	local filterSelected = nil
-	local prevFilterSelected = nil
 	for _, filter in Filters:GetChildren() do
 		if filter:IsA("TextButton") then
-			UIHelper:ClickEffects(filter)
-			UIHelper:HoverEffects(filter)
+			ClickHelper:ClickEffects(filter)
+			HoverHelper:HoverEffects(filter)
+			SelectedHelper:SelectedEffects(filter, "QuestFilters")
 
 			filter.MouseButton1Click:Connect(function()
-				prevFilterSelected = filterSelected
-				filterSelected = filter
-
-				if filterSelected ~= nil then
-					TweenService
-						:Create(filterSelected["TextLabel"], info, { TextColor3 = Color3.fromRGB(255, 154, 213) })
-						:Play()
-					TweenService:Create(filterSelected, info, { BackgroundColor3 = Color3.fromRGB(60, 49, 88) }):Play()
-					if prevFilterSelected ~= nil then
-						if prevFilterSelected ~= filterSelected then
-							TweenService
-								:Create(prevFilterSelected, info, { BackgroundColor3 = Color3.fromRGB(255, 255, 255) })
-								:Play()
-							TweenService:Create(
-								prevFilterSelected["TextLabel"],
-								info,
-								{ TextColor3 = Color3.fromRGB(255, 255, 255) }
-							):Play()
-						end
-					end
-				end
-
 				---Filter---
 				local filterType = filter.Name:split("Quests")[1] .. " Quest"
 				for _, questSlot in questList:GetChildren() do
-					if questSlot:IsA("ImageButton") then
+					if questSlot:IsA("TextButton") then
 						questSlot.Visible = true
 						if filterType ~= "All Quest" then
 							local questType = questSlot.QuestType.Text
@@ -61,18 +39,6 @@ function QuestMenuController:TopBar()
 							end
 						end
 					end
-				end
-			end)
-
-			filter.MouseEnter:Connect(function()
-				if filterSelected ~= filter then
-					TweenService:Create(filter, info, { BackgroundColor3 = Color3.fromRGB(87, 107, 194) }):Play()
-				end
-			end)
-
-			filter.MouseLeave:Connect(function()
-				if filterSelected ~= filter then
-					TweenService:Create(filter, info, { BackgroundColor3 = Color3.fromRGB(255, 255, 255) }):Play()
 				end
 			end)
 		end
@@ -86,11 +52,9 @@ function QuestMenuController:Quests()
 	local questInfo = UIManager:GetUI("QuestMenu", "QuestInfo")
 
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-	local questSelected = nil
-	local prevQuestSelected = nil
 
 	for _, questSlot in questList:GetChildren() do
-		if questSlot:IsA("ImageButton") then
+		if questSlot:IsA("TextButton") then
 			questSlot:Destroy()
 		end
 	end
@@ -109,15 +73,22 @@ function QuestMenuController:Quests()
 			end
 			if not questSlot then
 				questSlot =
-					UIManager:CloneUI("QuestMenu", questID, ReplicatedStorage.Assets.UI.Quest, "QuestScrollingFrame")
+					UIManager:CloneUI("QuestMenu", questID, player.PlayerGui.UITemplates.Quest, "QuestScrollingFrame")
 				questSlot.QuestName.TextLabel.Text = questData.Name
 				questSlot.QuestType.TextLabel.Text = questData.QuestType
-				UIHelper:RotateGradient(questSlot:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
-				UIHelper:ClickEffects(questSlot, 1.025, 0.975)
-				UIHelper:HoverEffects(questSlot, 1.025, 1)
 
-				UIHelper:ClickEffects(questSlot.TrackQuestButton)
-				UIHelper:HoverEffects(questSlot.TrackQuestButton)
+				HoverHelper:SoundEffect(questSlot)
+				HoverHelper:SizeEffect(questSlot)
+				ClickHelper:SizeEffect(questSlot)
+				ClickHelper:SoundEffect(questSlot)
+
+				SelectedHelper:SelectedEffects(questSlot, "QuestsList")
+
+				HoverHelper:SoundEffect(questSlot.TrackQuestButton)
+				HoverHelper:SizeEffect(questSlot.TrackQuestButton)
+				ClickHelper:SoundEffect(questSlot.TrackQuestButton)
+				ClickHelper:SizeEffect(questSlot.TrackQuestButton)
+
 				questSlot.TrackQuestButton.MouseButton1Click:Connect(function()
 					NetworkingService:FireToServer("TrackQuest", questID)
 				end)
@@ -166,16 +137,6 @@ function QuestMenuController:Quests()
 					}):Play()
 				end
 
-				questSlot.MouseEnter:Connect(function()
-					if questSelected ~= questSlot then
-					end
-				end)
-
-				questSlot.MouseLeave:Connect(function()
-					if questSelected ~= questSlot then
-					end
-				end)
-
 				---Quest Info---
 				questSlot.MouseButton1Click:Connect(function()
 					for _, objective in questInfo.QuestInfoProgress:GetChildren() do
@@ -202,7 +163,7 @@ function QuestMenuController:Quests()
 							objectiveFrame = UIManager:CloneUI(
 								"QuestMenu",
 								objectiveNumber,
-								ReplicatedStorage.Assets.UI.Quest.QuestProgress.ObjectiveTemplate,
+								player.PlayerGui.UITemplates.Quest.QuestProgress.ObjectiveTemplate,
 								"QuestInfoProgress"
 							)
 							objectiveFrame.Visible = true
@@ -241,7 +202,7 @@ function QuestMenuController:Quests()
 							local rewardSlot = UIManager:CloneUI(
 								"QuestMenu",
 								reward,
-								ReplicatedStorage.Assets.UI.Icons[rewardData.Rarity .. "Item"],
+								player.PlayerGui.UITemplates.Icons[rewardData.Rarity .. "Item"],
 								"QuestInfoRewards"
 							)
 							rewardSlot.NameText.Text = ""
@@ -257,7 +218,7 @@ function QuestMenuController:Quests()
 									local rewardSlot = UIManager:CloneUI(
 										"QuestMenu",
 										item,
-										ReplicatedStorage.Assets.UI.Icons[rewardData.Rarity .. "Item"],
+										player.PlayerGui.UITemplates.Icons[rewardData.Rarity .. "Item"],
 										"QuestInfoRewards"
 									)
 
@@ -267,17 +228,6 @@ function QuestMenuController:Quests()
 									rewardSlot.OwnedAmount.Position = UDim2.fromScale(0, 0.8)
 									rewardSlot.OwnedAmount.TextXAlignment = Enum.TextXAlignment.Center
 									rewardSlot.Icon.Image = rewardData.Icon
-								end
-							end
-						end
-					end
-
-					prevQuestSelected = questSelected
-					questSelected = questSlot
-					if questSelected ~= nil then
-						if prevQuestSelected ~= nil then
-							if prevQuestSelected ~= questSelected then
-								if prevQuestSelected:FindFirstChild("UIStroke") then
 								end
 							end
 						end
@@ -332,9 +282,10 @@ function QuestMenuController:AbandonQuest()
 	local questInfo = UIManager:GetUI("QuestMenu", "QuestInfo")
 	local abandonQuestButton = questInfo:FindFirstChild("AbandonQuest")
 	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-
-	UIHelper:HoverEffects(abandonQuestButton)
-	UIHelper:ClickEffects(abandonQuestButton)
+	HoverHelper:SoundEffect(abandonQuestButton)
+	HoverHelper:SizeEffect(abandonQuestButton)
+	ClickHelper:SizeEffect(abandonQuestButton)
+	ClickHelper:SoundEffect(abandonQuestButton)
 
 	local confirmPopup
 	local confirmConnection
@@ -345,29 +296,9 @@ function QuestMenuController:AbandonQuest()
 		end
 
 		confirmPopup = ConfirmPopup()
-
-		confirmPopup:GetPropertyChangedSignal("Visible"):Connect(function()
-			if confirmPopup.Visible then
-				TweenService
-					:Create(abandonQuestButton.AbandonQuestText, info, { TextColor3 = Color3.fromRGB(255, 154, 213) })
-					:Play()
-				TweenService:Create(abandonQuestButton.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 154, 213) })
-					:Play()
-				TweenService:Create(abandonQuestButton, info, { ImageColor3 = Color3.fromRGB(60, 49, 88) }):Play()
-			else
-				TweenService:Create(abandonQuestButton, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-				TweenService:Create(abandonQuestButton.RGBStroke, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
-					:Play()
-				TweenService
-					:Create(abandonQuestButton.AbandonQuestText, info, { TextColor3 = Color3.fromRGB(255, 255, 255) })
-					:Play()
-			end
-		end)
-
 		return confirmPopup
 	end
 
-	-----------------------------------------------------------------------------------------------------------------------------
 	abandonQuestButton.MouseButton1Click:Connect(function()
 		local popup = GetConfirmPopup()
 		local confirmButton = popup:FindFirstChild("ConfirmButton")
@@ -388,20 +319,6 @@ function QuestMenuController:AbandonQuest()
 			questInfo.Visible = false
 			popup.Visible = false
 		end)
-	end)
-
-	-----------------------------------------------------------------------------------------------------------------------------
-	abandonQuestButton.MouseEnter:Connect(function()
-		if confirmPopup and not confirmPopup.Visible then
-			TweenService:Create(abandonQuestButton, info, { ImageColor3 = Color3.fromRGB(87, 107, 194) }):Play()
-		end
-	end)
-
-	-----------------------------------------------------------------------------------------------------------------------------
-	abandonQuestButton.MouseLeave:Connect(function()
-		if confirmPopup and not confirmPopup.Visible then
-			TweenService:Create(abandonQuestButton, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-		end
 	end)
 end
 

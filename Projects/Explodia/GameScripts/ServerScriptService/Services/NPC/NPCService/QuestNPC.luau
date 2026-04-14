@@ -1,5 +1,4 @@
 return function(npc)
-	print("nice")
 	if not npc then
 		warn("Invalid NPC")
 		return
@@ -35,9 +34,7 @@ return function(npc)
 			ToolLoader(clone)
 		end
 	end
-
-	print("Nice")
-
+	
 	AIService:CreateAI(npc)
 
 	-- ---NPC Info GUI---

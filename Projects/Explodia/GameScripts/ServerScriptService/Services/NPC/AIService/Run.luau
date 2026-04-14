@@ -1,4 +1,3 @@
-
 --TODO MAKE CUSTOM PATHFINDING--
 return function(npc)
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")

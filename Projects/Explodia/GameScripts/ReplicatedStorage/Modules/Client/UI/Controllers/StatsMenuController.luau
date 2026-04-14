@@ -2,7 +2,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local ConfirmPopup = require(ReplicatedStorage.Modules.Client.UI.Components.ConfirmPopup)
 local ReturnButton = require(ReplicatedStorage.Modules.Client.UI.Components.ReturnButton)
-local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
+local ClickHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.ClickHelper)
+local HoverHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.HoverHelper)
 local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
 local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
 local StatsMenuController = {}
@@ -22,8 +23,8 @@ function StatsMenuController:Stats()
 	local statPointsFrame = UIManager:GetUI("StatsMenu", "StatPointsFrame")
 	local statSections = statPointsFrame:FindFirstChild("StatSections")
 
-	UIHelper:ClickEffects(resetButton)
-	UIHelper:HoverEffects(resetButton)
+	HoverHelper:HoverEffects(resetButton)
+	ClickHelper:ClickEffects(resetButton)
 
 	statPointsFrame:FindFirstChild("AvailablePoints").Text = "Points: "
 		.. playerLevel:FindFirstChild("StatPoints"):GetAttribute("Amount")
@@ -35,8 +36,10 @@ function StatsMenuController:Stats()
 	for _, statFrame in statSections:GetChildren() do
 		if statFrame:IsA("Frame") then
 			local allocateButton = statFrame:FindFirstChild("AllocateButton")
-			UIHelper:ClickEffects(allocateButton)
-			UIHelper:HoverEffects(allocateButton)
+
+			HoverHelper:HoverEffects(allocateButton)
+			ClickHelper:ClickEffects(allocateButton)
+			
 			allocateButton.MouseButton1Click:Connect(function()
 				local amount = statPointsFrame.Amount.AmountBox.Text
 				if tonumber(amount) == nil then
@@ -58,7 +61,7 @@ function StatsMenuController:Stats()
 					detailFrame = UIManager:CloneUI(
 						"StatsMenu",
 						stat.Name,
-						ReplicatedStorage.Assets.UI.StatDetailTemplate,
+						player.PlayerGui.UITemplates.StatDetailTemplate,
 						"StatDetailsFrame"
 					)
 					detailFrame.StatCatagory.Text = stat.Name
@@ -79,7 +82,7 @@ function StatsMenuController:Stats()
 					return
 				end
 
-				local statPoints = stat:GetAttribute("FlatStatPoint")
+				local statPoints = stat:GetAttribute("StatPoint")
 				for _, statFrame in statSections:GetChildren() do
 					if not statFrame:IsA("Frame") then
 						continue

@@ -54,7 +54,11 @@ return function()
 	setShiftLock(false)
 
 	RunService.RenderStepped:Connect(function(dt)
-		if StateChecker:CheckState(character, "Dead") or UIManager.ActiveScreen ~= "HUD" then
+		if
+			StateChecker:CheckState(character, "Dead")
+			or UIManager.ActiveScreen ~= "HUD"
+			or StateChecker:CheckState(character, "MouseAiming")
+		then
 			setShiftLock(false)
 			return
 		end

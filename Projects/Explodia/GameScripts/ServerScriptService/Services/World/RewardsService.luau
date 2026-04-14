@@ -28,7 +28,7 @@ function RewardsService:GiveRewards(player, Rewards, quest: boolean)
 		end
 		if Rewards.ItemDrops then
 			for item, itemInfo in pairs(Rewards.ItemDrops) do
-				local _, itemID = ItemDataBase:GetItemData(item)
+				local itemData, itemID = ItemDataBase:GetItemData(item)
 				if not itemID then
 					warn("Invalid Item")
 					return
@@ -38,9 +38,7 @@ function RewardsService:GiveRewards(player, Rewards, quest: boolean)
 					InventoryService:AddItem(itemID, itemInfo.Amount, player)
 				else
 					---If Normal Mob Drops---
-					if RarityService:CheckPity(player, itemID) then
-						InventoryService:AddItem(itemID, itemInfo.Amount, player)
-					elseif RarityService:Chance(player, itemID) then
+					if RarityService:Chance(player, itemData.Rarity) then
 						InventoryService:AddItem(itemID, itemInfo.Amount, player)
 					end
 				end

@@ -1,6 +1,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local TweenService = game:GetService("TweenService")
+local ClickHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.ClickHelper)
+local HoverHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.HoverHelper)
 local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
 local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
@@ -26,7 +27,7 @@ function TitleMenuController:Titles()
 
 		if not titleSlot then
 			titleSlot =
-				UIManager:CloneUI("StatsMenu", titleID, ReplicatedStorage.Assets.UI.Title, "TitleScrollingFrame")
+				UIManager:CloneUI("StatsMenu", titleID, player.PlayerGui.UITemplates.Title, "TitleScrollingFrame")
 			UIHelper:RotateGradient(titleSlot:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
 
 			titleSlot.TitleName.Text = titleData.Name
@@ -58,28 +59,13 @@ function TitleMenuController:Titles()
 				end
 			end
 
-			local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 			local equipButton = titleSlot:FindFirstChild("Equip"):FindFirstChild("EquipButton")
 			local unequipButton = titleSlot:FindFirstChild("Equip"):FindFirstChild("UnEquipButton")
 
-			UIHelper:ClickEffects(equipButton)
-			UIHelper:ClickEffects(unequipButton)
-			UIHelper:HoverEffects(titleSlot:FindFirstChild("Equip"))
-			UIHelper:RotateGradient(
-				titleSlot:FindFirstChild("Equip"):FindFirstChild("RGBStroke"):FindFirstChild("UIGradient")
-			)
-
-			titleSlot:FindFirstChild("Equip").MouseEnter:Connect(function()
-				TweenService
-					:Create(titleSlot:FindFirstChild("Equip"), info, { ImageColor3 = Color3.fromRGB(55, 67, 122) })
-					:Play()
-			end)
-
-			titleSlot:FindFirstChild("Equip").MouseLeave:Connect(function()
-				TweenService
-					:Create(titleSlot:FindFirstChild("Equip"), info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
-					:Play()
-			end)
+			ClickHelper:SoundEffect(equipButton)
+			ClickHelper:SizeEffect(equipButton)
+			HoverHelper:SoundEffect(unequipButton)
+			HoverHelper:SizeEffect(unequipButton)
 
 			---Equip Title---
 			equipButton.MouseButton1Click:Connect(function()

@@ -14,11 +14,13 @@ local DefualtPlayerData = {
 			EXPAcquired = 0,
 		},
 	},
+
 	Equipped = {
 		Weapons = {
 			MainHand = nil,
 			OffHand = nil,
 		},
+
 		Armor = {
 			Helmet = nil,
 			ChestPlate = nil,
@@ -26,42 +28,47 @@ local DefualtPlayerData = {
 			Boots = nil,
 		},
 	},
+
 	Stats = {
 		MainStats = {
-			Vitality = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-			Intelligence = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-			Strength = { Base = 10, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-			Dexterity = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
-			Agility = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+			Vitality = { Base = 10, Flat = 0, StatPoint = 0, Percent = 0, Final = 0 },
+			Intelligence = { Base = 10, Flat = 0, StatPoint = 0, Percent = 0, Final = 0 },
+			Strength = { Base = 10, Flat = 0, StatPoint = 0, Percent = 0, Final = 0 },
+			Dexterity = { Base = 0, Flat = 0, StatPoint = 0, Percent = 0, Final = 0 },
+			Agility = { Base = 0, Flat = 0, StatPoint = 0, Percent = 0, Final = 0 },
 		},
+
 		SubStats = {
-			Defense = { Base = 0, FlatBuff = 0, FlatStatPoint = 0, Percent = 0, Final = 0 },
+			Defense = { Base = 0, Flat = 0, StatPoint = 0, Percent = 0, Final = 0 },
 			CriticalDamage = { DexterityPercentBonus = 0, Percent = 0, Final = 0 },
 			CriticalChance = { DexterityPercentBonus = 0, Percent = 0, Final = 0 },
 		},
 	},
+
+	Buffs = {},
+
 	Level = {
 		CurrentLevel = 1,
 		RequiredEXP = 100,
 		CurrentEXP = 0,
 		StatPoints = 0,
 	},
+
 	Currency = {
 		Yen = 0,
 		Fracta = 0,
 	},
-	ItemPity = {},
 
 	Quests = {
 		ActiveQuests = {},
 		CompletedQuests = {},
 		TrackedQuest = nil,
 	},
+
 	Titles = {
 		Titles = {},
 		ActiveTitle = nil,
 	},
-	Buffs = {},
 
 	Techniques = {
 		Obtained = {},
@@ -87,6 +94,11 @@ local DefualtPlayerData = {
 			Technique10 = Enum.KeyCode.H.Name,
 			Technique11 = Enum.KeyCode.Y.Name,
 			Technique12 = Enum.KeyCode.U.Name,
+		},
+
+		Theme = {
+			Selected = "Default",
+			Custom = nil,
 		},
 	},
 }

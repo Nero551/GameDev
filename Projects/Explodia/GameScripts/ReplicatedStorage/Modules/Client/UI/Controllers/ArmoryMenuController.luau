@@ -1,7 +1,9 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
-local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
+local ClickHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.ClickHelper)
+local HoverHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.HoverHelper)
+local SelectedHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.SelectedHelper)
 local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
 local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
 local TechniqueData = require(ReplicatedStorage.Modules.Data.TechniqueData)
@@ -39,9 +41,6 @@ function ArmoryMenuController:Armory()
 		TweenService:Create(equipIcon, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
 	end)
 
-	local IconSelected = nil
-	local PrevIconSelected = nil
-
 	for _, itemSlot in itemFrame:GetChildren() do
 		if itemSlot:IsA("ImageButton") then
 			itemSlot:Destroy()
@@ -66,41 +65,16 @@ function ArmoryMenuController:Armory()
 			itemSlot = UIManager:CloneUI(
 				"ArmoryMenu",
 				itemID,
-				ReplicatedStorage.Assets.UI.Icons[itemData.Rarity .. "Item"],
+				player.PlayerGui.UITemplates.Icons[itemData.Rarity .. "Item"],
 				"ArmoryScrollingFrame"
 			)
-			UIHelper:ClickEffects(itemSlot)
-			UIHelper:HoverEffects(itemSlot)
-			local border = itemSlot:FindFirstChild("Border")
-			UIHelper:RotateGradient(border:FindFirstChild("UIGradient"))
+			HoverHelper:HoverEffects(itemSlot)
+			ClickHelper:ClickEffects(itemSlot)
+			SelectedHelper:SelectedEffects(itemSlot,"ArmorySlots")
 
 			local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-			itemSlot.MouseEnter:Connect(function()
-				itemSlot.ImageColor3 = Color3.fromHex("#eeeeee")
-				if IconSelected ~= itemSlot then
-					TweenService:Create(border, info, { ImageColor3 = Color3.fromRGB(71, 88, 158) }):Play()
-				end
-			end)
-
-			itemSlot.MouseLeave:Connect(function()
-				itemSlot.ImageColor3 = Color3.fromHex("#ffffff")
-				if IconSelected ~= itemSlot then
-					TweenService:Create(border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-				end
-			end)
-
 			itemSlot.MouseButton1Click:Connect(function()
-				PrevIconSelected = IconSelected
-				IconSelected = itemSlot
-				if IconSelected ~= nil then
-					TweenService:Create(IconSelected.Border, info, { ImageColor3 = Color3.fromRGB(114, 142, 255) })
-						:Play()
-				end
-				if PrevIconSelected ~= nil and PrevIconSelected ~= IconSelected then
-					TweenService:Create(PrevIconSelected.Border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
-						:Play()
-				end
 
 				---Info Setup---
 				for _, ability in abiltiesFrame:GetChildren() do
@@ -195,7 +169,7 @@ function ArmoryMenuController:Armory()
 			end)
 		end
 		local equippedIcon = itemSlot:FindFirstChild("EquippedIcon")
-		itemSlot.NameText.Text = itemData.Name
+		itemSlot.ItemName.TextLabel.Text = itemData.Name
 		itemSlot.Icon.Image = itemData.Icon
 		if itemSlot:FindFirstChild("OwnedAmount") then
 			itemSlot:FindFirstChild("OwnedAmount"):Destroy()
@@ -255,9 +229,15 @@ function ArmoryMenuController:Equip()
 	local unequipButton = equipIcon:FindFirstChild("UnEquipButton")
 	local info = TweenInfo.new(0.0625, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out)
 
-	UIHelper:HoverEffects(equipIcon)
-	UIHelper:ClickEffects(equipButton)
-	UIHelper:ClickEffects(unequipButton)
+	HoverHelper:SizeEffect(equipIcon)
+	HoverHelper:SoundEffect(equipIcon)
+
+	ClickHelper:SizeEffect(equipButton)
+	ClickHelper:SoundEffect(equipButton)
+
+	ClickHelper:SizeEffect(unequipButton)
+	ClickHelper:SoundEffect(unequipButton)
+
 	equipButton.MouseButton1Click:Connect(function()
 		local itemID = armoryInfo:GetAttribute("ItemID")
 		NetworkingService:FireToServer("EquipItem", itemID)
@@ -289,7 +269,7 @@ function ArmoryMenuController:Search()
 
 		for _, icon in itemFrame:GetChildren() do
 			if icon:IsA("ImageButton") then
-				local itemName = icon.NameText.Text:lower()
+				local itemName = icon.ItemName.TextLabel.Text:lower()
 
 				if text == "" then
 					icon.Visible = true

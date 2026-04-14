@@ -2,7 +2,9 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
 local ReturnButton = require(ReplicatedStorage.Modules.Client.UI.Components.ReturnButton)
-local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
+local ClickHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.ClickHelper)
+local HoverHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.HoverHelper)
+local SelectedHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.SelectedHelper)
 local UIManager = require(ReplicatedStorage.Modules.Client.UI.UIManager)
 local NetworkingService = require(ReplicatedStorage.Modules.Core.NetworkingService)
 local SettingsMenuController = {}
@@ -23,12 +25,14 @@ function SettingsMenuController:Options()
 			option = UIManager:CloneUI(
 				"SettingsMenu",
 				config.Name .. "Option",
-				ReplicatedStorage.Assets.UI.SettingsOption,
+				player.PlayerGui.UITemplates.SettingsOption,
 				"Options"
 			)
             option.OptionName.Text = config.Name
-			UIHelper:ClickEffects(option,0.975)
-			UIHelper:HoverEffects(option,1.05)
+
+			HoverHelper:HoverEffects(option)
+			ClickHelper:ClickEffects(option)
+			SelectedHelper:SelectedEffects(option, "SettingsOptions")
 
 			option.MouseButton1Click:Connect(function()
 				local wantedFrame = MainFrame:FindFirstChild(option.Name:split("Option")[1] .. "Frame")
@@ -67,7 +71,7 @@ function SettingsMenuController:Keybinds()
 					keySlot = UIManager:CloneUI(
 						"SettingsMenu",
 						keybind,
-						ReplicatedStorage.Assets.UI.KeyBindSlot,
+						player.PlayerGui.UITemplates.KeyBindSlot,
 						"KeybindsFrame"
 					)
 

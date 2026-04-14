@@ -1,4 +1,5 @@
 local KeybindsService = require(script.Parent.KeybindsService)
+local ThemeService = require(script.Parent.ThemeService)
 local SettingsService = {}
 
 function SettingsService:SetupSettings(player)
@@ -11,6 +12,7 @@ function SettingsService:SetupSettings(player)
 
 
     KeybindsService:SetupKeybinds(player)
+    ThemeService:SetupThemes(player)
 end
 
 return SettingsService

@@ -2,10 +2,12 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local ReturnButton = require(ReplicatedStorage.Modules.Client.UI.Components.ReturnButton)
+local ClickHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.ClickHelper)
+local HoverHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.HoverHelper)
+local SelectedHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.SelectedHelper)
 local ItemDataBase = require(game.ReplicatedStorage.Modules.Data.ItemDataBase)
 local RarityData = require(game.ReplicatedStorage.Modules.Data.RarityData)
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
-local UIHelper = require(game.ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(game.ReplicatedStorage.Modules.Client.UI.UIManager)
 
 local InventoryMenuController = {}
@@ -17,49 +19,14 @@ function InventoryMenuController:TopBar()
 
 	local itemFrame = UIManager:GetUI("InventoryMenu", "ItemScrollingFrame")
 	local Filters = UIManager:GetUI("InventoryMenu", "Filters")
-	local filterSelected = nil
-	local prevFilterSelected = nil
-	local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 	for _, filter in Filters:GetChildren() do
 		if filter:IsA("TextButton") then
-			UIHelper:ClickEffects(filter)
-			UIHelper:HoverEffects(filter)
-
-			filter.MouseEnter:Connect(function()
-				if filterSelected ~= filter then
-					TweenService:Create(filter, info, { BackgroundColor3 = Color3.fromRGB(87, 107, 194) }):Play()
-				end
-			end)
-
-			filter.MouseLeave:Connect(function()
-				if filterSelected ~= filter then
-					TweenService:Create(filter, info, { BackgroundColor3 = Color3.fromRGB(255, 255, 255) }):Play()
-				end
-			end)
+			ClickHelper:ClickEffects(filter)
+			HoverHelper:HoverEffects(filter)
+			SelectedHelper:SelectedEffects(filter, "InventoryFilters")
 
 			filter.MouseButton1Click:Connect(function()
-				prevFilterSelected = filterSelected
-				filterSelected = filter
-
-				if filterSelected ~= nil then
-					TweenService
-						:Create(filterSelected["FilterType"], info, { TextColor3 = Color3.fromRGB(255, 154, 213) })
-						:Play()
-					TweenService:Create(filterSelected, info, { BackgroundColor3 = Color3.fromRGB(60, 49, 88) }):Play()
-					if prevFilterSelected ~= nil then
-						if prevFilterSelected ~= filterSelected then
-							TweenService
-								:Create(prevFilterSelected, info, { BackgroundColor3 = Color3.fromRGB(255, 255, 255) })
-								:Play()
-							TweenService:Create(
-								prevFilterSelected["FilterType"],
-								info,
-								{ TextColor3 = Color3.fromRGB(255, 255, 255) }
-							):Play()
-						end
-					end
-				end
 				---Filter---
 				local filterType = filter.FilterType.Text
 
@@ -127,9 +94,6 @@ function InventoryMenuController:Inventory()
 	local equipButton = equipIcon:FindFirstChild("EquipButton")
 	local unequipButton = equipIcon:FindFirstChild("UnEquipButton")
 
-	local IconSelected = nil
-	local PrevIconSelected = nil
-
 	infoFrame.Visible = false
 
 	for _, itemSlot in itemFrame:GetChildren() do
@@ -152,43 +116,18 @@ function InventoryMenuController:Inventory()
 			itemSlot = UIManager:CloneUI(
 				"InventoryMenu",
 				itemID,
-				ReplicatedStorage.Assets.UI.Icons[itemData.Rarity .. "Item"],
+				player.PlayerGui.UITemplates.Icons[itemData.Rarity .. "Item"],
 				"ItemScrollingFrame"
 			)
 			itemSlot.Name = itemID
-			UIHelper:ClickEffects(itemSlot)
-			UIHelper:HoverEffects(itemSlot)
-
-			local border = itemSlot:FindFirstChild("Border")
-			UIHelper:RotateGradient(border:FindFirstChild("UIGradient"))
+			ClickHelper:ClickEffects(itemSlot)
+			HoverHelper:HoverEffects(itemSlot)
+			SelectedHelper:SelectedEffects(itemSlot, "InventorySlots")
 
 			local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-			itemSlot.MouseEnter:Connect(function()
-				itemSlot.ImageColor3 = Color3.fromHex("#eeeeee")
-				if IconSelected ~= itemSlot then
-					TweenService:Create(border, info, { ImageColor3 = Color3.fromRGB(200, 200, 200) }):Play()
-				end
-			end)
-
-			itemSlot.MouseLeave:Connect(function()
-				itemSlot.ImageColor3 = Color3.fromHex("#ffffff")
-				if IconSelected ~= itemSlot then
-					TweenService:Create(border, info, { ImageColor3 = Color3.fromRGB(145, 145, 145) }):Play()
-				end
-			end)
 
 			itemSlot.MouseButton1Click:Connect(function()
-				PrevIconSelected = IconSelected
-				IconSelected = itemSlot
-				if IconSelected ~= nil then
-					TweenService:Create(IconSelected.Border, info, { ImageColor3 = Color3.fromRGB(255, 255, 255) })
-						:Play()
-				end
-				if PrevIconSelected ~= nil and PrevIconSelected ~= IconSelected then
-					TweenService:Create(PrevIconSelected.Border, info, { ImageColor3 = Color3.fromRGB(145, 145, 145) })
-						:Play()
-				end
 
 				---Info Setup---
 				infoFrame:SetAttribute("ItemName", itemData.Name)
@@ -236,12 +175,12 @@ function InventoryMenuController:Inventory()
 		local equippedIcon = itemSlot:FindFirstChild("EquippedIcon")
 		if itemData.Stackable == false then
 			itemSlot.OwnedAmount.Visible = false
-			itemSlot.NameText.Visible = true
 		else
-			itemSlot.NameText.Visible = false
 			itemSlot.OwnedAmount.Visible = true
 		end
-		itemSlot.NameText.Text = itemData.Name
+
+		itemSlot.ItemName.TextLabel.Visible = true
+		itemSlot.ItemName.TextLabel.Text = itemData.Name
 		itemSlot.OwnedAmount.Text = descendant:GetAttribute("Amount")
 		itemSlot.Icon.Image = itemData.Icon
 
@@ -256,7 +195,6 @@ function InventoryMenuController:Inventory()
 	end
 
 	for _, catagory in equipped:GetChildren() do
-
 		catagory.ChildAdded:Connect(function(child)
 			local icon = itemFrame:FindFirstChild(child:GetAttribute("ItemID"))
 			if icon then
@@ -294,9 +232,14 @@ function InventoryMenuController:Equip()
 	local unequipButton = box:FindFirstChild("UnEquipButton")
 	local info = TweenInfo.new(0.0625, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out)
 
-	UIHelper:HoverEffects(box)
-	UIHelper:ClickEffects(equipButton)
-	UIHelper:ClickEffects(unequipButton)
+	HoverHelper:SizeEffect(box)
+	HoverHelper:SoundEffect(box)
+
+	ClickHelper:SizeEffect(equipButton)
+	ClickHelper:SoundEffect(equipButton)
+
+	ClickHelper:SizeEffect(unequipButton)
+	ClickHelper:SoundEffect(unequipButton)
 
 	box.MouseEnter:Connect(function()
 		TweenService:Create(box, info, { ImageColor3 = Color3.fromRGB(55, 67, 122) }):Play()
@@ -338,7 +281,7 @@ function InventoryMenuController:Search()
 
 		for _, icon in itemFrame:GetChildren() do
 			if icon:IsA("ImageButton") then
-				local itemName = icon.NameText.Text:lower()
+				local itemName = icon.ItemName.TextLabel.Text:lower()
 
 				if text == "" then
 					icon.Visible = true

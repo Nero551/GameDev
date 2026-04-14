@@ -1,10 +1,6 @@
 local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local UIHelper = {}
-
-local hoverSound = ReplicatedStorage.Assets.MenuSounds.Hover
-local clickSound = ReplicatedStorage.Assets.MenuSounds.Click
 
 UIHelper.Cache = {}
 
@@ -36,6 +32,14 @@ function UIHelper:RotateGradient(gradient, duration)
 	end
 end
 
+function UIHelper:Lighten(color, amount)
+	return color:Lerp(Color3.new(1, 1, 1), amount)
+end
+
+function UIHelper:Darken(color, amount)
+	return color:Lerp(Color3.new(0, 0, 0), amount)
+end
+
 function UIHelper:Rotate(ui)
 	local info = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	ui.MouseEnter:Connect(function()
@@ -46,47 +50,6 @@ function UIHelper:Rotate(ui)
 	end)
 end
 
-function UIHelper:HoverEffects(ui, enter, leave)
-	if not ui then
-		return
-	end
-	local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-
-	local scale = ui:FindFirstChildWhichIsA("UIScale")
-	if not scale then
-		scale = Instance.new("UIScale")
-		scale.Parent = ui
-	end
-	ui.MouseEnter:Connect(function()
-		TweenService:Create(scale, info, { Scale = (enter or 1.1) }):Play()
-		hoverSound:Play()
-	end)
-	ui.MouseLeave:Connect(function()
-		TweenService:Create(scale, info, { Scale = (leave or 1) }):Play()
-	end)
-end
-
-function UIHelper:ClickEffects(ui, down, up)
-	if not ui then
-		return
-	end
-	local info = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-	local scale = ui:FindFirstChildWhichIsA("UIScale")
-	if not scale then
-		scale = Instance.new("UIScale")
-		scale.Parent = ui
-	end
-	ui.MouseButton1Click:Connect(function()
-		clickSound:Play()
-	end)
-
-	ui.MouseButton1Down:Connect(function()
-		TweenService:Create(scale, info, { Scale = (down or 0.975) }):Play()
-	end)
-	ui.MouseButton1Up:Connect(function()
-		TweenService:Create(scale, info, { Scale = (up or 1) }):Play()
-	end)
-end
 
 function UIHelper:ModifySize(ui: Instance, wantedScale)
 	local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)

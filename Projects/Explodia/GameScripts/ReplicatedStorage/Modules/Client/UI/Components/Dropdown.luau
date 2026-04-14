@@ -1,11 +1,12 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local UIHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
+local ClickHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.ClickHelper)
+local HoverHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.HoverHelper)
 return function(frame)
     local toggleButton:TextButton = frame:FindFirstChild("ToggleButton")
     local dropdown:Frame = frame:FindFirstChild("Dropdown")
     local state = 0
-    UIHelper:ClickEffects(toggleButton)
-    UIHelper:HoverEffects(toggleButton)
+    ClickHelper:ClickEffects(toggleButton)
+    HoverHelper:HoverEffects(toggleButton)
 
     toggleButton.MouseButton1Click:Connect(function()
         if state == 1 then

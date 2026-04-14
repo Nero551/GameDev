@@ -1,18 +1,14 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Debris = game:GetService("Debris")
 local Players = game:GetService("Players")
 local ServerScriptService = game:GetService("ServerScriptService")
 
 local assets = ReplicatedStorage.Assets
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
-local HitService = require(script.Parent.HitService)
 local DataService = require(ServerScriptService.Services.Core.DataService)
 local AIService = require(ServerScriptService.Services.NPC.AIService)
-local StateService = require(game.ServerScriptService.Services.Core.StateService)
 local VitalsService = require(game.ServerScriptService.Services.Combat.VitalsService)
 local ActionVerifier = require(game.ReplicatedStorage.Modules.Helpers.ActionVerifier)
 
-local Animations = require(game.ReplicatedStorage.Modules.Core.Animations)
 local TechniqueData = require(game.ReplicatedStorage.Modules.Data.TechniqueData)
 local ItemDataBase = require(ReplicatedStorage.Modules.Data.ItemDataBase)
 
@@ -143,7 +139,6 @@ function TechniqueService:UseTechnique(character, techniqueSlot, mouse)
 		return
 	end
 
-	local humanoid = character:WaitForChild("Humanoid")
 	local itemData = ItemDataBase:GetItemData(VitalsService:GetVital(character, "ActiveHand"))
 	local techniqueData = TechniqueData:GetTechniqueData(techniqueID)
 
@@ -215,57 +210,12 @@ function TechniqueService:UseTechnique(character, techniqueSlot, mouse)
 
 		NetworkingService:FireToClient(player, "CameraShake", 0.25)
 	end
-
-	---Animation---
-	local animation = Animations:GetAnimation(humanoid, "Techniques." .. techniqueData.TechniqueName .. ".Animation")
-	if not animation then
-		warn("Animation Not Found")
-		return
+	if techniqueData.Type == "Normal" then
+		require(script.NormalTechnique)(character, techniqueSlot, techniqueData)
+		
+	elseif techniqueData.Type == "OnMouse" then
+		require(script.OnMouseTechnique)(character, techniqueSlot, techniqueData, mouse)
 	end
-	animation:Play()
-
-	---Ability States---
-	StateService:AddState(character, "Technique" .. techniqueSlot .. " Cooldown", techniqueData.Cooldown)
-	StateService:AddState(character, "Invulnerable", 0.2)
-	StateService:AddState(character, "Casting", animation.Length)
-
-	animation:GetMarkerReachedSignal("Hit"):Once(function()
-		local hrp = character:WaitForChild("HumanoidRootPart")
-
-		---HitBox---
-		local hitboxClone = assets.HitboxTemplate:Clone()
-		if techniqueData.OnMouse and mouse then
-			hitboxClone.Name = techniqueData.TechniqueName .. " Hitbox"
-			hitboxClone.Size = techniqueData.HitBoxSize
-			hitboxClone.Position = mouse
-			hitboxClone.Parent = workspace.World.Hitboxes
-		else
-			hitboxClone.Name = techniqueData.TechniqueName .. " Hitbox"
-			hitboxClone.Size = techniqueData.HitBoxSize
-			hitboxClone.Position = hrp.Position
-				+ techniqueData.HitBoxPosition
-				+ hrp.CFrame.LookVector * techniqueData.HitBoxLookVector
-			hitboxClone.Orientation = hrp.Orientation + techniqueData.HitBoxRotation
-			hitboxClone.Parent = workspace.World.Hitboxes
-		end
-
-		---VFX---
-		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "TechniqueVFX", {
-			["VFX"] = assets.Techniques[techniqueData.TechniqueName].VFX,
-			["HitBoxName"] = hitboxClone.Name,
-			["Caster"] = character,
-		})
-
-		---Sound---
-		NetworkingService:FireInRange("ClientEffects", hitboxClone.Position, nil, "TechniqueSound", {
-			["Sound"] = assets.Techniques[techniqueData.TechniqueName].Activate,
-			["HitBoxName"] = hitboxClone.Name,
-		})
-		Debris:AddItem(hitboxClone, animation.Length)
-
-		---Damage---
-		HitService:Apply(character, techniqueData, hitboxClone)
-	end)
 end
 
 return TechniqueService

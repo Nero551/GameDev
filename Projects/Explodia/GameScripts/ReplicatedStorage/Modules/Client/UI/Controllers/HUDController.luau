@@ -11,28 +11,31 @@ local StateChecker = require(game.ReplicatedStorage.Modules.Helpers.StateChecker
 local UIHelper = require(game.ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(game.ReplicatedStorage.Modules.Client.UI.UIManager)
 local StatusEffectsData = require(ReplicatedStorage.Modules.Data.StatusEffectsData)
+local HealthBar = require(ReplicatedStorage.Modules.Client.UI.Components.HealthBar)
+local ManaBar = require(ReplicatedStorage.Modules.Client.UI.Components.ManaBar)
+local EXPBar = require(ReplicatedStorage.Modules.Client.UI.Components.EXPBar)
+local StaminaBar = require(ReplicatedStorage.Modules.Client.UI.Components.StaminaBar)
+
+local ClickHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.ClickHelper)
+local HoverHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.HoverHelper)
 
 local HUDController = {}
 
 local player = Players.LocalPlayer
 
 function HUDController:Health()
-	local HealthBar = require(ReplicatedStorage.Modules.Client.UI.Components.HealthBar)
 	HealthBar("HUD")
 end
 
 function HUDController:Mana()
-	local ManaBar = require(ReplicatedStorage.Modules.Client.UI.Components.ManaBar)
 	ManaBar("HUD")
 end
 
 function HUDController:EXP()
-	local EXPBar = require(ReplicatedStorage.Modules.Client.UI.Components.EXPBar)
 	EXPBar("HUD")
 end
 
 function HUDController:Stamina()
-	local StaminaBar = require(ReplicatedStorage.Modules.Client.UI.Components.StaminaBar)
 	StaminaBar("HUD")
 end
 
@@ -380,7 +383,7 @@ function HUDController:Dialogue()
 		if options then
 			for option, optioninfo in pairs(options) do
 				local optionButton =
-					UIManager:CloneUI("HUD", option, ReplicatedStorage.Assets.UI.DialogueOption, "OptionsFrame")
+					UIManager:CloneUI("HUD", option, player.PlayerGui.UITemplates.DialogueOption, "OptionsFrame")
 				optionButton.TextLabel.Text = optioninfo.Text
 				optionButton.MouseButton1Click:Connect(function()
 					NetworkingService:FireToServer("SelectDialogueOption", option)
@@ -404,8 +407,11 @@ function HUDController:TrackedQuest()
 	trackQuestButton.MouseButton1Click:Connect(function()
 		NetworkingService:FireToServer("TrackQuest", trackedQuest:GetAttribute("ID"))
 	end)
-	UIHelper:ClickEffects(trackQuestButton)
-	UIHelper:HoverEffects(trackQuestButton)
+
+	ClickHelper:SizeEffect(trackQuestButton)
+	ClickHelper:SoundEffect(trackQuestButton)
+	HoverHelper:SizeEffect(trackQuestButton)
+	HoverHelper:SoundEffect(trackQuestButton)
 
 	local function UpdateTracked()
 		for _, objective in trackedQuestFrame.TrackedQuestProgress:GetChildren() do
@@ -429,7 +435,7 @@ function HUDController:TrackedQuest()
 							objectiveFrame = UIManager:CloneUI(
 								"HUD",
 								objectiveNumber,
-								ReplicatedStorage.Assets.UI.Quest.QuestProgress.ObjectiveTemplate,
+								player.PlayerGui.UITemplates.Quest.QuestProgress.ObjectiveTemplate,
 								"TrackedQuestProgress"
 							)
 							objectiveFrame.Visible = true
@@ -740,9 +746,8 @@ function HUDController:AdminPanel()
 	local textBox = adminFrame:FindFirstChild("TextBox")
 	local button = adminFrame:FindFirstChild("Button")
 
-	UIHelper:ClickEffects(button)
-	UIHelper:HoverEffects(button)
-	UIHelper:RotateGradient(textBox:FindFirstChild("UIStroke"):FindFirstChild("UIGradient"))
+	ClickHelper:ClickEffects(button)
+	HoverHelper:HoverEffects(button)
 
 	textBox.FocusLost:Connect(function(enterPressed)
 		if enterPressed then

@@ -2,9 +2,10 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local ReturnButton = require(ReplicatedStorage.Modules.Client.UI.Components.ReturnButton)
+local ClickHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.ClickHelper)
+local HoverHelper = require(ReplicatedStorage.Modules.Client.UI.Helpers.HoverHelper)
 local TechniqueData = require(ReplicatedStorage.Modules.Data.TechniqueData)
 local NetworkingService = require(game.ReplicatedStorage.Modules.Core.NetworkingService)
-local UIHelper = require(game.ReplicatedStorage.Modules.Client.UI.Helpers.UIHelper)
 local UIManager = require(game.ReplicatedStorage.Modules.Client.UI.UIManager)
 
 local TechniqueMenuController = {}
@@ -53,14 +54,15 @@ function TechniqueMenuController:Techniques()
 			techniqueSlot = UIManager:CloneUI(
 				"TechniquesMenu",
 				techniqueID,
-				ReplicatedStorage.Assets.UI.TechniqueSlot,
+				player.PlayerGui.UITemplates.TechniqueSlot,
 				"TechniquesScrollingFrame"
 			)
-			UIHelper:ClickEffects(techniqueSlot)
-			UIHelper:HoverEffects(techniqueSlot)
+			ClickHelper:SizeEffect(techniqueSlot)
+			ClickHelper:SoundEffect(techniqueSlot)
+			HoverHelper:SizeEffect(techniqueSlot)
+			HoverHelper:SoundEffect(techniqueSlot)
 
 			local border = techniqueSlot:FindFirstChild("Border")
-			UIHelper:RotateGradient(border:FindFirstChild("UIGradient"))
 
 			local info = TweenInfo.new(0.125, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
@@ -153,9 +155,14 @@ function TechniqueMenuController:Equip()
 	local unequipButton = box:FindFirstChild("UnEquipButton")
 	local info = TweenInfo.new(0.0625, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out)
 
-	UIHelper:HoverEffects(box)
-	UIHelper:ClickEffects(equipButton)
-	UIHelper:ClickEffects(unequipButton)
+	HoverHelper:SizeEffect(box)
+	HoverHelper:SoundEffect(box)
+
+	ClickHelper:SizeEffect(equipButton)
+	ClickHelper:SoundEffect(equipButton)
+
+	ClickHelper:SizeEffect(unequipButton)
+	ClickHelper:SoundEffect(unequipButton)
 
 	box.MouseEnter:Connect(function()
 		TweenService:Create(box, info, { ImageColor3 = Color3.fromRGB(55, 67, 122) }):Play()
@@ -236,7 +243,7 @@ function TechniqueMenuController:EquippedTechniques()
 	local function UpdateTechniques()
 		for _, techSlot in equippedTechsFrame:GetChildren() do
 			if techSlot:IsA("TextButton") then
-				techSlot.TechniqueName.Text = ""			
+				techSlot.TechniqueName.Text = ""
 			end
 		end
 
