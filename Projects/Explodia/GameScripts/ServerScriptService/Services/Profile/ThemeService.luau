@@ -1,8 +1,46 @@
+local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
 local ThemeData = require(ReplicatedStorage.Modules.Data.ThemeData)
 local DataService = require(ServerScriptService.Services.Core.DataService)
 local ThemeService = {}
+
+
+--? require(game.ServerScriptService.Services.Profile.ThemeService):ChangeMainThemeWhileInStudio()
+function ThemeService:ChangeMainThemeWhileInStudio()
+	for _, ui in CollectionService:GetTagged("Stroke") do
+		if ui:IsA("UIStroke") then
+			ui.Color = ThemeData.Default.Stroke
+		end
+		if ui:IsA("ImageLabel") then
+			ui.ImageColor3 = ThemeData.Default.Stroke
+		end
+	end
+
+	for _, ui in CollectionService:GetTagged("Surface_Panel") do
+		ui.BackgroundColor3 = ThemeData.Default.Surface.Panel
+	end
+
+	for _, ui in CollectionService:GetTagged("Surface_SubPanel") do
+		ui.BackgroundColor3 = ThemeData.Default.Surface.SubPanel
+	end
+
+	for _, ui in CollectionService:GetTagged("Surface_Background") do
+		ui.BackgroundColor3 = ThemeData.Default.Surface.Background
+	end
+
+	for _, ui in CollectionService:GetTagged("Text_Background") do
+		ui.BackgroundColor3 = ThemeData.Default.Text.Background
+	end
+
+	for _, ui in CollectionService:GetTagged("Text_Primary") do
+		ui.BackgroundColor3 = ThemeData.Default.Text.Primary
+	end
+
+	for _, ui in CollectionService:GetTagged("Button_Background") do
+		ui.BackgroundColor3 = ThemeData.Default.Button.Background
+	end
+end
 
 function ThemeService:UpdateTheme(player)
 	local Theme = DataService:GetTable(player, "Settings").Theme

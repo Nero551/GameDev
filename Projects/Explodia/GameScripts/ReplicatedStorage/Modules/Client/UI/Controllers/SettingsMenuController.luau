@@ -51,6 +51,11 @@ function SettingsMenuController:Options()
 	end
 end
 
+function SettingsMenuController:Theme()
+	local Theme = player:WaitForChild("Settings"):WaitForChild("Theme")
+	
+end
+
 function SettingsMenuController:Keybinds()
 	local listeningForSlot = nil
 	local KeybindOrder = {}
