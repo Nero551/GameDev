@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cw0u17iukfb8m"
+path="res://.godot/imported/Frieren Staff.obj-fe67529dda933d4772e066329170acba.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Frieren Staff.obj-fe67529dda933d4772e066329170acba.mesh"]
+
+source_file="res://Files/Shared/Assets/Models/Frieren Staff.obj"
+dest_files=["res://.godot/imported/Frieren Staff.obj-fe67529dda933d4772e066329170acba.mesh", "res://.godot/imported/Frieren Staff.obj-fe67529dda933d4772e066329170acba.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
