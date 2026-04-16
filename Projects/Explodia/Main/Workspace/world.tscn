@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://cgkpvnul3qovt"]
+
+[ext_resource type="Script" uid="uid://ct235mmigigf5" path="res://Main/Client/NewScript.cs" id="1_57xit"]
+[ext_resource type="PackedScene" uid="uid://2o6updau0h1s" path="res://Main/Workspace/player.tscn" id="2_4ls0c"]
+[ext_resource type="PackedScene" uid="uid://y163uilivcp" path="res://Main/Workspace/UI.tscn" id="4_vh06i"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qgh60"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtvj6"]
+albedo_color = Color(0.3882353, 0.27058825, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_57xit"]
+
+[sub_resource type="GDScript" id="GDScript_vjjlj"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[node name="World" type="Node3D" unique_id=592963299]
+script = ExtResource("1_57xit")
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=833942431]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1885777111]
+transform = Transform3D(3.7530937, 0, 0, 0, 1, 0, 0, 0, 3.9170816, 0, 0.01272583, 0)
+shape = SubResource("BoxShape3D_qgh60")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=675559389]
+transform = Transform3D(3.7530937, 0, 0, 0, 0.06564444, 0, 0, 0, 3.9170816, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_xtvj6")
+mesh = SubResource("BoxMesh_57xit")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1490077868]
+transform = Transform3D(1, 0, 0, 0, 0.025356868, 0.9996785, 0, -0.9996785, 0.025356868, 0, 4.0677843, 0)
+
+[node name="Player" parent="." unique_id=874543187 instance=ExtResource("2_4ls0c")]
+
+[node name="EOSLogin" type="Control" parent="." unique_id=65772481]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = SubResource("GDScript_vjjlj")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1750302501]
+
+[node name="Control" parent="UI" unique_id=1181390150 instance=ExtResource("4_vh06i")]
