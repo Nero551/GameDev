@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explodia", "Explodia.csproj", "{F55BAB52-89D0-468A-9908-0B837F504F7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explodia", "Explodia.csproj", "{C3C9F946-8249-4E90-AD07-11CD086723F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,11 +9,11 @@ Global
 	ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F55BAB52-89D0-468A-9908-0B837F504F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F55BAB52-89D0-468A-9908-0B837F504F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F55BAB52-89D0-468A-9908-0B837F504F7A}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
-		{F55BAB52-89D0-468A-9908-0B837F504F7A}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
-		{F55BAB52-89D0-468A-9908-0B837F504F7A}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
-		{F55BAB52-89D0-468A-9908-0B837F504F7A}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{C3C9F946-8249-4E90-AD07-11CD086723F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3C9F946-8249-4E90-AD07-11CD086723F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3C9F946-8249-4E90-AD07-11CD086723F2}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{C3C9F946-8249-4E90-AD07-11CD086723F2}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{C3C9F946-8249-4E90-AD07-11CD086723F2}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{C3C9F946-8249-4E90-AD07-11CD086723F2}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
 	EndGlobalSection
 EndGlobal

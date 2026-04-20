@@ -1,55 +1,48 @@
 [gd_scene format=3 uid="uid://cgkpvnul3qovt"]
 
-[ext_resource type="Script" uid="uid://ct235mmigigf5" path="res://Main/Client/NewScript.cs" id="1_57xit"]
 [ext_resource type="PackedScene" uid="uid://2o6updau0h1s" path="res://Main/Workspace/player.tscn" id="2_4ls0c"]
-[ext_resource type="PackedScene" uid="uid://y163uilivcp" path="res://Main/Workspace/UI.tscn" id="4_vh06i"]
+[ext_resource type="Script" uid="uid://dxb0v6tx4k3w6" path="res://Main/Server/eos_login.gd" id="2_vjjlj"]
+[ext_resource type="PackedScene" uid="uid://y163uilivcp" path="res://Main/UI/UI.tscn" id="4_vh06i"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_qgh60"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_bd1ac"]
+size = Vector3(50, 1, 50)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtvj6"]
-albedo_color = Color(0.3882353, 0.27058825, 1, 1)
+[sub_resource type="Gradient" id="Gradient_cvbt6"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_57xit"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1dhow"]
+gradient = SubResource("Gradient_cvbt6")
 
-[sub_resource type="GDScript" id="GDScript_vjjlj"]
-script/source = "extends Control
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bvebm"]
+albedo_color = Color(0.00363457, 0.0034945225, 0.0033769715, 1)
+albedo_texture = SubResource("GradientTexture2D_1dhow")
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
+[sub_resource type="BoxMesh" id="BoxMesh_cvbt6"]
 
 [node name="World" type="Node3D" unique_id=592963299]
-script = ExtResource("1_57xit")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=833942431]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1885777111]
-transform = Transform3D(3.7530937, 0, 0, 0, 1, 0, 0, 0, 3.9170816, 0, 0.01272583, 0)
-shape = SubResource("BoxShape3D_qgh60")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.076171875, 0.01272583, -0.21833801)
+shape = SubResource("BoxShape3D_bd1ac")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=675559389]
-transform = Transform3D(3.7530937, 0, 0, 0, 0.06564444, 0, 0, 0, 3.9170816, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_xtvj6")
-mesh = SubResource("BoxMesh_57xit")
+transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_bvebm")
+mesh = SubResource("BoxMesh_cvbt6")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1490077868]
 transform = Transform3D(1, 0, 0, 0, 0.025356868, 0.9996785, 0, -0.9996785, 0.025356868, 0, 4.0677843, 0)
 
 [node name="Player" parent="." unique_id=874543187 instance=ExtResource("2_4ls0c")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.56718385, 2.8727722, 0)
 
 [node name="EOSLogin" type="Control" parent="." unique_id=65772481]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = SubResource("GDScript_vjjlj")
+script = ExtResource("2_vjjlj")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1750302501]
 
