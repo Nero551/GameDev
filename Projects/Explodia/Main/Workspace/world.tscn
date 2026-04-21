@@ -1,21 +1,20 @@
 [gd_scene format=3 uid="uid://cgkpvnul3qovt"]
 
+[ext_resource type="Texture2D" uid="uid://dtsm7jpnqwq67" path="res://icon.svg" id="1_vjjlj"]
 [ext_resource type="PackedScene" uid="uid://2o6updau0h1s" path="res://Main/Workspace/player.tscn" id="2_4ls0c"]
 [ext_resource type="PackedScene" uid="uid://y163uilivcp" path="res://Main/UI/UI.tscn" id="4_vh06i"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bd1ac"]
 size = Vector3(50, 1, 50)
 
-[sub_resource type="Gradient" id="Gradient_cvbt6"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bd1ac"]
+albedo_texture = ExtResource("1_vjjlj")
+uv1_scale = Vector3(24.225, 24.225, 24.225)
+uv1_triplanar = true
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_1dhow"]
-gradient = SubResource("Gradient_cvbt6")
+[sub_resource type="PlaneMesh" id="PlaneMesh_i75i1"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bvebm"]
-albedo_color = Color(0.00363457, 0.0034945225, 0.0033769715, 1)
-albedo_texture = SubResource("GradientTexture2D_1dhow")
-
-[sub_resource type="BoxMesh" id="BoxMesh_cvbt6"]
+[sub_resource type="Environment" id="Environment_vjjlj"]
 
 [node name="World" type="Node3D" unique_id=592963299]
 
@@ -27,14 +26,13 @@ shape = SubResource("BoxShape3D_bd1ac")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=675559389]
 transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_bvebm")
-mesh = SubResource("BoxMesh_cvbt6")
+material_override = SubResource("StandardMaterial3D_bd1ac")
+mesh = SubResource("PlaneMesh_i75i1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1490077868]
-transform = Transform3D(1, 0, 0, 0, 0.025356868, 0.9996785, 0, -0.9996785, 0.025356868, 0, 4.0677843, 0)
+transform = Transform3D(1, 0, 0, 0, 0.025356868, 0.9996785, 0, -0.9996785, 0.025356868, 0, 10.5777, 0)
 
 [node name="Player" parent="." unique_id=874543187 instance=ExtResource("2_4ls0c")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.56718385, 2.8727722, 0)
 
 [node name="EOSLogin" type="Control" parent="." unique_id=65772481]
 layout_mode = 3
@@ -45,3 +43,6 @@ offset_bottom = 40.0
 [node name="UI" type="CanvasLayer" parent="." unique_id=1750302501]
 
 [node name="Control" parent="UI" unique_id=1181390150 instance=ExtResource("4_vh06i")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1811333581]
+environment = SubResource("Environment_vjjlj")

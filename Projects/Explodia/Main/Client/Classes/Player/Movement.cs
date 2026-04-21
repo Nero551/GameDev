@@ -26,10 +26,9 @@ public partial class Player
 		}
 
 		Vector2 inputDir = Input.GetVector("Left", "Right", "Forward", "Back");
-		Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+		Vector3 direction = (GetNode<SpringArm3D>("SpringArm3D").Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
 		var camera = GetNode<Camera3D>("SpringArm3D/Camera3D");
-		direction = direction.Rotated(Vector3.Up, camera.GlobalRotation.Y);
 
 		if (direction != Vector3.Zero)
 		{
@@ -37,8 +36,8 @@ public partial class Player
 			velocity.Z = direction.Z * Speed;
 
 			PlayAnim("Run");
-			// Vector3 target = GlobalPosition + direction;
-			// LookAt(target, Vector3.Up);
+			GD.Print(direction);
+			//GetNode<Node3D>("__Animation Dummy_Armature").LookAt(direction);
 		}
 		else
 		{
@@ -47,7 +46,6 @@ public partial class Player
 
 			PlayAnim("Idle");
 		}
-
 		Velocity = velocity;
 		MoveAndSlide();
 	}
