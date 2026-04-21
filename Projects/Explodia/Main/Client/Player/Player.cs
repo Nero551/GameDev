@@ -18,6 +18,7 @@ public partial class Player : Character
     }
     public override void _Process(double delta)
     {
+        UpdateStates(delta);
         Test(delta);
     }
     public override void _PhysicsProcess(double delta)
