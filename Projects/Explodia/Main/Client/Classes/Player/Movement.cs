@@ -5,7 +5,6 @@ public partial class Player
 {
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
-
 	public void MovementPhysics(double delta)
 	{
 		Vector3 velocity = Velocity;
@@ -25,10 +24,15 @@ public partial class Player
 			velocity.Y = JumpVelocity;
 		}
 
-		Vector2 inputDir = Input.GetVector("Left", "Right", "Forward", "Back");
-		Vector3 direction = (GetNode<SpringArm3D>("SpringArm3D").Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+		Vector2 inputDir = Input.GetVector("Left", "Right", "Back", "Forward");
+		var forward = -springArm.GlobalTransform.Basis.Z;
+		var right = springArm.GlobalTransform.Basis.X;
+		forward.Y = 0;
+		right.Y = 0;
+		forward = forward.Normalized();
+		right = right.Normalized();
 
-		var camera = GetNode<Camera3D>("SpringArm3D/Camera3D");
+		Vector3 direction = (right * inputDir.X + forward * inputDir.Y).Normalized();
 
 		if (direction != Vector3.Zero)
 		{
@@ -36,8 +40,7 @@ public partial class Player
 			velocity.Z = direction.Z * Speed;
 
 			PlayAnim("Run");
-			GD.Print(direction);
-			//GetNode<Node3D>("__Animation Dummy_Armature").LookAt(direction);
+			GetNode<Node3D>("__Animation Dummy_Armature").LookAt(GlobalPosition + direction);
 		}
 		else
 		{

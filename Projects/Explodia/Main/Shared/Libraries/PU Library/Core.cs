@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public static partial class NLib
+public static partial class PULib
 {
 	public static void CallInitMethods(object obj)
 	{

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://vy610mg6xsjr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yj7wh"]
+albedo_color = Color(0.13999999, 0.13999999, 1, 1)
+emission_enabled = true
+emission = Color(0, 0.13016655, 0.71, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_g2bwn"]
+
+[node name="Point" type="Node3D" unique_id=1332003232]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=679221862]
+material_override = SubResource("StandardMaterial3D_yj7wh")
+mesh = SubResource("SphereMesh_g2bwn")

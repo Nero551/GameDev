@@ -44,7 +44,7 @@ public partial class Player
 			springArm.RotateX(-(mouseMotion.Relative.Y * MouseSensitivity));
 
 			springArm.Rotation = new Vector3(
-				Mathf.Clamp(springArm.Rotation.X, -Mathf.Pi / 2, Mathf.Pi / 4),
+				Mathf.Clamp(springArm.Rotation.X, Mathf.DegToRad(-75), Mathf.DegToRad(45)),
 				Mathf.Wrap(springArm.Rotation.Y, -Mathf.Tau, Mathf.Tau),
 				Rotation.Z);
 		}

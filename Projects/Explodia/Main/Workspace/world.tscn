@@ -4,9 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://2o6updau0h1s" path="res://Main/Workspace/player.tscn" id="2_4ls0c"]
 [ext_resource type="PackedScene" uid="uid://y163uilivcp" path="res://Main/UI/UI.tscn" id="4_vh06i"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_bd1ac"]
-size = Vector3(50, 1, 50)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bd1ac"]
 albedo_texture = ExtResource("1_vjjlj")
 uv1_scale = Vector3(24.225, 24.225, 24.225)
@@ -14,25 +11,28 @@ uv1_triplanar = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_i75i1"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_vjjlj"]
+size = Vector3(100, 1, 100)
+
 [sub_resource type="Environment" id="Environment_vjjlj"]
 
 [node name="World" type="Node3D" unique_id=592963299]
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=833942431]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1885777111]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.076171875, 0.01272583, -0.21833801)
-shape = SubResource("BoxShape3D_bd1ac")
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=675559389]
 transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_bd1ac")
 mesh = SubResource("PlaneMesh_i75i1")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=503268306]
+shape = SubResource("BoxShape3D_vjjlj")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1490077868]
 transform = Transform3D(1, 0, 0, 0, 0.025356868, 0.9996785, 0, -0.9996785, 0.025356868, 0, 10.5777, 0)
 
 [node name="Player" parent="." unique_id=874543187 instance=ExtResource("2_4ls0c")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.8933635, 0)
 
 [node name="EOSLogin" type="Control" parent="." unique_id=65772481]
 layout_mode = 3
