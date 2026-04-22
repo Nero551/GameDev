@@ -8,11 +8,18 @@ public partial class Character
 	{
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
-	public void PlayAnim(string animName)
+	public void PlayAnim(string animName,float blendTime = 0.2f)
 	{
 		if (animationPlayer.CurrentAnimation != animName && animationPlayer.GetAnimation(animName) != null)
 		{
-			animationPlayer.Play(animName,0.2);
+			animationPlayer.Play(animName,blendTime);
 		}
 	}
+
+	public Animation GetAnim(string animName)
+	{
+		return animationPlayer.GetAnimation(animName);
+	}
+	
+	
 }

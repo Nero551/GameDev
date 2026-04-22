@@ -1,9 +1,16 @@
 using Godot;
+using Godot.NativeInterop;
 using System.Collections.Generic;
 
 public partial class Character
 {
 	private Dictionary<string, double> ActiveStates = new();
+
+	private Godot.Collections.Dictionary stateData;
+	public void InitStates()
+	{
+		stateData = PULib.JSONToCSharp("Main/Shared/Data/StateData");
+	}
 	public void AddState(string stateName, double duration = -1)
 	{
 		if (duration > 0)
@@ -17,32 +24,53 @@ public partial class Character
 		}
 	}
 
-	public void RemoveState(string stateName)
+	public void RemoveState(params string[] stateNames)
 	{
-		ActiveStates.Remove(stateName);
+		foreach (var name in stateNames)
+		{
+			ActiveStates.Remove(name);
+		}
 
 	}
 
-	public bool CheckState(string stateName)
+	public bool CheckState(params string[] stateNames)
 	{
-		if (ActiveStates.ContainsKey(stateName))
+		foreach (var name in stateNames)
 		{
-			return true;
+			if (ActiveStates.ContainsKey(name))
+			{
+				return true;
+			}
 		}
 		return false;
 	}
 
-	public void UpdateStates(double delta)
+	public void UpdateStatesDuration(double delta)
 	{
-		foreach (var pair in ActiveStates)
+		foreach (var key in ActiveStates.Keys)
 		{
-			if (pair.Value != double.MaxValue)
+			if (ActiveStates[key] != double.MaxValue)
 			{
-				ActiveStates[pair.Key] -= delta;
-			}
-			GD.Print(pair.Key);
-		}
+				ActiveStates[key] -= delta;
 
+				if (ActiveStates[key] <= 0)
+					ActiveStates.Remove(key);
+			}
+			GD.Print(key);
+		}
 	}
 
+	public void HandleStates(double delta)
+	{
+		foreach (var key in ActiveStates.Keys)
+		{
+			if (stateData.ContainsKey(key))
+			{
+				var data = (Godot.Collections.Dictionary)stateData[key];
+				JumpPower = (float)data["JumpPower"];
+				Speed = (float)data["Speed"];
+				return;
+			}
+		}
+	}
 }

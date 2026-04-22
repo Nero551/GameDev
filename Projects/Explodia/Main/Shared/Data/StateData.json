@@ -1,0 +1,12 @@
+{
+  "Stunned": { "JumpPower": 0, "Speed": 0 },
+  "BlockBroken": { "JumpPower": 0, "Speed": 0 },
+
+  "Blocking": { "JumpPower": 0, "Speed": 1 },
+  "Attacking": { "JumpPower": 0, "Speed": 1 },
+
+  "Sprinting": { "JumpPower": 4.5, "Speed": 10 },
+  "Walking": { "JumpPower": 4.5, "Speed": 5 },
+
+  "Idle": { "JumpPower": 4.5, "Speed": 0 }
+}

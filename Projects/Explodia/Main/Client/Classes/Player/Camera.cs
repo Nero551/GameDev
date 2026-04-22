@@ -12,7 +12,7 @@ public partial class Player
 	float horizontalRotation;
 	float verticalRotation;
 
-	public void Test(InputEvent @event)
+	public void Test()
 	{
 		if (Input.IsActionJustPressed("ExitGame"))
 		{

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://byyqestiltc28"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_njmj5"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yk28f"]
+size = Vector3(1, 1.5, 1)
+
+[node name="Hitbox" type="Node3D" unique_id=1933658404]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1698175402]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.766667, 0)
+material_override = SubResource("StandardMaterial3D_njmj5")
+mesh = SubResource("BoxMesh_yk28f")
