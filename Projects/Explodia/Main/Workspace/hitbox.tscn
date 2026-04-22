@@ -1,16 +1,18 @@
 [gd_scene format=3 uid="uid://byyqestiltc28"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_njmj5"]
-transparency = 1
-blend_mode = 1
-albedo_color = Color(1, 0, 0, 1)
+[ext_resource type="Script" uid="uid://d2ih23nw3b0m7" path="res://Main/Client/Classes/Hitbox/Hitbox.cs" id="1_yk28f"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_yk28f"]
-size = Vector3(1, 1.5, 1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_yk28f"]
+size = Vector3(1, 2.1522217, 1)
 
-[node name="Hitbox" type="Node3D" unique_id=1933658404]
+[node name="Hitbox" type="Area3D" unique_id=1232552731]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_yk28f")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1698175402]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.766667, 0)
-material_override = SubResource("StandardMaterial3D_njmj5")
-mesh = SubResource("BoxMesh_yk28f")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1472692233]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.57611084, 0)
+shape = SubResource("BoxShape3D_yk28f")
+debug_color = Color(0.9704773, 0.17597026, 0.13977158, 1)
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

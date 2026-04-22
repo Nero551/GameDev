@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 public partial class Player : Character
 {
-
-    //TODO Make Combat System.
     public override void _Ready()
     {
         PULib.CallInitMethods(this);
