@@ -3,13 +3,14 @@ using System;
 
 public partial class Player
 {
-	// Called when the node enters the scene tree for the first time.
 	private SpringArm3D springArm;
 	
 	int MaxSpringLength = 6;
 	int MinSpringLength = 1;
 	
 	[Export] public float MouseSensitivity = 0.002f;
+	float horizontalRotation;
+	float verticalRotation;
 
 	public void Test(InputEvent @event)
 	{
@@ -38,15 +39,15 @@ public partial class Player
 	}
 	public void RotateCamera(InputEvent @event)
 	{
-		if (@event is InputEventMouseMotion mouseMotion && Input.MouseMode is Input.MouseModeEnum.Captured)
+		if (@event is InputEventMouseMotion mouseMotion &&
+			Input.MouseMode == Input.MouseModeEnum.Captured)
 		{
-			springArm.RotateY(-(mouseMotion.Relative.X * MouseSensitivity));
-			springArm.RotateX(-(mouseMotion.Relative.Y * MouseSensitivity));
+			horizontalRotation -= mouseMotion.Relative.X * MouseSensitivity;
+			verticalRotation -= mouseMotion.Relative.Y * MouseSensitivity;
 
-			springArm.Rotation = new Vector3(
-				Mathf.Clamp(springArm.Rotation.X, Mathf.DegToRad(-75), Mathf.DegToRad(45)),
-				Mathf.Wrap(springArm.Rotation.Y, -Mathf.Tau, Mathf.Tau),
-				Rotation.Z);
+			verticalRotation = Mathf.Clamp(verticalRotation, Mathf.DegToRad(-75), Mathf.DegToRad(45));
+
+			springArm.Rotation = new Vector3(verticalRotation, horizontalRotation, 0);
 		}
 	}
 

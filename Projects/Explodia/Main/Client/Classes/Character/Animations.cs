@@ -4,7 +4,6 @@ using System;
 public partial class Character
 {
 	private AnimationPlayer animationPlayer;
-	//TODO Make good collisions per body part
 	public void InitAnim()
 	{
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -13,7 +12,7 @@ public partial class Character
 	{
 		if (animationPlayer.CurrentAnimation != animName && animationPlayer.GetAnimation(animName) != null)
 		{
-			animationPlayer.Play(animName);
+			animationPlayer.Play(animName,0.2);
 		}
 	}
 }

@@ -3,7 +3,8 @@ using System;
 
 public partial class Player
 {
-	public const float Speed = 5.0f;
+	public const float WalkSpeed = 5.0f;
+	public const float RunSpeed = 10f;
 	public const float JumpVelocity = 4.5f;
 	public void MovementPhysics(double delta)
 	{
@@ -36,16 +37,23 @@ public partial class Player
 
 		if (direction != Vector3.Zero)
 		{
-			velocity.X = direction.X * Speed;
-			velocity.Z = direction.Z * Speed;
+			velocity.X = direction.X * WalkSpeed;
+			velocity.Z = direction.Z * WalkSpeed;
 
 			PlayAnim("Run");
-			GetNode<Node3D>("__Animation Dummy_Armature").LookAt(GlobalPosition + direction);
+			var arm = GetNode<Node3D>("__Animation Dummy_Armature");
+
+			//? I dont understand this part at all but it works
+			//? Smooths character rotation 
+			Vector3 targetDir = (GlobalPosition + direction - arm.GlobalPosition).Normalized();
+			Basis target = Basis.LookingAt(targetDir, Vector3.Up);
+
+			arm.Basis = arm.Basis.Slerp(target, 8f * (float)delta);
 		}
 		else
 		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
+			velocity.X = Mathf.MoveToward(Velocity.X, 0, WalkSpeed);
+			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, WalkSpeed);
 
 			PlayAnim("Idle");
 		}
