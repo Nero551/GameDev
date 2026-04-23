@@ -1,8 +1,9 @@
 {
-    "Fist": {
-        "Name": "Fist",
-        "Damage":7.5,
-        "Swings":5,
-        "ComboCooldown": 2
-    }
+	"Fist": {
+		"Name": "Fist",
+		"Type": "Melee",
+		"Damage":7.5,
+		"Swings":5,
+		"ComboCooldown": 2
+	}
 }

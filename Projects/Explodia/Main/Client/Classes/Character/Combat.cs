@@ -7,33 +7,40 @@ public partial class Character
 	{
 		if (Input.IsActionPressed("Basic Attack") && CanAttack())
 		{
-			if (ActiveHand == null || ActiveHand is not Item)
+			if (ActiveHand == null || ActiveHand is not Item || ActiveHand.animationLibrary == null)
 			{
 				return;
 			}
 
-			//TODO Learn Animation Tree
+			string itemName = (string)ActiveHand.itemData["Name"];
+			Animation swingAnim = GetAnimFromLibrary(itemName, "L1");
 			//TODO ADD animations and marker event and link everything down to the marker event
-			AddState("Attacking", 0.2);			
-			string hitboxName = ActiveHand.itemData["Name"] + "Basic Attack Hitbox";
-			if (World.Hitboxes.GetNodeOrNull<Hitbox>(hitboxName) == null)
+			AddState("Attacking", swingAnim.Length);
+		}
+	}
+
+	public void DoBasicHit()
+	{
+		string itemName = (string)ActiveHand.itemData["Name"];
+		Animation swingAnim = GetAnimFromLibrary(itemName, "L1");
+		string hitboxName = itemName + "Basic Attack Hitbox";
+		if (World.Hitboxes.GetNodeOrNull<Hitbox>(hitboxName) == null)
+		{
+			var scene = GD.Load<PackedScene>("res://Main/Workspace/hitbox.tscn");
+			Hitbox hitbox = scene.Instantiate<Hitbox>();
+
+			hitbox.Name = hitboxName;
+			hitbox.Position = GlobalPosition;
+
+			hitbox.Init(new Vector3(2, 3f, 2), this);
+
+			World.Hitboxes.AddChild(hitbox);
+
+			GetTree().CreateTimer(swingAnim.Length).Timeout += () =>
 			{
-				var scene = GD.Load<PackedScene>("res://Main/Workspace/hitbox.tscn");
-				Hitbox hitbox = scene.Instantiate<Hitbox>();
-
-				hitbox.Name = hitboxName;
-				hitbox.Position = GlobalPosition;
-
-				hitbox.Init(new Vector3(2, 3f, 2), this);
-
-				World.Hitboxes.AddChild(hitbox);
-
-				GetTree().CreateTimer(0.2).Timeout += () =>
-				{
-					if (GodotObject.IsInstanceValid(hitbox))
-						hitbox.QueueFree();
-				};
-			}
+				if (GodotObject.IsInstanceValid(hitbox))
+					hitbox.QueueFree();
+			};
 		}
 	}
 

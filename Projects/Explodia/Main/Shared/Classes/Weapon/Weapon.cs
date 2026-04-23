@@ -3,10 +3,12 @@ using System;
 
 public partial class Weapon : Item
 {
-	public override void _Ready()
+	public override void InitClass()
 	{
 		itemData = PULib.JSONToCSharp("Main/Shared/Data/ItemData/WeaponData");
-		GD.Print(itemData);
 		itemData = (Godot.Collections.Dictionary)itemData[this.Name];
+		animationLibrary =
+		 Master.LoadAnimLibrary("Main/Shared/Assets/Items/Weapons/" + itemData["Type"] + "/" + itemData["Name"] + "/Animations");
+		Master.AddAnimLibrary((string)itemData["Name"], animationLibrary);
 	}
 }

@@ -37,7 +37,6 @@ public partial class Player
 			velocity.X = direction.X * Speed;
 			velocity.Z = direction.Z * Speed;
 
-			PlayAnim("Run");
 			AddState("Walking");
 			RemoveState("Idle");
 			var arm = GetNode<Node3D>("__Animation Dummy_Armature");
@@ -56,7 +55,6 @@ public partial class Player
 
 			AddState("Idle");
 			RemoveState("Walking", "Sprinting");
-			PlayAnim("Idle");
 		}
 
 		Velocity = velocity;

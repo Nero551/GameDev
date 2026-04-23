@@ -7,9 +7,9 @@ public partial class Character : CharacterBody3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GetNode<Weapon>("Fist").Init(this);
 		InitAnim();
 		InitStates();
+		GetNode<Weapon>("Fist").Init(this);
 	}
 	[Export] public float Speed;
 	[Export] public float JumpPower;
@@ -28,5 +28,6 @@ public partial class Character : CharacterBody3D
 	{
 		UpdateStatesDuration(delta);
 		HandleStates(delta);
+		MainAnimations();
 	}
 }
