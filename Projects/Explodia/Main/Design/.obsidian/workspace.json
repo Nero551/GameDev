@@ -181,8 +181,9 @@
       "bases:Create new base": false
     }
   },
-  "active": "9d6d087c634654e5",
+  "active": "bc30027129e50b08",
   "lastOpenFiles": [
+    "Chaos NoteBook/Notes 3.md",
     "Chaos NoteBook/Chemistry system.md",
     "AI Modified/SpellSystem.md",
     "AI Modified/DifficultySystem.md",
@@ -211,7 +212,6 @@
     "AI Modified/additional_systems.md",
     "AI Modified/status_resistance.md",
     "AI Modified/loot_system.md",
-    "AI Modified/difficulty_system.md",
     "AI Modified",
     "Original",
     "My Notes.base",

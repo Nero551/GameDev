@@ -41,6 +41,3 @@ art will be independent , not relying on weapon damage but has its own dmg and c
 
 chests that spawn around the map ( maybe in ruins) and respawn too
 
-
-
-

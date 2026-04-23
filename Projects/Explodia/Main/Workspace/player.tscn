@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://2o6updau0h1s"]
 
-[ext_resource type="Script" uid="uid://coh61ykiclpva" path="res://Main/Client/Classes/Player/Player.cs" id="1_768xg"]
+[ext_resource type="Script" uid="uid://djfsgbd2a0psh" path="res://Main/Client/Classes/SSJMode/SSJMode.cs" id="1_ngf1w"]
 [ext_resource type="Texture2D" uid="uid://bcys3pfxqwlf4" path="res://Main/Shared/Assets/Models/Rig_AnimationDummy1_diff.png" id="2_768xg"]
 [ext_resource type="Animation" uid="uid://bi3nd6gtlj6hd" path="res://Main/Shared/Assets/Animations/Default/Idle.anim" id="3_768xg"]
 [ext_resource type="Animation" uid="uid://ccxmbc2s2r2g5" path="res://Main/Shared/Assets/Animations/Default/Run.anim" id="4_kemrr"]
@@ -248,9 +248,9 @@ _data = {
 radius = 1.9082031
 height = 5.6414814
 
-[node name="Player" type="CharacterBody3D" unique_id=874543187]
+[node name="SSJPlayer" type="CharacterBody3D" unique_id=874543187]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
-script = ExtResource("1_768xg")
+script = ExtResource("1_ngf1w")
 
 [node name="__Animation Dummy_Armature" type="Node3D" parent="." unique_id=297453931]
 
@@ -266,47 +266,47 @@ bones/1/name = "Torso_2"
 bones/1/parent = 0
 bones/1/rest = Transform3D(-1, 0, 8.7422784e-08, 8.7422784e-08, 0, 1, 0, 1, 0, 0, 0, 0)
 bones/1/enabled = true
-bones/1/position = Vector3(0, 0, 4.033278e-06)
-bones/1/rotation = Quaternion(-2.2823383e-06, 0.7071007, 0.70711297, 6.9533153e-09)
+bones/1/position = Vector3(-1.0658141e-14, -0.27895236, 0)
+bones/1/rotation = Quaternion(-0.070703104, 0.82728547, 0.55579585, 0.04111845)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "Right Arm_2"
 bones/2/parent = 1
 bones/2/rest = Transform3D(-1, 0, 8.7422784e-08, 8.7422784e-08, 0, 1, 0, 1, 0, -0.99999994, 0, 0.50000006)
 bones/2/enabled = true
-bones/2/position = Vector3(-0.99999994, -0.09014021, 0.47609407)
-bones/2/rotation = Quaternion(-0.0052603087, 0.7087914, 0.705395, 0.0022569564)
+bones/2/position = Vector3(-0.99999994, 8.195639e-08, 0.5000001)
+bones/2/rotation = Quaternion(0.22245535, 0.39702368, 0.8816197, -0.12503007)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/name = "Left Arm_2"
 bones/3/parent = 1
 bones/3/rest = Transform3D(-1, 4.768371e-07, 8.742272e-08, 8.742272e-08, 0, 1, 4.768371e-07, 1, 0, 1, 0, 0.4999999)
 bones/3/enabled = true
-bones/3/position = Vector3(1.0000001, -0.042734724, 0.4458878)
-bones/3/rotation = Quaternion(0.013280593, 0.7351677, 0.67773765, -0.004886839)
+bones/3/position = Vector3(1.0019735, -0.06579028, 0.37395495)
+bones/3/rotation = Quaternion(0.1466911, 0.979596, 0.092967786, 0.10114582)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/name = "Head_2"
 bones/4/parent = 1
 bones/4/rest = Transform3D(1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, 1, 8.742279e-08, 0, 1)
 bones/4/enabled = true
 bones/4/position = Vector3(8.742279e-08, 0, 1)
-bones/4/rotation = Quaternion(8.663533e-06, -1.6089401e-06, 1.6187735e-06, 1)
+bones/4/rotation = Quaternion(-0.10982353, 0.0041419906, 0.08594337, 0.9902199)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "Right Leg_2"
 bones/5/parent = -1
 bones/5/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 0)
 bones/5/enabled = true
-bones/5/position = Vector3(1, 2, -0.096819006)
-bones/5/rotation = Quaternion(-0.0021995874, -0.1450077, 0.011967563, 0.98935574)
+bones/5/position = Vector3(1, 1.9648525, 0.49412298)
+bones/5/rotation = Quaternion(-0.525802, -0.028084986, 0.017903006, 0.84995466)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/name = "Left Leg_2"
 bones/6/parent = -1
 bones/6/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, 0)
 bones/6/enabled = true
-bones/6/position = Vector3(-1.1266205, 2, -0.3270283)
-bones/6/rotation = Quaternion(0.011430281, 0.112060264, -0.013694146, 0.9935413)
+bones/6/position = Vector3(-1, 1.8696843, -0.11248063)
+bones/6/rotation = Quaternion(0.3713375, 0.02336531, -0.007777423, 0.92817134)
 bones/6/scale = Vector3(1, 1, 1)
 
 [node name="Right Leg" type="BoneAttachment3D" parent="__Animation Dummy_Armature/Skeleton3D" unique_id=1931535266]
-transform = Transform3D(0.95765907, -0.023042437, -0.28698105, 0.024318267, 0.9997039, 0.0008815713, 0.28687572, -0.007823125, 0.95793587, 1, 2, -0.096819006)
+transform = Transform3D(0.99778146, -0.0008992031, -0.06656881, 0.05996777, 0.4464234, 0.89281017, 0.028915059, -0.89482135, 0.4454869, 1, 1.9648525, 0.49412298)
 bone_name = "Right Leg_2"
 bone_idx = 5
 
@@ -322,7 +322,7 @@ collision_mask = 2
 shape = SubResource("ConcavePolygonShape3D_768xg")
 
 [node name="Left Leg" type="BoneAttachment3D" parent="__Animation Dummy_Armature/Skeleton3D" unique_id=2020145371]
-transform = Transform3D(0.97450995, 0.029773159, 0.22235994, -0.024649637, 0.99936366, -0.025782052, -0.22298606, 0.019643772, 0.9746237, -1.1266205, 2, -0.3270283)
+transform = Transform3D(0.99878716, 0.031790394, 0.037597924, 0.0029152678, 0.72409594, -0.6896931, -0.049150117, 0.68896616, 0.72312504, -1, 1.8696843, -0.11248063)
 bone_name = "Left Leg_2"
 bone_idx = 6
 
@@ -338,7 +338,7 @@ collision_mask = 2
 shape = SubResource("ConcavePolygonShape3D_ngf1w")
 
 [node name="Right Arm" type="BoneAttachment3D" parent="__Animation Dummy_Armature/Skeleton3D" unique_id=1885868934]
-transform = Transform3D(0.9999346, 0.010637781, 0.004218546, -0.010617321, 0.999932, -0.004843102, -0.004269778, 0.0047978493, 0.99997944, 0.9999987, 3.4760988, -0.090124704)
+transform = Transform3D(0.8600638, -0.29227522, -0.41816905, 0.50054836, 0.3248401, 0.80245256, -0.09869888, -0.8994742, 0.42568117, 0.9813408, 3.2550333, -0.042773798)
 bone_name = "Right Arm_2"
 bone_idx = 2
 
@@ -354,7 +354,7 @@ collision_mask = 2
 shape = SubResource("ConcavePolygonShape3D_kemrr")
 
 [node name="Left Arm" type="BoneAttachment3D" parent="__Animation Dummy_Armature/Skeleton3D" unique_id=268857409]
-transform = Transform3D(0.9995996, -0.026154384, -0.010819188, 0.025189798, 0.9963703, -0.08131311, 0.012906606, 0.08100776, 0.99662995, -1.0000014, 3.4458854, -0.04272622)
+transform = Transform3D(0.8759611, -0.42010888, -0.23706688, 0.022570506, 0.5266074, -0.849809, 0.48185343, 0.7390488, 0.47076955, -0.98181313, 2.9712093, -0.34868848)
 bone_name = "Left Arm_2"
 bone_idx = 3
 
@@ -370,7 +370,7 @@ collision_mask = 2
 shape = SubResource("ConcavePolygonShape3D_sgxj6")
 
 [node name="Torso" type="BoneAttachment3D" parent="__Animation Dummy_Armature/Skeleton3D" unique_id=1087273573]
-transform = Transform3D(-1, -3.2375192e-06, -3.2179082e-06, -3.2178523e-06, -1.7404556e-05, 1, -3.2375751e-06, 1, 1.7285347e-05, 0, 3, 4.033278e-06)
+transform = Transform3D(-0.98662066, -0.16269022, -0.010559596, -0.071276374, 0.3721841, 0.9254181, -0.14662638, 0.9137892, -0.3788004, -1.0658141e-14, 2.7210476, 0)
 bone_name = "Torso_2"
 bone_idx = 1
 
@@ -386,7 +386,7 @@ collision_mask = 2
 shape = SubResource("ConcavePolygonShape3D_387r5")
 
 [node name="Head" type="BoneAttachment3D" parent="__Animation Dummy_Armature/Skeleton3D" unique_id=291324507]
-transform = Transform3D(-1, -5.0338206e-14, 2.2737368e-13, -4.5474735e-13, -7.748531e-08, 1, -5.386386e-13, 1, -4.1713065e-08, -3.3053311e-06, 4, 2.1318625e-05)
+transform = Transform3D(-0.9992687, 0.014752797, -0.035273843, -0.032272242, 0.16928595, 0.9850384, 0.02050342, 0.98545647, -0.16868597, -0.010559683, 3.6464658, -0.3788004)
 bone_name = "Head_2"
 bone_idx = 4
 
