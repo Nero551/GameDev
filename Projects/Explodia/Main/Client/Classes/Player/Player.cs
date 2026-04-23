@@ -8,7 +8,8 @@ public partial class Player : Character
 {
     public override void _Ready()
     {
-        PULib.CallInitMethods(this);
+        base._Ready();
+        InitCamera();
     }
     public override void _Input(InputEvent @event)
     {
@@ -18,11 +19,6 @@ public partial class Player : Character
         BasicAttack();
     }
 
-    public override void _Process(double delta)
-    {
-        UpdateStatesDuration(delta);
-        HandleStates(delta);
-    }
     public override void _PhysicsProcess(double delta)
     {
         MovementPhysics(delta);

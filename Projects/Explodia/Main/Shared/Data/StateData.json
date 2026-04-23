@@ -1,4 +1,5 @@
 {
+  "Dead": {"JumpPower":0, "Speed":0},
   "Stunned": { "JumpPower": 0, "Speed": 0 },
   "BlockBroken": { "JumpPower": 0, "Speed": 0 },
 

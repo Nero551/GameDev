@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bcys3pfxqwlf4" path="res://Main/Shared/Assets/Models/Rig_AnimationDummy1_diff.png" id="2_3yol6"]
 [ext_resource type="Animation" uid="uid://bi3nd6gtlj6hd" path="res://Main/Shared/Assets/Animations/Default/Idle.anim" id="3_8dc0s"]
 [ext_resource type="Animation" uid="uid://ccxmbc2s2r2g5" path="res://Main/Shared/Assets/Animations/Default/Run.anim" id="4_e5aaj"]
+[ext_resource type="PackedScene" uid="uid://b3jccq5kuvl1l" path="res://Main/Shared/Items/Weapons/Melee/Fist/fist.tscn" id="5_3yol6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_68iwh"]
 resource_name = "AnimationDummy1Mtl"
@@ -412,9 +413,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3426466, 0)
 shape = SubResource("CapsuleShape3D_wfpgt")
 debug_color = Color(0, 0.5950001, 0.7, 1)
 
-[node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=584740713]
-transform = Transform3D(5, 0, 0, 0, 4.6984634, 1.7101008, 0, -1.7101008, 4.6984634, 0, 3.5654213, 0)
-spring_length = 2.0
-
-[node name="Camera3D" type="Camera3D" parent="SpringArm3D" unique_id=1893524019]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09428182, 1.9180572)
+[node name="Fist" parent="." unique_id=4045271 instance=ExtResource("5_3yol6")]

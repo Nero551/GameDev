@@ -5,21 +5,26 @@ public partial class Character
 {
 	public void BasicAttack()
 	{
-		//TODO Complete Basic Attack and do block and hitboxes and hitTypes
-		//TODO Hitbox class that deals with collision with enemy , if collision then does hittype and dmg and stuff
 		if (Input.IsActionPressed("Basic Attack") && CanAttack())
 		{
-			AddState("Attacking", 0.2);
+			if (ActiveHand == null || ActiveHand is not Item)
+			{
+				return;
+			}
 
-			if (World.Hitboxes.GetNodeOrNull<Hitbox>("Basic Attack Hitbox") == null)
+			//TODO Learn Animation Tree
+			//TODO ADD animations and marker event and link everything down to the marker event
+			AddState("Attacking", 0.2);			
+			string hitboxName = ActiveHand.itemData["Name"] + "Basic Attack Hitbox";
+			if (World.Hitboxes.GetNodeOrNull<Hitbox>(hitboxName) == null)
 			{
 				var scene = GD.Load<PackedScene>("res://Main/Workspace/hitbox.tscn");
 				Hitbox hitbox = scene.Instantiate<Hitbox>();
 
-				hitbox.Name = "Basic Attack Hitbox";
+				hitbox.Name = hitboxName;
 				hitbox.Position = GlobalPosition;
 
-				hitbox.Init(new Vector3(2, 3f, 2), this, 10);
+				hitbox.Init(new Vector3(2, 3f, 2), this);
 
 				World.Hitboxes.AddChild(hitbox);
 

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b2rdyvkt4scuo"]
+
+[ext_resource type="Script" uid="uid://bbcgluyxqd0pa" path="res://Main/Shared/Classes/Weapon/Weapon.cs" id="1_xls75"]
+
+[node name="Weapon" type="Node3D" unique_id=4045271]
+script = ExtResource("1_xls75")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1977264955]

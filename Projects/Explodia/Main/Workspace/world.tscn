@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://2o6updau0h1s" path="res://Main/Workspace/player.tscn" id="2_4ls0c"]
 [ext_resource type="PackedScene" uid="uid://y163uilivcp" path="res://Main/UI/UI.tscn" id="4_vh06i"]
 [ext_resource type="PackedScene" uid="uid://8plp26spdxm4" path="res://Main/Workspace/character.tscn" id="5_cvbt6"]
+[ext_resource type="Script" uid="uid://dvr5vpxnt2r5i" path="res://Main/Client/Classes/Enemy/Enemy.cs" id="6_1dhow"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bd1ac"]
 albedo_texture = ExtResource("1_vjjlj")
@@ -55,5 +56,6 @@ environment = SubResource("Environment_vjjlj")
 
 [node name="Hitboxes" type="Node3D" parent="." unique_id=2062355638]
 
-[node name="Character" parent="." unique_id=1560243081 instance=ExtResource("5_cvbt6")]
+[node name="Enemy" parent="." unique_id=1560243081 instance=ExtResource("5_cvbt6")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.06296408, 1.5765026)
+script = ExtResource("6_1dhow")

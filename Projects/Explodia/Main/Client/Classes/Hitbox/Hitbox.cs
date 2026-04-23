@@ -10,43 +10,43 @@ public partial class Hitbox : Area3D
 
 	private Godot.Collections.Dictionary Data;
 	public Character Attacker;
-	public float Damage;
 	public void OnBodyEntered(Node3D body)
 	{
-		var character = body.GetOwner<Character>();
+		var targetHit = body.GetOwner<Character>();
 
-		if (character != null && character is Character && character != Attacker)
+		if (targetHit != null && targetHit is Character && targetHit != Attacker)
 		{
-			if (hitTargets.Contains(character))
+			if (hitTargets.Contains(targetHit))
 			{
 				return;
 			}
-			hitTargets.Add(character);
+			hitTargets.Add(targetHit);
 
 			//Actual Hit Logic Here pls
-			if (character.CheckState("Blocking"))
+			//TODO Still Under Development
+			if (targetHit.CheckState("Blocking"))
 			{
 				if (false)
 				{
-					//TODO Block break logic
+					// BlockBreak(Attacker,Data,targetHit);
 				}
 				else
 				{
-					//TODO blocked logic
+					// BlockedHit(Attacker, Data, targetHit);
 				}
 			}
 			else
 			{
-				//TODO Default hit
+				DefaultHit(Attacker, Data, targetHit);
 			}
 		}
 	}
 
-	public void Init(Vector3 size, Character attacker, float damage)
+	public void Init(Vector3 size, Character attacker)
 	{
 		SetHitboxSize(size);
 		Attacker = attacker;
-		Damage = damage;
+		Data = Attacker.ActiveHand.itemData;
 	}
 
 	public void SetHitboxSize(Vector3 size)

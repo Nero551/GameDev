@@ -1,0 +1,8 @@
+{
+    "Fist": {
+        "Name": "Fist",
+        "Damage":7.5,
+        "Swings":5,
+        "ComboCooldown": 2
+    }
+}

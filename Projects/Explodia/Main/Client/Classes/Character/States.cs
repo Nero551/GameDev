@@ -56,7 +56,7 @@ public partial class Character
 				if (ActiveStates[key] <= 0)
 					ActiveStates.Remove(key);
 			}
-		//	GD.Print(key);
+				GD.Print(key);
 		}
 	}
 
@@ -66,6 +66,10 @@ public partial class Character
 		{
 			if (stateData.ContainsKey(key))
 			{
+				if (CurrentHealth <= 0)
+				{
+					AddState("Dead");
+				}
 				var data = (Godot.Collections.Dictionary)stateData[key];
 				JumpPower = (float)data["JumpPower"];
 				Speed = (float)data["Speed"];
