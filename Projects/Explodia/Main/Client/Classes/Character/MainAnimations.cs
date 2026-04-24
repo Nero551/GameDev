@@ -9,7 +9,7 @@ public partial class Character
 		{
 			if (CheckState("Sprinting") && IsMoving())
 			{
-				//PlayAnim("Run")
+				PlayAnim("Run");
 			}
 			else if (CheckState("Walking"))
 			{
@@ -27,8 +27,7 @@ public partial class Character
 			//Play weapon Animations
 			if (CheckState("Sprinting") && IsMoving())
 			{
-				//PlayAnimFromLibrary((string)ActiveHand.itemData["Name"], "Run");
-				//PlayAnim("Run")
+				PlayAnimFromLibrary((string)ActiveHand.itemData["Name"], "Run");
 			}
 			else if (CheckState("Walking"))
 			{
@@ -38,8 +37,7 @@ public partial class Character
 			}
 			else
 			{
-				//PlayAnimFromLibrary((string)ActiveHand.itemData["Name"], "Idle");
-				PlayAnim("Idle");
+				PlayAnimFromLibrary((string)ActiveHand.itemData["Name"], "Idle");
 			}
 		}
 		else

@@ -6,8 +6,6 @@ Organ prob is heart or smth if it dies person dies
 
 Basically Mana = ATP molecules
 
-
-
 Multiple universes and character building , 
 
 Kill enemies and complete stories to unlock "power core"s to gain abilities

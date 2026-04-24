@@ -30,7 +30,6 @@ arts cost either stamina or mana or both
 
 critical attacks and blackflash hits
 
-
 player can equip 2 items at the same time (Main hand and offhand)
 no switching system just m1 uses main hand m2 uses offhand
 arts will be restricted by weapon type
@@ -41,3 +40,20 @@ art will be independent , not relying on weapon damage but has its own dmg and c
 
 chests that spawn around the map ( maybe in ruins) and respawn too
 
+Chemistry alchemy system
+Chemistry system where each element has properties and the properties react with each other instead of hard coded chemicals reactions
+
+Dragons
+
+Combat mechanics
+M1 uses main hand 
+M2 uses offhand
+Blocking or dodging systems or both idk yet
+
+Instead of equipping Weapons u just put them in off hand and main hand slots
+No need to switch between them manually
+After 10 seconds or 5 the weapon will unequip itself 
+
+Dash mechanic and flashstep
+
+Weather system

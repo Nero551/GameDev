@@ -23,8 +23,8 @@ public partial class Player
 		}
 
 		Vector2 inputDir = Input.GetVector("Left", "Right", "Back", "Forward");
-		var forward = -springArm.GlobalTransform.Basis.Z;
-		var right = springArm.GlobalTransform.Basis.X;
+		Vector3 forward = -springArm.GlobalTransform.Basis.Z;
+		Vector3 right = springArm.GlobalTransform.Basis.X;
 		forward.Y = 0;
 		right.Y = 0;
 		forward = forward.Normalized();
@@ -39,14 +39,14 @@ public partial class Player
 
 			AddState("Walking");
 			RemoveState("Idle");
-			var arm = GetNode<Node3D>("__Animation Dummy_Armature");
+			var rig = GetNode<Node3D>("__Animation Dummy_Armature");
 
 			//? Smooths character rotation 
 			// I dont understand how this works but it works
-			Vector3 targetDir = (GlobalPosition + direction - arm.GlobalPosition).Normalized();
+			Vector3 targetDir = (GlobalPosition + direction - rig.GlobalPosition).Normalized();
 			Basis target = Basis.LookingAt(targetDir, Vector3.Up);
 
-			arm.Basis = arm.Basis.Slerp(target, 8f * (float)delta);
+			rig.Basis = rig.Basis.Slerp(target, 8f * (float)delta);
 		}
 		else
 		{

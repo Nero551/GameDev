@@ -28,12 +28,15 @@ public partial class Character
 
 	public void AddAnimLibrary(string libraryName, AnimationLibrary library)
 	{
-		animationPlayer.AddAnimationLibrary(libraryName, library);
+		if (GetAnimLibrary(libraryName) == null)
+		{
+			animationPlayer.AddAnimationLibrary(libraryName, library);
+		}
 	}
 
 	public void PlayAnimFromLibrary(string libraryName, string animName)
 	{
-		animationPlayer.Play(libraryName+"/"+animName);
+		animationPlayer.Play(libraryName + "/" + animName);
 	}
 	public void PlayAnim(string animName, float blendTime = 0.2f)
 	{

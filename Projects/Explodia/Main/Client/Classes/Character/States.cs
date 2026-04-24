@@ -26,7 +26,7 @@ public partial class Character
 
 	public void RemoveState(params string[] stateNames)
 	{
-		foreach (var name in stateNames)
+		foreach (string name in stateNames)
 		{
 			ActiveStates.Remove(name);
 		}
@@ -35,7 +35,7 @@ public partial class Character
 
 	public bool CheckState(params string[] stateNames)
 	{
-		foreach (var name in stateNames)
+		foreach (string name in stateNames)
 		{
 			if (ActiveStates.ContainsKey(name))
 			{
@@ -47,7 +47,7 @@ public partial class Character
 
 	public void UpdateStatesDuration(double delta)
 	{
-		foreach (var key in ActiveStates.Keys)
+		foreach (string key in ActiveStates.Keys)
 		{
 			if (ActiveStates[key] != double.MaxValue)
 			{
@@ -62,7 +62,7 @@ public partial class Character
 
 	public void HandleStates(double delta)
 	{
-		foreach (var key in ActiveStates.Keys)
+		foreach (string key in ActiveStates.Keys)
 		{
 			if (stateData.ContainsKey(key))
 			{
@@ -70,7 +70,7 @@ public partial class Character
 				{
 					AddState("Dead");
 				}
-				var data = (Godot.Collections.Dictionary)stateData[key];
+				Godot.Collections.Dictionary data = (Godot.Collections.Dictionary)stateData[key];
 				JumpPower = (float)data["JumpPower"];
 				Speed = (float)data["Speed"];
 				return;

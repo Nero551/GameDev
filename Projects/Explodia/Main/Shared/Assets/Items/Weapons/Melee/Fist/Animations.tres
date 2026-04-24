@@ -1,8 +1,10 @@
 [gd_resource type="AnimationLibrary" format=3 uid="uid://7y8eln88syxv"]
 
+[ext_resource type="Animation" uid="uid://b8rcs305w57rn" path="res://Main/Shared/Assets/Items/Weapons/Melee/Fist/Idle.anim" id="1_6g0fs"]
 [ext_resource type="Animation" uid="uid://ccxmbc2s2r2g5" path="res://Main/Shared/Assets/Animations/Default/Run.anim" id="1_p21iv"]
 
 [resource]
 _data = {
+&"Idle": ExtResource("1_6g0fs"),
 &"Run": ExtResource("1_p21iv")
 }

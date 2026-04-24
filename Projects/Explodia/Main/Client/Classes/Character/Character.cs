@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Linq;
 
 public partial class Character : CharacterBody3D
 {
@@ -21,8 +20,8 @@ public partial class Character : CharacterBody3D
 	[Export] public Item ActiveHand;
 
 	[Export] public int BlockCounter;
-	[Export] public int SwingNumber;
-	[Export] public int LastComboTime;
+	[Export] public int SwingNumber = 0;
+	[Export] public int LastComboTime = 0;
 
 	public override void _Process(double delta)
 	{

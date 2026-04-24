@@ -1,5 +1,4 @@
 using Godot;
-using Godot.NativeInterop;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +11,7 @@ public partial class Hitbox : Area3D
 	public Character Attacker;
 	public void OnBodyEntered(Node3D body)
 	{
-		var targetHit = body.GetOwner<Character>();
+		Character targetHit = body.GetOwner<Character>();
 
 		if (targetHit != null && targetHit is Character && targetHit != Attacker)
 		{

@@ -9,9 +9,9 @@ public static partial class PULib
 
 		if (file != null)
 		{
-			var jsonString = file.GetAsText();
+			string jsonString = file.GetAsText();
 			var parsedData = Json.ParseString(jsonString);
-			var data = parsedData.AsGodotDictionary();
+			Dictionary data = parsedData.AsGodotDictionary();
 
 			return data;
 		}

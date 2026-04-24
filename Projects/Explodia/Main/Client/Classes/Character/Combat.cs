@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading;
 
 public partial class Character
 {
@@ -12,8 +13,13 @@ public partial class Character
 				return;
 			}
 
+			SwingNumber++;
+			if (SwingNumber == (int)ActiveHand.itemData["Swings"])
+			{
+				GetTree().CreateTimer((double)ActiveHand.itemData["ComboCooldown"]);
+			}
 			string itemName = (string)ActiveHand.itemData["Name"];
-			Animation swingAnim = GetAnimFromLibrary(itemName, "L1");
+			Animation swingAnim = GetAnimFromLibrary(itemName, "L" + SwingNumber);
 			//TODO ADD animations and marker event and link everything down to the marker event
 			AddState("Attacking", swingAnim.Length);
 		}
@@ -26,7 +32,7 @@ public partial class Character
 		string hitboxName = itemName + "Basic Attack Hitbox";
 		if (World.Hitboxes.GetNodeOrNull<Hitbox>(hitboxName) == null)
 		{
-			var scene = GD.Load<PackedScene>("res://Main/Workspace/hitbox.tscn");
+			PackedScene scene = GD.Load<PackedScene>("res://Main/Workspace/hitbox.tscn");
 			Hitbox hitbox = scene.Instantiate<Hitbox>();
 
 			hitbox.Name = hitboxName;
