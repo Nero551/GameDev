@@ -234,6 +234,9 @@ Example:
 
 This is one of your strongest ideas.
 
+9 slots 
+1 ultimate art that requires charging and cd and and massive mana
+
 ### What are Arts?
 
 Special abilities powered by mana (ATP)
@@ -241,11 +244,12 @@ Special abilities powered by mana (ATP)
 ### Types:
 
 - Offensive
-    
+
 - Defensive
-    
+
 - Utility
-    
+
+- Ultimate
 
 ---
 
@@ -255,7 +259,7 @@ Instead of random abilities:
 
 Each Art should have:
 
-- Cost (mana)
+- Cost (mana or stamina)
     
 - Cooldown OR cast constraint
     

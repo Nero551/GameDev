@@ -3,7 +3,7 @@ using System;
 
 public partial class Player
 {
-	private SpringArm3D springArm;
+	public SpringArm3D springArm;
 	
 	int MaxSpringLength = 6;
 	int MinSpringLength = 1;
@@ -12,13 +12,6 @@ public partial class Player
 	float horizontalRotation;
 	float verticalRotation;
 
-	public void Test()
-	{
-		if (Input.IsActionJustPressed("ExitGame"))
-		{
-			Input.MouseMode = Input.MouseModeEnum.Visible;
-		}
-	}
 	public void InitCamera()
 	{
 		springArm = GetNode<SpringArm3D>("SpringArm3D");

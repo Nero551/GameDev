@@ -56,15 +56,15 @@ public partial class Character
 				if (ActiveStates[key] <= 0)
 					ActiveStates.Remove(key);
 			}
-				GD.Print(key);
+			GD.Print(key);
 		}
 	}
 
 	public void HandleStates(double delta)
 	{
-		foreach (string key in ActiveStates.Keys)
+		foreach (string key in stateData.Keys)
 		{
-			if (stateData.ContainsKey(key))
+			if (ActiveStates.ContainsKey(key))
 			{
 				if (CurrentHealth <= 0)
 				{

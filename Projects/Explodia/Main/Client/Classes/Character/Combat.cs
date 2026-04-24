@@ -4,9 +4,21 @@ using System.Threading;
 
 public partial class Character
 {
+
+	//TODO These two functions will be the entry from client to server
+	//TODO based on the item equipped they will choose one of the functions below them (basic attack, etc)
+	public void M1()
+	{
+
+	}
+	public void M2()
+	{
+
+	}
+
 	public void BasicAttack()
 	{
-		if (Input.IsActionPressed("Basic Attack") && CanAttack())
+		if (CanAttack())
 		{
 			if (ActiveHand == null || ActiveHand is not Item || ActiveHand.animationLibrary == null)
 			{

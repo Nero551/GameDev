@@ -54,6 +54,9 @@ Instead of equipping Weapons u just put them in off hand and main hand slots
 No need to switch between them manually
 After 10 seconds or 5 the weapon will unequip itself 
 
+if u run or walk weapon will unequip itself
+
+
 Dash mechanic and flashstep
 
 Weather system

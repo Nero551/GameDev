@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Chaos NoteBook/Notes 2.md",
+                "file": "Chaos NoteBook/Notes 3.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Notes 2"
+              "title": "Notes 3"
             }
           }
         ]
@@ -112,7 +112,7 @@
         "state": {
           "type": "backlink",
           "state": {
-            "file": "Story/Notes.md",
+            "file": "Chaos NoteBook/Notes 3.md",
             "collapseAll": false,
             "extraContext": false,
             "sortOrder": "alphabetical",
@@ -170,11 +170,13 @@
   },
   "active": "a8eef9cb4b17eeb1",
   "lastOpenFiles": [
-    "Chaos NoteBook/Code notes.md",
+    "AI Modified/Structured Ideas 2.md",
+    "AI Modified/CraftingAlchemy.md",
     "Chaos NoteBook/Notes 2.md",
+    "Chaos NoteBook/Notes.md",
+    "Chaos NoteBook/Code notes.md",
     "Chaos NoteBook/Notes 3.md",
     "AI Modified/Structured Ideas.md",
-    "Chaos NoteBook/Notes.md",
     "Chaos NoteBook/Chemistry system.md",
     "AI Modified/ClassSystem.md",
     "AI Modified/CoreGameplayLoop.md",
@@ -192,14 +194,12 @@
     "AI Modified/LootSystem.md",
     "AI Modified/WorldSystem.md",
     "AI Modified/DifficultySystem.md",
-    "AI Modified/CraftingAlchemy.md",
     "AI Modified/SpellSystem.md",
     "AI Modified/ManaSystem.md",
     "AI Modified/backlog.md",
     "Ideas/Chemistry system.md",
     "Story/Notes.md",
     "Chaos NoteBook",
-    "Story/Notes.sync-conflict-20260423-083530-A4GKIDB.md",
     "Untitled"
   ]
 }
