@@ -13,6 +13,7 @@ public partial class Character
 
 	public AnimationLibrary LoadAnimLibrary(string filepath)
 	{
+		GD.Print(filepath);
 		return GD.Load<AnimationLibrary>("res://" + filepath + ".tres");
 	}
 

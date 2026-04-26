@@ -9,15 +9,15 @@ public partial class Character
 		{
 			if (CheckState("Sprinting") && IsMoving())
 			{
-				PlayAnim("Run");
+				PlayAnimFromLibrary("Default","Run");
 			}
 			else if (CheckState("Walking") && IsMoving())
 			{
-				PlayAnim("Walk");
+				PlayAnimFromLibrary("Default", "Walk");
 			}
 			else
 			{
-				PlayAnim("Idle");
+				PlayAnimFromLibrary("Default", "Idle");
 			}
 		}
 		else if (ActiveHand.animationLibrary != null)
@@ -25,11 +25,11 @@ public partial class Character
 			//Play weapon Animations
 			if (CheckState("Sprinting") && IsMoving())
 			{
-				PlayAnim("Run");
+				PlayAnimFromLibrary("Default", "Run");
 			}
 			else if (CheckState("Walking") && IsMoving())
 			{
-				PlayAnim("Walk");
+				PlayAnimFromLibrary("Default", "Walk");
 			}
 			else
 			{
@@ -40,16 +40,16 @@ public partial class Character
 		{
 			if (CheckState("Sprinting") && IsMoving())
 			{
-				PlayAnim("Run");
+				PlayAnimFromLibrary("Default", "Run");
 			}
 			else if (CheckState("Walking") && IsMoving())
 			{
-				PlayAnim("Walk");
+				PlayAnimFromLibrary("Default", "Walk");
 
 			}
 			else
 			{
-				PlayAnim("Idle");
+				PlayAnimFromLibrary("Default", "Idle");
 			}
 		}
 	}
