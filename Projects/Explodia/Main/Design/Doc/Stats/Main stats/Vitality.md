@@ -1,0 +1,1 @@
+Increases [[Health]] capacity and regeneration. 

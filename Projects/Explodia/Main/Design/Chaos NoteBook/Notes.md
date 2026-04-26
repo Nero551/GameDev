@@ -8,8 +8,9 @@ Basically Mana = ATP molecules
 
 Multiple universes and character building , 
 
-Kill enemies and complete stories to unlock "power core"s to gain abilities
-A max of 8 abilities can be equiped at once
+Kill enemies and complete stories to unlock "power core"s to gain arts
+
+Analyze power core's to get their arts
 
 Crafting with materials u collect from enemies and from the enviroment of each universe
 

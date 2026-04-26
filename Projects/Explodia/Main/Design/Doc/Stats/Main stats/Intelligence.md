@@ -1,0 +1,1 @@
+Increases an individual's [[Mana]] capacity and regeneration.

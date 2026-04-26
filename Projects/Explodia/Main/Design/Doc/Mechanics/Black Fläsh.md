@@ -1,0 +1,1 @@
+If the player's [[Critical Rate]] is over 150% there is 5% to hit one of this. If one manages to , it will deal double the player's [[Critical Damage]].

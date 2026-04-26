@@ -1,0 +1,1 @@
+A chance to multiply a player's damage on hit. Chance can be increased by increasing one's [[Critical Rate]] . The damage dealt csn be increased by [[Critical Damage]].

@@ -1,0 +1,1 @@
+Increases one's attack  speed and movement speed.

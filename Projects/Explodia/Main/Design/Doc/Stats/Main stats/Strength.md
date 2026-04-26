@@ -1,0 +1,1 @@
+Increases [[Stamina]] capacity and regeneration.

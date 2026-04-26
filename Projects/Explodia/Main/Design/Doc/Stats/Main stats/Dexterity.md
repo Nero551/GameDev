@@ -1,0 +1,1 @@
+Increases [[Critical Rate]] and [[Critical Damage]].

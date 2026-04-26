@@ -1,0 +1,1 @@
+Mainly gained by increasing [[Dexterity]]. Can also be gained from Armor or boosts.

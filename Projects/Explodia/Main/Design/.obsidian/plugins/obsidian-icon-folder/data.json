@@ -6,11 +6,11 @@
     "emojiStyle": "twemoji",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "💡",
+      "🗒",
+      "📕",
       "🍀",
-      "📖",
-      "🤖",
-      "📓",
-      "💡"
+      "📖"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -34,6 +34,8 @@
     "debugMode": false,
     "useInternalPlugins": false
   },
+  "Doc": "📕",
+  "Chaos NoteBook": "🗒",
   "AI Modified": "🤖",
-  "Chaos NoteBook": "📓"
+  "Ideas": "💡"
 }

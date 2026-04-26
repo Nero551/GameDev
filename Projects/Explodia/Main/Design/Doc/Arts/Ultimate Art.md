@@ -1,0 +1,1 @@
+An individual's ULTIMATE attack. Very few can achieve this level of might.

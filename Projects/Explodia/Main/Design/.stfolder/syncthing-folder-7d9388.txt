@@ -1,5 +1,0 @@
-# This directory is a Syncthing folder marker.
-# Do not delete.
-
-folderID: warjd-ynake
-created: 2026-04-23T08:10:46+02:00

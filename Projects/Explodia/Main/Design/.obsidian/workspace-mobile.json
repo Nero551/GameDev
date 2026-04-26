@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "9b453643acfb9dd1",
+        "id": "53e93f655f614c7f",
         "type": "tabs",
         "children": [
           {
-            "id": "a8eef9cb4b17eeb1",
+            "id": "022608954ddcfeae",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Chaos NoteBook/Notes 3.md",
+                "file": "Doc/Stats/Main stats/Dexterity.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Notes 3"
+              "title": "Dexterity"
             }
           }
         ]
@@ -112,7 +112,7 @@
         "state": {
           "type": "backlink",
           "state": {
-            "file": "Chaos NoteBook/Notes 3.md",
+            "file": "Chaos NoteBook/Notes 2.md",
             "collapseAll": false,
             "extraContext": false,
             "sortOrder": "alphabetical",
@@ -168,38 +168,42 @@
       "bases:Create new base": false
     }
   },
-  "active": "a8eef9cb4b17eeb1",
+  "active": "022608954ddcfeae",
   "lastOpenFiles": [
-    "AI Modified/Structured Ideas 2.md",
-    "AI Modified/CraftingAlchemy.md",
-    "Chaos NoteBook/Notes 2.md",
-    "Chaos NoteBook/Notes.md",
-    "Chaos NoteBook/Code notes.md",
+    "Doc/Stats/Main stats/Strength.md",
+    "Doc/Stats/Main stats/Agility.md",
+    "Doc/Stats/Main stats/Dexterity.md",
     "Chaos NoteBook/Notes 3.md",
-    "AI Modified/Structured Ideas.md",
-    "Chaos NoteBook/Chemistry system.md",
-    "AI Modified/ClassSystem.md",
-    "AI Modified/CoreGameplayLoop.md",
-    "AI Modified/CombatSystem.md",
-    "AI Modified/CoreConcept.md",
-    "AI Modified/AbilitySystem.md",
-    "AI Modified/Backlog.md",
-    "Doc/Ideas",
-    "Doc/Story",
-    "Doc",
-    "AI Modified/EquipmentSystem.md",
-    "AI Modified/CharacterCustomization.md",
-    "AI Modified/AdditionalSystems.md",
-    "AI Modified/StatusResistance.md",
-    "AI Modified/LootSystem.md",
-    "AI Modified/WorldSystem.md",
-    "AI Modified/DifficultySystem.md",
-    "AI Modified/SpellSystem.md",
-    "AI Modified/ManaSystem.md",
-    "AI Modified/backlog.md",
-    "Ideas/Chemistry system.md",
-    "Story/Notes.md",
-    "Chaos NoteBook",
-    "Untitled"
+    "Doc/Base.base",
+    "Doc/Stats/Sub Stats/Critical Damage.md",
+    "Doc/Stats/Main stats/Vitality.md",
+    "Doc/Resources/Health.md",
+    "Doc/Stats/Main stats/Intelligence.md",
+    "Doc/Resources/Mana.md",
+    "Doc/Stats/Sub Stats/Critical Rate.md",
+    "Doc/Mechanics/Critical.md",
+    "Doc/Mechanics/Black Fläsh.md",
+    "Doc/Mechanics/Dodge.md",
+    "Doc/Stats/Sub Stats",
+    "Doc/Mechanics",
+    "Doc/Arts/Art.md",
+    "Doc/Arts/Ultimate Art.md",
+    "Doc/Stats/Main stats",
+    "Doc/Stats",
+    "Doc/Skills",
+    "Doc/Arts/Sword Arts",
+    "Untitled.md",
+    "Doc/Damage Types/Magic.md",
+    "Doc/Damage Types/Physical.md",
+    "Doc/Resources/Stamina.md",
+    "Doc/Damage Types",
+    "Doc/Main concepts/Movement.md",
+    "Doc/Main concepts/Combat.md",
+    "Doc/Main concepts/Arts.md",
+    "Doc/Main concepts/Untitled",
+    "Ideas/Arts.md",
+    "Doc/Main concepts",
+    "Doc/Items/Consumables.md",
+    "Doc/Items.md"
   ]
 }

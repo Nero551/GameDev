@@ -1,0 +1,1 @@
+Primary resource for [[Magic]] attacks.
