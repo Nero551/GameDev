@@ -13,6 +13,34 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "Doc/Status Effects/Black Flame.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Black Flame"
+            }
+          },
+          {
+            "id": "788c9d1aef11a145",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Doc/Status Effects/Bleed.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Bleed"
+            }
+          },
+          {
+            "id": "c7207c09854856e9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "Chaos NoteBook/Notes 3.md",
                 "mode": "source",
                 "source": false
@@ -21,7 +49,8 @@
               "title": "Notes 3"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -169,7 +198,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -182,44 +212,44 @@
       "bases:Create new base": false
     }
   },
-  "active": "3921f93afe9a2b3b",
+  "active": "c7207c09854856e9",
   "lastOpenFiles": [
-    "Doc/NPCS/Assassins/Assassin.md",
-    "Doc/Cooking/Cooking.md",
     "Chaos NoteBook/Notes.md",
-    "Chaos NoteBook/Code notes.md",
-    "AI Modified/EquipmentSystem.md",
-    "AI Modified/StatusResistance.md",
-    "AI Modified/ManaSystem.md",
-    "AI Modified/DifficultySystem.md",
-    "AI Modified/CharacterCustomization.md",
-    "Chaos NoteBook/Notes 3.md",
-    "Chaos NoteBook/Notes 2.md",
-    "Chaos NoteBook/Chemistry system.md",
-    "Doc/Character Customization/Gender.md",
-    "Doc/Character Customization/Shirt.md",
-    "Doc/Character Customization/Mouth.md",
-    "Doc/Mechanics/Presence.md",
-    "Doc/Mechanics/Overload.md",
-    "Doc/Character Customization/Skin Tone.md",
-    "Doc/Character Customization/Height.md",
-    "Doc/Character Customization/Width.md",
-    "Doc/Character Customization/Untitled.md",
-    "Doc/Character Customization/Eyes.md",
-    "Doc/Character Customization/Hair.md",
-    "Doc/Character Customization",
-    "Doc/Core Concepts/Art.md",
+    "Doc/Story/Plot.md",
+    "Doc/Story/Ch I.md",
+    "Doc/Story/Ch II.md",
+    "Doc/Story/Ch VII.md",
+    "Doc/Story/Ch X.md",
+    "Doc/Story/Ch VIII.md",
+    "Doc/Story/Untitled",
+    "Doc/Story/Ch VI.md",
+    "Doc/Story/Ch V.md",
+    "Doc/Story/Ch IV.md",
+    "Doc/Story/Ch III.md",
+    "Doc/Story/Ch 2",
+    "Doc/Core Concepts/Combat.md",
+    "Doc/Stats/Main stats/Vitality.md",
+    "Doc/Items/Accessories/Untitled",
+    "Doc/Items/Accessories/Back",
+    "Doc/Items/Accessories/Arm",
+    "Doc/Items/Accessories/Neck",
+    "Doc/Items/Weapons/Dual Daggers",
+    "Doc/Resources/Health.md",
+    "Doc/Resources/Stamina.md",
+    "Doc/Resources/Mana.md",
+    "Doc/Mechanics/Cooking.md",
+    "Doc/Mechanics/World Level.md",
+    "Doc/Mechanics/Mining.md",
+    "Doc/Mechanics/Alchemy.md",
     "Doc/Mechanics/Art.md",
+    "Doc/Mechanics/Class.md",
+    "Doc/Mechanics/Overload.md",
+    "Doc/Mechanics/Status Effect.md",
     "Doc/Mechanics/Ultimate Art.md",
-    "Doc/Core Concepts",
-    "Doc/Items/Armor/Boots",
-    "Doc/Items/Armor/Leggings",
-    "Doc/Items/Armor/Helmets",
-    "Doc/Items/Armor/Chestplates",
-    "Doc/Items/Armor/Untitled",
-    "Doc/Items/Accessories",
-    "Doc/Items/Armor",
-    "Doc/Items/Untitled",
+    "Doc/Mechanics/Black Flash.md",
+    "Doc.zip",
+    "Doc/Base.base",
+    "Doc/Status Effects/Untitled",
     "Doc/Canvas.canvas",
     "ntitled.canvas",
     "Canvas.canvas"

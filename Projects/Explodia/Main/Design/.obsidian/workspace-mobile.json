@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Chaos NoteBook/Notes 3.md",
+                "file": "Doc/Mechanics/Cooking.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Notes 3"
+              "title": "Cooking"
             }
           }
         ]
@@ -112,7 +112,7 @@
         "state": {
           "type": "backlink",
           "state": {
-            "file": "Doc/Character Customization/Gender.md",
+            "file": "Doc/Mechanics/Cooking.md",
             "collapseAll": false,
             "extraContext": false,
             "sortOrder": "alphabetical",
@@ -168,8 +168,9 @@
       "bases:Create new base": false
     }
   },
-  "active": "022608954ddcfeae",
+  "active": "bb81dd33d7a256d9",
   "lastOpenFiles": [
+    "Chaos NoteBook/Notes 3.md",
     "Doc/Character Customization/Gender.md",
     "Doc/Character Customization/Shirt.md",
     "Doc/Character Customization/Mouth.md",
@@ -205,7 +206,6 @@
     "Doc/Resources/Health.md",
     "Doc/Canvas.canvas",
     "Doc/NOTE !!.md",
-    "Chaos NoteBook/Notes 3.md",
     "Doc/Stats/Main stats/Dexterity.md"
   ]
 }

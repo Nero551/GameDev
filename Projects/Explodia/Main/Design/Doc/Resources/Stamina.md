@@ -1,1 +1,1 @@
-Primary resource for [[Physical]] attacks
+Primary resource for [[Physical]] attacks. Can be increased by maximizing one's [[Strength]].

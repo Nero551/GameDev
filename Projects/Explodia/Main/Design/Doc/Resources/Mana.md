@@ -1,1 +1,1 @@
-Primary resource for [[Magic]] attacks.
+Primary resource for [[Magic]] attacks. Can be increased by maximizing one's [[Intelligence]].

@@ -1,1 +1,1 @@
-An individual's Lifeforce.
+An individual's Lifeforce. Can be increased by maximizing one's [[Vitality]].
