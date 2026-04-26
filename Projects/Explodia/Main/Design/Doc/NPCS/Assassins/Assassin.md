@@ -1,0 +1,1 @@
+An NPC that you wont see much duh. he is watching you though. dont let your guard down.

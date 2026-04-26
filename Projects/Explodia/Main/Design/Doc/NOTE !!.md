@@ -1,0 +1,1 @@
+99% of all these this dont exist inside the actual game. this is just a list of stuff that i thought up and organized.

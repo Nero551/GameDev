@@ -1,1 +1,1 @@
-Increases one's attack  speed and movement speed.
+Increases one's movement speed and dodges.

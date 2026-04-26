@@ -1,0 +1,1 @@
+Dodging requires extreme focus. A normal person has 2 dodges though they can be increased by increasing [[Agility]]. gives a duration of i-frames.

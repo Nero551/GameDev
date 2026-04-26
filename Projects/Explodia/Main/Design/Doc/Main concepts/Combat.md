@@ -1,0 +1,1 @@
+M1 uses your main hand slot , M2 uses your off hand slot.

@@ -1,0 +1,1 @@
+Classes are merely labels that are applied based on the player's stats and build. it doesn't give any extra buffs.

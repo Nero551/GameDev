@@ -1,0 +1,1 @@
+A Special Ability or stat bonus that comes with weapons.
