@@ -37,7 +37,14 @@ public partial class Player
 			velocity.X = direction.X * Speed;
 			velocity.Z = direction.Z * Speed;
 
-			AddState("Walking");
+			if (!CheckState("Sprinting"))
+			{
+				AddState("Walking");
+			}
+			else
+			{
+				RemoveState("Walking");
+			}
 			RemoveState("Idle");
 			var rig = GetNode<Node3D>("__Animation Dummy_Armature");
 
@@ -54,7 +61,7 @@ public partial class Player
 			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
 
 			AddState("Idle");
-			RemoveState("Walking", "Sprinting");
+			RemoveState("Walking");
 		}
 
 		Velocity = velocity;

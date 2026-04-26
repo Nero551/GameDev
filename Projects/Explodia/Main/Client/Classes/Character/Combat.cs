@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Threading;
 
 public partial class Character
 {
@@ -24,16 +23,21 @@ public partial class Character
 			{
 				return;
 			}
+			string itemName = (string)ActiveHand.itemData["Name"];
+			Animation swingAnim = GetAnimFromLibrary(itemName, "L" + SwingNumber);
+			if (swingAnim == null)
+			{
+				return;
+			}
 
-			SwingNumber++;
 			if (SwingNumber == (int)ActiveHand.itemData["Swings"])
 			{
 				GetTree().CreateTimer((double)ActiveHand.itemData["ComboCooldown"]);
 			}
-			string itemName = (string)ActiveHand.itemData["Name"];
-			Animation swingAnim = GetAnimFromLibrary(itemName, "L" + SwingNumber);
-			//TODO ADD animations and marker event and link everything down to the marker event
+			
+			//Todo ADD animations and marker event and link everything down to the marker event
 			AddState("Attacking", swingAnim.Length);
+			SwingNumber++;
 		}
 	}
 

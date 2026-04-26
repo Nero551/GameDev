@@ -1,0 +1,1 @@
+Just find a cave and get mining. you can melt ores for [[Crafting]] or break em down for [[Alchemy]]. you gotta get a pickaxe tho.

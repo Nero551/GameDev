@@ -1,0 +1,1 @@
+You craft weapons, armor , materials , lots of stuff

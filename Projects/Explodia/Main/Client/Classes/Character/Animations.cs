@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.IO;
 
 
 public partial class Character
@@ -22,20 +21,6 @@ public partial class Character
 		return GD.Load<AnimationLibrary>("res://" + filepath + ".tres");
 	}
 
-	public AnimationLibrary GetAnimLibrary(string libraryName)
-	{
-		if (animationPlayer.HasAnimationLibrary(libraryName))
-		{
-			return animationPlayer.GetAnimationLibrary(libraryName);
-		}
-		return null;
-	}
-
-	public Animation GetAnimFromLibrary(string libraryName, string animName)
-	{
-		return GetAnimLibrary(libraryName).GetAnimation(animName);
-	}
-
 	public void AddAnimLibrary(string libraryName, AnimationLibrary library)
 	{
 		if (GetAnimLibrary(libraryName) == null)
@@ -44,9 +29,9 @@ public partial class Character
 		}
 	}
 
-	public void PlayAnimFromLibrary(string libraryName, string animName)
+	public void PlayAnimFromLibrary(string libraryName, string animName, float blendTime = 0.2f)
 	{
-		animationPlayer.Play(libraryName + "/" + animName);
+		PlayAnim(libraryName + "/" + animName, blendTime);
 	}
 	public void PlayAnim(string animName, float blendTime = 0.2f)
 	{
@@ -56,7 +41,25 @@ public partial class Character
 		}
 	}
 
-
+	public AnimationLibrary GetAnimLibrary(string libraryName)
+	{
+		if (animationPlayer.HasAnimationLibrary(libraryName))
+		{
+			return animationPlayer.GetAnimationLibrary(libraryName);
+		}
+		return null;
+	}
+	
+	public Animation GetAnimFromLibrary(string libraryName, string animName)
+	{
+		var animLib = GetAnimLibrary(libraryName);
+		if (animLib != null)
+		{
+			return animLib.GetAnimation(animName);
+		}
+		return null;
+	}
+	
 	public Animation GetAnim(string animName)
 	{
 		return animationPlayer.GetAnimation(animName);

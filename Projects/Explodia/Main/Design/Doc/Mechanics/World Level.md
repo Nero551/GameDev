@@ -1,1 +1,1 @@
-By increasing your world level. enemies will get hella stronger but will give more loot and cool stuff.
+By increasing your world level. NPCS will get hella stronger but will give more loot and cool stuff.

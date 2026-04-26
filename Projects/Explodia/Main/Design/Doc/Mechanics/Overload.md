@@ -1,0 +1,1 @@
+If you use too much mana or stamina too fast u get overloaded. slows u down and decreases dmg till you recover.
