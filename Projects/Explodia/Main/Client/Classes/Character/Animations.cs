@@ -8,7 +8,12 @@ public partial class Character
 	private AnimationPlayer animationPlayer;
 	public void InitAnim()
 	{
-		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		animationPlayer = GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
+
+		if (animationPlayer == null)
+		{
+			GD.PushError("AnimationPlayer not found!");
+		}
 	}
 
 	public AnimationLibrary LoadAnimLibrary(string filepath)
@@ -19,7 +24,11 @@ public partial class Character
 
 	public AnimationLibrary GetAnimLibrary(string libraryName)
 	{
-		return animationPlayer.GetAnimationLibrary(libraryName);
+		if (animationPlayer.HasAnimationLibrary(libraryName))
+		{
+			return animationPlayer.GetAnimationLibrary(libraryName);
+		}
+		return null;
 	}
 
 	public Animation GetAnimFromLibrary(string libraryName, string animName)
@@ -52,6 +61,4 @@ public partial class Character
 	{
 		return animationPlayer.GetAnimation(animName);
 	}
-
-
 }
