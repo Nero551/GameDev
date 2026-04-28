@@ -41,9 +41,10 @@ public partial class Hitbox : Area3D
 		}
 	}
 
-	public void Init(Vector3 size, Character attacker)
+	public void Init(Vector3 position,Vector3 size, Character attacker)
 	{
 		SetHitboxSize(size);
+		GlobalPosition = position;
 		Attacker = attacker;
 		Data = Attacker.ActiveHand.itemData;
 	}

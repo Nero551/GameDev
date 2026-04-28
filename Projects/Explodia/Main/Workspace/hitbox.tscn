@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d2ih23nw3b0m7" path="res://Main/Client/Classes/Hitbox/Hitbox.cs" id="1_yk28f"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yk28f"]
-size = Vector3(1, 2.1522217, 1)
+size = Vector3(0.75, 1, 0.75)
 
 [node name="Hitbox" type="Area3D" unique_id=1232552731]
 collision_layer = 2
@@ -11,7 +11,7 @@ collision_mask = 2
 script = ExtResource("1_yk28f")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1472692233]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.57611084, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12107849, 0)
 shape = SubResource("BoxShape3D_yk28f")
 debug_color = Color(0.9704773, 0.17597026, 0.13977158, 1)
 

@@ -55,7 +55,7 @@ public partial class Character
 				if (ActiveStates[key] <= 0)
 					ActiveStates.Remove(key);
 			}
-			GD.Print(key);
+			// GD.Print(key);
 		}
 	}
 

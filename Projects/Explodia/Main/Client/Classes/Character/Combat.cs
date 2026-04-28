@@ -25,12 +25,17 @@ public partial class Character
 			{
 				return;
 			}
-			if (SwingNumber == (int)ActiveHand.itemData["Swings"])
+			if ((PULib.CurrentSTime() - LastComboTime) < (double)ActiveHand.itemData["ComboCooldown"])
 			{
-				GetTree().CreateTimer((double)ActiveHand.itemData["ComboCooldown"]);
+				return;
+			}
+			if (SwingNumber == (int)ActiveHand.itemData["Swings"] || (PULib.CurrentSTime() - LastSwingTime) >= 5)
+			{
+				LastComboTime = PULib.CurrentSTime();
 				SwingNumber = 0;
 			}
 			SwingNumber++;
+			LastSwingTime = PULib.CurrentSTime();
 
 			string itemName = (string)ActiveHand.itemData["Name"];
 			Animation swingAnim = GetAnim(itemName + "/" + "L" + SwingNumber);
@@ -39,7 +44,6 @@ public partial class Character
 				return;
 			}
 
-			//Todo ADD animations and marker event and link everything down to the marker event
 			AddState("Attacking", swingAnim.Length);
 			PlayAnim(itemName + "/" + "L" + SwingNumber, 1);
 		}
@@ -55,11 +59,10 @@ public partial class Character
 			Hitbox hitbox = scene.Instantiate<Hitbox>();
 
 			hitbox.Name = hitboxName;
-			hitbox.Position = GlobalPosition;
 
-			hitbox.Init(new Vector3(2, 3f, 2), this);
-
+			hitbox.Init(GlobalPosition - GlobalTransform.Basis.Z * 3f + Vector3.Up * 0.5f, new Vector3(0.75f, 1f, 0.75f), this);
 			World.Hitboxes.AddChild(hitbox);
+			PULib.ScheduleRemoval(hitbox, 0.2f);
 		}
 	}
 

@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dql3it6yesosp" path="res://Main/Client/Classes/Character/Character.cs" id="1_6xqrn"]
 [ext_resource type="Texture2D" uid="uid://bcys3pfxqwlf4" path="res://Main/Shared/Assets/Models/Rig_AnimationDummy1_diff.png" id="2_3yol6"]
-[ext_resource type="Animation" uid="uid://34fwyxdmu7ck" path="res://Main/Shared/Assets/Animations/Default/Idle.anim" id="3_8dc0s"]
-[ext_resource type="Animation" uid="uid://djg5pjrhhiv1u" path="res://Main/Shared/Assets/Animations/Default/Run.anim" id="4_e5aaj"]
+[ext_resource type="Animation" uid="uid://dnowa4nlop0id" path="res://Main/Shared/Assets/Animations/Default/Idle.anim" id="3_8dc0s"]
+[ext_resource type="Animation" uid="uid://cfehr211rvlkt" path="res://Main/Shared/Assets/Animations/Default/Run.anim" id="4_e5aaj"]
 [ext_resource type="PackedScene" uid="uid://b3jccq5kuvl1l" path="res://Main/Shared/Assets/Items/Weapons/Melee/Fist/fist.tscn" id="5_3yol6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_68iwh"]
