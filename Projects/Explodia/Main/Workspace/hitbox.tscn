@@ -6,6 +6,7 @@
 size = Vector3(0.75, 1, 0.75)
 
 [node name="Hitbox" type="Area3D" unique_id=1232552731]
+top_level = true
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_yk28f")

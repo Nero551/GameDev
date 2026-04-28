@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 public partial class Hitbox : Area3D
 {
@@ -41,14 +42,19 @@ public partial class Hitbox : Area3D
 		}
 	}
 
-	public void Init(Vector3 position,Vector3 size, Character attacker)
+	public void Init(Vector3 position, Vector3 size, Character attacker)
 	{
+		GD.Print(position);
 		SetHitboxSize(size);
-		GlobalPosition = position;
+		SetHitboxPosition(position);
 		Attacker = attacker;
 		Data = Attacker.ActiveHand.itemData;
 	}
 
+	public void SetHitboxPosition(Vector3 position)
+	{
+		Position = position;
+	}
 	public void SetHitboxSize(Vector3 size)
 	{
 		var shape = (BoxShape3D)GetNode<CollisionShape3D>("CollisionShape3D").Shape;
