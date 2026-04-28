@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public partial class Character
 {
-	private Dictionary<string, double> ActiveStates = new();
+	public Dictionary<string, double> ActiveStates = new();
 
 	private Godot.Collections.Dictionary stateData;
 	public void InitStates()

@@ -5,16 +5,15 @@ using System.Threading.Tasks;
 
 public partial class Character
 {
-
-	//TODO These two functions will be the entry from client to server
-	//TODO based on the item equipped they will choose one of the functions below them (basic attack, etc)
 	public void M1()
 	{
-
+		// ActiveHand = MainHand;
+		BasicAttack();
 	}
 	public void M2()
 	{
-
+		// ActiveHand = OffHand;
+		BasicAttack();
 	}
 
 	public void BasicAttack()

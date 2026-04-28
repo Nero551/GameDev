@@ -5,9 +5,13 @@ public partial class Player
 {
     public void PlayerInput()
     {
-        if (Input.IsActionPressed("Basic Attack"))
+        if (Input.IsActionPressed("M1"))
         {
-            BasicAttack();
+            M1();
+        }
+        if (Input.IsActionPressed("M2"))
+        {
+            M2();
         }
 
         if (Input.IsActionJustPressed("ExitGame"))

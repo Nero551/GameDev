@@ -53,7 +53,6 @@ public partial class Hitbox : Area3D
 
 	public void Init(Vector3 position, Vector3 size, Character attacker)
 	{
-		GD.Print(position);
 		SetHitboxSize(size);
 		SetHitboxPosition(position);
 		Attacker = attacker;
