@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 public partial class Character
 {
@@ -23,28 +25,29 @@ public partial class Character
 			{
 				return;
 			}
+			if (SwingNumber == (int)ActiveHand.itemData["Swings"])
+			{
+				GetTree().CreateTimer((double)ActiveHand.itemData["ComboCooldown"]);
+				SwingNumber = 0;
+			}
+			SwingNumber++;
+
 			string itemName = (string)ActiveHand.itemData["Name"];
-			Animation swingAnim = GetAnimFromLibrary(itemName, "L" + SwingNumber);
+			Animation swingAnim = GetAnim(itemName + "/" + "L" + SwingNumber);
 			if (swingAnim == null)
 			{
 				return;
 			}
 
-			if (SwingNumber == (int)ActiveHand.itemData["Swings"])
-			{
-				GetTree().CreateTimer((double)ActiveHand.itemData["ComboCooldown"]);
-			}
-			
 			//Todo ADD animations and marker event and link everything down to the marker event
 			AddState("Attacking", swingAnim.Length);
-			SwingNumber++;
+			PlayAnim(itemName + "/" + "L" + SwingNumber, 1);
 		}
 	}
 
-	public void DoBasicHit()
+	public void OnHitMarker()
 	{
 		string itemName = (string)ActiveHand.itemData["Name"];
-		Animation swingAnim = GetAnimFromLibrary(itemName, "L1");
 		string hitboxName = itemName + "Basic Attack Hitbox";
 		if (World.Hitboxes.GetNodeOrNull<Hitbox>(hitboxName) == null)
 		{
@@ -57,12 +60,6 @@ public partial class Character
 			hitbox.Init(new Vector3(2, 3f, 2), this);
 
 			World.Hitboxes.AddChild(hitbox);
-
-			GetTree().CreateTimer(swingAnim.Length).Timeout += () =>
-			{
-				if (GodotObject.IsInstanceValid(hitbox))
-					hitbox.QueueFree();
-			};
 		}
 	}
 

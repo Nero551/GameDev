@@ -1,1 +1,1 @@
-Uses mana.
+Uses [[Mana]].

@@ -5,6 +5,8 @@ using System;
 public partial class Character
 {
 	private AnimationPlayer animationPlayer;
+	//TODO make an animation priority system
+	//? Priority Guide, 1 high , 2 medium , 3 low
 	public void InitAnim()
 	{
 		animationPlayer = GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
@@ -17,7 +19,6 @@ public partial class Character
 
 	public AnimationLibrary LoadAnimLibrary(string filepath)
 	{
-		GD.Print(filepath);
 		return GD.Load<AnimationLibrary>("res://" + filepath + ".tres");
 	}
 
@@ -28,16 +29,16 @@ public partial class Character
 			animationPlayer.AddAnimationLibrary(libraryName, library);
 		}
 	}
-
-	public void PlayAnimFromLibrary(string libraryName, string animName, float blendTime = 0.2f)
+	public void PlayAnim(string animName, int priority, float blendTime = 0.2f)
 	{
-		PlayAnim(libraryName + "/" + animName, blendTime);
-	}
-	public void PlayAnim(string animName, float blendTime = 0.2f)
-	{
-		if (animationPlayer.CurrentAnimation != animName && animationPlayer.GetAnimation(animName) != null)
+		if (CurrentAnim != animName && GetAnim(animName) != null)
 		{
-			animationPlayer.Play(animName, blendTime);
+			if (priority <= CurrentAnimPriority)
+			{
+				CurrentAnimPriority = priority;
+				CurrentAnim = animName;
+				animationPlayer.Play(animName, blendTime);
+			}
 		}
 	}
 
@@ -49,19 +50,20 @@ public partial class Character
 		}
 		return null;
 	}
-	
-	public Animation GetAnimFromLibrary(string libraryName, string animName)
-	{
-		var animLib = GetAnimLibrary(libraryName);
-		if (animLib != null)
-		{
-			return animLib.GetAnimation(animName);
-		}
-		return null;
-	}
-	
+
 	public Animation GetAnim(string animName)
 	{
-		return animationPlayer.GetAnimation(animName);
+		if (animationPlayer.HasAnimation(animName))
+		{
+			return animationPlayer.GetAnimation(animName);
+		}
+		GD.PushWarning("Animation: " + animName + " Doesn't Exist.");
+		return null;
+	}
+
+	private void OnAnimFinished(string animName)
+	{
+		CurrentAnim = "";
+		CurrentAnimPriority = 3;
 	}
 }

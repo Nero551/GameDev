@@ -1,1 +1,1 @@
-Increases one's movement speed and dodges.
+Increases one's movement speed and [[Dodge]].

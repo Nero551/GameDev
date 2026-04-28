@@ -1,1 +1,1 @@
-Uses Stamina.
+Uses [[Stamina]].

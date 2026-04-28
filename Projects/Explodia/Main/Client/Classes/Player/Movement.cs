@@ -60,7 +60,6 @@ public partial class Player
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
 			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
 
-			AddState("Idle");
 			RemoveState("Walking");
 		}
 

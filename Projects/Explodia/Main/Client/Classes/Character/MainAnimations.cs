@@ -5,19 +5,21 @@ public partial class Character
 {
 	public void MainAnimations()
 	{
+		if (!IsMoving()) { AddState("Idle"); }
+
 		if (ActiveHand == null)
 		{
 			if (CheckState("Sprinting") && IsMoving())
 			{
-				PlayAnimFromLibrary("Default","Run");
+				PlayAnim("Default/Run", 3);
 			}
 			else if (CheckState("Walking") && IsMoving())
 			{
-				PlayAnimFromLibrary("Default", "Walk");
+				PlayAnim("Default/Walk",3);
 			}
 			else
 			{
-				PlayAnimFromLibrary("Default", "Idle");
+				PlayAnim("Default/Idle",3);
 			}
 		}
 		else if (ActiveHand.animationLibrary != null)
@@ -25,31 +27,31 @@ public partial class Character
 			//Play weapon Animations
 			if (CheckState("Sprinting") && IsMoving())
 			{
-				PlayAnimFromLibrary("Default", "Run");
+				PlayAnim("Default/Run",3);
 			}
 			else if (CheckState("Walking") && IsMoving())
 			{
-				PlayAnimFromLibrary("Default", "Walk");
+				PlayAnim("Default/Walk",3);
 			}
 			else
 			{
-				PlayAnimFromLibrary((string)ActiveHand.itemData["Name"], "Idle");
+				PlayAnim((string)ActiveHand.itemData["Name"] +"/"+ "Idle",3);
 			}
 		}
 		else
 		{
 			if (CheckState("Sprinting") && IsMoving())
 			{
-				PlayAnimFromLibrary("Default", "Run");
+				PlayAnim("Default/Run",3);
 			}
 			else if (CheckState("Walking") && IsMoving())
 			{
-				PlayAnimFromLibrary("Default", "Walk");
+				PlayAnim("Default/Walk",3);
 
 			}
 			else
 			{
-				PlayAnimFromLibrary("Default", "Idle");
+				PlayAnim("Default/Idle",3);
 			}
 		}
 	}

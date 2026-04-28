@@ -13,7 +13,7 @@ Allows attacks to bypass a portion of the target's defensive stats.
 - Percentage Pierce — ignores % of defense
 - True Damage — ignores all defenses completely
 
-## Interactions
+## Dev Notes
 - Does not reduce target stats (unlike [[Corrosive]])
 - Works independently per hit
-- Can stack with Critical Damage
+- Can stack with [[Critical]]

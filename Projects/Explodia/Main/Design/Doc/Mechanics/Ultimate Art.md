@@ -1,1 +1,1 @@
-An individual's ULTIMATE attack. Very few can achieve this level of might.
+An individual's ULTIMATE attack. Very few can achieve this level of might. Probably requires some sort of charging mechanic. like u need to use 15 arts before being able to use ultimate art. 

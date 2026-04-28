@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 public partial class Character : CharacterBody3D
 {
@@ -10,18 +11,9 @@ public partial class Character : CharacterBody3D
 		InitStates();
 		GetNode<Weapon>("Fist").Init(this);
 	}
-	[Export] public float Speed;
-	[Export] public float JumpPower;
-	[Export] public float MaxHealth = 100;
-	[Export] public float CurrentHealth = 100;
 
-	[Export] public Item MainHand;
-	[Export] public Item Offhand;
-	[Export] public Item ActiveHand;
-
-	[Export] public int BlockCounter;
-	[Export] public int SwingNumber = 0;
-	[Export] public int LastComboTime = 0;
+	[Export] public int CurrentAnimPriority = 3;
+	[Export] public string CurrentAnim = "";
 
 	public override void _Process(double delta)
 	{
