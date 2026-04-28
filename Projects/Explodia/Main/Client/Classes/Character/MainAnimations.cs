@@ -5,8 +5,6 @@ public partial class Character
 {
 	public void MainAnimations()
 	{
-		if (!IsMoving()) { AddState("Idle"); }
-
 		if (ActiveHand == null)
 		{
 			if (CheckState("Sprinting") && IsMoving())

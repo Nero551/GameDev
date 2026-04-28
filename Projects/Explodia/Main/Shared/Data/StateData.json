@@ -7,7 +7,6 @@
   "Attacking": { "JumpPower": 0, "Speed": 1 },
 
   "Sprinting": { "JumpPower": 4.5, "Speed": 5 },
-  "Walking": { "JumpPower": 4.5, "Speed": 1 },
+  "Walking": { "JumpPower": 4.5, "Speed": 1 }
 
-  "Idle": { "JumpPower": 4.5, "Speed": 0 }
 }

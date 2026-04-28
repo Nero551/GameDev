@@ -11,6 +11,8 @@ public partial class Character : CharacterBody3D
 		InitStates();
 		GetNode<Weapon>("Fist").Init(this);
 	}
+	[Export] public MainStates MainState;
+
 	[Export] public float Speed;
 	[Export] public float JumpPower;
 	[Export] public float MaxHealth = 100;
@@ -32,6 +34,7 @@ public partial class Character : CharacterBody3D
 	{
 		UpdateStatesDuration(delta);
 		HandleStates(delta);
+		UpdateMainStates();
 		MainAnimations();
 	}
 }

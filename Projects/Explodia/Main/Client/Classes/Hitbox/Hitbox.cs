@@ -5,8 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 
 public partial class Hitbox : Area3D
 {
-
-	private HashSet<Character> hitTargets = new();
+	private Dictionary<Character, int> hitTargets = new();
 
 	private Godot.Collections.Dictionary Data;
 	public Character Attacker;
@@ -16,11 +15,21 @@ public partial class Hitbox : Area3D
 
 		if (targetHit != null && targetHit is Character && targetHit != Attacker)
 		{
-			if (hitTargets.Contains(targetHit))
+			if (hitTargets.ContainsKey(targetHit))
 			{
-				return;
+				if (hitTargets[targetHit] >= (int)Data["Hits"])
+				{
+					return;
+				}
+				else
+				{
+					hitTargets[targetHit]++;
+				}
 			}
-			hitTargets.Add(targetHit);
+			else
+			{
+				hitTargets.Add(targetHit, 1);
+			}
 
 			//Actual Hit Logic Here pls
 			//TODO Still Under Development
