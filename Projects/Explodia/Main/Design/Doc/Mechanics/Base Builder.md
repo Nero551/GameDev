@@ -1,0 +1,1 @@
+Some side quest that unlocks an art's to make a subspace domain where u can build your home.

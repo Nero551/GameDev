@@ -1,0 +1,1 @@
+A structure u can teleport to. Eases travel across the map.

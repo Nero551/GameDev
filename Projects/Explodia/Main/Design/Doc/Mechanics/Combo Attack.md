@@ -1,0 +1,1 @@
+If u use a combo attack compatible skill and ur friend uses one too both at the same time. U unleash a combo attack .
