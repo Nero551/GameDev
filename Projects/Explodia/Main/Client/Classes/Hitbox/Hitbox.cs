@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 
 public partial class Hitbox : Area3D
 {
@@ -17,7 +16,9 @@ public partial class Hitbox : Area3D
 		{
 			if (hitTargets.ContainsKey(targetHit))
 			{
-				if (hitTargets[targetHit] >= (int)Data["Hits"])
+				int hits = Data.ContainsKey("Hits") ? (int)Data["Hits"] : 1;
+
+				if (hitTargets[targetHit] >= hits)
 				{
 					return;
 				}
@@ -33,21 +34,8 @@ public partial class Hitbox : Area3D
 
 			//Actual Hit Logic Here pls
 			//TODO Still Under Development
-			if (targetHit.CheckState("Blocking"))
-			{
-				if (false)
-				{
-					// BlockBreak(Attacker,Data,targetHit);
-				}
-				else
-				{
-					// BlockedHit(Attacker, Data, targetHit);
-				}
-			}
-			else
-			{
-				DefaultHit(Attacker, Data, targetHit);
-			}
+
+			DefaultHit(Attacker, Data, targetHit);
 		}
 	}
 

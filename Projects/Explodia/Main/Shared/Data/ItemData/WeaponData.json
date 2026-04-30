@@ -2,8 +2,8 @@
 	"Fist": {
 		"Name": "Fist",
 		"Type": "Melee",
-		"Damage":7.5,
-		"Swings":5,
+		"Damage": 7.5,
+		"Swings": 5,
 		"ComboCooldown": 2
 	}
 }

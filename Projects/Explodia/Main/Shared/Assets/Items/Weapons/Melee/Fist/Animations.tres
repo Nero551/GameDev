@@ -2,9 +2,11 @@
 
 [ext_resource type="Animation" uid="uid://cghjcq3obi7y5" path="res://Main/Shared/Assets/Items/Weapons/Melee/Fist/Idle.anim" id="1_p21iv"]
 [ext_resource type="Animation" uid="uid://vubjifrna7ga" path="res://Main/Shared/Assets/Items/Weapons/Melee/Fist/L1.anim" id="2_6g0fs"]
+[ext_resource type="Animation" uid="uid://dqds30qe8ajby" path="res://Main/Shared/Assets/Items/Weapons/Melee/Fist/L2.anim" id="3_bx3tk"]
 
 [resource]
 _data = {
 &"Idle": ExtResource("1_p21iv"),
-&"L1": ExtResource("2_6g0fs")
+&"L1": ExtResource("2_6g0fs"),
+&"L2": ExtResource("3_bx3tk")
 }

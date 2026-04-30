@@ -7,6 +7,7 @@ public partial class Player
 	{
 		Vector3 velocity = Velocity;
 
+
 		if (!IsOnFloor())
 		{
 			velocity += GetGravity() * (float)delta;
@@ -22,7 +23,6 @@ public partial class Player
 			velocity.Y = JumpPower;
 		}
 
-		Vector2 inputDir = Input.GetVector("Left", "Right", "Back", "Forward");
 		Vector3 forward = -springArm.GlobalTransform.Basis.Z;
 		Vector3 right = springArm.GlobalTransform.Basis.X;
 		forward.Y = 0;
@@ -30,7 +30,7 @@ public partial class Player
 		forward = forward.Normalized();
 		right = right.Normalized();
 
-		Vector3 direction = (right * inputDir.X + forward * inputDir.Y).Normalized();
+		Vector3 direction = (right * MoveDirection.X + forward * MoveDirection.Y).Normalized();
 
 		if (direction != Vector3.Zero)
 		{
@@ -54,7 +54,7 @@ public partial class Player
 			Basis target = Basis.LookingAt(targetDir, Vector3.Up);
 
 			rig.Basis = rig.Basis.Slerp(target, 8f * (float)delta);
-		}
+		} 
 		else
 		{
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);

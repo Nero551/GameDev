@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Security.Cryptography.X509Certificates;
 
 public partial class Character : CharacterBody3D
 {
@@ -13,6 +12,7 @@ public partial class Character : CharacterBody3D
 	}
 	[Export] public MainStates MainState;
 
+	[Export] public Vector2 MoveDirection = Vector2.Zero;
 	[Export] public float Speed;
 	[Export] public float JumpPower;
 	[Export] public float MaxHealth = 100;

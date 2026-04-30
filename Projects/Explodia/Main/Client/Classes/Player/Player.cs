@@ -10,13 +10,13 @@ public partial class Player : Character
     }
     public override void _Input(InputEvent @event)
     {
-        PlayerInput();
-        ZoomCamera();
         RotateCamera(@event);
     }
 
     public override void _PhysicsProcess(double delta)
     {
+        PlayerInput(delta);
+        ZoomCamera();
         MovementPhysics(delta);
     }
 }
