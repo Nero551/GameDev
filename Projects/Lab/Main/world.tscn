@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://b804kg1wf78yy"]
+
+[ext_resource type="Script" uid="uid://b2tu2getqx87t" path="res://addons/debug_camera/scripts/DebugCamera3D.gd" id="1_5invl"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_e745f"]
+
+[node name="World" type="Node3D" unique_id=279850032]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1617546362]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1476049028]
+transform = Transform3D(16.656366, 0, 0, 0, 1, 0, 0, 0, 13.7473545, 0, 0, 0)
+mesh = SubResource("BoxMesh_e745f")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1454768334]
+script = ExtResource("1_5invl")

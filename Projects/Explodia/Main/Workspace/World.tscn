@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://wm74fyw2ougo" path="res://Main/Shared/Classes/World.cs" id="1_bd1ac"]
 [ext_resource type="Texture2D" uid="uid://dtsm7jpnqwq67" path="res://icon.svg" id="1_vjjlj"]
-[ext_resource type="PackedScene" uid="uid://2o6updau0h1s" path="res://Main/Workspace/player.tscn" id="2_4ls0c"]
 [ext_resource type="PackedScene" uid="uid://y163uilivcp" path="res://Main/UI/UI.tscn" id="4_vh06i"]
-[ext_resource type="PackedScene" uid="uid://8plp26spdxm4" path="res://Main/Workspace/character.tscn" id="5_cvbt6"]
+[ext_resource type="PackedScene" uid="uid://8plp26spdxm4" path="res://Main/Workspace/Character.tscn" id="5_cvbt6"]
 [ext_resource type="Script" uid="uid://dvr5vpxnt2r5i" path="res://Main/Client/Classes/Enemy/Enemy.cs" id="6_1dhow"]
+[ext_resource type="PackedScene" uid="uid://cvle36gt8soas" path="res://Main/Workspace/Player.tscn" id="6_bvebm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bd1ac"]
 albedo_texture = ExtResource("1_vjjlj")
@@ -35,12 +35,6 @@ shape = SubResource("BoxShape3D_vjjlj")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1490077868]
 transform = Transform3D(1, 0, 0, 0, 0.025356868, 0.9996785, 0, -0.9996785, 0.025356868, 0, 10.5777, 0)
 
-[node name="Player" parent="." unique_id=874543187 instance=ExtResource("2_4ls0c")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.8933635, 0)
-metadata/States = {
-"Spritn": 5.0
-}
-
 [node name="EOSLogin" type="Control" parent="." unique_id=65772481]
 layout_mode = 3
 anchors_preset = 0
@@ -54,8 +48,14 @@ offset_bottom = 40.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1811333581]
 environment = SubResource("Environment_vjjlj")
 
-[node name="Hitboxes" type="Node3D" parent="." unique_id=2062355638]
-
 [node name="Enemy" parent="." unique_id=1560243081 instance=ExtResource("5_cvbt6")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.06296408, 1.5765026)
 script = ExtResource("6_1dhow")
+
+[node name="Players" type="Node" parent="." unique_id=447140130]
+
+[node name="Nero" parent="Players" unique_id=746435136 instance=ExtResource("6_bvebm")]
+
+[node name="Hitboxes" type="Node" parent="." unique_id=801362876]
+
+[node name="Characters" type="Node3D" parent="." unique_id=51375643]

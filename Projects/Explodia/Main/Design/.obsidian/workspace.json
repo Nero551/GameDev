@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Doc/Entities/Regular NPCS/Main.md",
+                "file": "Chaos NoteBook/Notes 3.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Main"
+              "title": "Notes 3"
             }
           }
         ]
@@ -185,11 +185,11 @@
   },
   "active": "a3c787ad57a57221",
   "lastOpenFiles": [
+    "Doc/Entities/Regular NPCS/Main.md",
     "Doc/Mechanics/Black Flash.md",
     "Doc/Status Effects/Black Flame.md",
     "Doc/Status Effects/Bleed.md",
     "Doc/Mechanics/Character Customization.md",
-    "Doc/Entities/Regular NPCS/Main.md",
     "Doc/Character Customization/Height.md",
     "Chaos NoteBook/Notes 3.md",
     "Doc/Entities/Regular NPCS",

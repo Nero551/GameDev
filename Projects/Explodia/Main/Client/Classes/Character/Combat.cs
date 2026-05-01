@@ -54,13 +54,12 @@ public partial class Character
 		string hitboxName = itemName + "Basic Attack Hitbox";
 		if (World.Hitboxes.GetNodeOrNull<Hitbox>(hitboxName) == null)
 		{
-			PackedScene scene = GD.Load<PackedScene>("res://Main/Workspace/hitbox.tscn");
+			PackedScene scene = GD.Load<PackedScene>("res://Main/Workspace/Hitbox.tscn");
 			Hitbox hitbox = scene.Instantiate<Hitbox>();
 
 			hitbox.Name = hitboxName;
 
 			hitbox.Init(GlobalPosition - GlobalTransform.Basis.Z * 3f + Vector3.Up * 0.5f, new Vector3(0.75f, 1f, 0.75f), this);
-			World.Hitboxes.AddChild(hitbox);
 			PULib.ScheduleRemoval(hitbox, 0.2f);
 		}
 	}

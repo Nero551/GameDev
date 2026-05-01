@@ -12,11 +12,11 @@ public partial class Player
     {
         if (Input.IsActionPressed("M1"))
         {
-            M1();
+            Character.M1();
         }
         if (Input.IsActionPressed("M2"))
         {
-            M2();
+            Character.M2();
         }
 
         if (Input.IsActionJustPressed("ExitGame"))
@@ -26,16 +26,16 @@ public partial class Player
 
         if (Input.IsActionJustPressed("Sprint"))
         {
-            if (CheckState("Sprinting"))
+            if (Character.CheckState("Sprinting"))
             {
-                RemoveState("Sprinting");
+                Character.RemoveState("Sprinting");
             }
             else
             {
-                AddState("Sprinting");
+                Character.AddState("Sprinting");
             }
         }
-        MoveDirection = Input.GetVector("Left", "Right", "Back", "Forward");
+        Character.MoveDirection = Input.GetVector("Left", "Right", "Back", "Forward");
 
     }
 }

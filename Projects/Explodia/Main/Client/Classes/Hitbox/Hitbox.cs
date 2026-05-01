@@ -33,8 +33,6 @@ public partial class Hitbox : Area3D
 			}
 
 			//Actual Hit Logic Here pls
-			//TODO Still Under Development
-
 			DefaultHit(Attacker, Data, targetHit);
 		}
 	}
@@ -45,6 +43,8 @@ public partial class Hitbox : Area3D
 		SetHitboxPosition(position);
 		Attacker = attacker;
 		Data = Attacker.ActiveHand.itemData;
+
+		World.Hitboxes.AddChild(this);
 	}
 
 	public void SetHitboxPosition(Vector3 position)

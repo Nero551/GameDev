@@ -3,9 +3,14 @@ using System;
 
 public partial class World : Node3D
 {
-	public static Node3D Hitboxes;
-	public override void _Ready()
+	public static Node Hitboxes;
+	public static Node Players;
+	public static Node Characters;
+
+	public override void _EnterTree()
 	{
-		Hitboxes = GetNodeOrNull<Node3D>("Hitboxes");
+		Players = GetNodeOrNull<Node>("Players");
+		Characters = GetNodeOrNull<Node>("Characters");
+		Hitboxes = GetNodeOrNull<Node>("Hitboxes");
 	}
 }

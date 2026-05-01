@@ -5,22 +5,22 @@ public partial class Player
 {
 	public void MovementPhysics(double delta)
 	{
-		Vector3 velocity = Velocity;
+		Vector3 velocity = Character.Velocity;
 
 
-		if (!IsOnFloor())
+		if (!Character.IsOnFloor())
 		{
-			velocity += GetGravity() * (float)delta;
+			velocity += Character.GetGravity() * (float)delta;
 		}
-		else if (CheckState("Jumping"))
+		else if (Character.CheckState("Jumping"))
 		{
-			RemoveState("Jumping");
+			Character.RemoveState("Jumping");
 		}
 
-		if (Input.IsActionJustPressed("Jump") && IsOnFloor())
+		if (Input.IsActionJustPressed("Jump") && Character.IsOnFloor())
 		{
-			AddState("Jumping");
-			velocity.Y = JumpPower;
+			Character.AddState("Jumping");
+			velocity.Y = Character.JumpPower;
 		}
 
 		Vector3 forward = -springArm.GlobalTransform.Basis.Z;
@@ -30,41 +30,41 @@ public partial class Player
 		forward = forward.Normalized();
 		right = right.Normalized();
 
-		Vector3 direction = (right * MoveDirection.X + forward * MoveDirection.Y).Normalized();
+		Vector3 direction = (right * Character.MoveDirection.X + forward * Character.MoveDirection.Y).Normalized();
 
 		if (direction != Vector3.Zero)
 		{
-			velocity.X = direction.X * Speed;
-			velocity.Z = direction.Z * Speed;
+			velocity.X = direction.X * Character.Speed;
+			velocity.Z = direction.Z * Character.Speed;
 
-			if (!CheckState("Sprinting"))
+			if (!Character.CheckState("Sprinting"))
 			{
-				AddState("Walking");
+				Character.AddState("Walking");
 			}
 			else
 			{
-				RemoveState("Walking");
+				Character.RemoveState("Walking");
 			}
-			RemoveState("Idle");
-			var rig = GetNode<Node3D>("__Animation Dummy_Armature");
+			Character.RemoveState("Idle");
+			var rig = Character.GetNode<Node3D>("__Animation Dummy_Armature");
 
 			//? Smooths character rotation 
 			// I dont understand how this works but it works
-			Vector3 targetDir = (GlobalPosition + direction - rig.GlobalPosition).Normalized();
+			Vector3 targetDir = (Character.GlobalPosition + direction - rig.GlobalPosition).Normalized();
 			Basis target = Basis.LookingAt(targetDir, Vector3.Up);
 
 			rig.Basis = rig.Basis.Slerp(target, 8f * (float)delta);
-		} 
+		}
 		else
 		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
+			velocity.X = Mathf.MoveToward(Character.Velocity.X, 0, Character.Speed);
+			velocity.Z = Mathf.MoveToward(Character.Velocity.Z, 0, Character.Speed);
 
-			RemoveState("Walking");
+			Character.RemoveState("Walking");
 		}
 
-		Velocity = velocity;
-		MoveAndSlide();
+		Character.Velocity = velocity;
+		Character.MoveAndSlide();
 	}
 
 }
