@@ -2,18 +2,25 @@
 
 [ext_resource type="Script" uid="uid://8vyuhyx0xogt" path="res://addons/godot-freecam-plugin-11a229982a39a4f1551db1971f7a92efc862c0d7/addons/freecam_3D/freecam.gd" id="1_5invl"]
 [ext_resource type="Script" uid="uid://basaeofw4o53a" path="res://Main/Mouse.cs" id="1_jd6ud"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_e745f"]
+[ext_resource type="Script" uid="uid://dju24gnlkgpry" path="res://Main/Grid/Grid.cs" id="4_8lx2g"]
 
 [node name="World" type="Node3D" unique_id=279850032]
-script = ExtResource("1_jd6ud")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1617546362]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1476049028]
-transform = Transform3D(16.656366, 0, 0, 0, 1, 0, 0, 0, 13.7473545, 0, 0, 0)
-mesh = SubResource("BoxMesh_e745f")
 
 [node name="Freecam3D" type="Camera3D" parent="." unique_id=139897174]
+visible = false
 script = ExtResource("1_5invl")
 metadata/_custom_type_script = "uid://8vyuhyx0xogt"
+
+[node name="Grid" type="Node" parent="." unique_id=784772152]
+script = ExtResource("4_8lx2g")
+
+[node name="Lines" type="Node" parent="Grid" unique_id=625160623]
+
+[node name="Points" type="Node" parent="Grid" unique_id=817487097]
+
+[node name="GridLines" type="Node" parent="Grid" unique_id=1960811890]
+
+[node name="Axis" type="Node" parent="Grid" unique_id=1249152492]
+
+[node name="Mouse" type="Node3D" parent="." unique_id=41744804]
+script = ExtResource("1_jd6ud")

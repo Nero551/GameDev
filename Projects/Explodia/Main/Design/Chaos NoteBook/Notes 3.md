@@ -13,3 +13,9 @@ Npcs have stats like emotional state, IQ , etc.
 
 Enemies have limited range of sight so u can sneak up behind them and stuff.
 
+main main menu where u can change settings and choose gamemode,
+this menu wont load any ingame things.
+usabilty:
+1- if someonoe changes settings that nuke their game , they can modify it here.
+2- adds option for non online gamemodes in the future.
+

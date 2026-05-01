@@ -67,7 +67,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	
-	if Input.is_action_just_released("__debug_camera_toggle"):
+	if Input.is_action_just_released("ToggleMouseMode"):
 		movement_active = not movement_active
 	
 	if movement_active:

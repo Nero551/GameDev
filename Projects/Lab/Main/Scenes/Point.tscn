@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dhrgv44771bpb"]
+
+[ext_resource type="Script" uid="uid://ckw8fpe47di1k" path="res://Main/Grid/Point.cs" id="1_80dwv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_80dwv"]
+emission_enabled = true
+emission = Color(0.88962394, 0.62780696, 0.25447404, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cfcef"]
+
+[node name="Point" type="Node3D" unique_id=580026383]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+top_level = true
+script = ExtResource("1_80dwv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=432366226]
+material_override = SubResource("StandardMaterial3D_80dwv")
+mesh = SubResource("BoxMesh_cfcef")
