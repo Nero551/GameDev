@@ -44,10 +44,13 @@ public partial class Character
 		return false;
 	}
 
-	public void UpdateStatesDuration(double delta)
+	public void HandleStates(double delta)
 	{
+		float normalSpeed = 1;
+		float normalJumpPower = 4.5f;
 		foreach (string key in ActiveStates.Keys)
 		{
+			//Durations
 			if (ActiveStates[key] != double.MaxValue)
 			{
 				ActiveStates[key] -= delta;
@@ -55,25 +58,21 @@ public partial class Character
 				if (ActiveStates[key] <= 0)
 					ActiveStates.Remove(key);
 			}
-			// GD.Print(key);
-		}
-	}
 
-	public void HandleStates(double delta)
-	{
-		foreach (string key in stateData.Keys)
-		{
-			if (ActiveStates.ContainsKey(key))
+			//Adjusting JumpPower and Speed
+			Godot.Collections.Dictionary data = (Godot.Collections.Dictionary)stateData[key];
+			if (data != null)
 			{
 				if (CurrentHealth <= 0)
 				{
 					AddState("Dead");
 				}
-				Godot.Collections.Dictionary data = (Godot.Collections.Dictionary)stateData[key];
-				JumpPower = (float)data["JumpPower"];
-				Speed = (float)data["Speed"];
-				return;
+				normalJumpPower = (float)data["JumpPower"];
+				normalSpeed = (float)data["Speed"];
+				break;
 			}
 		}
+		Speed = normalSpeed;
+		JumpPower = normalJumpPower;
 	}
 }

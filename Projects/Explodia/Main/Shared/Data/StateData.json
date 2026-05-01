@@ -22,9 +22,5 @@
   "Sprinting": {
     "JumpPower": 4.5,
     "Speed": 5
-  },
-  "Walking": {
-    "JumpPower": 4.5,
-    "Speed": 1
   }
 }

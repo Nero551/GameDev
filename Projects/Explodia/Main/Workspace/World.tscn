@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://cgkpvnul3qovt"]
 
-[ext_resource type="Script" uid="uid://wm74fyw2ougo" path="res://Main/Shared/Classes/World.cs" id="1_bd1ac"]
-[ext_resource type="Texture2D" uid="uid://dtsm7jpnqwq67" path="res://icon.svg" id="1_vjjlj"]
-[ext_resource type="PackedScene" uid="uid://y163uilivcp" path="res://Main/UI/UI.tscn" id="4_vh06i"]
-[ext_resource type="PackedScene" uid="uid://8plp26spdxm4" path="res://Main/Workspace/Character.tscn" id="5_cvbt6"]
-[ext_resource type="Script" uid="uid://dvr5vpxnt2r5i" path="res://Main/Client/Classes/Enemy/Enemy.cs" id="6_1dhow"]
-[ext_resource type="PackedScene" uid="uid://cvle36gt8soas" path="res://Main/Workspace/Player.tscn" id="6_bvebm"]
+[ext_resource type="Script" uid="uid://wm74fyw2ougo" path="res://Main/Shared/Classes/World.cs" id="1_vklr1"]
+[ext_resource type="Texture2D" uid="uid://dtsm7jpnqwq67" path="res://icon.svg" id="2_5awyl"]
+[ext_resource type="PackedScene" uid="uid://8plp26spdxm4" path="res://Main/Workspace/Character.tscn" id="3_u2oix"]
+[ext_resource type="Script" uid="uid://dvr5vpxnt2r5i" path="res://Main/Client/Classes/Enemy/Enemy.cs" id="4_tcacx"]
+[ext_resource type="PackedScene" uid="uid://cvle36gt8soas" path="res://Main/Workspace/Player.tscn" id="6_digbp"]
+[ext_resource type="PackedScene" uid="uid://y163uilivcp" path="res://Main/UI/UI.tscn" id="7_kvvb5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bd1ac"]
-albedo_texture = ExtResource("1_vjjlj")
+albedo_texture = ExtResource("2_5awyl")
 uv1_scale = Vector3(24.225, 24.225, 24.225)
 uv1_triplanar = true
 
@@ -20,7 +20,7 @@ size = Vector3(100, 0.1, 100)
 [sub_resource type="Environment" id="Environment_vjjlj"]
 
 [node name="World" type="Node3D" unique_id=592963299]
-script = ExtResource("1_bd1ac")
+script = ExtResource("1_vklr1")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=833942431]
 
@@ -41,21 +41,23 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1750302501]
-
-[node name="Control" parent="UI" unique_id=1181390150 instance=ExtResource("4_vh06i")]
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1811333581]
 environment = SubResource("Environment_vjjlj")
 
-[node name="Enemy" parent="." unique_id=1560243081 instance=ExtResource("5_cvbt6")]
+[node name="Enemy" parent="." unique_id=1560243081 instance=ExtResource("3_u2oix")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.06296408, 1.5765026)
-script = ExtResource("6_1dhow")
+script = ExtResource("4_tcacx")
+AIState = 3
+MainState = 3
 
 [node name="Players" type="Node" parent="." unique_id=447140130]
 
-[node name="Nero" parent="Players" unique_id=746435136 instance=ExtResource("6_bvebm")]
+[node name="Nero" parent="Players" unique_id=746435136 instance=ExtResource("6_digbp")]
+
+[node name="UI" type="CanvasLayer" parent="Players/Nero" unique_id=1750302501]
+
+[node name="Control" parent="Players/Nero/UI" unique_id=1181390150 instance=ExtResource("7_kvvb5")]
 
 [node name="Hitboxes" type="Node" parent="." unique_id=801362876]
 
-[node name="Characters" type="Node3D" parent="." unique_id=51375643]
+[node name="Characters" type="Node" parent="." unique_id=2116615802]

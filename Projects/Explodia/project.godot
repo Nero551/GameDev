@@ -29,6 +29,7 @@ window/stretch/mode="canvas_items"
 [dotnet]
 
 project/assembly_name="Explodia"
+project/max_fps=0
 
 [editor_plugins]
 

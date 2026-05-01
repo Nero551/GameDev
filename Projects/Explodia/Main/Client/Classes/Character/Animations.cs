@@ -31,7 +31,7 @@ public partial class Character
 			animationPlayer.AddAnimationLibrary(libraryName, library);
 		}
 	}
-	public void PlayAnim(string animName, int priority, float blendTime = 0.2f)
+	public void PlayAnim(string animName, int priority, float blendTime = 0.15f)
 	{
 		if (CurrentAnim != animName && GetAnim(animName) != null)
 		{

@@ -5,51 +5,33 @@ public partial class Character
 {
 	public void MainAnimations()
 	{
-		if (ActiveHand == null)
+		if (MainState == MainStates.Moving)
 		{
-			if (CheckState("Sprinting") && IsMoving())
+			if (CheckState("Sprinting"))
 			{
 				PlayAnim("Default/Run", 3);
 			}
-			else if (CheckState("Walking") && IsMoving())
-			{
-				PlayAnim("Default/Walk",3);
-			}
 			else
 			{
-				PlayAnim("Default/Idle",3);
+				PlayAnim("Default/Walk", 3);
 			}
 		}
-		else if (ActiveHand.animationLibrary != null)
+		else if (MainState == MainStates.Idle)
 		{
-			//Play weapon Animations
-			if (CheckState("Sprinting") && IsMoving())
+			if (ActiveHand == null)
 			{
-				PlayAnim("Default/Run",3);
-			}
-			else if (CheckState("Walking") && IsMoving())
-			{
-				PlayAnim("Default/Walk",3);
+				PlayAnim("Default/Idle", 3);
 			}
 			else
 			{
-				PlayAnim((string)ActiveHand.itemData["Name"] +"/"+ "Idle",3);
-			}
-		}
-		else
-		{
-			if (CheckState("Sprinting") && IsMoving())
-			{
-				PlayAnim("Default/Run",3);
-			}
-			else if (CheckState("Walking") && IsMoving())
-			{
-				PlayAnim("Default/Walk",3);
-
-			}
-			else
-			{
-				PlayAnim("Default/Idle",3);
+				if (ActiveHand.animationLibrary == null)
+				{
+					PlayAnim("Default/Idle", 3);
+				}
+				else
+				{
+					PlayAnim((string)ActiveHand.itemData["Name"] + "/" + "Idle", 3);
+				}
 			}
 		}
 	}

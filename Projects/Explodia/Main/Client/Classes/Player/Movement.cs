@@ -7,19 +7,13 @@ public partial class Player
 	{
 		Vector3 velocity = Character.Velocity;
 
-
 		if (!Character.IsOnFloor())
 		{
 			velocity += Character.GetGravity() * (float)delta;
 		}
-		else if (Character.CheckState("Jumping"))
-		{
-			Character.RemoveState("Jumping");
-		}
 
 		if (Input.IsActionJustPressed("Jump") && Character.IsOnFloor())
 		{
-			Character.AddState("Jumping");
 			velocity.Y = Character.JumpPower;
 		}
 
@@ -37,15 +31,6 @@ public partial class Player
 			velocity.X = direction.X * Character.Speed;
 			velocity.Z = direction.Z * Character.Speed;
 
-			if (!Character.CheckState("Sprinting"))
-			{
-				Character.AddState("Walking");
-			}
-			else
-			{
-				Character.RemoveState("Walking");
-			}
-			Character.RemoveState("Idle");
 			var rig = Character.GetNode<Node3D>("__Animation Dummy_Armature");
 
 			//? Smooths character rotation 
@@ -59,8 +44,6 @@ public partial class Player
 		{
 			velocity.X = Mathf.MoveToward(Character.Velocity.X, 0, Character.Speed);
 			velocity.Z = Mathf.MoveToward(Character.Velocity.Z, 0, Character.Speed);
-
-			Character.RemoveState("Walking");
 		}
 
 		Character.Velocity = velocity;

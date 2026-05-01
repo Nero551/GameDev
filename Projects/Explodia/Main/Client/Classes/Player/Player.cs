@@ -4,6 +4,7 @@ using System;
 public partial class Player : Node3D
 {
     [Export] public Character Character;
+
     public override void _Ready()
     {
         SpawnCharacter();
@@ -28,7 +29,6 @@ public partial class Player : Node3D
 
     public override void _PhysicsProcess(double delta)
     {
-        GlobalPosition = Character.GlobalPosition;
         PlayerInput(delta);
         ZoomCamera();
         MovementPhysics(delta);
@@ -36,6 +36,7 @@ public partial class Player : Node3D
 
     public override void _Process(double delta)
     {
+        GlobalPosition = Character.GlobalPosition;
         base._Process(delta);
     }
 }
