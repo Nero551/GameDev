@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://b804kg1wf78yy"]
 
-[ext_resource type="Script" uid="uid://b2tu2getqx87t" path="res://addons/debug_camera/scripts/DebugCamera3D.gd" id="1_5invl"]
+[ext_resource type="Script" uid="uid://8vyuhyx0xogt" path="res://addons/godot-freecam-plugin-11a229982a39a4f1551db1971f7a92efc862c0d7/addons/freecam_3D/freecam.gd" id="1_5invl"]
+[ext_resource type="Script" uid="uid://basaeofw4o53a" path="res://Main/Mouse.cs" id="1_jd6ud"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_e745f"]
 
 [node name="World" type="Node3D" unique_id=279850032]
+script = ExtResource("1_jd6ud")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1617546362]
 
@@ -12,5 +14,6 @@
 transform = Transform3D(16.656366, 0, 0, 0, 1, 0, 0, 0, 13.7473545, 0, 0, 0)
 mesh = SubResource("BoxMesh_e745f")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1454768334]
+[node name="Freecam3D" type="Camera3D" parent="." unique_id=139897174]
 script = ExtResource("1_5invl")
+metadata/_custom_type_script = "uid://8vyuhyx0xogt"

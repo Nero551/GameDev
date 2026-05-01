@@ -10,6 +10,15 @@ public partial class Player
 
     public void PlayerInput(double delta)
     {
+        if (Input.IsActionJustPressed("SwitchCam"))
+        {
+            SwitchCam();
+        }
+
+        if (World.DebugCam.Current)
+        {
+            return;
+        }
         if (Input.IsActionPressed("M1"))
         {
             Character.M1();
@@ -36,6 +45,5 @@ public partial class Player
             }
         }
         Character.MoveDirection = Input.GetVector("Left", "Right", "Back", "Forward");
-
     }
 }

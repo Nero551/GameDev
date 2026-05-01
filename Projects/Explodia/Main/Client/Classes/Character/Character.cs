@@ -10,7 +10,7 @@ public partial class Character : CharacterBody3D
 		GetNode<Weapon>("Fist").Init(this);
 	}
 	[Export] public MainStates MainState;
-
+ 
 	[Export] public Vector2 MoveDirection = Vector2.Zero;
 
 	[Export] public float Speed;

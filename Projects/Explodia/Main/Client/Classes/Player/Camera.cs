@@ -18,6 +18,18 @@ public partial class Player
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
 
+	public void SwitchCam()
+	{
+		if (!World.DebugCam.Current)
+		{
+			World.DebugCam.Current = true;
+		}
+		else
+		{
+			springArm.GetNode<Camera3D>("Camera3D").Current = true;
+		}
+	}
+
 	public void ZoomCamera()
 	{
 		if (Input.IsActionJustPressed("Zoom In") && springArm.SpringLength > MinSpringLength)
