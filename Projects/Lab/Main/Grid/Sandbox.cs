@@ -14,6 +14,9 @@ public partial class Grid
         Line AB = CreateLine("AB", A.Position, B.Position);
         Line BC = CreateLine("BC", B.Position, C.Position);
         Line AC = CreateLine("AC", A.Position, C.Position);
+
+        LinearEquation(3,5,8);
+        LinearEquation(9,4,23);
     }
 
     public override void _Process(double delta)
