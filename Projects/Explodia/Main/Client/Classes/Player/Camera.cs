@@ -4,10 +4,10 @@ using System;
 public partial class Player
 {
 	public SpringArm3D springArm;
-	
+
 	int MaxSpringLength = 6;
 	int MinSpringLength = 1;
-	
+
 	[Export] public float MouseSensitivity = 0.002f;
 	float horizontalRotation;
 	float verticalRotation;

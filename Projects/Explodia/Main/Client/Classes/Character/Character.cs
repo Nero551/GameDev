@@ -5,12 +5,14 @@ public partial class Character : CharacterBody3D
 {
 	public override void _Ready()
 	{
+		Rig = GetNode<Node3D>("__Animation Dummy_Armature");
 		InitAnim();
 		InitStates();
 		GetNode<Weapon>("Fist").Init(this);
 	}
 	[Export] public MainStates MainState;
- 
+
+	[Export] public Node3D Rig;
 	[Export] public Vector2 MoveDirection = Vector2.Zero;
 
 	[Export] public float Speed;

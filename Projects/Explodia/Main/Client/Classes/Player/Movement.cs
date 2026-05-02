@@ -3,6 +3,7 @@ using System;
 
 public partial class Player
 {
+
 	public void MovementPhysics(double delta)
 	{
 		Vector3 velocity = Character.Velocity;
@@ -31,14 +32,12 @@ public partial class Player
 			velocity.X = direction.X * Character.Speed;
 			velocity.Z = direction.Z * Character.Speed;
 
-			var rig = Character.GetNode<Node3D>("__Animation Dummy_Armature");
-
 			//? Smooths character rotation 
 			// I dont understand how this works but it works
-			Vector3 targetDir = (Character.GlobalPosition + direction - rig.GlobalPosition).Normalized();
+			Vector3 targetDir = (Character.GlobalPosition + direction - Character.Rig.GlobalPosition).Normalized();
 			Basis target = Basis.LookingAt(targetDir, Vector3.Up);
 
-			rig.Basis = rig.Basis.Slerp(target, 8f * (float)delta);
+			Character.Rig.Basis = Character.Rig.Basis.Slerp(target, 8f * (float)delta);
 		}
 		else
 		{

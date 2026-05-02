@@ -9,20 +9,28 @@ public partial class Grid
     {
         base._Ready();
         CreateGrid(20, 20, 20);
-        LinearEquation(3, 4, 5);
-        LinearEquation(4, -3, 5);
-        QuadraticEquation(2, 4, 2);
 
-        CreateCircle(new Vector3(5, 8, 0), 5);
-        CreateTriangle(new Vector3(5, 8, 0), new Vector3(8, 8, 0), new Vector3(8, 12, 0));
+        Vector3 a = Origin;
+        Vector3 b = new Vector3(4, 0, 0);
+        Vector3 c = new Vector3(4, 3, 0);
 
-        CreateTriangle(new Vector3(5, 8, 0), new Vector3(8, 8, 0), new Vector3(8, 4, 0));
+        Point A = CreatePoint(a.ToString(), a);
+        Point B = CreatePoint(b.ToString(), b);
+        Point C = CreatePoint(c.ToString(), c);
+        Line AB = CreateLine(A.Position.ToString(), A.Position, B.Position);
+        Line BC = CreateLine(B.Position.ToString(), B.Position, C.Position);
+        Line AC = CreateLine(C.Position.ToString(), A.Position, C.Position);
 
-        CreateLine("Triangle Median", new Vector3(8, 8, 0), (new Vector3(5, 8, 0) + new Vector3(8, 12, 0)) / 2);
+        float sin = BC.Scale.Y / AC.Scale.Y;
+        float cos = AB.Scale.Y / AC.Scale.Y;
+        float tan = BC.Scale.Y / AB.Scale.Y;
 
+        GD.Print("Sin: " + sin);
+        GD.Print("Cos: " + cos);
+        GD.Print("Tan: " + tan);
 
-        CreateLine("Triangle Median", new Vector3(8, 8, 0), (new Vector3(5, 8, 0) + new Vector3(8, 4, 0)) / 2);
-
+        GD.Print("C: " + C.Position);
+        GD.Print(new Vector3(cos, sin, 0));
     }
 
     public override void _Process(double delta)

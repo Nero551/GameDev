@@ -22,17 +22,25 @@ public partial class Character
 			{
 				return;
 			}
+
 			if ((PULib.CurrentSTime() - LastComboTime) < (double)ActiveHand.itemData["ComboCooldown"])
 			{
 				return;
 			}
-			if (SwingNumber == (int)ActiveHand.itemData["Swings"] || (PULib.CurrentSTime() - LastSwingTime) >= 5)
+
+			if ((PULib.CurrentSTime() - LastSwingTime) >= (double)ActiveHand.itemData["ComboResetTime"])
+			{
+				SwingNumber = 0;
+			}
+
+			SwingNumber++;
+			LastSwingTime = PULib.CurrentSTime();
+
+			if (SwingNumber > (int)ActiveHand.itemData["Swings"])
 			{
 				LastComboTime = PULib.CurrentSTime();
 				SwingNumber = 0;
 			}
-			SwingNumber++;
-			LastSwingTime = PULib.CurrentSTime();
 
 			string itemName = (string)ActiveHand.itemData["Name"];
 			Animation swingAnim = GetAnim(itemName + "/" + "L" + SwingNumber);
@@ -57,7 +65,10 @@ public partial class Character
 
 			hitbox.Name = hitboxName;
 
-			hitbox.Init(GlobalPosition - GlobalTransform.Basis.Z * 3f + Vector3.Up * 0.5f, new Vector3(0.75f, 1f, 0.75f), this);
+			Godot.Collections.Dictionary hitboxData = (Godot.Collections.Dictionary)ActiveHand.itemData["Hitbox"];
+			Vector3 hitboxSize = new Vector3((float)hitboxData["X"], (float)hitboxData["Y"], (float)hitboxData["Z"]);
+
+			hitbox.Init(Rig.GetNode<Marker3D>("HitboxLocation").GlobalPosition, hitboxSize, this);
 			PULib.ScheduleRemoval(hitbox, 0.2f);
 		}
 	}

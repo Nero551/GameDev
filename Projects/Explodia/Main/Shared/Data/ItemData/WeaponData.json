@@ -3,7 +3,13 @@
 		"Name": "Fist",
 		"Type": "Melee",
 		"Damage": 7.5,
-		"Swings": 5,
-		"ComboCooldown": 2
+		"Swings": 4,
+		"ComboCooldown": 2,
+		"ComboResetTime": 2,
+		"Hitbox": {
+			"X": 0.75,
+			"Y": 1,
+			"Z": 0.75
+		}
 	}
 }

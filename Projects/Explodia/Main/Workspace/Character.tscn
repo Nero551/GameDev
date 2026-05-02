@@ -496,6 +496,9 @@ script = ExtResource("1_6xqrn")
 
 [node name="__Animation Dummy_Armature" type="Node3D" parent="." unique_id=1143357461]
 
+[node name="HitboxLocation" type="Marker3D" parent="__Animation Dummy_Armature" unique_id=489333077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8485906, -3.3381987)
+
 [node name="Skeleton3D" type="Skeleton3D" parent="__Animation Dummy_Armature" unique_id=89070784]
 bones/0/name = "HumanoidRootPart"
 bones/0/parent = -1
