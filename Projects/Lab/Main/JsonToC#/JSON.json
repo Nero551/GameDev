@@ -1,0 +1,10 @@
+{
+	"Bob": {
+		"Age": 20,
+		"Job": "Engineer",
+		"Skills": {
+			"1":"Cooking",
+			"2":"Cleaning"
+		}
+	}
+}

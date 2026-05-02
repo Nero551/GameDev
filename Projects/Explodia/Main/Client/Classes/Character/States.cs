@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using Dict = Godot.Collections.Dictionary;
 
 public partial class Character
 {
@@ -60,16 +61,19 @@ public partial class Character
 			}
 
 			//Adjusting JumpPower and Speed
-			Godot.Collections.Dictionary data = (Godot.Collections.Dictionary)stateData[key];
-			if (data != null)
+			if (stateData.ContainsKey(key))
 			{
-				if (CurrentHealth <= 0)
+				Dict data = (Dict)stateData[key];
+				if (data != null)
 				{
-					AddState("Dead");
+					if (CurrentHealth <= 0)
+					{
+						AddState("Dead");
+					}
+					normalJumpPower = (float)data["JumpPower"];
+					normalSpeed = (float)data["Speed"];
+					break;
 				}
-				normalJumpPower = (float)data["JumpPower"];
-				normalSpeed = (float)data["Speed"];
-				break;
 			}
 		}
 		Speed = normalSpeed;
