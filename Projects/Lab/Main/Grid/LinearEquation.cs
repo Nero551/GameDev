@@ -7,13 +7,10 @@ public partial class Grid
 {
     public void LinearEquation(float a, float b, float c)
     {
-        //? aX + bY + c = 0
-        //? 3X + 5Y + 8 = 0
         List<Point> Points = new();
-        for (float i = -15; i <= 15; i++)
+        for (float X = -100; X <= 100; X++)
         {
-            float X = (-c - (i * b)) / a;
-            float Y = (-c - (i * a)) / b;
+            float Y = (-a * X -c) / b;
             Points.Add(CreatePoint(new Vector3(X, Y, 0).ToString(), new Vector3(X, Y, 0)));
         }
         Point A = Points[0];

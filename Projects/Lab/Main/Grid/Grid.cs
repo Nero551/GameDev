@@ -73,10 +73,6 @@ public partial class Grid : Node
 
     public  Point CreatePoint(string name, Vector3 pos)
     {
-        if (GetNodeOrNull<Node3D>("Points/" + name) != null)
-        {
-            return null;
-        }
 
         PackedScene scene = GD.Load<PackedScene>("res://Main/Scenes/Point.tscn");
         Point P = scene.Instantiate<Point>();
@@ -89,10 +85,6 @@ public partial class Grid : Node
 
     public Line CreateLine(string name, Vector3 A, Vector3 B)
     {
-        if (GetNodeOrNull<Node3D>("Lines/" + name) != null)
-        {
-            return null;
-        }
 
         PackedScene scene = GD.Load<PackedScene>("res://Main/Scenes/Line.tscn");
         Line L = scene.Instantiate<Line>();

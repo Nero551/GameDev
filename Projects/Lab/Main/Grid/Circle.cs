@@ -6,7 +6,7 @@ public partial class Grid
     public void CreateCircle(Vector3 origin, float radius)
     {
         CreatePoint("M", origin);
-        for (float theta = 0; theta <= 360; theta += 0.5f)
+        for (float theta = 0; theta <= 360; theta += 1)
         {
             Vector3 C;
 
