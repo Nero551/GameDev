@@ -4,21 +4,18 @@ using System;
 public partial class AnimationsComponent : Component
 {
     private AnimationPlayer animationPlayer;
+    private IAnimatible anim;
     //? Priority Guide, 1 high , 2 medium , 3 low
     protected override void OnInit()
     {
-        if (Owner is not IAnimatible)
-        {
-            GD.PrintErr($"{GetType().Name} removed: missing IMovable");
-            return;
-        }
+        anim = Owner as IAnimatible;
         animationPlayer = Owner.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
 
         if (animationPlayer == null)
         {
             GD.PushError("AnimationPlayer not found!");
         }
-        
+
     }
 
     public AnimationLibrary LoadAnimLibrary(string filepath)
@@ -36,12 +33,12 @@ public partial class AnimationsComponent : Component
     }
     public void PlayAnim(string animName, int priority, float blendTime = 0.15f)
     {
-        if (Owner.CurrentAnim != animName && GetAnim(animName) != null)
+        if (anim.CurrentAnim != animName && GetAnim(animName) != null)
         {
-            if (priority <= Owner.CurrentAnimPriority)
+            if (priority <= anim.CurrentAnimPriority)
             {
-                Owner.CurrentAnimPriority = priority;
-                Owner.CurrentAnim = animName;
+                anim.CurrentAnimPriority = priority;
+                anim.CurrentAnim = animName;
                 animationPlayer.Play(animName, blendTime);
             }
         }
@@ -68,7 +65,7 @@ public partial class AnimationsComponent : Component
 
     private void OnAnimFinished(string animName)
     {
-        Owner.CurrentAnim = "";
-        Owner.CurrentAnimPriority = 3;
+        anim.CurrentAnim = "";
+        anim.CurrentAnimPriority = 3;
     }
 }

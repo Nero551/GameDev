@@ -15,7 +15,7 @@ public partial class Note : Component
     ? this will allow reusabilty anywhere even if its not the same class , as long as it meets the conditions.
 
     i have done some research. to move into the new framework i need a good understanding of:
-        1- interfaces
+        1- interfaces 
         2- generics
         2- composition
         3- polymorphism

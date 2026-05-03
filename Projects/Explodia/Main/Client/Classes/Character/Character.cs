@@ -3,13 +3,14 @@ using System;
 
 public partial class Character : CharacterBody3D, IAnimatible
 {
-	private AnimationsComponent animationsComponent = new AnimationsComponent();
+	private AnimationsComponent animationsComponent;
+	private Entity entity;
 
 	public override void _Ready()
 	{
-		
+		entity = new Entity(this);
+		animationsComponent = entity.AddComponent<AnimationsComponent>();
 		Rig = GetNode<Node3D>("__Animation Dummy_Armature");
-		animationsComponent.Init(this);
 		InitStates();
 		GetNode<Weapon>("Fist").Init(this);
 	}
@@ -32,8 +33,8 @@ public partial class Character : CharacterBody3D, IAnimatible
 	[Export] public double LastSwingTime = 0;
 	[Export] public double LastComboTime = 0;
 
-	[Export] public int CurrentAnimPriority = 3;
-	[Export] public string CurrentAnim = "";
+	[Export] public int CurrentAnimPriority { get; set; } = 3;
+	[Export] public string CurrentAnim { get; set; } = "";
 
 	public override void _Process(double delta)
 	{

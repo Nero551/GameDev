@@ -1,15 +1,17 @@
 [gd_scene format=4 uid="uid://8plp26spdxm4"]
 
 [ext_resource type="Script" uid="uid://dql3it6yesosp" path="res://Main/Client/Classes/Character/Character.cs" id="1_6xqrn"]
-[ext_resource type="Texture2D" uid="uid://bcys3pfxqwlf4" path="res://Main/Shared/Assets/Models/Rig_AnimationDummy1_diff.png" id="2_3yol6"]
 [ext_resource type="AnimationLibrary" uid="uid://daf4acs5qkjl3" path="res://Main/Shared/Assets/Animations/HitReactions/HitReactions.tres" id="4_4j2bq"]
 [ext_resource type="PackedScene" uid="uid://b3jccq5kuvl1l" path="res://Main/Shared/Assets/Items/Weapons/Melee/Fist/fist.tscn" id="5_3yol6"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_urab3"]
+load_path = "res://.godot/imported/Rig_AnimationDummy1_diff.png-e7f999057e4d8a9e3f7401a4d9f0abf1.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_68iwh"]
 resource_name = "AnimationDummy1Mtl"
 transparency = 4
 cull_mode = 2
-albedo_texture = ExtResource("2_3yol6")
+albedo_texture = SubResource("CompressedTexture2D_urab3")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_6xqrn"]
 _surfaces = [{

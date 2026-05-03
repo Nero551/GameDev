@@ -47,8 +47,8 @@ environment = SubResource("Environment_vjjlj")
 [node name="Enemy" parent="." unique_id=1560243081 instance=ExtResource("3_u2oix")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.06296408, 1.5765026)
 script = ExtResource("4_tcacx")
-AIState = 3
 MainState = 3
+AIState = 3
 
 [node name="Players" type="Node" parent="." unique_id=447140130]
 
