@@ -1,12 +1,15 @@
 using Godot;
 using System;
 
-public partial class Character : CharacterBody3D
+public partial class Character : CharacterBody3D, IAnimatible
 {
+	private AnimationsComponent animationsComponent = new AnimationsComponent();
+
 	public override void _Ready()
 	{
+		
 		Rig = GetNode<Node3D>("__Animation Dummy_Armature");
-		InitAnim();
+		animationsComponent.Init(this);
 		InitStates();
 		GetNode<Weapon>("Fist").Init(this);
 	}

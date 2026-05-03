@@ -19,4 +19,5 @@ usabilty:
 1- if someonoe changes settings that nuke their game , they can modify it here.
 2- adds option for non online gamemodes in the future.
 
-Time to change to composition
+Time to change to composition.
+
