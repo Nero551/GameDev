@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b2rdyvkt4scuo"]
 
-[ext_resource type="Script" uid="uid://bbcgluyxqd0pa" path="res://Main/Shared/Classes/Weapon/Weapon.cs" id="1_xls75"]
+[ext_resource type="Script" uid="uid://bbcgluyxqd0pa" path="res://Main/Shared/Entities/Weapon/Weapon.cs" id="1_xls75"]
 
 [node name="Weapon" type="Node3D" unique_id=4045271]
 script = ExtResource("1_xls75")
