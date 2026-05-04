@@ -3,6 +3,6 @@ using System;
 
 public interface ICombatable
 {
-    Node3D Rig {get;}
-    Item ActiveHand {get;}
+    Node3D Rig { get; }
+    EItem ActiveHand { get; }
 }

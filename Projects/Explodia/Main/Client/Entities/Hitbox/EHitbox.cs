@@ -2,17 +2,17 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Hitbox : Area3D
+public partial class EHitbox : Area3D
 {
-	private Dictionary<Character, int> hitTargets = new();
+	private Dictionary<ECharacter, int> hitTargets = new();
 
 	private Godot.Collections.Dictionary Data;
-	public Character Attacker;
+	public ECharacter Attacker;
 	public void OnBodyEntered(Node3D body)
 	{
-		Character targetHit = body.GetOwner<Character>();
+		ECharacter targetHit = body.GetOwner<ECharacter>();
 
-		if (targetHit != null && targetHit is Character && targetHit != Attacker)
+		if (targetHit != null && targetHit is ECharacter && targetHit != Attacker)
 		{
 			if (hitTargets.ContainsKey(targetHit))
 			{
@@ -37,7 +37,7 @@ public partial class Hitbox : Area3D
 		}
 	}
 
-	public void Init(Vector3 position, Vector3 size, Character attacker)
+	public void Init(Vector3 position, Vector3 size, ECharacter attacker)
 	{
 		SetHitboxSize(size);
 		SetHitboxPosition(position);

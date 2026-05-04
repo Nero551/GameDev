@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class CompCombat : Component
+public partial class CCombat : Component
 {
     [Export] public int SwingNumber = 0;
     [Export] public double LastSwingTime = 0;
@@ -27,9 +27,9 @@ public partial class CompCombat : Component
 
     public void BasicAttack()
     {
-        if (Entity.GetComponent<CompActionVerifier>().CanAttack())
+        if (Entity.GetComponent<CActionVerifier>().CanAttack())
         {
-            if (combatable.ActiveHand == null || combatable.ActiveHand is not Item || combatable.ActiveHand.animationLibrary == null)
+            if (combatable.ActiveHand == null || combatable.ActiveHand is not EItem || combatable.ActiveHand.animationLibrary == null)
             {
                 return;
             }
@@ -54,14 +54,14 @@ public partial class CompCombat : Component
             }
 
             string itemName = (string)combatable.ActiveHand.itemData["Name"];
-            Animation swingAnim = Entity.GetComponent<CompAnimations>().GetAnim(itemName + "/" + "L" + SwingNumber);
+            Animation swingAnim = Entity.GetComponent<CAnimations>().GetAnim(itemName + "/" + "L" + SwingNumber);
             if (swingAnim == null)
             {
                 return;
             }
 
-            Entity.GetComponent<CompStates>().AddState("Attacking", swingAnim.Length);
-            Entity.GetComponent<CompAnimations>().PlayAnim(itemName + "/" + "L" + SwingNumber, 1);
+            Entity.GetComponent<CStates>().AddState("Attacking", swingAnim.Length);
+            Entity.GetComponent<CAnimations>().PlayAnim(itemName + "/" + "L" + SwingNumber, 1);
         }
     }
 
@@ -69,17 +69,17 @@ public partial class CompCombat : Component
     {
         string itemName = (string)combatable.ActiveHand.itemData["Name"];
         string hitboxName = itemName + "Basic Attack Hitbox";
-        if (World.Hitboxes.GetNodeOrNull<Hitbox>(hitboxName) == null)
+        if (World.Hitboxes.GetNodeOrNull<EHitbox>(hitboxName) == null)
         {
             PackedScene scene = GD.Load<PackedScene>("res://Main/Workspace/Hitbox.tscn");
-            Hitbox hitbox = scene.Instantiate<Hitbox>();
+            EHitbox hitbox = scene.Instantiate<EHitbox>();
 
             hitbox.Name = hitboxName;
 
             Godot.Collections.Dictionary hitboxData = (Godot.Collections.Dictionary)combatable.ActiveHand.itemData["Hitbox"];
             Vector3 hitboxSize = new Vector3((float)hitboxData["X"], (float)hitboxData["Y"], (float)hitboxData["Z"]);
 
-            hitbox.Init(combatable.Rig.GetNode<Marker3D>("HitboxLocation").GlobalPosition, hitboxSize, Owner as Character);
+            hitbox.Init(combatable.Rig.GetNode<Marker3D>("HitboxLocation").GlobalPosition, hitboxSize, Owner as ECharacter);
             PULib.ScheduleRemoval(hitbox, 0.2f);
         }
     }

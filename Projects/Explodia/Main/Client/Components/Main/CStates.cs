@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class CompStates : Component
+public partial class CStates : Component
 {
     private IStatable statable;
 

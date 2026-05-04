@@ -1,10 +1,10 @@
 using Godot;
 using System;
 
-public partial class CompMainStates : Component
+public partial class CMainStates : Component
 {
     private IMainStatable mainStatable;
-    private Character character;
+    private ECharacter character;
 
     public enum MainStates
     {
@@ -19,14 +19,14 @@ public partial class CompMainStates : Component
     protected override void OnInit()
     {
         mainStatable = Owner as IMainStatable;
-        character = Owner as Character;
+        character = Owner as ECharacter;
+
     }
 
     public void HandleMainStates()
     {
         if (!mainStatable.IsOnFloor())
         {
-            GD.Print("Nice");
             if (mainStatable.Velocity.Y > 0)
                 MainState = MainStates.Jumping;
             else
@@ -34,7 +34,7 @@ public partial class CompMainStates : Component
         }
         else
         {
-            if (Entity.GetComponent<CompMovement>().IsMoving())
+            if (Entity.GetComponent<CMovement>().IsMoving())
                 MainState = MainStates.Moving;
             else
                 MainState = MainStates.Idle;

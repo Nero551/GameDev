@@ -1,22 +1,22 @@
 using Godot;
 using System;
 
-public partial class Hitbox
+public partial class EHitbox
 {
-	public void DefaultHit(Character Attacker, Godot.Collections.Dictionary itemData, Character targetHit)
+	public void DefaultHit(ECharacter Attacker, Godot.Collections.Dictionary itemData, ECharacter targetHit)
 	{
-		if (targetHit.compStates.CheckState("Invulnerable"))
+		if (targetHit.CStates.CheckState("Invulnerable"))
 		{
 			return;
 		}
-		Attacker.compStates.AddState("In Combat", 30);
-		targetHit.compStates.AddState("In Combat", 30);
-		targetHit.compStates.AddState("Stunned", 0.2);
+		Attacker.CStates.AddState("In Combat", 30);
+		targetHit.CStates.AddState("In Combat", 30);
+		targetHit.CStates.AddState("Stunned", 0.2);
 		//Damage
 		targetHit.CurrentHealth -= (float)itemData["Damage"];
 		Mathf.Max(0, targetHit.CurrentHealth);
 
-		targetHit.compAnimations.PlayAnim("HitReactions/" + Attacker.compCombat.SwingNumber, 1);
+		targetHit.CAnimations.PlayAnim("HitReactions/" + Attacker.CCombat.SwingNumber, 1);
 
 		//TODO VFX ,Animation all that stuff
 	}

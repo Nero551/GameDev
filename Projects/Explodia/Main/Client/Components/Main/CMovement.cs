@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class CompMovement : Component
+public partial class CMovement : Component
 {
     private IMovable movable;
     protected override void OnInit()

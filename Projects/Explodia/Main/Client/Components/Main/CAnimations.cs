@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class CompAnimations : Component
+public partial class CAnimations : Component
 {
     private AnimationPlayer animationPlayer;
 
@@ -70,5 +70,5 @@ public partial class CompAnimations : Component
         CurrentAnim = "";
         CurrentAnimPriority = 3;
     }
-    
+
 }

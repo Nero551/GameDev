@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class AI : Character
+public partial class EAI : ECharacter
 {
     public enum AIStates
     {

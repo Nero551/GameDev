@@ -3,7 +3,7 @@ using System;
 
 public partial class Player : Node3D
 {
-    [Export] public Character Character;
+    [Export] public ECharacter Character;
 
     public override void _Ready()
     {
@@ -16,7 +16,7 @@ public partial class Player : Node3D
         if (Character == null)
         {
             PackedScene scene = GD.Load<PackedScene>("res://Main/Workspace/Character.tscn");
-            Character = scene.Instantiate<Character>();
+            Character = scene.Instantiate<ECharacter>();
             Character.Name = this.Name;
             World.Characters.AddChild(Character);
         }
