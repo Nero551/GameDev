@@ -24,7 +24,7 @@ public partial class CompMainStates : Component
 
     public void HandleMainStates()
     {
-        if (!character.IsOnFloor())
+        if (!mainStatable.IsOnFloor())
         {
             GD.Print("Nice");
             if (mainStatable.Velocity.Y > 0)
