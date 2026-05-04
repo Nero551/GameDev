@@ -1,14 +1,16 @@
 using Godot;
 using System;
 
-public partial class AnimationsComponent : Component
+public partial class CompAnimations : Component
 {
     private AnimationPlayer animationPlayer;
-    private IAnimatible anim;
+
+    [Export] public int CurrentAnimPriority = 3;
+    [Export] public string CurrentAnim = "";
+
     //? Priority Guide, 1 high , 2 medium , 3 low
     protected override void OnInit()
     {
-        anim = Owner as IAnimatible;
         animationPlayer = Owner.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
 
         if (animationPlayer == null)
@@ -33,12 +35,12 @@ public partial class AnimationsComponent : Component
     }
     public void PlayAnim(string animName, int priority, float blendTime = 0.15f)
     {
-        if (anim.CurrentAnim != animName && GetAnim(animName) != null)
+        if (CurrentAnim != animName && GetAnim(animName) != null)
         {
-            if (priority <= anim.CurrentAnimPriority)
+            if (priority <= CurrentAnimPriority)
             {
-                anim.CurrentAnimPriority = priority;
-                anim.CurrentAnim = animName;
+                CurrentAnimPriority = priority;
+                CurrentAnim = animName;
                 animationPlayer.Play(animName, blendTime);
             }
         }
@@ -65,7 +67,8 @@ public partial class AnimationsComponent : Component
 
     private void OnAnimFinished(string animName)
     {
-        anim.CurrentAnim = "";
-        anim.CurrentAnimPriority = 3;
+        CurrentAnim = "";
+        CurrentAnimPriority = 3;
     }
+    
 }
