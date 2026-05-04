@@ -9,6 +9,7 @@ This framework is built around three core pillars:
 * **Interfaces**
 
 Together, they form a modular architecture for organizing gameplay logic in a decoupled and scalable way.
+I call it the EIC Framework pronounced "ice".
 
 ---
 
@@ -108,9 +109,11 @@ Classes currently communicate through:
 
 ## Summary
 
-* **Entities** manage and organize components
-* **Components** handle modular behavior
-* **Interfaces** define external capabilities
+* **Entities** manage and organize components & are prefixed with E
+* **Interfaces** define external capabilities & are prefixed with I
+* **Components** handle modular behavior & are prefixed with C
+
+* The **EIC** framework. pronounced "ice"
 
 This architecture prioritizes:
 
