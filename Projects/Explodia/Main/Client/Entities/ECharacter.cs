@@ -55,4 +55,9 @@ public partial class ECharacter : CharacterBody3D, IStatable, IMainStatable, ICo
 	{
 		CCombat.OnHitMarker();
 	}
+
+	public void OnAnimFinished(string animName)
+	{
+		CAnimations.OnAnimFinished(animName);
+	}
 }

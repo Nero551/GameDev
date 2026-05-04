@@ -65,7 +65,7 @@ public partial class CAnimations : Component
         return null;
     }
 
-    private void OnAnimFinished(string animName)
+    public void OnAnimFinished(string animName)
     {
         CurrentAnim = "";
         CurrentAnimPriority = 3;

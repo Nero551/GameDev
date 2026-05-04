@@ -3,11 +3,11 @@ using System;
 
 public partial class CMainAnimations : Component
 {
-    IMainAnimatible mainAnimatible;
+    IMainAnimatible IMainAnimatible;
 
     protected override void OnInit()
     {
-        mainAnimatible = Owner as IMainAnimatible;
+        IMainAnimatible = Owner as IMainAnimatible;
 
     }
 
@@ -26,19 +26,19 @@ public partial class CMainAnimations : Component
         }
         else if (Entity.GetComponent<CMainStates>().MainState == CMainStates.MainStates.Idle)
         {
-            if (mainAnimatible.ActiveHand == null)
+            if (IMainAnimatible.ActiveHand == null)
             {
                 Entity.GetComponent<CAnimations>().PlayAnim("Default/Idle", 3);
             }
             else
             {
-                if (mainAnimatible.ActiveHand.animationLibrary == null)
+                if (IMainAnimatible.ActiveHand.animationLibrary == null)
                 {
                     Entity.GetComponent<CAnimations>().PlayAnim("Default/Idle", 3);
                 }
                 else
                 {
-                    Entity.GetComponent<CAnimations>().PlayAnim((string)mainAnimatible.ActiveHand.itemData["Name"] + "/" + "Idle", 3);
+                    Entity.GetComponent<CAnimations>().PlayAnim((string)IMainAnimatible.ActiveHand.itemData["Name"] + "/" + "Idle", 3);
                 }
             }
         }
