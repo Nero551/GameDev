@@ -4,10 +4,13 @@ using System.Collections.Generic;
 
 public partial class EHitbox : Area3D
 {
-	private Dictionary<ECharacter, int> hitTargets = new();
+	public Entity Entity;
 
+	private Dictionary<ECharacter, int> hitTargets = new();
 	private Godot.Collections.Dictionary Data;
 	public ECharacter Attacker;
+	public CDefaultHit CdefaultHit;
+
 	public void OnBodyEntered(Node3D body)
 	{
 		ECharacter targetHit = body.GetOwner<ECharacter>();
@@ -33,16 +36,21 @@ public partial class EHitbox : Area3D
 			}
 
 			//Actual Hit Logic Here pls
-			DefaultHit(Attacker, Data, targetHit);
+			CdefaultHit.DefaultHit(Attacker, targetHit, Data);
+
 		}
 	}
 
 	public void Init(Vector3 position, Vector3 size, ECharacter attacker)
 	{
+		Entity = new Entity(this);		
+
 		SetHitboxSize(size);
 		SetHitboxPosition(position);
 		Attacker = attacker;
 		Data = Attacker.ActiveHand.itemData;
+
+		CdefaultHit = Entity.AddComponent<CDefaultHit>();
 
 		World.Hitboxes.AddChild(this);
 	}

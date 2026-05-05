@@ -3,8 +3,9 @@ using System;
 
 public partial class EPlayer : Node3D, ICamerable, IInputible, IPlayerMovable
 {
-    [Export] public ECharacter Character {get; set;}
+    [Export] public ECharacter Character { get; set; }
     public SpringArm3D SpringArm { get; set; }
+
     public CCamera Ccamera;
     public CPlayerInput CplayerInput;
     public CPlayerMovement CplayerMovement;
@@ -13,14 +14,14 @@ public partial class EPlayer : Node3D, ICamerable, IInputible, IPlayerMovable
 
     public override void _Ready()
     {
-        Entity = new Entity(this);
         SpawnCharacter();
+        Entity = new Entity(this);
         SpringArm = GetNode<SpringArm3D>("SpringArm3D");
 
         Ccamera = Entity.AddComponent<CCamera>();
         CplayerInput = Entity.AddComponent<CPlayerInput>();
         CplayerMovement = Entity.AddComponent<CPlayerMovement>();
-        
+
 
     }
 
