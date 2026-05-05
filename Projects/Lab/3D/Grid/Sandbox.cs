@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Grid
+public partial class Grid3D
 {
     //TODO make global equations parser and handler
 

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cwdbjomcy5ag8"]
 
-[ext_resource type="Script" uid="uid://b73r616jklmph" path="res://Main/Grid/Line.cs" id="1_gxtvm"]
+[ext_resource type="Script" uid="uid://b73r616jklmph" path="res://3D/Grid/Line3D.cs" id="1_gxtvm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cqwwi"]
 emission_enabled = true

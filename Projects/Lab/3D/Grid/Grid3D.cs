@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Grid : Node
+public partial class Grid3D : Node
 {
     public Vector3 Origin = new Vector3(0, 0, 0);
     public int BasisX = 1;
@@ -33,21 +33,21 @@ public partial class Grid : Node
         }
     }
 
-    private Line CreateAxisLine(string axisType, Vector3 A, Vector3 B)
+    private Line3D CreateAxisLine(string axisType, Vector3 A, Vector3 B)
     {
         PackedScene scene = null;
         string name = "";
         if (axisType == "X")
         {
-            scene = GD.Load<PackedScene>("res://Main/Scenes/Coordinate Plane/XAxisLine.tscn");
+            scene = GD.Load<PackedScene>("res://3D/Grid/Scenes/Coordinate Plane/XAxisLine.tscn");
             name = "X Axis";
         }
         else if (axisType == "Y")
         {
-            scene = GD.Load<PackedScene>("res://Main/Scenes/Coordinate Plane/YAxisLine.tscn");
+            scene = GD.Load<PackedScene>("res://3D/Grid/Scenes/Coordinate Plane/YAxisLine.tscn");
             name = "Y Axis";
         }
-        Line L = scene.Instantiate<Line>();
+        Line3D L = scene.Instantiate<Line3D>();
         L.Name = name;
 
         LineCalculations(L, A, B);
@@ -56,13 +56,13 @@ public partial class Grid : Node
         return L;
     }
 
-    private Line CreateGridLine(Vector3 A, Vector3 B)
+    private Line3D CreateGridLine(Vector3 A, Vector3 B)
     {
         Vector3 AB = B - A;
         float theta = Mathf.Atan2(AB.X, AB.Y);
 
-        PackedScene scene = GD.Load<PackedScene>("res://Main/Scenes/Coordinate Plane/GridLine.tscn");
-        Line L = scene.Instantiate<Line>();
+        PackedScene scene = GD.Load<PackedScene>("res://3D/Grid/Scenes/Coordinate Plane/GridLine.tscn");
+        Line3D L = scene.Instantiate<Line3D>();
         L.Name = "L" + AB.ToString();
 
         LineCalculations(L, A, B);
@@ -71,11 +71,11 @@ public partial class Grid : Node
         return L;
     }
 
-    public  Point CreatePoint(string name, Vector3 pos)
+    public Point3D CreatePoint(string name, Vector3 pos)
     {
 
-        PackedScene scene = GD.Load<PackedScene>("res://Main/Scenes/Point.tscn");
-        Point P = scene.Instantiate<Point>();
+        PackedScene scene = GD.Load<PackedScene>("res://3D/Grid/Scenes/Point.tscn");
+        Point3D P = scene.Instantiate<Point3D>();
         P.Name = name;
         P.Position = pos;
 
@@ -83,11 +83,11 @@ public partial class Grid : Node
         return P;
     }
 
-    public Line CreateLine(string name, Vector3 A, Vector3 B)
+    public Line3D CreateLine(string name, Vector3 A, Vector3 B)
     {
 
-        PackedScene scene = GD.Load<PackedScene>("res://Main/Scenes/Line.tscn");
-        Line L = scene.Instantiate<Line>();
+        PackedScene scene = GD.Load<PackedScene>("res://3D/Grid/Scenes/Line.tscn");
+        Line3D L = scene.Instantiate<Line3D>();
         L.Name = name;
 
         LineCalculations(L, A, B);
@@ -96,7 +96,7 @@ public partial class Grid : Node
         return L;
     }
 
-    private void LineCalculations(Line L, Vector3 A, Vector3 B)
+    private void LineCalculations(Line3D L, Vector3 A, Vector3 B)
     {
         Vector3 AB = B - A;
 

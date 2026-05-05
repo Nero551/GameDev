@@ -13,7 +13,6 @@ public partial class Csharp : Node
         Json jsonLoader = new Json();
 
         jsonLoader.Parse(data);
-        System.Text.Json.
         Godot.Collections.Dictionary loadedData = (Godot.Collections.Dictionary)jsonLoader.Data;
     }
 }

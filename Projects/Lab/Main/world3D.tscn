@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://8vyuhyx0xogt" path="res://addons/godot-freecam-plugin-11a229982a39a4f1551db1971f7a92efc862c0d7/addons/freecam_3D/freecam.gd" id="1_5invl"]
 [ext_resource type="Script" uid="uid://basaeofw4o53a" path="res://Main/Mouse.cs" id="1_jd6ud"]
 [ext_resource type="Script" uid="uid://b3nddy34n2nle" path="res://Main/JsonToC#/Csharp.cs" id="4_0m0xs"]
-[ext_resource type="Script" uid="uid://dju24gnlkgpry" path="res://Main/Grid/Grid.cs" id="4_8lx2g"]
+[ext_resource type="Script" uid="uid://dju24gnlkgpry" path="res://3D/Grid/Grid3D.cs" id="4_8lx2g"]
 
 [node name="World" type="Node3D" unique_id=279850032]
 

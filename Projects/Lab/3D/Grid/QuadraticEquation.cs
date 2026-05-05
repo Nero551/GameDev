@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-public partial class Grid
+public partial class Grid3D
 {
     public void QuadraticEquation(float a, float b, float c)
     {
-        List<Point> Points = new();
+        List<Point3D> Points = new();
         for (float x = -5; x <= 5; x += 0.1f)
         {
             float y = (a * Mathf.Pow(x, 2) + b * x + c);
@@ -19,7 +19,7 @@ public partial class Grid
         {
             CreateLine(Points[i].Position + Points[i + 1].Position.ToString(), Points[i].Position, Points[i + 1].Position);
         }
-        foreach (Point point in Points)
+        foreach (Point3D point in Points)
         {
         }
     }
