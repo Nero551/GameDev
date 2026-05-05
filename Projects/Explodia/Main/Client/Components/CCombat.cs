@@ -7,11 +7,11 @@ public partial class CCombat : Component
     [Export] public double LastSwingTime = 0;
     [Export] public double LastComboTime = 0;
 
-    private ICombatable ICombatable;
+    private ICombatable combatable;
 
     protected override void OnInit()
     {
-        ICombatable = Owner as ICombatable;
+        combatable = Owner as ICombatable;
     }
 
     public void M1()
@@ -29,17 +29,17 @@ public partial class CCombat : Component
     {
         if (Entity.GetComponent<CActionVerifier>().CanAttack())
         {
-            if (ICombatable.ActiveHand == null || ICombatable.ActiveHand is not EItem || ICombatable.ActiveHand.animationLibrary == null)
+            if (combatable.ActiveHand == null || combatable.ActiveHand is not EItem || combatable.ActiveHand.animationLibrary == null)
             {
                 return;
             }
 
-            if ((PULib.CurrentSTime() - LastComboTime) < (double)ICombatable.ActiveHand.itemData["ComboCooldown"])
+            if ((PULib.CurrentSTime() - LastComboTime) < (double)combatable.ActiveHand.itemData["ComboCooldown"])
             {
                 return;
             }
 
-            if ((PULib.CurrentSTime() - LastSwingTime) >= (double)ICombatable.ActiveHand.itemData["ComboResetTime"])
+            if ((PULib.CurrentSTime() - LastSwingTime) >= (double)combatable.ActiveHand.itemData["ComboResetTime"])
             {
                 SwingNumber = 0;
             }
@@ -47,13 +47,13 @@ public partial class CCombat : Component
             SwingNumber++;
             LastSwingTime = PULib.CurrentSTime();
 
-            if (SwingNumber > (int)ICombatable.ActiveHand.itemData["Swings"])
+            if (SwingNumber > (int)combatable.ActiveHand.itemData["Swings"])
             {
                 LastComboTime = PULib.CurrentSTime();
                 SwingNumber = 0;
             }
 
-            string itemName = (string)ICombatable.ActiveHand.itemData["Name"];
+            string itemName = (string)combatable.ActiveHand.itemData["Name"];
             Animation swingAnim = Entity.GetComponent<CAnimations>().GetAnim(itemName + "/" + "L" + SwingNumber);
             if (swingAnim == null)
             {
@@ -67,7 +67,7 @@ public partial class CCombat : Component
 
     public void OnHitMarker()
     {
-        string itemName = (string)ICombatable.ActiveHand.itemData["Name"];
+        string itemName = (string)combatable.ActiveHand.itemData["Name"];
         string hitboxName = itemName + "Basic Attack Hitbox";
         if (World.Hitboxes.GetNodeOrNull<EHitbox>(hitboxName) == null)
         {
@@ -76,10 +76,10 @@ public partial class CCombat : Component
 
             hitbox.Name = hitboxName;
 
-            Godot.Collections.Dictionary hitboxData = (Godot.Collections.Dictionary)ICombatable.ActiveHand.itemData["Hitbox"];
+            Godot.Collections.Dictionary hitboxData = (Godot.Collections.Dictionary)combatable.ActiveHand.itemData["Hitbox"];
             Vector3 hitboxSize = new Vector3((float)hitboxData["X"], (float)hitboxData["Y"], (float)hitboxData["Z"]);
 
-            hitbox.Init(ICombatable.Rig.GetNode<Marker3D>("HitboxLocation").GlobalPosition, hitboxSize, Owner as ECharacter);
+            hitbox.Init(combatable.Rig.GetNode<Marker3D>("HitboxLocation").GlobalPosition, hitboxSize, Owner as ECharacter);
             PULib.ScheduleRemoval(hitbox, 0.2f);
         }
     }

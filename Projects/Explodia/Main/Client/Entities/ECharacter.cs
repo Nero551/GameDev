@@ -16,13 +16,13 @@ public partial class ECharacter : CharacterBody3D, IStatable, IMainStatable, ICo
 	[Export] public EItem Offhand;
 	[Export] public EItem ActiveHand { get; set; }
 
-	public CAnimations CAnimations;
-	public CStates CStates;
-	public CMainAnimations CMainAnimations;
-	public CMainStates CMainStates;
-	public CActionVerifier CActionVerifier;
-	public CCombat CCombat;
-	public CMovement CMovement;
+	public CAnimations Canimations;
+	public CStates Cstates;
+	public CMainAnimations CmainAnimations;
+	public CMainStates CmainStates;
+	public CActionVerifier CactionVerifier;
+	public CCombat Ccombat;
+	public CMovement Cmovement;
 
 	public Entity Entity;
 
@@ -32,32 +32,32 @@ public partial class ECharacter : CharacterBody3D, IStatable, IMainStatable, ICo
 		Entity = new Entity(this);
 
 
-		CMovement = Entity.AddComponent<CMovement>();
-		CStates = Entity.AddComponent<CStates>();
-		CMainStates = Entity.AddComponent<CMainStates>();
-		CActionVerifier = Entity.AddComponent<CActionVerifier>();
-		CAnimations = Entity.AddComponent<CAnimations>();
+		Cmovement = Entity.AddComponent<CMovement>();
+		Cstates = Entity.AddComponent<CStates>();
+		CmainStates = Entity.AddComponent<CMainStates>();
+		CactionVerifier = Entity.AddComponent<CActionVerifier>();
+		Canimations = Entity.AddComponent<CAnimations>();
 		GetNode<EWeapon>("Fist").Init(this);
-		CMainAnimations = Entity.AddComponent<CMainAnimations>();
-		CCombat = Entity.AddComponent<CCombat>();
+		CmainAnimations = Entity.AddComponent<CMainAnimations>();
+		Ccombat = Entity.AddComponent<CCombat>();
 
 	}
 
 	public override void _Process(double delta)
 	{
 
-		CStates.HandleStates(delta);
-		CMainStates.HandleMainStates();
-		CMainAnimations.MainAnimations();
+		Cstates.HandleStates(delta);
+		CmainStates.HandleMainStates();
+		CmainAnimations.MainAnimations();
 	}
 
 	public void OnHitMarker()
 	{
-		CCombat.OnHitMarker();
+		Ccombat.OnHitMarker();
 	}
 
 	public void OnAnimFinished(string animName)
 	{
-		CAnimations.OnAnimFinished(animName);
+		Canimations.OnAnimFinished(animName);
 	}
 }

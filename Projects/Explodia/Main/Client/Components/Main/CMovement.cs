@@ -3,15 +3,15 @@ using System;
 
 public partial class CMovement : Component
 {
-    private IMovable IMovable;
+    private IMovable movable;
     protected override void OnInit()
     {
-        IMovable = Owner as IMovable;
+        movable = Owner as IMovable;
     }
 
     public bool IsMoving()
     {
-        Vector3 horizontal = new Vector3(IMovable.Velocity.X, 0, IMovable.Velocity.Z);
+        Vector3 horizontal = new Vector3(movable.Velocity.X, 0, movable.Velocity.Z);
         return horizontal.LengthSquared() > 0.01f;
     }
 }

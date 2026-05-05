@@ -2,18 +2,21 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Player
+public partial class CPlayerInput : Component
 {
     private Dictionary<string, double> InputBuffers = new();
+    private IInputible inputible;
+
     const double bufferTime = 0.15;
     //TODO Input buffer and custom input functions to help centralize input use even more.
 
+    protected override void OnInit()
+    {
+        inputible = Owner as IInputible;
+    }
+
     public void PlayerInput(double delta)
     {
-        if (Input.IsActionJustPressed("SwitchCam"))
-        {
-            SwitchCam();
-        }
 
         if (World.DebugCam.Current)
         {
@@ -21,11 +24,11 @@ public partial class Player
         }
         if (Input.IsActionPressed("M1"))
         {
-            Character.CCombat.M1();
+            inputible.Character.Ccombat.M1();
         }
         if (Input.IsActionPressed("M2"))
         {
-            Character.CCombat.M2();
+            inputible.Character.Ccombat.M2();
         }
 
         if (Input.IsActionJustPressed("ExitGame"))
@@ -35,15 +38,15 @@ public partial class Player
 
         if (Input.IsActionJustPressed("Sprint"))
         {
-            if (Character.CStates.CheckState("Sprinting"))
+            if (inputible.Character.Cstates.CheckState("Sprinting"))
             {
-                Character.CStates.RemoveState("Sprinting");
+                inputible.Character.Cstates.RemoveState("Sprinting");
             }
             else
             {
-                Character.CStates.AddState("Sprinting");
+                inputible.Character.Cstates.AddState("Sprinting");
             }
         }
-        Character.MoveDirection = Input.GetVector("Left", "Right", "Back", "Forward");
+        inputible.Character.MoveDirection = Input.GetVector("Left", "Right", "Back", "Forward");
     }
 }

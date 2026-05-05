@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://cvle36gt8soas"]
 
-[ext_resource type="Script" uid="uid://coh61ykiclpva" path="res://Main/Client/Entities/Player/Player.cs" id="1_7cd8q"]
+[ext_resource type="Script" uid="uid://coh61ykiclpva" path="res://Main/Client/Entities/EPlayer.cs" id="1_7cd8q"]
 [ext_resource type="PackedScene" uid="uid://y163uilivcp" path="res://Main/UI/UI.tscn" id="2_gok8u"]
 
 [node name="Player" type="Node3D" unique_id=746435136]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 script = ExtResource("1_7cd8q")
+MouseSensitivity = null
 
 [node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=2059194376]
 transform = Transform3D(5, 0, 0, 0, 4.6984634, 1.7101007, 0, -1.7101007, 4.6984634, 0, 3.5654213, 0)
