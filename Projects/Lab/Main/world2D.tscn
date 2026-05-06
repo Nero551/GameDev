@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://ifsrbkagdaq4"]
 
 [ext_resource type="Script" uid="uid://d2rd8nmpa885a" path="res://Main/2D/Coordinate Plane/Grid2D.cs" id="1_2w5gm"]
+[ext_resource type="PackedScene" uid="uid://0xu727uhvxvy" path="res://Main/2D/Coordinate Plane/Scenes/point.tscn" id="2_mx46q"]
 
 [node name="World" type="Node2D" unique_id=1610458306]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1828998838]
-scale = Vector2(3, 3)
 zoom = Vector2(40, 40)
 
 [node name="Grid" type="Node" parent="." unique_id=1161099422]
 script = ExtResource("1_2w5gm")
+
+[node name="Point" parent="Grid" unique_id=612649976 instance=ExtResource("2_mx46q")]
