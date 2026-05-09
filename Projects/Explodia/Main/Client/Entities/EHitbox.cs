@@ -8,6 +8,7 @@ public partial class EHitbox : Area3D
 
 	private Dictionary<ECharacter, int> hitTargets = new();
 	private Godot.Collections.Dictionary Data;
+
 	public ECharacter Attacker;
 	public CDefaultHit CdefaultHit;
 

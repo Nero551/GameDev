@@ -11,6 +11,7 @@ public partial class CDefaultHit : Component
         {
             return;
         }
+        
         Attacker.Cstates.AddState("In Combat", 30);
         targetHit.Cstates.AddState("In Combat", 30);
         targetHit.Cstates.AddState("Stunned", 0.2);
@@ -19,6 +20,8 @@ public partial class CDefaultHit : Component
         targetHit.CurrentHealth = Mathf.Max(0, targetHit.CurrentHealth);
 
         targetHit.Canimations.PlayAnim("HitReactions/" + Attacker.Ccombat.SwingNumber, 1);
+        targetHit.Cknockback.Knockback(new Vector3(0,20,0));
+        Attacker.Cpull.Pull(15);
 
         //TODO VFX ,Animation all that stuff
         //TODO add knockback

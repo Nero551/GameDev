@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class ECharacter : CharacterBody3D, IStatable, IMainStatable, ICombatable, IMovable, IMainAnimatible
+public partial class ECharacter : CharacterBody3D, IStatable, IMainStatable, ICombatable, IMovable, IMainAnimatible,IKnockable,IPullable
 {
 	[Export] public Node3D Rig { get; set; }
 	[Export] public Vector2 MoveDirection = Vector2.Zero;
@@ -23,6 +23,8 @@ public partial class ECharacter : CharacterBody3D, IStatable, IMainStatable, ICo
 	public CActionVerifier CactionVerifier;
 	public CCombat Ccombat;
 	public CMovement Cmovement;
+	public CKnockback Cknockback;
+	public CPull Cpull;
 
 	public Entity Entity;
 
@@ -31,7 +33,6 @@ public partial class ECharacter : CharacterBody3D, IStatable, IMainStatable, ICo
 		Rig = GetNode<Node3D>("__Animation Dummy_Armature");
 		Entity = new Entity(this);
 
-
 		Cmovement = Entity.AddComponent<CMovement>();
 		Cstates = Entity.AddComponent<CStates>();
 		CmainStates = Entity.AddComponent<CMainStates>();
@@ -39,8 +40,10 @@ public partial class ECharacter : CharacterBody3D, IStatable, IMainStatable, ICo
 		Canimations = Entity.AddComponent<CAnimations>();
 		GetNode<EWeapon>("Fist").Init(this);
 		CmainAnimations = Entity.AddComponent<CMainAnimations>();
-		Ccombat = Entity.AddComponent<CCombat>();
+		Cknockback = Entity.AddComponent<CKnockback>();
+		Cpull = Entity.AddComponent<CPull>();
 
+		Ccombat = Entity.AddComponent<CCombat>();
 	}
 
 	public override void _Process(double delta)
@@ -49,6 +52,7 @@ public partial class ECharacter : CharacterBody3D, IStatable, IMainStatable, ICo
 		Cstates.HandleStates(delta);
 		CmainStates.HandleMainStates();
 		CmainAnimations.MainAnimations();
+		MoveAndSlide();
 	}
 
 	public void OnHitMarker()
