@@ -38,17 +38,18 @@ public partial class ECharacter : CharacterBody3D, IStatable, IMainStatable, ICo
 		CmainStates = Entity.AddComponent<CMainStates>();
 		CactionVerifier = Entity.AddComponent<CActionVerifier>();
 		Canimations = Entity.AddComponent<CAnimations>();
-		GetNode<EWeapon>("Fist").Init(this);
 		CmainAnimations = Entity.AddComponent<CMainAnimations>();
 		Cknockback = Entity.AddComponent<CKnockback>();
 		Cpull = Entity.AddComponent<CPull>();
-
 		Ccombat = Entity.AddComponent<CCombat>();
+		
+		GetNode<EWeapon>("Fist").Init(this);
+
+		
 	}
 
 	public override void _Process(double delta)
 	{
-
 		Cstates.HandleStates(delta);
 		CmainStates.HandleMainStates();
 		CmainAnimations.MainAnimations();

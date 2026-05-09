@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public interface IKnockable
+public interface IKnockable : Interface
 {
     Vector3 Velocity {get; set;}
 }

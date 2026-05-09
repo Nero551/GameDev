@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public interface ICamerable
+public interface ICamerable : Interface
 {
-    SpringArm3D SpringArm {get;}
+    SpringArm3D SpringArm { get; }
 }

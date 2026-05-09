@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public interface IMainStatable
+public interface IMainStatable : Interface
 {
     bool IsOnFloor();
     Vector3 Velocity { get; set; }

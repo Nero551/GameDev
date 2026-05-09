@@ -7,16 +7,23 @@ public class Entity
 {
     public static List<Entity> Entities = new();
     /*
-    new framework , entities own components , components do logic.
-    interfaces/driver are not owned by entity or owner , instead just work directly with the components somehow.
-    drivers provide the needed data to complete the required logic by component.
-    research ecs and how it works internally since my framework is super similar.
+    ?Framework Rework:
 
-    its clear i need to learn more about C#, specifically on interfaces.
+    Entity owns drivers and components , components own logic , drivers own data.
+
+    components dont know which object owns them , they just check if entity has the drivers and runs on
+    the data given by drivers using HasDriver and GetDriver methods inside entity object
+
+    this "Driver" will store data required by the component. that is the piece am missing.
+
+    What i need:
+    1-way to dynamically add Drivers
+    2-way for those Drivers to store all kinds of data including class specific like Velocity or IsOnFloor()
+
+    perhaps this delegate thing is wut am missing? i will do more research when i can.
     */
     private Node Owner;
     private List<Component> Components = new();
-    private List<Interface> Interfaces = new();
 
     public Entity(Node owner)
     {
@@ -27,7 +34,7 @@ public class Entity
     public T AddComponent<T>() where T : Component, new()
     {
         var comp = new T();
-        comp.Init(Owner, this);
+        comp.Init(this);
         Components.Add(comp);
         return comp;
     }
@@ -49,27 +56,11 @@ public class Entity
         return false;
     }
 
-    public T AddInterface<T>() where T : Interface, new()
+    public T GetInterface<T>() where T : class, Interface
     {
-        var driver = new T();
-        Interfaces.Add(driver);
-        return driver;
-    }
-
-    public bool HasInterface<T>() where T : Interface, new()
-    {
-        if (Interfaces.OfType<T>().FirstOrDefault() != null)
+        if (Owner is T)
         {
-            return true;
-        }
-        return false;
-    }
-
-    public T GetInterface<T>() where T : Interface, new()
-    {
-        if (HasInterface<T>())
-        {
-            return Interfaces.OfType<T>().FirstOrDefault();
+            return Owner as T;
         }
         return default(T);
     }

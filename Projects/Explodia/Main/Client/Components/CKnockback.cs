@@ -6,7 +6,7 @@ public partial class CKnockback : Component
     private IKnockable knockable;
     protected override void OnInit()
     {
-        knockable = Owner as IKnockable;
+        knockable = Entity.GetInterface<IKnockable>();
     }
 
     public void Knockback(Vector3 force)

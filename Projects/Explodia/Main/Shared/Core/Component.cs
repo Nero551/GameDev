@@ -6,9 +6,8 @@ public abstract class Component
     public Node Owner;
     public Entity Entity;
 
-    public void Init(Node owner, Entity entity)
+    public void Init(Entity entity)
     {
-        Owner = owner;
         Entity = entity;
         OnInit();
     }

@@ -21,7 +21,7 @@ public partial class CDefaultHit : Component
 
         targetHit.Canimations.PlayAnim("HitReactions/" + Attacker.Ccombat.SwingNumber, 1);
         targetHit.Cknockback.Knockback(new Vector3(0,20,0));
-        Attacker.Cpull.Pull(15);
+        // Attacker.Cpull.Pull(15);
 
         //TODO VFX ,Animation all that stuff
         //TODO add knockback

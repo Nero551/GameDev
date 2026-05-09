@@ -14,7 +14,7 @@ public partial class CCamera : Component
 
     protected override void OnInit()
     {
-        camerable = Owner as ICamerable;
+        camerable = Entity.GetInterface<ICamerable>();
         Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 

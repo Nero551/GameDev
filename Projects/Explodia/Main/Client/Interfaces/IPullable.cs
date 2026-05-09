@@ -1,6 +1,6 @@
 using Godot;
 using System;
 
-public interface IPullable
+public interface IPullable : Interface
 {
 }
