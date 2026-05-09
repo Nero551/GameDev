@@ -3,7 +3,7 @@ using System;
 
 public partial class CCamera : Component
 {
-    private ICamerable camerable;
+    public SpringArm3D SpringArm;
     
     int MaxSpringLength = 6;
     int MinSpringLength = 1;
@@ -14,7 +14,7 @@ public partial class CCamera : Component
 
     protected override void OnInit()
     {
-        camerable = Entity.GetInterface<ICamerable>();
+        SpringArm = Entity.Owner.GetNode<SpringArm3D>("SpringArm3D");
         Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
@@ -26,19 +26,19 @@ public partial class CCamera : Component
         }
         else
         {
-            camerable.SpringArm.GetNode<Camera3D>("Camera3D").Current = true;
+            SpringArm.GetNode<Camera3D>("Camera3D").Current = true;
         }
     }
 
     public void ZoomCamera()
     {
-        if (Input.IsActionJustPressed("Zoom In") && camerable.SpringArm.SpringLength > MinSpringLength)
+        if (Input.IsActionJustPressed("Zoom In") && SpringArm.SpringLength > MinSpringLength)
         {
-            camerable.SpringArm.SpringLength -= 0.5f;
+            SpringArm.SpringLength -= 0.5f;
         }
-        else if (Input.IsActionJustPressed("Zoom Out") && camerable.SpringArm.SpringLength < MaxSpringLength)
+        else if (Input.IsActionJustPressed("Zoom Out") && SpringArm.SpringLength < MaxSpringLength)
         {
-            camerable.SpringArm.SpringLength += 0.5f;
+            SpringArm.SpringLength += 0.5f;
         }
 
     }
@@ -52,7 +52,7 @@ public partial class CCamera : Component
 
             verticalRotation = Mathf.Clamp(verticalRotation, Mathf.DegToRad(-75), Mathf.DegToRad(45));
 
-            camerable.SpringArm.Rotation = new Vector3(verticalRotation, horizontalRotation, 0);
+            SpringArm.Rotation = new Vector3(verticalRotation, horizontalRotation, 0);
         }
     }
 }

@@ -4,14 +4,12 @@ using System.Collections.Generic;
 
 public partial class CStates : Component
 {
-    private IStatable statable;
 
     public Dictionary<string, double> ActiveStates = new();
 
     private Godot.Collections.Dictionary stateData;
     protected override void OnInit()
     {
-        statable = Owner as IStatable;
         stateData = PULib.JSONToCSharp("Main/Shared/Data/StateData");
     }
     public void AddState(string stateName, double duration = -1)
@@ -69,7 +67,7 @@ public partial class CStates : Component
                 Godot.Collections.Dictionary data = (Godot.Collections.Dictionary)stateData[key];
                 if (data != null)
                 {
-                    if (statable.CurrentHealth <= 0)
+                    if (Entity.GetComponent<CHealth>().CurrentHealth <= 0)
                     {
                         AddState("Dead");
                     }
@@ -79,7 +77,7 @@ public partial class CStates : Component
                 }
             }
         }
-        statable.Speed = normalSpeed;
-        statable.JumpPower = normalJumpPower;
+        Entity.GetComponent<CMovement>().Speed = normalSpeed;
+        Entity.GetComponent<CMovement>().JumpPower = normalJumpPower;
     }
 }

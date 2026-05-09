@@ -7,7 +7,7 @@ public partial class CMainAnimations : Component
 
     protected override void OnInit()
     {
-        mainAnimatible = Owner as IMainAnimatible;
+        mainAnimatible = Entity.GetInterface<IMainAnimatible>();
 
     }
 

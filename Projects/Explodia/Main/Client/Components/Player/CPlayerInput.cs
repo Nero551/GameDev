@@ -5,14 +5,14 @@ using System.Collections.Generic;
 public partial class CPlayerInput : Component
 {
     private Dictionary<string, double> InputBuffers = new();
-    private IInputible inputible;
+    private ECharacter character;
 
     const double bufferTime = 0.15;
     //TODO Input buffer and custom input functions to help centralize input use even more.
 
     protected override void OnInit()
     {
-        inputible = Owner as IInputible;
+        character = Entity.GetComponent<CCharacter>().Character;
     }
 
     public void PlayerInput(double delta)
@@ -24,11 +24,11 @@ public partial class CPlayerInput : Component
         }
         if (Input.IsActionPressed("M1"))
         {
-            inputible.Character.Ccombat.M1();
+            character.Ccombat.M1();
         }
         if (Input.IsActionPressed("M2"))
         {
-            inputible.Character.Ccombat.M2();
+            character.Ccombat.M2();
         }
 
         if (Input.IsActionJustPressed("ExitGame"))
@@ -38,15 +38,15 @@ public partial class CPlayerInput : Component
 
         if (Input.IsActionJustPressed("Sprint"))
         {
-            if (inputible.Character.Cstates.CheckState("Sprinting"))
+            if (character.Cstates.CheckState("Sprinting"))
             {
-                inputible.Character.Cstates.RemoveState("Sprinting");
+                character.Cstates.RemoveState("Sprinting");
             }
             else
             {
-                inputible.Character.Cstates.AddState("Sprinting");
+                character.Cstates.AddState("Sprinting");
             }
         }
-        inputible.Character.MoveDirection = Input.GetVector("Left", "Right", "Back", "Forward");
+        character.Cmovement.MoveDirection = Input.GetVector("Left", "Right", "Back", "Forward");
     }
 }

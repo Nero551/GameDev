@@ -3,9 +3,6 @@ using System;
 
 public partial class CMainStates : Component
 {
-    private IMainStatable mainStatable;
-    private ECharacter character;
-
     public enum MainStates
     {
         Jumping,
@@ -14,20 +11,13 @@ public partial class CMainStates : Component
         Idle,
     }
 
-    [Export] public MainStates MainState;
-
-    protected override void OnInit()
-    {
-        mainStatable = Owner as IMainStatable;
-        character = Owner as ECharacter;
-
-    }
+    public MainStates MainState;
 
     public void HandleMainStates()
     {
-        if (!mainStatable.IsOnFloor())
+        if (!Entity.GetInterface<IIsOnFloor>().IsOnFloor())
         {
-            if (mainStatable.Velocity.Y > 0)
+            if (Entity.GetInterface<IVelocity>().Velocity.Y > 0)
                 MainState = MainStates.Jumping;
             else
                 MainState = MainStates.Falling;

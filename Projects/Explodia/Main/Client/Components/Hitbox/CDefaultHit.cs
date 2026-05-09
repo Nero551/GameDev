@@ -3,7 +3,7 @@ using System;
 
 public partial class CDefaultHit : Component
 {
-    
+
 
     public void DefaultHit(ECharacter Attacker, ECharacter targetHit, Godot.Collections.Dictionary itemData)
     {
@@ -11,16 +11,16 @@ public partial class CDefaultHit : Component
         {
             return;
         }
-        
+
         Attacker.Cstates.AddState("In Combat", 30);
         targetHit.Cstates.AddState("In Combat", 30);
         targetHit.Cstates.AddState("Stunned", 0.2);
         //Damage
-        targetHit.CurrentHealth -= (float)itemData["Damage"];
-        targetHit.CurrentHealth = Mathf.Max(0, targetHit.CurrentHealth);
+        targetHit.Chealth.CurrentHealth -= (float)itemData["Damage"];
+        targetHit.Chealth.CurrentHealth = Mathf.Max(0, targetHit.Chealth.CurrentHealth);
 
         targetHit.Canimations.PlayAnim("HitReactions/" + Attacker.Ccombat.SwingNumber, 1);
-        targetHit.Cknockback.Knockback(new Vector3(0,20,0));
+        targetHit.Cknockback.Knockback(new Vector3(0, 20, 0));
         // Attacker.Cpull.Pull(15);
 
         //TODO VFX ,Animation all that stuff

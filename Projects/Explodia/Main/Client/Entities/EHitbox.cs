@@ -44,7 +44,7 @@ public partial class EHitbox : Area3D
 
 	public void Init(Vector3 position, Vector3 size, ECharacter attacker)
 	{
-		Entity = new Entity(this);		
+		Entity = Entity.Create(this);
 
 		SetHitboxSize(size);
 		SetHitboxPosition(position);

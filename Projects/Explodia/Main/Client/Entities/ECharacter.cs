@@ -1,17 +1,9 @@
 using Godot;
 using System;
 
-public partial class ECharacter : CharacterBody3D, IStatable, IMainStatable, ICombatable, IMovable, IMainAnimatible,IKnockable,IPullable
+public partial class ECharacter : CharacterBody3D, ICombatable, IMainAnimatible, IVelocity, IIsOnFloor
 {
 	[Export] public Node3D Rig { get; set; }
-	[Export] public Vector2 MoveDirection = Vector2.Zero;
-
-	[Export] public float Speed { get; set; }
-	[Export] public float JumpPower { get; set; }
-
-	[Export] public float MaxHealth = 100;
-	[Export] public float CurrentHealth { get; set; } = 100;
-
 	[Export] public EItem MainHand;
 	[Export] public EItem Offhand;
 	[Export] public EItem ActiveHand { get; set; }
@@ -25,14 +17,16 @@ public partial class ECharacter : CharacterBody3D, IStatable, IMainStatable, ICo
 	public CMovement Cmovement;
 	public CKnockback Cknockback;
 	public CPull Cpull;
+	public CHealth Chealth;
 
 	public Entity Entity;
 
 	public override void _Ready()
 	{
 		Rig = GetNode<Node3D>("__Animation Dummy_Armature");
-		Entity = new Entity(this);
+		Entity = Entity.Create(this);
 
+		Chealth = Entity.AddComponent<CHealth>();
 		Cmovement = Entity.AddComponent<CMovement>();
 		Cstates = Entity.AddComponent<CStates>();
 		CmainStates = Entity.AddComponent<CMainStates>();

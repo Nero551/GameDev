@@ -5,30 +5,43 @@ using System.Linq;
 
 public class Entity
 {
-    public static List<Entity> Entities = new();
+    public static int EntityLimit = 999;
+    public static int slot = 0;
+    public static Entity[] Entities = new Entity[EntityLimit];
+
     /*
     ?Framework Rework:
+    Entities Contain Components
+    Components Contain Logic and Relevant Data THEY create (Health, AnimPriority,etc).
+    Built-in Data Required by Components such as Velocity is acquired through interfaces.
 
-    Entity owns drivers and components , components own logic , drivers own data.
-
-    components dont know which object owns them , they just check if entity has the drivers and runs on
-    the data given by drivers using HasDriver and GetDriver methods inside entity object
-
-    this "Driver" will store data required by the component. that is the piece am missing.
-
-    What i need:
-    1-way to dynamically add Drivers
-    2-way for those Drivers to store all kinds of data including class specific like Velocity or IsOnFloor()
-
-    perhaps this delegate thing is wut am missing? i will do more research when i can.
+    TODO-decrease amount of interfaces, limit them to only built-in engine data(E.X IVelocity)
     */
-    private Node Owner;
+    public Node Owner;
+    private int id;
     private List<Component> Components = new();
+
+    public static Entity Create(Node owner)
+    {
+        if (slot == EntityLimit)
+        {
+            GD.PushWarning("Exceeded Entity Limit!!");
+            return null;
+        }
+        return new Entity(owner);
+    }
 
     public Entity(Node owner)
     {
-        Entities.Add(this);
+        id = slot;
+        Entities[slot] = this;
+        slot++;
         Owner = owner;
+    }
+
+    ~Entity()
+    {
+        Entities[id] = null;
     }
 
     public T AddComponent<T>() where T : Component, new()
@@ -44,7 +57,7 @@ public class Entity
         {
             return Components.OfType<T>().FirstOrDefault();
         }
-        return default(T);
+        return null;
     }
 
     public bool HasComponent<T>() where T : Component, new()

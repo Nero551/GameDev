@@ -11,7 +11,7 @@ public partial class CCombat : Component
 
     protected override void OnInit()
     {
-        combatable = Owner as ICombatable;
+        combatable = Entity.GetInterface<ICombatable>();
     }
 
     public void M1()
@@ -79,7 +79,7 @@ public partial class CCombat : Component
             Godot.Collections.Dictionary hitboxData = (Godot.Collections.Dictionary)combatable.ActiveHand.itemData["Hitbox"];
             Vector3 hitboxSize = new Vector3((float)hitboxData["X"], (float)hitboxData["Y"], (float)hitboxData["Z"]);
 
-            hitbox.Init(combatable.Rig.GetNode<Marker3D>("HitboxLocation").GlobalPosition, hitboxSize, Owner as ECharacter);
+            hitbox.Init(combatable.Rig.GetNode<Marker3D>("HitboxLocation").GlobalPosition, hitboxSize, Entity.Owner as ECharacter);
             PULib.ScheduleRemoval(hitbox, 0.2f);
         }
     }
