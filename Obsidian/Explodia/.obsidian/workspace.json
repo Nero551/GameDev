@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "C# Notes.md",
+                "file": "Framework.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "C# Notes"
+              "title": "Framework"
             }
           }
         ]
@@ -185,8 +185,9 @@
   },
   "active": "a3c787ad57a57221",
   "lastOpenFiles": [
-    "Chaos NoteBook/Notes 3.md",
     "C# Notes.md",
+    "Framework.md",
+    "Chaos NoteBook/Notes 3.md",
     "Doc/Entities/Regular NPCS/Main.md",
     "Doc/Mechanics/Black Flash.md",
     "Doc/Status Effects/Black Flame.md",
@@ -215,7 +216,6 @@
     "Doc/Story/Ch VIII.md",
     "Doc/Story/Untitled",
     "Doc/Story/Ch VI.md",
-    "Doc/Story/Ch V.md",
     "Doc/Story/Ch 2",
     "Doc/Items/Accessories/Untitled",
     "Doc/Items/Accessories/Back",

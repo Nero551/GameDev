@@ -11,6 +11,7 @@ public partial class CPlayerMovement : Component
     }
     public void MovementPhysics(double delta)
     {
+        //TODO refactor this. all of it. this shouldnot even be here. it should be in character.
         Vector3 velocity = character.Velocity;
 
         if (!character.IsOnFloor())

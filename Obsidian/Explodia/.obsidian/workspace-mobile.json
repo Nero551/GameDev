@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Chaos NoteBook/Notes 3.md",
+                "file": "Framework.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Notes 3"
+              "title": "Framework"
             }
           }
         ],
@@ -185,6 +185,8 @@
   },
   "active": "55ec3dc104d1ae4a",
   "lastOpenFiles": [
+    "Framework.sync-conflict-20260509-150149-A4GKIDB.md",
+    "Framework.md",
     "Chaos NoteBook/Notes 3.md",
     "Doc/Entities/Regular NPCS/Main.md",
     "Doc/Entities/Regular NPCS",
@@ -212,8 +214,6 @@
     "AI Modified/ClassSystem.md",
     "Doc/Mechanics/Combo Attack.md",
     "Doc/Mechanics/Ancient Language.md",
-    "Doc/Mechanics/Cooking.md",
-    "Doc/Mechanics/Deciphering.md",
     "Doc/Items/Consumables/Ingredients",
     "Pasted image 20260427044446.jpg",
     "Doc/Items/Accessories/Arm",
