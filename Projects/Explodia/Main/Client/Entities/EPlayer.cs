@@ -8,7 +8,7 @@ public partial class EPlayer : Node3D
     public CPlayerMovement CplayerMovement;
     public CCharacter Ccharacter;
 
-    public Entity Entity;
+    private Entity Entity;
 
     public override void _Ready()
     {

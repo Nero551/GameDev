@@ -1,8 +1,8 @@
-# EIC Framework Overview
+# ICE Framework Overview
 
-This project uses the **EIC Framework**, pronounced _"ice"_.
+This project uses the **ICE Framework**, pronounced _"ice"_.
 
-EIC is built around three core parts:
+ICE is built around three core parts:
 
 - **Entities**
     

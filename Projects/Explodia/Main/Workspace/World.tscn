@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cgkpvnul3qovt"]
 
-[ext_resource type="Script" uid="uid://wm74fyw2ougo" path="res://Main/Shared/Entities/World.cs" id="1_vklr1"]
+[ext_resource type="Script" uid="uid://wm74fyw2ougo" path="res://Main/Shared/Core/World.cs" id="1_vklr1"]
 [ext_resource type="Texture2D" uid="uid://dtsm7jpnqwq67" path="res://icon.svg" id="2_5awyl"]
 [ext_resource type="PackedScene" uid="uid://8plp26spdxm4" path="res://Main/Workspace/Character.tscn" id="3_u2oix"]
 [ext_resource type="Script" uid="uid://dvr5vpxnt2r5i" path="res://Main/Client/Entities/EEnemy.cs" id="4_tcacx"]

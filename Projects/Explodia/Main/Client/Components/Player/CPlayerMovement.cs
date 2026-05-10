@@ -11,7 +11,7 @@ public partial class CPlayerMovement : Component
     }
     public void MovementPhysics(double delta)
     {
-        //TODO refactor this. all of it. this shouldnot even be here. it should be in character.
+        //TODO refactor this. all of it. this shouldnot even be here. it should be in Movement Component.
         Vector3 velocity = character.Velocity;
 
         if (!character.IsOnFloor())
@@ -21,7 +21,7 @@ public partial class CPlayerMovement : Component
 
         if (Input.IsActionJustPressed("Jump") && character.IsOnFloor())
         {
-            velocity.Y = character.Entity.GetComponent<CMovement>().JumpPower;
+            velocity.Y = character.Cmovement.JumpPower;
         }
 
         Vector3 forward = -Entity.GetComponent<CCamera>().SpringArm.GlobalTransform.Basis.Z;

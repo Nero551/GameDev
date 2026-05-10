@@ -19,7 +19,7 @@ public partial class ECharacter : CharacterBody3D, ICombatable, IMainAnimatible,
 	public CPull Cpull;
 	public CHealth Chealth;
 
-	public Entity Entity;
+	private Entity Entity;
 
 	public override void _Ready()
 	{

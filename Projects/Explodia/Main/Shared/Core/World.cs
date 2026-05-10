@@ -8,6 +8,7 @@ public partial class World : Node3D
 	public static Node Players;
 	public static Node Characters;
 	public static Camera3D DebugCam;
+	public static bool DebugMode = true;
 
 	public override void _EnterTree()
 	{

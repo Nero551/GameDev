@@ -12,6 +12,6 @@ public abstract class Component
         OnInit();
     }
 
-    // Override this for setup that needs the Entity reference.
+    // Override this for custom per Component setup.
     protected virtual void OnInit() { }
 }

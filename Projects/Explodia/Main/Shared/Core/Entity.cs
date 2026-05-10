@@ -21,7 +21,7 @@ public class Entity
     {
         if (slot == EntityLimit)
         {
-            GD.PushWarning("Exceeded Entity Limit!!");
+            GD.PushError("Exceeded Entity Limit!!");
             return null;
         }
         return new Entity(owner);
