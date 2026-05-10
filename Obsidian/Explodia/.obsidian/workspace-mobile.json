@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Chaos NoteBook/Notes 3.md",
+                "file": "Framework/Framework.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Notes 3"
+              "title": "Framework"
             }
           }
         ],
@@ -127,7 +127,7 @@
         "state": {
           "type": "backlink",
           "state": {
-            "file": "Chaos NoteBook/Notes 3.md",
+            "file": "Framework/Framework.md",
             "collapseAll": false,
             "extraContext": false,
             "sortOrder": "alphabetical",
@@ -185,8 +185,10 @@
   },
   "active": "55ec3dc104d1ae4a",
   "lastOpenFiles": [
-    "Framework/Framework.md",
+    "C# Notes.md",
+    "Chaos NoteBook/Chemistry system.md",
     "Chaos NoteBook/Notes 3.md",
+    "Framework/Framework.md",
     "Chaos NoteBook/Notes 2.md",
     "Chaos NoteBook/Notes.md",
     "Framework/Framework Diagram.canvas",
@@ -213,8 +215,6 @@
     "AI Modified/WorldSystem.md",
     "Doc/Worlds",
     "AI Modified/Structured Ideas.md",
-    "AI Modified/StatusResistance.md",
-    "AI Modified/SpellSystem.md",
     "Doc/Items/Consumables/Ingredients",
     "Pasted image 20260427044446.jpg",
     "Doc/Items/Accessories/Arm",

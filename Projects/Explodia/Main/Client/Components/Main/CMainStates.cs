@@ -24,7 +24,8 @@ public partial class CMainStates : Component
         }
         else
         {
-            if (Entity.GetComponent<CMovement>().IsMoving())
+            Vector3 horizontal = new Vector3(Entity.GetInterface<IVelocity>().Velocity.X, 0, Entity.GetInterface<IVelocity>().Velocity.Z);
+            if (horizontal.LengthSquared() > 0.01f)
                 MainState = MainStates.Moving;
             else
                 MainState = MainStates.Idle;
