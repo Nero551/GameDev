@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cua62qj8ceklf"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yh6sh"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_yh6sh"]
+
+[node name="StraightLine" type="Node2D" unique_id=1408779541]
+scale = Vector2(9.39, 0.5)
+
+[node name="Line" type="MeshInstance2D" parent="." unique_id=1414000112]
+mesh = SubResource("BoxMesh_yh6sh")
+
+[node name="Arrow1" type="MeshInstance2D" parent="." unique_id=1042794701]
+top_level = true
+position = Vector2(-5.1, 0)
+rotation = 1.5707964
+scale = Vector2(1.5, 1.1)
+mesh = SubResource("PrismMesh_yh6sh")
+
+[node name="Arrow2" type="MeshInstance2D" parent="." unique_id=1665273970]
+top_level = true
+position = Vector2(5.1, 0)
+rotation = -1.5707964
+scale = Vector2(1.5, 1.1)
+mesh = SubResource("PrismMesh_yh6sh")

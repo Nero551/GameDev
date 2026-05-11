@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ifsrbkagdaq4"]
 
-[ext_resource type="Script" uid="uid://d2rd8nmpa885a" path="res://Main/2D/Coordinate Plane/CartesianPlane.cs" id="1_7dk2f"]
+[ext_resource type="Script" uid="uid://d2rd8nmpa885a" path="res://Main/2D/Coordinate Plane/Code/CartesianPlane.cs" id="1_7dk2f"]
 
 [node name="Math" type="Node2D" unique_id=1976431736]
 
@@ -14,6 +14,9 @@ z_index = 2
 z_index = 1
 
 [node name="Axis" type="Node2D" parent="Cartesian Plane/Core" unique_id=788149757]
+z_index = 1
+
+[node name="Plane" type="Node2D" parent="Cartesian Plane/Core" unique_id=1033520145]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1520350185]
 zoom = Vector2(10, 10)
