@@ -11,12 +11,11 @@ script = ExtResource("1_7dk2f")
 z_index = 2
 
 [node name="Core" type="Node2D" parent="Cartesian Plane" unique_id=743349825]
-z_index = 1
 
 [node name="Axis" type="Node2D" parent="Cartesian Plane/Core" unique_id=788149757]
-z_index = 1
 
 [node name="Plane" type="Node2D" parent="Cartesian Plane/Core" unique_id=1033520145]
+z_index = -1
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1520350185]
 zoom = Vector2(10, 10)

@@ -6,10 +6,11 @@ public partial class CartesianPlane : Node
 	public Vector2 Origin = new Vector2(0, 0);
 	public int BasisX = 5;
 	public int BasisY = 5;
-	public int Size = 50;
+	public int Size;
 
 	public override void _Ready()
 	{
+		Size = BasisX * BasisY * 2;
 		CreateGrid();
 		Sandbox();
 	}
@@ -43,8 +44,7 @@ public partial class CartesianPlane : Node
 				PlaneLine(negativeEnd, positiveEnd);
 			}
 		}
-		CreatePoint(this,Origin, Colors.Green);
-
+		CreatePoint(this, Origin, Colors.RoyalBlue);
 	}
 
 

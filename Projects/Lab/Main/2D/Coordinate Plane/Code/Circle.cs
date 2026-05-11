@@ -9,6 +9,8 @@ public partial class CartesianPlane
         node.Name = "Circle: " + origin.ToString() + " | " + radius;
         GetNode<Node2D>("My Stuff").AddChild(node);
 
+        CreatePoint(node, origin);
+
         for (float theta = 0; theta < 360; theta += 1)
         {
             float rad = Mathf.DegToRad(theta);

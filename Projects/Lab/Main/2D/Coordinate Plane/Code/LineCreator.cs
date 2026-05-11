@@ -68,8 +68,8 @@ public partial class CartesianPlane
         Node2D line = scene.Instantiate<Node2D>();
         var meshInstance = line.GetNode<MeshInstance2D>("Line");
 
-        a = new Vector2(a.X, -a.Y);
-        b = new Vector2(b.X, -b.Y);
+        a = new Vector2(a.X * BasisX, -a.Y * BasisY);
+        b = new Vector2(b.X * BasisX, -b.Y * BasisY);
         Vector2 vAB = b - a;
 
         line.Position = a;
@@ -96,8 +96,8 @@ public partial class CartesianPlane
         var arrow1 = line.GetNode<MeshInstance2D>("Arrow1");
         var arrow2 = line.GetNode<MeshInstance2D>("Arrow2");
 
-        a = new Vector2(a.X, -a.Y);
-        b = new Vector2(b.X, -b.Y);
+        a = new Vector2(a.X * BasisX, -a.Y * BasisY);
+        b = new Vector2(b.X * BasisX, -b.Y * BasisY);
         Vector2 vAB = b - a;
 
         line.Position = (a + b) / 2;
