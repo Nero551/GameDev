@@ -30,6 +30,10 @@ public partial class EPlayer : Node3D
 
     public override void _PhysicsProcess(double delta)
     {
+        // Ccharacter.Character.Cmovement.Move(delta);
+        // Ccamera.UpdateCam();
+        // Ccharacter.Character.Cmovement.ApplyBodyRotation(delta);
+        // Ccharacter.Character.Cmovement.ApplyVelocity();
         CplayerInput.PlayerInput(delta);
         Ccamera.ZoomCamera();
         CplayerMovement.MovementPhysics(delta);

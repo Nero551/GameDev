@@ -4,7 +4,7 @@ using System;
 public partial class CCamera : Component
 {
     public SpringArm3D SpringArm;
-    
+
     int MaxSpringLength = 6;
     int MinSpringLength = 1;
 
@@ -54,5 +54,19 @@ public partial class CCamera : Component
 
             SpringArm.Rotation = new Vector3(verticalRotation, horizontalRotation, 0);
         }
+    }
+
+    public void UpdateCam()
+    {
+        Vector3 forward = -SpringArm.GlobalTransform.Basis.Z;
+        Vector3 right = SpringArm.GlobalTransform.Basis.X;
+        forward.Y = 1;
+        right.Y = 1;
+        forward = forward.Normalized();
+        right = right.Normalized();
+
+        var vel = Entity.GetComponent<CCharacter>().Character.Cmovement.velocity;
+        Entity.GetComponent<CCharacter>().Character.Cmovement.velocity = right * vel.X + forward * vel.Z;
+        GD.Print(Entity.GetComponent<CCharacter>().Character.Cmovement.velocity);
     }
 }

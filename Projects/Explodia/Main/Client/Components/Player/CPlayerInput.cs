@@ -36,6 +36,11 @@ public partial class CPlayerInput : Component
             Input.MouseMode = Input.MouseModeEnum.Visible;
         }
 
+        if (Input.IsActionJustPressed("Jump"))
+        {
+            character.Cmovement.Jump();
+        }
+
         if (Input.IsActionJustPressed("Sprint"))
         {
             if (character.Cstates.CheckState("Sprinting"))
@@ -48,5 +53,6 @@ public partial class CPlayerInput : Component
             }
         }
         character.Cmovement.MoveDirection = Input.GetVector("Left", "Right", "Back", "Forward");
+        GD.Print(character.Cmovement.MoveDirection);
     }
 }

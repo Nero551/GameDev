@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class ECharacter : CharacterBody3D, ICombatable, IMainAnimatible, IVelocity, IIsOnFloor
+public partial class ECharacter : CharacterBody3D, ICombatable, IMainAnimatible, IVelocity, IIsOnFloor, IGetGravity, IMoveAndSlide, IGlobalPosition
 {
 	[Export] public Node3D Rig { get; set; }
 	[Export] public EItem MainHand;
@@ -36,10 +36,8 @@ public partial class ECharacter : CharacterBody3D, ICombatable, IMainAnimatible,
 		Cknockback = Entity.AddComponent<CKnockback>();
 		Cpull = Entity.AddComponent<CPull>();
 		Ccombat = Entity.AddComponent<CCombat>();
-		
-		GetNode<EWeapon>("Fist").Init(this);
 
-		
+		GetNode<EWeapon>("Fist").Init(this);
 	}
 
 	public override void _Process(double delta)
@@ -47,13 +45,20 @@ public partial class ECharacter : CharacterBody3D, ICombatable, IMainAnimatible,
 		Cstates.HandleStates(delta);
 		CmainStates.HandleMainStates();
 		CmainAnimations.MainAnimations();
-		MoveAndSlide();
+		// MoveAndSlide();
 	}
 
 	public void OnHitMarker()
 	{
 		Ccombat.OnHitMarker();
 	}
+
+	public override void _PhysicsProcess(double delta)
+	{
+		// Cmovement.Move(delta);
+		// Cmovement.Gravity(delta);
+	}
+
 
 	public void OnAnimFinished(string animName)
 	{

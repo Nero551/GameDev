@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Framework/Framework.md",
+                "file": "Death Note/Notes 3.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Framework"
+              "title": "Notes 3"
             }
           }
         ],
@@ -127,7 +127,7 @@
         "state": {
           "type": "backlink",
           "state": {
-            "file": "Framework/Framework.md",
+            "file": "Death Note/Notes 3.md",
             "collapseAll": false,
             "extraContext": false,
             "sortOrder": "alphabetical",
@@ -185,13 +185,13 @@
   },
   "active": "55ec3dc104d1ae4a",
   "lastOpenFiles": [
-    "C# Notes.md",
-    "Chaos NoteBook/Chemistry system.md",
-    "Chaos NoteBook/Notes 3.md",
-    "Framework/Framework.md",
-    "Chaos NoteBook/Notes 2.md",
-    "Chaos NoteBook/Notes.md",
     "Framework/Framework Diagram.canvas",
+    "Framework/Framework.md",
+    "Death Note/Notes 3.md",
+    "C# Notes.md",
+    "Death Note/Chemistry system.md",
+    "Death Note/Notes 2.md",
+    "Death Note/Notes.md",
     "Framework.sync-conflict-20260509-150149-A4GKIDB.md",
     "Framework.md",
     "Doc/Entities/Regular NPCS/Main.md",
@@ -214,7 +214,6 @@
     "Doc/Entities/Player.md",
     "AI Modified/WorldSystem.md",
     "Doc/Worlds",
-    "AI Modified/Structured Ideas.md",
     "Doc/Items/Consumables/Ingredients",
     "Pasted image 20260427044446.jpg",
     "Doc/Items/Accessories/Arm",

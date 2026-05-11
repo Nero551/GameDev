@@ -31,20 +31,21 @@ public partial class CPlayerMovement : Component
         forward = forward.Normalized();
         right = right.Normalized();
 
-        Vector3 direction =
+        velocity = new Vector3(character.Cmovement.MoveDirection.X, 0, character.Cmovement.MoveDirection.Y);
+        velocity =
         (right * character.Cmovement.MoveDirection.X +
          forward * character.Cmovement.MoveDirection.Y
         ).Normalized();
 
-        if (direction != Vector3.Zero)
+        if (velocity != Vector3.Zero)
         {
-            velocity.X = direction.X * character.Cmovement.Speed;
-            velocity.Z = direction.Z * character.Cmovement.Speed;
+            velocity.X *= character.Cmovement.Speed;
+            velocity.Z *= character.Cmovement.Speed;
 
             //? Smooths character rotation 
             // I dont understand how this works but it works
             Vector3 targetDir = (
-                character.GlobalPosition + direction -
+                character.GlobalPosition + velocity -
                 Entity.GetComponent<CCharacter>().Character.Rig.GlobalPosition
                 ).Normalized();
             Basis target = Basis.LookingAt(targetDir, Vector3.Up);
