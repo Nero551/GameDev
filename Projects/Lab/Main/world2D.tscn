@@ -1,14 +1,19 @@
 [gd_scene format=3 uid="uid://ifsrbkagdaq4"]
 
-[ext_resource type="Script" uid="uid://d2rd8nmpa885a" path="res://Main/2D/Coordinate Plane/Grid2D.cs" id="1_2w5gm"]
-[ext_resource type="PackedScene" uid="uid://0xu727uhvxvy" path="res://Main/2D/Coordinate Plane/Scenes/point.tscn" id="2_mx46q"]
+[ext_resource type="Script" uid="uid://d2rd8nmpa885a" path="res://Main/2D/Coordinate Plane/CartesianPlane.cs" id="1_7dk2f"]
 
-[node name="World" type="Node2D" unique_id=1610458306]
+[node name="Math" type="Node2D" unique_id=1976431736]
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1828998838]
-zoom = Vector2(40, 40)
+[node name="Cartesian Plane" type="Node2D" parent="." unique_id=1831727838]
+script = ExtResource("1_7dk2f")
 
-[node name="Grid" type="Node" parent="." unique_id=1161099422]
-script = ExtResource("1_2w5gm")
+[node name="My Stuff" type="Node2D" parent="Cartesian Plane" unique_id=2144951206]
+z_index = 2
 
-[node name="Point" parent="Grid" unique_id=612649976 instance=ExtResource("2_mx46q")]
+[node name="Core" type="Node2D" parent="Cartesian Plane" unique_id=743349825]
+z_index = 1
+
+[node name="Axis" type="Node2D" parent="Cartesian Plane/Core" unique_id=788149757]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1520350185]
+zoom = Vector2(10, 10)

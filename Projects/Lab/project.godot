@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Lab"
-run/main_scene="uid://b804kg1wf78yy"
+run/main_scene="uid://ifsrbkagdaq4"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 

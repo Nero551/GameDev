@@ -1,14 +1,15 @@
 [gd_scene format=3 uid="uid://cgkpvnul3qovt"]
 
 [ext_resource type="Script" uid="uid://wm74fyw2ougo" path="res://Main/Shared/Core/World.cs" id="1_vklr1"]
-[ext_resource type="Texture2D" uid="uid://dtsm7jpnqwq67" path="res://icon.svg" id="2_5awyl"]
+[ext_resource type="Texture2D" uid="uid://bf3w1bajov4kr" path="res://Main/Shared/Assets/Textures/PrototypeFloor.png" id="2_4and7"]
 [ext_resource type="PackedScene" uid="uid://8plp26spdxm4" path="res://Main/Workspace/Character.tscn" id="3_u2oix"]
 [ext_resource type="Script" uid="uid://dvr5vpxnt2r5i" path="res://Main/Client/Entities/EEnemy.cs" id="4_tcacx"]
 [ext_resource type="PackedScene" uid="uid://cvle36gt8soas" path="res://Main/Workspace/Player.tscn" id="6_digbp"]
 [ext_resource type="Script" uid="uid://8vyuhyx0xogt" path="res://addons/godot-freecam-plugin-11a229982a39a4f1551db1971f7a92efc862c0d7/addons/freecam_3D/freecam.gd" id="7_vklr1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bd1ac"]
-albedo_texture = ExtResource("2_5awyl")
+albedo_color = Color(0.556953, 0.556953, 0.556953, 1)
+albedo_texture = ExtResource("2_4and7")
 uv1_scale = Vector3(24.225, 24.225, 24.225)
 uv1_triplanar = true
 

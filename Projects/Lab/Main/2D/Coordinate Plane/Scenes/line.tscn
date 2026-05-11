@@ -1,11 +1,10 @@
 [gd_scene format=3 uid="uid://bgs8wiy1rynbd"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_y1e3n"]
-height = 20.0
+[sub_resource type="BoxMesh" id="BoxMesh_y1e3n"]
 
-[node name="Line" type="Node2D" unique_id=853578137]
-rotation = 2.443461
-scale = Vector2(0.25, 0.25)
+[node name="Line" type="Node2D" unique_id=737903059]
+scale = Vector2(1, 0.5)
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=88295498]
-mesh = SubResource("CapsuleMesh_y1e3n")
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=115230947]
+position = Vector2(0.5, 0)
+mesh = SubResource("BoxMesh_y1e3n")

@@ -1,9 +1,8 @@
 [gd_scene format=3 uid="uid://0xu727uhvxvy"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_go3ee"]
+[sub_resource type="SphereMesh" id="SphereMesh_40ahp"]
 
-[node name="Point" type="Node2D" unique_id=612649976]
-scale = Vector2(0.25, 0.25)
+[node name="Point" type="Node2D" unique_id=1739503388]
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=710160775]
-mesh = SubResource("SphereMesh_go3ee")
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1109384576]
+mesh = SubResource("SphereMesh_40ahp")
