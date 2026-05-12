@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class CartesianPlane : Node
+public partial class CartesianPlane : Node2D
 {
 	public Vector2 Origin = new Vector2(0, 0);
 	public int BasisX = 5;
@@ -48,6 +48,64 @@ public partial class CartesianPlane : Node
 	}
 
 
+	public void PlaneLine(Vector2 a, Vector2 b)
+	{
+		PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/LineSegment.tscn");
+		Node2D line = scene.Instantiate<Node2D>();
+		var meshInstance = line.GetNode<MeshInstance2D>("Line");
+
+		a = new Vector2(a.X, -a.Y);
+		b = new Vector2(b.X, -b.Y);
+		Vector2 vAB = b - a;
+
+		line.Position = a;
+		line.Scale = new Vector2(Size * 2, 0.5f);
+		line.Rotation = (b - a).Angle();
+
+		line.Name = (a + b).ToString();
+
+		meshInstance.Modulate = Colors.DimGray;
+		GetNode<Node2D>("Core/Plane").AddChild(line);
+
+	}
+
+	public void AxisLine(Vector2 a, Vector2 b)
+	{
+		PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/StraightLine.tscn");
+		Node2D line = scene.Instantiate<Node2D>();
+		var meshInstance = line.GetNode<MeshInstance2D>("Line/LineMesh");
+		var arrow1 = line.GetNode<MeshInstance2D>("Arrow1/Arrow1Mesh");
+		var arrow2 = line.GetNode<MeshInstance2D>("Arrow2/Arrow2Mesh");
+
+		a = new Vector2(a.X, -a.Y);
+		b = new Vector2(b.X, -b.Y);
+		Vector2 vAB = b - a;
+
+		line.Position = (a + b) / 2;
+		line.GetNode<Node2D>("Line").Scale = new Vector2(Size * 2, 0.5f);
+		line.Rotation = (b - a).Angle();
+
+		line.GetNode<Node2D>("Arrow1").Position = new Vector2(line.GetNode<Node2D>("Line").Scale.X / 2, 0);
+		line.GetNode<Node2D>("Arrow2").Position = new Vector2(-line.GetNode<Node2D>("Line").Scale.X / 2, 0);
+
+		GetNode<Node2D>("Core/Axis").AddChild(line);
+		if (line.Rotation == 0)
+		{
+			arrow1.Modulate = Colors.IndianRed;
+			arrow2.Modulate = Colors.IndianRed;
+
+			meshInstance.Modulate = Colors.IndianRed;
+			line.Name = "X Axis";
+		}
+		else
+		{
+			arrow1.Modulate = Colors.LightGreen;
+			arrow2.Modulate = Colors.LightGreen;
+
+			meshInstance.Modulate = Colors.LightGreen;
+			line.Name = "Y Axis";
+		}
+	}
 
 
 }
