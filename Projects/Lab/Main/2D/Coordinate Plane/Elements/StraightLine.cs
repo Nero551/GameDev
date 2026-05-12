@@ -4,16 +4,14 @@ using System;
 public partial class CartesianPlane
 {
     //Vector Method
-    public void StraightLine(Vector2 a, Vector2 b, Color color = default)
+    public StraightLine StraightLine(Vector2 a, Vector2 b, Color color = default)
     {
         PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/StraightLine.tscn");
-        Node2D line = scene.Instantiate<Node2D>();
+        StraightLine line = scene.Instantiate<StraightLine>();
         var meshInstance = line.GetNode<MeshInstance2D>("Line/LineMesh");
         var arrow1 = line.GetNode<MeshInstance2D>("Arrow1/Arrow1Mesh");
         var arrow2 = line.GetNode<MeshInstance2D>("Arrow2/Arrow2Mesh");
 
-        a = new Vector2(a.X, -a.Y);
-        b = new Vector2(b.X, -b.Y);
         Vector2 vAB = b - a;
 
         line.Position = (a + b) / 2;
@@ -28,26 +26,35 @@ public partial class CartesianPlane
         arrow1.Modulate = color == default ? Colors.DimGray : color;
         arrow2.Modulate = color == default ? Colors.DimGray : color;
 
+        line.AngleRad = vAB.Angle();
+        line.Angle = Mathf.RadToDeg(line.Rotation);
+        line.Slope = Mathf.Tan(line.AngleRad);
+        line.Color = meshInstance.Modulate;
+        line.LineName = line.Name;
+        line.A = new Vector2(a.X / BasisX, a.Y / BasisY);
+        line.B = new Vector2(b.X / BasisX, b.Y / BasisY);
+
         GetNode<Node2D>("My Stuff").AddChild(line);
+
+        return line;
     }
 
     //Slope Method
-    public void StraightLine(Vector2 a, float slope, Color color = default)
+    public StraightLine StraightLine(Vector2 a, float slope, Color color = default)
     {
         PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/StraightLine.tscn");
-        Node2D line = scene.Instantiate<Node2D>();
+        StraightLine line = scene.Instantiate<StraightLine>();
 
-        float theta  = Mathf.Atan(slope);
+        float theta = Mathf.Atan(slope);
         float cos = Mathf.Cos(theta);
         float sin = Mathf.Sin(theta);
 
-        a = new Vector2(a.X, -a.Y);
-        Vector2 b = new Vector2(cos, -sin);
-        Vector2 vAB = b - a;
+        //* B is NOT a position its a DIRECTION vector
+        Vector2 b = Vector2(cos, sin);
 
         line.Position = (a + b) / 2;
         line.GetNode<Node2D>("Line").Scale = new Vector2(Size * 2, 0.5f);
-        line.Rotation = vAB.Angle();
+        line.Rotation = theta;
 
         line.GetNode<Node2D>("Arrow1").Position = new Vector2(-line.GetNode<Node2D>("Line").Scale.X / 2, 0);
         line.GetNode<Node2D>("Arrow2").Position = new Vector2(line.GetNode<Node2D>("Line").Scale.X / 2, 0);
@@ -62,8 +69,16 @@ public partial class CartesianPlane
         arrow1.Modulate = color == default ? Colors.DimGray : color;
         arrow2.Modulate = color == default ? Colors.DimGray : color;
 
-        GetNode<Node2D>("My Stuff").AddChild(line);
-    }
+        line.Slope = Mathf.Tan(line.Rotation);
+        line.AngleRad = line.Rotation;
+        line.Angle = Mathf.RadToDeg(line.Rotation);
+        line.Color = meshInstance.Modulate;
+        line.LineName = line.Name;
+        line.A = new Vector2(a.X / BasisX, a.Y / BasisY);
+        line.B = new Vector2(b.X / BasisX, b.Y / BasisY);
 
-    
+        GetNode<Node2D>("My Stuff").AddChild(line);
+
+        return line;
+    }
 }

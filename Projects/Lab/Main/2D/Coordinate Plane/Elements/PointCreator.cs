@@ -7,7 +7,6 @@ public partial class CartesianPlane
     {
         PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/Point.tscn");
         Node2D point = scene.Instantiate<Node2D>();
-        pos = new Vector2(pos.X * BasisX, -pos.Y * BasisY);
         point.Position = pos;
 
         point.Name = pos.ToString();

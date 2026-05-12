@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://chuks5bk1kuff"]
 
+[ext_resource type="Script" uid="uid://cyephy8cqpmhy" path="res://Main/2D/Coordinate Plane/Classes/Ray.cs" id="1_phwls"]
+
 [sub_resource type="PrismMesh" id="PrismMesh_w08l1"]
 size = Vector3(1.48, -1.1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_phwls"]
 
 [node name="Ray" type="Node2D" unique_id=1052653388]
+script = ExtResource("1_phwls")
 
 [node name="Arrow" type="Node2D" parent="." unique_id=216523874]
 position = Vector2(16.005, 0)

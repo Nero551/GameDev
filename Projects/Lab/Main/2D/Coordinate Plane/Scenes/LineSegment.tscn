@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://bgs8wiy1rynbd"]
 
+[ext_resource type="Script" uid="uid://grtmmtmb4asx" path="res://Main/2D/Coordinate Plane/Classes/LineSegment.cs" id="1_fatmu"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_4mdk6"]
 
 [node name="LineSegment" type="Node2D" unique_id=737903059]
 scale = Vector2(1, 0.5)
+script = ExtResource("1_fatmu")
 
 [node name="Line" type="MeshInstance2D" parent="." unique_id=115230947]
 position = Vector2(0.5, 0)

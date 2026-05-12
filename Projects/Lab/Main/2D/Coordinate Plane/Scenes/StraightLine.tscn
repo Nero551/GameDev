@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://cua62qj8ceklf"]
 
+[ext_resource type="Script" uid="uid://c4jw06lnali4e" path="res://Main/2D/Coordinate Plane/Classes/StraightLine.cs" id="1_b6vhq"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_yh6sh"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_b6vhq"]
@@ -9,6 +11,7 @@ size = Vector3(1.48, 1.1, 1)
 size = Vector3(1.48, -1.1, 1)
 
 [node name="StraightLine" type="Node2D" unique_id=1408779541]
+script = ExtResource("1_b6vhq")
 
 [node name="Line" type="Node2D" parent="." unique_id=900612796]
 scale = Vector2(25.91, 0.5)

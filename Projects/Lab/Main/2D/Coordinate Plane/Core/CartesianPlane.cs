@@ -107,5 +107,9 @@ public partial class CartesianPlane : Node2D
 		}
 	}
 
+	public Vector2 Vector2(float x, float y)
+	{
+		return new Vector2(x * BasisX, -y * BasisY);
+	}
 
 }

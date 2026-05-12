@@ -17,7 +17,7 @@ public partial class CartesianPlane
             float x = Mathf.Cos(rad) * radius;
             float y = Mathf.Sin(rad) * radius;
 
-            CreatePoint(node, new Vector2(x, y) + origin);
+            CreatePoint(node, Vector2(x, y) + origin);
         }
     }
 }
