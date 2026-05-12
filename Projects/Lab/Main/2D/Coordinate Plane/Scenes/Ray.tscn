@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://chuks5bk1kuff"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_w08l1"]
+size = Vector3(1.48, -1.1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_phwls"]
+
+[node name="Ray" type="Node2D" unique_id=1052653388]
+
+[node name="Arrow" type="Node2D" parent="." unique_id=216523874]
+position = Vector2(16.005, 0)
+
+[node name="ArrowMesh" type="MeshInstance2D" parent="Arrow" unique_id=109628528]
+rotation = 1.5707964
+mesh = SubResource("PrismMesh_w08l1")
+
+[node name="Line" type="Node2D" parent="." unique_id=1766313583]
+scale = Vector2(15.645, 0.5)
+
+[node name="LineMesh" type="MeshInstance2D" parent="Line" unique_id=866380180]
+position = Vector2(0.5, 0)
+mesh = SubResource("BoxMesh_phwls")
