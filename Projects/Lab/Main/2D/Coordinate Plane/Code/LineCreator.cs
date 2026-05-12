@@ -28,20 +28,20 @@ public partial class CartesianPlane
     {
         PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/StraightLine.tscn");
         Node2D line = scene.Instantiate<Node2D>();
-        var meshInstance = line.GetNode<MeshInstance2D>("Line");
-        var arrow1 = line.GetNode<MeshInstance2D>("Arrow1");
-        var arrow2 = line.GetNode<MeshInstance2D>("Arrow2");
+        var meshInstance = line.GetNode<MeshInstance2D>("Line/LineMesh");
+        var arrow1 = line.GetNode<MeshInstance2D>("Arrow1/Arrow1Mesh");
+        var arrow2 = line.GetNode<MeshInstance2D>("Arrow2/Arrow2Mesh");
 
         a = new Vector2(a.X, -a.Y);
         b = new Vector2(b.X, -b.Y);
         Vector2 vAB = b - a;
 
         line.Position = (a + b) / 2;
-        line.Scale = new Vector2(Size * 2, 0.5f);
+        line.GetNode<Node2D>("Line").Scale = new Vector2(Size * 2, 0.5f);
         line.Rotation = (b - a).Angle();
 
-        arrow1.Position = a;
-        arrow2.Position = b;
+        line.GetNode<Node2D>("Arrow1").Position = new Vector2(line.GetNode<Node2D>("Line").Scale.X / 2, 0);
+        line.GetNode<Node2D>("Arrow2").Position = new Vector2(-line.GetNode<Node2D>("Line").Scale.X / 2, 0);
 
         GetNode<Node2D>("Core/Axis").AddChild(line);
         if (line.Rotation == 0)
@@ -76,9 +76,9 @@ public partial class CartesianPlane
         line.Scale = new Vector2(vAB.Length(), 0.5f);
         line.Rotation = (b - a).Angle();
 
-        line.Name = (a + b).ToString();
-
+        line.Name = "Line Segment: " + (a + b).ToString();
         meshInstance.Modulate = color == default ? Colors.DimGray : color;
+
         GetNode<Node2D>("My Stuff").AddChild(line);
     }
 
@@ -92,23 +92,22 @@ public partial class CartesianPlane
     {
         PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/StraightLine.tscn");
         Node2D line = scene.Instantiate<Node2D>();
-        var meshInstance = line.GetNode<MeshInstance2D>("Line");
-        var arrow1 = line.GetNode<MeshInstance2D>("Arrow1");
-        var arrow2 = line.GetNode<MeshInstance2D>("Arrow2");
+        var meshInstance = line.GetNode<MeshInstance2D>("Line/LineMesh");
+        var arrow1 = line.GetNode<MeshInstance2D>("Arrow1/Arrow1Mesh");
+        var arrow2 = line.GetNode<MeshInstance2D>("Arrow2/Arrow2Mesh");
 
-        a = new Vector2(a.X * BasisX, -a.Y * BasisY);
-        b = new Vector2(b.X * BasisX, -b.Y * BasisY);
+        a = new Vector2(a.X, -a.Y);
+        b = new Vector2(b.X, -b.Y);
         Vector2 vAB = b - a;
 
         line.Position = (a + b) / 2;
-        line.Scale = new Vector2(Size * 2, 0.5f);
+        line.GetNode<Node2D>("Line").Scale = new Vector2(Size * 2, 0.5f);
         line.Rotation = (b - a).Angle();
 
+        line.GetNode<Node2D>("Arrow1").Position = new Vector2(line.GetNode<Node2D>("Line").Scale.X / 2, 0);
+        line.GetNode<Node2D>("Arrow2").Position = new Vector2(-line.GetNode<Node2D>("Line").Scale.X / 2, 0);
+
         line.Name = (a + b).ToString();
-
-        arrow1.Position = a;
-        arrow2.Position = b;
-
         meshInstance.Modulate = color == default ? Colors.DimGray : color;
         arrow1.Modulate = color == default ? Colors.DimGray : color;
         arrow2.Modulate = color == default ? Colors.DimGray : color;
