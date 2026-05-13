@@ -26,13 +26,7 @@ public partial class CartesianPlane
         arrow1.Modulate = color == default ? Colors.DimGray : color;
         arrow2.Modulate = color == default ? Colors.DimGray : color;
 
-        line.AngleRad = vAB.Angle();
-        line.Angle = Mathf.RadToDeg(line.Rotation);
-        line.Slope = Mathf.Tan(line.AngleRad);
-        line.Color = meshInstance.Modulate;
-        line.LineName = line.Name;
-        line.A = new Vector2(a.X / BasisX, a.Y / BasisY);
-        line.B = new Vector2(b.X / BasisX, b.Y / BasisY);
+        line.RegisterData(line,a,b);
 
         GetNode<Node2D>("My Stuff").AddChild(line);
 
@@ -69,13 +63,8 @@ public partial class CartesianPlane
         arrow1.Modulate = color == default ? Colors.DimGray : color;
         arrow2.Modulate = color == default ? Colors.DimGray : color;
 
-        line.Slope = Mathf.Tan(line.Rotation);
-        line.AngleRad = line.Rotation;
-        line.Angle = Mathf.RadToDeg(line.Rotation);
-        line.Color = meshInstance.Modulate;
-        line.LineName = line.Name;
-        line.A = new Vector2(a.X / BasisX, a.Y / BasisY);
-        line.B = new Vector2(b.X / BasisX, b.Y / BasisY);
+        line.RegisterData(line, a, b);
+
 
         GetNode<Node2D>("My Stuff").AddChild(line);
 

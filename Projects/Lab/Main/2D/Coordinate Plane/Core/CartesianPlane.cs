@@ -3,9 +3,9 @@ using System;
 
 public partial class CartesianPlane : Node2D
 {
-	public Vector2 Origin = new Vector2(0, 0);
-	public int BasisX = 5;
-	public int BasisY = 5;
+	public static Vector2 Origin = new Vector2(0, 0);
+	public static int BasisX = 5;
+	public static int BasisY = 5;
 	public int Size;
 
 	public override void _Ready()

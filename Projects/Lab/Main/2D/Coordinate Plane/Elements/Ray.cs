@@ -18,7 +18,7 @@ public partial class CartesianPlane
 
         line.GetNode<Node2D>("Arrow").Position = new Vector2(line.GetNode<Node2D>("Line").Scale.X, 0);
 
-        line.Name = (a + b).ToString();
+        line.Name =  "Ray: " + (a + b).ToString();
         meshInstance.Modulate = color == default ? Colors.DimGray : color;
         arrow.Modulate = color == default ? Colors.DimGray : color;
 
