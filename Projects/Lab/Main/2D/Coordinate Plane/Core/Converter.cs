@@ -3,14 +3,14 @@ using System;
 
 public partial class Converter
 {
-    public static Vector2 MathToRender(MathVector2 mathVector)
+    public static Vector2 VectorMathToRender(MathVector2 mathVector)
     {
         float x = mathVector.X * CartesianPlane.BasisX;
         float y = -(mathVector.Y * CartesianPlane.BasisX);
         Vector2 renderVector = new Vector2(x, y);
         return renderVector;
     }
-    public static MathVector2 RenderToMath(Vector2 renderVector)
+    public static MathVector2 VectorRenderToMath(Vector2 renderVector)
     {
         float x = renderVector.X / CartesianPlane.BasisX;
         float y = -(renderVector.Y / CartesianPlane.BasisY);

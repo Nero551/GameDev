@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Linq;
 
+
 public readonly struct MathVector2
 {
     public readonly float X;

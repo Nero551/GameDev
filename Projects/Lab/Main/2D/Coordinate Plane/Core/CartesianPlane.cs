@@ -3,6 +3,7 @@ using System;
 
 public partial class CartesianPlane : Node2D
 {
+	public static Node2D Plane;
 	public static MathVector2 Origin = new MathVector2(0, 0);
 	public static int BasisX = 5;
 	public static int BasisY = 5;
@@ -10,6 +11,8 @@ public partial class CartesianPlane : Node2D
 
 	public override void _Ready()
 	{
+		Plane = this;
+
 		Size = BasisX * BasisY * 2;
 		CreateGrid();
 		Sandbox();

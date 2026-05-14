@@ -17,17 +17,16 @@ public partial class Point : Node2D
 
         point.PointName = name == default ? "Point" : name;
         point.Color = color == default ? Colors.White : color;
+        parent = parent == default ? CartesianPlane.Plane.GetNodeOrNull<Node2D>("Content/Points") : parent;
 
-        parent = parent == default ? MathWorld.World : parent;
         parent.AddChild(point);
-
         return point;
     }
 
     public override void _Process(double delta)
     {
         Name = PointName;
-        Position = Converter.MathToRender(new MathVector2(X, Y));
+        Position = Converter.VectorMathToRender(new MathVector2(X, Y));
         GetNode<MeshInstance2D>("MeshInstance2D").Modulate = Color;
     }
 }

@@ -17,34 +17,38 @@ public partial class LineSegment : Node2D
     [Export] public string LineName;
     [Export] public Color Color;
 
-    public static LineSegment Create(string name = default, Color color = default)
+    public static LineSegment Create(string name = default, Color color = default, Node parent = default)
     {
         PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/LineSegment.tscn");
         LineSegment line = scene.Instantiate<LineSegment>();
-        var meshInstance = line.GetNode<MeshInstance2D>("Line");
-
-        // line.Scale = new Vector2(vAB.Length(), 0.5f);
-        // line.Rotation = (vAB).Angle();
 
         line.LineName = name == default ? "Line Segment" : name;
         line.Color = color == default ? Colors.White : color;
-        GD.Print(MathWorld.World);
-        MathWorld.World.GetNode<Node2D>("Cartesian Plane/My Stuff").AddChild(line);
+        parent = parent == default ? CartesianPlane.Plane.GetNodeOrNull<Node2D>("Content/LineSegments") : parent;
 
+        parent.AddChild(line);
         return line;
     }
 
+    //* i need a way to track change and adjust values accordingly.
+    //* maybe using setters that call a function?
+
+    //* another idea is have each variable turn a boolean true on setter.
+    //* then a function executes adjustments on true then falses the boolean
     public override void _Process(double delta)
     {
-        // Name = LineName;
-        GetNode<MeshInstance2D>("Line").Modulate = Color;
         AB = new MathVector2(BX - AX, BY - AY);
+        AngleRad = Mathf.Atan2(AB.Y, AB.X);
+        Angle = Mathf.RadToDeg(AngleRad);
+        Slope = Mathf.Tan(AngleRad);
         Length = AB.Length();
-        AngleRad = Mathf.DegToRad(Angle);
 
+
+        Name = LineName;
+        GetNode<MeshInstance2D>("Line").Modulate = Color;
 
         Scale = new Vector2(Converter.LengthMathToRender(Length), 0.5f);
-        Position = Converter.MathToRender(new MathVector2(AX, AY));
+        Position = Converter.VectorMathToRender(new MathVector2(AX, AY));
         Rotation = Converter.AngleMathToRender(AngleRad);
 
     }

@@ -25,24 +25,12 @@ public partial class CartesianPlane
         * 3- seperate the layers to avoid confusion
         */
         MathVector2 A = new MathVector2(3, 1);
-        MathVector2 B = new MathVector2(5, 5);
-        // Point.Create(B, "B");
+        MathVector2 B = new MathVector2(-5, 5);
+        Point.Create(B, "B");
         LineSegment line = LineSegment.Create("AB", Colors.Blue);
         line.AX = 0;
         line.AY = 0;
         line.BY = 5;
         line.BX = 5;
-        line.AngleRad  = 1;
-        // GD.Print((A + B).X);
-
-        // StraightLine AB = StraightLine.Create("AB",Colors.Red);
-        // AB.A = Origin;
-        // AB.B = Vector2(5,5);
-        // Circle(Vector2(0, 0), 5);
-        // LineSegment(Vector2(-6, 5), Vector2(-8, 3), Colors.Crimson);
-        // StraightLine strL = StraightLine(Origin, Vector2(5, 5), Colors.White);
-        // StraightLine strL2 = StraightLine(Origin, -1 / strL.Slope, Colors.Red);
-        // StraightLine(Origin, 1, Colors.White);
-        // Ray(Origin, Vector2(-3, 2), Colors.Pink);
     }
 }
