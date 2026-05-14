@@ -11,18 +11,19 @@ public partial class LineSegment : Node2D
     [Export] public float Slope;
     [Export] public string LineName;
     [Export] public Color Color;
+    [Export] public Vector2 DirectionVector;
 
     public void RegisterData(LineSegment line, Vector2 a, Vector2 b)
     {
         var meshInstance = line.GetNode<MeshInstance2D>("Line");
-        this.A = new Vector2(a.X / CartesianPlane.BasisX, -a.Y / CartesianPlane.BasisY);
-        this.B = new Vector2(b.X / CartesianPlane.BasisX, -b.Y / CartesianPlane.BasisY);
-        this.Length = (b - a).Length();
-        this.AngleRad = (b - a).Angle();
-        this.Angle = Mathf.RadToDeg(this.AngleRad);
-        this.Slope = Mathf.Tan(this.AngleRad);
-        this.LineName = this.Name;
-        this.Color = meshInstance.Modulate;
+        A = new Vector2(a.X / CartesianPlane.BasisX, -a.Y / CartesianPlane.BasisY);
+        B = new Vector2(b.X / CartesianPlane.BasisX, -b.Y / CartesianPlane.BasisY);
+        Length = (b - a).Length();
+        AngleRad = (b - a).Angle();
+        Angle = Mathf.RadToDeg(AngleRad);
+        Slope = Mathf.Tan(AngleRad);
+        LineName = Name;
+        Color = meshInstance.Modulate;
+        DirectionVector = new Vector2(Mathf.Cos(AngleRad), Mathf.Sin(AngleRad));
     }
-
 }

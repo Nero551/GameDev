@@ -11,17 +11,14 @@
             "id": "a3c787ad57a57221",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Framework/Framework Diagram.canvas",
-                "viewState": {
-                  "x": -569.4473463163145,
-                  "y": -225.55405353131118,
-                  "zoom": -0.8000000000000002
-                }
+                "file": "Death Note/Notes 3.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "Framework Diagram"
+              "icon": "lucide-file",
+              "title": "Notes 3"
             }
           }
         ]
@@ -188,6 +185,8 @@
   },
   "active": "a3c787ad57a57221",
   "lastOpenFiles": [
+    "Framework/Framework.md",
+    "Framework/Framework Diagram.canvas",
     "Death Note/Notes.md",
     "Death Note/Notes 3.md",
     "Death Note/Notes 2.md",
@@ -195,8 +194,6 @@
     "Death Note/Chemistry system.md",
     "Death Note",
     "Chaos NoteBook/Notes 3.md",
-    "Framework/Framework Diagram.canvas",
-    "Framework/Framework.md",
     "C# Notes.md",
     "Untitled.md",
     "Framework",
@@ -220,7 +217,6 @@
     "Doc/Worlds",
     "Doc/Items/Consumables/Ingredients",
     "Chaos NoteBook/Notes.md",
-    "Doc/Story/Plot.md",
     "Doc/Story/Untitled",
     "Doc/Story/Ch 2",
     "Doc/Items/Accessories/Untitled",

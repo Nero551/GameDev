@@ -6,7 +6,7 @@ public partial class CartesianPlane : Node2D
 	public static Vector2 Origin = new Vector2(0, 0);
 	public static int BasisX = 5;
 	public static int BasisY = 5;
-	public int Size;
+	public static int Size;
 
 	public override void _Ready()
 	{
@@ -71,7 +71,7 @@ public partial class CartesianPlane : Node2D
 
 	public void AxisLine(Vector2 a, Vector2 b)
 	{
-		PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/StraightLine.tscn");
+		PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/AxisLine.tscn");
 		Node2D line = scene.Instantiate<Node2D>();
 		var meshInstance = line.GetNode<MeshInstance2D>("Line/LineMesh");
 		var arrow1 = line.GetNode<MeshInstance2D>("Arrow1/Arrow1Mesh");
@@ -107,7 +107,7 @@ public partial class CartesianPlane : Node2D
 		}
 	}
 
-	public Vector2 Vector2(float x, float y)
+	public static Vector2 Vector2(float x, float y)
 	{
 		return new Vector2(x * BasisX, -y * BasisY);
 	}
