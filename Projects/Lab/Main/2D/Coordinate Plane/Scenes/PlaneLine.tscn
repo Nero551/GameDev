@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c6c5hbs177h5e"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4mdk6"]
+
+[node name="LineSegment" type="Node2D" unique_id=737903059]
+scale = Vector2(1, 0.5)
+
+[node name="Line" type="MeshInstance2D" parent="." unique_id=115230947]
+position = Vector2(0.5, 0)
+mesh = SubResource("BoxMesh_4mdk6")

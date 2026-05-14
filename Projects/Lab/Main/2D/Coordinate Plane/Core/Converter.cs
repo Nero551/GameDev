@@ -18,4 +18,14 @@ public partial class Converter
         MathVector2 mathVector = new MathVector2(x, y);
         return mathVector;
     }
+
+    public static float LengthMathToRender(float length)
+    {
+        return length * CartesianPlane.BasisX;  
+    }
+
+    public static float AngleMathToRender(float angle)
+    {
+        return -angle;
+    }
 }

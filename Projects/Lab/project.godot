@@ -15,10 +15,6 @@ run/main_scene="uid://ifsrbkagdaq4"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
-[autoload]
-
-World2d="*uid://ifsrbkagdaq4"
-
 [dotnet]
 
 project/assembly_name="Lab"

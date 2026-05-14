@@ -26,8 +26,13 @@ public partial class CartesianPlane
         */
         MathVector2 A = new MathVector2(3, 1);
         MathVector2 B = new MathVector2(5, 5);
-        GD.Print();
-        Point.Create(B);
+        // Point.Create(B, "B");
+        LineSegment line = LineSegment.Create("AB", Colors.Blue);
+        line.AX = 0;
+        line.AY = 0;
+        line.BY = 5;
+        line.BX = 5;
+        line.AngleRad  = 1;
         // GD.Print((A + B).X);
 
         // StraightLine AB = StraightLine.Create("AB",Colors.Red);

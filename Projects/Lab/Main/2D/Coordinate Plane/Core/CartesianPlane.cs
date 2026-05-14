@@ -44,13 +44,13 @@ public partial class CartesianPlane : Node2D
 				PlaneLine(negativeEnd, positiveEnd);
 			}
 		}
-		Point.Create(Origin, this, Colors.RoyalBlue);
+		Point.Create(Origin, "Origin", Colors.RoyalBlue, this);
 	}
 
 
 	public void PlaneLine(Vector2 a, Vector2 b)
 	{
-		PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/LineSegment.tscn");
+		PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/PlaneLine.tscn");
 		Node2D line = scene.Instantiate<Node2D>();
 		var meshInstance = line.GetNode<MeshInstance2D>("Line");
 
@@ -106,10 +106,4 @@ public partial class CartesianPlane : Node2D
 			line.Name = "Y Axis";
 		}
 	}
-
-	public static Vector2 Vector2(float x, float y)
-	{
-		return new Vector2(x * BasisX, -y * BasisY);
-	}
-
 }

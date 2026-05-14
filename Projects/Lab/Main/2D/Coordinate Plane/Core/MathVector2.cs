@@ -45,6 +45,15 @@ public readonly struct MathVector2
         GD.Print(text);
     }
 
+    public static string ToString(params MathVector2[] mathVectors)
+    {
+        string text = "";
+        foreach (MathVector2 v in mathVectors)
+        {
+            text += $"[{v.X}, {v.Y}] ";
+        }
+        return text;
+    }
     public float Length()
     {
         return Mathf.Sqrt(Mathf.Pow(X, 2) + Mathf.Pow(Y, 2));
