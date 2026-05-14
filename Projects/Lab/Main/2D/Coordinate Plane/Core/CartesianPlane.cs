@@ -3,7 +3,7 @@ using System;
 
 public partial class CartesianPlane : Node2D
 {
-	public static Vector2 Origin = new Vector2(0, 0);
+	public static MathVector2 Origin = new MathVector2(0, 0);
 	public static int BasisX = 5;
 	public static int BasisY = 5;
 	public static int Size;
@@ -44,7 +44,7 @@ public partial class CartesianPlane : Node2D
 				PlaneLine(negativeEnd, positiveEnd);
 			}
 		}
-		CreatePoint(this, Origin, Colors.RoyalBlue);
+		Point.Create(Origin, this, Colors.RoyalBlue);
 	}
 
 
