@@ -1,21 +1,34 @@
 using Godot;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 public partial class LineSegment : Node2D
 {
-    [Export] public float AX;
-    [Export] public float AY;
-    [Export] public float BX;
-    [Export] public float BY;
-    public MathVector2 AB;
+    public enum CalculationModes
+    {
+        Point,
+        Angle,
+        AngleRad,
+        Slope,
+        Length
+    }
+    [Export] public CalculationModes CalculationMode;
+    [Export] public float AX { get; set => SetProperty<float>(ref field, value, CalculationModes.Point); }
+    [Export] public float AY { get; set => SetProperty<float>(ref field, value, CalculationModes.Point); }
+    [Export] public float BX { get; set => SetProperty<float>(ref field, value, CalculationModes.Point); }
+    [Export] public float BY { get; set => SetProperty<float>(ref field, value, CalculationModes.Point); }
 
-    [Export] public float Length = default;
-    [Export] public float Angle = default;
-    [Export] public float AngleRad = default;
-    [Export] public float Slope = default;
+    [Export] public float Length { get; set => SetProperty<float>(ref field, value, CalculationModes.Length); }
+    [Export] public float Angle { get; set => SetProperty<float>(ref field, value, CalculationModes.Angle); }
+    [Export] public float AngleRad { get; set => SetProperty<float>(ref field, value, CalculationModes.AngleRad); }
+    [Export] public float Slope { get; set => SetProperty<float>(ref field, value, CalculationModes.Slope); }
 
     [Export] public string LineName;
     [Export] public Color Color;
+    public MathVector2 AB;
+    private bool Recalculating = false;
 
     public static LineSegment Create(string name = default, Color color = default, Node parent = default)
     {
@@ -30,26 +43,62 @@ public partial class LineSegment : Node2D
         return line;
     }
 
-    //* i need a way to track change and adjust values accordingly.
-    //* maybe using setters that call a function?
-
-    //* another idea is have each variable turn a boolean true on setter.
-    //* then a function executes adjustments on true then falses the boolean
-    public override void _Process(double delta)
+    public void SetProperty<T>(ref T propertyRef, T value, CalculationModes mode)
     {
+        if (!EqualityComparer<T>.Default.Equals(propertyRef, value))
+        {
+            propertyRef = value;
+            if (Recalculating == false)
+            {
+                CalculationMode = mode;
+                Recalculating = true;
+                Recalculate();
+            }
+        }
+    }
+    public void Recalculate()
+    {
+        switch (CalculationMode)
+        {
+            case CalculationModes.Point:
+                break;
+            case CalculationModes.AngleRad:
+                BX = AX + Length * Mathf.Cos(AngleRad);
+                BY = AY + Length * Mathf.Sin(AngleRad);
+                break;
+            case CalculationModes.Angle:
+                BX = AX + Length * Mathf.Cos(Mathf.DegToRad(Angle));
+                BY = AY + Length * Mathf.Sin(Mathf.DegToRad(Angle));
+                break;
+            case CalculationModes.Slope:
+                BX = AX + Length * Mathf.Cos(Mathf.Atan(Slope));
+                BY = AY + Length * Mathf.Sin(Mathf.Atan(Slope));
+                break;
+            case CalculationModes.Length:
+                BX = AX + Length * Mathf.Cos(AngleRad);
+                BY = AY + Length * Mathf.Sin(AngleRad);
+                break;
+            default:
+                break;
+        }
         AB = new MathVector2(BX - AX, BY - AY);
+        Length = AB.Length();
         AngleRad = Mathf.Atan2(AB.Y, AB.X);
         Angle = Mathf.RadToDeg(AngleRad);
-        Slope = Mathf.Tan(AngleRad);
-        Length = AB.Length();
 
+        Slope = AB.Y / AB.X;
 
+        Recalculating = false;
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
         Name = LineName;
         GetNode<MeshInstance2D>("Line").Modulate = Color;
 
-        Scale = new Vector2(Converter.LengthMathToRender(Length), 0.5f);
-        Position = Converter.VectorMathToRender(new MathVector2(AX, AY));
-        Rotation = Converter.AngleMathToRender(AngleRad);
+        Scale = new Vector2(Converter.LengthMathToRender(AB.Length()), 0.5f);
+        Position = Converter.VectorMathToRender(new MathVector2(AX + BX, AY + BY) / 2);
+        Rotation = Converter.AngleMathToRender(Mathf.Atan2(AB.Y, AB.X));
 
     }
 }

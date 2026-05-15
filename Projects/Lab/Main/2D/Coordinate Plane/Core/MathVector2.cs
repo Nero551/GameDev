@@ -35,6 +35,18 @@ public readonly struct MathVector2
         return new MathVector2(x, y);
     }
 
+    public static MathVector2 operator /(float numerator, MathVector2 b)
+    {
+        float x = numerator / b.X;
+        float y = numerator / b.Y;
+        return new MathVector2(x, y);
+    }
+    public static MathVector2 operator /(MathVector2 b, float denominator)
+    {
+        float x = b.X / denominator;
+        float y = b.Y / denominator;
+        return new MathVector2(x, y);
+    }
     public static void Print(params MathVector2[] mathVectors)
 
     {
