@@ -21,7 +21,6 @@ public partial class Circle : Element<Circle.CalculationModes>
     [Export] public float Area { get; set => SetProperty<float>(ref field, value, CalculationModes.Area); }
     [Export] public float Circumference { get; set => SetProperty<float>(ref field, value, CalculationModes.Circumference); }
 
-    [Export] public string CircleName;
     [Export] public Color Color { get; set => SetProperty<Color>(ref field, value, CalculationModes.Color); }
 
     private Point[] Points = new Point[360];
@@ -29,10 +28,10 @@ public partial class Circle : Element<Circle.CalculationModes>
 
     public static Circle Create(string name = default, Color color = default, Node parent = default)
     {
-        PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/Circle.tscn");
+        PackedScene scene = SceneLoader.Load("Circle");
         Circle circle = scene.Instantiate<Circle>();
 
-        circle.CircleName = name == default ? "Circle" : name;
+        circle.ElementName = name == default ? "Circle" : name;
         circle.Color = color == default ? Colors.White : color;
         parent = parent == default ? CartesianPlane.Plane.GetNodeOrNull<Node2D>("Content/Circles") : parent;
 
@@ -83,7 +82,7 @@ public partial class Circle : Element<Circle.CalculationModes>
 
     public override void _Process(double delta)
     {
-        Name = CircleName;
+        Name = ElementName;
         Position = Converter.VectorMathToRender(new MathVector2(OriginX, OriginY));
     }
 }

@@ -28,14 +28,22 @@ public partial class CartesianPlane
 
         // Circle circle = Circle.Create("M");
         // circle.Radius = 5;
+
         // Square square = Square.Create("ABCD");
         // square.OriginX = Origin.X;
         // square.OriginY = Origin.Y;
         // square.SideLength = 5;
 
-        Rectangle rectangle = Rectangle.Create("ABCD");
-        rectangle.Length = 10;
-        rectangle.Width = 3;
+        // Rectangle rectangle = Rectangle.Create("ABCD");\
+        // rectangle.OriginX = Origin.X;
+        // rectangle.OriginY = Origin.Y;
+        // rectangle.Length = 10;
+        // rectangle.Width = 3;
+
+        Rhombus rhombus = Rhombus.Create("ABCD");
+        rhombus.OriginX = Origin.X;
+        rhombus.OriginY = Origin.Y;
+        rhombus.SideLength = 5;
 
     }
 }

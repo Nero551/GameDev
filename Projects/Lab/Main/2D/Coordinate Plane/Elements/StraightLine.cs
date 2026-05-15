@@ -23,7 +23,6 @@ public partial class StraightLine : Element<StraightLine.CalculationModes>
     [Export] public float AngleRad { get; set => SetProperty<float>(ref field, value, CalculationModes.AngleRad); }
     [Export] public float Slope { get; set => SetProperty<float>(ref field, value, CalculationModes.Slope); }
 
-    [Export] public string StraightLineName;
     [Export] public Color Color;
 
     private MathVector2 AB;
@@ -31,10 +30,10 @@ public partial class StraightLine : Element<StraightLine.CalculationModes>
 
     public static StraightLine Create(string name = default, Color color = default, Node parent = default)
     {
-        PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/StraightLine.tscn");
+        PackedScene scene = SceneLoader.Load("StraightLine");
         StraightLine strLine = scene.Instantiate<StraightLine>();
 
-        strLine.StraightLineName = name == default ? "Straight Line" : name;
+        strLine.ElementName = name == default ? "Straight Line" : name;
         strLine.Color = color == default ? Colors.White : color;
         parent = parent == default ? CartesianPlane.Plane.GetNode<Node2D>("Content/StraightLines") : parent;
 
@@ -82,7 +81,7 @@ public partial class StraightLine : Element<StraightLine.CalculationModes>
 
     public override void _Process(double delta)
     {
-        Name = StraightLineName;
+        Name = ElementName;
         GetNode<MeshInstance2D>("Line/LineMesh").Modulate = Color;
         GetNode<MeshInstance2D>("Arrow1/Arrow1Mesh").Modulate = Color;
         GetNode<MeshInstance2D>("Arrow2/Arrow2Mesh").Modulate = Color;

@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public abstract partial class Element<TMode> : Node2D
 {
-    public TMode CalculationMode;
+    [Export] public string ElementName;
+    public TMode CalculationMode; 
     public bool Recalculating;
 
     public virtual void Recalculate() { }

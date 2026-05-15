@@ -61,6 +61,7 @@ Main/2D/Coordinate Plane/Core/
  Converter.cs
  Element.cs
  MathVector2.cs
+ SceneLoader.cs
 Main/2D/Coordinate Plane/Elements/
  Circle.cs
  LineSegment.cs

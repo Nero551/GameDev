@@ -8,6 +8,7 @@ public partial class Rhombus : Quadrilateral<Rhombus.CalculationModes>
         Origin,
         SideLength,
         DiagonalLength,
+        Angle,
         Perimeter,
         Area,
         Color,
@@ -19,39 +20,24 @@ public partial class Rhombus : Quadrilateral<Rhombus.CalculationModes>
     [Export] public float DiagonalLength { get; set => SetProperty<float>(ref field, value, CalculationModes.DiagonalLength); }
     [Export] public float Perimeter { get; set => SetProperty<float>(ref field, value, CalculationModes.Perimeter); }
     [Export] public float Area { get; set => SetProperty<float>(ref field, value, CalculationModes.Area); }
+    [Export] public float Angle { get; set => SetProperty<float>(ref field, value, CalculationModes.Angle); }
     [Export] public float Orientation;
 
-    //* A is the Origin.
-    private MathVector2 B;
-    private MathVector2 C;
-    private MathVector2 D;
-
-    private LineSegment AB;
-    private LineSegment BC;
-    private LineSegment CD;
-    private LineSegment AD;
-
-    //Diagonals
-    // private LineSegment AC;
-    // private LineSegment BD;
-
-    [Export] public string RhombusName;
     [Export] public Color Color { get; set => SetProperty<Color>(ref field, value, CalculationModes.Color); }
 
     public static Rhombus Create(string name = default, Color color = default, Node parent = default)
     {
-        PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/Square.tscn");
+        PackedScene scene = SceneLoader.Load("Rhombus");
         Rhombus rhombus = scene.Instantiate<Rhombus>();
 
-        rhombus.RhombusName = name == default ? "Square" : name;
+        rhombus.ElementName = name == default ? "Rhombus" : name;
         rhombus.Color = color == default ? Colors.White : color;
-        parent = parent == default ? CartesianPlane.Plane.GetNodeOrNull<Node2D>("Content/Squares") : parent;
+        parent = parent == default ? CartesianPlane.Plane.GetNodeOrNull<Node2D>("Content/Rhombuses") : parent;
 
         rhombus.AB = LineSegment.Create("AB", rhombus.Color, rhombus);
         rhombus.BC = LineSegment.Create("BC", rhombus.Color, rhombus);
         rhombus.CD = LineSegment.Create("CD", rhombus.Color, rhombus);
         rhombus.AD = LineSegment.Create("AD", rhombus.Color, rhombus);
-
 
         //Diagonals
         // square.AC = LineSegment.Create("AC", square.Color, square);
@@ -80,25 +66,28 @@ public partial class Rhombus : Quadrilateral<Rhombus.CalculationModes>
                 break;
             case CalculationModes.SideLength:
                 break;
-            case CalculationModes.DiagonalLength:
-                SideLength = DiagonalLength / Mathf.Sqrt(2);
-                break;
-            case CalculationModes.Perimeter:
-                SideLength = Perimeter / 4;
-                break;
-            case CalculationModes.Area:
-                SideLength = Mathf.Sqrt(Area);
-                break;
+            // case CalculationModes.Angle:
+
+            //     break;
+            // case CalculationModes.DiagonalLength:
+            //     SideLength = DiagonalLength / Mathf.Sqrt(2);
+            //     break;
+            // case CalculationModes.Perimeter:
+            //     SideLength = Perimeter / 4;
+            //     break;
+            // case CalculationModes.Area:
+            //     SideLength = Mathf.Sqrt(Area);
+            //     break;
             default:
                 break;
         }
-        DiagonalLength = SideLength * Mathf.Sqrt(2);
-        Perimeter = 4 * SideLength;
-        Area = Mathf.Pow(SideLength, 2);
+        // DiagonalLength = SideLength * Mathf.Sqrt(2);
+        // Perimeter = 4 * SideLength;
+        // Area = Mathf.Pow(SideLength, 2);
 
-        B = new MathVector2(SideLength, 0);
-        C = new MathVector2(B.X, B.Y + SideLength);
-        D = new MathVector2(0, C.Y);
+        B = new MathVector2(SideLength * Mathf.Cos(Mathf.DegToRad(Angle)), SideLength * Mathf.Sin(Mathf.DegToRad(Angle)));
+        C = new MathVector2(0, SideLength);
+        D = new MathVector2(-B.X, B.Y);
 
         //Diagonals
         // Set(AC, new MathVector2(0, 0), C);
@@ -117,6 +106,6 @@ public partial class Rhombus : Quadrilateral<Rhombus.CalculationModes>
     public override void _Process(double delta)
     {
         Rotation = Converter.AngleMathToRender(Mathf.DegToRad(Orientation));
-        Name = RhombusName;
+        Name = ElementName;
     }
 }

@@ -23,29 +23,14 @@ public partial class Rectangle : Quadrilateral<Rectangle.CalculationModes>
     [Export] public float Area { get; set => SetProperty<float>(ref field, value, CalculationModes.Area); }
     [Export] public float Orientation;
 
-    //* A is the Origin.
-    private MathVector2 B;
-    private MathVector2 C;
-    private MathVector2 D;
-
-    private LineSegment AB;
-    private LineSegment BC;
-    private LineSegment CD;
-    private LineSegment AD;
-
-    //Diagonals
-    // private LineSegment AC;
-    // private LineSegment BD;
-
-    [Export] public string RectangleName;
     [Export] public Color Color { get; set => SetProperty<Color>(ref field, value, CalculationModes.Color); }
 
     public static Rectangle Create(string name = default, Color color = default, Node parent = default)
     {
-        PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/Rectangle.tscn");
+        PackedScene scene = SceneLoader.Load("Rectangle");
         Rectangle rectangle = scene.Instantiate<Rectangle>();
 
-        rectangle.RectangleName = name == default ? "Rectangle" : name;
+        rectangle.ElementName = name == default ? "Rectangle" : name;
         rectangle.Color = color == default ? Colors.White : color;
         parent = parent == default ? CartesianPlane.Plane.GetNodeOrNull<Node2D>("Content/Rectangles") : parent;
 
@@ -125,6 +110,6 @@ public partial class Rectangle : Quadrilateral<Rectangle.CalculationModes>
     public override void _Process(double delta)
     {
         Rotation = Converter.AngleMathToRender(Mathf.DegToRad(Orientation));
-        Name = RectangleName;
+        Name = ElementName;
     }
 }

@@ -20,7 +20,6 @@ public partial class CartesianPlane : Node2D
 
 	public void CreateGrid()
 	{
-
 		for (int x = -Size; x <= Size; x += BasisX)
 		{
 			Vector2 positiveEnd = new Vector2(x, Size);
@@ -50,10 +49,9 @@ public partial class CartesianPlane : Node2D
 		Point.Create(Origin, "Origin", Colors.RoyalBlue, this);
 	}
 
-
 	public void PlaneLine(Vector2 a, Vector2 b)
 	{
-		PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/PlaneLine.tscn");
+		PackedScene scene = SceneLoader.Load("PlaneLine");
 		Node2D line = scene.Instantiate<Node2D>();
 		var meshInstance = line.GetNode<MeshInstance2D>("Line");
 
@@ -74,7 +72,7 @@ public partial class CartesianPlane : Node2D
 
 	public void AxisLine(Vector2 a, Vector2 b)
 	{
-		PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/AxisLine.tscn");
+		PackedScene scene = SceneLoader.Load("AxisLine");
 		Node2D line = scene.Instantiate<Node2D>();
 		var meshInstance = line.GetNode<MeshInstance2D>("Line/LineMesh");
 		var arrow1 = line.GetNode<MeshInstance2D>("Arrow1/Arrow1Mesh");

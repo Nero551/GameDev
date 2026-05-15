@@ -22,7 +22,6 @@ public partial class Ray : Element<Ray.CalculationModes>
     [Export] public float AngleRad { get; set => SetProperty<float>(ref field, value, CalculationModes.AngleRad); }
     [Export] public float Slope { get; set => SetProperty<float>(ref field, value, CalculationModes.Slope); }
 
-    [Export] public string RayName;
     [Export] public Color Color;
 
     private MathVector2 AB;
@@ -30,10 +29,10 @@ public partial class Ray : Element<Ray.CalculationModes>
 
     public static Ray Create(string name = default, Color color = default, Node parent = default)
     {
-        PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/Ray.tscn");
+        PackedScene scene = SceneLoader.Load("Ray");
         Ray ray = scene.Instantiate<Ray>();
 
-        ray.RayName = name == default ? "Ray" : name;
+        ray.ElementName = name == default ? "Ray" : name;
         ray.Color = color == default ? Colors.White : color;
         parent = parent == default ? CartesianPlane.Plane.GetNodeOrNull<Node2D>("Content/Rays") : parent;
 
@@ -83,7 +82,7 @@ public partial class Ray : Element<Ray.CalculationModes>
 
     public override void _Process(double delta)
     {
-        Name = RayName;
+        Name = ElementName;
         GetNode<MeshInstance2D>("Line/LineMesh").Modulate = Color;
         GetNode<MeshInstance2D>("Arrow/ArrowMesh").Modulate = Color;
         OriginPoint.Color = Color;

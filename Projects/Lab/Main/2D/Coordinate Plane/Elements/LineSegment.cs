@@ -24,17 +24,16 @@ public partial class LineSegment : Element<LineSegment.CalculationModes>
     [Export] public float AngleRad { get; set => SetProperty<float>(ref field, value, CalculationModes.AngleRad); }
     [Export] public float Slope { get; set => SetProperty<float>(ref field, value, CalculationModes.Slope); }
 
-    [Export] public string LineName;
     [Export] public Color Color;
     
     private MathVector2 AB;
 
     public static LineSegment Create(string name = default, Color color = default, Node parent = default)
     {
-        PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/LineSegment.tscn");
+        PackedScene scene = SceneLoader.Load("LineSegment");
         LineSegment line = scene.Instantiate<LineSegment>();
 
-        line.LineName = name == default ? "Line Segment" : name;
+        line.ElementName = name == default ? "Line Segment" : name;
         line.Color = color == default ? Colors.White : color;
         parent = parent == default ? CartesianPlane.Plane.GetNodeOrNull<Node2D>("Content/LineSegments") : parent;
 
@@ -82,7 +81,7 @@ public partial class LineSegment : Element<LineSegment.CalculationModes>
 
     public override void _Process(double delta)
     {
-        Name = LineName;
+        Name = ElementName;
         GetNode<MeshInstance2D>("Line").Modulate = Color;
     }
 }

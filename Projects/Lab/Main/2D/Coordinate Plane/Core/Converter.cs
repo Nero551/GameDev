@@ -6,7 +6,7 @@ public partial class Converter
     public static Vector2 VectorMathToRender(MathVector2 mathVector)
     {
         float x = mathVector.X * CartesianPlane.BasisX;
-        float y = -(mathVector.Y * CartesianPlane.BasisX);
+        float y = -(mathVector.Y * CartesianPlane.BasisY);
         Vector2 renderVector = new Vector2(x, y);
         return renderVector;
     }
@@ -21,7 +21,7 @@ public partial class Converter
 
     public static float LengthMathToRender(float length)
     {
-        return length * CartesianPlane.BasisX;  
+        return length * Mathf.Sqrt(CartesianPlane.BasisX * CartesianPlane.BasisY);
     }
 
     public static float AngleMathToRender(float angle)

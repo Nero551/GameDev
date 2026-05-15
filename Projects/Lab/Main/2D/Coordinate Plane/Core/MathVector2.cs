@@ -28,6 +28,13 @@ public readonly struct MathVector2
         return new MathVector2(x, y);
     }
 
+    public static MathVector2 operator *(MathVector2 a, MathVector2 b)
+    {
+        float x = a.X * b.X;
+        float y = a.Y * b.Y;
+        return new MathVector2(x, y);
+    }
+
     public static MathVector2 operator *(float scalar, MathVector2 b)
     {
         float x = scalar * b.X;

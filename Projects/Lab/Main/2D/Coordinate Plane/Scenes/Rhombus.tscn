@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cdjhl8gm5ib05"]
+
+[ext_resource type="Script" uid="uid://cpjg3dspwnt8v" path="res://Main/2D/Coordinate Plane/Elements/Quadrilateral/Regular/Rhombus.cs" id="1_ssfvu"]
+
+[node name="Square" type="Node2D" unique_id=1822951201]
+script = ExtResource("1_ssfvu")
