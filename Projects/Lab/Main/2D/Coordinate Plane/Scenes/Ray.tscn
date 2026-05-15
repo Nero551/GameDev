@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://chuks5bk1kuff"]
 
-[ext_resource type="Script" uid="uid://cyephy8cqpmhy" path="res://Main/2D/Coordinate Plane/Classes/Ray.cs" id="1_phwls"]
+[ext_resource type="Script" uid="uid://cyephy8cqpmhy" path="res://Main/2D/Coordinate Plane/Elements/Ray.cs" id="1_phwls"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_w08l1"]
 size = Vector3(1.48, -1.1, 1)

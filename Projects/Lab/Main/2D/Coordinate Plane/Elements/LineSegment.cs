@@ -27,7 +27,8 @@ public partial class LineSegment : Node2D
 
     [Export] public string LineName;
     [Export] public Color Color;
-    public MathVector2 AB;
+    
+    private MathVector2 AB;
     private bool Recalculating = false;
 
     public static LineSegment Create(string name = default, Color color = default, Node parent = default)
@@ -85,8 +86,11 @@ public partial class LineSegment : Node2D
         Length = AB.Length();
         AngleRad = Mathf.Atan2(AB.Y, AB.X);
         Angle = Mathf.RadToDeg(AngleRad);
-
         Slope = AB.Y / AB.X;
+
+        Scale = new Vector2(Converter.LengthMathToRender(AB.Length()), 0.5f);
+        Position = Converter.VectorMathToRender(new MathVector2(AX + BX, AY + BY) / 2);
+        Rotation = Converter.AngleMathToRender(Mathf.Atan2(AB.Y, AB.X));
 
         Recalculating = false;
     }
@@ -95,10 +99,5 @@ public partial class LineSegment : Node2D
     {
         Name = LineName;
         GetNode<MeshInstance2D>("Line").Modulate = Color;
-
-        Scale = new Vector2(Converter.LengthMathToRender(AB.Length()), 0.5f);
-        Position = Converter.VectorMathToRender(new MathVector2(AX + BX, AY + BY) / 2);
-        Rotation = Converter.AngleMathToRender(Mathf.Atan2(AB.Y, AB.X));
-
     }
 }

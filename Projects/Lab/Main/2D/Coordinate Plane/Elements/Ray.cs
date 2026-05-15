@@ -1,29 +1,106 @@
-// using Godot;
-// using System;
+using Godot;
+using System;
+using System.Collections.Generic;
 
-// public partial class CartesianPlane
-// {
-//     public Ray Ray(Vector2 a, Vector2 b, Color color = default)
-//     {
-//         PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/Ray.tscn");
-//         Ray line = scene.Instantiate<Ray>();
-//         var meshInstance = line.GetNode<MeshInstance2D>("Line/LineMesh");
-//         var arrow = line.GetNode<MeshInstance2D>("Arrow/ArrowMesh");
+public partial class Ray : Node2D
+{
+    public enum CalculationModes
+    {
+        Direction,
+        Angle,
+        AngleRad,
+        Slope,
+        Length
+    }
+    [Export] public CalculationModes CalculationMode;
+    [Export] public float OriginX { get; set => SetProperty<float>(ref field, value, CalculationModes.Direction); }
+    [Export] public float OriginY { get; set => SetProperty<float>(ref field, value, CalculationModes.Direction); }
+    [Export] public float DirectionX { get; set => SetProperty<float>(ref field, value, CalculationModes.Direction); }
+    [Export] public float DirectionY { get; set => SetProperty<float>(ref field, value, CalculationModes.Direction); }
 
-//         Vector2 vAB = b - a;
+    [Export] public float Length { get; set => SetProperty<float>(ref field, value, CalculationModes.Length); }
+    [Export] public float Angle { get; set => SetProperty<float>(ref field, value, CalculationModes.Angle); }
+    [Export] public float AngleRad { get; set => SetProperty<float>(ref field, value, CalculationModes.AngleRad); }
+    [Export] public float Slope { get; set => SetProperty<float>(ref field, value, CalculationModes.Slope); }
 
-//         line.Position = a;
-//         line.GetNode<Node2D>("Line").Scale = new Vector2(vAB.Length(), 0.5f);
-//         line.Rotation = (b - a).Angle();
+    [Export] public string RayName;
+    [Export] public Color Color;
 
-//         line.GetNode<Node2D>("Arrow").Position = new Vector2(line.GetNode<Node2D>("Line").Scale.X, 0);
+    private MathVector2 AB;
+    private bool Recalculating = false;
+    private Point OriginPoint;
 
-//         line.Name =  "Ray: " + (a + b).ToString();
-//         meshInstance.Modulate = color == default ? Colors.DimGray : color;
-//         arrow.Modulate = color == default ? Colors.DimGray : color;
+    public static Ray Create(string name = default, Color color = default, Node parent = default)
+    {
+        PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/Ray.tscn");
+        Ray ray = scene.Instantiate<Ray>();
 
-//         GetNode<Node2D>("My Stuff").AddChild(line);
+        ray.RayName = name == default ? "Ray" : name;
+        ray.Color = color == default ? Colors.White : color;
+        parent = parent == default ? CartesianPlane.Plane.GetNodeOrNull<Node2D>("Content/Rays") : parent;
 
-//         return line;
-//     }
-// }
+        ray.OriginPoint = Point.Create(new MathVector2(0, 0), "Origin Point", ray.Color, ray);
+        parent.AddChild(ray);
+        return ray;
+    }
+
+    public void SetProperty<T>(ref T propertyRef, T value, CalculationModes mode)
+    {
+        if (!EqualityComparer<T>.Default.Equals(propertyRef, value))
+        {
+            propertyRef = value;
+            if (Recalculating == false)
+            {
+                CalculationMode = mode;
+                Recalculating = true;
+                Recalculate();
+            }
+        }
+    }
+    public void Recalculate()
+    {
+        switch (CalculationMode)
+        {
+            case CalculationModes.Direction:
+                break;
+            case CalculationModes.AngleRad:
+                DirectionX = OriginX + Length * Mathf.Cos(AngleRad);
+                DirectionY = OriginY + Length * Mathf.Sin(AngleRad);
+                break;
+            case CalculationModes.Angle:
+                DirectionX = OriginX + Length * Mathf.Cos(Mathf.DegToRad(Angle));
+                DirectionY = OriginY + Length * Mathf.Sin(Mathf.DegToRad(Angle));
+                break;
+            case CalculationModes.Slope:
+                DirectionX = OriginX + Length * Mathf.Cos(Mathf.Atan(Slope));
+                DirectionY = OriginY + Length * Mathf.Sin(Mathf.Atan(Slope));
+                break;
+            case CalculationModes.Length:
+                DirectionX = OriginX + Length * Mathf.Cos(AngleRad);
+                DirectionY = OriginY + Length * Mathf.Sin(AngleRad);
+                break;
+            default:
+                break;
+        }
+        AB = new MathVector2(DirectionX - OriginX, DirectionY - OriginY);
+        Length = AB.Length();
+        AngleRad = Mathf.Atan2(AB.Y, AB.X);
+        Angle = Mathf.RadToDeg(AngleRad);
+        Slope = AB.Y / AB.X;
+
+        Position = Converter.VectorMathToRender(new MathVector2(OriginX, OriginY));
+        Rotation = Converter.AngleMathToRender(Mathf.Atan2(AB.Y, AB.X));
+        GetNode<Node2D>("Line").Scale = new Vector2(Converter.LengthMathToRender(AB.Length()), 0.5f);
+        GetNode<Node2D>("Arrow").Position = new Vector2(GetNode<Node2D>("Line").Scale.X, 0);
+
+        Recalculating = false;
+    }
+
+    public override void _Process(double delta)
+    {
+        Name = RayName;
+        GetNode<MeshInstance2D>("Line/LineMesh").Modulate = Color;
+        GetNode<MeshInstance2D>("Arrow/ArrowMesh").Modulate = Color;
+        OriginPoint.Color = Color;
+    }
+}

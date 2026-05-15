@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bgs8wiy1rynbd"]
 
-[ext_resource type="Script" uid="uid://grtmmtmb4asx" path="res://Main/2D/Coordinate Plane/Classes/LineSegment.cs" id="1_fatmu"]
+[ext_resource type="Script" uid="uid://grtmmtmb4asx" path="res://Main/2D/Coordinate Plane/Elements/LineSegment.cs" id="1_fatmu"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4mdk6"]
 

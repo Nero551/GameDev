@@ -1,8 +1,11 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO.Pipes;
+using System.Threading;
 
-public partial class Ray : Node2D
+public partial class StraightLine : Node2D
 {
     public enum CalculationModes
     {
@@ -10,7 +13,6 @@ public partial class Ray : Node2D
         Angle,
         AngleRad,
         Slope,
-        Length
     }
     [Export] public CalculationModes CalculationMode;
     [Export] public float OriginX { get; set => SetProperty<float>(ref field, value, CalculationModes.Direction); }
@@ -18,31 +20,30 @@ public partial class Ray : Node2D
     [Export] public float DirectionX { get; set => SetProperty<float>(ref field, value, CalculationModes.Direction); }
     [Export] public float DirectionY { get; set => SetProperty<float>(ref field, value, CalculationModes.Direction); }
 
-    [Export] public float Length { get; set => SetProperty<float>(ref field, value, CalculationModes.Length); }
     [Export] public float Angle { get; set => SetProperty<float>(ref field, value, CalculationModes.Angle); }
     [Export] public float AngleRad { get; set => SetProperty<float>(ref field, value, CalculationModes.AngleRad); }
     [Export] public float Slope { get; set => SetProperty<float>(ref field, value, CalculationModes.Slope); }
 
-    [Export] public string RayName;
+    [Export] public string StraightLineName;
     [Export] public Color Color;
 
-    public MathVector2 AB;
-
+    private MathVector2 AB;
     private bool Recalculating = false;
     private Point OriginPoint;
 
-    public static Ray Create(string name = default, Color color = default, Node parent = default)
+    public static StraightLine Create(string name = default, Color color = default, Node parent = default)
     {
-        PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/Ray.tscn");
-        Ray ray = scene.Instantiate<Ray>();
+        PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/StraightLine.tscn");
+        StraightLine strLine = scene.Instantiate<StraightLine>();
 
-        ray.RayName = name == default ? "Ray" : name;
-        ray.Color = color == default ? Colors.White : color;
-        parent = parent == default ? CartesianPlane.Plane.GetNodeOrNull<Node2D>("Content/Rays") : parent;
+        strLine.StraightLineName = name == default ? "Straight Line" : name;
+        strLine.Color = color == default ? Colors.White : color;
+        parent = parent == default ? CartesianPlane.Plane.GetNode<Node2D>("Content/StraightLines") : parent;
 
-        ray.OriginPoint = Point.Create(new MathVector2(0, 0), "Origin Point", ray.Color, ray);
-        parent.AddChild(ray);
-        return ray;
+        strLine.OriginPoint = Point.Create(new MathVector2(0, 0), "Origin Point", strLine.Color, strLine);
+
+        parent.AddChild(strLine);
+        return strLine;
     }
 
     public void SetProperty<T>(ref T propertyRef, T value, CalculationModes mode)
@@ -65,43 +66,41 @@ public partial class Ray : Node2D
             case CalculationModes.Direction:
                 break;
             case CalculationModes.AngleRad:
-                DirectionX = OriginX + Length * Mathf.Cos(AngleRad);
-                DirectionY = OriginY + Length * Mathf.Sin(AngleRad);
+                DirectionX = OriginX + Mathf.Cos(AngleRad);
+                DirectionY = OriginY + Mathf.Sin(AngleRad);
                 break;
             case CalculationModes.Angle:
-                DirectionX = OriginX + Length * Mathf.Cos(Mathf.DegToRad(Angle));
-                DirectionY = OriginY + Length * Mathf.Sin(Mathf.DegToRad(Angle));
+                DirectionX = OriginX + Mathf.Cos(Mathf.DegToRad(Angle));
+                DirectionY = OriginY + Mathf.Sin(Mathf.DegToRad(Angle));
                 break;
             case CalculationModes.Slope:
-                DirectionX = OriginX + Length * Mathf.Cos(Mathf.Atan(Slope));
-                DirectionY = OriginY + Length * Mathf.Sin(Mathf.Atan(Slope));
-                break;
-            case CalculationModes.Length:
-                DirectionX = OriginX + Length * Mathf.Cos(AngleRad);
-                DirectionY = OriginY + Length * Mathf.Sin(AngleRad);
+                DirectionX = OriginX + Mathf.Cos(Mathf.Atan(Slope));
+                DirectionY = OriginY + Mathf.Sin(Mathf.Atan(Slope));
                 break;
             default:
                 break;
         }
         AB = new MathVector2(DirectionX - OriginX, DirectionY - OriginY);
-        Length = AB.Length();
         AngleRad = Mathf.Atan2(AB.Y, AB.X);
         Angle = Mathf.RadToDeg(AngleRad);
         Slope = AB.Y / AB.X;
 
+        Position = Converter.VectorMathToRender(new MathVector2(OriginX, OriginY));
+        Rotation = Converter.AngleMathToRender(Mathf.Atan2(AB.Y, AB.X));
+        GetNode<Node2D>("Line").Scale = new Vector2(CartesianPlane.Size * 2, 0.5f);
+
+        GetNode<Node2D>("Arrow1").Position = new Vector2(-GetNode<Node2D>("Line").Scale.X / 2, 0);
+        GetNode<Node2D>("Arrow2").Position = new Vector2(GetNode<Node2D>("Line").Scale.X / 2, 0);
+        
         Recalculating = false;
     }
 
     public override void _Process(double delta)
     {
-        Name = RayName;
+        Name = StraightLineName;
         GetNode<MeshInstance2D>("Line/LineMesh").Modulate = Color;
-        GetNode<MeshInstance2D>("Arrow/ArrowMesh").Modulate = Color;
-
-        Position = Converter.VectorMathToRender(new MathVector2(OriginX, OriginY));
-        Rotation = Converter.AngleMathToRender(Mathf.Atan2(AB.Y, AB.X));
-        GetNode<Node2D>("Line").Scale = new Vector2(Converter.LengthMathToRender(AB.Length()), 0.5f);
-
-        GetNode<Node2D>("Arrow").Position = new Vector2(GetNode<Node2D>("Line").Scale.X, 0);
+        GetNode<MeshInstance2D>("Arrow1/Arrow1Mesh").Modulate = Color;
+        GetNode<MeshInstance2D>("Arrow2/Arrow2Mesh").Modulate = Color;
+        OriginPoint.Color = Color;
     }
 }

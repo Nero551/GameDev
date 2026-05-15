@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cs2otqu0kshft"]
+
+[ext_resource type="Script" uid="uid://bpyw7a523uvu0" path="res://Main/2D/Coordinate Plane/Elements/Circle.cs" id="1_guac1"]
+
+[node name="Circle" type="Node2D" unique_id=1956748928]
+script = ExtResource("1_guac1")

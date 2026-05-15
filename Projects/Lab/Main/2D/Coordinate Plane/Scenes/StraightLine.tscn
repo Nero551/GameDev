@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cua62qj8ceklf"]
 
-[ext_resource type="Script" uid="uid://c4jw06lnali4e" path="res://Main/2D/Coordinate Plane/Classes/StraightLine.cs" id="1_b6vhq"]
+[ext_resource type="Script" uid="uid://c4jw06lnali4e" path="res://Main/2D/Coordinate Plane/Elements/StraightLine.cs" id="1_b6vhq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_yh6sh"]
 
