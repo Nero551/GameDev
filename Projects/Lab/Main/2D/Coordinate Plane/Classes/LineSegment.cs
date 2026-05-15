@@ -91,7 +91,7 @@ public partial class LineSegment : Node2D
         Recalculating = false;
     }
 
-    public override void _PhysicsProcess(double delta)
+    public override void _Process(double delta)
     {
         Name = LineName;
         GetNode<MeshInstance2D>("Line").Modulate = Color;

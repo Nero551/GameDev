@@ -24,15 +24,12 @@ public partial class StraightLine : Node2D
     [Export] public float AngleRad { get; set => SetProperty<float>(ref field, value, CalculationModes.AngleRad); }
     [Export] public float Slope { get; set => SetProperty<float>(ref field, value, CalculationModes.Slope); }
 
-    [Export] public string LineName;
+    [Export] public string StraightLineName;
     [Export] public Color Color;
 
     public MathVector2 AB;
 
     private bool Recalculating = false;
-    private MeshInstance2D Arrow1;
-    private MeshInstance2D Arrow2;
-    private MeshInstance2D LineMesh;
     private Point OriginPoint;
 
     public static StraightLine Create(string name = default, Color color = default, Node parent = default)
@@ -40,11 +37,7 @@ public partial class StraightLine : Node2D
         PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/StraightLine.tscn");
         StraightLine strLine = scene.Instantiate<StraightLine>();
 
-        strLine.LineMesh = strLine.GetNode<MeshInstance2D>("Line/LineMesh");
-        strLine.Arrow1 = strLine.GetNode<MeshInstance2D>("Arrow1/Arrow1Mesh");
-        strLine.Arrow2 = strLine.GetNode<MeshInstance2D>("Arrow2/Arrow2Mesh");
-
-        strLine.LineName = name == default ? "Straight Line" : name;
+        strLine.StraightLineName = name == default ? "Straight Line" : name;
         strLine.Color = color == default ? Colors.White : color;
         parent = parent == default ? CartesianPlane.Plane.GetNode<Node2D>("Content/StraightLines") : parent;
 
@@ -97,15 +90,16 @@ public partial class StraightLine : Node2D
 
     public override void _Process(double delta)
     {
+        Name = StraightLineName;
+        GetNode<MeshInstance2D>("Line/LineMesh").Modulate = Color;
+        GetNode<MeshInstance2D>("Arrow1/Arrow1Mesh").Modulate = Color;
+        GetNode<MeshInstance2D>("Arrow2/Arrow2Mesh").Modulate = Color;
+
         Position = Converter.VectorMathToRender(new MathVector2(OriginX, OriginY));
         Rotation = Converter.AngleMathToRender(Mathf.Atan2(AB.Y, AB.X));
-
         GetNode<Node2D>("Line").Scale = new Vector2(CartesianPlane.Size * 2, 0.5f);
+
         GetNode<Node2D>("Arrow1").Position = new Vector2(-GetNode<Node2D>("Line").Scale.X / 2, 0);
         GetNode<Node2D>("Arrow2").Position = new Vector2(GetNode<Node2D>("Line").Scale.X / 2, 0);
-
-        LineMesh.Modulate = Color;
-        Arrow1.Modulate = Color;
-        Arrow2.Modulate = Color;
     }
 }
