@@ -12,6 +12,6 @@ public abstract partial class Quadrilateral<TMode> : Element<TMode>
     protected LineSegment CD;
     protected LineSegment AD;
 
-    // private LineSegment AC;
-    // private LineSegment BD;
+    protected LineSegment AC;
+    protected LineSegment BD;
 }
