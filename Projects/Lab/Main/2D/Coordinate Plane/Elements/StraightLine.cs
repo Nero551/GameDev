@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO.Pipes;
 using System.Threading;
 
-public partial class StraightLine : Node2D
+public partial class StraightLine : Element<StraightLine.CalculationModes>
 {
     public enum CalculationModes
     {
@@ -14,7 +14,6 @@ public partial class StraightLine : Node2D
         AngleRad,
         Slope,
     }
-    [Export] public CalculationModes CalculationMode;
     [Export] public float OriginX { get; set => SetProperty<float>(ref field, value, CalculationModes.Direction); }
     [Export] public float OriginY { get; set => SetProperty<float>(ref field, value, CalculationModes.Direction); }
     [Export] public float DirectionX { get; set => SetProperty<float>(ref field, value, CalculationModes.Direction); }
@@ -28,7 +27,6 @@ public partial class StraightLine : Node2D
     [Export] public Color Color;
 
     private MathVector2 AB;
-    private bool Recalculating = false;
     private Point OriginPoint;
 
     public static StraightLine Create(string name = default, Color color = default, Node parent = default)
@@ -46,20 +44,7 @@ public partial class StraightLine : Node2D
         return strLine;
     }
 
-    public void SetProperty<T>(ref T propertyRef, T value, CalculationModes mode)
-    {
-        if (!EqualityComparer<T>.Default.Equals(propertyRef, value))
-        {
-            propertyRef = value;
-            if (Recalculating == false)
-            {
-                CalculationMode = mode;
-                Recalculating = true;
-                Recalculate();
-            }
-        }
-    }
-    public void Recalculate()
+    public override void Recalculate()
     {
         switch (CalculationMode)
         {

@@ -13,7 +13,12 @@ config_version=5
 config/name="Lab"
 run/main_scene="uid://ifsrbkagdaq4"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
+run/max_fps=60
 config/icon="res://icon.svg"
+
+[debug]
+
+settings/stdout/print_fps=true
 
 [dotnet]
 

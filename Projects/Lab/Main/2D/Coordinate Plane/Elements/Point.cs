@@ -1,8 +1,13 @@
 using Godot;
 using System;
 
-public partial class Point : Node2D
+public partial class Point : Element<Point.CalculationModes>
 {
+    public enum CalculationModes
+    {
+        None,
+    }
+
     [Export] public float X;
     [Export] public float Y;
     [Export] public Color Color;

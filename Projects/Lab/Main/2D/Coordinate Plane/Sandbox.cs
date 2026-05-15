@@ -8,23 +8,23 @@ public partial class CartesianPlane
     {
         MathVector2 A = new MathVector2(3, 1);
         MathVector2 B = new MathVector2(-5, 5);
-        Point.Create(B, "B");
-        LineSegment line = LineSegment.Create("AB", Colors.Blue);
-        line.AX = -3;
-        line.AY = -5;
-        line.BY = -3;
-        line.BX = -5;
+        // Point.Create(B, "B");
+        // LineSegment line = LineSegment.Create("AB", Colors.Blue);
+        // line.AX = -3;
+        // line.AY = -5;
+        // line.BY = -3;
+        // line.BX = -5;
 
-        StraightLine strLine = StraightLine.Create("C", Colors.White);
-        strLine.OriginX = Origin.X;
-        strLine.OriginY = Origin.Y;
-        strLine.Angle = 135;
+        // StraightLine strLine = StraightLine.Create("C", Colors.White);
+        // strLine.OriginX = Origin.X;
+        // strLine.OriginY = Origin.Y;
+        // strLine.Angle = 135;
 
-        Ray ray = Ray.Create("A", Colors.Blue);
-        ray.OriginX = Origin.X;
-        ray.OriginY = Origin.Y;
-        ray.DirectionX = 5;
-        ray.DirectionY = 5;
+        // Ray ray = Ray.Create("A", Colors.Blue);
+        // ray.OriginX = Origin.X;
+        // ray.OriginY = Origin.Y;
+        // ray.DirectionX = 5;
+        // ray.DirectionY = 5;
 
         Circle circle = Circle.Create("M");
         circle.Radius = 5;

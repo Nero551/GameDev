@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-public partial class LineSegment : Node2D
+public partial class LineSegment : Element<LineSegment.CalculationModes>
 {
     public enum CalculationModes
     {
@@ -14,7 +14,6 @@ public partial class LineSegment : Node2D
         Slope,
         Length
     }
-    [Export] public CalculationModes CalculationMode;
     [Export] public float AX { get; set => SetProperty<float>(ref field, value, CalculationModes.Point); }
     [Export] public float AY { get; set => SetProperty<float>(ref field, value, CalculationModes.Point); }
     [Export] public float BX { get; set => SetProperty<float>(ref field, value, CalculationModes.Point); }
@@ -29,7 +28,6 @@ public partial class LineSegment : Node2D
     [Export] public Color Color;
     
     private MathVector2 AB;
-    private bool Recalculating = false;
 
     public static LineSegment Create(string name = default, Color color = default, Node parent = default)
     {
@@ -44,20 +42,7 @@ public partial class LineSegment : Node2D
         return line;
     }
 
-    public void SetProperty<T>(ref T propertyRef, T value, CalculationModes mode)
-    {
-        if (!EqualityComparer<T>.Default.Equals(propertyRef, value))
-        {
-            propertyRef = value;
-            if (Recalculating == false)
-            {
-                CalculationMode = mode;
-                Recalculating = true;
-                Recalculate();
-            }
-        }
-    }
-    public void Recalculate()
+    public override void Recalculate()
     {
         switch (CalculationMode)
         {
