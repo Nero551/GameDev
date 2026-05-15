@@ -32,7 +32,7 @@ public partial class Circle : Element<Circle.CalculationModes>
         PackedScene scene = GD.Load<PackedScene>("res://Main/2D/Coordinate Plane/Scenes/Circle.tscn");
         Circle circle = scene.Instantiate<Circle>();
 
-        circle.CircleName = name == default ? "Line Segment" : name;
+        circle.CircleName = name == default ? "Circle" : name;
         circle.Color = color == default ? Colors.White : color;
         parent = parent == default ? CartesianPlane.Plane.GetNodeOrNull<Node2D>("Content/Circles") : parent;
 

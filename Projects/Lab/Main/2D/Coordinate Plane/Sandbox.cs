@@ -26,8 +26,16 @@ public partial class CartesianPlane
         // ray.DirectionX = 5;
         // ray.DirectionY = 5;
 
-        Circle circle = Circle.Create("M");
-        circle.Radius = 5;
+        // Circle circle = Circle.Create("M");
+        // circle.Radius = 5;
+        // Square square = Square.Create("ABCD");
+        // square.OriginX = Origin.X;
+        // square.OriginY = Origin.Y;
+        // square.SideLength = 5;
+
+        Rectangle rectangle = Rectangle.Create("ABCD");
+        rectangle.Length = 10;
+        rectangle.Width = 3;
 
     }
 }

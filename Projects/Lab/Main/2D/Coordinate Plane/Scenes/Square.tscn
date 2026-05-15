@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dpk0b6uxklepl"]
+
+[ext_resource type="Script" uid="uid://goe6i1h0rmq8" path="res://Main/2D/Coordinate Plane/Elements/Quadrilateral/Regular/Square.cs" id="1_ibige"]
+
+[node name="Square" type="Node2D" unique_id=1822951201]
+script = ExtResource("1_ibige")

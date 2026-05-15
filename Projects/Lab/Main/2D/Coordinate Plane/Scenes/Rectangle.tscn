@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bhxmxe1c8x61u"]
+
+[ext_resource type="Script" uid="uid://k4e6uj2d1uvr" path="res://Main/2D/Coordinate Plane/Elements/Quadrilateral/Regular/Rectangle.cs" id="1_kg5wv"]
+
+[node name="Rectangle" type="Node2D" unique_id=1700148685]
+script = ExtResource("1_kg5wv")

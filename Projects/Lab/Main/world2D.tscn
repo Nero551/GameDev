@@ -20,6 +20,10 @@ z_index = 2
 
 [node name="Circles" type="Node2D" parent="Cartesian Plane/Content" unique_id=1884109163]
 
+[node name="Squares" type="Node2D" parent="Cartesian Plane/Content" unique_id=1417734938]
+
+[node name="Rectangles" type="Node2D" parent="Cartesian Plane/Content" unique_id=1757262539]
+
 [node name="Core" type="Node2D" parent="Cartesian Plane" unique_id=743349825]
 
 [node name="Axis" type="Node2D" parent="Cartesian Plane/Core" unique_id=788149757]

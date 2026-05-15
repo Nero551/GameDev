@@ -34,6 +34,12 @@ public readonly struct MathVector2
         float y = scalar * b.Y;
         return new MathVector2(x, y);
     }
+    public static MathVector2 operator *(MathVector2 b, float scalar)
+    {
+        float x = scalar * b.X;
+        float y = scalar * b.Y;
+        return new MathVector2(x, y);
+    }
 
     public static MathVector2 operator /(float numerator, MathVector2 b)
     {
@@ -76,4 +82,10 @@ public readonly struct MathVector2
     {
         return Mathf.Atan2(Y, X);
     }
+
+    public bool Parallel(MathVector2 ab, MathVector2 cd)
+    {
+        return Mathf.Abs(ab.X * cd.Y - ab.Y * cd.X) < 0.0001f;
+    }
 }
+
