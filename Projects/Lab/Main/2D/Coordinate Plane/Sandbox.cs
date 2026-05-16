@@ -9,6 +9,7 @@ public partial class CartesianPlane
         MathVector2 A = new MathVector2(3, 1);
         MathVector2 B = new MathVector2(-5, 5);
         // Point.Create(B, "B");
+        
         // LineSegment line = LineSegment.Create("AB", Colors.Blue);
         // line.AX = -3;
         // line.AY = -5;

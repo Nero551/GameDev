@@ -83,18 +83,18 @@ public partial class Rhombus : Quadrilateral<Rhombus.CalculationModes>
             default:
                 break;
         }
-        VerticalDiagonalLength = 2 * SideLength * Mathf.Sin(Mathf.DegToRad(Angle));
-        HorizontalDiagonalLength = 2 * SideLength * Mathf.Cos(Mathf.DegToRad(Angle));
+        VerticalDiagonalLength = 2 * SideLength * Mathf.Cos(Mathf.DegToRad(Angle));
+        HorizontalDiagonalLength = 2 * SideLength * Mathf.Sin(Mathf.DegToRad(Angle));
         // Perimeter = 4 * SideLength;
         // Area = Mathf.Pow(SideLength, 2);
 
         B = new MathVector2(
-             SideLength * Mathf.Cos(Mathf.DegToRad(Angle)),
-              SideLength * Mathf.Sin(Mathf.DegToRad(Angle))
+             SideLength * Mathf.Cos(Mathf.DegToRad((180 - 2 * (Angle / 2)) / 2)),
+              SideLength * Mathf.Sin(Mathf.DegToRad((180 - 2 * (Angle / 2)) / 2))
             );
         D = new MathVector2(
-             SideLength * Mathf.Cos(Mathf.DegToRad((180 - Angle))),
-             SideLength * Mathf.Sin(Mathf.DegToRad((180 - Angle)))
+             SideLength * Mathf.Cos(Mathf.DegToRad(180 - (180 - 2 * (Angle / 2)) / 2)),
+             SideLength * Mathf.Sin(Mathf.DegToRad(180 - (180 - 2 * (Angle / 2)) / 2))
             );
 
         C = B + D;
