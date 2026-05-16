@@ -41,10 +41,11 @@ public partial class CartesianPlane
         // rectangle.Length = 10;
         // rectangle.Width = 3;
 
-        Rhombus rhombus = Rhombus.Create("ABCD");
-        rhombus.OriginX = Origin.X;
-        rhombus.OriginY = Origin.Y;
-        rhombus.SideLength = 5;
+        // Rhombus rhombus = Rhombus.Create("ABCD");
+        // rhombus.OriginX = Origin.X;
+        // rhombus.OriginY = Origin.Y;
+        // rhombus.SideLength = 5;
 
+        
     }
 }

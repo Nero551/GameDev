@@ -69,6 +69,7 @@ Main/2D/Coordinate Plane/Elements/
  Quadrilateral/
   Quadrilateral.cs
   Regular/
+   Parallelogram.cs
    Rectangle.cs
    Rhombus.cs
    Square.cs
