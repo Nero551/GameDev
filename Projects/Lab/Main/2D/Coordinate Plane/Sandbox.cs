@@ -46,6 +46,9 @@ public partial class CartesianPlane
         // rhombus.OriginY = Origin.Y;
         // rhombus.SideLength = 5;
 
-        
+        Parallelogram parallelogram = Parallelogram.Create("ABCD");
+        parallelogram.Width = 5;
+        parallelogram.Length = 8;
+        parallelogram.Angle = 90;
     }
 }

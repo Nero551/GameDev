@@ -42,8 +42,8 @@ public partial class Rhombus : Quadrilateral<Rhombus.CalculationModes>
         rhombus.AD = LineSegment.Create("AD", rhombus.Color, rhombus);
 
         //Diagonals
-        rhombus.AC = LineSegment.Create("AC", rhombus.Color, rhombus);
-        rhombus.BD = LineSegment.Create("BD", rhombus.Color, rhombus);
+        // rhombus.AC = LineSegment.Create("AC", rhombus.Color, rhombus);
+        // rhombus.BD = LineSegment.Create("BD", rhombus.Color, rhombus);
 
         parent.AddChild(rhombus);
         return rhombus;
@@ -105,8 +105,8 @@ public partial class Rhombus : Quadrilateral<Rhombus.CalculationModes>
         C = B + D;
 
         //Diagonals
-        Set(AC, new MathVector2(0, 0), C);
-        Set(BD, B, D);
+        // Set(AC, new MathVector2(0, 0), C);
+        // Set(BD, B, D);
 
         //Sides
         Set(AB, new MathVector2(0, 0), B);

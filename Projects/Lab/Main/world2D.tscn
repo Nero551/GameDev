@@ -26,6 +26,8 @@ z_index = 2
 
 [node name="Rhombuses" type="Node2D" parent="Cartesian Plane/Content" unique_id=1700968278]
 
+[node name="Parallelograms" type="Node2D" parent="Cartesian Plane/Content" unique_id=1140518491]
+
 [node name="Core" type="Node2D" parent="Cartesian Plane" unique_id=743349825]
 
 [node name="Axis" type="Node2D" parent="Cartesian Plane/Core" unique_id=788149757]

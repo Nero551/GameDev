@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dtuci4ujdijep"]
+
+[ext_resource type="Script" uid="uid://caviqagnh32fs" path="res://Main/2D/Coordinate Plane/Elements/Quadrilateral/Regular/Parallelogram.cs" id="1_e4so8"]
+
+[node name="Parallelogram" type="Node2D" unique_id=1186938900]
+script = ExtResource("1_e4so8")
