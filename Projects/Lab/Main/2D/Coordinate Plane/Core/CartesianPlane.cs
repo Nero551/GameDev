@@ -11,11 +11,13 @@ public partial class CartesianPlane : Node2D
 
 	public override void _Ready()
 	{
-		Plane = this;
+		Math.Parse("5+2");
+		GD.Print();
+		// Plane = this;
 
-		Size = BasisX * BasisY * 2;
-		CreateGrid();
-		Sandbox();
+		// Size = BasisX * BasisY * 2;
+		// CreateGrid();
+		// Sandbox();
 	}
 
 	public void CreateGrid()

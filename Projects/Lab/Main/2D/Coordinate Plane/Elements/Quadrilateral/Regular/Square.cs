@@ -56,7 +56,7 @@ public partial class Square : Quadrilateral<Square.CalculationModes>
         side?.BY = b.Y;
     }
 
-    public override void Recalculate()
+    protected override void Recalculate()
     {
         switch (CalculationMode)
         {

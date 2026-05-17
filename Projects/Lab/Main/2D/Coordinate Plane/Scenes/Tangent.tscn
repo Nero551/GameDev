@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://wx1q77ujacdj"]
+
+[ext_resource type="Script" uid="uid://cmpa8bd54re82" path="res://Main/2D/Coordinate Plane/Elements/Functions/Trignometric/Tangent.cs" id="1_gdmhp"]
+
+[node name="Tangent" type="Node2D" unique_id=992451352]
+script = ExtResource("1_gdmhp")

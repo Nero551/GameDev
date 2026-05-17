@@ -41,7 +41,7 @@ public partial class Ray : Element<Ray.CalculationModes>
         return ray;
     }
 
-    public override void Recalculate()
+    protected override void Recalculate()
     {
         switch (CalculationMode)
         {

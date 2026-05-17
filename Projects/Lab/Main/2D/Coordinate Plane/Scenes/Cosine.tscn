@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d2lttk73lw6i5"]
+
+[ext_resource type="Script" uid="uid://dxm7s1hjoncd" path="res://Main/2D/Coordinate Plane/Elements/Functions/Trignometric/Cosine.cs" id="1_q283y"]
+
+[node name="Cosine" type="Node2D" unique_id=992451352]
+script = ExtResource("1_q283y")

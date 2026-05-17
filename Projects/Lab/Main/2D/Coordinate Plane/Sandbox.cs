@@ -4,12 +4,15 @@ using System;
 
 public partial class CartesianPlane
 {
+    Sine sine;
+    Cosine cosine;
+    Tangent tangent;
     public void Sandbox()
     {
         MathVector2 A = new MathVector2(3, 1);
         MathVector2 B = new MathVector2(-5, 5);
         // Point.Create(B, "B");
-        
+
         // LineSegment line = LineSegment.Create("AB", Colors.Blue);
         // line.AX = -3;
         // line.AY = -5;
@@ -46,9 +49,21 @@ public partial class CartesianPlane
         // rhombus.OriginY = Origin.Y;
         // rhombus.SideLength = 5;
 
-        Parallelogram parallelogram = Parallelogram.Create("ABCD");
-        parallelogram.Width = 5;
-        parallelogram.Length = 8;
-        parallelogram.Angle = 90;
+        // Parallelogram parallelogram = Parallelogram.Create("ABCD");
+        // parallelogram.Width = 5;
+        // parallelogram.Length = 8;
+        // parallelogram.Angle = 90;
+
+        sine = Sine.Create(default, Colors.Blue);
+        cosine = Cosine.Create(default, Colors.Red);
+        // tangent = Tangent.Create(default, Colors.Purple);
     }
+
+    // public override void _Process(double delta)
+    // {
+    //     int multiplier = 3;
+    //     sine.Period += multiplier * (float)delta;
+    //     // tangent.Period += multiplier * (float)delta;
+    //     cosine.Period += multiplier * (float)delta;
+    // }
 }

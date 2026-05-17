@@ -41,7 +41,7 @@ public partial class LineSegment : Element<LineSegment.CalculationModes>
         return line;
     }
 
-    public override void Recalculate()
+    protected override void Recalculate()
     {
         switch (CalculationMode)
         {

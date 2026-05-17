@@ -57,7 +57,7 @@ public partial class Rectangle : Quadrilateral<Rectangle.CalculationModes>
         side?.BY = b.Y;
     }
 
-    public override void Recalculate()
+    protected override void Recalculate()
     {
         //* if both Length and Width are unknown, it assumes Length = 2 Width.
         switch (CalculationMode)

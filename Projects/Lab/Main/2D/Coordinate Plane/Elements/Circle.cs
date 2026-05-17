@@ -46,7 +46,7 @@ public partial class Circle : Element<Circle.CalculationModes>
         return circle;
     }
 
-    public override void Recalculate()
+    protected override void Recalculate()
     {
         switch (CalculationMode)
         {

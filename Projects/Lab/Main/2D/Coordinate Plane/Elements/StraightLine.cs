@@ -43,7 +43,7 @@ public partial class StraightLine : Element<StraightLine.CalculationModes>
         return strLine;
     }
 
-    public override void Recalculate()
+    protected override void Recalculate()
     {
         switch (CalculationMode)
         {

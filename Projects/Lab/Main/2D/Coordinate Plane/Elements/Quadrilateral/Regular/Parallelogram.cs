@@ -8,7 +8,8 @@ public partial class Parallelogram : Quadrilateral<Parallelogram.CalculationMode
         Origin,
         Width,
         Length,
-        DiagonalLength,
+        Diagonal1Length,
+        Diagonal2Length,
         Perimeter,
         Area,
         Color,
@@ -19,7 +20,8 @@ public partial class Parallelogram : Quadrilateral<Parallelogram.CalculationMode
     [Export] public float OriginY { get; set => SetProperty<float>(ref field, value, CalculationModes.Origin); }
     [Export] public float Width { get; set => SetProperty<float>(ref field, value, CalculationModes.Width); }
     [Export] public float Length { get; set => SetProperty<float>(ref field, value, CalculationModes.Length); }
-    [Export] public float DiagonalLength { get; set => SetProperty<float>(ref field, value, CalculationModes.DiagonalLength); }
+    [Export] public float Diagonal1Length { get; set => SetProperty<float>(ref field, value, CalculationModes.Diagonal1Length); }
+    [Export] public float Diagonal2Length { get; set => SetProperty<float>(ref field, value, CalculationModes.Diagonal2Length); }
     [Export] public float Perimeter { get; set => SetProperty<float>(ref field, value, CalculationModes.Perimeter); }
     [Export] public float Area { get; set => SetProperty<float>(ref field, value, CalculationModes.Area); }
     [Export] public float Angle { get; set => SetProperty<float>(ref field, value, CalculationModes.Angle); }
@@ -41,10 +43,9 @@ public partial class Parallelogram : Quadrilateral<Parallelogram.CalculationMode
         parallelogram.CD = LineSegment.Create("CD", parallelogram.Color, parallelogram);
         parallelogram.AD = LineSegment.Create("AD", parallelogram.Color, parallelogram);
 
-
         // Diagonals
-        // parallelogram.AC = LineSegment.Create("AC", parallelogram.Color, parallelogram);
-        // parallelogram.BD = LineSegment.Create("BD", parallelogram.Color, parallelogram);
+        parallelogram.AC = LineSegment.Create("AC", parallelogram.Color, parallelogram);
+        parallelogram.BD = LineSegment.Create("BD", parallelogram.Color, parallelogram);
 
         parent.AddChild(parallelogram);
         return parallelogram;
@@ -59,7 +60,7 @@ public partial class Parallelogram : Quadrilateral<Parallelogram.CalculationMode
         side?.BY = b.Y;
     }
 
-    public override void Recalculate()
+    protected override void Recalculate()
     {
         //* if both Length and Width are unknown, it assumes Length = 2 Width.
         switch (CalculationMode)
@@ -89,7 +90,10 @@ public partial class Parallelogram : Quadrilateral<Parallelogram.CalculationMode
             default:
                 break;
         }
-        // DiagonalLength = Mathf.Sqrt(Mathf.Pow(Length, 2) + Mathf.Pow(Width, 2));
+        Diagonal1Length = (float)Mathf.Sqrt(Mathf.Pow(Width * Mathf.Sin(Angle), 2) +
+                         Mathf.Pow(Length + Width * Mathf.Cos(Angle), 2));
+        Diagonal1Length = (float)Mathf.Sqrt(Mathf.Pow(Width * Mathf.Sin(Angle), 2) +
+                        Mathf.Pow(Length - Width * Mathf.Cos(Angle), 2));
         // Perimeter = 2 * (Width + Length);
         // Area = Width * Length;
 
@@ -98,11 +102,11 @@ public partial class Parallelogram : Quadrilateral<Parallelogram.CalculationMode
             B.X + Mathf.Cos(Mathf.DegToRad(Angle)) * Width,
              B.Y + (Width * Mathf.Sin(Mathf.DegToRad(Angle)))
             );
-        D = new MathVector2(C.X - B.X,C.Y - B.Y);
+        D = new MathVector2(C.X - B.X, C.Y - B.Y);
 
-        //Diagonals
-        // Set(AC, new MathVector2(0, 0), C);
-        // Set(BD, B, D);
+        // Diagonals
+        Set(AC, new MathVector2(0, 0), C);
+        Set(BD, B, D);
 
         //Sides
         Set(AB, new MathVector2(0, 0), B);

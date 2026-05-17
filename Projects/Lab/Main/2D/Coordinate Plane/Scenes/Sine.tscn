@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dh8mtsasterhf"]
+
+[ext_resource type="Script" uid="uid://bsaowe64d510p" path="res://Main/2D/Coordinate Plane/Elements/Functions/Trignometric/Sine.cs" id="1_5y4w8"]
+
+[node name="Sine" type="Node2D" unique_id=992451352]
+script = ExtResource("1_5y4w8")

@@ -58,7 +58,7 @@ public partial class Rhombus : Quadrilateral<Rhombus.CalculationModes>
         side?.BY = b.Y;
     }
 
-    public override void Recalculate()
+    protected override void Recalculate()
     {
         //* if both side and angle are unknown, it assumes Angle  = 45
         switch (CalculationMode)
@@ -72,8 +72,8 @@ public partial class Rhombus : Quadrilateral<Rhombus.CalculationModes>
             case CalculationModes.Angle:
                 break;
             case CalculationModes.VerticalDiagonalLength:
-                Angle = 2 * Mathf.RadToDeg(Mathf.Acos(VerticalDiagonalLength / 2 / SideLength));
                 VerticalDiagonalLength = Mathf.Clamp(VerticalDiagonalLength, -SideLength * 2, SideLength * 2);
+                Angle = 2 * Mathf.RadToDeg(Mathf.Acos(VerticalDiagonalLength / 2 / SideLength));
                 break;
             case CalculationModes.HorizontalDiagonalLength:
                 HorizontalDiagonalLength = Mathf.Clamp(HorizontalDiagonalLength, -SideLength * 2, SideLength * 2);
