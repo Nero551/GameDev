@@ -1,56 +1,64 @@
-using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Lexer
+public class Lexer
 {
     public enum TokenType
     {
-        Atom,
-        Operator,
-        OpenedParenthesis,
-        ClosedParenthesis,
         Constant,
+        Add,
+        Subtract,
+        Multiply,
+        Divide,
+        OpenParen,
+        CloseParen
     }
 
-    public int Pos = -1;
-    public int End;
-    public List<Token> Tokens = new();
-    public List<Token> Tokenize(string text)
+    public static List<Token> Tokenize(string text)
     {
+        List<Token> tokens = new();
 
         text = text.ToUpper();
+
         for (int i = 0; i < text.Length; i++)
         {
             char c = text[i];
+
+            // NUMBER (multi-digit FIX)
             if (char.IsDigit(c))
             {
-                Tokens.Add(new Token(TokenType.Atom, c.ToString()));
-            }
-            else if ("+-/*".Contains(c))
-            {
-                Tokens.Add(new Token(TokenType.Operator, c.ToString()));
-            }
-            else if ("(".Contains(c))
-            {
-                Tokens.Add(new Token(TokenType.OpenedParenthesis, c.ToString()));
-            }
-            else if (")".Contains(c))
-            {
-                Tokens.Add(new Token(TokenType.ClosedParenthesis, c.ToString()));
-            }
-        }
-        End = Tokens.Count;
-        return Tokens;
-    }
+                string num = "";
+                int start = i;
+                while (i < text.Length && char.IsDigit(text[i]))
+                {
+                    i++;
+                }
+                num = text.Substring(start, i - start);
+                i--; // step back
 
-    public Token Next()
-    {
-        return Tokens[Pos++];
-    }
-    public bool Peek()
-    {
-        return Pos == End;
+                tokens.Add(new Token(TokenType.Constant, num));
+                continue;
+            }
+
+            if (c == '+')
+                tokens.Add(new Token(TokenType.Add, "+"));
+
+            else if (c == '-')
+                tokens.Add(new Token(TokenType.Subtract, "-"));
+
+            else if (c == '*')
+                tokens.Add(new Token(TokenType.Multiply, "*"));
+
+            else if (c == '/')
+                tokens.Add(new Token(TokenType.Divide, "/"));
+
+            else if (c == '(')
+                tokens.Add(new Token(TokenType.OpenParen, "("));
+
+            else if (c == ')')
+                tokens.Add(new Token(TokenType.CloseParen, ")"));
+        }
+
+        return tokens;
     }
 }
-

@@ -11,7 +11,7 @@ public partial class CartesianPlane : Node2D
 
 	public override void _Ready()
 	{
-		Math.Parse("5+2");
+		Expression.Parse("5+2");
 		GD.Print();
 		// Plane = this;
 
