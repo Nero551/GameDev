@@ -4,8 +4,19 @@ using System.Collections.Generic;
 
 public abstract partial class Element<TMode> : Node2D
 {
+
+    [Export]
+    public bool Delete
+    {
+        get;
+        set
+        {
+            field = !value;
+            Destroy();
+        }
+    }
     [Export] public string ElementName;
-    public TMode CalculationMode; 
+    public TMode CalculationMode;
     public bool Recalculating;
 
     protected virtual void Recalculate() { }
@@ -21,6 +32,11 @@ public abstract partial class Element<TMode> : Node2D
                 Recalculate();
             }
         }
+    }
+
+    public void Destroy()
+    {
+        QueueFree();
     }
 
 }

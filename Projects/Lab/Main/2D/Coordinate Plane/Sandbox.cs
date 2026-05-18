@@ -54,16 +54,26 @@ public partial class CartesianPlane
         // parallelogram.Length = 8;
         // parallelogram.Angle = 90;
 
-        sine = Sine.Create(default, Colors.Blue);
-        cosine = Cosine.Create(default, Colors.Red);
+        // sine = Sine.Create(default, Colors.Blue);
+        // cosine = Cosine.Create(default, Colors.Red);
+        // sine.Amplitude = 20;
+        // cosine.Amplitude = 20;
         // tangent = Tangent.Create(default, Colors.Purple);
     }
 
-    // public override void _Process(double delta)
-    // {
-    //     int multiplier = 3;
-    //     sine.Period += multiplier * (float)delta;
-    //     // tangent.Period += multiplier * (float)delta;
-    //     cosine.Period += multiplier * (float)delta;
-    // }
+    public override void _Process(double delta)
+    {
+        // int multiplier = 1;
+        // sine.Period += multiplier * (float)delta;
+        // // tangent.Period += multiplier * (float)delta;
+        // cosine.Period += multiplier * (float)delta;
+
+
+        //* Input
+        if (Input.IsActionJustPressed("CreateRay"))
+        {
+            Ray ray = Ray.Create();
+            
+        }
+    }
 }
