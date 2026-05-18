@@ -24,7 +24,6 @@ public class Lexer
         {
             char c = text[i];
 
-            // NUMBER (multi-digit FIX)
             if (char.IsDigit(c))
             {
                 string num = "";
@@ -34,7 +33,7 @@ public class Lexer
                     i++;
                 }
                 num = text.Substring(start, i - start);
-                i--; // step back
+                i--;
 
                 tokens.Add(new Token(TokenType.Constant, num));
                 continue;

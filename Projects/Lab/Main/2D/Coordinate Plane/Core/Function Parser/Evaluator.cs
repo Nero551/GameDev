@@ -1,6 +1,14 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
-public partial class Evaluator
+public class Evaluator
 {
+    public static float Evaluate(List<Token> parsedData)
+    {
+        float result = 0;
+
+
+        return result;
+    }
 }

@@ -9,16 +9,17 @@ public abstract class Expression
     /*
     *from my understading, wut i need to do is: 
     * 1- tokenize the string(Lexer).
-    * 2- map out each token to a class(Mapper).
-    * 3- loop through the mapped out list and bind atoms to operators depending on binding power(Binder).
-    * 4-loop through the binded operators and evaluate the answer(Evaluator).
+    * 2- order the tokens by operation priority (Parser)
+    * 4-calculate the answer(Evaluator).
     */
+    //! i will be postponing this , its hella hard. i will expand my knowledge on linear algebra.
 
-    public static List<Expression> Parse(string text)
+    public static float Solve(string text)
     {
         List<Token> Tokens = Lexer.Tokenize(text);
-
-        return null;
+        List<Token> ParsedData = Parser.Parse(Tokens);
+        float result = Evaluator.Evaluate(ParsedData);
+        return result;
     }
 
 }
