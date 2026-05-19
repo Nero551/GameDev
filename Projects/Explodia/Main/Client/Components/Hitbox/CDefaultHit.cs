@@ -33,8 +33,7 @@ public partial class CDefaultHit : Component
             targetHit.cForce.Knockback(new Vector3(0, 0, 1));
             Attacker.cForce.Knockback(new Vector3(0, 0, 1));
         }
-
+        
         //TODO VFX ,Animation all that stuff
-        //TODO add knockback
     }
 }

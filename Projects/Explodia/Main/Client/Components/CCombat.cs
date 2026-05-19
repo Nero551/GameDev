@@ -40,15 +40,16 @@ public partial class CCombat : Component
             {
                 return;
             }
-
+            
             if ((PULib.CurrentSTime() - LastSwingTime) >= (double)itemData["ComboResetTime"])
             {
                 SwingNumber = 0;
             }
 
-
             SwingNumber++;
-            LastSwingTime = PULib.CurrentSTime(); if (SwingNumber > (int)itemData["Swings"])
+            LastSwingTime = PULib.CurrentSTime();
+
+            if (SwingNumber > (int)itemData["Swings"])
             {
                 LastComboTime = PULib.CurrentSTime();
                 SwingNumber = 0;
