@@ -8,7 +8,7 @@ public partial class EWeapon : EItem
 		itemData = PULib.JSONToCSharp("Main/Shared/Data/ItemData/WeaponData");
 		itemData = (Godot.Collections.Dictionary)itemData[this.Name];
 		animationLibrary =
-		 Master.Canimations.LoadAnimLibrary("Main/Shared/Assets/Items/Weapons/" + itemData["Type"] + "/" + itemData["Name"] + "/Animations");
-		Master.Canimations.AddAnimLibrary((string)itemData["Name"], animationLibrary);
+		 Master.cAnimations.LoadAnimLibrary("Main/Shared/Assets/Items/Weapons/" + itemData["Type"] + "/" + itemData["Name"] + "/Animations");
+		Master.cAnimations.AddAnimLibrary((string)itemData["Name"], animationLibrary);
 	}
 }

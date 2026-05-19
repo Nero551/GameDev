@@ -56,17 +56,19 @@ public partial class CCamera : Component
         }
     }
 
-    public void UpdateCam()
+    public void ApplyCamRelativeMovement()
     {
         Vector3 forward = -SpringArm.GlobalTransform.Basis.Z;
         Vector3 right = SpringArm.GlobalTransform.Basis.X;
-        forward.Y = 1;
-        right.Y = 1;
+        forward.Y = 0;
+        right.Y = 0;
         forward = forward.Normalized();
         right = right.Normalized();
 
-        var vel = Entity.GetComponent<CCharacter>().Character.Cmovement.velocity;
-        Entity.GetComponent<CCharacter>().Character.Cmovement.velocity = right * vel.X + forward * vel.Z;
-        GD.Print(Entity.GetComponent<CCharacter>().Character.Cmovement.velocity);
+        Vector3 vel = Entity.GetComponent<CCharacter>().Character.cMovement.velocity;
+
+        Vector3 direction = right * vel.X + forward * vel.Z;
+        direction.Y = vel.Y;
+        Entity.GetComponent<CCharacter>().Character.cMovement.velocity = direction;
     }
 }

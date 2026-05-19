@@ -10,7 +10,7 @@ public partial class EHitbox : Area3D
 	private Godot.Collections.Dictionary Data;
 
 	public ECharacter Attacker;
-	public CDefaultHit CdefaultHit;
+	public CDefaultHit cDefaultHit;
 
 	public void OnBodyEntered(Node3D body)
 	{
@@ -37,7 +37,7 @@ public partial class EHitbox : Area3D
 			}
 
 			//Actual Hit Logic Here pls
-			CdefaultHit.DefaultHit(Attacker, targetHit, Data);
+			cDefaultHit.DefaultHit(Attacker, targetHit, Data);
 
 		}
 	}
@@ -51,7 +51,7 @@ public partial class EHitbox : Area3D
 		Attacker = attacker;
 		Data = Attacker.ActiveHand.itemData;
 
-		CdefaultHit = Entity.AddComponent<CDefaultHit>();
+		cDefaultHit = Entity.AddComponent<CDefaultHit>();
 
 		World.Hitboxes.AddChild(this);
 	}

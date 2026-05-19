@@ -3,45 +3,38 @@ using System;
 
 public partial class EPlayer : Node3D
 {
-    public CCamera Ccamera;
-    public CPlayerInput CplayerInput;
-    public CPlayerMovement CplayerMovement;
-    public CCharacter Ccharacter;
+    public CCamera cCamera;
+    public CPlayerInput cPlayerInput;
+    public CCharacter cCharacter;
 
     private Entity Entity;
 
     public override void _Ready()
     {
         Entity = Entity.Create(this);
-        Ccharacter = Entity.AddComponent<CCharacter>();
-        Ccharacter.SpawnCharacter(this.Name);
+        cCharacter = Entity.AddComponent<CCharacter>();
+        cCharacter.SpawnCharacter(this.Name);
 
-        Ccamera = Entity.AddComponent<CCamera>();
-        CplayerMovement = Entity.AddComponent<CPlayerMovement>();
-        CplayerInput = Entity.AddComponent<CPlayerInput>();
-
-
+        cCamera = Entity.AddComponent<CCamera>();
+        cPlayerInput = Entity.AddComponent<CPlayerInput>();
     }
 
     public override void _Input(InputEvent @event)
     {
-        Ccamera.RotateCamera(@event);
+        cCamera.RotateCamera(@event);
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        // Ccharacter.Character.Cmovement.Move(delta);
-        // Ccamera.UpdateCam();
-        // Ccharacter.Character.Cmovement.ApplyBodyRotation(delta);
-        // Ccharacter.Character.Cmovement.ApplyVelocity();
-        CplayerInput.PlayerInput(delta);
-        Ccamera.ZoomCamera();
-        CplayerMovement.MovementPhysics(delta);
+        cPlayerInput.PlayerInput(delta);
+        cCharacter.Character.cMovement.Move(delta);
+        cCamera.ApplyCamRelativeMovement();
+        cCharacter.Character.cMovement.ApplyBodyRotation(delta);
+        cCamera.ZoomCamera();
     }
 
     public override void _Process(double delta)
     {
-        GlobalPosition = Ccharacter.Character.GlobalPosition;
-        base._Process(delta);
+        GlobalPosition = cCharacter.Character.GlobalPosition;
     }
 }

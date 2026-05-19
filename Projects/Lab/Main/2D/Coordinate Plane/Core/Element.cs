@@ -5,19 +5,11 @@ using System.Collections.Generic;
 public abstract partial class Element<TMode> : Node2D
 {
 
-    [Export]
-    public bool Delete
-    {
-        get;
-        set
-        {
-            field = !value;
-            Destroy();
-        }
-    }
+    [Export] public bool Delete { get; set { field = !value; Destroy(); } }
     [Export] public string ElementName;
-    public TMode CalculationMode;
-    public bool Recalculating;
+    protected TMode CalculationMode;
+    protected bool Recalculating;
+    // protected float LerpWeight = 0.2f;
 
     protected virtual void Recalculate() { }
     protected void SetProperty<T>(ref T propertyRef, T value, TMode mode)

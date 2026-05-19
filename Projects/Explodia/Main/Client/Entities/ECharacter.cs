@@ -8,16 +8,15 @@ public partial class ECharacter : CharacterBody3D, ICombatable, IMainAnimatible,
 	[Export] public EItem Offhand;
 	[Export] public EItem ActiveHand { get; set; }
 
-	public CAnimations Canimations;
-	public CStates Cstates;
-	public CMainAnimations CmainAnimations;
-	public CMainStates CmainStates;
-	public CActionVerifier CactionVerifier;
-	public CCombat Ccombat;
-	public CMovement Cmovement;
-	public CKnockback Cknockback;
-	public CPull Cpull;
-	public CHealth Chealth;
+	public CAnimations cAnimations;
+	public CStates cStates;
+	public CMainAnimations cMainAnimations;
+	public CMainStates cMainStates;
+	public CActionVerifier cActionVerifier;
+	public CCombat cCombat;
+	public CMovement cMovement;
+	public CForce cForce;
+	public CHealth cHealth;
 
 	private Entity Entity;
 
@@ -26,42 +25,41 @@ public partial class ECharacter : CharacterBody3D, ICombatable, IMainAnimatible,
 		Rig = GetNode<Node3D>("__Animation Dummy_Armature");
 		Entity = Entity.Create(this);
 
-		Chealth = Entity.AddComponent<CHealth>();
-		Cmovement = Entity.AddComponent<CMovement>();
-		Cstates = Entity.AddComponent<CStates>();
-		CmainStates = Entity.AddComponent<CMainStates>();
-		CactionVerifier = Entity.AddComponent<CActionVerifier>();
-		Canimations = Entity.AddComponent<CAnimations>();
-		CmainAnimations = Entity.AddComponent<CMainAnimations>();
-		Cknockback = Entity.AddComponent<CKnockback>();
-		Cpull = Entity.AddComponent<CPull>();
-		Ccombat = Entity.AddComponent<CCombat>();
+		cHealth = Entity.AddComponent<CHealth>();
+		cMovement = Entity.AddComponent<CMovement>();
+		cStates = Entity.AddComponent<CStates>();
+		cMainStates = Entity.AddComponent<CMainStates>();
+		cActionVerifier = Entity.AddComponent<CActionVerifier>();
+		cAnimations = Entity.AddComponent<CAnimations>();
+		cMainAnimations = Entity.AddComponent<CMainAnimations>();
+		cForce = Entity.AddComponent<CForce>();
+		cCombat = Entity.AddComponent<CCombat>();
 
 		GetNode<EWeapon>("Fist").Init(this);
 	}
 
 	public override void _Process(double delta)
 	{
-		Cstates.HandleStates(delta);
-		CmainStates.HandleMainStates();
-		CmainAnimations.MainAnimations();
+		cStates.HandleStates(delta);
+		cMainStates.HandleMainStates();
+		cMainAnimations.MainAnimations();
 		// MoveAndSlide();
 	}
 
 	public void OnHitMarker()
 	{
-		Ccombat.OnHitMarker();
+		cCombat.OnHitMarker();
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		// Cmovement.Move(delta);
-		// Cmovement.Gravity(delta);
+		cMovement.ApplyVelocity();
+		cMovement.Gravity(delta);
 	}
 
 
 	public void OnAnimFinished(string animName)
 	{
-		Canimations.OnAnimFinished(animName);
+		cAnimations.OnAnimFinished(animName);
 	}
 }

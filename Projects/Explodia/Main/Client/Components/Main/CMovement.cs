@@ -18,8 +18,8 @@ public partial class CMovement : Component
         }
         if (velocity != Vector3.Zero)
         {
-            velocity.X = Mathf.MoveToward(Entity.GetInterface<IVelocity>().Velocity.X, 0, Speed);
-            velocity.Z = Mathf.MoveToward(Entity.GetInterface<IVelocity>().Velocity.Z, 0, Speed);
+            velocity.X = Mathf.MoveToward(velocity.X, 0, Speed);
+            velocity.Z = Mathf.MoveToward(velocity.Z, 0, Speed);
         }
     }
 
@@ -33,7 +33,7 @@ public partial class CMovement : Component
 
     public void Move(double delta)
     {
-        velocity = new Vector3(MoveDirection.X, velocity.Y, MoveDirection.Y);
+        velocity = new Vector3(MoveDirection.X + velocity.X, velocity.Y, MoveDirection.Y + velocity.Z);
         if (velocity != Vector3.Zero)
         {
             velocity.X *= Speed;
@@ -43,29 +43,28 @@ public partial class CMovement : Component
 
     public void ApplyBodyRotation(double delta)
     {
+
         Vector3 targetDir = (
         Entity.GetInterface<IGlobalPosition>().GlobalPosition + velocity -
-        Entity.Owner.GetNode<Node3D>("__Animation Dummy_Armature").GlobalPosition).Normalized();
+        Entity.Owner.GetNode<Node3D>("__Animation Dummy_Armature").GlobalPosition);
 
-        GD.Print(targetDir);
-        Basis target = Basis.LookingAt(targetDir, Vector3.Up);
+        targetDir.Y = 0;
+        targetDir.Normalized();
 
-        Entity.Owner.GetNode<Node3D>("__Animation Dummy_Armature").Basis =
-         Entity.Owner.GetNode<Node3D>("__Animation Dummy_Armature").Basis.Slerp(target, 8f * (float)delta);
+        if (targetDir != Vector3.Zero)
+        {
+            Basis target = Basis.LookingAt(targetDir, Vector3.Up);
+
+            Entity.Owner.GetNode<Node3D>("__Animation Dummy_Armature").Basis =
+             Entity.Owner.GetNode<Node3D>("__Animation Dummy_Armature").Basis.Slerp(target, 8f * (float)delta);
+        }
     }
 
     public void ApplyVelocity()
     {
-        GD.Print(velocity);
         Entity.GetInterface<IVelocity>().Velocity = velocity;
         Entity.GetInterface<IMoveAndSlide>().MoveAndSlide();
     }
-
-    /*
-TODO
-am gonna merge player movement with this. idea is , this script will have a velocity variable, the main gravity , move and jump methods.
-TODO- as for camera adjustments. camera component will just modify the velocity variable
-*/
 }
 
 

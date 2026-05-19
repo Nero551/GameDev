@@ -13,7 +13,7 @@ public partial class CartesianPlane : Node2D
 	{
 		Plane = this;
 
-		Size = BasisX * BasisY * 2;
+		Size = BasisX * BasisY * 4;
 		CreateGrid();
 		Sandbox();
 	}

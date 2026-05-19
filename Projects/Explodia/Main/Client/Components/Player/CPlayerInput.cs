@@ -24,11 +24,11 @@ public partial class CPlayerInput : Component
         }
         if (Input.IsActionPressed("M1"))
         {
-            character.Ccombat.M1();
+            character.cCombat.M1();
         }
         if (Input.IsActionPressed("M2"))
         {
-            character.Ccombat.M2();
+            character.cCombat.M2();
         }
 
         if (Input.IsActionJustPressed("ExitGame"))
@@ -38,21 +38,20 @@ public partial class CPlayerInput : Component
 
         if (Input.IsActionJustPressed("Jump"))
         {
-            character.Cmovement.Jump();
+            character.cMovement.Jump();
         }
 
         if (Input.IsActionJustPressed("Sprint"))
         {
-            if (character.Cstates.CheckState("Sprinting"))
+            if (character.cStates.CheckState("Sprinting"))
             {
-                character.Cstates.RemoveState("Sprinting");
+                character.cStates.RemoveState("Sprinting");
             }
             else
             {
-                character.Cstates.AddState("Sprinting");
+                character.cStates.AddState("Sprinting");
             }
         }
-        character.Cmovement.MoveDirection = Input.GetVector("Left", "Right", "Back", "Forward");
-        GD.Print(character.Cmovement.MoveDirection);
+        character.cMovement.MoveDirection = Input.GetVector("Left", "Right", "Back", "Forward");
     }
 }
