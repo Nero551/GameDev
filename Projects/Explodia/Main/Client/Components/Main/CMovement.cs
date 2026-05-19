@@ -3,23 +3,30 @@ using System;
 
 public partial class CMovement : Component
 {
-    public Vector3 velocity;
+    public Vector3 MovementVelocity;
+    public Vector3 Force;
     public float Speed;
     public float JumpPower;
     public Vector2 MoveDirection = Vector2.Zero;
 
     public void Gravity(double delta)
     {
-        velocity = Entity.GetInterface<IVelocity>().Velocity;
+        MovementVelocity = Entity.GetInterface<IVelocity>().Velocity;
 
         if (!Entity.GetInterface<IIsOnFloor>().IsOnFloor())
         {
-            velocity += Entity.GetInterface<IGetGravity>().GetGravity() * (float)delta;
+            MovementVelocity += Entity.GetInterface<IGetGravity>().GetGravity() * (float)delta;
         }
-        if (velocity != Vector3.Zero)
+        if (MovementVelocity != Vector3.Zero)
         {
-            velocity.X = Mathf.MoveToward(velocity.X, 0, Speed);
-            velocity.Z = Mathf.MoveToward(velocity.Z, 0, Speed);
+            MovementVelocity.X = Mathf.MoveToward(MovementVelocity.X, 0, Speed);
+            MovementVelocity.Z = Mathf.MoveToward(MovementVelocity.Z, 0, Speed);
+        }
+
+        if (Force != Vector3.Zero)
+        {
+            Force.X = Mathf.MoveToward(Force.X, 0, Speed);
+            Force.Z = Mathf.MoveToward(Force.Z, 0, Speed);
         }
     }
 
@@ -27,17 +34,17 @@ public partial class CMovement : Component
     {
         if (Entity.GetInterface<IIsOnFloor>().IsOnFloor())
         {
-            velocity.Y = JumpPower;
+            MovementVelocity.Y = JumpPower;
         }
     }
 
     public void Move(double delta)
     {
-        velocity = new Vector3(MoveDirection.X + velocity.X, velocity.Y, MoveDirection.Y + velocity.Z);
-        if (velocity != Vector3.Zero)
+        MovementVelocity = new Vector3(MoveDirection.X + MovementVelocity.X, MovementVelocity.Y, MoveDirection.Y + MovementVelocity.Z);
+        if (MovementVelocity != Vector3.Zero)
         {
-            velocity.X *= Speed;
-            velocity.Z *= Speed;
+            MovementVelocity.X *= Speed;
+            MovementVelocity.Z *= Speed;
         }
     }
 
@@ -45,7 +52,7 @@ public partial class CMovement : Component
     {
 
         Vector3 targetDir = (
-        Entity.GetInterface<IGlobalPosition>().GlobalPosition + velocity -
+        Entity.GetInterface<IGlobalPosition>().GlobalPosition + MovementVelocity -
         Entity.Owner.GetNode<Node3D>("__Animation Dummy_Armature").GlobalPosition);
 
         targetDir.Y = 0;
@@ -62,9 +69,8 @@ public partial class CMovement : Component
 
     public void ApplyVelocity()
     {
-        Entity.GetInterface<IVelocity>().Velocity = velocity;
+        Entity.GetInterface<IVelocity>().Velocity = MovementVelocity + Force;
         Entity.GetInterface<IMoveAndSlide>().MoveAndSlide();
     }
 }
-
 

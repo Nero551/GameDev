@@ -65,10 +65,10 @@ public partial class CCamera : Component
         forward = forward.Normalized();
         right = right.Normalized();
 
-        Vector3 vel = Entity.GetComponent<CCharacter>().Character.cMovement.velocity;
+        Vector3 vel = Entity.GetComponent<CCharacter>().Character.cMovement.MovementVelocity;
 
         Vector3 direction = right * vel.X + forward * vel.Z;
         direction.Y = vel.Y;
-        Entity.GetComponent<CCharacter>().Character.cMovement.velocity = direction;
+        Entity.GetComponent<CCharacter>().Character.cMovement.MovementVelocity = direction;
     }
 }

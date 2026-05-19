@@ -26,12 +26,12 @@ public partial class CDefaultHit : Component
         //Knockback
         if (Attacker.cCombat.SwingNumber == (int)itemData["Swings"])
         {
-            targetHit.cForce.Knockback(new Vector3(0, 0, 10));
+            targetHit.cForce.Knockback(new Vector3(0, 0, 2));
         }
         else
         {
-            targetHit.cForce.Knockback(new Vector3(0, 0, 2));
-            Attacker.cForce.Knockback(new Vector3(0, 0, 2));
+            targetHit.cForce.Knockback(new Vector3(0, 0, 1));
+            Attacker.cForce.Knockback(new Vector3(0, 0, 1));
         }
 
         //TODO VFX ,Animation all that stuff

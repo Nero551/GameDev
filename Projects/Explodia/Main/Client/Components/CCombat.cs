@@ -3,9 +3,9 @@ using System;
 
 public partial class CCombat : Component
 {
-    [Export] public int SwingNumber = 0;
-    [Export] public double LastSwingTime = 0;
-    [Export] public double LastComboTime = 0;
+    public int SwingNumber = 0;
+    public double LastSwingTime = 0;
+    public double LastComboTime = 0;
 
     private ICombatable combatable;
 
@@ -80,7 +80,7 @@ public partial class CCombat : Component
             Vector3 hitboxSize = new Vector3((float)hitboxData["X"], (float)hitboxData["Y"], (float)hitboxData["Z"]);
 
             hitbox.Init(combatable.Rig.GetNode<Marker3D>("HitboxLocation").GlobalPosition, hitboxSize, Entity.Owner as ECharacter);
-            PULib.ScheduleRemoval(hitbox, 0.2f);
+            PULib.ScheduleRemoval(hitbox, 0.1f);
         }
     }
 }
