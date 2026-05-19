@@ -38,7 +38,7 @@ public partial class CMainAnimations : Component
                 }
                 else
                 {
-                    Entity.GetComponent<CAnimations>().PlayAnim((string)mainAnimatible.ActiveHand.itemData["Name"] + "/" + "Idle", 3);
+                    Entity.GetComponent<CAnimations>().PlayAnim($"{(string)mainAnimatible.ActiveHand.itemData["Name"]}/Idle", 3);
                 }
             }
         }

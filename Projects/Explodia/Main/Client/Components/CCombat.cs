@@ -33,41 +33,44 @@ public partial class CCombat : Component
             {
                 return;
             }
+            var itemData = combatable.ActiveHand.itemData;
 
-            if ((PULib.CurrentSTime() - LastComboTime) < (double)combatable.ActiveHand.itemData["ComboCooldown"])
+
+            if ((PULib.CurrentSTime() - LastComboTime) < (double)itemData["ComboCooldown"])
             {
                 return;
             }
 
-            if ((PULib.CurrentSTime() - LastSwingTime) >= (double)combatable.ActiveHand.itemData["ComboResetTime"])
+            if ((PULib.CurrentSTime() - LastSwingTime) >= (double)itemData["ComboResetTime"])
             {
                 SwingNumber = 0;
             }
 
-            SwingNumber++;
-            LastSwingTime = PULib.CurrentSTime();
 
-            if (SwingNumber > (int)combatable.ActiveHand.itemData["Swings"])
+            SwingNumber++;
+            LastSwingTime = PULib.CurrentSTime(); if (SwingNumber > (int)itemData["Swings"])
             {
                 LastComboTime = PULib.CurrentSTime();
                 SwingNumber = 0;
+                return;
             }
 
-            string itemName = (string)combatable.ActiveHand.itemData["Name"];
-            Animation swingAnim = Entity.GetComponent<CAnimations>().GetAnim(itemName + "/" + "L" + SwingNumber);
+            string itemName = (string)itemData["Name"];
+            Animation swingAnim = Entity.GetComponent<CAnimations>().GetAnim($"{itemName}/L{SwingNumber}");
             if (swingAnim == null)
             {
                 return;
             }
 
             Entity.GetComponent<CStates>().AddState("Attacking", swingAnim.Length);
-            Entity.GetComponent<CAnimations>().PlayAnim(itemName + "/" + "L" + SwingNumber, 1);
+            Entity.GetComponent<CAnimations>().PlayAnim($"{itemName}/L{SwingNumber}", 1);
         }
     }
 
     public void OnHitMarker()
     {
-        string itemName = (string)combatable.ActiveHand.itemData["Name"];
+        var itemData = combatable.ActiveHand.itemData;
+        string itemName = (string)itemData["Name"];
         string hitboxName = itemName + "Basic Attack Hitbox";
         if (World.Hitboxes.GetNodeOrNull<EHitbox>(hitboxName) == null)
         {
@@ -76,7 +79,7 @@ public partial class CCombat : Component
 
             hitbox.Name = hitboxName;
 
-            Godot.Collections.Dictionary hitboxData = (Godot.Collections.Dictionary)combatable.ActiveHand.itemData["Hitbox"];
+            var hitboxData = (Godot.Collections.Dictionary)itemData["Hitbox"];
             Vector3 hitboxSize = new Vector3((float)hitboxData["X"], (float)hitboxData["Y"], (float)hitboxData["Z"]);
 
             hitbox.Init(combatable.Rig.GetNode<Marker3D>("HitboxLocation").GlobalPosition, hitboxSize, Entity.Owner as ECharacter);
