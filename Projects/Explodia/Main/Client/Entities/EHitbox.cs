@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public partial class EHitbox : Area3D
 {
+	/*
+	TODO- add a spawn hitbox method here.
+	TODO- infact how about a global spawn (insert entity) method that can be overridden by every entity
+	*/
 	public Entity Entity;
 
 	private Dictionary<ECharacter, int> hitTargets = new();
