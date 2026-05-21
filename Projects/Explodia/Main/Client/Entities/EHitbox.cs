@@ -18,6 +18,7 @@ public partial class EHitbox : Area3D
 
 	public void OnBodyEntered(Node3D body)
 	{
+		
 		ECharacter targetHit = body.GetOwner<ECharacter>();
 
 		if (targetHit != null && targetHit is ECharacter && targetHit != Attacker)

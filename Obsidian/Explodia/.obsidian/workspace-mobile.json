@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Death Note/Notes 3.md",
+                "file": "C# CheckList.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Notes 3"
+              "title": "C# CheckList"
             }
           }
         ],
@@ -185,9 +185,9 @@
   },
   "active": "55ec3dc104d1ae4a",
   "lastOpenFiles": [
+    "Death Note/Notes 3.md",
     "C# Notes.md",
     "Framework/Framework.md",
-    "Death Note/Notes 3.md",
     "Framework/Framework Diagram.canvas",
     "Death Note/Chemistry system.md",
     "Death Note/Notes 2.md",

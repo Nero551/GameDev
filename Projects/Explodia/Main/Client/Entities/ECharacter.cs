@@ -22,6 +22,7 @@ public partial class ECharacter : CharacterBody3D, ICombatable, IMainAnimatible,
 
 	public override void _Ready()
 	{
+		
 		Rig = GetNode<Node3D>("__Animation Dummy_Armature");
 		Entity = Entity.Create(this);
 
