@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Explodia"
 run/main_scene="uid://cgkpvnul3qovt"
-config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
+config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 run/max_fps=60
 config/icon="res://icon.svg"
 run/stretch/mode="disabled"

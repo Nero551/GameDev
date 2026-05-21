@@ -18,18 +18,6 @@ public partial class CCamera : Component
         Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
-    public void SwitchCam()
-    {
-        if (!World.DebugCam.Current)
-        {
-            World.DebugCam.Current = true;
-        }
-        else
-        {
-            SpringArm.GetNode<Camera3D>("Camera3D").Current = true;
-        }
-    }
-
     public void ZoomCamera()
     {
         if (Input.IsActionJustPressed("Zoom In") && SpringArm.SpringLength > MinSpringLength)

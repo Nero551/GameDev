@@ -17,11 +17,6 @@ public partial class CPlayerInput : Component
 
     public void PlayerInput(double delta)
     {
-
-        if (World.DebugCam.Current)
-        {
-            return;
-        }
         if (Input.IsActionPressed("M1"))
         {
             character.cCombat.M1();
