@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class CCombat : Component
 {
@@ -29,25 +29,21 @@ public partial class CCombat : Component
     {
         if (Entity.GetComponent<CActionVerifier>().CanAttack())
         {
-            if (combatable.ActiveHand == null || combatable.ActiveHand is not EItem || combatable.ActiveHand.animationLibrary == null)
+            if (combatable.ActiveHand == null || combatable.ActiveHand is not EItem || combatable.ActiveHand.AnimationLibrary == null)
             {
                 return;
             }
-            var itemData = combatable.ActiveHand.itemData;
+            var itemData = combatable.ActiveHand.ItemData;
 
 
             if ((PULib.CurrentSTime() - LastComboTime) < (double)itemData["ComboCooldown"])
             {
                 return;
             }
-            
             if ((PULib.CurrentSTime() - LastSwingTime) >= (double)itemData["ComboResetTime"])
             {
                 SwingNumber = 0;
             }
-
-            SwingNumber++;
-            LastSwingTime = PULib.CurrentSTime();
 
             if (SwingNumber > (int)itemData["Swings"])
             {
@@ -55,6 +51,9 @@ public partial class CCombat : Component
                 SwingNumber = 0;
                 return;
             }
+
+            SwingNumber++;
+            LastSwingTime = PULib.CurrentSTime();
 
             string itemName = (string)itemData["Name"];
             Animation swingAnim = Entity.GetComponent<CAnimations>().GetAnim($"{itemName}/L{SwingNumber}");
@@ -70,7 +69,7 @@ public partial class CCombat : Component
 
     public void OnHitMarker()
     {
-        var itemData = combatable.ActiveHand.itemData;
+        var itemData = combatable.ActiveHand.ItemData;
         string itemName = (string)itemData["Name"];
         string hitboxName = itemName + "Basic Attack Hitbox";
         if (World.Hitboxes.GetNodeOrNull<EHitbox>(hitboxName) == null)

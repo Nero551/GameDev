@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "C# CheckList.md",
+                "file": "Framework/Framework.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "C# CheckList"
+              "title": "Framework"
             }
           }
         ],
@@ -185,6 +185,7 @@
   },
   "active": "55ec3dc104d1ae4a",
   "lastOpenFiles": [
+    "C# CheckList.md",
     "Death Note/Notes 3.md",
     "C# Notes.md",
     "Framework/Framework.md",

@@ -1,14 +1,13 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class EWeapon : EItem
 {
-	public override void InitClass()
-	{
-		itemData = PULib.JSONToCSharp("Main/Shared/Data/ItemData/WeaponData");
-		itemData = (Godot.Collections.Dictionary)itemData[this.Name];
-		animationLibrary =
-		 Master.cAnimations.LoadAnimLibrary("Main/Shared/Assets/Items/Weapons/" + itemData["Type"] + "/" + itemData["Name"] + "/Animations");
-		Master.cAnimations.AddAnimLibrary((string)itemData["Name"], animationLibrary);
-	}
+    public override void InitClass()
+    {
+        ItemData = PULib.JSONToCSharp("Main/Shared/Data/ItemData/WeaponData");
+        ItemData = (Godot.Collections.Dictionary)ItemData[this.Name];
+        AnimationLibrary = Master.cAnimations.LoadAnimLibrary($"Main/Shared/Assets/Items/Weapons/{ItemData["Type"]}/{ItemData["Name"]}/Animations");
+        Master.cAnimations.AddAnimLibrary((string)ItemData["Name"], AnimationLibrary);
+    }
 }

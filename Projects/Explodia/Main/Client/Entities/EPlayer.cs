@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class EPlayer : Node3D
 {
@@ -26,7 +26,6 @@ public partial class EPlayer : Node3D
 
     public override void _PhysicsProcess(double delta)
     {
-        cPlayerInput.PlayerInput(delta);
         cCharacter.Character.cMovement.Move(delta);
         cCamera.ApplyCamRelativeMovement();
         cCharacter.Character.cMovement.ApplyBodyRotation(delta);
@@ -36,5 +35,6 @@ public partial class EPlayer : Node3D
     public override void _Process(double delta)
     {
         GlobalPosition = cCharacter.Character.GlobalPosition;
+        cPlayerInput.PlayerInput(delta);
     }
 }

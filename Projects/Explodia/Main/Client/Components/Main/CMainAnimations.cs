@@ -32,13 +32,13 @@ public partial class CMainAnimations : Component
             }
             else
             {
-                if (mainAnimatible.ActiveHand.animationLibrary == null)
+                if (mainAnimatible.ActiveHand.AnimationLibrary == null)
                 {
                     Entity.GetComponent<CAnimations>().PlayAnim("Default/Idle", 3);
                 }
                 else
                 {
-                    Entity.GetComponent<CAnimations>().PlayAnim($"{(string)mainAnimatible.ActiveHand.itemData["Name"]}/Idle", 3);
+                    Entity.GetComponent<CAnimations>().PlayAnim($"{(string)mainAnimatible.ActiveHand.ItemData["Name"]}/Idle", 3);
                 }
             }
         }

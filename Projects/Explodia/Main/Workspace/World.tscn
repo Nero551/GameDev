@@ -4,7 +4,19 @@
 [ext_resource type="Texture2D" uid="uid://bf3w1bajov4kr" path="res://Main/Shared/Assets/Textures/PrototypeFloor.png" id="2_4and7"]
 [ext_resource type="PackedScene" uid="uid://8plp26spdxm4" path="res://Main/Workspace/Character.tscn" id="3_u2oix"]
 [ext_resource type="Script" uid="uid://dvr5vpxnt2r5i" path="res://Main/Client/Entities/EEnemy.cs" id="4_tcacx"]
+[ext_resource type="PackedScene" uid="uid://cy1ey0lofpjac" path="res://Main/Shared/Assets/VFX/HitImpact/HitImpact.tscn" id="6_4and7"]
 [ext_resource type="PackedScene" uid="uid://cvle36gt8soas" path="res://Main/Workspace/Player.tscn" id="6_digbp"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vklr1"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_5awyl"]
+sky_material = SubResource("ProceduralSkyMaterial_vklr1")
+
+[sub_resource type="Environment" id="Environment_u2oix"]
+background_mode = 2
+sky = SubResource("Sky_5awyl")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bd1ac"]
 albedo_color = Color(0.556953, 0.556953, 0.556953, 1)
@@ -17,20 +29,11 @@ uv1_triplanar = true
 [sub_resource type="BoxShape3D" id="BoxShape3D_vjjlj"]
 size = Vector3(100, 0.1, 100)
 
-[sub_resource type="Environment" id="Environment_vjjlj"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8n0od"]
-transparency = 1
-cull_mode = 2
-vertex_color_use_as_albedo = true
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4and7"]
-gravity = Vector3(0, 0, 0)
-
-[sub_resource type="QuadMesh" id="QuadMesh_vklr1"]
-
 [node name="World" type="Node3D" unique_id=592963299]
 script = ExtResource("1_vklr1")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1819194911]
+environment = SubResource("Environment_u2oix")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=833942431]
 
@@ -42,17 +45,11 @@ mesh = SubResource("PlaneMesh_i75i1")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=81132005]
 shape = SubResource("BoxShape3D_vjjlj")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1490077868]
-transform = Transform3D(1, 0, 0, 0, 0.025356868, 0.9996785, 0, -0.9996785, 0.025356868, 0, 10.5777, 0)
-
 [node name="EOSLogin" type="Control" parent="." unique_id=65772481]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1811333581]
-environment = SubResource("Environment_vjjlj")
 
 [node name="Enemy" parent="." unique_id=1560243081 instance=ExtResource("3_u2oix")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.06296408, 1.5765026)
@@ -67,13 +64,5 @@ AIState = 3
 
 [node name="Characters" type="Node" parent="." unique_id=2116615802]
 
-[node name="HitImpact" type="Node3D" parent="." unique_id=477073076]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.719422, 1.154172, 7.2344866)
-
-[node name="GPUParticles3D" type="GPUParticles3D" parent="HitImpact" unique_id=1975768549]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.427045, 0)
-material_override = SubResource("StandardMaterial3D_8n0od")
-amount = 4
-lifetime = 37.25
-process_material = SubResource("ParticleProcessMaterial_4and7")
-draw_pass_1 = SubResource("QuadMesh_vklr1")
+[node name="HitImpact" parent="." unique_id=1725906742 instance=ExtResource("6_4and7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8636191, 0.8046993, 2.3615463)

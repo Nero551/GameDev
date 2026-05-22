@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class CDefaultHit : Component
 {
@@ -34,6 +34,7 @@ public partial class CDefaultHit : Component
             Attacker.cForce.Knockback(new Vector3(0, 0, 1));
         }
 
-        //TODO VFX and sound.
+        //TODO sound.
+        VisualEffect.Spawn("Shared/Assets/VFX/HitImpact/HitImpact.tscn", targetHit, targetHit.GlobalPosition + new Vector3(0, 0.6f, 0));
     }
 }

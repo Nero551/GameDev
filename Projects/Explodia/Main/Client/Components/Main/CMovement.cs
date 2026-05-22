@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class CMovement : Component
 {
@@ -16,6 +16,7 @@ public partial class CMovement : Component
         if (!Entity.GetInterface<IIsOnFloor>().IsOnFloor())
         {
             MovementVelocity += Entity.GetInterface<IGetGravity>().GetGravity() * (float)delta;
+            Force += Entity.GetInterface<IGetGravity>().GetGravity() * (float)delta;
         }
         if (MovementVelocity != Vector3.Zero)
         {

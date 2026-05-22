@@ -1,6 +1,6 @@
-using Godot;
 using System;
 using System.Collections.Generic;
+using Godot;
 
 public partial class CStates : Component
 {
@@ -48,6 +48,7 @@ public partial class CStates : Component
 
     public void HandleStates(double delta)
     {
+
         float normalSpeed = 1;
         float normalJumpPower = 4.5f;
         foreach (string key in ActiveStates.Keys)
@@ -71,6 +72,7 @@ public partial class CStates : Component
                     {
                         AddState("Dead");
                     }
+                    GD.Print(key);
                     normalJumpPower = (float)data["JumpPower"];
                     normalSpeed = (float)data["Speed"];
                     break;

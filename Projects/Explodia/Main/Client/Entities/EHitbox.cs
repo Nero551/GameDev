@@ -54,7 +54,7 @@ public partial class EHitbox : Area3D
 		SetHitboxSize(size);
 		SetHitboxPosition(position);
 		Attacker = attacker;
-		Data = Attacker.ActiveHand.itemData;
+		Data = Attacker.ActiveHand.ItemData;
 
 		cDefaultHit = Entity.AddComponent<CDefaultHit>();
 
