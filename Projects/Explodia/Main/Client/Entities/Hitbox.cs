@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class EHitbox : Area3D
+public partial class Hitbox : Area3D
 {
 	/*
 	TODO- add a spawn hitbox method here.
@@ -10,18 +10,18 @@ public partial class EHitbox : Area3D
 	*/
 	public Entity Entity;
 
-	private Dictionary<ECharacter, int> hitTargets = new();
+	private Dictionary<Character, int> hitTargets = new();
 	private Godot.Collections.Dictionary Data;
 
-	public ECharacter Attacker;
+	public Character Attacker;
 	public CDefaultHit cDefaultHit;
 
 	public void OnBodyEntered(Node3D body)
 	{
 		
-		ECharacter targetHit = body.GetOwner<ECharacter>();
+		Character targetHit = body.GetOwner<Character>();
 
-		if (targetHit != null && targetHit is ECharacter && targetHit != Attacker)
+		if (targetHit != null && targetHit is Character && targetHit != Attacker)
 		{
 			if (hitTargets.ContainsKey(targetHit))
 			{
@@ -47,7 +47,7 @@ public partial class EHitbox : Area3D
 		}
 	}
 
-	public void Init(Vector3 position, Vector3 size, ECharacter attacker)
+	public void Init(Vector3 position, Vector3 size, Character attacker)
 	{
 		Entity = Entity.Create(this);
 

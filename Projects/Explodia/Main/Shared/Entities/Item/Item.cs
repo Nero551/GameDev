@@ -1,17 +1,17 @@
 using System;
 using Godot;
 
-public partial class EItem : Node3D
+public partial class Item : Node3D
 {
     [Export] public Godot.Collections.Dictionary ItemData;
     [Export] public AnimationLibrary AnimationLibrary;
-    [Export] public ECharacter Master;
+    [Export] public Character Master;
 
     public virtual void InitClass()
     {
 
     }
-    public void Init(ECharacter master)
+    public void Init(Character master)
     {
         Master = master;
         Master.ActiveHand = this;

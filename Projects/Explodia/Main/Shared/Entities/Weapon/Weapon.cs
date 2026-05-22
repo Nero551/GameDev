@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public partial class EWeapon : EItem
+public partial class Weapon : Item
 {
     public override void InitClass()
     {

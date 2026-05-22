@@ -29,7 +29,7 @@ public partial class CCombat : Component
     {
         if (Entity.GetComponent<CActionVerifier>().CanAttack())
         {
-            if (combatable.ActiveHand == null || combatable.ActiveHand is not EItem || combatable.ActiveHand.AnimationLibrary == null)
+            if (combatable.ActiveHand == null || combatable.ActiveHand is not Item || combatable.ActiveHand.AnimationLibrary == null)
             {
                 return;
             }
@@ -72,17 +72,17 @@ public partial class CCombat : Component
         var itemData = combatable.ActiveHand.ItemData;
         string itemName = (string)itemData["Name"];
         string hitboxName = itemName + "Basic Attack Hitbox";
-        if (World.Hitboxes.GetNodeOrNull<EHitbox>(hitboxName) == null)
+        if (World.Hitboxes.GetNodeOrNull<Hitbox>(hitboxName) == null)
         {
             PackedScene scene = GD.Load<PackedScene>("res://Main/Workspace/Hitbox.tscn");
-            EHitbox hitbox = scene.Instantiate<EHitbox>();
+            Hitbox hitbox = scene.Instantiate<Hitbox>();
 
             hitbox.Name = hitboxName;
 
             var hitboxData = (Godot.Collections.Dictionary)itemData["Hitbox"];
             Vector3 hitboxSize = new Vector3((float)hitboxData["X"], (float)hitboxData["Y"], (float)hitboxData["Z"]);
 
-            hitbox.Init(combatable.Rig.GetNode<Marker3D>("HitboxLocation").GlobalPosition, hitboxSize, Entity.Owner as ECharacter);
+            hitbox.Init(combatable.Rig.GetNode<Marker3D>("HitboxLocation").GlobalPosition, hitboxSize, Entity.Owner as Character);
             PULib.ScheduleRemoval(hitbox, 0.1f);
         }
     }

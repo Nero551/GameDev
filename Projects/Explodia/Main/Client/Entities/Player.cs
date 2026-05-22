@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public partial class EPlayer : Node3D
+public partial class Player : Node3D
 {
     public CCamera cCamera;
     public CPlayerInput cPlayerInput;

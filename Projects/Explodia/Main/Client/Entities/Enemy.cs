@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Brain
+public partial class Enemy : AI
 {
 
 }

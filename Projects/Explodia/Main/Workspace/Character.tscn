@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://8plp26spdxm4"]
 
-[ext_resource type="Script" uid="uid://dql3it6yesosp" path="res://Main/Client/Entities/ECharacter.cs" id="1_6xqrn"]
+[ext_resource type="Script" uid="uid://dql3it6yesosp" path="res://Main/Client/Entities/Character.cs" id="1_6xqrn"]
 [ext_resource type="AnimationLibrary" uid="uid://daf4acs5qkjl3" path="res://Main/Shared/Assets/Animations/HitReactions/HitReactions.tres" id="4_4j2bq"]
 [ext_resource type="PackedScene" uid="uid://b3jccq5kuvl1l" path="res://Main/Shared/Assets/Items/Weapons/Melee/Fist/fist.tscn" id="5_3yol6"]
 

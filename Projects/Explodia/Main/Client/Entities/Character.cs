@@ -1,12 +1,12 @@
 using Godot;
 using System;
 
-public partial class ECharacter : CharacterBody3D, ICombatable, IMainAnimatible, IVelocity, IIsOnFloor, IGetGravity, IMoveAndSlide, IGlobalPosition
+public partial class Character : CharacterBody3D, ICombatable, IMainAnimatible, IVelocity, IIsOnFloor, IGetGravity, IMoveAndSlide, IGlobalPosition
 {
 	[Export] public Node3D Rig { get; set; }
-	[Export] public EItem MainHand;
-	[Export] public EItem Offhand;
-	[Export] public EItem ActiveHand { get; set; }
+	[Export] public Item MainHand;
+	[Export] public Item Offhand;
+	[Export] public Item ActiveHand { get; set; }
 
 	public CAnimations cAnimations;
 	public CStates cStates;
@@ -36,7 +36,7 @@ public partial class ECharacter : CharacterBody3D, ICombatable, IMainAnimatible,
 		cForce = Entity.AddComponent<CForce>();
 		cCombat = Entity.AddComponent<CCombat>();
 
-		GetNode<EWeapon>("Fist").Init(this);
+		GetNode<Weapon>("Fist").Init(this);
 	}
 
 	public override void _Process(double delta)

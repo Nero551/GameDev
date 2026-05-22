@@ -5,7 +5,7 @@ public partial class CDefaultHit : Component
 {
 
 
-    public void DefaultHit(ECharacter Attacker, ECharacter targetHit, Godot.Collections.Dictionary itemData)
+    public void DefaultHit(Character Attacker, Character targetHit, Godot.Collections.Dictionary itemData)
     {
         if (targetHit.cStates.CheckState("Invulnerable"))
         {
@@ -34,7 +34,8 @@ public partial class CDefaultHit : Component
             Attacker.cForce.Knockback(new Vector3(0, 0, 1));
         }
 
-        //TODO sound.
-        VisualEffect.Spawn("Shared/Assets/VFX/HitImpact/HitImpact.tscn", targetHit, targetHit.GlobalPosition + new Vector3(0, 0.6f, 0));
+        //VFX & Sound
+        VisualService.Spawn("Shared/Assets/VFX/HitImpact/HitImpact.tscn", targetHit, targetHit.GlobalPosition + new Vector3(0, 0.7f, 0));
+        AudioService.PlaySpatialSound("Shared/Assets/Audio/SFX/AirBlow.mp3", targetHit);
     }
 }

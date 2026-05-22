@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://cy1ey0lofpjac"]
 
-[ext_resource type="Script" uid="uid://dh8ydnosayput" path="res://Main/Shared/Entities/VisualEffect.cs" id="1_dlyp7"]
 [ext_resource type="Texture2D" uid="uid://buesljsxjij8g" path="res://Main/Shared/Assets/VFX/HitImpact/SunStar.png" id="1_yq1dp"]
 [ext_resource type="Texture2D" uid="uid://b3w3i2yl75dqc" path="res://Main/Shared/Assets/VFX/HitImpact/flare.png" id="2_dlyp7"]
 [ext_resource type="Texture2D" uid="uid://ewroscqmfmov" path="res://Main/Shared/Assets/VFX/HitImpact/dust.png" id="3_lqup4"]
@@ -26,13 +25,14 @@ point_count = 3
 curve = SubResource("Curve_5awyl")
 
 [sub_resource type="Gradient" id="Gradient_b8wc7"]
-offsets = PackedFloat32Array(0, 0.7936963)
+interpolation_mode = 2
+colors = PackedColorArray(0.43199882, 0.60955304, 0.98298544, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_digbp"]
 gradient = SubResource("Gradient_b8wc7")
 
 [sub_resource type="Curve" id="Curve_kvvb5"]
-_data = [Vector2(0.007999998, 0.28526974), 0.0, 0.7614314, 0, 1, Vector2(0.94666666, 1), 0.7614314, 0.0, 1, 0]
+_data = [Vector2(0, 1), 0.0, 0.22180045, 0, 0, Vector2(1, 0), -1.0, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_a0jod"]
@@ -57,7 +57,7 @@ color_ramp = SubResource("GradientTexture1D_digbp")
 alpha_curve = SubResource("CurveTexture_u2oix")
 emission_curve = SubResource("CurveTexture_a0jod")
 hue_variation_min = -2.2351742e-08
-hue_variation_max = 0.019999977
+hue_variation_max = 0.039999977
 
 [sub_resource type="QuadMesh" id="QuadMesh_0qmem"]
 
@@ -99,6 +99,13 @@ curve = SubResource("Curve_u2oix")
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_kvvb5"]
 gradient = SubResource("Gradient_digbp")
 
+[sub_resource type="Curve" id="Curve_dlyp7"]
+_data = [Vector2(0, 1), 0.0, 0.061297413, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_lqup4"]
+curve = SubResource("Curve_dlyp7")
+
 [sub_resource type="Curve" id="Curve_a0jod"]
 _data = [Vector2(0.0026666634, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -112,20 +119,22 @@ angle_max = 360.00003
 angular_velocity_min = -1.6093254e-05
 angular_velocity_max = -1.6093254e-05
 gravity = Vector3(0, 0, 0)
+scale_min = 2.0
+scale_max = 2.0
 scale_curve = SubResource("CurveTexture_2uhs1")
 color_ramp = SubResource("GradientTexture1D_kvvb5")
 alpha_curve = SubResource("CurveTexture_tcacx")
+emission_curve = SubResource("CurveTexture_lqup4")
 
-[sub_resource type="SphereMesh" id="SphereMesh_t8rwu"]
+[sub_resource type="TorusMesh" id="TorusMesh_ftpop"]
 
 [node name="HitImpact" type="Node3D" unique_id=1725906742]
-script = ExtResource("1_dlyp7")
 
 [node name="Flash" type="GPUParticles3D" parent="." unique_id=1806378446]
 material_override = SubResource("StandardMaterial3D_tcacx")
 emitting = false
-amount = 1
-lifetime = 0.1
+amount = 2
+lifetime = 0.2
 one_shot = true
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_c5bpr")
@@ -135,7 +144,7 @@ draw_pass_1 = SubResource("QuadMesh_0qmem")
 material_override = SubResource("StandardMaterial3D_5awyl")
 emitting = false
 amount = 1
-lifetime = 0.1
+lifetime = 0.2
 one_shot = true
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_c5bpr")
@@ -150,4 +159,4 @@ preprocess = 0.1
 randomness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_tcacx")
-draw_pass_1 = SubResource("SphereMesh_t8rwu")
+draw_pass_1 = SubResource("TorusMesh_ftpop")

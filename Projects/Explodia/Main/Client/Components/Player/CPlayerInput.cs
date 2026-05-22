@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public partial class CPlayerInput : Component
 {
     private Dictionary<string, double> InputBuffers = new();
-    private ECharacter character;
+    private Character character;
 
     const double bufferTime = 0.15;
     //TODO Input buffer and custom input functions to help centralize input use even more.
