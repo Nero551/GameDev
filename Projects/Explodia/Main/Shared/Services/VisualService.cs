@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public static class VisualService
+public class VisualService : Service
 {
     public static Node3D Spawn(string filepath, Node parent, Vector3 pos, float lifeTime = 5f)
     {

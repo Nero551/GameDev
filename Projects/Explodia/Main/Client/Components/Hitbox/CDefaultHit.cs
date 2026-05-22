@@ -3,8 +3,6 @@ using Godot;
 
 public partial class CDefaultHit : Component
 {
-
-
     public void DefaultHit(Character Attacker, Character targetHit, Godot.Collections.Dictionary itemData)
     {
         if (targetHit.cStates.CheckState("Invulnerable"))
@@ -35,6 +33,10 @@ public partial class CDefaultHit : Component
         }
 
         //VFX & Sound
+        //Todo- need way to attach vfx to specific parts of his body
+        //Todo- probably with marker3D that marks the parts on the body like attachment points.
+        //Todo- so they work with multiple entity types(player , slime)
+        //TODO- basically i need to rework the character, its setup was trash anyway.
         VisualService.Spawn("Shared/Assets/VFX/HitImpact/HitImpact.tscn", targetHit, targetHit.GlobalPosition + new Vector3(0, 0.7f, 0));
         AudioService.PlaySpatialSound("Shared/Assets/Audio/SFX/AirBlow.mp3", targetHit);
     }
