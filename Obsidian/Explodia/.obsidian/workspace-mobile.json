@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Framework/Framework.md",
+                "file": "Tasks.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Framework"
+              "title": "Tasks"
             }
           }
         ],
@@ -185,9 +185,11 @@
   },
   "active": "55ec3dc104d1ae4a",
   "lastOpenFiles": [
+    "Ideas/Notes.md",
+    "Tasks.md",
+    "C# Notes.md",
     "C# CheckList.md",
     "Death Note/Notes 3.md",
-    "C# Notes.md",
     "Framework/Framework.md",
     "Framework/Framework Diagram.canvas",
     "Death Note/Chemistry system.md",
@@ -209,11 +211,9 @@
     "AI Modified/Backlog.md",
     "Doc/Entities/Untitled.md",
     "Doc/Entities/Sea Monsters",
-    "Ideas/Notes.md",
     "Doc/Untitled.md",
     "Doc/Entities/Assassins/Assassin.md",
     "Doc/Entities/Player.md",
-    "AI Modified/WorldSystem.md",
     "Doc/Worlds",
     "Doc/Items/Consumables/Ingredients",
     "Pasted image 20260427044446.jpg",

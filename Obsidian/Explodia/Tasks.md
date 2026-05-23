@@ -1,0 +1,2 @@
+Learn shading.
+Learn rigging.
