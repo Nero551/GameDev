@@ -31,10 +31,6 @@ window/stretch/mode="canvas_items"
 project/assembly_name="Explodia"
 project/max_fps=0
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/godot-freecam-plugin-11a229982a39a4f1551db1971f7a92efc862c0d7/addons/freecam_3D/plugin.cfg")
-
 [input]
 
 Jump={
