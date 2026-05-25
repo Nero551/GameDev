@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://dvr5vpxnt2r5i" path="res://Main/Client/Entities/Enemy.cs" id="4_tcacx"]
 [ext_resource type="PackedScene" uid="uid://cy1ey0lofpjac" path="res://Main/Shared/Assets/VFX/HitImpact/HitImpact.tscn" id="6_4and7"]
 [ext_resource type="PackedScene" uid="uid://cvle36gt8soas" path="res://Main/Workspace/Player.tscn" id="6_digbp"]
-[ext_resource type="PackedScene" uid="uid://qvre4jrsu6mt" path="res://Main/Shared/Assets/Models/Modeling.glb" id="7_vklr1"]
+[ext_resource type="PackedScene" uid="uid://bp44nylkvirac" path="res://Main/Shared/Assets/Models/Character.glb" id="7_vklr1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vklr1"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -44,6 +44,7 @@ shadow_enabled = true
 environment = SubResource("Environment_u2oix")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=833942431]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=675559389]
 transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, 0, 0)
@@ -75,4 +76,5 @@ AIState = 3
 [node name="HitImpact" parent="." unique_id=1725906742 instance=ExtResource("6_4and7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8636191, 0.8046993, 2.3615463)
 
-[node name="Modeling" parent="." unique_id=1937516055 instance=ExtResource("7_vklr1")]
+[node name="Character" parent="." unique_id=757766650 instance=ExtResource("7_vklr1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1746049, 3.0794969, -3.040985)

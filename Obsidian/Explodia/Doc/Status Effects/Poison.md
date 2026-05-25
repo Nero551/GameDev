@@ -1,0 +1,1 @@
+A [[Status Effect]].

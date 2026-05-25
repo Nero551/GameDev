@@ -1,5 +1,5 @@
 ## Type
-Offensive Status Effect
+Offensive [[Status Effect]]
 
 ## Description
 Allows attacks to bypass a portion of the target's defensive stats.
