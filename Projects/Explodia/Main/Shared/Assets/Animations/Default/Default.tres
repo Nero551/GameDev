@@ -1,4 +1,4 @@
-[gd_resource type="AnimationLibrary" format=3 uid="uid://dyjrkyvxmd7qu"]
+[gd_resource type="AnimationLibrary" format=3 uid="uid://bmxnhhsmxiwbc"]
 
 [ext_resource type="Animation" uid="uid://34fwyxdmu7ck" path="res://Main/Shared/Assets/Animations/Default/Idle.anim" id="1_3utyg"]
 [ext_resource type="Animation" uid="uid://djg5pjrhhiv1u" path="res://Main/Shared/Assets/Animations/Default/Run.anim" id="2_hhvmt"]
