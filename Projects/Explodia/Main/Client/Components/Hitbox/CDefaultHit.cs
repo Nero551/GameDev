@@ -40,16 +40,8 @@ public partial class CDefaultHit : Component
         * 4- then we start on the server bs  
         */
 
-        //Todo- need way to attach vfx to specific parts of his body
-        //Todo- probably with marker3D that marks the parts on the body like attachment points.
-        //Todo- so they work with multiple entity types(player , slime)
-        //TODO- basically i need to rework the character, its setup was trash anyway.
-        //TODO- rethink how characters and monsters would even work.
-
-        //TODO- i think a good starting point is making the model for the slime then figuring out the rest.
-
-        //Todo- what i require is a global reference system
-        //Todo- for example. all alive ppl have Root marker, any vfx applied to root marker work on all now.
+        //TODO- make sound effects.
+        //TODO- learn how to use godot shaders and material to make good looking models in godot.
         //VFX & Sound
         VisualService.Spawn("Shared/Assets/VFX/HitImpact/HitImpact.tscn", targetHit.cBody.Root);
         AudioService.PlaySpatialSound("Shared/Assets/Audio/SFX/AirBlow.mp3", targetHit);

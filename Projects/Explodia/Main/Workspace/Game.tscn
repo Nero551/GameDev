@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://8plp26spdxm4" path="res://Main/Workspace/Character.tscn" id="3_u2oix"]
 [ext_resource type="PackedScene" uid="uid://cy1ey0lofpjac" path="res://Main/Shared/Assets/VFX/HitImpact/HitImpact.tscn" id="6_4and7"]
 [ext_resource type="PackedScene" uid="uid://cvle36gt8soas" path="res://Main/Workspace/Player.tscn" id="6_digbp"]
+[ext_resource type="PackedScene" uid="uid://bkrceqbwindf8" path="res://Main/Shared/Assets/Models/Slime.glb" id="6_ec7s1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vklr1"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -70,3 +71,6 @@ offset_bottom = 40.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8636191, 0.8046993, 2.3615463)
 
 [node name="Character" parent="." unique_id=1560243081 instance=ExtResource("3_u2oix")]
+
+[node name="Slime" parent="." unique_id=1390514013 instance=ExtResource("6_ec7s1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.46032417, 2.7524652)
