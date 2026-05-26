@@ -26,7 +26,7 @@ public partial class Player : Node3D
 
     public override void _PhysicsProcess(double delta)
     {
-        cCharacter.Character.cMovement.Move(delta);
+        cCharacter.Character.cMovement.Move();
         cCamera.ApplyCamRelativeMovement();
         cCharacter.Character.cMovement.ApplyBodyRotation(delta);
         cCamera.ZoomCamera();

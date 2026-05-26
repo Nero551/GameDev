@@ -82,7 +82,7 @@ public partial class CCombat : Component
             var hitboxData = (Godot.Collections.Dictionary)itemData["Hitbox"];
             Vector3 hitboxSize = new Vector3((float)hitboxData["X"], (float)hitboxData["Y"], (float)hitboxData["Z"]);
 
-            hitbox.Init(combatable.Rig.GetNode<Marker3D>("HitboxLocation").GlobalPosition, hitboxSize, Entity.Owner as Character);
+            hitbox.Init(Entity.Owner.GetNode<Node3D>("Armature/HitboxLocation").GlobalPosition, hitboxSize, Entity.Owner as Character);
             PULib.ScheduleRemoval(hitbox, 0.1f);
         }
     }

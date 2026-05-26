@@ -3,7 +3,6 @@ using System;
 
 public partial class Character : CharacterBody3D, ICombatable, IMainAnimatible, IVelocity, IIsOnFloor, IGetGravity, IMoveAndSlide, IGlobalPosition
 {
-	[Export] public Node3D Rig { get; set; }
 	[Export] public Item MainHand;
 	[Export] public Item Offhand;
 	[Export] public Item ActiveHand { get; set; }
@@ -17,15 +16,15 @@ public partial class Character : CharacterBody3D, ICombatable, IMainAnimatible, 
 	public CMovement cMovement;
 	public CForce cForce;
 	public CHealth cHealth;
+	public CBody cBody;
 
 	private Entity Entity;
 
 	public override void _Ready()
 	{
 		
-		Rig = GetNode<Node3D>("__Animation Dummy_Armature");
 		Entity = Entity.Create(this);
-
+		cBody = Entity.AddComponent<CBody>();
 		cHealth = Entity.AddComponent<CHealth>();
 		cMovement = Entity.AddComponent<CMovement>();
 		cStates = Entity.AddComponent<CStates>();

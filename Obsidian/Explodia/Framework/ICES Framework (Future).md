@@ -246,7 +246,7 @@ This allows systems to use engine data without knowing whether the owner is `ECh
 Systems access gameplay data through the `Entity`:
 
 ```csharp
-Entity.GetComponent<CStates>().AddState("Attacking", duration);
+Entity.GetComponent<CStates>()
 ```
 
 This keeps system relationships explicit and centralized.

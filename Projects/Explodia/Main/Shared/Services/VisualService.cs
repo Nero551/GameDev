@@ -3,7 +3,7 @@ using Godot;
 
 public class VisualService : Service
 {
-    public static Node3D Spawn(string filepath, Node parent, Vector3 pos, float lifeTime = 5f)
+    public static Node3D Spawn(string filepath, Node parent, Vector3? pos = null, float lifeTime = 5f)
     {
         PackedScene scene = GD.Load<PackedScene>($"res://Main/{filepath}");
         if (scene == null)
@@ -13,8 +13,10 @@ public class VisualService : Service
 
         Node3D vfx = scene.Instantiate<Node3D>();
         parent.AddChild(vfx);
-        vfx.GlobalPosition = pos;
-
+        if (pos is Vector3 p)
+        {
+            vfx.GlobalPosition = p;
+        }
         Play(vfx);
         DestroyAsync(vfx, lifeTime);
         return vfx;

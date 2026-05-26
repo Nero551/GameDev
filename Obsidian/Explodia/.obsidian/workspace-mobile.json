@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Tasks.md",
+                "file": "Framework/ICE Framework (Current).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Tasks"
+              "title": "ICE Framework (Current)"
             }
           }
         ],
@@ -185,8 +185,9 @@
   },
   "active": "55ec3dc104d1ae4a",
   "lastOpenFiles": [
-    "Ideas/Notes.md",
+    "Framework/ICES Framework (Future).md",
     "Tasks.md",
+    "Ideas/Notes.md",
     "C# Notes.md",
     "C# CheckList.md",
     "Death Note/Notes 3.md",
@@ -213,7 +214,6 @@
     "Doc/Entities/Sea Monsters",
     "Doc/Untitled.md",
     "Doc/Entities/Assassins/Assassin.md",
-    "Doc/Entities/Player.md",
     "Doc/Worlds",
     "Doc/Items/Consumables/Ingredients",
     "Pasted image 20260427044446.jpg",

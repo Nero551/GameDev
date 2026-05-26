@@ -47,8 +47,11 @@ public partial class CDefaultHit : Component
         //TODO- rethink how characters and monsters would even work.
 
         //TODO- i think a good starting point is making the model for the slime then figuring out the rest.
+
+        //Todo- what i require is a global reference system
+        //Todo- for example. all alive ppl have Root marker, any vfx applied to root marker work on all now.
         //VFX & Sound
-        VisualService.Spawn("Shared/Assets/VFX/HitImpact/HitImpact.tscn", targetHit, targetHit.GlobalPosition + new Vector3(0, 0.7f, 0));
+        VisualService.Spawn("Shared/Assets/VFX/HitImpact/HitImpact.tscn", targetHit.cBody.Root);
         AudioService.PlaySpatialSound("Shared/Assets/Audio/SFX/AirBlow.mp3", targetHit);
     }
 }

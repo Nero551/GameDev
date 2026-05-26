@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://boexiwd023bs6"
-path="res://.godot/imported/HitReactions.glb-e47d94cea7e7e005d7c9abe5fe011a73.scn"
+uid="uid://duff4sowawywv"
+path="res://.godot/imported/HitReactions.gltf-eba0b0cc62a1e5b37d5fa74dbd68d667.scn"
 
 [deps]
 
-source_file="res://Main/Shared/Assets/Animations/HitReactions/HitReactions.glb"
-dest_files=["res://.godot/imported/HitReactions.glb-e47d94cea7e7e005d7c9abe5fe011a73.scn"]
+source_file="res://Main/Shared/Assets/Animations/HitReactions/HitReactions.gltf"
+dest_files=["res://.godot/imported/HitReactions.gltf-eba0b0cc62a1e5b37d5fa74dbd68d667.scn"]
 
 [params]
 
@@ -45,7 +45,7 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/fallback_path": "res://Main/Shared/Assets/Animations/HitReactions/1.anim",
 "save_to_file/keep_custom_tracks": true,
-"save_to_file/path": "uid://ch433mo6pqgse",
+"save_to_file/path": "uid://cmalvi3ij55pr",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
@@ -2101,7 +2101,7 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/fallback_path": "res://Main/Shared/Assets/Animations/HitReactions/2.anim",
 "save_to_file/keep_custom_tracks": true,
-"save_to_file/path": "uid://dqj1ndmwx5ets",
+"save_to_file/path": "uid://10l0mfv2tisi",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
@@ -4157,7 +4157,7 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/fallback_path": "res://Main/Shared/Assets/Animations/HitReactions/3.anim",
 "save_to_file/keep_custom_tracks": true,
-"save_to_file/path": "uid://6kip6dq1i53a",
+"save_to_file/path": "uid://dm2ba17yu8npy",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
@@ -6213,7 +6213,7 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/fallback_path": "res://Main/Shared/Assets/Animations/HitReactions/4.anim",
 "save_to_file/keep_custom_tracks": true,
-"save_to_file/path": "uid://d2o5yghdmo8k8",
+"save_to_file/path": "uid://7umibw7s7s4r",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,

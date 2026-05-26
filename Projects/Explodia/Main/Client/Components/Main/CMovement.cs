@@ -39,7 +39,7 @@ public partial class CMovement : Component
         }
     }
 
-    public void Move(double delta)
+    public void Move()
     {
         MovementVelocity = new Vector3(MoveDirection.X + MovementVelocity.X, MovementVelocity.Y, MoveDirection.Y + MovementVelocity.Z);
         if (MovementVelocity != Vector3.Zero)
@@ -51,20 +51,18 @@ public partial class CMovement : Component
 
     public void ApplyBodyRotation(double delta)
     {
-
+        var armature = Entity.Owner.GetNode<Node3D>("Armature"); 
         Vector3 targetDir = (
         Entity.GetInterface<IGlobalPosition>().GlobalPosition + MovementVelocity -
-        Entity.Owner.GetNode<Node3D>("__Animation Dummy_Armature").GlobalPosition);
+        armature.GlobalPosition);
 
         targetDir.Y = 0;
-        targetDir.Normalized();
+        targetDir =  targetDir.Normalized();
 
         if (targetDir != Vector3.Zero)
         {
             Basis target = Basis.LookingAt(targetDir, Vector3.Up);
-
-            Entity.Owner.GetNode<Node3D>("__Animation Dummy_Armature").Basis =
-             Entity.Owner.GetNode<Node3D>("__Animation Dummy_Armature").Basis.Slerp(target, 8f * (float)delta);
+            armature.Basis = armature.Basis.Orthonormalized().Slerp(target, 8f * (float)delta);
         }
     }
 
@@ -74,4 +72,3 @@ public partial class CMovement : Component
         Entity.GetInterface<IMoveAndSlide>().MoveAndSlide();
     }
 }
-
