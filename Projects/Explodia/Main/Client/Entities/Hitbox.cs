@@ -58,7 +58,7 @@ public partial class Hitbox : Area3D
 
 		cDefaultHit = Entity.AddComponent<CDefaultHit>();
 
-		World.Hitboxes.AddChild(this);
+		Game.Hitboxes.AddChild(this);
 	}
 
 	public void SetHitboxPosition(Vector3 position)

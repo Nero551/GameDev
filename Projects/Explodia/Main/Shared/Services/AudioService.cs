@@ -4,10 +4,7 @@ public class AudioService : Service
 {
     public static void PlaySound(string filepath, Node parent)
     {
-        AudioStreamPlayer sound = new AudioStreamPlayer();
-
-        sound.Stream = GD.Load<AudioStream>($"res://Main/{filepath}");
-
+        var sound = new AudioStreamPlayer() { Stream = GD.Load<AudioStream>($"res://Main/{filepath}") };
         parent.AddChild(sound);
 
         sound.Play();
@@ -16,10 +13,7 @@ public class AudioService : Service
 
     public static void PlaySpatialSound(string filepath, Node parent)
     {
-        AudioStreamPlayer3D sound = new AudioStreamPlayer3D();
-
-        sound.Stream = GD.Load<AudioStream>($"res://Main/{filepath}");
-
+        var sound = new AudioStreamPlayer3D() { Stream = GD.Load<AudioStream>($"res://Main/{filepath}") };
         parent.AddChild(sound);
 
         sound.Play();

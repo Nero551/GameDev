@@ -14,7 +14,9 @@ public partial class Attachment3D : Marker3D
     public override void _Process(double delta)
     {
         if (AttachWhat == null || AttachTo == null)
+        {
             return;
+        }
 
         AttachWhat.GlobalTransform = AttachTo.GlobalTransform;
     }

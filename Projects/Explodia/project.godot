@@ -11,16 +11,12 @@ config_version=5
 [application]
 
 config/name="Explodia"
-run/main_scene="uid://cgkpvnul3qovt"
+run/main_scene="uid://ca5ivjqvgcvon"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 run/max_fps=60
 config/icon="res://icon.svg"
 run/stretch/mode="disabled"
 run/size/viewport_height=648
-
-[autoload]
-
-World="*uid://wm74fyw2ougo"
 
 [display]
 
@@ -106,7 +102,7 @@ SwitchCam={
 
 [layer_names]
 
-3d_physics/layer_1="World"
+3d_physics/layer_1="Game"
 3d_physics/layer_2="Hitbox"
 
 [physics]

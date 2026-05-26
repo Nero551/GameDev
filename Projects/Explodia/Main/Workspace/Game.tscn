@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://cgkpvnul3qovt"]
+[gd_scene format=3 uid="uid://ca5ivjqvgcvon"]
 
-[ext_resource type="Script" uid="uid://wm74fyw2ougo" path="res://Main/Shared/Core/World.cs" id="1_vklr1"]
+[ext_resource type="Script" uid="uid://wm74fyw2ougo" path="res://Main/Shared/Core/Game.cs" id="1_vklr1"]
 [ext_resource type="Texture2D" uid="uid://bf3w1bajov4kr" path="res://Main/Shared/Assets/Textures/PrototypeFloor.png" id="2_4and7"]
 [ext_resource type="PackedScene" uid="uid://8plp26spdxm4" path="res://Main/Workspace/Character.tscn" id="3_u2oix"]
 [ext_resource type="PackedScene" uid="uid://cy1ey0lofpjac" path="res://Main/Shared/Assets/VFX/HitImpact/HitImpact.tscn" id="6_4and7"]
@@ -31,7 +31,7 @@ uv1_triplanar = true
 [sub_resource type="BoxShape3D" id="BoxShape3D_vjjlj"]
 size = Vector3(100, 0.1, 100)
 
-[node name="World" type="Node3D" unique_id=592963299]
+[node name="Game" type="Node3D" unique_id=592963299]
 script = ExtResource("1_vklr1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1302978069]

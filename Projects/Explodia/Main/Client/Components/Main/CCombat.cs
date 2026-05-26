@@ -72,7 +72,7 @@ public partial class CCombat : Component
         var itemData = combatable.ActiveHand.ItemData;
         string itemName = (string)itemData["Name"];
         string hitboxName = itemName + "Basic Attack Hitbox";
-        if (World.Hitboxes.GetNodeOrNull<Hitbox>(hitboxName) == null)
+        if (Game.Hitboxes.GetNodeOrNull<Hitbox>(hitboxName) == null)
         {
             PackedScene scene = GD.Load<PackedScene>("res://Main/Workspace/Hitbox.tscn");
             Hitbox hitbox = scene.Instantiate<Hitbox>();
