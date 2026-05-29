@@ -1,1 +1,1 @@
-If you use too much [[Mana]] or [[Stamina]] too fast u get overloaded. slows u down and decreases dmg till you recover.
+If you use too much [[Mana]] or [[Stamina]] too fast u get overloaded. slows u down , decreases dmg and decrease [[Mana]] or [[Stamina]] recovery till a certain amount of time passes (10 seconds ?).

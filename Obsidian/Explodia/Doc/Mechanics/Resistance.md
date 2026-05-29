@@ -1,4 +1,4 @@
-The more u get hit with a status effect the less dmf it deals.
+The more u get hit with a status effect the less dmg it deals.
 E.X
 If [[Poison]] deals 20 dmg
 If u have no resistance it deals 20

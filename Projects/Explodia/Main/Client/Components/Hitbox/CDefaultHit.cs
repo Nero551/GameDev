@@ -42,8 +42,9 @@ public partial class CDefaultHit : Component
 
         //TODO- make sound effects.
         //TODO- learn how to use godot shaders and material to make good looking models in godot.
+        
         //VFX & Sound
         VisualService.Spawn("Shared/Assets/VFX/HitImpact/HitImpact.tscn", targetHit.cBody.Root);
-        AudioService.PlaySpatialSound("Shared/Assets/Audio/SFX/AirBlow.mp3", targetHit);
+        AudioService.PlaySpatialSound("Shared/Assets/Aqudio/SFX/AirBlow.mp3", targetHit);
     }
 }

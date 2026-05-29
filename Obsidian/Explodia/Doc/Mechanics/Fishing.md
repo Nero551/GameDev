@@ -1,1 +1,1 @@
-U get fishing rod u fish. Simple bruv.
+U get fishing rod, u fish. Simple bruv.
