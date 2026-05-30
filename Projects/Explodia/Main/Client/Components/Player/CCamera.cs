@@ -4,11 +4,11 @@ using System;
 public partial class CCamera : Component
 {
     public SpringArm3D SpringArm;
+    public float MouseSensitivity = 0.002f;
 
-    int MaxSpringLength = 6;
-    int MinSpringLength = 1;
+    public int MaxSpringLength = 6;
+    public int MinSpringLength = 1;
 
-    [Export] public float MouseSensitivity = 0.002f;
     float horizontalRotation;
     float verticalRotation;
 

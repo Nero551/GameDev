@@ -45,6 +45,6 @@ public partial class CDefaultHit : Component
         
         //VFX & Sound
         VisualService.Spawn("Shared/Assets/VFX/HitImpact/HitImpact.tscn", targetHit.cBody.Root);
-        AudioService.PlaySpatialSound("Shared/Assets/Aqudio/SFX/AirBlow.mp3", targetHit);
+        AudioService.PlaySpatialSound("Shared/Assets/Audio/SFX/punch.wav", targetHit);
     }
 }

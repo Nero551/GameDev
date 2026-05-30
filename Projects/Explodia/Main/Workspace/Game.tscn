@@ -21,18 +21,18 @@ sky = SubResource("Sky_5awyl")
 glow_enabled = true
 glow_intensity = 0.1
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ec7s1"]
+size = Vector3(100, 0.001, 100)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bd1ac"]
-albedo_color = Color(0.556953, 0.556953, 0.556953, 1)
+albedo_color = Color(0.31, 0.31, 0.31, 1)
 albedo_texture = ExtResource("2_4and7")
 uv1_scale = Vector3(24.225, 24.225, 24.225)
 uv1_triplanar = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_i75i1"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_vjjlj"]
-size = Vector3(100, 0.1, 100)
-
-[node name="Game" type="Node3D" unique_id=592963299]
+[node name="Game" type="Node" unique_id=596900149]
 script = ExtResource("1_vklr1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1302978069]
@@ -43,15 +43,14 @@ shadow_enabled = true
 environment = SubResource("Environment_u2oix")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=833942431]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=664161806]
+shape = SubResource("BoxShape3D_ec7s1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=675559389]
 transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_bd1ac")
 mesh = SubResource("PlaneMesh_i75i1")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=81132005]
-shape = SubResource("BoxShape3D_vjjlj")
 
 [node name="EOSLogin" type="Control" parent="." unique_id=65772481]
 layout_mode = 3
@@ -70,7 +69,7 @@ offset_bottom = 40.0
 [node name="HitImpact" parent="." unique_id=1725906742 instance=ExtResource("6_4and7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8636191, 0.8046993, 2.3615463)
 
-[node name="Character" parent="." unique_id=1560243081 instance=ExtResource("3_u2oix")]
-
 [node name="Slime" parent="." unique_id=1390514013 instance=ExtResource("6_ec7s1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.46032417, 2.7524652)
+
+[node name="Character" parent="." unique_id=1560243081 instance=ExtResource("3_u2oix")]

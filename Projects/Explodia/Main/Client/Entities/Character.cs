@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Character : CharacterBody3D, ICombatable, IMainAnimatible, IVelocity, IIsOnFloor, IGetGravity, IMoveAndSlide, IGlobalPosition
+public partial class Character : CharacterBody3D, ICombatable, IMainAnimatible,IRotation3, IVelocity, IIsOnFloor, IGetGravity, IMoveAndSlide, IGlobalPosition
 {
 	[Export] public Item MainHand;
 	[Export] public Item Offhand;
@@ -22,8 +22,8 @@ public partial class Character : CharacterBody3D, ICombatable, IMainAnimatible, 
 
 	public override void _Ready()
 	{
-		
 		Entity = Entity.Create(this);
+		
 		cBody = Entity.AddComponent<CBody>();
 		cHealth = Entity.AddComponent<CHealth>();
 		cMovement = Entity.AddComponent<CMovement>();
@@ -43,7 +43,6 @@ public partial class Character : CharacterBody3D, ICombatable, IMainAnimatible, 
 		cStates.HandleStates(delta);
 		cMainStates.HandleMainStates();
 		cMainAnimations.MainAnimations();
-		// MoveAndSlide();
 	}
 
 	public void OnHitMarker()
@@ -53,8 +52,9 @@ public partial class Character : CharacterBody3D, ICombatable, IMainAnimatible, 
 
 	public override void _PhysicsProcess(double delta)
 	{
-		cMovement.ApplyVelocity();
-		cMovement.Gravity(delta);
+        // cMovement.ApplyBodyRotation(delta);
+        // cMovement.ApplyVelocity();
+		// cMovement.Gravity(delta);
 	}
 
 

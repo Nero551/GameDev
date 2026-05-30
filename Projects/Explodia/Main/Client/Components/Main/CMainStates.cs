@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class CMainStates : Component
 {
@@ -30,5 +30,6 @@ public partial class CMainStates : Component
             else
                 MainState = MainStates.Idle;
         }
+        GD.Print(MainState);
     }
 }

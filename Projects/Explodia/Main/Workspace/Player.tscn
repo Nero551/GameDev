@@ -8,7 +8,7 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 script = ExtResource("1_7cd8q")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=2059194376]
-transform = Transform3D(5, 0, 0, 0, 4.6984634, 1.7101007, 0, -1.7101007, 4.6984634, 0, 3.5654213, 0)
+transform = Transform3D(5, 0, 0, 0, 4.6984634, 1.7101005, 0, -1.7101005, 4.6984634, 0, 3.5654213, 0)
 spring_length = 2.0
 
 [node name="Camera3D" type="Camera3D" parent="SpringArm3D" unique_id=1261477087]

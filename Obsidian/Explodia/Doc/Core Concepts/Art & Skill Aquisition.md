@@ -1,0 +1,1 @@
+U obtain arts and skills by deciphering books and other stuff. Books will prob be obtained from idk bosses?

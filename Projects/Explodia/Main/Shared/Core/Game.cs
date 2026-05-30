@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Diagnostics;
 
-public partial class Game : Node3D
+public partial class Game : Node
 {
 	public static Node Hitboxes;
 	public static Node Players;

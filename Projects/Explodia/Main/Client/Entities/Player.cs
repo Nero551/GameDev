@@ -26,15 +26,14 @@ public partial class Player : Node3D
 
     public override void _PhysicsProcess(double delta)
     {
-        cCharacter.Character.cMovement.Move();
-        cCamera.ApplyCamRelativeMovement();
-        cCharacter.Character.cMovement.ApplyBodyRotation(delta);
+        // cCharacter.Character.cMovement.Move();
+        // cCamera.ApplyCamRelativeMovement();
         cCamera.ZoomCamera();
     }
 
     public override void _Process(double delta)
     {
-        GlobalPosition = cCharacter.Character.GlobalPosition;
+        GlobalPosition = cCharacter.Character.cBody.Root.GlobalPosition;
         cPlayerInput.PlayerInput(delta);
     }
 }
