@@ -3,21 +3,29 @@
 [ext_resource type="Script" uid="uid://wm74fyw2ougo" path="res://Main/Shared/Core/Game.cs" id="1_vklr1"]
 [ext_resource type="Texture2D" uid="uid://bf3w1bajov4kr" path="res://Main/Shared/Assets/Textures/PrototypeFloor.png" id="2_4and7"]
 [ext_resource type="PackedScene" uid="uid://8plp26spdxm4" path="res://Main/Workspace/Character.tscn" id="3_u2oix"]
+[ext_resource type="PackedScene" uid="uid://cy1ey0lofpjac" path="res://Main/Shared/Assets/VFX/HitImpact/HitImpact.tscn" id="5_3eqp4"]
 [ext_resource type="PackedScene" uid="uid://cvle36gt8soas" path="res://Main/Workspace/Player.tscn" id="6_digbp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vklr1"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_curve = 0.12553373
+sun_angle_max = 60.0
 
 [sub_resource type="Sky" id="Sky_5awyl"]
 sky_material = SubResource("ProceduralSkyMaterial_vklr1")
 
 [sub_resource type="Environment" id="Environment_u2oix"]
 background_mode = 2
-background_energy_multiplier = 0.38
+background_energy_multiplier = 0.4
 sky = SubResource("Sky_5awyl")
 glow_enabled = true
-glow_intensity = 0.1
+glow_intensity = 0.4
+glow_bloom = 1.0
+adjustment_enabled = true
+adjustment_brightness = 1.1
+adjustment_contrast = 1.25
+adjustment_saturation = 0.83
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ec7s1"]
 size = Vector3(100, 0.001, 100)
@@ -66,3 +74,7 @@ offset_bottom = 40.0
 [node name="Characters" type="Node" parent="." unique_id=2116615802]
 
 [node name="Character" parent="." unique_id=1560243081 instance=ExtResource("3_u2oix")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -2.389043, 0, 1.6252947)
+
+[node name="HitImpact" parent="." unique_id=1725906742 instance=ExtResource("5_3eqp4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2750313, 0)

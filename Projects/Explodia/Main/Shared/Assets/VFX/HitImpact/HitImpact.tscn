@@ -53,8 +53,8 @@ angle_max = 360.00003
 angular_velocity_min = -50.000015
 angular_velocity_max = 49.99998
 gravity = Vector3(0, 0, 0)
-scale_min = 2.0
-scale_max = 2.0
+scale_min = 1.5
+scale_max = 1.5
 scale_curve = SubResource("CurveTexture_t8rwu")
 color_ramp = SubResource("GradientTexture1D_digbp")
 alpha_curve = SubResource("CurveTexture_u2oix")
@@ -82,8 +82,8 @@ lifetime_randomness = 0.1
 angle_min = 1.0728835e-05
 angle_max = 360.00003
 gravity = Vector3(0, 0, 0)
-scale_min = 2.0
-scale_max = 2.0
+scale_min = 1.5
+scale_max = 1.5
 scale_curve = SubResource("CurveTexture_t8rwu")
 color_ramp = SubResource("GradientTexture1D_digbp")
 alpha_curve = SubResource("CurveTexture_u2oix")
@@ -105,8 +105,8 @@ particles_anim_v_frames = 4
 particles_anim_loop = true
 
 [sub_resource type="Curve" id="Curve_u2oix"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7146666, 0.9258298), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.27149323, 1), 0.0, 0.0, 0, 0, Vector2(0.60181, 0.8539326), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [sub_resource type="CurveTexture" id="CurveTexture_tcacx"]
 curve = SubResource("Curve_u2oix")
@@ -133,25 +133,25 @@ curve = SubResource("Curve_a0jod")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tcacx"]
 angle_min = 1.0728835e-05
 angle_max = 360.00003
-angular_velocity_min = -1.6093254e-05
-angular_velocity_max = -1.6093254e-05
 gravity = Vector3(0, 0, 0)
-scale_min = 2.0
-scale_max = 2.0
+scale_min = 1.5
+scale_max = 1.5
 scale_curve = SubResource("CurveTexture_2uhs1")
 color_ramp = SubResource("GradientTexture1D_kvvb5")
 alpha_curve = SubResource("CurveTexture_tcacx")
 emission_curve = SubResource("CurveTexture_lqup4")
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.049999975
 
 [sub_resource type="TorusMesh" id="TorusMesh_ftpop"]
 
 [node name="HitImpact" type="Node3D" unique_id=1725906742]
 script = ExtResource("1_dlyp7")
-Delay = 2.0
+LoopPlay = true
+Delay = 1.0
 
 [node name="Flash" type="GPUParticles3D" parent="." unique_id=1806378446]
 material_override = SubResource("StandardMaterial3D_tcacx")
-emitting = false
 amount = 1
 lifetime = 0.2
 one_shot = true
@@ -161,7 +161,6 @@ draw_pass_1 = SubResource("QuadMesh_0qmem")
 
 [node name="Flare" type="GPUParticles3D" parent="." unique_id=681252630]
 material_override = SubResource("StandardMaterial3D_5awyl")
-emitting = false
 amount = 1
 lifetime = 0.2
 one_shot = true
@@ -171,10 +170,11 @@ draw_pass_1 = SubResource("QuadMesh_0qmem")
 
 [node name="Dust" type="GPUParticles3D" parent="." unique_id=1652303815]
 material_override = SubResource("StandardMaterial3D_u2oix")
-emitting = false
-lifetime = 0.4
+amount = 2
+lifetime = 0.8
 one_shot = true
 preprocess = 0.1
+explosiveness = 0.75
 randomness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_tcacx")

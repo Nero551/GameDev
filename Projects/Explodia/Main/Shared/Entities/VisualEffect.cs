@@ -9,6 +9,14 @@ public partial class VisualEffect : Node3D
     [Export] public bool LoopPlay { get; set { field = value; PlayWithDelayAsync(); } } = false;
     [Export] public float Delay = 0.1f;
 
+    private ComponentHost componentHost;
+
+    public override void _Ready()
+    {
+        LoopPlay = false;
+        componentHost = ComponentHost.Create(this);
+    }
+
     public static VisualEffect Spawn(string filepath, Node parent, Vector3? pos = null, float lifeTime = 5f)
     {
         PackedScene scene = GD.Load<PackedScene>($"res://Main/{filepath}");
@@ -74,7 +82,7 @@ public partial class VisualEffect : Node3D
     {
         while (LoopPlay == true)
         {
-            Play();
+            Emit = true;
             await ToSignal(GetTree().CreateTimer(Delay), SceneTreeTimer.SignalName.Timeout);
         }
     }
