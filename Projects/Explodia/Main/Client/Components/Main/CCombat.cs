@@ -62,7 +62,7 @@ public partial class CCombat : Component
                 return;
             }
 
-            Entity.GetComponent<CStates>().AddState("Attacking", swingAnim.Length);
+            Entity.GetComponent<CStates>().AddState("all ", swingAnim.Length);
             Entity.GetComponent<CAnimations>().PlayAnim($"{itemName}/L{SwingNumber}", 1);
         }
     }

@@ -30,6 +30,6 @@ public partial class CMainStates : Component
             else
                 MainState = MainStates.Idle;
         }
-        GD.Print(MainState);
+        // GD.Print(MainState);
     }
 }

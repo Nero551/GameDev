@@ -33,7 +33,7 @@ public partial class CPlayerInput : Component
 
         if (Input.IsActionJustPressed("Jump"))
         {
-            // character.cMovement.Jump();
+            character.cMovement.Jump();
         }
 
         if (Input.IsActionJustPressed("Sprint"))

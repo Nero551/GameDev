@@ -52,10 +52,10 @@ public partial class Character : CharacterBody3D, ICombatable, IMainAnimatible,I
 
 	public override void _PhysicsProcess(double delta)
 	{
-        // cMovement.ApplyBodyRotation(delta);
-        // cMovement.ApplyVelocity();
-		// cMovement.Gravity(delta);
-	}
+        cMovement.ApplyBodyRotation(delta);
+        cMovement.ApplyVelocity();
+        cMovement.Gravity(delta);
+    }
 
 
 	public void OnAnimFinished(string animName)

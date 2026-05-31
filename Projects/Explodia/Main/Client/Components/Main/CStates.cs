@@ -50,7 +50,7 @@ public partial class CStates : Component
     {
 
         float normalSpeed = 1;
-        float normalJumpPower = 20f;
+        float normalJumpPower = 4.5f;
         foreach (string key in ActiveStates.Keys)
         {
             //Durations
@@ -72,10 +72,9 @@ public partial class CStates : Component
                     {
                         AddState("Dead");
                     }
-                    // GD.Print(key);
                     normalJumpPower = (float)data["JumpPower"];
                     normalSpeed = (float)data["Speed"];
-                    break;
+                    continue;
                 }
             }
         }
