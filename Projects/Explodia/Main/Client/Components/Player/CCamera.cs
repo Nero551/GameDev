@@ -14,7 +14,7 @@ public partial class CCamera : Component
 
     protected override void OnInit()
     {
-        SpringArm = Entity.Owner.GetNode<SpringArm3D>("SpringArm3D");
+        SpringArm = ComponentHost.Owner.GetNode<SpringArm3D>("SpringArm3D");
         Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
@@ -53,10 +53,10 @@ public partial class CCamera : Component
         forward = forward.Normalized();
         right = right.Normalized();
 
-        Vector3 vel = Entity.GetComponent<CCharacter>().Character.cMovement.MovementVelocity;
+        Vector3 vel = ComponentHost.GetComponent<CCharacter>().Character.cMovement.MovementVelocity;
 
         Vector3 direction = right * vel.X + forward * vel.Z;
         direction.Y = vel.Y;
-        Entity.GetComponent<CCharacter>().Character.cMovement.MovementVelocity = direction;
+        ComponentHost.GetComponent<CCharacter>().Character.cMovement.MovementVelocity = direction;
     }
 }

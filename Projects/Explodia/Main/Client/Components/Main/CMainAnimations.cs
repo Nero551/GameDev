@@ -7,47 +7,47 @@ public partial class CMainAnimations : Component
 
     protected override void OnInit()
     {
-        Entity.GetComponent<CAnimations>().AddAnimLibrary(
+        ComponentHost.GetComponent<CAnimations>().AddAnimLibrary(
             "HitReactions",
-            Entity.GetComponent<CAnimations>().LoadAnimLibrary("Main/Shared/Assets/Animations/HitReactions/HitReactions")
+            ComponentHost.GetComponent<CAnimations>().LoadAnimLibrary("Main/Shared/Assets/Animations/HitReactions/HitReactions")
         );
         
-        Entity.GetComponent<CAnimations>().AddAnimLibrary(
+        ComponentHost.GetComponent<CAnimations>().AddAnimLibrary(
             "Default",
-            Entity.GetComponent<CAnimations>().LoadAnimLibrary("Main/Shared/Assets/Animations/Default/Default")
+            ComponentHost.GetComponent<CAnimations>().LoadAnimLibrary("Main/Shared/Assets/Animations/Default/Default")
         );
-        mainAnimatible = Entity.GetInterface<IMainAnimatible>();
+        mainAnimatible = ComponentHost.GetInterface<IMainAnimatible>();
 
     }
 
     public void MainAnimations()
     {
-        if (Entity.GetComponent<CMainStates>().MainState == CMainStates.MainStates.Moving)
+        if (ComponentHost.GetComponent<CMainStates>().MainState == CMainStates.MainStates.Moving)
         {
-            if (Entity.GetComponent<CStates>().CheckState("Sprinting"))
+            if (ComponentHost.GetComponent<CStates>().CheckState("Sprinting"))
             {
-                Entity.GetComponent<CAnimations>().PlayAnim("Default/Run", 3);
+                ComponentHost.GetComponent<CAnimations>().PlayAnim("Default/Run", 3);
             }
             else
             {
-                Entity.GetComponent<CAnimations>().PlayAnim("Default/Walk", 3);
+                ComponentHost.GetComponent<CAnimations>().PlayAnim("Default/Walk", 3);
             }
         }
-        else if (Entity.GetComponent<CMainStates>().MainState == CMainStates.MainStates.Idle)
+        else if (ComponentHost.GetComponent<CMainStates>().MainState == CMainStates.MainStates.Idle)
         {
             if (mainAnimatible.ActiveHand == null)
             {
-                Entity.GetComponent<CAnimations>().PlayAnim("Default/Idle", 3);
+                ComponentHost.GetComponent<CAnimations>().PlayAnim("Default/Idle", 3);
             }
             else
             {
                 if (mainAnimatible.ActiveHand.AnimationLibrary == null)
                 {
-                    Entity.GetComponent<CAnimations>().PlayAnim("Default/Idle", 3);
+                    ComponentHost.GetComponent<CAnimations>().PlayAnim("Default/Idle", 3);
                 }
                 else
                 {
-                    Entity.GetComponent<CAnimations>().PlayAnim($"{(string)mainAnimatible.ActiveHand.ItemData["Name"]}/Idle", 3);
+                    ComponentHost.GetComponent<CAnimations>().PlayAnim($"{(string)mainAnimatible.ActiveHand.ItemData["Name"]}/Idle", 3);
                 }
             }
         }

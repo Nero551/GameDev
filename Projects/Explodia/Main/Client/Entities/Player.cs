@@ -7,16 +7,16 @@ public partial class Player : Node3D
     public CPlayerInput cPlayerInput;
     public CCharacter cCharacter;
 
-    private Entity Entity;
+    private ComponentHost componentHost;
 
     public override void _Ready()
     {
-        Entity = Entity.Create(this);
-        cCharacter = Entity.AddComponent<CCharacter>();
+        componentHost = ComponentHost.Create(this);
+        cCharacter = componentHost.AddComponent<CCharacter>();
         cCharacter.SpawnCharacter(this.Name);
 
-        cCamera = Entity.AddComponent<CCamera>();
-        cPlayerInput = Entity.AddComponent<CPlayerInput>();
+        cCamera = componentHost.AddComponent<CCamera>();
+        cPlayerInput = componentHost.AddComponent<CPlayerInput>();
     }
 
     public override void _Input(InputEvent @event)

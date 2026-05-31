@@ -6,6 +6,6 @@ public partial class CBody : Component
     public Attachment3D Root;
     protected override void OnInit()
     {
-        Root = Entity.Owner.GetNode<Attachment3D>("Root");
+        Root = ComponentHost.Owner.GetNode<Attachment3D>("Root");
     }
 }

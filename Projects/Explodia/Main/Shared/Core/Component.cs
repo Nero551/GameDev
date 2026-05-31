@@ -4,11 +4,11 @@ using System;
 public abstract class Component
 {
     // Back-reference used to access sibling components and owner interfaces.
-    public Entity Entity;
+    public ComponentHost ComponentHost;
     
-    public void Init(Entity entity)
+    public void Init(ComponentHost componentHost)
     {
-        Entity = entity;
+        ComponentHost = componentHost;
         OnInit();
     }
 

@@ -68,7 +68,7 @@ public partial class CStates : Component
                 Godot.Collections.Dictionary data = (Godot.Collections.Dictionary)stateData[key];
                 if (data != null)
                 {
-                    if (Entity.GetComponent<CHealth>().CurrentHealth <= 0)
+                    if (ComponentHost.GetComponent<CHealth>().CurrentHealth <= 0)
                     {
                         AddState("Dead");
                     }
@@ -78,7 +78,7 @@ public partial class CStates : Component
                 }
             }
         }
-        Entity.GetComponent<CMovement>().Speed = normalSpeed;
-        Entity.GetComponent<CMovement>().JumpPower = normalJumpPower;
+        ComponentHost.GetComponent<CMovement>().Speed = normalSpeed;
+        ComponentHost.GetComponent<CMovement>().JumpPower = normalJumpPower;
     }
 }

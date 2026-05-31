@@ -12,9 +12,9 @@ public partial class CMovement : Component
 
     public void Gravity(double delta)
     {
-        if (!Entity.GetInterface<IIsOnFloor>().IsOnFloor())
+        if (!ComponentHost.GetInterface<IIsOnFloor>().IsOnFloor())
         {
-            MovementVelocity += Entity.GetInterface<IGetGravity>().GetGravity() * (float)delta * 1.5f;
+            MovementVelocity += ComponentHost.GetInterface<IGetGravity>().GetGravity() * (float)delta * 1.5f;
         }
         if (MovementVelocity != Vector3.Zero)
         {
@@ -31,7 +31,7 @@ public partial class CMovement : Component
 
     public void Jump()
     {
-        if (Entity.GetInterface<IIsOnFloor>().IsOnFloor())
+        if (ComponentHost.GetInterface<IIsOnFloor>().IsOnFloor())
         {
             MovementVelocity.Y = JumpPower;
         }
@@ -49,9 +49,9 @@ public partial class CMovement : Component
 
     public void ApplyBodyRotation(double delta)
     {
-        var armature = Entity.Owner.GetNode<Node3D>("Armature");
+        var armature = ComponentHost.Owner.GetNode<Node3D>("Armature");
         Vector3 targetDir = (
-        Entity.GetInterface<IGlobalPosition>().GlobalPosition + MovementVelocity -
+        ComponentHost.GetInterface<IGlobalPosition>().GlobalPosition + MovementVelocity -
         armature.GlobalPosition);
 
         targetDir.Y = 0;
@@ -66,8 +66,8 @@ public partial class CMovement : Component
 
     public void ApplyVelocity()
     {
-        Entity.GetInterface<IVelocity>().Velocity = MovementVelocity + Force;
-        Entity.GetInterface<IMoveAndSlide>().MoveAndSlide();
+        ComponentHost.GetInterface<IVelocity>().Velocity = MovementVelocity + Force;
+        ComponentHost.GetInterface<IMoveAndSlide>().MoveAndSlide();
     }
 }
 

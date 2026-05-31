@@ -11,7 +11,7 @@ public partial class CCombat : Component
 
     protected override void OnInit()
     {
-        combatable = Entity.GetInterface<ICombatable>();
+        combatable = ComponentHost.GetInterface<ICombatable>();
     }
 
     public void M1()
@@ -27,7 +27,7 @@ public partial class CCombat : Component
 
     public void BasicAttack()
     {
-        if (Entity.GetComponent<CActionVerifier>().CanAttack())
+        if (ComponentHost.GetComponent<CActionVerifier>().CanAttack())
         {
             if (combatable.ActiveHand == null || combatable.ActiveHand is not Item || combatable.ActiveHand.AnimationLibrary == null)
             {
@@ -56,14 +56,14 @@ public partial class CCombat : Component
             LastSwingTime = PULib.CurrentSTime();
 
             string itemName = (string)itemData["Name"];
-            Animation swingAnim = Entity.GetComponent<CAnimations>().GetAnim($"{itemName}/L{SwingNumber}");
+            Animation swingAnim = ComponentHost.GetComponent<CAnimations>().GetAnim($"{itemName}/L{SwingNumber}");
             if (swingAnim == null)
             {
                 return;
             }
 
-            Entity.GetComponent<CStates>().AddState("Attacking", swingAnim.Length);
-            Entity.GetComponent<CAnimations>().PlayAnim($"{itemName}/L{SwingNumber}", 1);
+            ComponentHost.GetComponent<CStates>().AddState("Attacking", swingAnim.Length);
+            ComponentHost.GetComponent<CAnimations>().PlayAnim($"{itemName}/L{SwingNumber}", 1);
         }
     }
 
@@ -82,7 +82,7 @@ public partial class CCombat : Component
             var hitboxData = (Godot.Collections.Dictionary)itemData["Hitbox"];
             Vector3 hitboxSize = new Vector3((float)hitboxData["X"], (float)hitboxData["Y"], (float)hitboxData["Z"]);
 
-            hitbox.Init(Entity.Owner.GetNode<Node3D>("Armature/HitboxLocation").GlobalPosition, hitboxSize, Entity.Owner as Character);
+            hitbox.Init(ComponentHost.Owner.GetNode<Node3D>("Armature/HitboxLocation").GlobalPosition, hitboxSize, ComponentHost.Owner as Character);
             PULib.ScheduleRemoval(hitbox, 0.1f);
         }
     }

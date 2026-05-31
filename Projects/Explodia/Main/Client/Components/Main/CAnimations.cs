@@ -11,7 +11,7 @@ public partial class CAnimations : Component
     //? Priority Guide, 1 high , 2 medium , 3 low
     protected override void OnInit()
     {
-        animationPlayer = Entity.Owner.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
+        animationPlayer = ComponentHost.Owner.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
 
         if (animationPlayer == null)
         {

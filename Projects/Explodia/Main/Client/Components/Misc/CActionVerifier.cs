@@ -6,7 +6,7 @@ public partial class CActionVerifier : Component
 
     public bool CanAttack()
     {
-        if (Entity.GetComponent<CStates>().CheckState("Attacking"))
+        if (ComponentHost.GetComponent<CStates>().CheckState("Attacking"))
         {
             return false;
         }

@@ -8,7 +8,7 @@ public partial class Hitbox : Area3D
 	TODO- add a spawn hitbox method here.
 	TODO- infact how about a global spawn (insert entity) method that can be overridden by every entity
 	*/
-	public Entity Entity;
+	private ComponentHost componentHost;
 
 	private Dictionary<Character, int> hitTargets = new();
 	private Godot.Collections.Dictionary Data;
@@ -49,14 +49,14 @@ public partial class Hitbox : Area3D
 
 	public void Init(Vector3 position, Vector3 size, Character attacker)
 	{
-		Entity = Entity.Create(this);
+		componentHost = ComponentHost.Create(this);
 
 		SetHitboxSize(size);
 		SetHitboxPosition(position);
 		Attacker = attacker;
 		Data = Attacker.ActiveHand.ItemData;
 
-		cDefaultHit = Entity.AddComponent<CDefaultHit>();
+		cDefaultHit = componentHost.AddComponent<CDefaultHit>();
 
 		Game.Hitboxes.AddChild(this);
 	}

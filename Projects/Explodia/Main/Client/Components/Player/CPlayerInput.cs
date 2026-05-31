@@ -12,7 +12,7 @@ public partial class CPlayerInput : Component
 
     protected override void OnInit()
     {
-        character = Entity.GetComponent<CCharacter>().Character;
+        character = ComponentHost.GetComponent<CCharacter>().Character;
     }
 
     public void PlayerInput(double delta)

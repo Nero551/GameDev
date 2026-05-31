@@ -15,16 +15,16 @@ public partial class CMainStates : Component
 
     public void HandleMainStates()
     {
-        if (!Entity.GetInterface<IIsOnFloor>().IsOnFloor())
+        if (!ComponentHost.GetInterface<IIsOnFloor>().IsOnFloor())
         {
-            if (Entity.GetInterface<IVelocity>().Velocity.Y > 0)
+            if (ComponentHost.GetInterface<IVelocity>().Velocity.Y > 0)
                 MainState = MainStates.Jumping;
             else
                 MainState = MainStates.Falling;
         }
         else
         {
-            Vector3 horizontal = new Vector3(Entity.GetInterface<IVelocity>().Velocity.X, 0, Entity.GetInterface<IVelocity>().Velocity.Z);
+            Vector3 horizontal = new Vector3(ComponentHost.GetInterface<IVelocity>().Velocity.X, 0, ComponentHost.GetInterface<IVelocity>().Velocity.Z);
             if (horizontal.LengthSquared() > 0.01f)
                 MainState = MainStates.Moving;
             else

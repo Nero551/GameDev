@@ -50,10 +50,7 @@ They allow components to access engine-level data without coupling to concrete t
 ## Example
 
 ```csharp
-public interface IVelocity
-{
-	Vector3 Velocity { get; set; }
-}
+public interface IVelocity{	Vector3 Velocity { get; set; }}
 ```
 
 ## Usage
@@ -89,23 +86,13 @@ Each component owns a single responsibility.
 ```csharp
 public partial class CHealth : Component
 {
-    public float MaxHealth = 100; 
+    public float MaxHealth = 100;
     public float CurrentHealth = 100;
-    
-    public void TakeDamage(float amount)    
+    public void TakeDamage(float amount)
     {
-        CurrentHealth -= amount;    
+        CurrentHealth -= amount;        
     }
 }
-```
-
-## Communication
-
-Components communicate through the Entity:
-
-```csharp
-Entity.GetComponent<CHealth>().TakeDamage(10);
-Entity.GetComponent<CAnimations>().Play("Hit");
 ```
 
 ---
@@ -118,7 +105,7 @@ It is the composition root of all gameplay behavior.
 
 ## Responsibilities
 
-- Owns and manages components
+- Owns and manages a ComponentHost
 - Acts as a communication hub between components
 - Forwards engine callbacks (Godot lifecycle events)
 - Represents a complete gameplay object
@@ -132,11 +119,20 @@ It is the composition root of all gameplay behavior.
 ## Example
 
 ```csharp
-Entity = Entity.Create(this);
-CHealth = Entity.AddComponent<CHealth>();
-CMovement = Entity.AddComponent<CMovement>();
-CCombat = Entity.AddComponent<CCombat>();
+ComponentHost = new ComponentHost(this);
+ComponentHost.AddComponent<CHealth>();
+ComponentHost.AddComponent<CMovement>();
+ComponentHost.AddComponent<CCombat>();
 ```
+
+---
+
+## Important Note
+
+Because of Godot’s inheritance-based system, an Entity is a separate class that exists as a Node-based object.  
+The object can still be categorized as an Entity even if it does not contain a ComponentHost.
+
+However, when it **does use components**, it owns a ComponentHost to manage them.
 
 ---
 
@@ -148,7 +144,7 @@ Services handle game-wide functionality.
 
 ## Responsibilities
 
-- Global systems (audio,, saving, scene management)
+- Global systems (audio, saving, scene management)
 - Cross-entity coordination
 - Resource management
 - Game-wide logic
@@ -219,10 +215,10 @@ Use when:
 
 ## Component → Component
 
-All communication goes through the Entity.
+All communication goes through the ComponentHost.
 
 ```csharp
-Entity.GetComponent<CStates>().SetState("Attacking");
+ComponentHost.GetComponent<CStates>().SetState("Attacking");
 ```
 
 ---
@@ -247,15 +243,15 @@ AudioService.Play("Jump");
 
 ---
 
-## Entity → Component
+## Entity → ComponentHost → Component
 
-Entities forward engine events.
+Entities forward engine events and access systems through ComponentHost.
 
 ```csharp
 public override void _Process(double delta)
 {
-    CMovement.Process(delta); 
-    CHealth.Process(delta);
+	ComponentHost.GetComponent<CMovement>().Process(delta);
+	ComponentHost.GetComponent<CHealth>().Process(delta);
 }
 ```
 
@@ -263,10 +259,11 @@ public override void _Process(double delta)
 
 # Naming Conventions
 
-- C → Components
-- I → Interfaces
-- Service → Services
 - Data → Data assets
+- I → Interfaces
+- C → Components
+- Entities don't have a prefix or suffix, just call it whatever it is.
+- Service → Services
 
 ---
 
@@ -301,5 +298,5 @@ Everything in the project has a clear place:
 - Data → raw information
 - Interfaces → engine capability access
 - Components → gameplay systems
-- Entities → gameplay objects
+- Entities → gameplay objects (Node + optional ComponentHost)
 - Services → global systems

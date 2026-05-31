@@ -18,22 +18,22 @@ public partial class Character : CharacterBody3D, ICombatable, IMainAnimatible,I
 	public CHealth cHealth;
 	public CBody cBody;
 
-	private Entity Entity;
+	private ComponentHost componentHost;
 
 	public override void _Ready()
 	{
-		Entity = Entity.Create(this);
+		componentHost = ComponentHost.Create(this);
 		
-		cBody = Entity.AddComponent<CBody>();
-		cHealth = Entity.AddComponent<CHealth>();
-		cMovement = Entity.AddComponent<CMovement>();
-		cStates = Entity.AddComponent<CStates>();
-		cMainStates = Entity.AddComponent<CMainStates>();
-		cActionVerifier = Entity.AddComponent<CActionVerifier>();
-		cAnimations = Entity.AddComponent<CAnimations>();
-		cMainAnimations = Entity.AddComponent<CMainAnimations>();
-		cForce = Entity.AddComponent<CForce>();
-		cCombat = Entity.AddComponent<CCombat>();
+		cBody = componentHost.AddComponent<CBody>();
+		cHealth = componentHost.AddComponent<CHealth>();
+		cMovement = componentHost.AddComponent<CMovement>();
+		cStates = componentHost.AddComponent<CStates>();
+		cMainStates = componentHost.AddComponent<CMainStates>();
+		cActionVerifier = componentHost.AddComponent<CActionVerifier>();
+		cAnimations = componentHost.AddComponent<CAnimations>();
+		cMainAnimations = componentHost.AddComponent<CMainAnimations>();
+		cForce = componentHost.AddComponent<CForce>();
+		cCombat = componentHost.AddComponent<CCombat>();
 
 		GetNode<Weapon>("Fist").Init(this);
 	}
