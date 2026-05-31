@@ -1,29 +1,18 @@
 [gd_scene format=3 uid="uid://cyrsxgrusxml0"]
 
 [ext_resource type="PackedScene" uid="uid://bkrceqbwindf8" path="res://Main/Shared/Assets/Models/Slime.glb" id="1_fbgq7"]
+[ext_resource type="Shader" uid="uid://1uy2765hykt8" path="res://Main/Shared/Assets/Shaders/Slime.gdshader" id="2_fbgq7"]
 
-[sub_resource type="Shader" id="Shader_rgvxi"]
-code = "shader_typespatial;
-
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
-
-void fragment() {
-	// Called for every pixel the material is visible on.
-}
-
-//void light() {
-//	// Called for every pixel for every light affecting the material.
-//	// Uncomment to replace the default light processing function with this one.
-//}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_670hr"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rgvxi"]
 render_priority = 0
-shader = SubResource("Shader_rgvxi")
+shader = ExtResource("2_fbgq7")
+shader_parameter/color_r = 0.15000000223518
+shader_parameter/color_g = 0.35000000521542
+shader_parameter/color_b = 0.70000001043084
+shader_parameter/alpha = 0.77
 
 [node name="Slime" unique_id=249992345 instance=ExtResource("1_fbgq7")]
 
 [node name="Model" parent="." index="0" unique_id=87927360]
-material_override = SubResource("ShaderMaterial_670hr")
+transform = Transform3D(1.2736888, 0, 0, 0, 1.2736888, 0, 0, 0, 1.2736888, 0.30927485, 0.23646235, 0)
+material_override = SubResource("ShaderMaterial_rgvxi")

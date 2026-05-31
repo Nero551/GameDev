@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class CAnimations : Component
 {
@@ -21,7 +21,6 @@ public partial class CAnimations : Component
     }
 
     public AnimationLibrary LoadAnimLibrary(string filepath)
-
     {
         return GD.Load<AnimationLibrary>("res://" + filepath + ".tres");
     }

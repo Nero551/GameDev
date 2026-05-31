@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class CMainAnimations : Component
 {
@@ -7,6 +7,15 @@ public partial class CMainAnimations : Component
 
     protected override void OnInit()
     {
+        Entity.GetComponent<CAnimations>().AddAnimLibrary(
+            "HitReactions",
+            Entity.GetComponent<CAnimations>().LoadAnimLibrary("Main/Shared/Assets/Animations/HitReactions/HitReactions")
+        );
+        
+        Entity.GetComponent<CAnimations>().AddAnimLibrary(
+            "Default",
+            Entity.GetComponent<CAnimations>().LoadAnimLibrary("Main/Shared/Assets/Animations/Default/Default")
+        );
         mainAnimatible = Entity.GetInterface<IMainAnimatible>();
 
     }

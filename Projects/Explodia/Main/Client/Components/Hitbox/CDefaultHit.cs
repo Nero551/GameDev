@@ -34,17 +34,15 @@ public partial class CDefaultHit : Component
 
         /*
         *Current Plan is: 
-        * 1- doing the stuff down there in the todos
-        * 2- making hit sounds
+        * 1- godot shaders
         * 3- making a slime monster that i can fight
         * 4- then we start on the server bs  
         */
 
-        //TODO- make sound effects.
         //TODO- learn how to use godot shaders and material to make good looking models in godot.
-        
+
         //VFX & Sound
-        VisualService.Spawn("Shared/Assets/VFX/HitImpact/HitImpact.tscn", targetHit.cBody.Root);
+        VisualEffect.Spawn("Shared/Assets/VFX/HitImpact/HitImpact.tscn", targetHit.cBody.Root);
         AudioService.PlaySpatialSound("Shared/Assets/Audio/SFX/punch.wav", targetHit);
     }
 }
