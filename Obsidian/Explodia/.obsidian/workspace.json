@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Doc/Mechanics/Skill.md",
+                "file": "Framework/ICES Framework (Scrapped).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Skill"
+              "title": "ICES Framework (Scrapped)"
             }
           }
         ]
@@ -185,11 +185,16 @@
   },
   "active": "56f571a6dfbab34f",
   "lastOpenFiles": [
+    "Framework/ICE Framework (Previous).md",
+    "Tasks.md",
+    "Framework/DICES Framework(Current).md",
+    "Framework/Framework Diagram.canvas",
+    "Framework/ICES Framework (Scrapped).md",
+    "Doc/Mechanics/Skill.md",
     "Doc/Mechanics/World Level.md",
     "Doc/Mechanics/Waypoint.md",
     "Doc/Mechanics/Ultimate Art.md",
     "Doc/Mechanics/Status Effect.md",
-    "Doc/Mechanics/Skill.md",
     "Doc/Mechanics/Resistance.md",
     "Doc/Mechanics/Presence.md",
     "Doc/Mechanics/Overload.md",
@@ -207,14 +212,9 @@
     "Doc/Mechanics/Black Flash.md",
     "Doc/Mechanics/Base Builder.md",
     "Doc/Mechanics/Art.md",
-    "Doc/Mechanics/Ancient Language.md",
-    "Doc/Mechanics/Alchemy.md",
-    "Doc/Core Concepts/Combat.md",
-    "Doc/Entities/Regular NPCS/Main.md",
     "Doc/Base.base",
     "Untitled.canvas",
     "Untitled.base",
-    "Framework/Framework Diagram.canvas",
     "Death Note",
     "Framework",
     "Doc/Entities/Regular NPCS",
