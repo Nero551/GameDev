@@ -18,9 +18,6 @@ public partial class CDefaultHit : Component
         //Damage
         targetHit.cHealth.CurrentHealth -= (float)itemData["Damage"];
 
-        //Animations
-        targetHit.cAnimations.PlayAnim("HitReactions/" + Attacker.cCombat.SwingNumber, 1);
-
         //Knockback
         if (Attacker.cCombat.SwingNumber == (int)itemData["Swings"])
         {
@@ -35,13 +32,14 @@ public partial class CDefaultHit : Component
         /*
         *Current Plan is: 
         * 1- godot shaders
-        * 3- making a slime monster that i can fight
-        * 4- then we start on the server bs  
+        * 2- making a slime monster AI that i can fight
+        * 3- then we start on the server bs  
         */
 
         //TODO- learn how to use godot shaders and material to make good looking models in godot.
 
-        //VFX & Sound
+        //Animations, VFX & Sound
+        targetHit.cAnimations.PlayAnim("HitReactions/" + Attacker.cCombat.SwingNumber, 1);
         VisualEffect.Spawn("Shared/Assets/VFX/HitImpact/HitImpact.tscn", targetHit.cBody.Root);
         AudioService.PlaySpatialSound("Shared/Assets/Audio/SFX/punch.wav", targetHit);
     }

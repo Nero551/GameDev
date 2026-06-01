@@ -8,7 +8,7 @@ public partial class CPlayerInput : Component
     private Character character;
 
     const double bufferTime = 0.15;
-    //TODO Input buffer and custom input functions to help centralize input use even more.
+    //TODO Input buffer, and custom input functions to help centralize input use even more.
 
     protected override void OnInit()
     {

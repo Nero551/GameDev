@@ -15,9 +15,8 @@ public partial class CAnimations : Component
 
         if (animationPlayer == null)
         {
-            GD.PushError("AnimationPlayer not found!");
+            GD.PushWarning("AnimationPlayer not found!");
         }
-
     }
 
     public AnimationLibrary LoadAnimLibrary(string filepath)

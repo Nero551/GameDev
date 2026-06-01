@@ -23,6 +23,16 @@ public class ComponentHost
     public T AddComponent<T>() where T : Component, new()
     {
         // Components are created by the host so they can be initialized with this owner.
+
+        //Check if it already exists.
+        for (int i = 0; i < Components.Count; i++)
+        {
+            if (Components[i] is T typed)
+            {
+                return typed;
+            }
+        }
+        
         var comp = new T();
         comp.Init(this);
         Components.Add(comp);

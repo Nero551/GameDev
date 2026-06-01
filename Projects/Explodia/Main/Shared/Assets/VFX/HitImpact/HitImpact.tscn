@@ -148,7 +148,7 @@ hue_variation_max = 0.049999975
 [node name="HitImpact" type="Node3D" unique_id=1725906742]
 script = ExtResource("1_dlyp7")
 LoopPlay = true
-Delay = 1.0
+Delay = 0.05
 
 [node name="Flash" type="GPUParticles3D" parent="." unique_id=1806378446]
 material_override = SubResource("StandardMaterial3D_tcacx")

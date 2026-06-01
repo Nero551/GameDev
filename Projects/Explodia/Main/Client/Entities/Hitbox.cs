@@ -4,10 +4,6 @@ using System.Collections.Generic;
 
 public partial class Hitbox : Area3D
 {
-	/*
-	TODO- add a spawn hitbox method here.
-	TODO- infact how about a global spawn (insert entity) method that can be overridden by every entity
-	*/
 	private ComponentHost componentHost;
 
 	private Dictionary<Character, int> hitTargets = new();
