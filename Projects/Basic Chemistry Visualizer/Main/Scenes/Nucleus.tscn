@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dlwsxps6iint5"]
+
+[ext_resource type="Script" uid="uid://cone2nfu3jvmd" path="res://Main/Atom/Nucleus.cs" id="1_u2sxp"]
+
+[node name="Nucleus" type="Node3D" unique_id=1536165553]
+script = ExtResource("1_u2sxp")

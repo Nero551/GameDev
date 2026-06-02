@@ -1,0 +1,66 @@
+{
+  "Name": "Sodium",
+  "Symbol": "Na",
+  "AtomicNumber": 11,
+  "AtomicMass": 22.99,
+  "RepresentativeMassNumber": 23,
+  "Protons": 11,
+  "Electrons": 11,
+  "NeutronsApprox": 12,
+  "Category": "Alkali",
+  "Group": "1",
+  "Period": 3,
+  "Block": "s",
+  "StateAt293K": "Solid",
+  "Density": 0.968,
+  "Appearance": [
+    "Sodium is a soft metal that tarnishes within seconds of being exposed to the air. It also reacts vigorously with water."
+  ],
+  "Uses": [
+    "Sodium is used as a heat exchanger in some nuclear reactors, and as a reagent in the chemicals industry. But sodium salts have more uses than the metal itself.",
+    "The most common compound of sodium is sodium chloride (common salt). It is added to food and used to de-ice roads in winter. It is also used as a feedstock for the chemical industry.",
+    "Sodium carbonate (washing soda) is also a useful sodium salt. It is used as a water softener."
+  ],
+  "ElectronConfiguration": "[Ne] 3s1",
+  "EnergyLevels": [
+    2,
+    8,
+    1
+  ],
+  "AtomicRadius": 2.27,
+  "CovalentRadius": 1.6,
+  "ElectronAffinity": 52.867,
+  "Electronegativity": 0.93,
+  "IonizationEnergies": [
+    495.845,
+    4562.444,
+    6910.28,
+    9543.36,
+    13353.6,
+    16612.85,
+    20117.2,
+    25496.25
+  ],
+  "MeltingPointK": 370.944,
+  "BoilingPointK": 1156.09,
+  "KeyIsotopes": [
+    {
+      "Name": "23Na",
+      "HalfLife": [],
+      "Mass": 22.99,
+      "MassNumber": 23,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 100
+    }
+  ],
+  "Isotopes": [
+    {
+      "Name": "23Na",
+      "HalfLife": [],
+      "Mass": 22.99,
+      "MassNumber": 23,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 100
+    }
+  ]
+}

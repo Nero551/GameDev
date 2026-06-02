@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bc1exwuxam44p"]
+
+[ext_resource type="Script" uid="uid://d1gpyhxugcxv5" path="res://Main/Game.cs" id="1_mydax"]
+[ext_resource type="Script" uid="uid://8vyuhyx0xogt" path="res://addons/godot-freecam-plugin-11a229982a39a4f1551db1971f7a92efc862c0d7/addons/freecam_3D/freecam.gd" id="2_mydax"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mydax"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0.26825458, 0.27422848, 0.28618947, 1)
+sky_curve = 0.06997746
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.30657822, 0.31524396, 0.32824263, 1)
+
+[sub_resource type="Sky" id="Sky_0wgfy"]
+sky_material = SubResource("ProceduralSkyMaterial_mydax")
+
+[sub_resource type="Environment" id="Environment_1js7q"]
+background_mode = 2
+background_color = Color(0.06879827, 0.06879828, 0.06879828, 1)
+sky = SubResource("Sky_0wgfy")
+glow_enabled = true
+fog_light_energy = 0.0
+
+[node name="Game" type="Node3D" unique_id=1446345578]
+script = ExtResource("1_mydax")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1193111005]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1079435348]
+environment = SubResource("Environment_1js7q")
+
+[node name="Freecam3D" type="Camera3D" parent="." unique_id=568908382]
+script = ExtResource("2_mydax")
+metadata/_custom_type_script = "uid://8vyuhyx0xogt"

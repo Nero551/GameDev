@@ -1,0 +1,130 @@
+{
+  "Name": "Ruthenium",
+  "Symbol": "Ru",
+  "AtomicNumber": 44,
+  "AtomicMass": 101.07,
+  "RepresentativeMassNumber": 101,
+  "Protons": 44,
+  "Electrons": 44,
+  "NeutronsApprox": 57,
+  "Category": "Transition",
+  "Group": "8",
+  "Period": 5,
+  "Block": "d",
+  "StateAt293K": "Solid",
+  "Density": 12.45,
+  "Appearance": [
+    "A shiny, silvery metal."
+  ],
+  "Uses": [
+    "Many new uses are emerging for ruthenium. Most is used in the electronics industry for chip resistors and electrical contacts. Ruthenium oxide is used in the chemical industry to coat the anodes of electrochemical cells for chlorine production. Ruthenium is also used in catalysts for ammonia and acetic acid production. Ruthenium compounds can be used in solar cells, which turn light energy into electrical energy.",
+    "Ruthenium is one of the most effective hardeners for platinum and palladium, and is alloyed with these metals to make electrical contacts for severe wear resistance. It is used in some jewellery as an alloy with platinum."
+  ],
+  "ElectronConfiguration": "[Kr] 4d75s1",
+  "EnergyLevels": [
+    2,
+    8,
+    18,
+    15,
+    1
+  ],
+  "AtomicRadius": 2.13,
+  "CovalentRadius": 1.36,
+  "ElectronAffinity": 101.31,
+  "Electronegativity": 2.2,
+  "IonizationEnergies": [
+    710.18,
+    1617.09,
+    2746.94
+  ],
+  "MeltingPointK": 2606,
+  "BoilingPointK": 4420,
+  "KeyIsotopes": [
+    {
+      "Name": "101Ru",
+      "HalfLife": [],
+      "Mass": 100.906,
+      "MassNumber": 101,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 17.06
+    },
+    {
+      "Name": "102Ru",
+      "HalfLife": [],
+      "Mass": 101.904,
+      "MassNumber": 102,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 31.55
+    },
+    {
+      "Name": "104Ru",
+      "HalfLife": [],
+      "Mass": 103.905,
+      "MassNumber": 104,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 18.62
+    }
+  ],
+  "Isotopes": [
+    {
+      "Name": "96Ru",
+      "HalfLife": [
+        "> 3.1 x 1016 y"
+      ],
+      "Mass": 95.908,
+      "MassNumber": 96,
+      "ModeOfDecay": [
+        "beta+beta+"
+      ],
+      "NaturalAbundance": 5.54
+    },
+    {
+      "Name": "98Ru",
+      "HalfLife": [],
+      "Mass": 97.905,
+      "MassNumber": 98,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 1.87
+    },
+    {
+      "Name": "99Ru",
+      "HalfLife": [],
+      "Mass": 98.906,
+      "MassNumber": 99,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 12.76
+    },
+    {
+      "Name": "100Ru",
+      "HalfLife": [],
+      "Mass": 99.904,
+      "MassNumber": 100,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 12.6
+    },
+    {
+      "Name": "101Ru",
+      "HalfLife": [],
+      "Mass": 100.906,
+      "MassNumber": 101,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 17.06
+    },
+    {
+      "Name": "102Ru",
+      "HalfLife": [],
+      "Mass": 101.904,
+      "MassNumber": 102,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 31.55
+    },
+    {
+      "Name": "104Ru",
+      "HalfLife": [],
+      "Mass": 103.905,
+      "MassNumber": 104,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 18.62
+    }
+  ]
+}

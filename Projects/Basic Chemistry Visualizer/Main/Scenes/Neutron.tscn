@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://ckevoaw6ephe0"]
+
+[ext_resource type="Script" uid="uid://cu32i1ovt8ckx" path="res://Main/Core Particles/Neutron.cs" id="1_twepm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kho6i"]
+albedo_color = Color(0.2336747, 0.54909325, 0.93305206, 1)
+emission_enabled = true
+emission = Color(0.23529412, 0.54901963, 0.93333334, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_tu50s"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_twepm"]
+radius = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kho6i"]
+
+[node name="Neutron" type="Node3D" unique_id=1042676883]
+script = ExtResource("1_twepm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=685614381]
+material_override = SubResource("StandardMaterial3D_kho6i")
+mesh = SubResource("SphereMesh_tu50s")
+
+[node name="InnerArea3D" type="Area3D" parent="." unique_id=236963818]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InnerArea3D" unique_id=326614459]
+shape = SubResource("SphereShape3D_twepm")
+
+[node name="OuterArea3D" type="Area3D" parent="." unique_id=692722078]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OuterArea3D" unique_id=1232199377]
+shape = SubResource("SphereShape3D_kho6i")

@@ -1,0 +1,92 @@
+{
+  "Name": "Rubidium",
+  "Symbol": "Rb",
+  "AtomicNumber": 37,
+  "AtomicMass": 85.468,
+  "RepresentativeMassNumber": 85,
+  "Protons": 37,
+  "Electrons": 37,
+  "NeutronsApprox": 48,
+  "Category": "Alkali",
+  "Group": "1",
+  "Period": 5,
+  "Block": "s",
+  "StateAt293K": "Solid",
+  "Density": 1.532,
+  "Appearance": [
+    "A soft metal that ignites in the air and reacts violently with water."
+  ],
+  "Uses": [
+    "Rubidium is little used outside research. It has been used as a component of photocells, to remove traces of oxygen from vacuum tubes and to make special types of glass.",
+    "It is easily ionised so was considered for use in ion engines, but was found to be less effective than caesium. It has also been proposed for use as a working fluid for vapour turbines and in thermoelectric generators.",
+    "Rubidium nitrate is sometimes used in fireworks to give them a purple colour."
+  ],
+  "ElectronConfiguration": "[Kr] 5s1",
+  "EnergyLevels": [
+    2,
+    8,
+    18,
+    8,
+    1
+  ],
+  "AtomicRadius": 3.03,
+  "CovalentRadius": 2.15,
+  "ElectronAffinity": 46.884,
+  "Electronegativity": 0.82,
+  "IonizationEnergies": [
+    403.032,
+    2633.037,
+    3859,
+    5075.1,
+    6850,
+    8143.4,
+    9571.3,
+    13122
+  ],
+  "MeltingPointK": 312.45,
+  "BoilingPointK": 961,
+  "KeyIsotopes": [
+    {
+      "Name": "85Rb",
+      "HalfLife": [],
+      "Mass": 84.912,
+      "MassNumber": 85,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 72.17
+    },
+    {
+      "Name": "87Rb",
+      "HalfLife": [
+        "4.88 x 1010 y"
+      ],
+      "Mass": 86.909,
+      "MassNumber": 87,
+      "ModeOfDecay": [
+        "beta-"
+      ],
+      "NaturalAbundance": 27.83
+    }
+  ],
+  "Isotopes": [
+    {
+      "Name": "85Rb",
+      "HalfLife": [],
+      "Mass": 84.912,
+      "MassNumber": 85,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 72.17
+    },
+    {
+      "Name": "87Rb",
+      "HalfLife": [
+        "4.88 x 1010 y"
+      ],
+      "Mass": 86.909,
+      "MassNumber": 87,
+      "ModeOfDecay": [
+        "beta-"
+      ],
+      "NaturalAbundance": 27.83
+    }
+  ]
+}

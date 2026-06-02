@@ -1,0 +1,109 @@
+{
+  "Name": "Platinum",
+  "Symbol": "Pt",
+  "AtomicNumber": 78,
+  "AtomicMass": 195.08,
+  "RepresentativeMassNumber": 195,
+  "Protons": 78,
+  "Electrons": 78,
+  "NeutronsApprox": 117,
+  "Category": "Transition",
+  "Group": "10",
+  "Period": 6,
+  "Block": "d",
+  "StateAt293K": "Solid",
+  "Density": 21.45,
+  "Appearance": [
+    "A shiny, silvery-white metal as resistant to corrosion as gold."
+  ],
+  "Uses": [
+    "Platinum is used extensively for jewellery. Its main use, however, is in catalytic converters for cars, trucks and buses. This accounts for about 50% of demand each year. Platinum is very effective at converting emissions from the vehicle's engine into less harmful waste products.",
+    "Platinum is used in the chemicals industry as a catalyst for the production of nitric acid, silicone and benzene. It is also used as a catalyst to improve the efficiency of fuel cells.",
+    "The electronics industry uses platinum for computer hard disks and thermocouples.",
+    "Platinum is also used to make optical fibres and LCDs, turbine blades, spark plugs, pacemakers and dental fillings.",
+    "Platinum compounds are important chemotherapy drugs used to treat cancers."
+  ],
+  "ElectronConfiguration": "[Xe] 4f145d96s1",
+  "EnergyLevels": [
+    2,
+    8,
+    18,
+    32,
+    17,
+    1
+  ],
+  "AtomicRadius": 2.13,
+  "CovalentRadius": 1.3,
+  "ElectronAffinity": 205.321,
+  "Electronegativity": 2.2,
+  "IonizationEnergies": [
+    864.393,
+    1791.057
+  ],
+  "MeltingPointK": 2041.4,
+  "BoilingPointK": 4098,
+  "KeyIsotopes": [
+    {
+      "Name": "195Pt",
+      "HalfLife": [],
+      "Mass": 194.965,
+      "MassNumber": 195,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 33.78
+    }
+  ],
+  "Isotopes": [
+    {
+      "Name": "190Pt",
+      "HalfLife": [
+        "4.5 x 1011 y"
+      ],
+      "Mass": 189.96,
+      "MassNumber": 190,
+      "ModeOfDecay": [
+        "alpha"
+      ],
+      "NaturalAbundance": 0.012
+    },
+    {
+      "Name": "192Pt",
+      "HalfLife": [],
+      "Mass": 191.961,
+      "MassNumber": 192,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 0.782
+    },
+    {
+      "Name": "194Pt",
+      "HalfLife": [],
+      "Mass": 193.963,
+      "MassNumber": 194,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 32.86
+    },
+    {
+      "Name": "195Pt",
+      "HalfLife": [],
+      "Mass": 194.965,
+      "MassNumber": 195,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 33.78
+    },
+    {
+      "Name": "196Pt",
+      "HalfLife": [],
+      "Mass": 195.965,
+      "MassNumber": 196,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 25.21
+    },
+    {
+      "Name": "198Pt",
+      "HalfLife": [],
+      "Mass": 197.968,
+      "MassNumber": 198,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 7.356
+    }
+  ]
+}

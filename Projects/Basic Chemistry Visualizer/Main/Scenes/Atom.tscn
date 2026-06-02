@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://m8gv8f77hlrl"]
+
+[ext_resource type="Script" uid="uid://rn2377tdv7es" path="res://Main/Atom/Atom.cs" id="1_p4k6f"]
+
+[node name="Atom" type="Node3D" unique_id=1577389052]
+script = ExtResource("1_p4k6f")
+
+[node name="Electrons" type="Node3D" parent="." unique_id=668173251]

@@ -1,0 +1,80 @@
+{
+  "Name": "Oxygen",
+  "Symbol": "O",
+  "AtomicNumber": 8,
+  "AtomicMass": 15.999,
+  "RepresentativeMassNumber": 16,
+  "Protons": 8,
+  "Electrons": 8,
+  "NeutronsApprox": 8,
+  "Category": "Nonmetal",
+  "Group": "16",
+  "Period": 2,
+  "Block": "p",
+  "StateAt293K": "Gas",
+  "Density": 1.429,
+  "Appearance": [
+    "A colourless, odourless gas."
+  ],
+  "Uses": [
+    "The greatest commercial use of oxygen gas is in the steel industry. Large quantities are also used in the manufacture of a wide range of chemicals including nitric acid and hydrogen peroxide. It is also used to make epoxyethane (ethylene oxide), used as antifreeze and to make polyester, and chloroethene, the precursor to PVC.",
+    "Oxygen gas is used for oxy-acetylene welding and cutting of metals. A growing use is in the treatment of sewage and of effluent from industry."
+  ],
+  "ElectronConfiguration": "[He] 2s22p4",
+  "EnergyLevels": [
+    2,
+    6
+  ],
+  "AtomicRadius": 1.52,
+  "CovalentRadius": 0.64,
+  "ElectronAffinity": 140.976,
+  "Electronegativity": 3.44,
+  "IonizationEnergies": [
+    1313.942,
+    3388.671,
+    5300.47,
+    7469.271,
+    10989.584,
+    13326.526,
+    71330.65,
+    84078.3
+  ],
+  "MeltingPointK": 54.36,
+  "BoilingPointK": 90.188,
+  "KeyIsotopes": [
+    {
+      "Name": "16O",
+      "HalfLife": [],
+      "Mass": 15.995,
+      "MassNumber": 16,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 99.757
+    }
+  ],
+  "Isotopes": [
+    {
+      "Name": "16O",
+      "HalfLife": [],
+      "Mass": 15.995,
+      "MassNumber": 16,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 99.757
+    },
+    {
+      "Name": "17O",
+      "HalfLife": [],
+      "Mass": 16.999,
+      "MassNumber": 17,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 0.038
+    },
+    {
+      "Name": "18O",
+      "HalfLife": [],
+      "Mass": 17.999,
+      "MassNumber": 18,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 0.205
+    }
+  ]
+}

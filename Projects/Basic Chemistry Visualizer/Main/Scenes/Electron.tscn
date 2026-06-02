@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bl0p4pfy2543u"]
+
+[ext_resource type="Script" uid="uid://d2es3uklcpq0v" path="res://Main/Core Particles/Electron.cs" id="1_frbmg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nh8vy"]
+albedo_color = Color(0.98, 0.9146668, 0, 1)
+emission_enabled = true
+emission = Color(0.98039216, 0.9137255, 0, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_tu50s"]
+
+[node name="Electron" type="Node3D" unique_id=405592818]
+script = ExtResource("1_frbmg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1822863820]
+material_override = SubResource("StandardMaterial3D_nh8vy")
+mesh = SubResource("SphereMesh_tu50s")

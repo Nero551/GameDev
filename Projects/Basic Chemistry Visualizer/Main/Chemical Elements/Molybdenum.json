@@ -1,0 +1,140 @@
+{
+  "Name": "Molybdenum",
+  "Symbol": "Mo",
+  "AtomicNumber": 42,
+  "AtomicMass": 95.95,
+  "RepresentativeMassNumber": 95,
+  "Protons": 42,
+  "Electrons": 42,
+  "NeutronsApprox": 53,
+  "Category": "Transition",
+  "Group": "6",
+  "Period": 5,
+  "Block": "d",
+  "StateAt293K": "Solid",
+  "Density": 10.28,
+  "Appearance": [
+    "A shiny, silvery metal."
+  ],
+  "Uses": [
+    "Molybdenum has a very high melting point so it is produced and sold as a grey powder. Many molybdenum items are formed by compressing the powder at a very high pressure.",
+    "Most molybdenum is used to make alloys. It is used in steel alloys to increase strength, hardness, electrical conductivity and resistance to corrosion and wear. These 'moly steel' alloys are used in parts of engines. Other alloys are used in heating elements, drills and saw blades.",
+    "Molybdenum disulfide is used as a lubricant additive. Other uses for molybdenum include catalysts for the petroleum industry, inks for circuit boards, pigments and electrodes."
+  ],
+  "ElectronConfiguration": "[Kr] 4d55s1",
+  "EnergyLevels": [
+    2,
+    8,
+    18,
+    13,
+    1
+  ],
+  "AtomicRadius": 2.17,
+  "CovalentRadius": 1.46,
+  "ElectronAffinity": 72.171,
+  "Electronegativity": 2.16,
+  "IonizationEnergies": [
+    684.316,
+    1559.2,
+    2617.65,
+    4476.9,
+    5257.49,
+    6640.854,
+    12124.734,
+    13855.3
+  ],
+  "MeltingPointK": 2895,
+  "BoilingPointK": 4912,
+  "KeyIsotopes": [
+    {
+      "Name": "95Mo",
+      "HalfLife": [],
+      "Mass": 94.906,
+      "MassNumber": 95,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 15.8
+    },
+    {
+      "Name": "96Mo",
+      "HalfLife": [],
+      "Mass": 95.905,
+      "MassNumber": 96,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 16.67
+    },
+    {
+      "Name": "98Mo",
+      "HalfLife": [],
+      "Mass": 97.905,
+      "MassNumber": 98,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 24.39
+    }
+  ],
+  "Isotopes": [
+    {
+      "Name": "92Mo",
+      "HalfLife": [
+        "> 3 x 1017 y"
+      ],
+      "Mass": 91.907,
+      "MassNumber": 92,
+      "ModeOfDecay": [
+        "beta+-EC"
+      ],
+      "NaturalAbundance": 14.53
+    },
+    {
+      "Name": "94Mo",
+      "HalfLife": [],
+      "Mass": 93.905,
+      "MassNumber": 94,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 9.15
+    },
+    {
+      "Name": "95Mo",
+      "HalfLife": [],
+      "Mass": 94.906,
+      "MassNumber": 95,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 15.8
+    },
+    {
+      "Name": "96Mo",
+      "HalfLife": [],
+      "Mass": 95.905,
+      "MassNumber": 96,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 16.67
+    },
+    {
+      "Name": "97Mo",
+      "HalfLife": [],
+      "Mass": 96.906,
+      "MassNumber": 97,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 9.6
+    },
+    {
+      "Name": "98Mo",
+      "HalfLife": [],
+      "Mass": 97.905,
+      "MassNumber": 98,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 24.39
+    },
+    {
+      "Name": "100Mo",
+      "HalfLife": [
+        "6 x 1020 y"
+      ],
+      "Mass": 99.907,
+      "MassNumber": 100,
+      "ModeOfDecay": [
+        "beta-beta-"
+      ],
+      "NaturalAbundance": 9.82
+    }
+  ]
+}

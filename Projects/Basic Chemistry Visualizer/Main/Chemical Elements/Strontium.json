@@ -1,0 +1,109 @@
+{
+  "Name": "Strontium",
+  "Symbol": "Sr",
+  "AtomicNumber": 38,
+  "AtomicMass": 87.62,
+  "RepresentativeMassNumber": 86,
+  "Protons": 38,
+  "Electrons": 38,
+  "NeutronsApprox": 48,
+  "Category": "Alkaline",
+  "Group": "2",
+  "Period": 5,
+  "Block": "s",
+  "StateAt293K": "Solid",
+  "Density": 2.64,
+  "Appearance": [
+    "A soft, silvery metal that burns in air and reacts with water."
+  ],
+  "Uses": [
+    "Strontium is best known for the brilliant reds its salts give to fireworks and flares. It is also used in producing ferrite magnets and refining zinc.",
+    "Modern 'glow-in-the-dark' paints and plastics contain strontium aluminate. They absorb light during the day and release it slowly for hours afterwards.",
+    "Strontium-90, a radioactive isotope, is a by-product of nuclear reactors and present in nuclear fallout. It has a half-life of 28 years. It is absorbed by bone tissue instead of calcium and can destroy bone marrow and cause cancer. However, it is also useful as it is one of the best high-energy beta-emitters known. It can be used to generate electricity for space vehicles, remote weather stations and navigation buoys. It can also be used for thickness gauges and to remove static charges from machinery handling paper or plastic.",
+    "Strontium chloride hexahydrate is an ingredient in toothpaste for sensitive teeth."
+  ],
+  "ElectronConfiguration": "[Kr] 5s2",
+  "EnergyLevels": [
+    2,
+    8,
+    18,
+    8,
+    2
+  ],
+  "AtomicRadius": 2.49,
+  "CovalentRadius": 1.9,
+  "ElectronAffinity": 4.631,
+  "Electronegativity": 0.95,
+  "IonizationEnergies": [
+    549.47,
+    1064.243,
+    4138.26,
+    5500,
+    6908.4,
+    8760.9,
+    10227,
+    11800.2
+  ],
+  "MeltingPointK": 1050,
+  "BoilingPointK": 1650,
+  "KeyIsotopes": [
+    {
+      "Name": "86Sr",
+      "HalfLife": [],
+      "Mass": 85.909,
+      "MassNumber": 86,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 9.86
+    },
+    {
+      "Name": "87Sr",
+      "HalfLife": [],
+      "Mass": 86.909,
+      "MassNumber": 87,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 7
+    },
+    {
+      "Name": "88Sr",
+      "HalfLife": [],
+      "Mass": 87.906,
+      "MassNumber": 88,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 82.58
+    }
+  ],
+  "Isotopes": [
+    {
+      "Name": "84Sr",
+      "HalfLife": [],
+      "Mass": 83.913,
+      "MassNumber": 84,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 0.56
+    },
+    {
+      "Name": "86Sr",
+      "HalfLife": [],
+      "Mass": 85.909,
+      "MassNumber": 86,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 9.86
+    },
+    {
+      "Name": "87Sr",
+      "HalfLife": [],
+      "Mass": 86.909,
+      "MassNumber": 87,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 7
+    },
+    {
+      "Name": "88Sr",
+      "HalfLife": [],
+      "Mass": 87.906,
+      "MassNumber": 88,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 82.58
+    }
+  ]
+}

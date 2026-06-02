@@ -1,0 +1,63 @@
+{
+  "Name": "Iodine",
+  "Symbol": "I",
+  "AtomicNumber": 53,
+  "AtomicMass": 126.9,
+  "RepresentativeMassNumber": 127,
+  "Protons": 53,
+  "Electrons": 53,
+  "NeutronsApprox": 74,
+  "Category": "Nonmetal",
+  "Group": "17",
+  "Period": 5,
+  "Block": "p",
+  "StateAt293K": "Solid",
+  "Density": 4.933,
+  "Appearance": [
+    "A black, shiny, crystalline solid. When heated, iodine sublimes to form a purple vapour."
+  ],
+  "Uses": [
+    "Photography was the first commercial use for iodine after Louis Daguerre, in 1839, invented a technique for producing images on a piece of metal. These images were called daguerreotypes.",
+    "Today, iodine has many commercial uses. Iodide salts are used in pharmaceuticals and disinfectants, printing inks and dyes, catalysts, animal feed supplements and photographic chemicals. Iodine is also used to make polarising filters for LCD displays.",
+    "Iodide is added in small amounts to table salt, in order to avoid iodine deficiency affecting the thyroid gland. The radioactive isotope iodine-131 is sometimes used to treat cancerous thyroid glands."
+  ],
+  "ElectronConfiguration": "[Kr] 4d105s25p5",
+  "EnergyLevels": [
+    2,
+    8,
+    18,
+    18,
+    7
+  ],
+  "AtomicRadius": 1.98,
+  "CovalentRadius": 1.36,
+  "ElectronAffinity": 295.152,
+  "Electronegativity": 2.66,
+  "IonizationEnergies": [
+    1008.393,
+    1845.89,
+    3184
+  ],
+  "MeltingPointK": 386.9,
+  "BoilingPointK": 457.6,
+  "KeyIsotopes": [
+    {
+      "Name": "127I",
+      "HalfLife": [],
+      "Mass": 126.904,
+      "MassNumber": 127,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 100
+    }
+  ],
+  "Isotopes": [
+    {
+      "Name": "127I",
+      "HalfLife": [],
+      "Mass": 126.904,
+      "MassNumber": 127,
+      "ModeOfDecay": [],
+      "NaturalAbundance": 100
+    }
+  ]
+}
