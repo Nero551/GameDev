@@ -39,6 +39,7 @@ public partial class Shell : Node3D
         for (int i = 1; i <= shell.Electrons; i++)
         {
             Electron electron = Electron.Create(shell);
+			electron.Name = $"Electron{i}";
             Vector3 electronPos =
             new Vector3(Mathf.Cos(Mathf.DegToRad(angle)), 0, Mathf.Sin(Mathf.DegToRad(angle))) * radius;
             electron.Position = electronPos;

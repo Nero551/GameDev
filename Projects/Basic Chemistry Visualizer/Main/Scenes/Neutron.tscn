@@ -11,9 +11,6 @@ emission_energy_multiplier = 2.0
 [sub_resource type="SphereMesh" id="SphereMesh_tu50s"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_twepm"]
-radius = 0.2
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_kho6i"]
 
 [node name="Neutron" type="Node3D" unique_id=1042676883]
 script = ExtResource("1_twepm")
@@ -22,14 +19,7 @@ script = ExtResource("1_twepm")
 material_override = SubResource("StandardMaterial3D_kho6i")
 mesh = SubResource("SphereMesh_tu50s")
 
-[node name="InnerArea3D" type="Area3D" parent="." unique_id=236963818]
+[node name="Area3D" type="Area3D" parent="." unique_id=353452890]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InnerArea3D" unique_id=326614459]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1044854668]
 shape = SubResource("SphereShape3D_twepm")
-
-[node name="OuterArea3D" type="Area3D" parent="." unique_id=692722078]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="OuterArea3D" unique_id=1232199377]
-shape = SubResource("SphereShape3D_kho6i")

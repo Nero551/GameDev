@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
+using Godot.Collections;
 using PULib;
 
 public partial class Atom : Node3D
@@ -8,8 +10,9 @@ public partial class Atom : Node3D
     private List<Electron> electrons = new();
     [Export] public Nucleus Nucleus;
     [Export] public int Electrons;
+    [Export] public Godot.Collections.Dictionary<int, Electron> ValenceElectrons = new();
     [Export] public float Radius;
-    [Export] public Godot.Collections.Dictionary<int, Shell> Shells;
+    [Export] public Godot.Collections.Dictionary<int, Shell> Shells = new();
 
     public static Atom Create(string name, Vector3 pos, Node parent, float radius, int protons, int neutrons, int electrons)
     {
@@ -45,12 +48,15 @@ public partial class Atom : Node3D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        
+        Scale = new Vector3(Radius, Radius, Radius);
         CreateShells();
-        float scale = Radius * Shells.Count * 0.115f;
+        float scale = Radius * Shells.Count * 0.09f;
         GetNodeOrNull<MeshInstance3D>("Barrier").Scale = new Vector3(scale, scale, scale);
+        AssignValenceElectrons();
     }
 
-    public void CreateShells()
+    private void CreateShells()
     {
         int MaxEnergyLevel = Mathf.CeilToInt(Electrons / 8);
         int remainingElectrons = Electrons;
@@ -81,12 +87,26 @@ public partial class Atom : Node3D
                 }
                 else
                 {
+
                     remainingElectrons -= remainingElectrons;
                 }
             }
             else
             {
                 break;
+            }
+        }
+    }
+
+    private void AssignValenceElectrons()
+    {
+        int i = 1;
+        foreach (Node node in Shells[Shells.Count].GetChildren())
+        {
+            if (node is Electron electron)
+            {
+                ValenceElectrons[i] = electron;
+                i++;
             }
         }
     }

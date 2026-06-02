@@ -19,14 +19,7 @@ script = ExtResource("1_xwos5")
 material_override = SubResource("StandardMaterial3D_ukugj")
 mesh = SubResource("SphereMesh_tu50s")
 
-[node name="InnerArea3D" type="Area3D" parent="." unique_id=13159632]
+[node name="Area3D" type="Area3D" parent="." unique_id=13159632]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InnerArea3D" unique_id=1558540589]
-shape = SubResource("SphereShape3D_tu50s")
-
-[node name="OuterArea3D" type="Area3D" parent="." unique_id=635963656]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="OuterArea3D" unique_id=953970723]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1558540589]
 shape = SubResource("SphereShape3D_tu50s")

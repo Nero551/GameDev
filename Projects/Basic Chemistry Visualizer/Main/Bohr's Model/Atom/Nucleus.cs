@@ -52,7 +52,7 @@ public partial class Nucleus : Node3D
     {
         float t = (float)i / (float)total;
 
-        float inclination = Mathf.Acos(1- 2 * t);
+        float inclination = Mathf.Acos(1 - 2 * t);
         float azimuth = Mathf.Tau * i * 0.618033f; // golden ratio
         return new Vector3(
             Mathf.Sin(inclination) * Mathf.Cos(azimuth),
