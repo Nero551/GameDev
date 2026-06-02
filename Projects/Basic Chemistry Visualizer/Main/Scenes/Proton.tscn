@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d3udv5l7yh1fa"]
 
-[ext_resource type="Script" uid="uid://d3x63wmbfn1u8" path="res://Main/Core Particles/Proton.cs" id="1_xwos5"]
+[ext_resource type="Script" uid="uid://d3x63wmbfn1u8" path="res://Main/Bohr's Model/Core Particles/Proton.cs" id="1_xwos5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ukugj"]
 albedo_color = Color(1, 0.13999999, 0.13999999, 1)

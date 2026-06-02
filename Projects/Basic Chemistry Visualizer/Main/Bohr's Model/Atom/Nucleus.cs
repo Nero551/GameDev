@@ -21,30 +21,39 @@ public partial class Nucleus : Node3D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        CreateNeutrons();
+        CreateProtons();
+    }
 
+    private void CreateProtons()
+    {
         for (int i = 1; i <= Protons; i++)
         {
             Proton proton = Proton.Create(this);
             proton.Name = $"Proton{i}";
-            proton.Position = NucleusPosition(i, Protons + Neutrons);
+            proton.Position = ParticlePosition(i, Protons + Neutrons);
         }
+    }
 
+    private void CreateNeutrons()
+    {
         for (int i = 1; i <= Neutrons; i++)
         {
             Neutron neutron = Neutron.Create(this);
             neutron.Name = $"Neutron{i}";
-            neutron.Position = NucleusPosition(i + Protons, Protons + Neutrons );
+            neutron.Position = ParticlePosition(i + Protons, Protons + Neutrons);
         }
     }
 
+    [Export] float azimuth;
+    [Export] float inclination;
 
-    Vector3 NucleusPosition(int i, int total)
+    Vector3 ParticlePosition(int i, int total)
     {
         float t = (float)i / (float)total;
 
-        float inclination = Mathf.Acos(1 - 2 * t);
+        float inclination = Mathf.Acos(1- 2 * t);
         float azimuth = Mathf.Tau * i * 0.618033f; // golden ratio
-
         return new Vector3(
             Mathf.Sin(inclination) * Mathf.Cos(azimuth),
             Mathf.Cos(inclination),

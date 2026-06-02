@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://m8gv8f77hlrl"]
 
-[ext_resource type="Script" uid="uid://rn2377tdv7es" path="res://Main/Atom/Atom.cs" id="1_p4k6f"]
+[ext_resource type="Script" uid="uid://rn2377tdv7es" path="res://Main/Bohr's Model/Atom/Atom.cs" id="1_p4k6f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ukugj"]
 albedo_color = Color(0, 0.6825681, 0.32845202, 1)
@@ -9,12 +9,13 @@ emission = Color(0, 0.68235296, 0.32941177, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_tu50s"]
 
-[node name="Atom" type="Node3D" unique_id=1577389052]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+[node name="Atom" type="Node3D" unique_id=1577389052 node_paths=PackedStringArray("Shells")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 script = ExtResource("1_p4k6f")
+Shells = {}
 
 [node name="Electrons" type="Node3D" parent="." unique_id=668173251]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+transform = Transform3D(0.045, 0, 0, 0, 0.045, 0, 0, 0, 0.045, 0, 0, 0)
 
 [node name="Barrier" type="MeshInstance3D" parent="." unique_id=1088109106]
 material_override = SubResource("StandardMaterial3D_ukugj")

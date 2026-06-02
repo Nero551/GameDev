@@ -1,8 +1,10 @@
-using Godot;
 using System;
 using System.Security.Cryptography.X509Certificates;
+using Godot;
 
-public partial class PULib
+namespace PULib;
+
+public partial class GDHelper
 {
     //? Returns Time in seconds.
     public static double CurrentSTime()

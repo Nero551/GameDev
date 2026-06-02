@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bl0p4pfy2543u"]
 
-[ext_resource type="Script" uid="uid://d2es3uklcpq0v" path="res://Main/Core Particles/Electron.cs" id="1_frbmg"]
+[ext_resource type="Script" uid="uid://d2es3uklcpq0v" path="res://Main/Bohr's Model/Core Particles/Electron.cs" id="1_frbmg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nh8vy"]
 albedo_color = Color(0.98, 0.9146668, 0, 1)

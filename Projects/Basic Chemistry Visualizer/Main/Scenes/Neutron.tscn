@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ckevoaw6ephe0"]
 
-[ext_resource type="Script" uid="uid://cu32i1ovt8ckx" path="res://Main/Core Particles/Neutron.cs" id="1_twepm"]
+[ext_resource type="Script" uid="uid://cu32i1ovt8ckx" path="res://Main/Bohr's Model/Core Particles/Neutron.cs" id="1_twepm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kho6i"]
 albedo_color = Color(0.2336747, 0.54909325, 0.93305206, 1)

@@ -78,3 +78,4 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -2.389043, 0, 1.6252947
 
 [node name="HitImpact" parent="." unique_id=1725906742 instance=ExtResource("5_3eqp4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.389043, 0.613271, -1.2927873)
+LoopPlay = false

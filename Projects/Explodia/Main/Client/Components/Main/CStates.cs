@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using PULib;
 
 public partial class CStates : Component
 {
@@ -10,7 +11,7 @@ public partial class CStates : Component
     private Godot.Collections.Dictionary stateData;
     protected override void OnInit()
     {
-        stateData = PULib.JSONToCSharp("Main/Shared/Data/StateData");
+        stateData = JSONHelper.JSONToCSharp("Main/Shared/Data/StateData");
     }
     public void AddState(string stateName, double duration = -1)
     {
