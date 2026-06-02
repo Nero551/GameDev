@@ -7,7 +7,7 @@
 sky_top_color = Color(0, 0, 0, 1)
 sky_horizon_color = Color(0.26825458, 0.27422848, 0.28618947, 1)
 sky_curve = 0.06997746
-ground_bottom_color = Color(0, 0, 0, 1)
+ground_bottom_color = Color(0.043039158, 0.04303915, 0.04303915, 1)
 ground_horizon_color = Color(0.30657822, 0.31524396, 0.32824263, 1)
 
 [sub_resource type="Sky" id="Sky_0wgfy"]

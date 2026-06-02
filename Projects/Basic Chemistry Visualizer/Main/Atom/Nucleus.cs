@@ -26,60 +26,29 @@ public partial class Nucleus : Node3D
         {
             Proton proton = Proton.Create(this);
             proton.Name = $"Proton{i}";
+            proton.Position = NucleusPosition(i, Protons + Neutrons);
         }
 
         for (int i = 1; i <= Neutrons; i++)
         {
             Neutron neutron = Neutron.Create(this);
             neutron.Name = $"Neutron{i}";
+            neutron.Position = NucleusPosition(i + Protons, Protons + Neutrons );
         }
     }
 
 
-    public override void _PhysicsProcess(double delta)
+    Vector3 NucleusPosition(int i, int total)
     {
-        base._PhysicsProcess(delta);
-        // foreach (Node node in this.GetChildren())
-        // {
-        //     Particle particle = (Particle)node;
-        //     Area3D innerArea = particle.GetNodeOrNull<Area3D>("InnerArea3D");
-        //     Area3D outerArea = particle.GetNodeOrNull<Area3D>("OuterArea3D");
+        float t = (float)i / (float)total;
 
-        //     if (innerArea.HasOverlappingAreas())
-        //     {
-        //         foreach (Area3D overlapArea in innerArea.GetOverlappingAreas())
-        //         {
-        //             Particle other = overlapArea.GetParent<Particle>();
+        float inclination = Mathf.Acos(1 - 2 * t);
+        float azimuth = Mathf.Tau * i * 0.618033f; // golden ratio
 
-        //             Vector3 dir =
-        //                 (particle.Position - other.Position).Normalized();
-
-        //             particle.Position += dir * 0.1f;
-        //         }
-        //     }
-
-        // }
-        if (Protons + Neutrons > 1)
-        {
-            foreach (Node node in this.GetChildren())
-            {
-                Particle particle = (Particle)node;
-                Area3D innerArea = particle.GetNodeOrNull<Area3D>("InnerArea3D");
-                Area3D outerArea = particle.GetNodeOrNull<Area3D>("OuterArea3D");
-
-                if (innerArea.HasOverlappingAreas() || !outerArea.HasOverlappingAreas())
-                {
-                    Vector3 dir = new Vector3(
-                        (float)GD.RandRange(-1.0, 1.0),
-                        (float)GD.RandRange(-1.0, 1.0),
-                        (float)GD.RandRange(-1.0, 1.0)
-                    );
-                    particle.Position =
-                    dir.Normalized() *
-                    (particle.Scale.X) * GD.Randf() *
-                    (Mathf.Abs(((Protons * Neutrons) / (Protons + Neutrons))) + 1);
-                }
-            }
-        }
+        return new Vector3(
+            Mathf.Sin(inclination) * Mathf.Cos(azimuth),
+            Mathf.Cos(inclination),
+            Mathf.Sin(inclination) * Mathf.Sin(azimuth)
+        );
     }
 }
