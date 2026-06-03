@@ -7,12 +7,12 @@ using PULib;
 
 public partial class Atom : Node3D
 {
-    private List<Electron> electrons = new();
     [Export] public Nucleus Nucleus;
     [Export] public int Electrons;
-    [Export] public Godot.Collections.Dictionary<int, Electron> ValenceElectrons = new();
+    [Export] public Godot.Collections.Dictionary<int, Electron> ValenceElectrons = [];
     [Export] public float Radius;
-    [Export] public Godot.Collections.Dictionary<int, Shell> Shells = new();
+    [Export] public Godot.Collections.Dictionary<int, Shell> Shells = [];
+    [Export] public bool Stable;
 
     public static Atom Create(string name, Vector3 pos, Node parent, float radius, int protons, int neutrons, int electrons)
     {
@@ -48,10 +48,10 @@ public partial class Atom : Node3D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        
+
         Scale = new Vector3(Radius, Radius, Radius);
         CreateShells();
-        float scale = Radius * Shells.Count * 0.09f;
+        float scale = Radius * Shells.Count * 0.06f;
         GetNodeOrNull<MeshInstance3D>("Barrier").Scale = new Vector3(scale, scale, scale);
         AssignValenceElectrons();
     }
@@ -61,33 +61,21 @@ public partial class Atom : Node3D
         int MaxEnergyLevel = Mathf.CeilToInt(Electrons / 8);
         int remainingElectrons = Electrons;
 
-        //Create First energy level
-        if (remainingElectrons <= 2)
-        {
-            Shells[1] = Shell.Create(this, Radius, 1, remainingElectrons);
-            return;
-        }
-        else
-        {
-            Shells[1] = Shell.Create(this, Radius, 1, 2);
-            remainingElectrons -= 2;
-        }
-
-        //loop for the rest
-        for (int i = 2; i <= MaxEnergyLevel + 2; i++)
+        for (int i = 1; i <= MaxEnergyLevel + 3; i++)
         {
             if (remainingElectrons > 0)
             {
-                //Shell class automatically limits electrons to 8 max
-                Shells[i] = Shell.Create(this, i * Radius, i, remainingElectrons);
+                int shellCapacity = 2 * (int)Mathf.Pow(i, 2);
+                shellCapacity = Mathf.Clamp(shellCapacity, 0, 8);
 
-                if (remainingElectrons >= 8)
+                if (remainingElectrons >= shellCapacity)
                 {
-                    remainingElectrons -= 8;
+                    Shells[i] = Shell.Create(this, i * Radius, i, shellCapacity);
+                    remainingElectrons -= shellCapacity;
                 }
                 else
                 {
-
+                    Shells[i] = Shell.Create(this, i * Radius, i, remainingElectrons);
                     remainingElectrons -= remainingElectrons;
                 }
             }
@@ -101,7 +89,7 @@ public partial class Atom : Node3D
     private void AssignValenceElectrons()
     {
         int i = 1;
-        foreach (Node node in Shells[Shells.Count].GetChildren())
+        foreach (Node node in Shells[Shells.Count].GetNode<Node3D>("Electrons").GetChildren())
         {
             if (node is Electron electron)
             {
@@ -109,5 +97,11 @@ public partial class Atom : Node3D
                 i++;
             }
         }
+    }
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        Stable = (ValenceElectrons.Count == Shells[Shells.Count].Capacity);
     }
 }

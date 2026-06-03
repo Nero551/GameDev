@@ -45,10 +45,7 @@ public partial class Nucleus : Node3D
         }
     }
 
-    [Export] float azimuth;
-    [Export] float inclination;
-
-    Vector3 ParticlePosition(int i, int total)
+    private Vector3 ParticlePosition(int i, int total)
     {
         float t = (float)i / (float)total;
 

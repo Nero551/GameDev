@@ -1,0 +1,131 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Main/Bohr's Model/Atom/Atom.cs" id="1_ivycn"]
+[ext_resource type="PackedScene" path="res://Main/Scenes/Shell.tscn" id="2_q1uvj"]
+[ext_resource type="PackedScene" path="res://Main/Scenes/Electron.tscn" id="3_qs82m"]
+[ext_resource type="PackedScene" path="res://Main/Scenes/Nucleus.tscn" id="4_c4vo5"]
+[ext_resource type="PackedScene" path="res://Main/Scenes/Neutron.tscn" id="5_vwb7u"]
+[ext_resource type="PackedScene" path="res://Main/Scenes/Proton.tscn" id="6_cqdos"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ukugj"]
+albedo_color = Color(0, 0.6825681, 0.32845202, 1)
+emission_enabled = true
+emission = Color(0, 0.68235296, 0.32941177, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_tu50s"]
+
+[node name="Oxygen" type="Node3D" unique_id=1577389052 node_paths=PackedStringArray("Nucleus", "ValenceElectrons", "Shells")]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, 0, 0)
+script = ExtResource("1_ivycn")
+Nucleus = NodePath("Nucleus")
+Electrons = 8
+ValenceElectrons = {
+1: NodePath(""),
+2: NodePath(""),
+3: NodePath(""),
+4: NodePath(""),
+5: NodePath(""),
+6: NodePath("")
+}
+Radius = 1.52
+Shells = {
+1: NodePath(""),
+2: NodePath("")
+}
+
+[node name="Electrons" type="Node3D" parent="." unique_id=668173251]
+transform = Transform3D(0.035, 0, 0, 0, 0.035, 0, 0, 0, 0.035, 0, 0, 0)
+
+[node name="Shell 1" parent="Electrons" unique_id=1345207788 instance=ExtResource("2_q1uvj")]
+transform = Transform3D(-0.21544132, -0.937522, 0.27319896, 0.97459805, -0.22396135, 0, 0.06118601, 0.26625916, 0.9619576, 0, 0, 0)
+EnergyLevel = 1
+Radius = 1.52
+Electrons = 2
+
+[node name="Electron1" parent="Electrons/Shell 1" unique_id=405592818 instance=ExtResource("3_qs82m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.52, 0, 0)
+
+[node name="Electron2" parent="Electrons/Shell 1" unique_id=1555979618 instance=ExtResource("3_qs82m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52, 0, -1.3288262e-07)
+
+[node name="Shell 2" parent="Electrons" unique_id=1681277416 instance=ExtResource("2_q1uvj")]
+transform = Transform3D(0.799129, -0.29176235, 0.5256116, 0.34295744, 0.93935096, 0, -0.49373373, 0.1802624, 0.85072464, 0, 0, 0)
+EnergyLevel = 2
+Radius = 3.04
+Electrons = 6
+
+[node name="Electron1" parent="Electrons/Shell 2" unique_id=1233939075 instance=ExtResource("3_qs82m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.04, 0, 0)
+
+[node name="Electron2" parent="Electrons/Shell 2" unique_id=871424050 instance=ExtResource("3_qs82m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5199999, 0, 2.6327174)
+
+[node name="Electron3" parent="Electrons/Shell 2" unique_id=1984912769 instance=ExtResource("3_qs82m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5200002, 0, 2.6327171)
+
+[node name="Electron4" parent="Electrons/Shell 2" unique_id=1244853556 instance=ExtResource("3_qs82m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.04, 0, -2.6576524e-07)
+
+[node name="Electron5" parent="Electrons/Shell 2" unique_id=176757991 instance=ExtResource("3_qs82m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5199997, 0, -2.6327174)
+
+[node name="Electron6" parent="Electrons/Shell 2" unique_id=844516050 instance=ExtResource("3_qs82m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5199997, 0, -2.6327174)
+
+[node name="Barrier" type="MeshInstance3D" parent="." unique_id=1088109106]
+transform = Transform3D(0.2736, 0, 0, 0, 0.2736, 0, 0, 0, 0.2736, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_ukugj")
+transparency = 0.98
+mesh = SubResource("SphereMesh_tu50s")
+
+[node name="Nucleus" parent="." unique_id=1536165553 instance=ExtResource("4_c4vo5")]
+Protons = 8
+Neutrons = 8
+
+[node name="Neutron1" parent="Nucleus" unique_id=1042676883 instance=ExtResource("5_vwb7u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.91711634, -0.12500004, -0.3785137)
+
+[node name="Neutron2" parent="Nucleus" unique_id=518664379 instance=ExtResource("5_vwb7u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4104396, -0.24999997, 0.8769489)
+
+[node name="Neutron3" parent="Nucleus" unique_id=1468035358 instance=ExtResource("5_vwb7u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27738604, -0.37499994, -0.8845519)
+
+[node name="Neutron4" parent="Nucleus" unique_id=1867023750 instance=ExtResource("5_vwb7u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7492627, -0.50000006, 0.43428722)
+
+[node name="Neutron5" parent="Nucleus" unique_id=1976180597 instance=ExtResource("5_vwb7u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7624306, -0.62499994, 0.16755486)
+
+[node name="Neutron6" parent="Nucleus" unique_id=127523760 instance=ExtResource("5_vwb7u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38045818, -0.74999994, -0.5410654)
+
+[node name="Neutron7" parent="Nucleus" unique_id=1201111833 instance=ExtResource("5_vwb7u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.062170055, -0.875, 0.48011446)
+
+[node name="Neutron8" parent="Nucleus" unique_id=875342769 instance=ExtResource("5_vwb7u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.684217e-08, -1, 5.6345947e-08)
+
+[node name="Proton1" parent="Nucleus" unique_id=1006571770 instance=ExtResource("6_cqdos")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3569792, 0.875, -0.3270181)
+
+[node name="Proton2" parent="Nucleus" unique_id=1939153272 instance=ExtResource("6_cqdos")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05783482, 0.75, 0.65890455)
+
+[node name="Proton3" parent="Nucleus" unique_id=488955527 instance=ExtResource("6_cqdos")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.47495097, 0.625, -0.61951315)
+
+[node name="Proton4" parent="Nucleus" unique_id=267688235 instance=ExtResource("6_cqdos")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8527832, 0.49999997, 0.15086706)
+
+[node name="Proton5" parent="Nucleus" unique_id=553113335 instance=ExtResource("6_cqdos")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.782197, 0.37499997, 0.49753684)
+
+[node name="Proton6" parent="Nucleus" unique_id=739777222 instance=ExtResource("6_cqdos")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25139543, 0.25, -0.9350403)
+
+[node name="Proton7" parent="Nucleus" unique_id=719179849 instance=ExtResource("6_cqdos")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4572548, 0.12499995, 0.8805073)
+
+[node name="Proton8" parent="Nucleus" unique_id=1005383987 instance=ExtResource("6_cqdos")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.93930435, -4.371139e-08, -0.34308502)
