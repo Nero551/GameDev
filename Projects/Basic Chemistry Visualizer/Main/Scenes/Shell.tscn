@@ -5,4 +5,4 @@
 [node name="Shell" type="Node3D" unique_id=1345207788]
 script = ExtResource("1_spr8b")
 
-[node name="Electrons" type="Node3D" parent="." unique_id=343976244]
+[node name="Electrons" type="Node3D" parent="." unique_id=2008739758]

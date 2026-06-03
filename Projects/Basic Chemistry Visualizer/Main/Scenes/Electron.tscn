@@ -3,26 +3,17 @@
 [ext_resource type="Script" uid="uid://d2es3uklcpq0v" path="res://Main/Bohr's Model/Core Particles/Electron.cs" id="1_frbmg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nh8vy"]
-albedo_color = Color(0.98, 0.9146668, 0, 1)
+albedo_color = Color(1, 0.9426667, 0.13999999, 1)
 emission_enabled = true
-emission = Color(0.98039216, 0.9137255, 0, 1)
+emission = Color(1, 0.9411765, 0.14117648, 1)
 emission_energy_multiplier = 2.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_tu50s"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_frbmg"]
-
 [node name="Electron" type="Node3D" unique_id=405592818]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 script = ExtResource("1_frbmg")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1822863820]
 material_override = SubResource("StandardMaterial3D_nh8vy")
 mesh = SubResource("SphereMesh_tu50s")
-
-[node name="Area3D" type="Area3D" parent="." unique_id=1949537092]
-collision_layer = 4
-collision_mask = 4
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1507661693]
-shape = SubResource("SphereShape3D_frbmg")

@@ -10,19 +10,17 @@ public partial class Atom : Node3D
     [Export] public Nucleus Nucleus;
     [Export] public int Electrons;
     [Export] public Godot.Collections.Dictionary<int, Electron> ValenceElectrons = [];
-    [Export] public float Radius;
     [Export] public Godot.Collections.Dictionary<int, Shell> Shells = [];
     [Export] public bool Stable;
     [Export] public Color CPKColor;
 
-    public static Atom Create(string name, Vector3 pos, float radius, Node parent, int protons, int neutrons, int electrons, Color color = default)
+    public static Atom Create(string name, Vector3 pos, Node parent, int protons, int neutrons, int electrons, Color color = default)
     {
         var scene = GD.Load<PackedScene>("res://Main/Scenes/Atom.tscn");
         Atom atom = scene.Instantiate<Atom>();
         atom.Position = pos;
 
         atom.Name = name;
-        atom.Radius = radius;
         atom.Electrons = electrons;
         atom.CPKColor = color == default ? Colors.Green : color;
 
@@ -39,7 +37,6 @@ public partial class Atom : Node3D
         atom.Position = pos;
 
         atom.Name = (string)elementData["Name"];
-        atom.Radius = (float)elementData["AtomicRadius"];
         atom.Electrons = (int)elementData["Electrons"];
         atom.CPKColor = new Color((string)elementData["CPKColor"]);
 
@@ -53,7 +50,7 @@ public partial class Atom : Node3D
     {
         // Scale = new Vector3(Radius, Radius, Radius);
         CreateShells();
-        float scale = Radius * Shells.Count * 0.085f;
+        float scale = 1.25f * Shells.Count * 0.11f;
         GetNodeOrNull<MeshInstance3D>("Barrier").Scale = new Vector3(scale, scale, scale);
 
         if (GetNodeOrNull<MeshInstance3D>("Barrier").GetActiveMaterial(0) is StandardMaterial3D mat)
@@ -62,7 +59,7 @@ public partial class Atom : Node3D
             mat.AlbedoColor = CPKColor;
             GetNodeOrNull<MeshInstance3D>("Barrier").MaterialOverride = mat;
         }
-        AssignValenceElectrons();
+        // AssignValenceElectrons();
     }
 
     private void CreateShells()
@@ -79,12 +76,12 @@ public partial class Atom : Node3D
 
                 if (remainingElectrons >= shellCapacity)
                 {
-                    Shells[i] = Shell.Create(this, i * Radius, i, shellCapacity);
+                    Shells[i] = Shell.Create(this, i * 1.25f, i, shellCapacity);
                     remainingElectrons -= shellCapacity;
                 }
                 else
                 {
-                    Shells[i] = Shell.Create(this, i * Radius, i, remainingElectrons);
+                    Shells[i] = Shell.Create(this, i * 1.25f, i, remainingElectrons);
                     remainingElectrons -= remainingElectrons;
                 }
             }
@@ -108,9 +105,9 @@ public partial class Atom : Node3D
         }
     }
 
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
-        Stable = (ValenceElectrons.Count == Shells[Shells.Count].Capacity);
-    }
+    // public override void _Process(double delta)
+    // {
+    //     base._Process(delta);
+    //     Stable = (ValenceElectrons.Count == Shells[Shells.Count].Capacity);
+    // }
 }

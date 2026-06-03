@@ -23,26 +23,26 @@ public partial class Shell : Node3D
         shell.Capacity = Mathf.Clamp(2 * (int)Mathf.Pow(energyLevel, 2), 0, 8);
 
         parent.GetNodeOrNull<Node3D>("Shells").AddChild(shell);
+        return shell;
+    }
+    public override void _Ready()
+    {
 
         int angle = 0;
-        for (int i = 1; i <= shell.Electrons; i++)
+        for (int i = 1; i <= Electrons; i++)
         {
-            Electron electron = Electron.Create(shell.GetNodeOrNull<Node3D>("Electrons"));
+            Electron electron = Electron.Create(GetNodeOrNull<Node3D>("Electrons"));
             electron.Name = $"Electron{i}";
             Vector3 electronPos = new Vector3(
                 Mathf.Cos(Mathf.DegToRad(angle)),
                 0,
                 Mathf.Sin(Mathf.DegToRad(angle))
-            ) * radius * 0.8f;
+            ) * Radius;
 
             electron.Position = electronPos;
-            angle += 360 / shell.Electrons;
+            angle += 360 / Electrons;
         }
 
-        return shell;
-    }
-    public override void _Ready()
-    {
         Rotation = new Vector3(Mathf.DegToRad(EnergyLevel * 8), 0, EnergyLevel * 8.5f);
     }
 
