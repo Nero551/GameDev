@@ -1,6 +1,7 @@
 {
   "Name": "Silicon",
   "Symbol": "Si",
+  "CPKColor": "#F0C8A0",
   "AtomicNumber": 14,
   "AtomicMass": 28.085,
   "RepresentativeMassNumber": 28,

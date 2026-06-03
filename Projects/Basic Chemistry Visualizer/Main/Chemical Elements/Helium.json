@@ -1,6 +1,7 @@
 {
   "Name": "Helium",
   "Symbol": "He",
+  "CPKColor": "#D9FFFF",
   "AtomicNumber": 2,
   "AtomicMass": 4.0026,
   "RepresentativeMassNumber": 4,

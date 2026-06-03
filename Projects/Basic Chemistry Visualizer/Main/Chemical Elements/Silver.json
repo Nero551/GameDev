@@ -1,6 +1,7 @@
 {
   "Name": "Silver",
   "Symbol": "Ag",
+  "CPKColor": "#C0C0C0",
   "AtomicNumber": 47,
   "AtomicMass": 107.87,
   "RepresentativeMassNumber": 107,

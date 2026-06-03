@@ -1,6 +1,7 @@
 {
   "Name": "Calcium",
   "Symbol": "Ca",
+  "CPKColor": "#3DFF00",
   "AtomicNumber": 20,
   "AtomicMass": 40.078,
   "RepresentativeMassNumber": 40,

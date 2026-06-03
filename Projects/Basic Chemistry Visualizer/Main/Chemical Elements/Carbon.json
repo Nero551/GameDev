@@ -1,6 +1,7 @@
 {
   "Name": "Carbon",
   "Symbol": "C",
+  "CPKColor": "#909090",
   "AtomicNumber": 6,
   "AtomicMass": 12.011,
   "RepresentativeMassNumber": 12,

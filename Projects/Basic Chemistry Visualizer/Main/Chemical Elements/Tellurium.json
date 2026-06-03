@@ -1,6 +1,7 @@
 {
   "Name": "Tellurium",
   "Symbol": "Te",
+  "CPKColor": "#D47A00",
   "AtomicNumber": 52,
   "AtomicMass": 127.6,
   "RepresentativeMassNumber": 130,

@@ -1,6 +1,7 @@
 {
   "Name": "Lithium",
   "Symbol": "Li",
+  "CPKColor": "#CC80FF",
   "AtomicNumber": 3,
   "AtomicMass": 6.94,
   "RepresentativeMassNumber": 7,

@@ -1,6 +1,7 @@
 {
   "Name": "Gallium",
   "Symbol": "Ga",
+  "CPKColor": "#C28F8F",
   "AtomicNumber": 31,
   "AtomicMass": 69.723,
   "RepresentativeMassNumber": 69,

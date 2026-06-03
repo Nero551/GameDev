@@ -43,21 +43,16 @@ public partial class Shell : Node3D
     }
     public override void _Ready()
     {
-        Rotation = new Vector3(
-            EnergyLevel * 20,
-            EnergyLevel * 35,
-            0
-        );
+        Rotation = new Vector3(Mathf.DegToRad(EnergyLevel * 8), 0, EnergyLevel * 8.5f);
     }
 
     public override void _Process(double delta)
     {
-        Rotation = new Vector3(EnergyLevel * 8, 0, EnergyLevel * 8);
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        float value = (float)delta;
+        float value = (float)delta * (EnergyLevel / Radius);
         base._PhysicsProcess(delta);
         GetNodeOrNull<Node3D>("Electrons").RotateY(value);
     }

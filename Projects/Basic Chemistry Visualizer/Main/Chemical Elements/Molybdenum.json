@@ -1,6 +1,7 @@
 {
   "Name": "Molybdenum",
   "Symbol": "Mo",
+  "CPKColor": "#54B5B5",
   "AtomicNumber": 42,
   "AtomicMass": 95.95,
   "RepresentativeMassNumber": 95,

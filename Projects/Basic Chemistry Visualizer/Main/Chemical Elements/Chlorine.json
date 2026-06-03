@@ -1,6 +1,7 @@
 {
   "Name": "Chlorine",
   "Symbol": "Cl",
+  "CPKColor": "#1FF01F",
   "AtomicNumber": 17,
   "AtomicMass": 35.45,
   "RepresentativeMassNumber": 35,

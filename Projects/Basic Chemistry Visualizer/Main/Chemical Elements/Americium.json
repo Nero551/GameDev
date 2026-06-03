@@ -1,6 +1,7 @@
 {
   "Name": "Americium",
   "Symbol": "Am",
+  "CPKColor": "#545CF2",
   "AtomicNumber": 95,
   "AtomicMass": 243,
   "RepresentativeMassNumber": 241,

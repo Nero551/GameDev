@@ -13,16 +13,18 @@ public partial class Atom : Node3D
     [Export] public float Radius;
     [Export] public Godot.Collections.Dictionary<int, Shell> Shells = [];
     [Export] public bool Stable;
+    [Export] public Color CPKColor;
 
-    public static Atom Create(string name, Vector3 pos, Node parent, float radius, int protons, int neutrons, int electrons)
+    public static Atom Create(string name, Vector3 pos, float radius, Node parent, int protons, int neutrons, int electrons, Color color = default)
     {
         var scene = GD.Load<PackedScene>("res://Main/Scenes/Atom.tscn");
         Atom atom = scene.Instantiate<Atom>();
         atom.Position = pos;
 
         atom.Name = name;
-        atom.Electrons = electrons;
         atom.Radius = radius;
+        atom.Electrons = electrons;
+        atom.CPKColor = color == default ? Colors.Green : color;
 
         parent.AddChild(atom);
         atom.Nucleus = Nucleus.Create(atom, protons, neutrons);
@@ -39,6 +41,7 @@ public partial class Atom : Node3D
         atom.Name = (string)elementData["Name"];
         atom.Radius = (float)elementData["AtomicRadius"];
         atom.Electrons = (int)elementData["Electrons"];
+        atom.CPKColor = new Color((string)elementData["CPKColor"]);
 
         parent.AddChild(atom);
         atom.Nucleus = Nucleus.Create(atom, (int)elementData["Protons"], (int)elementData["NeutronsApprox"]);
@@ -48,11 +51,17 @@ public partial class Atom : Node3D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-
-        Scale = new Vector3(Radius, Radius, Radius);
+        // Scale = new Vector3(Radius, Radius, Radius);
         CreateShells();
-        float scale = Radius * Shells.Count * 0.06f;
+        float scale = Radius * Shells.Count * 0.085f;
         GetNodeOrNull<MeshInstance3D>("Barrier").Scale = new Vector3(scale, scale, scale);
+
+        if (GetNodeOrNull<MeshInstance3D>("Barrier").GetActiveMaterial(0) is StandardMaterial3D mat)
+        {
+            mat = (StandardMaterial3D)mat.Duplicate(); // important (don’t edit shared material)
+            mat.AlbedoColor = CPKColor;
+            GetNodeOrNull<MeshInstance3D>("Barrier").MaterialOverride = mat;
+        }
         AssignValenceElectrons();
     }
 
@@ -61,7 +70,7 @@ public partial class Atom : Node3D
         int MaxEnergyLevel = Mathf.CeilToInt(Electrons / 8);
         int remainingElectrons = Electrons;
 
-        for (int i = 1; i <= MaxEnergyLevel + 3; i++)
+        for (int i = 1; i <= MaxEnergyLevel + 2; i++)
         {
             if (remainingElectrons > 0)
             {

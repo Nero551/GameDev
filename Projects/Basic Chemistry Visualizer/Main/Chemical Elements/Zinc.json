@@ -1,6 +1,7 @@
 {
   "Name": "Zinc",
   "Symbol": "Zn",
+  "CPKColor": "#7D80B0",
   "AtomicNumber": 30,
   "AtomicMass": 65.38,
   "RepresentativeMassNumber": 64,

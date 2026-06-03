@@ -1,6 +1,7 @@
 {
   "Name": "Neodymium",
   "Symbol": "Nd",
+  "CPKColor": "#C7FFC7",
   "AtomicNumber": 60,
   "AtomicMass": 144.24,
   "RepresentativeMassNumber": 142,

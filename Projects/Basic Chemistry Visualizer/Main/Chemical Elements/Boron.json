@@ -1,6 +1,7 @@
 {
   "Name": "Boron",
   "Symbol": "B",
+  "CPKColor": "#FFB5B5",
   "AtomicNumber": 5,
   "AtomicMass": 10.81,
   "RepresentativeMassNumber": 11,

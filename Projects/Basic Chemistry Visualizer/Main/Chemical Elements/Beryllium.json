@@ -1,6 +1,7 @@
 {
   "Name": "Beryllium",
   "Symbol": "Be",
+  "CPKColor": "#C2FF00",
   "AtomicNumber": 4,
   "AtomicMass": 9.0122,
   "RepresentativeMassNumber": 9,

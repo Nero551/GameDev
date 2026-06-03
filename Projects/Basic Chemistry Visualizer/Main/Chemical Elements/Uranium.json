@@ -1,6 +1,7 @@
 {
   "Name": "Uranium",
   "Symbol": "U",
+  "CPKColor": "#008FFF",
   "AtomicNumber": 92,
   "AtomicMass": 238.03,
   "RepresentativeMassNumber": 234,

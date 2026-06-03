@@ -1,6 +1,7 @@
 {
   "Name": "Thorium",
   "Symbol": "Th",
+  "CPKColor": "#00BAFF",
   "AtomicNumber": 90,
   "AtomicMass": 232.04,
   "RepresentativeMassNumber": 230,

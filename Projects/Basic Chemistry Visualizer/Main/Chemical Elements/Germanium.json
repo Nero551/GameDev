@@ -1,6 +1,7 @@
 {
   "Name": "Germanium",
   "Symbol": "Ge",
+  "CPKColor": "#668F8F",
   "AtomicNumber": 32,
   "AtomicMass": 72.63,
   "RepresentativeMassNumber": 73,

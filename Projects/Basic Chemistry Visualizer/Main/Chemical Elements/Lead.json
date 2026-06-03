@@ -1,6 +1,7 @@
 {
   "Name": "Lead",
   "Symbol": "Pb",
+  "CPKColor": "#575961",
   "AtomicNumber": 82,
   "AtomicMass": 207.2,
   "RepresentativeMassNumber": 208,

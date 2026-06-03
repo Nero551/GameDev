@@ -1,6 +1,7 @@
 {
   "Name": "Plutonium",
   "Symbol": "Pu",
+  "CPKColor": "#006BFF",
   "AtomicNumber": 94,
   "AtomicMass": 244,
   "RepresentativeMassNumber": 238,

@@ -1,6 +1,7 @@
 {
   "Name": "Copper",
   "Symbol": "Cu",
+  "CPKColor": "#C88033",
   "AtomicNumber": 29,
   "AtomicMass": 63.546,
   "RepresentativeMassNumber": 63,

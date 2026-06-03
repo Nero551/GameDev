@@ -1,6 +1,7 @@
 {
   "Name": "Hydrogen",
   "Symbol": "H",
+  "CPKColor": "#FFFFFF",
   "AtomicNumber": 1,
   "AtomicMass": 1.008,
   "RepresentativeMassNumber": 1,

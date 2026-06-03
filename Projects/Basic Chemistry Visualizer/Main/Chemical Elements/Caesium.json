@@ -1,6 +1,7 @@
 {
   "Name": "Caesium",
   "Symbol": "Cs",
+  "CPKColor": "#57178F",
   "AtomicNumber": 55,
   "AtomicMass": 132.91,
   "RepresentativeMassNumber": 133,

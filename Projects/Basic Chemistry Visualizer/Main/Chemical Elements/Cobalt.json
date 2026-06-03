@@ -1,6 +1,7 @@
 {
   "Name": "Cobalt",
   "Symbol": "Co",
+  "CPKColor": "#F090A0",
   "AtomicNumber": 27,
   "AtomicMass": 58.933,
   "RepresentativeMassNumber": 59,

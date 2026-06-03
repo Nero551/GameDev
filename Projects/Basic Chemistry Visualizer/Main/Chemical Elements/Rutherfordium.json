@@ -1,6 +1,7 @@
 {
   "Name": "Rutherfordium",
   "Symbol": "Rf",
+  "CPKColor": "#CC0059",
   "AtomicNumber": 104,
   "AtomicMass": 267,
   "RepresentativeMassNumber": 265,

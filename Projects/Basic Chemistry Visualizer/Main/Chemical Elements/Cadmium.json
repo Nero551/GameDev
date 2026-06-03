@@ -1,6 +1,7 @@
 {
   "Name": "Cadmium",
   "Symbol": "Cd",
+  "CPKColor": "#FFD98F",
   "AtomicNumber": 48,
   "AtomicMass": 112.41,
   "RepresentativeMassNumber": 114,

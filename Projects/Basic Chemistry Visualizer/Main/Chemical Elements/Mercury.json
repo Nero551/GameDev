@@ -1,6 +1,7 @@
 {
   "Name": "Mercury",
   "Symbol": "Hg",
+  "CPKColor": "#B8B8D0",
   "AtomicNumber": 80,
   "AtomicMass": 200.59,
   "RepresentativeMassNumber": 202,

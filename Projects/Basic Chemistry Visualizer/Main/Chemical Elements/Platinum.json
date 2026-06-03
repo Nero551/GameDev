@@ -1,6 +1,7 @@
 {
   "Name": "Platinum",
   "Symbol": "Pt",
+  "CPKColor": "#D0D0E0",
   "AtomicNumber": 78,
   "AtomicMass": 195.08,
   "RepresentativeMassNumber": 195,

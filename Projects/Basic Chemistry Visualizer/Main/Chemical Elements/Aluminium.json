@@ -1,6 +1,7 @@
 {
   "Name": "Aluminium",
   "Symbol": "Al",
+  "CPKColor": "#BFA6A6",
   "AtomicNumber": 13,
   "AtomicMass": 26.982,
   "RepresentativeMassNumber": 27,

@@ -1,6 +1,7 @@
 {
   "Name": "Oxygen",
   "Symbol": "O",
+  "CPKColor": "#FF0D0D",
   "AtomicNumber": 8,
   "AtomicMass": 15.999,
   "RepresentativeMassNumber": 16,

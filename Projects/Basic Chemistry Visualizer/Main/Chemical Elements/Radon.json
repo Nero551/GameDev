@@ -1,6 +1,7 @@
 {
   "Name": "Radon",
   "Symbol": "Rn",
+  "CPKColor": "#428296",
   "AtomicNumber": 86,
   "AtomicMass": 222,
   "RepresentativeMassNumber": 211,

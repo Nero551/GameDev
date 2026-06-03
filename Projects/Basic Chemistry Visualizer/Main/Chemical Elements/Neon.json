@@ -1,6 +1,7 @@
 {
   "Name": "Neon",
   "Symbol": "Ne",
+  "CPKColor": "#B3E3F5",
   "AtomicNumber": 10,
   "AtomicMass": 20.18,
   "RepresentativeMassNumber": 20,

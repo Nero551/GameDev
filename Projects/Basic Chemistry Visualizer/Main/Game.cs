@@ -7,10 +7,12 @@ public partial class Game : Node3D
     {
         Input.MouseMode = Input.MouseModeEnum.Captured;
 
-        // Atom.Create("Nydrogen", new Vector3(0, 0, 0), this, 1, 0, 1, 1);
-        // Atom.Create("Pydrogen", new Vector3(5, 0, 0), this, 1, 1, 0, 1);
-        // Atom.Create("Test", Vector3.Zero, this, 1.52f, 15, 15, 0);
-        Atom.Create(Element.Gold, Vector3.Zero, this);
+        // Atom.Create("Nydrogen", new Vector3(0, 0, 0), 1.5f, this, 8, 8, 1000);
+        // Atom.Create(Element.Sodium, Vector3.Zero, this);
+        // Atom.Create(Element.Chlorine, new Vector3(1,0,0), this);
+        Atom.Create(Element.Oxygen, Vector3.Zero, this);
+        Atom.Create(Element.Uranium, new Vector3(1,0,0), this);
+
     }
 
     public override void _Process(double delta)

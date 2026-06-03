@@ -1,6 +1,7 @@
 {
   "Name": "Sulfur",
   "Symbol": "S",
+  "CPKColor": "#FFFF30",
   "AtomicNumber": 16,
   "AtomicMass": 32.06,
   "RepresentativeMassNumber": 32,

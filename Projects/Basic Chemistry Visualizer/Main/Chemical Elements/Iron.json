@@ -1,6 +1,7 @@
 {
   "Name": "Iron",
   "Symbol": "Fe",
+  "CPKColor": "#E06633",
   "AtomicNumber": 26,
   "AtomicMass": 55.845,
   "RepresentativeMassNumber": 56,

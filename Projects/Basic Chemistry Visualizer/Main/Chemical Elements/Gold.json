@@ -1,6 +1,7 @@
 {
   "Name": "Gold",
   "Symbol": "Au",
+  "CPKColor": "#FFD123",
   "AtomicNumber": 79,
   "AtomicMass": 196.97,
   "RepresentativeMassNumber": 197,

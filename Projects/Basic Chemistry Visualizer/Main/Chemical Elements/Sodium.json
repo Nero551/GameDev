@@ -1,6 +1,7 @@
 {
   "Name": "Sodium",
   "Symbol": "Na",
+  "CPKColor": "#AB5CF2",
   "AtomicNumber": 11,
   "AtomicMass": 22.99,
   "RepresentativeMassNumber": 23,

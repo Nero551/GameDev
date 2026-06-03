@@ -1,6 +1,7 @@
 {
   "Name": "Phosphorus",
   "Symbol": "P",
+  "CPKColor": "#FF8000",
   "AtomicNumber": 15,
   "AtomicMass": 30.974,
   "RepresentativeMassNumber": 31,

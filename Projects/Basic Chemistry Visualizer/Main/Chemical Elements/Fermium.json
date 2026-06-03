@@ -1,6 +1,7 @@
 {
   "Name": "Fermium",
   "Symbol": "Fm",
+  "CPKColor": "#B31FBA",
   "AtomicNumber": 100,
   "AtomicMass": 257,
   "RepresentativeMassNumber": 257,

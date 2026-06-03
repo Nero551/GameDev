@@ -1,6 +1,7 @@
 {
   "Name": "Roentgenium",
   "Symbol": "Rg",
+  "CPKColor": "#EB0026",
   "AtomicNumber": 111,
   "AtomicMass": 282,
   "RepresentativeMassNumber": 280,

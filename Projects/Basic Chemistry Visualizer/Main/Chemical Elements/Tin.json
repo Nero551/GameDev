@@ -1,6 +1,7 @@
 {
   "Name": "Tin",
   "Symbol": "Sn",
+  "CPKColor": "#668080",
   "AtomicNumber": 50,
   "AtomicMass": 118.71,
   "RepresentativeMassNumber": 120,

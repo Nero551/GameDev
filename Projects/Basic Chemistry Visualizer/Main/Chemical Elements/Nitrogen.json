@@ -1,6 +1,7 @@
 {
   "Name": "Nitrogen",
   "Symbol": "N",
+  "CPKColor": "#3050F8",
   "AtomicNumber": 7,
   "AtomicMass": 14.007,
   "RepresentativeMassNumber": 14,

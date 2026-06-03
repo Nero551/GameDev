@@ -1,6 +1,7 @@
 {
   "Name": "Neptunium",
   "Symbol": "Np",
+  "CPKColor": "#0080FF",
   "AtomicNumber": 93,
   "AtomicMass": 237,
   "RepresentativeMassNumber": 237,

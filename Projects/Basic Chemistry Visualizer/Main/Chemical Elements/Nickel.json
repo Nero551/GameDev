@@ -1,6 +1,7 @@
 {
   "Name": "Nickel",
   "Symbol": "Ni",
+  "CPKColor": "#50D050",
   "AtomicNumber": 28,
   "AtomicMass": 58.693,
   "RepresentativeMassNumber": 58,

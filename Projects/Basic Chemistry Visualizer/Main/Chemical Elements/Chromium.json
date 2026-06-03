@@ -1,6 +1,7 @@
 {
   "Name": "Chromium",
   "Symbol": "Cr",
+  "CPKColor": "#8A99C7",
   "AtomicNumber": 24,
   "AtomicMass": 51.996,
   "RepresentativeMassNumber": 52,
