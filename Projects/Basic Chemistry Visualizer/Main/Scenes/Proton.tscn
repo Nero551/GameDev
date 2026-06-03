@@ -10,16 +10,9 @@ emission_energy_multiplier = 2.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_tu50s"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_tu50s"]
-
 [node name="Proton" type="Node3D" unique_id=1006571770]
 script = ExtResource("1_xwos5")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=783356839]
 material_override = SubResource("StandardMaterial3D_ukugj")
 mesh = SubResource("SphereMesh_tu50s")
-
-[node name="Area3D" type="Area3D" parent="." unique_id=13159632]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1558540589]
-shape = SubResource("SphereShape3D_tu50s")

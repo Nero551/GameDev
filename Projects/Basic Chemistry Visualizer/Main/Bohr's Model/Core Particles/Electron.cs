@@ -16,8 +16,4 @@ public partial class Electron : Particle
     {
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-    {
-    }
 }

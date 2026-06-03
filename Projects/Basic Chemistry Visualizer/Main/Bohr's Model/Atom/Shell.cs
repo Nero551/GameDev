@@ -46,10 +46,6 @@ public partial class Shell : Node3D
         Rotation = new Vector3(Mathf.DegToRad(EnergyLevel * 8), 0, EnergyLevel * 8.5f);
     }
 
-    public override void _Process(double delta)
-    {
-    }
-
     public override void _PhysicsProcess(double delta)
     {
         float value = (float)delta * (EnergyLevel / Radius);
