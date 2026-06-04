@@ -39,6 +39,7 @@ public partial class CCombat : Component
 
             if ((GDHelper.CurrentSTime() - LastComboTime) < (double)itemData["ComboCooldown"])
             {
+                GD.Print("1");
                 return;
             }
             if ((GDHelper.CurrentSTime() - LastSwingTime) >= (double)itemData["ComboResetTime"])
@@ -48,6 +49,7 @@ public partial class CCombat : Component
 
             if (SwingNumber > (int)itemData["Swings"])
             {
+                GD.Print("2");
                 LastComboTime = GDHelper.CurrentSTime();
                 SwingNumber = 0;
                 return;
@@ -60,6 +62,7 @@ public partial class CCombat : Component
             Animation swingAnim = ComponentHost.GetComponent<CAnimations>().GetAnim($"{itemName}/L{SwingNumber}");
             if (swingAnim == null)
             {
+                GD.Print("3");
                 return;
             }
 

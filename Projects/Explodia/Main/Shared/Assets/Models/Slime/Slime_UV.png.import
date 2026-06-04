@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://djnpup8jqkpff"
-path.s3tc="res://.godot/imported/Slime_UV.png-8a0bf5dd99ba79a076b68279eac6b876.s3tc.ctex"
+path.s3tc="res://.godot/imported/Slime_UV.png-90c8984042973f439194514aca0aa00e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://Main/Shared/Assets/Models/Slime_UV.png"
-dest_files=["res://.godot/imported/Slime_UV.png-8a0bf5dd99ba79a076b68279eac6b876.s3tc.ctex"]
+source_file="res://Main/Shared/Assets/Models/Slime/Slime_UV.png"
+dest_files=["res://.godot/imported/Slime_UV.png-90c8984042973f439194514aca0aa00e.s3tc.ctex"]
 
 [params]
 

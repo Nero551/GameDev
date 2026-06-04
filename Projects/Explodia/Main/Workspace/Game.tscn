@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" uid="uid://wm74fyw2ougo" path="res://Main/Shared/Core/Game.cs" id="1_vklr1"]
 [ext_resource type="Texture2D" uid="uid://bf3w1bajov4kr" path="res://Main/Shared/Assets/Textures/PrototypeFloor.png" id="2_4and7"]
-[ext_resource type="PackedScene" uid="uid://8plp26spdxm4" path="res://Main/Workspace/Character.tscn" id="3_u2oix"]
+[ext_resource type="PackedScene" uid="uid://cfbs7n6wipav8" path="res://Main/Workspace/Enemy.tscn" id="4_cmhw0"]
 [ext_resource type="PackedScene" uid="uid://cy1ey0lofpjac" path="res://Main/Shared/Assets/VFX/HitImpact/HitImpact.tscn" id="5_3eqp4"]
-[ext_resource type="PackedScene" uid="uid://cvle36gt8soas" path="res://Main/Workspace/Player.tscn" id="6_digbp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vklr1"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -20,8 +19,8 @@ background_mode = 2
 background_energy_multiplier = 0.4
 sky = SubResource("Sky_5awyl")
 glow_enabled = true
-glow_intensity = 0.4
-glow_bloom = 1.0
+glow_intensity = 0.1
+glow_bloom = 0.3
 adjustment_enabled = true
 adjustment_brightness = 1.1
 adjustment_contrast = 1.25
@@ -67,15 +66,13 @@ offset_bottom = 40.0
 
 [node name="Players" type="Node" parent="." unique_id=447140130]
 
-[node name="Nero" parent="Players" unique_id=746435136 instance=ExtResource("6_digbp")]
-
 [node name="Hitboxes" type="Node" parent="." unique_id=801362876]
 
 [node name="Characters" type="Node" parent="." unique_id=2116615802]
 
-[node name="Character" parent="." unique_id=1560243081 instance=ExtResource("3_u2oix")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -2.389043, 0, 1.6252947)
-
 [node name="HitImpact" parent="." unique_id=1725906742 instance=ExtResource("5_3eqp4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.389043, 0.613271, -1.2927873)
 LoopPlay = false
+
+[node name="Enemy" parent="." unique_id=473999008 instance=ExtResource("4_cmhw0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.3487797)

@@ -3,6 +3,8 @@ using Godot;
 
 public partial class Player : Node3D
 {
+    //TODO- later on i will def need a PlayersService to manage players.
+
     public CCamera cCamera;
     public CPlayerInput cPlayerInput;
     public CCharacter cCharacter;

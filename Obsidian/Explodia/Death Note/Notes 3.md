@@ -25,3 +25,4 @@ Weapons will have a walk , idle and run
 
 Reson for this is variety when adding weapons to npcs. Each weapon will have its own complete set of animations 
 
+

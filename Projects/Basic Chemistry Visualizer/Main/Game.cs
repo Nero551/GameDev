@@ -11,12 +11,13 @@ public partial class Game : Node3D
         // Atom.Create(Element.Sodium, Vector3.Zero, this);
         // Atom.Create(Element.Chlorine, new Vector3(1,0,0), this);
         // Atom.Create(Element.Oxygen, Vector3.Zero, this);
-        // Atom.Create(Element.Uranium, new Vector3(1,0,0), this);
-        for (int i = 0; i < 250; i++)
-        {
-            Atom.Create(Element.Oxygen, Vector3.Zero, this);
-        }
 
+        Atom.Create(Element.Uranium, new Vector3(1, 0, 0), this);
+        
+        // for (int i = 0; i < 250; i++)
+        // {
+        //     Atom.Create(Element.Oxygen, Vector3.Zero, this);
+        // }
     }
 
     public override void _Process(double delta)

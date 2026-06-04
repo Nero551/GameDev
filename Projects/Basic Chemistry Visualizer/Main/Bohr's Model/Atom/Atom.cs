@@ -48,7 +48,6 @@ public partial class Atom : Node3D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        // Scale = new Vector3(Radius, Radius, Radius);
         CreateShells();
         float scale = 1.25f * Shells.Count * 0.11f;
         GetNodeOrNull<MeshInstance3D>("Barrier").Scale = new Vector3(scale, scale, scale);
@@ -59,7 +58,7 @@ public partial class Atom : Node3D
             mat.AlbedoColor = CPKColor;
             GetNodeOrNull<MeshInstance3D>("Barrier").MaterialOverride = mat;
         }
-        // AssignValenceElectrons();
+        AssignValenceElectrons();
     }
 
     private void CreateShells()
@@ -105,9 +104,9 @@ public partial class Atom : Node3D
         }
     }
 
-    // public override void _Process(double delta)
-    // {
-    //     base._Process(delta);
-    //     Stable = (ValenceElectrons.Count == Shells[Shells.Count].Capacity);
-    // }
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        Stable = (ValenceElectrons.Count == Shells[Shells.Count].Capacity);
+    }
 }

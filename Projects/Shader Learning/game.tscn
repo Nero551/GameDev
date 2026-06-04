@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://emutee8v1mxq"]
+
+[ext_resource type="Shader" uid="uid://dqbgt08u6xpa3" path="res://shader.gdshader" id="1_e2o6t"]
+[ext_resource type="Texture2D" uid="uid://b455iotmldl54" path="res://circle.png" id="2_feb5d"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tu50s"]
+shader = ExtResource("1_e2o6t")
+
+[node name="Game" type="Node2D" unique_id=131334249]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1676881936]
+material = SubResource("ShaderMaterial_tu50s")
+texture = ExtResource("2_feb5d")

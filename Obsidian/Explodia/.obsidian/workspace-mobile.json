@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Framework/ICE Framework (Current).md",
+                "file": "Doc/Stats/Stat Tree.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ICE Framework (Current)"
+              "title": "Stat Tree"
             }
           }
         ],
@@ -185,6 +185,7 @@
   },
   "active": "55ec3dc104d1ae4a",
   "lastOpenFiles": [
+    "Doc/Stats/Stat Tree.md",
     "Doc/Core Concepts/Art & Skill Aquisition.md",
     "Death Note/Notes 3.md",
     "Framework/ICE Framework (Current).md",
@@ -212,7 +213,6 @@
     "AI Modified/AdditionalSystems.md",
     "Doc/Mechanics/Base Builder.md",
     "AI Modified/Backlog.md",
-    "Doc/Entities/Untitled.md",
     "Doc/Entities/Sea Monsters",
     "Doc/Worlds",
     "Doc/Items/Consumables/Ingredients",

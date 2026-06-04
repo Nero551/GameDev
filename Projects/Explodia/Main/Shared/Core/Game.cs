@@ -13,5 +13,7 @@ public partial class Game : Node
 		Players = GetNodeOrNull<Node>("Players");
 		Characters = GetNodeOrNull<Node>("Characters");
 		Hitboxes = GetNodeOrNull<Node>("Hitboxes");
-	}
+
+        PlayersService.Spawn("Nero");
+    }
 }

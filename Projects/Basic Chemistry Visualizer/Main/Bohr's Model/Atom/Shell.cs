@@ -25,6 +25,7 @@ public partial class Shell : Node3D
         parent.GetNodeOrNull<Node3D>("Shells").AddChild(shell);
         return shell;
     }
+    
     public override void _Ready()
     {
 
