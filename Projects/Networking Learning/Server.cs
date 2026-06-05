@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 
-public partial class Main : Node3D
+public partial class Server : Node
 {
     //TODO- learn godot networking, make networking serice wrapper to make using godot multiplayer easier.
 
@@ -12,15 +12,12 @@ public partial class Main : Node3D
     {
         {
             Multiplayer.PeerConnected += OnPeerConnected;
-            var args = OS.GetCmdlineArgs();
-
-            if (args.Contains("--server"))
+            if (NetworkingService.IsServer())
             {
                 StandardMaterial3D material = new()
                 {
                     AlbedoColor = Colors.Aqua
                 };
-                GetNode<MeshInstance3D>("Cube").MaterialOverride = material;
                 StartHost();
             }
             else
@@ -55,7 +52,8 @@ public partial class Main : Node3D
         PackedScene scene = GD.Load<PackedScene>("res://player.tscn");
         CharacterBody3D player = scene.Instantiate<CharacterBody3D>();
         player.SetMultiplayerAuthority((int)id);
-        AddChild(player);
+        player.Name = id.ToString();
+        Game.game.AddChild(player);
 
         GD.Print("Spawned player: " + id);
     }
