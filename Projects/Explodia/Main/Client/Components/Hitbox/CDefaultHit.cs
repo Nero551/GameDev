@@ -13,26 +13,26 @@ public partial class CDefaultHit : Component
         //States
         Attacker.cStates.AddState("In Combat", 30);
         targetHit.cStates.AddState("In Combat", 30);
-        targetHit.cStates.AddState("Stunned", 0.2);
+        targetHit.cStates.AddState("Stunned", 0.4);
 
         //Damage
         targetHit.cHealth.CurrentHealth -= (float)itemData["Damage"];
 
         //Knockback
+        Vector3 direction = -Attacker.Basis.Z;
         if (Attacker.cCombat.SwingNumber == (int)itemData["Swings"])
         {
-            targetHit.cForce.Knockback(new Vector3(0, 0, 2));
+            targetHit.cForce.Knockback(direction * 30);
         }
         else
         {
-            targetHit.cForce.Knockback(new Vector3(0, 0, 1));
-            Attacker.cForce.Knockback(new Vector3(0, 0, 1));
+            targetHit.cForce.Knockback(direction * 2);
+            Attacker.cForce.Pull(-direction * 2);
         }
 
         /*
         *Current Plan is: 
         * 1- godot shaders
-        * 2- making a slime monster AI that i can fight
         * 3- then we start on the server bs  
         */
 

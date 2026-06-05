@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bf3w1bajov4kr" path="res://Main/Shared/Assets/Textures/PrototypeFloor.png" id="2_4and7"]
 [ext_resource type="PackedScene" uid="uid://cfbs7n6wipav8" path="res://Main/Workspace/Enemy.tscn" id="4_cmhw0"]
 [ext_resource type="PackedScene" uid="uid://cy1ey0lofpjac" path="res://Main/Shared/Assets/VFX/HitImpact/HitImpact.tscn" id="5_3eqp4"]
+[ext_resource type="PackedScene" uid="uid://cyrsxgrusxml0" path="res://Main/Shared/Assets/Models/Slime/Slime.tscn" id="5_ec7s1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vklr1"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -75,4 +76,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.389043, 0.613271, -1.29278
 LoopPlay = false
 
 [node name="Enemy" parent="." unique_id=473999008 instance=ExtResource("4_cmhw0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.3487797)
+
+[node name="Slime" parent="." unique_id=1437722623 instance=ExtResource("5_ec7s1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.7386284)

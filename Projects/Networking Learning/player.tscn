@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dmxmqj60m6mqm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ukugj"]
+albedo_color = Color(0.7254102, 0.06258754, 0.2989305, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tu50s"]
+
+[node name="Player" type="CharacterBody3D" unique_id=1834828033]
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=883302187]
+material_override = SubResource("StandardMaterial3D_ukugj")
+mesh = SubResource("BoxMesh_tu50s")

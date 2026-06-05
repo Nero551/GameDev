@@ -16,17 +16,6 @@ public partial class CMovement : Component
         {
             MovementVelocity += ComponentHost.GetInterface<IGetGravity>().GetGravity() * (float)delta * 1.5f;
         }
-        if (MovementVelocity != Vector3.Zero)
-        {
-            MovementVelocity.X = Mathf.MoveToward(MovementVelocity.X, 0, Speed);
-            MovementVelocity.Z = Mathf.MoveToward(MovementVelocity.Z, 0, Speed);
-        }
-
-        if (Force != Vector3.Zero)
-        {
-            Force.X = Mathf.MoveToward(Force.X, 0, Speed);
-            Force.Z = Mathf.MoveToward(Force.Z, 0, Speed);
-        }
     }
 
     public void Jump()
@@ -49,10 +38,7 @@ public partial class CMovement : Component
 
     public void ApplyBodyRotation(double delta)
     {
-        var armature = ComponentHost.Owner.GetNode<Node3D>("Armature");
-        Vector3 targetDir = (
-        ComponentHost.GetInterface<IGlobalPosition>().GlobalPosition + MovementVelocity -
-        armature.GlobalPosition);
+        Vector3 targetDir = MovementVelocity;
 
         targetDir.Y = 0;
         targetDir = targetDir.Normalized();
@@ -60,7 +46,23 @@ public partial class CMovement : Component
         if (targetDir != Vector3.Zero)
         {
             Basis target = Basis.LookingAt(targetDir, Vector3.Up);
-            armature.Basis = armature.Basis.Orthonormalized().Slerp(target, 8f * (float)delta);
+            ComponentHost.GetInterface<ITransform3D>().Basis =
+                ComponentHost.GetInterface<ITransform3D>().Basis.Orthonormalized().Slerp(target, 8f * (float)delta);
+        }
+    }
+
+    private void Decay()
+    {
+        if (MovementVelocity != Vector3.Zero)
+        {
+            MovementVelocity.X = Mathf.MoveToward(MovementVelocity.X, 0, Speed);
+            MovementVelocity.Z = Mathf.MoveToward(MovementVelocity.Z, 0, Speed);
+        }
+
+        if (Force != Vector3.Zero)
+        {
+            Force.X = Mathf.MoveToward(Force.X, 0, 2);
+            Force.Z = Mathf.MoveToward(Force.Z, 0, 2);
         }
     }
 
@@ -68,6 +70,7 @@ public partial class CMovement : Component
     {
         ComponentHost.GetInterface<IVelocity>().Velocity = MovementVelocity + Force;
         ComponentHost.GetInterface<IMoveAndSlide>().MoveAndSlide();
+        Decay();
     }
 }
 

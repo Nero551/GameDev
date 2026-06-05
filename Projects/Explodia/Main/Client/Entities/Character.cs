@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public partial class Character : CharacterBody3D, ICombatable, IMainAnimatible, IRotation3, IVelocity, IIsOnFloor, IGetGravity, IMoveAndSlide, IGlobalPosition
+public partial class Character : CharacterBody3D, ICombatable, IMainAnimatible,ITransform3D, IVelocity, IIsOnFloor, IGetGravity, IMoveAndSlide
 {
     [Export] public Item MainHand;
     [Export] public Item Offhand;

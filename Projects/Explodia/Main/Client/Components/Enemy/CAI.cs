@@ -19,7 +19,7 @@ public partial class CAI : Component
     {
         foreach (Player player in PlayersService.Players)
         {
-            Vector3 pos = ComponentHost.GetInterface<IGlobalPosition>().GlobalPosition;
+            Vector3 pos = ComponentHost.GetInterface<ITransform3D>().GlobalPosition;
             Vector3 playerPos = player.cCharacter.Character.GlobalPosition;
             if ((playerPos - pos).Length() <= 50)
             {
@@ -29,14 +29,13 @@ public partial class CAI : Component
         }
     }
 
-    public void Move(double delta)
+    public void Follow()
     {
-        Vector3 pos = ComponentHost.GetInterface<IGlobalPosition>().GlobalPosition;
+        Vector3 pos = ComponentHost.GetInterface<ITransform3D>().GlobalPosition;
         Vector3 direction = (Target.GlobalPosition - pos).Normalized();
         ComponentHost.GetComponent<CMovement>().MoveDirection = new Vector2(direction.X, direction.Z);
+        // ComponentHost.GetComponent<CStates>().AddState("Sprinting");
         ComponentHost.GetComponent<CMovement>().Move();
-
-        // ComponentHost.GetInterface<IGlobalPosition>().GlobalPosition += direction * (float)delta * 2;
     }
 
     public void Attack()
@@ -44,24 +43,27 @@ public partial class CAI : Component
         ComponentHost.GetComponent<CCombat>().BasicAttack();
     }
 
+    public void Idle()
+    {
+
+    }
+
     public void StateUpdater(double delta)
     {
         SearchForTarget();
-
-        if (Target == null)
+        switch (AIState)
         {
-            AIState = AIStates.Idle;
-            return;
-        }
+            case AIStates.Attack:
+                Attack();
+                break;
 
-        if ((Target.GlobalPosition - ComponentHost.GetInterface<IGlobalPosition>().GlobalPosition).Length() <= 1)
-        {
-            Attack();
-            return;
-        }
-        Move(delta);
-        return;
+            case AIStates.Follow:
+                Follow();
+                break;
 
-    }
+            case AIStates.Idle:
+                Idle();
+                break;
+        }    }
     //TODO AI functions go here (state updater , move , attack ,etc)
 }

@@ -17,7 +17,6 @@ public partial class CMainAnimations : Component
             ComponentHost.GetComponent<CAnimations>().LoadAnimLibrary("Main/Shared/Assets/Animations/Default/Default")
         );
         mainAnimatible = ComponentHost.GetInterface<IMainAnimatible>();
-
     }
 
     public void MainAnimations()

@@ -1,15 +1,22 @@
 shader_type spatial;
-uniform vec3 color;
+render_mode unshaded;
+//uniform vec3 color;
 uniform float alpha;
 
 void vertex() {
 		// Called for every vertex the material is visible on.
-    VERTEX.xz += sin(TIME + VERTEX.y) * 0.01;
+	float wave = sin(TIME * 3.0 + VERTEX.y);
+	VERTEX.xz += wave * 0.01;
+	
+	float squash = 1.0 + 0.05 * sin(TIME * 2.0);
+	VERTEX.y *= squash;
 }
 
 void fragment() {
 	// Called for every pixel the material is visible
-	ALBEDO = color;
+
+	EMISSION = vec3(0,0.5,0.9) * 0.5;
+	ALBEDO = vec3(0,0.5,0.9);
 	ALPHA = alpha;
 }
 
