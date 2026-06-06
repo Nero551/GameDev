@@ -3,9 +3,19 @@ using Godot;
 
 public partial class Player : CharacterBody3D
 {
+    [Export] public int UserId;
     public const float Speed = 5.0f;
     public const float JumpVelocity = 4.5f;
     [Export] Vector3 velocity;
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        // if (Input.IsActionJustPressed("Print"))
+        // {
+        // 	RpcId(1, nameof(MovementOnServer.Print)); ;
+        // }
+    }
 
     public override void _PhysicsProcess(double delta)
     {
@@ -18,7 +28,7 @@ public partial class Player : CharacterBody3D
 
         if (inputDir != Vector2.Zero)
         {
-			
+
         }
         Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
         if (direction != Vector3.Zero)

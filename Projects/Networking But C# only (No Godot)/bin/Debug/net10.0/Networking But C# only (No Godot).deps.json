@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "Networking But C# only (No Godot)/1.0.0": {
+        "runtime": {
+          "Networking But C# only (No Godot).dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Networking But C# only (No Godot)/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

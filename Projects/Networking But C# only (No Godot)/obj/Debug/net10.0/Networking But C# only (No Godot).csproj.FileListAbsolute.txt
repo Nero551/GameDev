@@ -1,0 +1,15 @@
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/bin/Debug/net10.0/Networking But C# only (No Godot)
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/bin/Debug/net10.0/Networking But C# only (No Godot).deps.json
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/bin/Debug/net10.0/Networking But C# only (No Godot).runtimeconfig.json
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/bin/Debug/net10.0/Networking But C# only (No Godot).dll
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/bin/Debug/net10.0/Networking But C# only (No Godot).pdb
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/obj/Debug/net10.0/Networking But C# only (No Godot).GeneratedMSBuildEditorConfig.editorconfig
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/obj/Debug/net10.0/Networking But C# only (No Godot).AssemblyInfoInputs.cache
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/obj/Debug/net10.0/Networking But C# only (No Godot).AssemblyInfo.cs
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/obj/Debug/net10.0/Networking But C# only (No Godot).csproj.CoreCompileInputs.cache
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/obj/Debug/net10.0/Networking But C# only (No Godot).sourcelink.json
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/obj/Debug/net10.0/Networking But C# only (No Godot).dll
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/obj/Debug/net10.0/refint/Networking But C# only (No Godot).dll
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/obj/Debug/net10.0/Networking But C# only (No Godot).pdb
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/obj/Debug/net10.0/Networking But C# only (No Godot).genruntimeconfig.cache
+/home/nero551/Main/GameDev/Projects/Networking But C# only (No Godot)/obj/Debug/net10.0/ref/Networking But C# only (No Godot).dll

@@ -1,11 +1,11 @@
 using System;
 using Godot;
 
-public partial class MovementOnServer
+public partial class MovementOnServer : Node
 {
-    [Rpc]
-    public void Move()
-    {
-
-    }
+    // [Rpc]
+    // public void Print()
+    // {
+    //     GD.Print("Printed");
+    // }
 }
