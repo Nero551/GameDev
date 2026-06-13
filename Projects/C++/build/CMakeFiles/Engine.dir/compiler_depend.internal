@@ -3,6 +3,7 @@
 
 CMakeFiles/Engine.dir/Engine/Entity.cpp.o
  /home/nero551/Main/GameDev/Projects/C++/Engine/Entity.cpp
+ /home/nero551/Main/GameDev/Projects/C++/Engine/Component.h
  /home/nero551/Main/GameDev/Projects/C++/Engine/Entity.h
  /usr/include/alloca.h
  /usr/include/asm-generic/bitsperlong.h

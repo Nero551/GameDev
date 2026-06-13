@@ -11,10 +11,6 @@ public partial class Player : CharacterBody3D
     public override void _Process(double delta)
     {
         base._Process(delta);
-        // if (Input.IsActionJustPressed("Print"))
-        // {
-        // 	RpcId(1, nameof(MovementOnServer.Print)); ;
-        // }
     }
 
     public override void _PhysicsProcess(double delta)
@@ -26,10 +22,6 @@ public partial class Player : CharacterBody3D
         // As good practice, you should replace UI actions with custom gameplay actions.
         Vector2 inputDir = Input.GetVector("Left", "Right", "Forward", "Back");
 
-        if (inputDir != Vector2.Zero)
-        {
-
-        }
         Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
         if (direction != Vector3.Zero)
         {

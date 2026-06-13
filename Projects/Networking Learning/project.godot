@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 Server="*uid://c2e4oxihty4gc"
-NetworkingService="*uid://dee6hhkh7oh87"
 
 [display]
 

@@ -2,6 +2,7 @@ CMakeFiles/Engine.dir/Engine/Entity.cpp.o: \
  /home/nero551/Main/GameDev/Projects/C++/Engine/Entity.cpp \
  /usr/include/stdc-predef.h \
  /home/nero551/Main/GameDev/Projects/C++/Engine/Entity.h \
+ /home/nero551/Main/GameDev/Projects/C++/Engine/Component.h \
  /usr/include/c++/16.1.1/iostream \
  /usr/include/c++/16.1.1/bits/requires_hosted.h \
  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++config.h \

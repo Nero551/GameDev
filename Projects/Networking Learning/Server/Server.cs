@@ -17,16 +17,16 @@ public partial class Server : Node
     {
         if (NetworkingService.IsServer())
         {
-            StartHost();
+            StartServer();
         }
         else
         {
-            Multiplayer.PeerConnected += OnPeerConnected;
-            StartClient();
+            Multiplayer.PeerConnected += OnClientConnected;
+            ConnectClient();
         }
     }
 
-    private void StartHost()
+    private void StartServer()
     {
         peer = new ENetMultiplayerPeer();
         peer.CreateServer(Port, MaxPlayers);
@@ -35,7 +35,7 @@ public partial class Server : Node
         GD.Print("Server Started");
     }
 
-    private void StartClient()
+    private void ConnectClient()
     {
         if (Players.Count < MaxPlayers)
         {
@@ -51,7 +51,7 @@ public partial class Server : Node
         }
     }
 
-    void OnPeerConnected(long id)
+    void OnClientConnected(long id)
     {
         PackedScene scene = GD.Load<PackedScene>("res://player.tscn");
         Player player = scene.Instantiate<Player>();

@@ -1,6 +1,6 @@
 
 #pragma once
-
 class Entity {
-    public: void Move();
+public:
+  void Move();
 };

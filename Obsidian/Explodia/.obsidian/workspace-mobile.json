@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Doc/Stats/Stat Tree.md",
+                "file": "Framework/DICES Framework(Current).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Stat Tree"
+              "title": "DICES Framework(Current)"
             }
           }
         ],
@@ -127,7 +127,7 @@
         "state": {
           "type": "backlink",
           "state": {
-            "file": "Death Note/Notes 3.md",
+            "file": "Framework/DICES Framework(Current).md",
             "collapseAll": false,
             "extraContext": false,
             "sortOrder": "alphabetical",
