@@ -1,23 +1,11 @@
 using System;
 using System.Text;
 
-class Packet : IDisposable
+class Packet
 {
     public List<byte> BufferList = [];
-    private byte[] BufferArray;
+    private byte[] BufferArray = [];
     private int ReadPos = 0;
-    private bool Disposed = false;
-
-    public Packet()
-    {
-
-    }
-
-    public Packet(byte[] bytes)
-    {
-        WriteBytes(bytes);
-        BufferArray = CreateBytesArray();
-    }
 
     public byte[] CreateBytesArray()
     {
@@ -93,27 +81,10 @@ class Packet : IDisposable
             if (length > 0)
             {
                 string value = Encoding.ASCII.GetString(BufferArray, ReadPos, length);
+                ReadPos += length;
                 return value;
             }
         }
         throw new Exception("Couldn't Read Value");
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!Disposed)
-        {
-            Disposed = true;
-            if (disposing)
-            {
-                BufferList?.Clear();
-                ReadPos = 0;
-            }
-        }
-    }
-
-    public void Dispose(){
-        Dispose(true);
-        GC.SuppressFinalize(this);
     }
 }
