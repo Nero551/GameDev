@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "CMake",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/ComputerSimulator",
+            "preLaunchTask": "build",
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb",
+            "stopAtEntry": false
+        }
+    ]
+}

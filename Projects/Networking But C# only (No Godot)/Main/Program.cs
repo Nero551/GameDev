@@ -1,19 +1,30 @@
-﻿
-
+﻿using System.Net;
 using System.Text;
+
+IPAddress IP = IPAddress.Parse("127.0.0.1");
+int Port = 7777;
+
+Console.Clear();
 
 Packet packet = new();
 
+packet.WriteInt(1);
 packet.WriteString("Hello");
-packet.WriteInt(5);
-packet.WriteFloat(2.3f);
-packet.WriteBool(true);
 
-packet.CreateBytesArray();
+var key = Console.ReadKey(true);
+if (key.Key == ConsoleKey.S)
+{
+    Server server = new();
+    server.Start(Port);
+    server.SendToUDP(packet);
+}
+if (key.Key == ConsoleKey.C)
+{
+    Client client = new();
+    client.Start(IP, Port);
+}
 
-Console.WriteLine(BitConverter.ToString(packet.BufferList.ToArray()));
+Console.WriteLine("Press any key to exit...");
+Console.ReadKey();
 
-Console.WriteLine(packet.ReadString());
-Console.WriteLine(packet.ReadInt());
-Console.WriteLine(packet.ReadFloat());
-Console.WriteLine(packet.ReadBool());
+
