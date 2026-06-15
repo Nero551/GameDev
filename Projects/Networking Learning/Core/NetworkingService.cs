@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Godot.NativeInterop;
@@ -11,7 +12,7 @@ public static class NetworkingService
     }
     //TODO- i have decided i will make custom packet sender and reciever instead of using the godot RPC system.
     /*
-    the core of this is , u convert argument into bytes , u send them with ENet , u unconvert them back into data
+    the core of this is , u convert data into bytes , u send them with ENet , u unconvert them back into data
     */
     //* Reason for this is: RPC depends on nodes , my framework doesnot depend on nodes.
     //TODO- make public enum for creating network calls instead of using strings. more safe.
@@ -47,19 +48,42 @@ public static class NetworkingService
         return true;
     }
 
-    public static void SendToServer(NetworkCall call, params object[] args)
+    /*
+        * No need for client class since the player class IS the client.
+        Here and the function down there. there should be the packett send methods.
+        i will rarely interact with the actual packet class.
+        how to create packet:
+        1-create class and inherit packet class.
+        2-override send and recieve methods to have custom encoding and decoding.
+    */
+
+    public static void SendToServer<T>(params object[] data) where T : Packet, new()
     {
-        if (!IsClient())
+        if (IsClient())
         {
-            return;
+            T packet = new();
+            packet.Send(1, data);
         }
     }
 
-    public static void SendToClient(NetworkCall call, params object[] args)
+    public static void SendToClient<T>(int id, params object[] data) where T : Packet, new()
     {
-        if (!IsServer())
+        if (IsServer())
         {
-            return;
+            T packet = new();
+            packet.Send(id, data);
+        }
+    }
+
+    public static void SendToAllClients<T>(params object[] data) where T : Packet, new()
+    {
+        if (IsServer())
+        {
+            foreach (KeyValuePair<long, Player> pair in Server.Players)
+            {
+                T packet = new();
+                packet.Send(pair.Value.UserId, data);
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ public partial class Server : Node
     private int MaxPlayers = 12;
 
     //TODO- learn godot networking, make networking serice wrapper to make using godot multiplayer easier.
-    public Dictionary<long, Player> Players = [];
+    public static Dictionary<long, Player> Players = [];
     ENetMultiplayerPeer peer;
 
     public override void _Ready()
