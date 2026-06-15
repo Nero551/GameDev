@@ -59,6 +59,9 @@ public static class NetworkingService
 
     public static void SendToServer<T>(params object[] data) where T : Packet, new()
     {
+        
+        //TODO- send the id of the player who sent tthis to the server.
+        // EventService.Invoke(EventService.Event.OnClientConnected, );
         if (IsClient())
         {
             T packet = new();
