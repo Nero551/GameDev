@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Death Note/Notes 4.md",
+                "file": "Tasks.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Notes 4"
+              "title": "Tasks"
             }
           }
         ]
@@ -185,8 +185,8 @@
   },
   "active": "56f571a6dfbab34f",
   "lastOpenFiles": [
-    "Death Note/Notes 3.md",
     "Death Note/Notes 4.md",
+    "Death Note/Notes 3.md",
     "Framework/DICES Framework(Current).md",
     "Framework/Framework Diagram.canvas",
     "Framework/Trash",

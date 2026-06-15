@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Godot;
+using Godot.NativeInterop;
 
 public static class NetworkingService
 {
@@ -15,6 +16,17 @@ public static class NetworkingService
     //* Reason for this is: RPC depends on nodes , my framework doesnot depend on nodes.
     //TODO- make public enum for creating network calls instead of using strings. more safe.
     //TODO- channels enum for like "reliable" and "unreliable"
+
+    //* Server Signals
+    [Signal] public delegate void OnClientConnectedEventHandler(int clientId);
+    [Signal] public delegate void OnClientDisconnectedEventHandler(int clientId);
+    [Signal] public delegate void OnServerPacketEventHandler(int clientId, godot_packed_byte_array data);
+
+    //* Client Signals
+    [Signal] public delegate void OnConnectedToServerEventHandler();
+    [Signal] public delegate void OnDisconnectedFromServerEventHandler();
+    [Signal] public delegate void OnClientPacketEventHandler(godot_packed_byte_array data);
+
     public static bool IsServer()
     {
         var args = OS.GetCmdlineArgs();
@@ -40,7 +52,7 @@ public static class NetworkingService
         if (!IsClient())
         {
             return;
-        }   
+        }
     }
 
     public static void SendToClient(NetworkCall call, params object[] args)

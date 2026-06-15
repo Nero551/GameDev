@@ -36,5 +36,7 @@ public partial class Player : CharacterBody3D
 
         Velocity = velocity;
         MoveAndSlide();
+        TestPacket packet = Packet.Create<TestPacket>();
+        packet.Send(1, []);
     }
 }
