@@ -1,12 +1,14 @@
-using Godot;
 using System;
+using Godot;
 
-public partial class TestPacket : Packet
+namespace Packets;
+
+public  class TestPacket : Packet
 {
     public override void Send(int id, object[] data)
     {
         //Encoding Goes Here
-
+        
         base.Send(id, data);
     }
     public override void Recieve(Packet packet)

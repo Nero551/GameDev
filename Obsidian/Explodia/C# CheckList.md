@@ -26,7 +26,7 @@
 - [x] `for`
 - [ ] `while`
 - [x] `foreach`
-- [ ] Nested loops
+- [x] Nested loops
 - [x] `break` and `continue`
 
 ### Methods
@@ -56,8 +56,8 @@
 
 - [x] String interpolation
 - [ ] String formatting
-- [ ] Splitting strings
-- [ ] Parsing numbers from strings
+- [x] Splitting strings
+- [x] Parsing numbers from strings
 
 ### Debugging
 
@@ -82,7 +82,7 @@
 ### Encapsulation
 
 - [x] Private fields
-- [ ] Public APIs
+- [x] Public APIs
 - [x] Getters/setters
 
 ### Inheritance
@@ -109,7 +109,7 @@
 - [x] Structs
 - [x] Enums
 - [ ] Flags enums
-- [ ] Value vs reference types
+- [x] Value vs reference types
 
 ### Generics
 
@@ -119,11 +119,11 @@
 
 ### Delegates & Events
 
-- [ ] Delegates
-- [ ] `Action`
+- [x] Delegates
+- [x] `Action`
 - [ ] `Func`
-- [ ] Events
-- [ ] Event-driven programming
+- [x] Events
+- [x] Event-driven programming
 
 ### Lambdas & LINQ
 
@@ -158,11 +158,11 @@
 - [x] Read files
 - [x] Write files
 - [x] JSON serialization
-- [ ] Binary serialization concepts
+- [x] Binary serialization concepts
 
 ### Async Programming
 
-- [ ] `async/await`
+- [x] `async/await`
 - [ ] Tasks
 - [ ] Thread basics
 - [ ] Cancellation tokens
@@ -189,8 +189,8 @@
 ### Patterns
 
 - [ ] Singleton
-- [ ] Factory
-- [ ] Observer
+- [x] Factory
+- [x] Observer
 - [x] State machine
 - [ ] Command pattern
 

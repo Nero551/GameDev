@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Godot;
 
-public partial class Packet
+namespace Packets {}
+
+public  class Packet
 {
     public List<byte> BufferList = [];
     private byte[] BufferArray = [];

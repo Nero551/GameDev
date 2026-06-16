@@ -4,6 +4,6 @@ using Godot;
 
 namespace Events;
 
-public class ClientDisconnected() : Event
+public class ConnectedToServer() : Event
 {
 }

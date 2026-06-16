@@ -2,14 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Godot.Collections;
 using Godot.NativeInterop;
 
 public static class NetworkService
 {
-    public enum NetworkCall
-    {
-
-    }
     //TODO- i have decided i will make custom packet sender and reciever instead of using the godot RPC system.
     /*
     the core of this is , u convert data into bytes , u send them with ENet , u unconvert them back into data
@@ -18,15 +15,7 @@ public static class NetworkService
     //TODO- make public enum for creating network calls instead of using strings. more safe.
     //TODO- channels enum for like "reliable" and "unreliable"
 
-    //* Server Signals
-    [Signal] public delegate void OnClientConnectedEventHandler(int clientId);
-    [Signal] public delegate void OnClientDisconnectedEventHandler(int clientId);
-    [Signal] public delegate void OnServerPacketEventHandler(int clientId, godot_packed_byte_array data);
-
-    //* Client Signals
-    [Signal] public delegate void OnConnectedToServerEventHandler();
-    [Signal] public delegate void OnDisconnectedFromServerEventHandler();
-    [Signal] public delegate void OnClientPacketEventHandler(godot_packed_byte_array data);
+    public static ENetConnection Connection;
 
     public static bool IsServer()
     {
@@ -60,7 +49,7 @@ public static class NetworkService
     public static void SendToServer<T>(params object[] data) where T : Packet, new()
     {
         // EventService.Fire(EventService.Event.ClientConnected);
-        
+
         //TODO- send the id of the player who sent tthis to the server.
         if (IsClient())
         {
@@ -78,15 +67,15 @@ public static class NetworkService
         }
     }
 
-    public static void SendToAllClients<T>(params object[] data) where T : Packet, new()
-    {
-        if (IsServer())
-        {
-            foreach (KeyValuePair<long, Player> pair in Server.Players)
-            {
-                T packet = new();
-                packet.Send(pair.Value.UserId, data);
-            }
-        }
-    }
+    // public static void SendToAllClients<T>(params object[] data) where T : Packet, new()
+    // {
+    //     if (IsServer())
+    //     {
+    //         foreach (KeyValuePair<long, Player> pair in Server.Players)
+    //         {
+    //             T packet = new();
+    //             packet.Send(pair.Value.UserId, data);
+    //         }
+    //     }
+    // }
 }
