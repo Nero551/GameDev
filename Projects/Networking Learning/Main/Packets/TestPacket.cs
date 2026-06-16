@@ -1,21 +1,24 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 
 namespace Packets;
 
-public  class TestPacket : Packet
+public class TestPacket : Packet
 {
-    public override void Send(int id, object[] data)
+    public override byte[] Encode()
     {
-        //Encoding Goes Here
-        
-        base.Send(id, data);
+        Flag = (int)ENetPacketPeer.FlagReliable;
+        ID = 1;
+        WriteInt(1);
+        WriteInt(5);
+        return CreateBytesArray();
     }
-    public override void Recieve(Packet packet)
+
+    public override List<Object> Decode()
     {
-        //Decoding Goes Here
-
-        base.Recieve(packet);
-
+        //Dont Read packet id when decoding.
+        List<Object> data = [ReadInt()];
+        return data;
     }
 }

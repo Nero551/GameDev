@@ -9,6 +9,8 @@ public class Packet
 {
     public List<byte> BufferList = [];
     private byte[] BufferArray = [];
+    public int Flag;
+    public int ID;
     private int ReadPos = 0;
 
     public static T Create<T>() where T : Packet, new()
@@ -16,12 +18,15 @@ public class Packet
         return new T();
     }
 
-    public virtual byte[] Encode() { 
+    public virtual byte[] Encode()
+    {
 
         return CreateBytesArray();
     }
-    public virtual void Decode()
-    {}
+    public virtual List<Object> Decode()
+    {
+        return [];
+    }
 
     public virtual void Send(int id, object[] data = default) { }
     public virtual void Recieve(Packet packet) { }

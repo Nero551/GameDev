@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
+using Packets;
 
 public class Client
 {
@@ -8,6 +10,7 @@ public class Client
     private bool Running = false;
     public void Start()
     {
+        EventService.Subscribe<Events.ClientRecievedPacket>(OnClientRecievedPacket);
         Connection = new ENetConnection();
         Error error = Connection.CreateHost(1);
         if (error != default)
@@ -69,5 +72,23 @@ public class Client
     {
         GD.Print("Connected To Server");
         EventService.Fire(new Events.ConnectedToServer());
+    }
+
+    void OnClientRecievedPacket(Events.ClientRecievedPacket @event)
+    {
+        byte[] data = @event.Data;
+
+        Packet packet = new();
+
+        packet.WriteBytes(data);
+        packet.CreateBytesArray();
+        int packetId = packet.ReadInt();
+
+        List<Object> decodedData = packet.Decode();
+        GD.Print("Nice");
+        foreach (object smth in decodedData)
+        {
+            GD.Print(smth);
+        }
     }
 }

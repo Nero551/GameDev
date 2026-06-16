@@ -22,10 +22,12 @@ public partial class Game : Node3D
             Client client = new();
             client.Start();
         }
+
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
+        NetworkService.SendToClient<Packets.TestPacket>(256, 5);
     }
 }

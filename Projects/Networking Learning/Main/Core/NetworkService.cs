@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using Godot.Collections;
 using Godot.NativeInterop;
+using Packets;
 
 public static class NetworkService
 {
+    public static Dictionary<int, Type> Packets = new()
+    {
+        {1 , typeof(TestPacket)}
+    };
     //TODO- i have decided i will make custom packet sender and reciever instead of using the godot RPC system.
     /*
     the core of this is , u convert data into bytes , u send them with ENet , u unconvert them back into data
@@ -59,8 +63,11 @@ public static class NetworkService
         {
             T packet = new();
             //Sending
-            // Server.Clients[id].Client;
-            // packet.Send(id, data);
+            if (Server.Clients.ContainsKey(id))
+            {
+                Server.Clients[id].Client.Send(0, packet.Encode(), packet.Flag);
+                GD.Print("sending");
+            }
         }
     }
 
