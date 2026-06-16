@@ -13,14 +13,16 @@ public partial class Game : Node3D
     public override void _Ready()
     {
         base._Ready();
-        EventService.Subscribe(EventService.Event.ClientConnected, TestMethod);
-        EventService.Fire(EventService.Event.ClientConnected);
+        EventService.Subscribe<Events.ClientConnected>(TestMethod);
+        EventService.Fire<Events.ClientConnected>(new Events.ClientConnected(5));
 
     }
 
-    void TestMethod()
+    void TestMethod(Events.ClientConnected @event)
     {
-		GD.Print("Success");
+        GD.Print(@event.ClientId);
+        GD.Print("Nice");
+        // GD.Print(clientConnected.ClientId);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
