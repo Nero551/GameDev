@@ -27,12 +27,10 @@ public partial class Packet
     {
         BufferList.AddRange(bytes);
     }
-
     public void WriteInt(int value)
     {
         BufferList.AddRange(BitConverter.GetBytes(value));
     }
-
     public void WriteFloat(float value)
     {
         BufferList.AddRange(BitConverter.GetBytes(value));
@@ -41,7 +39,6 @@ public partial class Packet
     {
         BufferList.AddRange(BitConverter.GetBytes(value));
     }
-
     public void WriteString(string value)
     {
         WriteInt(value.Length);
@@ -59,7 +56,6 @@ public partial class Packet
         }
         throw new Exception("Couldn't Read Value");
     }
-
     public float ReadFloat()
     {
         if (BufferList.Count > ReadPos)
@@ -70,7 +66,6 @@ public partial class Packet
         }
         throw new Exception("Couldn't Read Value");
     }
-
     public bool ReadBool()
     {
         if (BufferList.Count > ReadPos)
@@ -81,7 +76,6 @@ public partial class Packet
         }
         throw new Exception("Couldn't Read Value");
     }
-
     public string ReadString()
     {
         if (BufferList.Count > ReadPos)

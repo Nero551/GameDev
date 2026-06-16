@@ -4,7 +4,7 @@ using System.Linq;
 using Godot;
 using Godot.NativeInterop;
 
-public static class NetworkingService
+public static class NetworkService
 {
     public enum NetworkCall
     {
@@ -59,9 +59,9 @@ public static class NetworkingService
 
     public static void SendToServer<T>(params object[] data) where T : Packet, new()
     {
+        EventService.Fire(EventService.Event.ClientConnected);
         
         //TODO- send the id of the player who sent tthis to the server.
-        // EventService.Invoke(EventService.Event.OnClientConnected, );
         if (IsClient())
         {
             T packet = new();

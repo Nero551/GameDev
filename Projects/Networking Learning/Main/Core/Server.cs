@@ -15,7 +15,7 @@ public partial class Server : Node
 
     public override void _Ready()
     {
-        if (NetworkingService.IsServer())
+        if (NetworkService.IsServer())
         {
             StartServer();
         }
