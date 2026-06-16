@@ -4,40 +4,38 @@ using Godot;
 
 public partial class EventService
 {
-    public static event Action ClientConnected;
     public enum Event
     {
         ClientConnected
     }
-    public static Dictionary<Event, Action> EventsLookup = new()
-    {
-        {Event.ClientConnected, ClientConnected},
-    };
+    public static Dictionary<Event, Action> Events = new() { };
     //TODO- need to make EventService since i realized i am starting to need C# events to replace signals.
     /*
         to make this eventservice i need to learn delegates and events. atleast that what i know i need to learn.
     */
 
-    public static void Fire(Event @event, params object[] args)
+    public static void Fire(Event @event)
     {
-        if (EventsLookup.ContainsKey(@event))
-        {
-            EventsLookup[@event].Invoke();
-        }
+        if (Events.TryGetValue(@event, out Action action))
+            action?.Invoke();
     }
 
     public static void Subscribe(Event @event, Action callback)
     {
-        if (EventsLookup.ContainsKey(@event))
+        if (Events.ContainsKey(@event))
         {
-            EventsLookup[@event] += callback;
+            Events[@event] += callback;
+        }
+        else
+        {
+            Events[@event] = callback;
         }
     }
     public static void Unsubscribe(Event @event, Action callback)
     {
-        if (EventsLookup.ContainsKey(@event))
+        if (Events.ContainsKey(@event))
         {
-            EventsLookup[@event] -= callback;
+            Events[@event] -= callback;
         }
     }
 }
