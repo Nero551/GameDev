@@ -1,48 +1,56 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Godot;
 
-public partial class Server : Node
+public partial class Server
 {
     //TODO- learn godot networking, make networking serice wrapper to make using godot multiplayer easier.
 
     public static int Port = 7777;
     public static string IP = "127.0.0.1";
-    private int MaxClients = 12;
-    private readonly List<int> AvailableIds = System.Linq.Enumerable.Range(256, 0).Reverse().ToList();
+    public static Dictionary<int, Player> Clients = [];
+    public static ENetPacketPeer ServerPeer;
 
-    public Dictionary<int, Player> Clients = [];
-    public ENetPacketPeer ServerPeer;
+    private bool Running = false;
+    private int MaxClients = 12;
+    private readonly List<int> AvailableIds = System.Linq.Enumerable.Range(256, 2).Reverse().ToList();
+    private ENetConnection Connection;
+
+    public async void Update()
+    {
+        while (Running)
+        {
+            HandlePackets();
+            await Task.Delay(10);
+        }
+    }
 
     public void Start()
     {
         if (NetworkService.IsServer())
         {
-            NetworkService.Connection = new ENetConnection();
-            Error error = NetworkService.Connection.CreateHostBound(IP, Port, MaxClients);
+            Connection = new ENetConnection();
+            Error error = Connection.CreateHostBound(IP, Port, MaxClients);
             if (error != default)
             {
                 GD.Print($"Server Failed To Start: {error}");
-                NetworkService.Connection = null;
+                Connection = null;
                 return;
             }
+            Running = true;
             GD.Print("Server Started");
+            Update();
         }
     }
 
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
-        HandlePackets();
-
-    }
     private void HandlePackets()
     {
         if (!NetworkService.IsServer())
             return;
 
-        var packetEvent = NetworkService.Connection.Service();
+        var packetEvent = Connection.Service();
         ENetConnection.EventType eventType = packetEvent[0].As<ENetConnection.EventType>();
         var peer = packetEvent[1].As<ENetPacketPeer>();
 
@@ -63,7 +71,7 @@ public partial class Server : Node
             default:
                 break;
         }
-        packetEvent = NetworkService.Connection.Service();
+        packetEvent = Connection.Service();
         eventType = packetEvent[0].As<ENetConnection.EventType>();
     }
 
@@ -71,8 +79,8 @@ public partial class Server : Node
     {
         PackedScene scene = GD.Load<PackedScene>("res://Main/Scenes/player.tscn");
         Player player = scene.Instantiate<Player>();
-        player.UserId = clientId;
         player.Client = client;
+        player.UserId = clientId;
         player.Name = clientId.ToString();
         Game.game.AddChild(player);
         return player;

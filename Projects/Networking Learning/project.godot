@@ -15,10 +15,6 @@ run/main_scene="res://Main/Scenes/Game.tscn"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
-[autoload]
-
-Server="*uid://c2e4oxihty4gc"
-
 [display]
 
 window/stretch/mode="canvas_items"

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Godot;
 
-namespace Packets {}
+namespace Packets { }
 
-public  class Packet
+public class Packet
 {
     public List<byte> BufferList = [];
     private byte[] BufferArray = [];
@@ -15,6 +15,14 @@ public  class Packet
     {
         return new T();
     }
+
+    public virtual byte[] Encode() { 
+
+        return CreateBytesArray();
+    }
+    public virtual void Decode()
+    {}
+
     public virtual void Send(int id, object[] data = default) { }
     public virtual void Recieve(Packet packet) { }
 

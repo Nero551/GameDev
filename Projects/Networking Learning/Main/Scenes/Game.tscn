@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://c8251d0yp4rkx"]
 
 [ext_resource type="Script" uid="uid://ctwmhkgd72w16" path="res://Main/Game.cs" id="1_vqmpt"]
-[ext_resource type="Script" uid="uid://byndjp0muf10n" path="res://MovementOnServer.cs" id="2_gduds"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -29,6 +28,3 @@ environment = SubResource("Environment_h2yge")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=896338953]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.1260986)
-
-[node name="Node" type="Node" parent="." unique_id=865721935]
-script = ExtResource("2_gduds")

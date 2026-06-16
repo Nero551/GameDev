@@ -15,8 +15,6 @@ public static class NetworkService
     //TODO- make public enum for creating network calls instead of using strings. more safe.
     //TODO- channels enum for like "reliable" and "unreliable"
 
-    public static ENetConnection Connection;
-
     public static bool IsServer()
     {
         var args = OS.GetCmdlineArgs();
@@ -38,7 +36,6 @@ public static class NetworkService
     }
 
     /*
-        * No need for client class since the player class IS the client.
         Here and the function down there. there should be the packett send methods.
         i will rarely interact with the actual packet class.
         how to create packet:
@@ -48,8 +45,6 @@ public static class NetworkService
 
     public static void SendToServer<T>(params object[] data) where T : Packet, new()
     {
-        // EventService.Fire(EventService.Event.ClientConnected);
-
         //TODO- send the id of the player who sent tthis to the server.
         if (IsClient())
         {
@@ -63,7 +58,9 @@ public static class NetworkService
         if (IsServer())
         {
             T packet = new();
-            packet.Send(id, data);
+            //Sending
+            // Server.Clients[id].Client;
+            // packet.Send(id, data);
         }
     }
 

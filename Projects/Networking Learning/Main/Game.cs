@@ -12,6 +12,16 @@ public partial class Game : Node3D
 
     public override void _Ready()
     {
+        if (NetworkService.IsServer())
+        {
+            Server server = new();
+            server.Start();
+        }
+        else
+        {
+            Client client = new();
+            client.Start();
+        }
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
