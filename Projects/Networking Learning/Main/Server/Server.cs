@@ -3,22 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Godot;
+using Godot.NativeInterop;
+using Microsoft.VisualBasic;
 
-public partial class Server
+public static class Server
 {
-    //TODO- learn godot networking, make networking serice wrapper to make using godot multiplayer easier.
-
+    public partial class ClientInfo : GodotObject
+    {
+        public int UserId;
+        public int PeerId;
+        public ENetPacketPeer Peer;
+        public Player Player;
+    }
     public static int Port = 7777;
     public static string IP = "127.0.0.1";
-    public static Dictionary<int, Player> Clients = [];
-    public static ENetPacketPeer ServerPeer;
+    public static Dictionary<int, ClientInfo> Clients = [];
     public static ENetConnection Connection;
 
-    private bool Running = false;
-    private readonly int MaxClients = 12;
-    private readonly List<int> AvailableIds = System.Linq.Enumerable.Range(256, 2).Reverse().ToList();
+    private static bool Running = false;
+    private static readonly int MaxClients = 12;
+    private static readonly List<int> AvailableIds = System.Linq.Enumerable.Range(MaxClients, 2).Reverse().ToList();
 
-    public void Start()
+    public static void Start()
     {
         if (NetworkService.IsServer())
         {
@@ -37,7 +43,7 @@ public partial class Server
         }
     }
 
-    public async void Update()
+    public static async void Update()
     {
         while (Running)
         {
@@ -46,7 +52,7 @@ public partial class Server
         }
     }
 
-    private void HandlePackets()
+    private static void HandlePackets()
     {
         var packetEvent = Connection.Service();
         ENetConnection.EventType eventType = packetEvent[0].As<ENetConnection.EventType>();
@@ -64,55 +70,63 @@ public partial class Server
                 ClientDisconnected(peer);
                 break;
             case ENetConnection.EventType.Receive:
-                EventService.Fire(new Events.ServerRecievedPacket(((Player)peer.GetMeta("Player")).UserId, peer.GetPacket()));
+                EventService.Fire(
+                    new Events.ServerRecievedPacket(
+                        ((ClientInfo)peer.GetMeta("ClientInfo")).PeerId, peer.GetPacket()
+                        )
+                    );
                 break;
             default:
                 break;
         }
     }
 
-    Player CreatePlayer(ENetPacketPeer peer, int clientId)
+    static Player CreatePlayer(ClientInfo clientInfo)
     {
         PackedScene scene = GD.Load<PackedScene>("res://Main/Scenes/player.tscn");
         Player player = scene.Instantiate<Player>();
-        player.Peer = peer;
-        player.UserId = clientId;
-        player.Name = clientId.ToString();
+        player.Name = clientInfo.UserId.ToString();
         Game.game.AddChild(player);
         return player;
     }
 
-    void ClientConnected(ENetPacketPeer peer)
+    static void ClientConnected(ENetPacketPeer peer)
     {
-        int clientId = AvailableIds[AvailableIds.Count - 1];
+        //TODO- fix this.
+        int peerId = AvailableIds[AvailableIds.Count - 1];
         AvailableIds.RemoveAt(AvailableIds.Count - 1);
 
-        Player player = CreatePlayer(peer, clientId);
-        peer.SetMeta("Player", player);
-        Clients[clientId] = player;
 
-        GD.Print($"Client Connected With ID {player.UserId}");
-        EventService.Fire(new Events.ClientConnected(player.UserId));
+        ClientInfo clientInfo = new();
+        clientInfo.PeerId = peerId;
+        clientInfo.Peer = peer;
+        clientInfo.Player = CreatePlayer(clientInfo);
+        peer.SetMeta("ClientInfo", clientInfo);
+        Clients[peerId] = clientInfo;
+
+        NetworkService.SendToClient<Packets.ClientInfo>(peerId, clientInfo);
+
+        GD.Print($"Client Connected With ID {peerId}");
+        EventService.Fire(new Events.ClientConnected(peerId));
     }
 
-    void ClientDisconnected(ENetPacketPeer client)
+    static void ClientDisconnected(ENetPacketPeer client)
     {
-        Player player = (Player)client.GetMeta("Player");
-        int userId = player.UserId;
-        AvailableIds.Add(userId);
-        Clients.Remove(userId);
-        player.QueueFree();
+        ClientInfo clientInfo = (ClientInfo)client.GetMeta("ClientInfo");
+        AvailableIds.Add(clientInfo.PeerId);
+        Clients.Remove(clientInfo.PeerId);
+        clientInfo.Player.QueueFree();
 
-        GD.Print($"Client Disconnected With ID {userId}");
-        EventService.Fire(new Events.ClientDisconnected(userId));
+        GD.Print($"Client Disconnected With ID {clientInfo.PeerId}");
+        EventService.Fire(new Events.ClientDisconnected(clientInfo.PeerId));
     }
 
-    void OnServerRecievedPacket(Events.ServerRecievedPacket evnt)
+    static void OnServerRecievedPacket(Events.ServerRecievedPacket evnt)
     {
         int clientId = evnt.ClientId;
         byte[] data = evnt.Data;
         int packetId = Packet.ReadPacketId(data);
-        
+
         Packet packet = (Packet)Activator.CreateInstance(NetworkService.Packets[packetId]);
         packet.WriteBytes(data);
         packet.CreateBytesArray();

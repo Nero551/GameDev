@@ -9,14 +9,10 @@ public partial class Game : Node3D
     public override void _EnterTree()
     {
         NetworkService.InitRegisterPackets();
-        // NetworkService.Packets[1] = typeof(TestPacket);
         game = this;
 
-        Server server = new();
-        server.Start();
-
-        Client client = new();
-        client.Start();
+        Server.Start();
+        Client.Start();
     }
 
     public override void _Ready()
@@ -25,8 +21,9 @@ public partial class Game : Node3D
 
     public override void _Process(double delta)
     {
-        NetworkService.SendToClient<Packets.TestPacket>(256,6);
+        // NetworkService.SendToClient<Packets.TestPacket>(256,6);
         NetworkService.SendToServer<Packets.TestPacket>(6);
-        NetworkService.SendToAllClients<Packets.TestPacket>(6);
+        // NetworkService.SendToAllClients<Packets.TestPacket>(6);
+
     }
 }

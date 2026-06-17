@@ -48,18 +48,19 @@ public static class NetworkService
         if (IsClient())
         {
             T packet = Packet.Create<T>(data);
-            Server.ServerPeer.Send(0, packet.Encode(), packet.Flag);
+            //TODO- this is completely WRong , a client should't use the sreever like that. use the commented one.
+            Client.Connection.SocketSend(Server.IP, Server.Port, packet.Encode());
         }
     }
 
-    public static void SendToClient<T>(int clientId, params object[] data) where T : Packet, new()
+    public static void SendToClient<T>(int peerId, params object[] data) where T : Packet, new()
     {
         if (IsServer())
         {
-            if (Server.Clients.ContainsKey(clientId))
+            if (Server.Clients.ContainsKey(peerId))
             {
                 T packet = Packet.Create<T>(data);
-                Server.Clients[clientId].Peer.Send(0, packet.Encode(), packet.Flag);
+                Server.Clients[peerId].Peer.Send(0, packet.Encode(), packet.Flag);
             }
         }
     }
@@ -78,8 +79,8 @@ public static class NetworkService
 
     // }
 
-    public static void OnServerPacket<T>() where T : Packet, new()
-    {
+    // public static void OnServerPacket<T>() where T : Packet, new()
+    // {
 
-    }
+    // }
 }

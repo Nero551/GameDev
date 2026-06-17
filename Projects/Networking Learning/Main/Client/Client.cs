@@ -7,16 +7,24 @@ public class Client
 {
     //TODO- need way for the Client class and Player Class to be connected.
     /*
-        *when they are connected the peer will exist here , making it much easier to do anything basically.
-        * and client class will contain player field. making comms between them easier to work with.
-        * the clientt class should OWN the player.
+        * am thinking make the server send back a packet containing the peer id and peer,
+        * after the "ClientConnected" server event.
 
-        * I COULD MAKE THIS CLIENT CLASS INHERITTT EnetPacketPeer
+        * it just hit me . there is only 1 client per client instance. that means it can be static.
+        * same with server .the instance that has server only has 1 server.
+        * the server only contains the Client's player. it can't own the client. the client is on its own instanc
     */
-    private ENetConnection Connection;
-    private bool Running = false;
 
-    public void Start()
+    public static ENetConnection Connection;
+
+    public static ENetPacketPeer Peer;
+    public static Player Player; //* the player Entity (includes camera , input, etc)
+    public static int PeerId; //* this is the signature for the network connection ITSELF
+    public static int UserId = 1; //* this is a signature for the player's data in DB
+    
+    private static bool Running = false;
+
+    public static void Start()
     {
         if (NetworkService.IsClient())
         {
@@ -29,14 +37,15 @@ public class Client
                 Connection = null;
                 return;
             }
-            Server.ServerPeer = Connection.ConnectToHost(Server.IP, Server.Port);
+            //TODO- tis is same issue. client should't access server like that.
+            Connection.ConnectToHost(Server.IP, Server.Port);
             Running = true;
-            Update();
             GD.Print("Client Started");
+            Update();
         }
     }
 
-    public async void Update()
+    public static async void Update()
     {
         while (Running)
         {
@@ -45,7 +54,7 @@ public class Client
         }
     }
 
-    void HandlePackets()
+    static void HandlePackets()
     {
         var packetEvent = Connection.Service();
         ENetConnection.EventType eventType = packetEvent[0].As<ENetConnection.EventType>();
@@ -70,19 +79,19 @@ public class Client
         }
     }
 
-    void DisconnectedFromServer()
+    static void DisconnectedFromServer()
     {
         GD.Print("Disconnected To Server");
         EventService.Fire(new Events.DisconnectedFromServer());
     }
 
-    void ConnectedToServer()
+    static void ConnectedToServer()
     {
         GD.Print("Connected To Server");
         EventService.Fire(new Events.ConnectedToServer());
     }
 
-    void OnClientRecievedPacket(Events.ClientRecievedPacket evnt)
+    static void OnClientRecievedPacket(Events.ClientRecievedPacket evnt)
     {
         byte[] data = evnt.Data;
         int packetId = Packet.ReadPacketId(data);
@@ -94,7 +103,7 @@ public class Client
         List<Object> decodedData = packet.Decode();
         foreach (object smth in decodedData)
         {
-            GD.Print(smth );
+            GD.Print(smth);
         }
     }
 }
