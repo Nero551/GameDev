@@ -1,23 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Security;
 using Godot;
 using Godot.NativeInterop;
 using Packets;
 
 public static class NetworkService
 {
-    public static Dictionary<int, Type> Packets = new()
+
+    public static Dictionary<int, Type> Packets = new() { };
+    
+    public static void InitRegisterPackets()
     {
-        {1 , typeof(TestPacket)}
-    };
-    //TODO- i have decided i will make custom packet sender and reciever instead of using the godot RPC system.
-    /*
-    the core of this is , u convert data into bytes , u send them with ENet , u unconvert them back into data
-    */
-    //* Reason for this is: RPC depends on nodes , my framework doesnot depend on nodes.
-    //TODO- make public enum for creating network calls instead of using strings. more safe.
-    //TODO- channels enum for like "reliable" and "unreliable"
+        var packetTypes = typeof(Packet).Assembly.GetTypes().Where(t => !t.IsAbstract && typeof(Packet).IsAssignableFrom(t));
+
+        foreach (var type in packetTypes)
+        {
+            Packet packet = (Packet)Activator.CreateInstance(type);
+
+            Packets[packet.Id] = type;
+        }
+    }
 
     public static bool IsServer()
     {
@@ -39,47 +43,43 @@ public static class NetworkService
         return true;
     }
 
-    /*
-        Here and the function down there. there should be the packett send methods.
-        i will rarely interact with the actual packet class.
-        how to create packet:
-        1-create class and inherit packet class.
-        2-override send and recieve methods to have custom encoding and decoding.
-    */
-
     public static void SendToServer<T>(params object[] data) where T : Packet, new()
     {
-        //TODO- send the id of the player who sent tthis to the server.
         if (IsClient())
         {
-            T packet = new();
-            packet.Send(1, data);
+            T packet = Packet.Create<T>(data);
+            Server.ServerPeer.Send(0, packet.Encode(), packet.Flag);
         }
     }
 
-    public static void SendToClient<T>(int id, params object[] data) where T : Packet, new()
+    public static void SendToClient<T>(int clientId, params object[] data) where T : Packet, new()
     {
         if (IsServer())
         {
-            T packet = new();
-            //Sending
-            if (Server.Clients.ContainsKey(id))
+            if (Server.Clients.ContainsKey(clientId))
             {
-                Server.Clients[id].Client.Send(0, packet.Encode(), packet.Flag);
-                GD.Print("sending");
+                T packet = Packet.Create<T>(data);
+                Server.Clients[clientId].Peer.Send(0, packet.Encode(), packet.Flag);
             }
         }
     }
 
-    // public static void SendToAllClients<T>(params object[] data) where T : Packet, new()
+    public static void SendToAllClients<T>(params object[] data) where T : Packet, new()
+    {
+        if (IsServer())
+        {
+            T packet = Packet.Create<T>(data);
+            Server.Connection.Broadcast(0, packet.Encode(), packet.Flag);
+        }
+    }
+
+    // public static void OnClientPacket<T>() where T : Packet, new()
     // {
-    //     if (IsServer())
-    //     {
-    //         foreach (KeyValuePair<long, Player> pair in Server.Players)
-    //         {
-    //             T packet = new();
-    //             packet.Send(pair.Value.UserId, data);
-    //         }
-    //     }
+
     // }
+
+    public static void OnServerPacket<T>() where T : Packet, new()
+    {
+
+    }
 }

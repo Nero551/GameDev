@@ -5,7 +5,7 @@ using Godot;
 public partial class Player : CharacterBody3D
 {
     [Export] public int UserId;
-    [Export] public ENetPacketPeer Client;
+    [Export] public ENetPacketPeer Peer;
     public const float Speed = 5.0f;
     public const float JumpVelocity = 4.5f;
     [Export] Vector3 velocity;
@@ -34,6 +34,5 @@ public partial class Player : CharacterBody3D
 
         Velocity = velocity;
         MoveAndSlide();
-        Packet.Create<Packets.TestPacket>().Send(1, []);
     }
 }

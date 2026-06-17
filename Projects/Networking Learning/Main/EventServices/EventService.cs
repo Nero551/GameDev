@@ -1,16 +1,15 @@
 using System;
 using System.Collections.Generic;
-using Godot;
 
 public static class EventService
 {
     private static Dictionary<Type, Delegate> Events = [];
 
-    public static void Fire<T>(T @event) where T : Event
+    public static void Fire<T>(T evnt) where T : Event
     {
-        if (Events.TryGetValue(@event.GetType(), out Delegate callback))
+        if (Events.TryGetValue(evnt.GetType(), out Delegate callback))
         {
-            ((Action<T>)callback)?.Invoke(@event);
+            ((Action<T>)callback)?.Invoke(evnt);
         }
     }
 

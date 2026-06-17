@@ -2,28 +2,40 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
-using Packets;
 
 public class Client
 {
-    public ENetConnection Connection;
+    //TODO- need way for the Client class and Player Class to be connected.
+    /*
+        *when they are connected the peer will exist here , making it much easier to do anything basically.
+        * and client class will contain player field. making comms between them easier to work with.
+        * the clientt class should OWN the player.
+
+        * I COULD MAKE THIS CLIENT CLASS INHERITTT EnetPacketPeer
+    */
+    private ENetConnection Connection;
     private bool Running = false;
+
     public void Start()
     {
-        EventService.Subscribe<Events.ClientRecievedPacket>(OnClientRecievedPacket);
-        Connection = new ENetConnection();
-        Error error = Connection.CreateHost(1);
-        if (error != default)
+        if (NetworkService.IsClient())
         {
-            GD.Print($"Client Failed To Start: {error}");
-            Connection = null;
-            return;
+            EventService.Subscribe<Events.ClientRecievedPacket>(OnClientRecievedPacket);
+            Connection = new ENetConnection();
+            Error error = Connection.CreateHost(1);
+            if (error != default)
+            {
+                GD.Print($"Client Failed To Start: {error}");
+                Connection = null;
+                return;
+            }
+            Server.ServerPeer = Connection.ConnectToHost(Server.IP, Server.Port);
+            Running = true;
+            Update();
+            GD.Print("Client Started");
         }
-        Connection.ConnectToHost(Server.IP, Server.Port);
-        Running = true;
-        Update();
-        GD.Print("Client Started");
     }
+
     public async void Update()
     {
         while (Running)
@@ -32,11 +44,9 @@ public class Client
             await Task.Delay(10);
         }
     }
+
     void HandlePackets()
     {
-        if (!NetworkService.IsClient())
-            return;
-
         var packetEvent = Connection.Service();
         ENetConnection.EventType eventType = packetEvent[0].As<ENetConnection.EventType>();
         var peer = packetEvent[1].As<ENetPacketPeer>();
@@ -58,8 +68,6 @@ public class Client
             default:
                 break;
         }
-        packetEvent = Connection.Service();
-        eventType = packetEvent[0].As<ENetConnection.EventType>();
     }
 
     void DisconnectedFromServer()
@@ -74,21 +82,19 @@ public class Client
         EventService.Fire(new Events.ConnectedToServer());
     }
 
-    void OnClientRecievedPacket(Events.ClientRecievedPacket @event)
+    void OnClientRecievedPacket(Events.ClientRecievedPacket evnt)
     {
-        byte[] data = @event.Data;
+        byte[] data = evnt.Data;
+        int packetId = Packet.ReadPacketId(data);
 
-        Packet packet = new();
-
+        Packet packet = (Packet)Activator.CreateInstance(NetworkService.Packets[packetId]);
         packet.WriteBytes(data);
         packet.CreateBytesArray();
-        int packetId = packet.ReadInt();
 
         List<Object> decodedData = packet.Decode();
-        GD.Print("Nice");
         foreach (object smth in decodedData)
         {
-            GD.Print(smth);
+            GD.Print(smth );
         }
     }
 }

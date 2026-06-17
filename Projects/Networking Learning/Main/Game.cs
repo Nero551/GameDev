@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Packets;
 
 public partial class Game : Node3D
 {
@@ -7,27 +8,25 @@ public partial class Game : Node3D
     // Called when the node enters the scene tree for the first time.
     public override void _EnterTree()
     {
+        NetworkService.InitRegisterPackets();
+        // NetworkService.Packets[1] = typeof(TestPacket);
         game = this;
+
+        Server server = new();
+        server.Start();
+
+        Client client = new();
+        client.Start();
     }
 
     public override void _Ready()
     {
-        if (NetworkService.IsServer())
-        {
-            Server server = new();
-            server.Start();
-        }
-        else
-        {
-            Client client = new();
-            client.Start();
-        }
-
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
-        NetworkService.SendToClient<Packets.TestPacket>(256, 5);
+        NetworkService.SendToClient<Packets.TestPacket>(256,6);
+        NetworkService.SendToServer<Packets.TestPacket>(6);
+        NetworkService.SendToAllClients<Packets.TestPacket>(6);
     }
 }

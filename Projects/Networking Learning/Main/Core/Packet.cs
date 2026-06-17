@@ -1,21 +1,33 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Godot;
 
 namespace Packets { }
 
-public class Packet
+public abstract class Packet()
 {
+    public virtual int Flag { get; }
+    public virtual int Id { get; }
+
+    public object[] Data;
     public List<byte> BufferList = [];
     private byte[] BufferArray = [];
-    public int Flag;
-    public int ID;
     private int ReadPos = 0;
 
-    public static T Create<T>() where T : Packet, new()
+    public static T Create<T>(object[] data) where T : Packet, new()
     {
-        return new T();
+        T packet = new()
+        {
+            Data = data
+        };
+        return packet;
+    }
+
+    public static int ReadPacketId(byte[] data)
+    {
+        return BitConverter.ToInt32(data, 0);
     }
 
     public virtual byte[] Encode()
@@ -27,9 +39,6 @@ public class Packet
     {
         return [];
     }
-
-    public virtual void Send(int id, object[] data = default) { }
-    public virtual void Recieve(Packet packet) { }
 
     public byte[] CreateBytesArray()
     {

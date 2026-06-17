@@ -12,25 +12,17 @@ public partial class Server
     public static string IP = "127.0.0.1";
     public static Dictionary<int, Player> Clients = [];
     public static ENetPacketPeer ServerPeer;
+    public static ENetConnection Connection;
 
     private bool Running = false;
-    private int MaxClients = 12;
+    private readonly int MaxClients = 12;
     private readonly List<int> AvailableIds = System.Linq.Enumerable.Range(256, 2).Reverse().ToList();
-    private ENetConnection Connection;
-
-    public async void Update()
-    {
-        while (Running)
-        {
-            HandlePackets();
-            await Task.Delay(10);
-        }
-    }
 
     public void Start()
     {
         if (NetworkService.IsServer())
         {
+            EventService.Subscribe<Events.ServerRecievedPacket>(OnServerRecievedPacket);
             Connection = new ENetConnection();
             Error error = Connection.CreateHostBound(IP, Port, MaxClients);
             if (error != default)
@@ -45,11 +37,17 @@ public partial class Server
         }
     }
 
+    public async void Update()
+    {
+        while (Running)
+        {
+            HandlePackets();
+            await Task.Delay(10);
+        }
+    }
+
     private void HandlePackets()
     {
-        if (!NetworkService.IsServer())
-            return;
-
         var packetEvent = Connection.Service();
         ENetConnection.EventType eventType = packetEvent[0].As<ENetConnection.EventType>();
         var peer = packetEvent[1].As<ENetPacketPeer>();
@@ -71,28 +69,26 @@ public partial class Server
             default:
                 break;
         }
-        packetEvent = Connection.Service();
-        eventType = packetEvent[0].As<ENetConnection.EventType>();
     }
 
-    Player CreatePlayer(ENetPacketPeer client, int clientId)
+    Player CreatePlayer(ENetPacketPeer peer, int clientId)
     {
         PackedScene scene = GD.Load<PackedScene>("res://Main/Scenes/player.tscn");
         Player player = scene.Instantiate<Player>();
-        player.Client = client;
+        player.Peer = peer;
         player.UserId = clientId;
         player.Name = clientId.ToString();
         Game.game.AddChild(player);
         return player;
     }
 
-    void ClientConnected(ENetPacketPeer client)
+    void ClientConnected(ENetPacketPeer peer)
     {
         int clientId = AvailableIds[AvailableIds.Count - 1];
         AvailableIds.RemoveAt(AvailableIds.Count - 1);
 
-        Player player = CreatePlayer(client, clientId);
-        client.SetMeta("Player", player);
+        Player player = CreatePlayer(peer, clientId);
+        peer.SetMeta("Player", player);
         Clients[clientId] = player;
 
         GD.Print($"Client Connected With ID {player.UserId}");
@@ -109,5 +105,23 @@ public partial class Server
 
         GD.Print($"Client Disconnected With ID {userId}");
         EventService.Fire(new Events.ClientDisconnected(userId));
+    }
+
+    void OnServerRecievedPacket(Events.ServerRecievedPacket evnt)
+    {
+        int clientId = evnt.ClientId;
+        byte[] data = evnt.Data;
+        int packetId = Packet.ReadPacketId(data);
+        
+        Packet packet = (Packet)Activator.CreateInstance(NetworkService.Packets[packetId]);
+        packet.WriteBytes(data);
+        packet.CreateBytesArray();
+
+        List<Object> decodedData = packet.Decode();
+
+        foreach (object smth in decodedData)
+        {
+            GD.Print(smth);
+        }
     }
 }
