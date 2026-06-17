@@ -6,7 +6,7 @@ using Godot;
 using Godot.NativeInterop;
 using Microsoft.VisualBasic;
 
-public static class Server
+public static partial class Server
 {
     public partial class ClientInfo : GodotObject
     {
@@ -17,12 +17,12 @@ public static class Server
     }
     public static int Port = 7777;
     public static string IP = "127.0.0.1";
-    public static Dictionary<int, ClientInfo> Clients = [];
+    public static Dictionary<int, ClientInfo> ClientInfos = [];
     public static ENetConnection Connection;
 
     private static bool Running = false;
     private static readonly int MaxClients = 12;
-    private static readonly List<int> AvailableIds = System.Linq.Enumerable.Range(MaxClients, 2).Reverse().ToList();
+    private static readonly List<int> AvailableIds = [.. System.Linq.Enumerable.Range(1, 12).Reverse()];
 
     public static void Start()
     {
@@ -83,7 +83,7 @@ public static class Server
 
     static Player CreatePlayer(ClientInfo clientInfo)
     {
-        PackedScene scene = GD.Load<PackedScene>("res://Main/Scenes/player.tscn");
+        PackedScene scene = GD.Load<PackedScene>("res://Main/Shared/Scenes/player.tscn");
         Player player = scene.Instantiate<Player>();
         player.Name = clientInfo.UserId.ToString();
         Game.game.AddChild(player);
@@ -92,17 +92,18 @@ public static class Server
 
     static void ClientConnected(ENetPacketPeer peer)
     {
-        //TODO- fix this.
-        int peerId = AvailableIds[AvailableIds.Count - 1];
+        int peerId = AvailableIds[^1];
         AvailableIds.RemoveAt(AvailableIds.Count - 1);
 
 
-        ClientInfo clientInfo = new();
-        clientInfo.PeerId = peerId;
-        clientInfo.Peer = peer;
+        ClientInfo clientInfo = new()
+        {
+            PeerId = peerId,
+            Peer = peer
+        };
         clientInfo.Player = CreatePlayer(clientInfo);
         peer.SetMeta("ClientInfo", clientInfo);
-        Clients[peerId] = clientInfo;
+        ClientInfos[peerId] = clientInfo;
 
         NetworkService.SendToClient<Packets.ClientInfo>(peerId, clientInfo);
 
@@ -114,7 +115,7 @@ public static class Server
     {
         ClientInfo clientInfo = (ClientInfo)client.GetMeta("ClientInfo");
         AvailableIds.Add(clientInfo.PeerId);
-        Clients.Remove(clientInfo.PeerId);
+        ClientInfos.Remove(clientInfo.PeerId);
         clientInfo.Player.QueueFree();
 
         GD.Print($"Client Disconnected With ID {clientInfo.PeerId}");

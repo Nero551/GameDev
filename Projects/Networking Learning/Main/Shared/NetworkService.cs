@@ -48,8 +48,8 @@ public static class NetworkService
         if (IsClient())
         {
             T packet = Packet.Create<T>(data);
-            //TODO- this is completely WRong , a client should't use the sreever like that. use the commented one.
-            Client.Connection.SocketSend(Server.IP, Server.Port, packet.Encode());
+            //the client only knows the server. so broadcast sends only to the server.
+            Client.Connection.Broadcast(0, packet.Encode(), packet.Flag);
         }
     }
 
@@ -57,10 +57,10 @@ public static class NetworkService
     {
         if (IsServer())
         {
-            if (Server.Clients.ContainsKey(peerId))
+            if (Server.ClientInfos.ContainsKey(peerId))
             {
                 T packet = Packet.Create<T>(data);
-                Server.Clients[peerId].Peer.Send(0, packet.Encode(), packet.Flag);
+                Server.ClientInfos[peerId].Peer.Send(0, packet.Encode(), packet.Flag);
             }
         }
     }

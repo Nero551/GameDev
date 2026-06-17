@@ -5,15 +5,8 @@ using Godot;
 
 public class Client
 {
-    //TODO- need way for the Client class and Player Class to be connected.
-    /*
-        * am thinking make the server send back a packet containing the peer id and peer,
-        * after the "ClientConnected" server event.
-
-        * it just hit me . there is only 1 client per client instance. that means it can be static.
-        * same with server .the instance that has server only has 1 server.
-        * the server only contains the Client's player. it can't own the client. the client is on its own instanc
-    */
+    //TODO- i need to learn how to byte-ify classes (player,peer, etc). things other than ints and bools
+    //* i dont need to byte-ify the peer if i can't, its unnecessary
 
     public static ENetConnection Connection;
 
@@ -21,7 +14,7 @@ public class Client
     public static Player Player; //* the player Entity (includes camera , input, etc)
     public static int PeerId; //* this is the signature for the network connection ITSELF
     public static int UserId = 1; //* this is a signature for the player's data in DB
-    
+
     private static bool Running = false;
 
     public static void Start()
@@ -37,7 +30,6 @@ public class Client
                 Connection = null;
                 return;
             }
-            //TODO- tis is same issue. client should't access server like that.
             Connection.ConnectToHost(Server.IP, Server.Port);
             Running = true;
             GD.Print("Client Started");
@@ -103,7 +95,7 @@ public class Client
         List<Object> decodedData = packet.Decode();
         foreach (object smth in decodedData)
         {
-            GD.Print(smth);
+            // GD.Print(smth);
         }
     }
 }
