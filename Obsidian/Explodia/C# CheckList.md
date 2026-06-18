@@ -24,7 +24,7 @@
 - [x] `if / else`
 - [x] `switch`
 - [x] `for`
-- [ ] `while`
+- [x] `while`
 - [x] `foreach`
 - [x] Nested loops
 - [x] `break` and `continue`

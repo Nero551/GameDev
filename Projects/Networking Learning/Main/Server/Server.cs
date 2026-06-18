@@ -28,7 +28,6 @@ public static partial class Server
     {
         if (NetworkService.IsServer())
         {
-            EventService.Subscribe<Events.ServerRecievedPacket>(OnServerRecievedPacket);
             Connection = new ENetConnection();
             Error error = Connection.CreateHostBound(IP, Port, MaxClients);
             if (error != default)
@@ -120,23 +119,5 @@ public static partial class Server
 
         GD.Print($"Client Disconnected With ID {clientInfo.PeerId}");
         EventService.Fire(new Events.ClientDisconnected(clientInfo.PeerId));
-    }
-
-    static void OnServerRecievedPacket(Events.ServerRecievedPacket evnt)
-    {
-        int clientId = evnt.ClientId;
-        byte[] data = evnt.Data;
-        int packetId = Packet.ReadPacketId(data);
-
-        Packet packet = (Packet)Activator.CreateInstance(NetworkService.Packets[packetId]);
-        packet.WriteBytes(data);
-        packet.CreateBytesArray();
-
-        List<Object> decodedData = packet.Decode();
-
-        foreach (object smth in decodedData)
-        {
-            GD.Print(smth);
-        }
     }
 }

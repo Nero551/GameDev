@@ -10,8 +10,15 @@ public static class NetworkService
 {
 
     public static Dictionary<int, Type> Packets = new() { };
-    
-    public static void InitRegisterPackets()
+
+    public static void Init()
+    {
+        RegisterPackets();
+        EventService.Subscribe<Events.ServerRecievedPacket>(OnServerRecievedPacket);
+        EventService.Subscribe<Events.ClientRecievedPacket>(OnClientRecievedPacket);
+    }
+
+    public static void RegisterPackets()
     {
         var packetTypes = typeof(Packet).Assembly.GetTypes().Where(t => !t.IsAbstract && typeof(Packet).IsAssignableFrom(t));
 
@@ -74,13 +81,38 @@ public static class NetworkService
         }
     }
 
-    // public static void OnClientPacket<T>() where T : Packet, new()
-    // {
 
-    // }
+    static void OnClientRecievedPacket(Events.ClientRecievedPacket evnt)
+    {
+        byte[] data = evnt.Data;
+        int packetId = Packet.ReadPacketId(data);
 
-    // public static void OnServerPacket<T>() where T : Packet, new()
-    // {
+        Packet packet = (Packet)Activator.CreateInstance(NetworkService.Packets[packetId]);
+        packet.WriteBytes(data);
+        packet.CreateBytesArray();
 
-    // }
+        List<Object> decodedData = packet.Decode();
+        foreach (object smth in decodedData)
+        {
+            // GD.Print(smth);
+        }
+    }
+
+    static void OnServerRecievedPacket(Events.ServerRecievedPacket evnt)
+    {
+        int clientId = evnt.ClientId;
+        byte[] data = evnt.Data;
+        int packetId = Packet.ReadPacketId(data);
+
+        Packet packet = (Packet)Activator.CreateInstance(NetworkService.Packets[packetId]);
+        packet.WriteBytes(data);
+        packet.CreateBytesArray();
+
+        List<Object> decodedData = packet.Decode();
+
+        foreach (object smth in decodedData)
+        {
+            GD.Print(smth);
+        }
+    }
 }
