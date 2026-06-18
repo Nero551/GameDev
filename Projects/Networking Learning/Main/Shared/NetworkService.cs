@@ -8,17 +8,22 @@ using Packets;
 
 public static class NetworkService
 {
-
+    /*
+        ? so how does this mess work? to send stuff from client to server first you:
+        ?   1- create a packet
+        ?   2- create a Remote Event to notify when packet is recieved
+        ?   3- send with one of the send methods
+        ?   4- subscribe a method to the Remote Event
+    */
     public static Dictionary<int, Type> Packets = new() { };
 
     public static void Init()
     {
         RegisterPackets();
-        EventService.Subscribe<Events.ServerRecievedPacket>(OnServerRecievedPacket);
-        EventService.Subscribe<Events.ClientRecievedPacket>(OnClientRecievedPacket);
+        EventService.Subscribe<Events.RecievedPacket>(OnRecievedPacket);
     }
 
-    public static void RegisterPackets()
+    static void RegisterPackets()
     {
         var packetTypes = typeof(Packet).Assembly.GetTypes().Where(t => !t.IsAbstract && typeof(Packet).IsAssignableFrom(t));
 
@@ -81,26 +86,13 @@ public static class NetworkService
         }
     }
 
-
-    static void OnClientRecievedPacket(Events.ClientRecievedPacket evnt)
+    //* what i could do is have a custom event for each packet. this method just figures out which event to fire
+    //* this will make using packets way easier. but setting up a packet will take longer
+    static void OnRecievedPacket(Events.RecievedPacket evnt)
     {
-        byte[] data = evnt.Data;
-        int packetId = Packet.ReadPacketId(data);
+        int senderPeerId = evnt.SenderPeerId;  // equals 0 if the server sent it
+        GD.Print(senderPeerId);
 
-        Packet packet = (Packet)Activator.CreateInstance(NetworkService.Packets[packetId]);
-        packet.WriteBytes(data);
-        packet.CreateBytesArray();
-
-        List<Object> decodedData = packet.Decode();
-        foreach (object smth in decodedData)
-        {
-            // GD.Print(smth);
-        }
-    }
-
-    static void OnServerRecievedPacket(Events.ServerRecievedPacket evnt)
-    {
-        int clientId = evnt.ClientId;
         byte[] data = evnt.Data;
         int packetId = Packet.ReadPacketId(data);
 

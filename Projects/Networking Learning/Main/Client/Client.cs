@@ -64,7 +64,7 @@ public class Client
                 DisconnectedFromServer();
                 return;
             case ENetConnection.EventType.Receive:
-                EventService.Fire(new Events.ClientRecievedPacket(peer.GetPacket()));
+                EventService.Fire(new Events.RecievedPacket(peer.GetPacket()));
                 break;
             default:
                 break;

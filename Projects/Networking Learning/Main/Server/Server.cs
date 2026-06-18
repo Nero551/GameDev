@@ -70,8 +70,8 @@ public static partial class Server
                 break;
             case ENetConnection.EventType.Receive:
                 EventService.Fire(
-                    new Events.ServerRecievedPacket(
-                        ((ClientInfo)peer.GetMeta("ClientInfo")).PeerId, peer.GetPacket()
+                    new Events.RecievedPacket(
+                        peer.GetPacket(), ((ClientInfo)peer.GetMeta("ClientInfo")).PeerId
                         )
                     );
                 break;

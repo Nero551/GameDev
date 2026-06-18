@@ -4,7 +4,7 @@ using Godot;
 
 namespace Events;
 
-public class ClientConnected(int clientId) : Event
+public class ClientConnected(int peerId) : Event
 {
-    public readonly int ClientId = clientId;
+    public readonly int PeerId = peerId;
 }

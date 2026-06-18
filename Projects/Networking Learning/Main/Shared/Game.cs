@@ -22,7 +22,7 @@ public partial class Game : Node3D
     public override void _Process(double delta)
     {
         // NetworkService.SendToClient<Packets.TestPacket>(256,6);
-        NetworkService.SendToServer<Packets.TestPacket>(6);
+        // NetworkService.SendToServer<Packets.TestPacket>(6);
         // NetworkService.SendToAllClients<Packets.TestPacket>(6);
 
     }
