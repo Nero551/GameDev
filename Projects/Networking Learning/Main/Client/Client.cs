@@ -5,12 +5,18 @@ using Godot;
 
 public class Client
 {
+    //TODO- high-key i might need to switch to ECS-style framework. atleast seperate data and globalize logic
+    //* it will be easier to maintain and work with multiplayer in that framework
+
+    //TODO- move onto replication 
+
     //TODO- i need to learn how to byte-ify classes (player,peer, etc). things other than ints and bools
+
+    //* FOR GODOT NODES. U CAN JUST USE THE SCENE. send the filepath of the scene.
     //* i dont need to byte-ify the peer if i can't, its unnecessary
 
     public static ENetConnection Connection;
 
-    public static ENetPacketPeer Peer;
     public static Player Player; //* the player Entity (includes camera , input, etc)
     public static int PeerId; //* this is the signature for the network connection ITSELF
     public static int UserId = 1; //* this is a signature for the player's data in DB
@@ -87,5 +93,6 @@ public class Client
     {
         PeerId = evnt.PeerId;
         UserId = evnt.UserId;
+        Player = PlayersService.CreatePlayer(UserId);
     }
 }

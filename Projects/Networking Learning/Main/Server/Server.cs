@@ -13,7 +13,6 @@ public static partial class Server
         public int UserId;
         public int PeerId;
         public ENetPacketPeer Peer;
-        public Player Player;
     }
     public static int Port = 7777;
     public static string IP = "127.0.0.1";
@@ -80,15 +79,6 @@ public static partial class Server
         }
     }
 
-    static Player CreatePlayer(ClientInfo clientInfo)
-    {
-        PackedScene scene = GD.Load<PackedScene>("res://Main/Shared/Scenes/player.tscn");
-        Player player = scene.Instantiate<Player>();
-        player.Name = clientInfo.UserId.ToString();
-        Game.game.AddChild(player);
-        return player;
-    }
-
     static void ClientConnected(ENetPacketPeer peer)
     {
         int peerId = AvailableIds[^1];
@@ -100,7 +90,8 @@ public static partial class Server
             PeerId = peerId,
             Peer = peer
         };
-        clientInfo.Player = CreatePlayer(clientInfo);
+        PlayersService.CreatePlayer(clientInfo.UserId).Name = clientInfo.UserId.ToString();
+
         peer.SetMeta("ClientInfo", clientInfo);
         ClientInfos[peerId] = clientInfo;
 
@@ -115,7 +106,7 @@ public static partial class Server
         ClientInfo clientInfo = (ClientInfo)client.GetMeta("ClientInfo");
         AvailableIds.Add(clientInfo.PeerId);
         ClientInfos.Remove(clientInfo.PeerId);
-        clientInfo.Player.QueueFree();
+        PlayersService.RemovePlayer(clientInfo.UserId);
 
         GD.Print($"Client Disconnected With ID {clientInfo.PeerId}");
         EventService.Fire(new Events.ClientDisconnected(clientInfo.PeerId));

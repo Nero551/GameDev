@@ -5,21 +5,20 @@ using Godot;
 
 namespace Packets;
 
-public class ClientInfo : Packet
+public class Position : Packet
 {
-    
-    public override int Flag => (int)ENetPacketPeer.FlagReliable;
+
+    public override int Flag => (int)ENetPacketPeer.FlagUnreliableFragment;
 
     public override byte[] Encode()
     {
         //Writing Id
         WriteInt(NetworkService.IdPacketLookup[this.GetType()]);
-        
+        WriteFloat(((Vector3)Data[0]).X);
+        WriteFloat(((Vector3)Data[0]).Y);
+        WriteFloat(((Vector3)Data[0]).Z);
+
         //* Writing Here
-        Server.ClientInfo clientInfo = Data[0] as Server.ClientInfo;
-        WriteInt(clientInfo.UserId);
-        WriteInt(clientInfo.PeerId);
-        // WriteInt(clientInfo.Peer);
         return CreateBytesArray();
     }
 
@@ -28,14 +27,15 @@ public class ClientInfo : Packet
         //Skip id
         ReadInt();
 
-        //* Writing Here
-        object[] data = [ReadInt(), ReadInt()];
+        //* Reading Here
+        object[] data = [ReadFloat(), ReadFloat(), ReadFloat()];
         return data;
     }
 
     public override void FireRemote(int senderPeerId, object[] decodedData)
     {
         base.FireRemote(senderPeerId, decodedData);
-        EventService.Fire(new Events.Remote.ClientInfo(senderPeerId, decodedData));
+        EventService.Fire(new Events.Remote.Position(decodedData, senderPeerId));
     }
 }
+

@@ -9,7 +9,6 @@ public class ClientInfo : Remote
 {
     public int UserId;
     public int PeerId;
-    public Player Player;
 
     public ClientInfo(int senderPeerId, object[] decodedData)
     {

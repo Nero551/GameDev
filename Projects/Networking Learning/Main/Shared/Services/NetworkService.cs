@@ -29,6 +29,7 @@ public static class NetworkService
         ?   4- create new fields and assign them to values in the DecodedData Array (differs per remote) 
     */
     public static Dictionary<int, Type> Packets = new() { };
+    public static Dictionary<Type, int> IdPacketLookup = new() { };
 
     public static void Init()
     {
@@ -103,13 +104,16 @@ public static class NetworkService
 
     static void RegisterPackets()
     {
-        var packetTypes = typeof(Packet).Assembly.GetTypes().Where(t => !t.IsAbstract && typeof(Packet).IsAssignableFrom(t));
+        int currentId = 1;
+        var packetTypes = typeof(Packet).Assembly.GetTypes().Where(t => !t.IsAbstract && typeof(Packet).IsAssignableFrom(t)).OrderBy( t => t.Name);
 
         foreach (var type in packetTypes)
         {
             Packet packet = (Packet)Activator.CreateInstance(type);
 
-            Packets[packet.Id] = type;
+            IdPacketLookup[type] = currentId;
+            Packets[currentId] = type;
+            currentId++;
         }
     }
 }

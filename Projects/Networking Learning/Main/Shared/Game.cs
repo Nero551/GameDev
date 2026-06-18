@@ -10,13 +10,13 @@ public partial class Game : Node3D
     {
         NetworkService.Init();
         game = this;
-
-        Server.Start();
-        Client.Start();
     }
 
     public override void _Ready()
     {
+
+        Server.Start();
+        Client.Start();
     }
 
     public override void _Process(double delta)

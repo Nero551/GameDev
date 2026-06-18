@@ -9,14 +9,13 @@ namespace Packets { }
 public abstract class Packet()
 {
     public virtual int Flag { get; }
-    public virtual int Id { get; }
 
     public object[] Data;
     public List<byte> BufferList = [];
-    private byte[] BufferArray = [];
+    protected byte[] BufferArray = [];
     private int ReadPos = 0;
 
-    public static T Create<T>(object[] data) where T : Packet, new()
+    public static T Create<T>(params object[] data) where T : Packet, new()
     {
         T packet = new()
         {

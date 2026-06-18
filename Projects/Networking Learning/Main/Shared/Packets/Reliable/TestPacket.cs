@@ -8,14 +8,13 @@ namespace Packets;
 public class TestPacket : Packet
 {
 
-    public override int Id => 1;
     public override int Flag => (int)ENetPacketPeer.FlagReliable;
 
     public override byte[] Encode()
     {
         //Writing Id
-        WriteInt(Id);
-        
+        WriteInt(NetworkService.IdPacketLookup[this.GetType()]);
+
         //* Writing Here
         WriteInt((int)Data[0]);
         return CreateBytesArray();
