@@ -30,12 +30,16 @@ public abstract class Packet()
         return BitConverter.ToInt32(data, 0);
     }
 
+    public virtual void FireRemote(int senderPeerId, object[] decodedData)
+    {
+
+    }
     public virtual byte[] Encode()
     {
 
         return CreateBytesArray();
     }
-    public virtual List<Object> Decode()
+    public virtual object[] Decode()
     {
         return [];
     }

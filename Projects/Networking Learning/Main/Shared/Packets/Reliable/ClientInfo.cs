@@ -24,13 +24,19 @@ public class ClientInfo : Packet
         return CreateBytesArray();
     }
 
-    public override List<Object> Decode()
+    public override object[] Decode()
     {
         //Skip id
         ReadInt();
 
         //* Writing Here
-        List<Object> data = [ReadInt(), ReadInt(), ];
+        object[] data = [ReadInt(), ReadInt()];
         return data;
+    }
+
+    public override void FireRemote(int senderPeerId, object[] decodedData)
+    {
+        base.FireRemote(senderPeerId, decodedData);
+        EventService.Fire(new Events.Remote.ClientInfo(senderPeerId, decodedData));
     }
 }

@@ -21,13 +21,13 @@ public class TestPacket : Packet
         return CreateBytesArray();
     }
 
-    public override List<Object> Decode()
+    public override object[] Decode()
     {
         //Skip id
         ReadInt();
 
         //* Writing Here
-        List<Object> data = [ReadInt()];
+        object[] data = [ReadInt()];
         return data;
     }
 }

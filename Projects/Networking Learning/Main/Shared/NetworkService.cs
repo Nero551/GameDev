@@ -4,16 +4,29 @@ using System.Linq;
 using System.Net.Security;
 using Godot;
 using Godot.NativeInterop;
-using Packets;
 
 public static class NetworkService
 {
     /*
-        ? so how does this mess work? to send stuff from client to server first you:
+        !So how does this mess work? to send stuff from client to server or vice versa first you:
         ?   1- create a packet
         ?   2- create a Remote Event to notify when packet is recieved
         ?   3- send with one of the send methods
         ?   4- subscribe a method to the Remote Event
+
+        * Packets contain the Decode and Encode Methods aswell as the Remote Event they fire when sent.
+        * Remote Events contain organized data recieved by the packet. the data the reciever will see.
+
+        !Steps For Creating a Packet:
+        ?   1- create a new class inheriting Packet.
+        ?   2- assign Flag and Id of the packet.
+        ?   3- override Encode, Decode & FireRemote methods to suit the packet's data
+
+        !Steps For Creating a Remote:
+        ?   1- create a new class inheriting Remote
+        ?   2- create a constructor with parameters (int senderPeerId, object[] decodedData)
+        ?   3- assign the base fields SenderPeerId and DecodedData to the parameters
+        ?   4- create new fields and assign them to values in the DecodedData Array (differs per remote) 
     */
     public static Dictionary<int, Type> Packets = new() { };
 
@@ -21,6 +34,15 @@ public static class NetworkService
     {
         RegisterPackets();
         EventService.Subscribe<Events.RecievedPacket>(OnRecievedPacket);
+
+        EventService.Subscribe<Events.Remote.ClientInfo>(OnClientInfo);
+    }
+
+    static void OnClientInfo(Events.Remote.ClientInfo @evnt)
+    {
+        GD.Print("nice");
+        GD.Print(evnt.SenderPeerId);
+        GD.Print(evnt.UserId);
     }
 
     static void RegisterPackets()
@@ -91,20 +113,14 @@ public static class NetworkService
     static void OnRecievedPacket(Events.RecievedPacket evnt)
     {
         int senderPeerId = evnt.SenderPeerId;  // equals 0 if the server sent it
-        GD.Print(senderPeerId);
-
         byte[] data = evnt.Data;
         int packetId = Packet.ReadPacketId(data);
 
         Packet packet = (Packet)Activator.CreateInstance(NetworkService.Packets[packetId]);
         packet.WriteBytes(data);
         packet.CreateBytesArray();
+        object[] decodedData = packet.Decode();
 
-        List<Object> decodedData = packet.Decode();
-
-        foreach (object smth in decodedData)
-        {
-            GD.Print(smth);
-        }
+        packet.FireRemote(senderPeerId, decodedData);
     }
 }

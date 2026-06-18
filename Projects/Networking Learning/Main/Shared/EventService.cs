@@ -13,6 +13,7 @@ public static class EventService
         }
     }
 
+    //TODO- u can subscribe twice on the same method. idk how to fix this (haven't tried yet)
     public static void Subscribe<T>(params Action<T>[] callbacks) where T : Event
     {
         foreach (Action<T> callback in callbacks)
