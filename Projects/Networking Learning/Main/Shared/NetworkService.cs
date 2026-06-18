@@ -34,17 +34,7 @@ public static class NetworkService
     {
         RegisterPackets();
         EventService.Subscribe<Events.RecievedPacket>(OnRecievedPacket);
-
-        EventService.Subscribe<Events.Remote.ClientInfo>(OnClientInfo);
     }
-
-    static void OnClientInfo(Events.Remote.ClientInfo @evnt)
-    {
-        GD.Print("nice");
-        GD.Print(evnt.SenderPeerId);
-        GD.Print(evnt.UserId);
-    }
-
     static void RegisterPackets()
     {
         var packetTypes = typeof(Packet).Assembly.GetTypes().Where(t => !t.IsAbstract && typeof(Packet).IsAssignableFrom(t));

@@ -25,9 +25,9 @@ public abstract class Packet()
         return packet;
     }
 
-    public static int ReadPacketId(byte[] data)
+    public static int ReadPacketId(byte[] encodedData)
     {
-        return BitConverter.ToInt32(data, 0);
+        return BitConverter.ToInt32(encodedData, 0);
     }
 
     public virtual void FireRemote(int senderPeerId, object[] decodedData)

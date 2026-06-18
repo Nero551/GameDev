@@ -5,7 +5,6 @@ using Godot;
 
 public class Client
 {
-    //TODO- makee packet recieving more versatile and easy to use.
     //TODO- i need to learn how to byte-ify classes (player,peer, etc). things other than ints and bools
     //* i dont need to byte-ify the peer if i can't, its unnecessary
 
@@ -20,6 +19,7 @@ public class Client
 
     public static void Start()
     {
+        EventService.Subscribe<Events.Remote.ClientInfo>(OnRemoteClientInfo);
         if (NetworkService.IsClient())
         {
             Connection = new ENetConnection();
@@ -81,5 +81,11 @@ public class Client
     {
         GD.Print("Connected To Server");
         EventService.Fire(new Events.ConnectedToServer());
+    }
+
+    static void OnRemoteClientInfo(Events.Remote.ClientInfo evnt)
+    {
+        PeerId = evnt.PeerId;
+        UserId = evnt.UserId;
     }
 }

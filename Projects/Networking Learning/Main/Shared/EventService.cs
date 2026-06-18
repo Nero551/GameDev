@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public static class EventService
 {
@@ -13,13 +14,16 @@ public static class EventService
         }
     }
 
-    //TODO- u can subscribe twice on the same method. idk how to fix this (haven't tried yet)
     public static void Subscribe<T>(params Action<T>[] callbacks) where T : Event
     {
         foreach (Action<T> callback in callbacks)
         {
             if (Events.ContainsKey(typeof(T)))
             {
+                if (Events[typeof(T)].GetInvocationList().Contains(callback))
+                {
+                    return;
+                }
                 Events[typeof(T)] = Delegate.Combine(callback, Events[typeof(T)]);
             }
             else
