@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c8251d0yp4rkx"]
 
 [ext_resource type="Script" uid="uid://ctwmhkgd72w16" path="res://Main/Shared/Game.cs" id="1_qesgf"]
+[ext_resource type="Script" uid="uid://djxr0vyaoyb2i" path="res://Main/Shared/Label.cs" id="2_s5iea"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -16,6 +17,8 @@ ssao_enabled = true
 sdfgi_enabled = true
 glow_enabled = true
 
+[sub_resource type="LabelSettings" id="LabelSettings_qesgf"]
+
 [node name="Game" type="Node3D" unique_id=602571514]
 script = ExtResource("1_qesgf")
 
@@ -28,3 +31,22 @@ environment = SubResource("Environment_h2yge")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=896338953]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.1260986)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1416458648]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=602138916]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=464635798]
+layout_mode = 0
+offset_right = 101.0
+offset_bottom = 49.0
+text = "Hello"
+label_settings = SubResource("LabelSettings_qesgf")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+script = ExtResource("2_s5iea")

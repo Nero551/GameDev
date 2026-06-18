@@ -10,15 +10,12 @@ public class Client
 
     //TODO- move onto replication 
 
-    //TODO- i need to learn how to byte-ify classes (player,peer, etc). things other than ints and bools
-
     //* FOR GODOT NODES. U CAN JUST USE THE SCENE. send the filepath of the scene.
-    //* i dont need to byte-ify the peer if i can't, its unnecessary
 
     public static ENetConnection Connection;
 
     public static Player Player; //* the player Entity (includes camera , input, etc)
-    public static int PeerId; //* this is the signature for the network connection ITSELF
+    public static int PeerId = 1; //* this is the signature for the network connection ITSELF
     public static int UserId = 1; //* this is a signature for the player's data in DB
 
     private static bool Running = false;
@@ -86,7 +83,6 @@ public class Client
     static void ConnectedToServer()
     {
         GD.Print("Connected To Server");
-        EventService.Fire(new Events.ConnectedToServer());
     }
 
     static void OnRemoteClientInfo(Events.Remote.ClientInfo evnt)
@@ -94,5 +90,6 @@ public class Client
         PeerId = evnt.PeerId;
         UserId = evnt.UserId;
         Player = PlayersService.CreatePlayer(UserId);
+        EventService.Fire(new Events.ConnectedToServer());
     }
 }

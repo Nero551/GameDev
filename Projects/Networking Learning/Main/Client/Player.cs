@@ -35,13 +35,12 @@ public partial class Player : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
-        velocity = Velocity;
 
+        velocity = Velocity;
 
         if (NetworkService.IsClient())
         {
             Vector2 inputDir = Input.GetVector("Left", "Right", "Forward", "Back");
-            // Move(inputDir);
             NetworkService.SendToServer<Packets.MoveRequest>(inputDir);
         }
     }

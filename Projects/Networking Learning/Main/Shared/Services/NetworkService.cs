@@ -56,7 +56,7 @@ public static class NetworkService
         }
         return true;
     }
-
+    
     public static void SendToServer<T>(params object[] data) where T : Packet, new()
     {
         if (IsClient())
@@ -105,7 +105,9 @@ public static class NetworkService
     static void RegisterPackets()
     {
         int currentId = 1;
-        var packetTypes = typeof(Packet).Assembly.GetTypes().Where(t => !t.IsAbstract && typeof(Packet).IsAssignableFrom(t)).OrderBy( t => t.Name);
+        var packetTypes = typeof(Packet).Assembly.GetTypes().Where(
+            t => !t.IsAbstract && typeof(Packet).IsAssignableFrom(t)
+            ).OrderBy(t => t.Name);
 
         foreach (var type in packetTypes)
         {
