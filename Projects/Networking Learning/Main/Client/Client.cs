@@ -16,7 +16,7 @@ public class Client
 
     public static Player Player; //* the player Entity (includes camera , input, etc)
     public static int PeerId = 1; //* this is the signature for the network connection ITSELF
-    public static int UserId = 1; //* this is a signature for the player's data in DB
+    public static int UserId = 1; //* this should go to player class
 
     private static bool Running = false;
 
@@ -45,7 +45,7 @@ public class Client
         while (Running)
         {
             HandlePackets();
-            await Task.Delay(10);
+            await Task.Delay(NetworkService.PacketDebounce);
         }
     }
 

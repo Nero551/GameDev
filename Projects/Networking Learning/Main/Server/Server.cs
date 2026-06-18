@@ -46,7 +46,7 @@ public static partial class Server
         while (Running)
         {
             HandlePackets();
-            await Task.Delay(10);
+            await Task.Delay(NetworkService.PacketDebounce);
         }
     }
 

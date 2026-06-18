@@ -10,16 +10,15 @@ public partial class Label : Godot.Label
         {
             Text = "Server";
         }
-        EventService.Subscribe<Events.ConnectedToServer>(ChangeText);
+        EventService.Subscribe<Events.ConnectedToServer>(evnt =>
+        {
+            if (NetworkService.IsClient())
+            {
+                Text = $"Client {Client.PeerId}";
+            }
+        });
     }
 
-    void ChangeText(Events.ConnectedToServer evnt)
-    {
-        if (NetworkService.IsClient())
-        {
-            Text = $"Client {Client.PeerId}";
-        }
-    }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)

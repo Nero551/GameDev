@@ -28,13 +28,16 @@ public static class NetworkService
         ?   3- assign the base fields SenderPeerId and DecodedData to the parameters
         ?   4- create new fields and assign them to values in the DecodedData Array (differs per remote) 
     */
-    public static Dictionary<int, Type> Packets = new() { };
-    public static Dictionary<Type, int> IdPacketLookup = new() { };
+
+    public static int PacketDebounce = 10; // The delay on handling packets in milliseconds
+    public static Dictionary<int, Type> Packets = [];
+    public static Dictionary<Type, int> IdPacketLookup = [];
 
     public static void Init()
     {
         RegisterPackets();
         EventService.Subscribe<Events.RecievedPacket>(OnRecievedPacket);
+
     }
 
     public static bool IsServer()
