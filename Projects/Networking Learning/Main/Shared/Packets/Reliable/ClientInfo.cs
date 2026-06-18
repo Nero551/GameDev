@@ -7,7 +7,7 @@ namespace Packets;
 
 public class ClientInfo : Packet
 {
-
+    
     public override int Id => 2;
     public override int Flag => (int)ENetPacketPeer.FlagReliable;
 

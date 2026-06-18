@@ -35,17 +35,6 @@ public static class NetworkService
         RegisterPackets();
         EventService.Subscribe<Events.RecievedPacket>(OnRecievedPacket);
     }
-    static void RegisterPackets()
-    {
-        var packetTypes = typeof(Packet).Assembly.GetTypes().Where(t => !t.IsAbstract && typeof(Packet).IsAssignableFrom(t));
-
-        foreach (var type in packetTypes)
-        {
-            Packet packet = (Packet)Activator.CreateInstance(type);
-
-            Packets[packet.Id] = type;
-        }
-    }
 
     public static bool IsServer()
     {
@@ -98,8 +87,6 @@ public static class NetworkService
         }
     }
 
-    //* what i could do is have a custom event for each packet. this method just figures out which event to fire
-    //* this will make using packets way easier. but setting up a packet will take longer
     static void OnRecievedPacket(Events.RecievedPacket evnt)
     {
         int senderPeerId = evnt.SenderPeerId;  // equals 0 if the server sent it
@@ -112,5 +99,17 @@ public static class NetworkService
         object[] decodedData = packet.Decode();
 
         packet.FireRemote(senderPeerId, decodedData);
+    }
+
+    static void RegisterPackets()
+    {
+        var packetTypes = typeof(Packet).Assembly.GetTypes().Where(t => !t.IsAbstract && typeof(Packet).IsAssignableFrom(t));
+
+        foreach (var type in packetTypes)
+        {
+            Packet packet = (Packet)Activator.CreateInstance(type);
+
+            Packets[packet.Id] = type;
+        }
     }
 }

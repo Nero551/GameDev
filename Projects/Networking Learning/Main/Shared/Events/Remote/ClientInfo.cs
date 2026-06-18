@@ -16,7 +16,6 @@ public class ClientInfo : Remote
         DecodedData = decodedData;
         SenderPeerId = senderPeerId;
 
-
         UserId = (int)DecodedData[0];
         PeerId = (int)DecodedData[1];
     }
