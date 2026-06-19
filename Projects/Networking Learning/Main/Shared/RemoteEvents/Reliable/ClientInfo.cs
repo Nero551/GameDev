@@ -25,7 +25,6 @@ public class ClientInfo : Packet
     public override void Decode()
     {
         base.Decode();
-
         UserId = ReadInt();
         PeerId = ReadInt();
         PlayerIds = ReadIntArray();

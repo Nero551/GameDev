@@ -1,12 +1,15 @@
 using System;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class Player : CharacterBody3D
 {
     public int UserId;
-    public const float Speed = 2.5f;
-    public const float JumpVelocity = 4.5f;
+    public const float Speed = 20f;
     [Export] Vector3 velocity;
+
+    private Vector3 TargetPosition;
+    private int TargetPlayerId;
 
     public override void _Ready()
     {
@@ -18,6 +21,7 @@ public partial class Player : CharacterBody3D
 
     private void Move(Player player, Vector2 inputDir)
     {
+        velocity = Velocity;
         Vector3 direction = (player.Transform.Basis * new Vector3(inputDir.X, -inputDir.Y, 0)).Normalized();
         if (direction != Vector3.Zero)
         {
@@ -26,43 +30,58 @@ public partial class Player : CharacterBody3D
         }
         else
         {
-            velocity.X = Mathf.MoveToward(player.Velocity.X, 0, Speed);
-            velocity.Y = Mathf.MoveToward(player.Velocity.Y, 0, Speed);
+            velocity.X = Mathf.MoveToward(velocity.X, 0, Speed);
+            velocity.Y = Mathf.MoveToward(velocity.Y, 0, Speed);
         }
 
         player.Velocity = velocity;
         player.MoveAndSlide();
-
     }
+
+    private double _timeSinceLastSend;
 
     public override void _PhysicsProcess(double delta)
     {
-
-        velocity = Velocity;
-
-        if (NetworkService.IsClient())
+        if (TargetPlayerId != default && TargetPosition != default)
         {
-            Vector2 inputDir = Input.GetVector("Left", "Right", "Forward", "Back");
-            if (inputDir != Vector2.Zero)
-            {
-                NetworkService.SendToServer<RemoteEvents.MoveRequest>(inputDir);
-            }
+            PlayersService.GetPlayer(TargetPlayerId).Position = 
+                PlayersService.GetPlayer(TargetPlayerId).Position.Lerp(TargetPosition, 0.1f);
         }
+
+        if (!NetworkService.IsClient())
+            return;
+
+        _timeSinceLastSend += delta;
+
+        if (_timeSinceLastSend < 0.1)
+            return;
+
+        _timeSinceLastSend = 0;
+
+        Vector2 inputDir = Input.GetVector(
+            "Left",
+            "Right",
+            "Forward",
+            "Back"
+        );
+
+        if (inputDir != Vector2.Zero)
+            NetworkService.SendToServer<RemoteEvents.MoveRequest>(inputDir);
     }
 
     void OnMoveRequest(RemoteEvents.MoveRequest evnt)
     {
         Vector2 inputDir = evnt.Vec2;
         Move(Server.ClientInfos[evnt.SenderPeerId].Player, inputDir);
+
         NetworkService.SendToAllClients<RemoteEvents.Position>(
-            Server.ClientInfos[evnt.SenderPeerId].UserId, Server.ClientInfos[evnt.SenderPeerId].Player.Velocity
+            Server.ClientInfos[evnt.SenderPeerId].UserId, Server.ClientInfos[evnt.SenderPeerId].Player.Position
             );
     }
 
     void OnPosition(RemoteEvents.Position evnt)
     {
-        PlayersService.GetPlayer(evnt.UserId).Velocity = evnt.Vec3;
-        PlayersService.GetPlayer(evnt.UserId).MoveAndSlide();
+        TargetPosition = evnt.Vec3;
+        TargetPlayerId = evnt.UserId;
     }
-
 }

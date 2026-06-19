@@ -16,10 +16,7 @@ public class Position : Packet
     {
         base.Encode();
 
-        foreach (var item in Data)
-        {
-            GD.Print(item);
-        }
+        GD.Print((Vector3)Data[1]);
         WriteInt((int)Data[0]);
         WriteVector3((Vector3)Data[1]);
 

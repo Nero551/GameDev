@@ -14,7 +14,7 @@ public static class PlayersService
         player.UserId = userId;
         player.Name = userId.ToString();
         Players[userId] = player;
-        Game.game.AddChild(player);
+        Game.World.AddChild(player);
         return player;
     }
 
