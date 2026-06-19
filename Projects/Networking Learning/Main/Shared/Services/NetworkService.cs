@@ -9,8 +9,8 @@ public static class NetworkService
 {
     /*
         !So how does this mess work? to send stuff from client to server or vice versa first you:
-        ?   1- create a RemoteEvent class inheriting Packet.
-        ?   2- assign the Flag of the packet (Reliable, Unreliable, etc).
+        ?   1- create a RemoteEvent class inheriting RemoteEvent.
+        ?   2- assign the Flag of the remote event (Reliable, Unreliable, etc).
         ?   3- override Encode to write the data sent over the network.
         ?   4- override Decode to read the data into fields.
         ?   5- send with one of the send methods.
@@ -18,17 +18,17 @@ public static class NetworkService
 
         * RemoteEvents contain both the networking logic and the organized data the reciever will see.
         * NetworkService fires the RemoteEvent after Decode finishes.
-        * SenderPeerId is assigned before Decode runs. It equals 0 if the server sent the packet.
+        * SenderPeerId is assigned before Decode runs. It equals 0 if the server sent the remote event.
     */
 
     public static int PacketDebounce = 5; // The delay on handling packets in milliseconds
-    public static Dictionary<int, Type> Packets = [];
-    public static Dictionary<Type, int> IdPacketLookup = [];
+    public static Dictionary<int, Type> RemoteEvents = [];
+    public static Dictionary<Type, int> IdRemoteEventLookup = [];
 
     public static void Init()
     {
-        RegisterPackets();
-        EventService.Subscribe<Events.RecievedPacket>(OnRecievedPacket);
+        RegisterRemoteEvents();
+        EventService.Subscribe<Events.Network.RecievedPacket>(OnRecievedPacket);
     }
 
     public static bool IsServer()
@@ -51,65 +51,63 @@ public static class NetworkService
         return true;
     }
 
-    public static void SendToServer<T>(params object[] data) where T : Packet, new()
+    public static void SendToServer<T>(params object[] data) where T : RemoteEvent, new()
     {
         if (IsClient())
         {
-            T packet = Packet.Create<T>(data);
+            T remoteEvent = RemoteEvent.Create<T>(data);
             //the client only knows the server. so broadcast sends only to the server.
-            Client.Connection.Broadcast(0, packet.Encode(), packet.Flag);
+            Client.Connection.Broadcast(0, remoteEvent.Encode(), remoteEvent.Flag);
         }
     }
 
-    public static void SendToClient<T>(int peerId, params object[] data) where T : Packet, new()
+    public static void SendToClient<T>(int peerId, params object[] data) where T : RemoteEvent, new()
     {
         if (IsServer())
         {
             if (Server.ClientInfos.ContainsKey(peerId))
             {
-                T packet = Packet.Create<T>(data);
-                Server.ClientInfos[peerId].Peer.Send(0, packet.Encode(), packet.Flag);
+                T remoteEvent = RemoteEvent.Create<T>(data);
+                Server.ClientInfos[peerId].Peer.Send(0, remoteEvent.Encode(), remoteEvent.Flag);
             }
         }
     }
 
-    public static void SendToAllClients<T>(params object[] data) where T : Packet, new()
+    public static void SendToAllClients<T>(params object[] data) where T : RemoteEvent, new()
     {
         if (IsServer())
         {
-            T packet = Packet.Create<T>(data);
-            Server.Connection.Broadcast(0, packet.Encode(), packet.Flag);
+            T remoteEvent = RemoteEvent.Create<T>(data);
+            Server.Connection.Broadcast(0, remoteEvent.Encode(), remoteEvent.Flag);
         }
     }
 
-    static void OnRecievedPacket(Events.RecievedPacket evnt)
+    static void OnRecievedPacket(Events.Network.RecievedPacket evnt)
     {
         int senderPeerId = evnt.SenderPeerId;  // equals 0 if the server sent it
         byte[] data = evnt.Data;
-        int packetId = Packet.ReadPacketId(data);
+        int remoteEventId = RemoteEvent.ReadRemoteEventId(data);
 
-        Packet packet = (Packet)Activator.CreateInstance(NetworkService.Packets[packetId]);
-        packet.WriteBytes(data);
-        packet.CreateBytesArray();
+        RemoteEvent remoteEvent = (RemoteEvent)Activator.CreateInstance(NetworkService.RemoteEvents[remoteEventId]);
+        remoteEvent.WriteBytes(data);
+        remoteEvent.CreateBytesArray();
 
-        packet.SenderPeerId = senderPeerId;
-        packet.Decode();
-        packet.Fire();
+        remoteEvent.SenderPeerId = senderPeerId;
+        remoteEvent.Decode();
+        remoteEvent.Fire();
     }
 
-    static void RegisterPackets()
+    static void RegisterRemoteEvents()
     {
         int currentId = 1;
-        var packetTypes = typeof(Packet).Assembly.GetTypes().Where(
-            t => !t.IsAbstract && typeof(Packet).IsAssignableFrom(t)
+        var remoteEventTypes = typeof(RemoteEvent).Assembly.GetTypes().Where(
+            t => !t.IsAbstract && typeof(RemoteEvent).IsAssignableFrom(t)
             ).OrderBy(t => t.Name);
 
-        foreach (var type in packetTypes)
+        foreach (var type in remoteEventTypes)
         {
-            Packet packet = (Packet)Activator.CreateInstance(type);
-
-            IdPacketLookup[type] = currentId;
-            Packets[currentId] = type;
+            IdRemoteEventLookup[type] = currentId;
+            RemoteEvents[currentId] = type;
             currentId++;
         }
     }

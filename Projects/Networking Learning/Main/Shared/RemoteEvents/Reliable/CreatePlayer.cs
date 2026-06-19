@@ -2,7 +2,7 @@ using Godot;
 
 namespace RemoteEvents;
 
-public class CreatePlayer : Packet
+public class CreatePlayer : RemoteEvent
 {
     public int UserId;
 

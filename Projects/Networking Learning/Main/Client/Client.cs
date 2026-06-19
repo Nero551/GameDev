@@ -78,7 +78,7 @@ public static class Client
                 DisconnectedFromServer();
                 return;
             case ENetConnection.EventType.Receive:
-                EventService.Fire(new Events.RecievedPacket(peer.GetPacket()));
+                EventService.Fire(new Events.Network.RecievedPacket(peer.GetPacket()));
                 break;
             default:
                 break;
@@ -88,7 +88,7 @@ public static class Client
     static void DisconnectedFromServer()
     {
         GD.Print("Disconnected From Server");
-        EventService.Fire(new Events.DisconnectedFromServer());
+        EventService.Fire(new Events.Network.DisconnectedFromServer());
     }
 
     static void ConnectedToServer()
@@ -107,6 +107,6 @@ public static class Client
                 PlayersService.CreatePlayer(playerId);
             }
         }
-        EventService.Fire(new Events.ConnectedToServer());
+        EventService.Fire(new Events.Network.ConnectedToServer());
     }
 }

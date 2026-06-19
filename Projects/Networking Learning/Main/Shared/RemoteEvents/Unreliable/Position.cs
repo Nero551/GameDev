@@ -5,7 +5,7 @@ using Godot;
 
 namespace RemoteEvents;
 
-public class Position : Packet
+public class Position : RemoteEvent
 {
     public int UserId;
     public Vector3 Vec3;
@@ -33,6 +33,5 @@ public class Position : Packet
 		Vec3 = ReadVector3();
     }
 }
-
 
 

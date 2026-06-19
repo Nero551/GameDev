@@ -16,7 +16,7 @@ public class MovementProcessor : Processor
     {
         base.Process(entity, delta);
         movementBlock.Speed += (float)delta;
-        GD.Print(movementBlock.Speed);
+        // GD.Print(movementBlock.Speed);
     }
 
     public override void PhysicsProcess(Entity entity, double delta)

@@ -2,7 +2,7 @@ using System;
 using Godot;
 
 
-namespace Events;
+namespace Events.Network;
 
 public class DisconnectedFromServer() : Event
 {

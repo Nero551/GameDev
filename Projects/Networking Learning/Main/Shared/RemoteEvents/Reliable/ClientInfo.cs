@@ -2,7 +2,7 @@ using Godot;
 
 namespace RemoteEvents;
 
-public class ClientInfo : Packet
+public class ClientInfo : RemoteEvent
 {
     public int UserId;
     public int PeerId;

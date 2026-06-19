@@ -79,7 +79,7 @@ public static partial class Server
                     break;
                 case ENetConnection.EventType.Receive:
                     EventService.Fire(
-                        new Events.RecievedPacket(
+                        new Events.Network.RecievedPacket(
                             peer.GetPacket(), ((ClientInfo)peer.GetMeta("ClientInfo")).PeerId
                             )
                         );
@@ -110,7 +110,7 @@ public static partial class Server
         NetworkService.SendToClient<RemoteEvents.ClientInfo>(peerId, clientInfo, PlayersService.Players.Keys.ToArray());
         NetworkService.SendToAllClients<RemoteEvents.CreatePlayer>(clientInfo.UserId);
         GD.Print($"Client Connected With ID {peerId}");
-        EventService.Fire(new Events.ClientConnected(peerId));
+        EventService.Fire(new Events.Network.ClientConnected(peerId));
     }
 
     static void ClientDisconnected(ENetPacketPeer client)
@@ -122,6 +122,6 @@ public static partial class Server
 
         NetworkService.SendToAllClients<RemoteEvents.RemovePlayer>(clientInfo.UserId);
         GD.Print($"Client Disconnected With ID {clientInfo.PeerId}");
-        EventService.Fire(new Events.ClientDisconnected(clientInfo.PeerId));
+        EventService.Fire(new Events.Network.ClientDisconnected(clientInfo.PeerId));
     }
 }

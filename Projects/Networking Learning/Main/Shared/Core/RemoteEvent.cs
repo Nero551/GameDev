@@ -6,7 +6,7 @@ using Godot;
 
 namespace RemoteEvents { }
 
-public abstract class Packet() : Event
+public abstract class RemoteEvent() : Event
 {
     public virtual int Flag { get; }
 
@@ -18,23 +18,23 @@ public abstract class Packet() : Event
     protected byte[] BufferArray = [];
     private int ReadPos = 0;
 
-    public static T Create<T>(params object[] data) where T : Packet, new()
+    public static T Create<T>(params object[] data) where T : RemoteEvent, new()
     {
-        T packet = new()
+        T remoteEvent = new()
         {
             Data = data
         };
-        return packet;
+        return remoteEvent;
     }
 
-    public static int ReadPacketId(byte[] encodedData)
+    public static int ReadRemoteEventId(byte[] encodedData)
     {
         return BitConverter.ToInt32(encodedData, 0);
     }
 
     public virtual byte[] Encode()
     {
-        WriteInt(NetworkService.IdPacketLookup[this.GetType()]);
+        WriteInt(NetworkService.IdRemoteEventLookup[this.GetType()]);
         return CreateBytesArray();
     }
     public virtual void Decode()
@@ -56,7 +56,7 @@ public abstract class Packet() : Event
     private void EnsureBytes(int size)
     {
         if (ReadPos + size > BufferArray.Length)
-            throw new Exception("Packet read overflow");
+            throw new Exception("RemoteEvent read overflow");
     }
 
     //* Writing

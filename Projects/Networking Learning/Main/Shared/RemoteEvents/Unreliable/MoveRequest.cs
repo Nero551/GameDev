@@ -2,7 +2,7 @@ using Godot;
 
 namespace RemoteEvents;
 
-public class MoveRequest : Packet
+public class MoveRequest : RemoteEvent
 {
     public Vector2 Vec2;
 
