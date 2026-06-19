@@ -1,6 +1,8 @@
 using System;
 using Godot;
 
+
+namespace Processors;
 public class MovementProcessor : Processor
 {
     Blocks.Movement movementBlock;

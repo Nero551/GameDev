@@ -4,8 +4,9 @@ using Godot;
 
 public class ClientRuntime : Runtime
 {
-    private void AddProcessors()
+    protected override void AddProcessors()
     {
+        base.AddProcessors();
         // Processor.Add<MovementProcessor>();
     }
 

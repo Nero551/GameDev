@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
+namespace Processors { }
 public abstract class Processor
 {
     public static Processor Add<T>() where T : Processor, new()

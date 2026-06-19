@@ -4,9 +4,10 @@ using Godot;
 
 public class ServerRuntime : Runtime
 {
-    private  void AddProcessors()
+    protected override void AddProcessors()
     {
-        Processor.Add<MovementProcessor>();
+        base.AddProcessors();
+        Processor.Add<Processors.MovementProcessor>();
     }
 
     public override void Start()

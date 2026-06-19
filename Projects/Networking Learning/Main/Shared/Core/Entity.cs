@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
+
+namespace Entities { }
 public class Entity
 {
-
+    public static int NextId = 0;
     // The Godot object that owns this host and exposes engine data through interfaces.
 
     // Blocks hold gameplay logic and the data created by that logic.
@@ -18,12 +20,18 @@ public class Entity
         return entity;
     }
 
+    public static Entity Create<T>() where T : Entity, new()
+    {
+        T entity = new();
+        return entity;
+    }
+
     Entity()
     {
         Game.Runtime.Entities.Add(this);
-        Id = Game.Runtime.Entities.Count - 1;
+        Id = NextId++;
     }
-    ~Entity()
+    public void Destory()
     {
         Game.Runtime.Entities.Remove(this);
     }
@@ -56,9 +64,10 @@ public class Entity
 
     public bool HasBlock<T>() where T : Blocks.Block
     {
-        if (Blocks.OfType<T>().FirstOrDefault() != null)
+        for (int i = 0; i < Blocks.Count; i++)
         {
-            return true;
+            if (Blocks[i] is T)
+                return true;
         }
         return false;
     }

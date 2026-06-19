@@ -4,11 +4,18 @@ using Godot;
 
 public abstract class Runtime
 {
-    public  List<Processor> Processors = [];
-    public  List<Entity> Entities = [];
+    public List<Processor> Processors = [];
+    public List<Entity> Entities = [];
+
+    protected virtual void AddProcessors()
+    {
+
+    }
 
     public virtual void Start()
     {
+        
+
         for (int i = 0; i < Processors.Count; i++)
         {
             for (int j = 0; j < Entities.Count; j++)

@@ -2,3 +2,7 @@ root = true
 
 [*]
 charset = utf-8
+
+[*.cs]
+# Disable IDE0130: Namespace does not match folder structure
+dotnet_diagnostic.IDE0130.severity = none
