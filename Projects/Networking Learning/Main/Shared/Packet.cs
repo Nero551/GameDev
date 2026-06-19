@@ -35,17 +35,18 @@ public abstract class Packet()
     }
     public virtual byte[] Encode()
     {
-
+        WriteInt(NetworkService.IdPacketLookup[this.GetType()]);
         return CreateBytesArray();
     }
     public virtual object[] Decode()
     {
+        ReadInt();
         return [];
     }
 
     public byte[] CreateBytesArray()
     {
-        BufferArray = BufferList.ToArray();
+        BufferArray = [.. BufferList];
         return BufferArray;
     }
 
@@ -71,6 +72,29 @@ public abstract class Packet()
         WriteInt(value.Length);
         BufferList.AddRange(Encoding.ASCII.GetBytes(value));
     }
+
+    public void WriteVector3(Vector3 vec3)
+    {
+        WriteFloat(vec3.X);
+        WriteFloat(vec3.Y);
+        WriteFloat(vec3.Z);
+    }
+
+    public void WriteVector2(Vector2 vec2)
+    {
+        WriteFloat(vec2.X);
+        WriteFloat(vec2.Y);
+    }
+
+    public void WriteIntArray(int[] intArray)
+    {
+        WriteInt(intArray.Length);
+        foreach (int i in intArray)
+        {
+            WriteInt(i);
+        }
+    }
+
 
     //* Reading
     public int ReadInt()
@@ -116,5 +140,28 @@ public abstract class Packet()
             }
         }
         throw new Exception("Couldn't Read Value");
+    }
+
+    public Vector3 ReadVector3()
+    {
+        return new Vector3(ReadFloat(), ReadFloat(), ReadFloat());
+    }
+
+    public Vector2 ReadVector2()
+    {
+        return new Vector2(ReadFloat(), ReadFloat());
+    }
+
+    public int[] ReadIntArray()
+    {
+        
+        int length = ReadInt();
+        int[] intArray = [length];
+        for (int i = 0; i < length - 1; i++)
+        {
+            intArray[i] = ReadInt();
+        }
+
+        return intArray;
     }
 }

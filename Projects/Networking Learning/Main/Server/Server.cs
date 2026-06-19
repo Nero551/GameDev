@@ -12,9 +12,10 @@ public static partial class Server
     {
         public int UserId;
         public int PeerId;
+        public Player Player;
         public ENetPacketPeer Peer;
     }
-    
+
     public static int Port = 7777;
     public static string IP = "127.0.0.1";
     public static Dictionary<int, ClientInfo> ClientInfos = [];
@@ -53,30 +54,39 @@ public static partial class Server
 
     private static void HandlePackets()
     {
-        var packetEvent = Connection.Service();
-        ENetConnection.EventType eventType = packetEvent[0].As<ENetConnection.EventType>();
-        var peer = packetEvent[1].As<ENetPacketPeer>();
-
-        switch (eventType)
+        while (true)
         {
-            case ENetConnection.EventType.Error:
-                GD.PushWarning("Packet Resulted in Unknown Error!");
+            var packetEvent = Connection.Service();
+            ENetConnection.EventType eventType = packetEvent[0].As<ENetConnection.EventType>();
+
+            if (eventType == ENetConnection.EventType.None)
+            {
                 break;
-            case ENetConnection.EventType.Connect:
-                ClientConnected(peer);
-                break;
-            case ENetConnection.EventType.Disconnect:
-                ClientDisconnected(peer);
-                break;
-            case ENetConnection.EventType.Receive:
-                EventService.Fire(
-                    new Events.RecievedPacket(
-                        peer.GetPacket(), ((ClientInfo)peer.GetMeta("ClientInfo")).PeerId
-                        )
-                    );
-                break;
-            default:
-                break;
+            }
+
+            var peer = packetEvent[1].As<ENetPacketPeer>();
+
+            switch (eventType)
+            {
+                case ENetConnection.EventType.Error:
+                    GD.PushWarning("Packet Resulted in Unknown Error!");
+                    break;
+                case ENetConnection.EventType.Connect:
+                    ClientConnected(peer);
+                    break;
+                case ENetConnection.EventType.Disconnect:
+                    ClientDisconnected(peer);
+                    break;
+                case ENetConnection.EventType.Receive:
+                    EventService.Fire(
+                        new Events.RecievedPacket(
+                            peer.GetPacket(), ((ClientInfo)peer.GetMeta("ClientInfo")).PeerId
+                            )
+                        );
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -88,15 +98,17 @@ public static partial class Server
 
         ClientInfo clientInfo = new()
         {
+            UserId = peerId,
             PeerId = peerId,
             Peer = peer
         };
-        PlayersService.CreatePlayer(clientInfo.UserId).Name = clientInfo.UserId.ToString();
+        clientInfo.Player = PlayersService.CreatePlayer(clientInfo.UserId);
 
         peer.SetMeta("ClientInfo", clientInfo);
         ClientInfos[peerId] = clientInfo;
 
-        NetworkService.SendToClient<Packets.ClientInfo>(peerId, clientInfo);
+        NetworkService.SendToClient<Packets.ClientInfo>(peerId, clientInfo, PlayersService.Players.Keys.ToArray());
+        NetworkService.SendToAllClients<Packets.CreatePlayer>(clientInfo.UserId);
 
         GD.Print($"Client Connected With ID {peerId}");
         EventService.Fire(new Events.ClientConnected(peerId));
@@ -109,6 +121,7 @@ public static partial class Server
         ClientInfos.Remove(clientInfo.PeerId);
         PlayersService.RemovePlayer(clientInfo.UserId);
 
+        NetworkService.SendToAllClients<Packets.RemovePlayer>(clientInfo.UserId);
         GD.Print($"Client Disconnected With ID {clientInfo.PeerId}");
         EventService.Fire(new Events.ClientDisconnected(clientInfo.PeerId));
     }

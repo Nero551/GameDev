@@ -12,10 +12,8 @@ public class MoveRequest : Packet
 
     public override byte[] Encode()
     {
-        //Writing Id
-        WriteInt(NetworkService.IdPacketLookup[this.GetType()]);
-        WriteFloat(((Vector2)Data[0]).X);
-        WriteFloat(((Vector2)Data[0]).Y);
+        base.Encode();
+        WriteVector2((Vector2)Data[0]);
 
         //* Writing Here
         return CreateBytesArray();
@@ -23,11 +21,10 @@ public class MoveRequest : Packet
 
     public override object[] Decode()
     {
-        //Skip id
-        ReadInt();
+        base.Decode();
 
         //* Reading Here
-        object[] data = [ReadFloat(), ReadFloat()];
+        object[] data = [ReadVector2()];
         return data;
     }
 

@@ -13,7 +13,8 @@ public class MoveRequest : Remote
 	{
 		DecodedData = decodedData;
 		SenderPeerId = senderPeerId;
-		Vec2 = new Vector2((float)decodedData[0], (float)decodedData[1]);
+
+		Vec2 = (Vector2)DecodedData[0];
 	}
 }
 

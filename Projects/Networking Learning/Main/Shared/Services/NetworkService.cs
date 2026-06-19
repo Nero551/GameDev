@@ -29,7 +29,7 @@ public static class NetworkService
         ?   4- create new fields and assign them to values in the DecodedData Array (differs per remote) 
     */
 
-    public static int PacketDebounce = 10; // The delay on handling packets in milliseconds
+    public static int PacketDebounce = 5; // The delay on handling packets in milliseconds
     public static Dictionary<int, Type> Packets = [];
     public static Dictionary<Type, int> IdPacketLookup = [];
 
@@ -100,7 +100,7 @@ public static class NetworkService
         packet.WriteBytes(data);
         packet.CreateBytesArray();
         object[] decodedData = packet.Decode();
-
+        
         packet.FireRemote(senderPeerId, decodedData);
     }
 

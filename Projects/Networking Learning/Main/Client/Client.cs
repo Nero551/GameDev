@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
 
-public class Client
+public static class Client
 {
-    //TODO- high-key i might need to switch to ECS-style framework. atleast seperate data and globalize logic
+
+    //TODO- high-key i might need to switch to ECS-style framework. atleast seperate data from logic
     //* it will be easier to maintain and work with multiplayer in that framework
 
     //TODO- move onto replication 
@@ -15,14 +16,24 @@ public class Client
 
     public static ENetConnection Connection;
     public static Player Player; //* the player Entity (includes camera , input, etc)
-    public static int PeerId = 1; //* this is the signature for the network connection ITSELF
-    public static int UserId = 1; //* this should go to player class
+    public static int PeerId; //* this is the signature for the network connection ITSELF
+    public static int UserId; //* this should go to player class
 
     private static bool Running = false;
 
     public static void Start()
     {
-        EventService.Subscribe<Events.Remote.ClientInfo>(OnRemoteClientInfo);
+        EventService.Subscribe<Events.Remote.CreatePlayer>((evnt) =>
+        {
+            Player player = PlayersService.CreatePlayer(evnt.UserId);
+            if (UserId == evnt.UserId)
+            {
+                Player = player;
+            }
+        });
+        EventService.Subscribe<Events.Remote.RemovePlayer>((evnt) => PlayersService.RemovePlayer(evnt.UserId));
+
+        EventService.Subscribe<Events.Remote.ClientInfo>(OnClientInfo);
         if (NetworkService.IsClient())
         {
             Connection = new ENetConnection();
@@ -76,7 +87,7 @@ public class Client
 
     static void DisconnectedFromServer()
     {
-        GD.Print("Disconnected To Server");
+        GD.Print("Disconnected From Server");
         EventService.Fire(new Events.DisconnectedFromServer());
     }
 
@@ -85,11 +96,17 @@ public class Client
         GD.Print("Connected To Server");
     }
 
-    static void OnRemoteClientInfo(Events.Remote.ClientInfo evnt)
+    static void OnClientInfo(Events.Remote.ClientInfo evnt)
     {
         PeerId = evnt.PeerId;
         UserId = evnt.UserId;
-        Player = PlayersService.CreatePlayer(UserId);
+        foreach (int playerId in evnt.PlayerIds)
+        {
+            if (playerId != UserId)
+            {
+                PlayersService.CreatePlayer(playerId);
+            }
+        }
         EventService.Fire(new Events.ConnectedToServer());
     }
 }

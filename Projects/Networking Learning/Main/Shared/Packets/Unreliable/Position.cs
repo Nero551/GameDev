@@ -12,11 +12,14 @@ public class Position : Packet
 
     public override byte[] Encode()
     {
-        //Writing Id
-        WriteInt(NetworkService.IdPacketLookup[this.GetType()]);
-        WriteFloat(((Vector3)Data[0]).X);
-        WriteFloat(((Vector3)Data[0]).Y);
-        WriteFloat(((Vector3)Data[0]).Z);
+        base.Encode();
+
+        foreach (var item in Data)
+        {
+            GD.Print(item);
+        }
+        WriteInt((int)Data[0]);
+        WriteVector3((Vector3)Data[1]);
 
         //* Writing Here
         return CreateBytesArray();
@@ -24,11 +27,10 @@ public class Position : Packet
 
     public override object[] Decode()
     {
-        //Skip id
-        ReadInt();
+        base.Decode();
 
         //* Reading Here
-        object[] data = [ReadFloat(), ReadFloat(), ReadFloat()];
+        object[] data = [ReadInt(), ReadVector3()];
         return data;
     }
 

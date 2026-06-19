@@ -1,23 +1,20 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using Packets;
 
 
 namespace Events.Remote;
 
-public class ClientInfo : Remote
+public class CreatePlayer : Remote
 {
     public int UserId;
-    public int PeerId;
-    public int[] PlayerIds;
-
-    public ClientInfo(int senderPeerId, object[] decodedData)
+    public CreatePlayer(object[] decodedData, int senderPeerId)
     {
         DecodedData = decodedData;
         SenderPeerId = senderPeerId;
 
         UserId = (int)DecodedData[0];
-        PeerId = (int)DecodedData[1];
-        PlayerIds = (int[])DecodedData[2];
     }
 }
+

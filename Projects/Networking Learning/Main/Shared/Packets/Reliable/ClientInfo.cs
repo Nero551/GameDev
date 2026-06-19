@@ -7,29 +7,27 @@ namespace Packets;
 
 public class ClientInfo : Packet
 {
-    
+
     public override int Flag => (int)ENetPacketPeer.FlagReliable;
 
     public override byte[] Encode()
     {
-        //Writing Id
-        WriteInt(NetworkService.IdPacketLookup[this.GetType()]);
-        
+        base.Encode();
         //* Writing Here
         Server.ClientInfo clientInfo = Data[0] as Server.ClientInfo;
         WriteInt(clientInfo.UserId);
         WriteInt(clientInfo.PeerId);
+        WriteIntArray((int[])Data[1]);
         // WriteInt(clientInfo.Peer);
         return CreateBytesArray();
     }
 
     public override object[] Decode()
     {
-        //Skip id
-        ReadInt();
+        base.Decode();
 
         //* Writing Here
-        object[] data = [ReadInt(), ReadInt()];
+        object[] data = [ReadInt(), ReadInt(),ReadIntArray()];
         return data;
     }
 
