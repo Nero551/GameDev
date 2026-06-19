@@ -107,9 +107,8 @@ public static partial class Server
         peer.SetMeta("ClientInfo", clientInfo);
         ClientInfos[peerId] = clientInfo;
 
-        NetworkService.SendToClient<Packets.ClientInfo>(peerId, clientInfo, PlayersService.Players.Keys.ToArray());
-        NetworkService.SendToAllClients<Packets.CreatePlayer>(clientInfo.UserId);
-
+        NetworkService.SendToClient<RemoteEvents.ClientInfo>(peerId, clientInfo, PlayersService.Players.Keys.ToArray());
+        NetworkService.SendToAllClients<RemoteEvents.CreatePlayer>(clientInfo.UserId);
         GD.Print($"Client Connected With ID {peerId}");
         EventService.Fire(new Events.ClientConnected(peerId));
     }
@@ -121,7 +120,7 @@ public static partial class Server
         ClientInfos.Remove(clientInfo.PeerId);
         PlayersService.RemovePlayer(clientInfo.UserId);
 
-        NetworkService.SendToAllClients<Packets.RemovePlayer>(clientInfo.UserId);
+        NetworkService.SendToAllClients<RemoteEvents.RemovePlayer>(clientInfo.UserId);
         GD.Print($"Client Disconnected With ID {clientInfo.PeerId}");
         EventService.Fire(new Events.ClientDisconnected(clientInfo.PeerId));
     }

@@ -9,24 +9,16 @@ public static class NetworkService
 {
     /*
         !So how does this mess work? to send stuff from client to server or vice versa first you:
-        ?   1- create a packet
-        ?   2- create a Remote Event to notify when packet is recieved
-        ?   3- send with one of the send methods
-        ?   4- subscribe a method to the Remote Event
-
-        * Packets contain the Decode and Encode Methods aswell as the Remote Event they fire when sent.
-        * Remote Events contain organized data recieved by the packet. the data the reciever will see.
-
-        !Steps For Creating a Packet:
-        ?   1- create a new class inheriting Packet.
+        ?   1- create a RemoteEvent class inheriting Packet.
         ?   2- assign the Flag of the packet (Reliable, Unreliable, etc).
-        ?   3- override Encode, Decode & FireRemote methods to suit the packet's data
+        ?   3- override Encode to write the data sent over the network.
+        ?   4- override Decode to read the data into fields.
+        ?   5- send with one of the send methods.
+        ?   6- subscribe a method to the RemoteEvent type.
 
-        !Steps For Creating a Remote:
-        ?   1- create a new class inheriting Remote
-        ?   2- create a constructor with parameters (int senderPeerId, object[] decodedData)
-        ?   3- assign the base fields SenderPeerId and DecodedData to the parameters
-        ?   4- create new fields and assign them to values in the DecodedData Array (differs per remote) 
+        * RemoteEvents contain both the networking logic and the organized data the reciever will see.
+        * NetworkService fires the RemoteEvent after Decode finishes.
+        * SenderPeerId is assigned before Decode runs. It equals 0 if the server sent the packet.
     */
 
     public static int PacketDebounce = 5; // The delay on handling packets in milliseconds
@@ -99,9 +91,10 @@ public static class NetworkService
         Packet packet = (Packet)Activator.CreateInstance(NetworkService.Packets[packetId]);
         packet.WriteBytes(data);
         packet.CreateBytesArray();
-        object[] decodedData = packet.Decode();
-        
-        packet.FireRemote(senderPeerId, decodedData);
+
+        packet.SenderPeerId = senderPeerId;
+        packet.Decode();
+        packet.Fire();
     }
 
     static void RegisterPackets()

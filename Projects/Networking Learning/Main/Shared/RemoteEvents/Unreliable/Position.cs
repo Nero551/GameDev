@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Data.Common;
 using Godot;
 
-namespace Packets;
+namespace RemoteEvents;
 
 public class Position : Packet
 {
+    public int UserId;
+    public Vector3 Vec3;
 
     public override int Flag => (int)ENetPacketPeer.FlagUnreliableFragment;
 
@@ -25,19 +27,15 @@ public class Position : Packet
         return CreateBytesArray();
     }
 
-    public override object[] Decode()
+    public override void Decode()
     {
         base.Decode();
 
         //* Reading Here
-        object[] data = [ReadInt(), ReadVector3()];
-        return data;
-    }
-
-    public override void FireRemote(int senderPeerId, object[] decodedData)
-    {
-        base.FireRemote(senderPeerId, decodedData);
-        EventService.Fire(new Events.Remote.Position(decodedData, senderPeerId));
+		UserId = ReadInt();
+		Vec3 = ReadVector3();
     }
 }
+
+
 

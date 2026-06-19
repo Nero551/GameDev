@@ -23,7 +23,7 @@ public static class Client
 
     public static void Start()
     {
-        EventService.Subscribe<Events.Remote.CreatePlayer>((evnt) =>
+        EventService.Subscribe<RemoteEvents.CreatePlayer>((evnt) =>
         {
             Player player = PlayersService.CreatePlayer(evnt.UserId);
             if (UserId == evnt.UserId)
@@ -31,9 +31,9 @@ public static class Client
                 Player = player;
             }
         });
-        EventService.Subscribe<Events.Remote.RemovePlayer>((evnt) => PlayersService.RemovePlayer(evnt.UserId));
+        EventService.Subscribe<RemoteEvents.RemovePlayer>((evnt) => PlayersService.RemovePlayer(evnt.UserId));
 
-        EventService.Subscribe<Events.Remote.ClientInfo>(OnClientInfo);
+        EventService.Subscribe<RemoteEvents.ClientInfo>(OnClientInfo);
         if (NetworkService.IsClient())
         {
             Connection = new ENetConnection();
@@ -96,7 +96,7 @@ public static class Client
         GD.Print("Connected To Server");
     }
 
-    static void OnClientInfo(Events.Remote.ClientInfo evnt)
+    static void OnClientInfo(RemoteEvents.ClientInfo evnt)
     {
         PeerId = evnt.PeerId;
         UserId = evnt.UserId;

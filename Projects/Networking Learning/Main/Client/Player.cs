@@ -1,11 +1,10 @@
 using System;
-using Events.Remote;
 using Godot;
 
 public partial class Player : CharacterBody3D
 {
     public int UserId;
-    public const float Speed = 5.0f;
+    public const float Speed = 2.5f;
     public const float JumpVelocity = 4.5f;
     [Export] Vector3 velocity;
 
@@ -13,8 +12,8 @@ public partial class Player : CharacterBody3D
     {
         base._Ready();
 
-        EventService.Subscribe<Events.Remote.MoveRequest>(OnMoveRequest);
-        EventService.Subscribe<Events.Remote.Position>(OnPosition);
+        EventService.Subscribe<RemoteEvents.MoveRequest>(OnMoveRequest);
+        EventService.Subscribe<RemoteEvents.Position>(OnPosition);
     }
 
     private void Move(Player player, Vector2 inputDir)
@@ -46,23 +45,24 @@ public partial class Player : CharacterBody3D
             Vector2 inputDir = Input.GetVector("Left", "Right", "Forward", "Back");
             if (inputDir != Vector2.Zero)
             {
-                NetworkService.SendToServer<Packets.MoveRequest>(inputDir);
+                NetworkService.SendToServer<RemoteEvents.MoveRequest>(inputDir);
             }
         }
     }
 
-    void OnMoveRequest(Events.Remote.MoveRequest evnt)
+    void OnMoveRequest(RemoteEvents.MoveRequest evnt)
     {
         Vector2 inputDir = evnt.Vec2;
         Move(Server.ClientInfos[evnt.SenderPeerId].Player, inputDir);
-        NetworkService.SendToAllClients<Packets.Position>(
-            Server.ClientInfos[evnt.SenderPeerId].UserId, Server.ClientInfos[evnt.SenderPeerId].Player.Position
+        NetworkService.SendToAllClients<RemoteEvents.Position>(
+            Server.ClientInfos[evnt.SenderPeerId].UserId, Server.ClientInfos[evnt.SenderPeerId].Player.Velocity
             );
     }
 
-    void OnPosition(Events.Remote.Position evnt)
+    void OnPosition(RemoteEvents.Position evnt)
     {
-        PlayersService.GetPlayer(evnt.UserId).Position = evnt.Vec3;
+        PlayersService.GetPlayer(evnt.UserId).Velocity = evnt.Vec3;
+        PlayersService.GetPlayer(evnt.UserId).MoveAndSlide();
     }
 
 }
