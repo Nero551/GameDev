@@ -2,26 +2,32 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-public class Processor
+public abstract class Processor
 {
-    public static Processor Add<T>(ref List<Processor> processors) where T : Processor, new()
+    public static Processor Add<T>() where T : Processor, new()
     {
-        T processor = new T();
-        processors.Add(processor);
+
+        T processor = new();
+        Game.Runtime.Processors.Add(processor);
         return processor;
     }
 
-    public virtual void Start()
+    public virtual bool HasRequiredBlocks(Entity entity)
+    {
+        return true;
+    }
+
+    public virtual void Start(Entity entity)
     {
 
     }
 
-    public virtual void Process(double delta)
+    public virtual void Process(Entity entity, double delta)
     {
 
     }
 
-    public virtual void PhysicsProcess(double delta)
+    public virtual void PhysicsProcess(Entity entity, double delta)
     {
 
     }

@@ -19,7 +19,7 @@ glow_enabled = true
 
 [sub_resource type="LabelSettings" id="LabelSettings_qesgf"]
 
-[node name="World" type="Node3D" unique_id=602571514]
+[node name="Game" type="Node3D" unique_id=602571514]
 script = ExtResource("1_w7t5r")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1586411953]

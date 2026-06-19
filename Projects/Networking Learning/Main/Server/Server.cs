@@ -38,7 +38,7 @@ public static partial class Server
                 return;
             }
             Running = true;
-            // GD.Print("Server Started");
+            GD.Print("Server Started");
             Update();
         }
     }

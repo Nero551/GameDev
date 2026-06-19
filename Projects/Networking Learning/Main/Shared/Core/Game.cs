@@ -4,50 +4,30 @@ using Godot;
 public partial class Game : Node3D
 {
     public static Node3D World;
-    // Called when the node enters the scene tree for the first time.
+    public static Runtime Runtime;
+    /*
+        PEB, Processor Entity Block. its ECS but godot style.
+        starts here. branches out to ServerRuntime and ClientRuntime. then branches out to processors.
+        entities contain blocks. blocks are well. blocks of data
+    */
+
     public override void _EnterTree()
     {
         World = this;
         NetworkService.Init();
-
-        if (NetworkService.IsServer())
-        {
-            ServerMain.Start();
-        }
-        else
-        {
-            ClientMain.Start();
-        }
+        Runtime = NetworkService.IsServer() ? new ServerRuntime() : new ClientRuntime();
+        Runtime.Start();
     }
-
-    //*Note: u can add this to the launch args of the server to make it disable rendering:
-    //* godot --headless Server
 
     public override void _Process(double delta)
     {
         base._Process(delta);
-
-        if (NetworkService.IsServer())
-        {
-            ServerMain.Process(delta);
-        }
-        else
-        {
-            ClientMain.Process(delta);
-        }
+        Runtime.Process(delta);
     }
 
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-
-        if (NetworkService.IsServer())
-        {
-            ServerMain.PhysicsProcess(delta);
-        }
-        else
-        {
-            ClientMain.PhysicsProcess(delta);
-        }
+        Runtime.PhysicsProcess(delta);
     }
 }

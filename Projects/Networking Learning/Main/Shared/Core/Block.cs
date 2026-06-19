@@ -1,7 +1,9 @@
-using System;
 using Godot;
+using System;
 
-public class Block
+
+namespace Blocks;
+public abstract class Block
 {
-    
+    public Entity Entity;
 }
