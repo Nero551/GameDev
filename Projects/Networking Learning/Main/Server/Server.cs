@@ -14,6 +14,7 @@ public static partial class Server
         public int PeerId;
         public ENetPacketPeer Peer;
     }
+    
     public static int Port = 7777;
     public static string IP = "127.0.0.1";
     public static Dictionary<int, ClientInfo> ClientInfos = [];

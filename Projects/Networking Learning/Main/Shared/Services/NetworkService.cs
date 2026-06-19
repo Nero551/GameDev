@@ -19,7 +19,7 @@ public static class NetworkService
 
         !Steps For Creating a Packet:
         ?   1- create a new class inheriting Packet.
-        ?   2- assign Flag and Id of the packet.
+        ?   2- assign the Flag of the packet (Reliable, Unreliable, etc).
         ?   3- override Encode, Decode & FireRemote methods to suit the packet's data
 
         !Steps For Creating a Remote:
@@ -37,7 +37,6 @@ public static class NetworkService
     {
         RegisterPackets();
         EventService.Subscribe<Events.RecievedPacket>(OnRecievedPacket);
-
     }
 
     public static bool IsServer()
@@ -59,7 +58,7 @@ public static class NetworkService
         }
         return true;
     }
-    
+
     public static void SendToServer<T>(params object[] data) where T : Packet, new()
     {
         if (IsClient())

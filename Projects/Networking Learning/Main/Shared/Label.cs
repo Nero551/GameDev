@@ -10,7 +10,7 @@ public partial class Label : Godot.Label
         {
             Text = "Server";
         }
-        EventService.Subscribe<Events.ConnectedToServer>(evnt =>
+        EventService.Subscribe<Events.ConnectedToServer>((evnt) =>
         {
             if (NetworkService.IsClient())
             {

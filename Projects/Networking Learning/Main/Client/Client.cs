@@ -11,9 +11,9 @@ public class Client
     //TODO- move onto replication 
 
     //* FOR GODOT NODES. U CAN JUST USE THE SCENE. send the filepath of the scene.
+    //* even better, u can make a scene registry to assign an id to each scene. now u just send the id
 
     public static ENetConnection Connection;
-
     public static Player Player; //* the player Entity (includes camera , input, etc)
     public static int PeerId = 1; //* this is the signature for the network connection ITSELF
     public static int UserId = 1; //* this should go to player class
