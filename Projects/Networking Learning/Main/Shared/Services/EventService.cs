@@ -3,43 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
+/// <summary>
+/// Global event bus used for communication between systems.
+/// </summary>
+/// <remarks>
+/// Events are identified by their type.
+/// Subscribers receive the full event object rather than raw data.
+/// </remarks>
+/// 
 public static class EventService
 {
-    /*
-    *   How To Use:
-    *       1- Create a class inheriting Event.
-    *       2- Fire using Fire method
-    *       3- other methods can subscribe to the event using subscribe
-    *       4- the subscriber recieves the event object that u specified.
-    
-    ?   Notes:  the subscriber DOES NOT recieve raw data. itt recieves the event object containing the data.
-    */
+    /// <summary>
+    /// Maps event types to their subscribed callbacks.
+    /// </summary>
+    /// 
+    private static readonly Dictionary<Type, Delegate> Events = [];
 
-    private static Dictionary<Type, Delegate> Events = [];
-
+    /// <summary>
+    /// Fires an event and invokes all subscribed callbacks.
+    /// </summary>
+    /// <typeparam name="T">The event type.</typeparam>
+    /// <param name="evnt">The event instance to dispatch.</param>
+    /// 
     public static void Fire<T>(T evnt) where T : Event
     {
-
-        //Checks if an action is connected to the event
         if (Events.TryGetValue(typeof(T), out Delegate callback))
         {
             ((Action<T>)callback)?.Invoke(evnt);
         }
     }
 
+    /// <summary>
+    /// Subscribes one or more callbacks to an event type.
+    /// </summary>
+    /// <typeparam name="T">The event type.</typeparam>
+    /// <param name="callbacks">Methods to invoke when the event is fired.</param>
+    /// 
     public static void Subscribe<T>(params Action<T>[] callbacks) where T : Event
     {
         Type evnt = typeof(T);
-        //The params and loop allow for multiple methods to subscribe in 1 line
+
         foreach (Action<T> callback in callbacks)
         {
             if (Events.ContainsKey(evnt))
             {
-                //Checks if the action is already subscribed
                 if (Events[evnt].GetInvocationList().Contains(callback))
                 {
                     continue;
                 }
+
                 Events[evnt] = Delegate.Combine(callback, Events[evnt]);
             }
             else
@@ -49,10 +61,16 @@ public static class EventService
         }
     }
 
+    /// <summary>
+    /// Unsubscribes one or more callbacks from an event type.
+    /// </summary>
+    /// <typeparam name="T">The event type.</typeparam>
+    /// <param name="callbacks">Methods to remove from the event.</param>
+    /// 
     public static void Unsubscribe<T>(params Action<T>[] callbacks) where T : Event
     {
         Type evnt = typeof(T);
-        //The params and loop allow for multiple methods to subscribe in 1 line
+
         foreach (Action<T> callback in callbacks)
         {
             if (Events.ContainsKey(evnt))

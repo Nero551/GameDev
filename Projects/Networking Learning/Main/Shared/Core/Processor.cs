@@ -7,7 +7,7 @@ namespace Processors { }
 /// <summary>
 /// Base class for all simulation processors in the Depths framework.
 /// 
-/// A Processor is a system that operates over all entities that satisfy
+/// A Processor is a system that operates globally or over all entities that satisfy
 /// a specific block requirement set. It defines lifecycle hooks for:
 /// - initialization (Start)
 /// - frame processing (Process)
@@ -40,7 +40,6 @@ public abstract class Processor
 
     /// <summary>
     /// Called once when the processor starts.
-    /// Iterates all entities and initializes valid ones.
     /// </summary>
     /// 
     public virtual void Start()
@@ -78,8 +77,7 @@ public abstract class Processor
     public virtual void PhysicsProcessEntities(Entity entity, double delta) { }
 
     /// <summary>
-    /// Executes per-frame processing for all entities in the runtime.
-    /// Only entities that satisfy HasRequiredBlocks are processed.
+    /// Executes per-frame processing in the runtime.
     /// </summary>
     /// <param name="delta">Frame delta time.</param>
     /// 
@@ -95,8 +93,7 @@ public abstract class Processor
     }
 
     /// <summary>
-    /// Executes physics-step processing for all entities in the runtime.
-    /// Only entities that satisfy HasRequiredBlocks are processed.
+    /// Executes physics-step processing in the runtime.
     /// </summary>
     /// <param name="delta">Physics delta time.</param>
     /// 
