@@ -1,25 +1,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Godot;
 
 
 namespace Entities { }
 public class Entity
 {
-    public static int NextId = 0;
 
     private readonly List<Blocks.Block> Blocks = [];
+
+    public readonly Dictionary<FieldInfo, object> LastReplicatedFieldValues = [];
+    public readonly Dictionary<Type, List<FieldInfo>> ReplicatedFields = [];
     public int Id;
     public Node ConnectedNode;
 
     public static Entity Create()
     {
         Entity entity = new();
+
         return entity;
     }
 
-    public static Entity Create<T>() where T : Entity, new()
+    public static T Create<T>() where T : Entity, new()
     {
         T entity = new();
         return entity;
@@ -28,24 +32,29 @@ public class Entity
     protected Entity()
     {
         Initialize();
-        Game.Runtime.Entities.Add(this);
-        Id = NextId++;
+        Id = Game.Runtime.NextEntityId++;
+        Game.Runtime.Entities[Id] = this;
     }
 
     protected virtual void Initialize() { }
 
     public void Destroy()
     {
-        Game.Runtime.Entities.Remove(this);
+        Game.Runtime.Entities.Remove(Id);
     }
 
-    public void ConnectTo<T>(T node) where T : Node
+    public Node ConnectTo<T>(T node) where T : Node
     {
         ConnectedNode = node;
+        return ConnectedNode;
     }
 
     public T GetNode<T>() where T : Node
     {
+        if (ConnectedNode == null)
+        {
+            throw new Exception($"Connected Node Of Entity[{Id}] Doesn't Exist");
+        }
         return ConnectedNode as T;
     }
 
@@ -60,8 +69,10 @@ public class Entity
             }
         }
 
-        var block = new T { Entity = this };
+        var block = new T { EntityId = Id, Id = Blocks.Count - 1 };
         Blocks.Add(block);
+
+        MarkReplicatedFields(block);
         return block;
     }
     public T GetBlock<T>() where T : Blocks.Block
@@ -71,11 +82,46 @@ public class Entity
             for (int i = 0; i < Blocks.Count; i++)
             {
                 if (Blocks[i] is T block)
+                {
                     return block;
+                }
             }
             ;
         }
         return null;
+    }
+
+    public Blocks.Block GetBlock(Type blockType)
+    {
+        for (int i = 0; i < Blocks.Count; i++)
+        {
+            if (Blocks[i].GetType() == blockType)
+            {
+                return Blocks[i];
+            }
+        }
+        throw new Exception($"Entity: {Id} Doesn't Have Block: {blockType.Name}");
+    }
+
+    public List<Blocks.Block> GetAllBlocks()
+    {
+        return Blocks;
+    }
+
+    private void MarkReplicatedFields(Blocks.Block block)
+    {
+        int fieldId = 0;
+        ReplicatedFields[block.GetType()] = [];
+        foreach (FieldInfo field in block.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+        {
+            if (Attribute.IsDefined(field, typeof(Replicated)))
+            {
+                block.ReplicatedFields.Add(fieldId,field);
+
+                ReplicatedFields[block.GetType()].Add(field);
+                fieldId++;
+            }
+        }
     }
 
     public bool HasBlock<T>() where T : Blocks.Block

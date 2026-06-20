@@ -1,6 +1,7 @@
 using System;
 using Blocks;
 using Godot;
+using RemoteEvents;
 
 
 namespace Processors;
@@ -10,6 +11,11 @@ public class MovementProcessor : Processor
     public override bool HasRequiredBlocks(Entity entity)
     {
         return entity.HasBlock<Blocks.MovementBlock, Blocks.TransformBlock>();
+    }
+
+    public override void Init()
+    {
+        EventService.Subscribe<RemoteEvents.MoveRequest>(OnMoveRequest);
     }
 
     public override void Start(Entity entity)
@@ -22,14 +28,16 @@ public class MovementProcessor : Processor
         base.Process(entity, delta);
     }
 
+    double elapsed = 0;
     public override void PhysicsProcess(Entity entity, double delta)
     {
         base.PhysicsProcess(entity, delta);
         var movementBlock = entity.GetBlock<Blocks.MovementBlock>();
         var transformBlock = entity.GetBlock<Blocks.TransformBlock>();
 
-        movementBlock.MoveDirection = Input.GetVector("Left", "Right", "Back", "Forward");
-
+        movementBlock.Velocity.X = Mathf.MoveToward(movementBlock.Velocity.X, 0, movementBlock.Speed);
+        movementBlock.Velocity.Z = Mathf.MoveToward(movementBlock.Velocity.Z, 0, movementBlock.Speed);
+        
         if (movementBlock.MoveDirection != Vector2.Zero)
         {
             Vector3 direction = (
@@ -42,10 +50,20 @@ public class MovementProcessor : Processor
                 movementBlock.Velocity.Z = direction.Z * movementBlock.Speed;
             }
         }
-        transformBlock.Position += movementBlock.Velocity * (float)delta;
-        entity.GetNode<CharacterBody3D>().Position = transformBlock.Position;
 
-        movementBlock.Velocity.X = Mathf.MoveToward(movementBlock.Velocity.X, 0, movementBlock.Speed);
-        movementBlock.Velocity.Z = Mathf.MoveToward(movementBlock.Velocity.Z, 0, movementBlock.Speed);
+        transformBlock.Position += movementBlock.Velocity * (float)delta;
+
+        elapsed += delta;
+        if (elapsed >= 0.1)
+        {
+            elapsed = 0;
+            NetworkService.SendToAllClients<RemoteEvents.Position>(entity.Id, transformBlock.Position);
+        }
+    }
+
+    void OnMoveRequest(RemoteEvents.MoveRequest evnt)
+    {
+        var movementBlock = Game.Runtime.Entities[evnt.EntityId].GetBlock<Blocks.MovementBlock>();
+        movementBlock.MoveDirection = evnt.MoveDirection;
     }
 }

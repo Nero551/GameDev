@@ -13,6 +13,8 @@ public abstract class Processor
         return processor;
     }
 
+    public virtual void Init() { }
+
     public virtual bool HasRequiredBlocks(Entity entity)
     {
         return true;

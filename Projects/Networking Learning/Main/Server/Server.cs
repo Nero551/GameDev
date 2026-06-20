@@ -12,7 +12,7 @@ public static partial class Server
     {
         public int UserId;
         public int PeerId;
-        public Player Player;
+        public Entities.Player Player;
         public ENetPacketPeer Peer;
     }
 

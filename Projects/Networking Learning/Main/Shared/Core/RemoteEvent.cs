@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Blocks;
 using Godot;
 
 namespace RemoteEvents { }
@@ -34,7 +35,7 @@ public abstract class RemoteEvent() : Event
 
     public virtual byte[] Encode()
     {
-        WriteInt(NetworkService.IdRemoteEventLookup[this.GetType()]);
+        WriteInt(NetworkService.RemoteEvents.GetByValue(this.GetType()));
         return CreateBytesArray();
     }
     public virtual void Decode()
@@ -104,6 +105,34 @@ public abstract class RemoteEvent() : Event
         }
     }
 
+    public void WriteBasis(Basis basis)
+    {
+        WriteVector3(basis.Column0);
+        WriteVector3(basis.Column1);
+        WriteVector3(basis.Column2);
+        WriteVector3(basis.Row0);
+        WriteVector3(basis.Row1);
+        WriteVector3(basis.Row2);
+        WriteVector3(basis.X);
+        WriteVector3(basis.Y);
+        WriteVector3(basis.Z);
+    }
+
+    public void WriteMovementBlock(Blocks.MovementBlock movementBlock)
+    {
+        WriteInt(movementBlock.EntityId);
+        WriteVector2(movementBlock.MoveDirection);
+        WriteFloat(movementBlock.Speed);
+        WriteVector3(movementBlock.Velocity);
+    }
+
+    public void WriteTransformBlock(Blocks.TransformBlock transformBlock)
+    {
+        WriteInt(transformBlock.EntityId);
+        WriteVector3(transformBlock.Position);
+        WriteBasis(transformBlock.Basis);
+    }
+
 
     //* Reading
     public int ReadInt()
@@ -166,5 +195,32 @@ public abstract class RemoteEvent() : Event
             return intArray;
         }
         return [];
+    }
+
+    public Basis ReadBasis()
+    {
+        return new Basis()
+        {
+            Column0 = ReadVector3(),
+            Column1 = ReadVector3(),
+            Column2 = ReadVector3(),
+            Row0 = ReadVector3(),
+            Row1 = ReadVector3(),
+            Row2 = ReadVector3(),
+            X = ReadVector3(),
+            Y = ReadVector3(),
+            Z = ReadVector3(),
+        };
+
+    }
+
+    public Blocks.MovementBlock ReadMovementBlock()
+    {
+        return new MovementBlock() { EntityId = ReadInt(), MoveDirection = ReadVector2(), Speed = ReadFloat(), Velocity = ReadVector3() };
+    }
+
+    public Blocks.TransformBlock ReadTransformBlock()
+    {
+        return new Blocks.TransformBlock() { EntityId = ReadInt(), Position = ReadVector3(), Basis = ReadBasis() };
     }
 }

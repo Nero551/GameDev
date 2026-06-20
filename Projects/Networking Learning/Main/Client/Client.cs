@@ -13,7 +13,7 @@ public static class Client
     //* even better, u can make a scene registry to assign an id to each scene. now u just send the id
 
     public static ENetConnection Connection;
-    public static Player Player; //* the player Entity (includes camera , input, etc)
+    public static Entities.Player Player; //* the player Entity (includes camera , input, etc)
     public static int PeerId; //* this is the signature for the network connection ITSELF
     public static int UserId; //* this should go to player class
 
@@ -23,7 +23,7 @@ public static class Client
     {
         EventService.Subscribe<RemoteEvents.CreatePlayer>((evnt) =>
         {
-            Player player = PlayersService.CreatePlayer(evnt.UserId);
+            Entities.Player player = PlayersService.CreatePlayer(evnt.UserId);
             if (UserId == evnt.UserId)
             {
                 Player = player;

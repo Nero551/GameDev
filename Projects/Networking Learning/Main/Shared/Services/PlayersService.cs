@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-public static class PlayersService 
+public static class PlayersService
 {
-    public static Dictionary<int, Player> Players = [];
+    public static Dictionary<int, Entities.Player> Players = [];
 
-    public static Player CreatePlayer(int userId)
+    public static Entities.Player CreatePlayer(int userId)
     {
-        PackedScene scene = GD.Load<PackedScene>("res://Main/Shared/Scenes/player.tscn");
-        Player player = scene.Instantiate<Player>();
-        player.UserId = userId;
-        player.Name = userId.ToString();
+        Entities.Player player = Entity.Create<Entities.Player>();
+        player.ConnectedNode?.Name = userId.ToString();
         Players[userId] = player;
-        Game.World.AddChild(player);
+
         return player;
     }
 
-    public static List<Player> GetPlayers()
+    public static List<Entities.Player> GetPlayers()
     {
         return [.. Players.Values];
     }
@@ -32,17 +30,17 @@ public static class PlayersService
     {
         if (Players.ContainsKey(userId))
         {
-            Players[userId].QueueFree();
+            Players[userId].Destroy();
             Players.Remove(userId);
         }
     }
 
-    public static Player GetPlayer(int userId)
+    public static Entities.Player GetPlayer(int userId)
     {
         if (Players.ContainsKey(userId))
         {
             return Players[userId];
         }
-        return new Player();
+        return Entity.Create<Entities.Player>();
     }
 }

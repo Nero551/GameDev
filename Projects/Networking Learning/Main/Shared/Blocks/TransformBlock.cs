@@ -4,6 +4,8 @@ using System;
 namespace Blocks;
 public  class TransformBlock : Block
 {
-    public Basis Basis;
-	public Vector3 Position;
+    [Replicated] public Basis Basis;
+	[Replicated] public Vector3 Position;
+    
+
 }

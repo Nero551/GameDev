@@ -22,8 +22,7 @@ public static class NetworkService
     */
 
     public static int PacketDebounce = 5; // The delay on handling packets in milliseconds
-    public static Dictionary<int, Type> RemoteEvents = [];
-    public static Dictionary<Type, int> IdRemoteEventLookup = [];
+    public static BidirectionalDictionary<int, Type> RemoteEvents = new();
 
     public static void Init()
     {
@@ -88,7 +87,7 @@ public static class NetworkService
         byte[] data = evnt.Data;
         int remoteEventId = RemoteEvent.ReadRemoteEventId(data);
 
-        RemoteEvent remoteEvent = (RemoteEvent)Activator.CreateInstance(NetworkService.RemoteEvents[remoteEventId]);
+        RemoteEvent remoteEvent = (RemoteEvent)Activator.CreateInstance(NetworkService.RemoteEvents.GetByKey(remoteEventId));
         remoteEvent.WriteBytes(data);
         remoteEvent.CreateBytesArray();
 
@@ -106,8 +105,7 @@ public static class NetworkService
 
         foreach (var type in remoteEventTypes)
         {
-            IdRemoteEventLookup[type] = currentId;
-            RemoteEvents[currentId] = type;
+            RemoteEvents.Add(currentId, type);
             currentId++;
         }
     }
