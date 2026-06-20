@@ -68,7 +68,7 @@ public class Entity
             }
         }
         int blockId = Blocks.Count;
-        var block = new T { EntityId = Id, Id = blockId };
+        var block = new T { EntityId = Id};
         Blocks.Add(blockId, block);
 
         MarkReplicatedFields(block);

@@ -55,7 +55,7 @@ public class ReplicationProcessor : Processor
                 {
                     block.LastReplicatedFields[replicatedFieldId] = value;
 
-                    ReplicationBox replicationBox = new(entity.Id, block.Id, replicatedFieldId, value);
+                    ReplicationBox replicationBox = new(entity.Id, blockId, replicatedFieldId, value);
                     ReplicationBoxes.Add(replicationBox);
                 }
             }
