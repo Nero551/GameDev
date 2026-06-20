@@ -60,11 +60,11 @@ public class Entity
     public T AddBlock<T>() where T : Blocks.Block, new()
     {
         //Check if it already exists.
-        for (int i = 0; i < Blocks.Count; i++)
+        foreach (int key in Blocks.GetAllKeys())
         {
-            if (Blocks.ContainsKey(i) && Blocks.GetByKey(i) is T)
+            if (Blocks.TryGetByKey(key, out Blocks.Block existingBlock) && existingBlock is T)
             {
-                return Blocks.GetByKey(i) as T;
+                return existingBlock as T;
             }
         }
         int blockId = Blocks.Count;
@@ -79,11 +79,11 @@ public class Entity
     {
         if (HasBlock<T>())
         {
-            for (int i = 0; i < Blocks.Count; i++)
+            foreach (int key in Blocks.GetAllKeys())
             {
-                if (Blocks.ContainsKey(i) && Blocks.GetByKey(i) is T)
+                if (Blocks.TryGetByKey(key, out Blocks.Block block) && block is T)
                 {
-                    return Blocks.GetByKey(i) as T;
+                    return block as T;
                 }
             }
             ;
@@ -112,9 +112,9 @@ public class Entity
 
     public bool HasBlock<T>() where T : Blocks.Block
     {
-        for (int i = 0; i < Blocks.Count; i++)
+        foreach (int key in Blocks.GetAllKeys())
         {
-            if (Blocks.ContainsKey(i) && Blocks.GetByKey(i) is T)
+            if (Blocks.TryGetByKey(key, out Blocks.Block block) && block is T)
             {
                 return true;
             }

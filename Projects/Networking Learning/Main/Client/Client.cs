@@ -5,10 +5,6 @@ using Godot;
 
 public static class Client
 {
-
-    //TODO- high-key i might need to switch to ECS-style framework. atleast seperate data from logic
-    //* it will be easier to maintain and work with multiplayer in that framework
-
     //* FOR GODOT NODES. U CAN JUST USE THE SCENE. send the filepath of the scene.
     //* even better, u can make a scene registry to assign an id to each scene. now u just send the id
 

@@ -197,8 +197,9 @@ public abstract class RemoteEvent() : Event
         };
     }
 
+    //TODO- make this dynamic. no way am adding stuff here everytime i  add a new Read and Write
     protected static readonly Dictionary<Type, int> TypeToId = new()
-{
+    {
     { typeof(int), 0 },
     { typeof(float), 1 },
     { typeof(bool), 2 },
@@ -206,5 +207,5 @@ public abstract class RemoteEvent() : Event
     { typeof(Vector2), 4 },
     { typeof(Vector3), 5 },
     { typeof(Basis), 6 },
-};
+    };
 }

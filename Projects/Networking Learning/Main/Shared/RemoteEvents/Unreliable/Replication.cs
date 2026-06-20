@@ -1,16 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Godot;
+using Processors;
 
 namespace RemoteEvents;
 
 public class Replication : RemoteEvent
 {
-    private int TypeId;
-    public int EntityId;
-    public int BlockId;
-    public int FieldId;
-    public object Value;
+    private int ArrayLength;
+    public List<ReplicationBox> ReplicationBoxes = [];
 
     public override int Flag => (int)ENetPacketPeer.FlagUnreliableFragment;
 
@@ -18,23 +17,25 @@ public class Replication : RemoteEvent
     {
         base.Encode();
         //* Writing Here
-        WriteInt((int)Data[0]);
-        WriteInt((int)Data[1]);
-        WriteInt((int)Data[2]);
-
-        TypeId = TypeToId[Data[3].GetType()];
-        WriteInt(TypeId);
-        switch (Data[3])
+        WriteInt(((List<ReplicationBox>)Data[0]).Count);
+        foreach (ReplicationBox replicationBox in (List<ReplicationBox>)Data[0])
         {
-            case int i: WriteInt(i); break;
-            case float f: WriteFloat(f); break;
-            case bool b: WriteBool(b); break;
-            case string s: WriteString(s); break;
-            case Vector2 v: WriteVector2(v); break;
-            case Vector3 v: WriteVector3(v); break;
-            case Basis b: WriteBasis(b); break;
-        }
+            WriteInt(replicationBox.EntityId);
+            WriteInt(replicationBox.BlockId);
+            WriteInt(replicationBox.FieldId);
 
+            WriteInt(TypeToId[replicationBox.Value.GetType()]);
+            switch (replicationBox.Value)
+            {
+                case int i: WriteInt(i); break;
+                case float f: WriteFloat(f); break;
+                case bool b: WriteBool(b); break;
+                case string s: WriteString(s); break;
+                case Vector2 v: WriteVector2(v); break;
+                case Vector3 v: WriteVector3(v); break;
+                case Basis b: WriteBasis(b); break;
+            }
+        }
         return CreateBytesArray();
     }
 
@@ -43,45 +44,51 @@ public class Replication : RemoteEvent
         base.Decode();
 
         //* Reading Here
-        EntityId = ReadInt();
-        BlockId = ReadInt();
-        FieldId = ReadInt();
-
-        TypeId = ReadInt();
-        switch (TypeId)
+        ArrayLength = ReadInt();
+        for (int i = 0; i < ArrayLength; i++)
         {
-            case 0:
-                Value = ReadInt();
-                return;
+            int entityId = ReadInt();
+            int blockId = ReadInt();
+            int fieldId = ReadInt();
+            int typeId = ReadInt();
+            object value;
+            //TODO- make this dynamic too
+            switch (typeId)
+            {
+                case 0:
+                    value = ReadInt();
+                    break;
 
-            case 1:
-                Value = ReadFloat();
-                return;
+                case 1:
+                    value = ReadFloat();
+                    break;
 
-            case 2:
-                Value = ReadBool();
-                return;
+                case 2:
+                    value = ReadBool();
+                    break;
 
-            case 3:
-                Value = ReadString();
-                return;
+                case 3:
+                    value = ReadString();
+                    break;
 
-            case 4:
-                Value = ReadVector2();
-                return;
+                case 4:
+                    value = ReadVector2();
+                    break;
 
-            case 5:
-                Value = ReadVector3();
-                return;
+                case 5:
+                    value = ReadVector3();
+                    break;
 
-            case 6:
-                Value = ReadBasis();
-                return;
+                case 6:
+                    value = ReadBasis();
+                    break;
 
-            default:
-                throw new Exception($"Unknown TypeId: {TypeId}");
+                default:
+                    throw new Exception($"Unknown TypeId: {typeId}");
+            }
+
+            ReplicationBoxes.Add(new ReplicationBox(entityId, blockId, fieldId, value));
         }
-        throw new Exception($"Value Type Doesn't Exist For Replication Decoding {Value.GetType().Name}");
     }
 }
 

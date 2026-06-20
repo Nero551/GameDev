@@ -7,24 +7,14 @@ namespace Processors;
 
 public class InputProcessor : Processor
 {
-    public override void Init()
-    {
-        base.Init();
-    }
-
     public override bool HasRequiredBlocks(Entity entity)
     {
         return entity.HasBlock<Blocks.InputBlock, Blocks.MovementBlock>();
     }
 
-    public override void Start(Entity entity)
+    public override void ProcessEntities(Entity entity, double delta)
     {
-        base.Start(entity);
-    }
-
-    public override void Process(Entity entity, double delta)
-    {
-        base.Process(entity, delta);
+        base.ProcessEntities(entity, delta);
 
         var movementBlock = entity.GetBlock<Blocks.MovementBlock>();
         movementBlock.MoveDirection = Input.GetVector("Left", "Right", "Back", "Forward");

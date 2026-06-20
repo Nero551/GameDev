@@ -8,21 +8,19 @@ public abstract class Runtime
     public List<Processor> Processors = [];
     public Dictionary<int, Entity> Entities = [];
 
-    protected virtual void AddProcessors() { Processor.Add<Processors.ReplicationProcessor>(); }
+    protected virtual void AddProcessors()
+    {
+        //* Shared Between Server & Client
+        Processor.Add<Processors.ReplicationProcessor>();
+    }
 
     public virtual void Start()
     {
         AddProcessors();
+
         for (int i = 0; i < Processors.Count; i++)
         {
-            Processors[i].Init();
-            for (int j = 0; j < Entities.Count; j++)
-            {
-                if (Processors[i].HasRequiredBlocks(Entities[j]))
-                {
-                    Processors[i].Start(Entities[j]);
-                }
-            }
+            Processors[i].Start();
         }
     }
 
@@ -30,13 +28,7 @@ public abstract class Runtime
     {
         for (int i = 0; i < Processors.Count; i++)
         {
-            for (int j = 0; j < Entities.Count; j++)
-            {
-                if (Processors[i].HasRequiredBlocks(Entities[j]))
-                {
-                    Processors[i].Process(Entities[j], delta);
-                }
-            }
+            Processors[i].Process(delta);
         }
     }
 
@@ -44,13 +36,7 @@ public abstract class Runtime
     {
         for (int i = 0; i < Processors.Count; i++)
         {
-            for (int j = 0; j < Entities.Count; j++)
-            {
-                if (Processors[i].HasRequiredBlocks(Entities[j]))
-                {
-                    Processors[i].PhysicsProcess(Entities[j], delta);
-                }
-            }
+            Processors[i].PhysicsProcess(delta);
         }
     }
 }

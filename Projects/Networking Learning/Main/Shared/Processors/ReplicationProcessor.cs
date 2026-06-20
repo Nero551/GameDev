@@ -7,27 +7,37 @@ namespace Processors;
 
 public class ReplicationProcessor : Processor
 {
-    public override void Init()
+    double elapsed = 0;
+    private readonly List<ReplicationBox> ReplicationBoxes = [];
+
+    public override void Start()
     {
         EventService.Subscribe<RemoteEvents.Replication>(OnReplication);
+        base.Start();
     }
 
-    public override void Start(Entity entity)
+    public override void Process(double delta)
     {
-        base.Start(entity);
-    }
-
-    double elapsed = 0;
-    public override void Process(Entity entity, double delta)
-    {
-        base.Process(entity, delta);
         if (!NetworkService.IsServer())
             return;
-
         elapsed += delta;
         if (elapsed < 0.1)
             return;
+
         elapsed = 0;
+        base.Process(delta);
+
+        if (ReplicationBoxes.Count != 0)
+        {
+            GD.Print(ReplicationBoxes);
+            NetworkService.SendToAllClients<RemoteEvents.Replication>(ReplicationBoxes);
+            ReplicationBoxes.Clear();
+        }
+    }
+
+    public override void ProcessEntities(Entity entity, double delta)
+    {
+        base.ProcessEntities(entity, delta);
 
         foreach (int blockId in entity.Blocks.GetAllKeys())
         {
@@ -44,8 +54,9 @@ public class ReplicationProcessor : Processor
                     || !Equals(value, old))
                 {
                     block.LastReplicatedFields[replicatedFieldId] = value;
-                    NetworkService.SendToAllClients<RemoteEvents.Replication>(
-                        entity.Id, block.Id, replicatedFieldId, value);
+
+                    ReplicationBox replicationBox = new(entity.Id, block.Id, replicatedFieldId, value);
+                    ReplicationBoxes.Add(replicationBox);
                 }
             }
         }
@@ -53,10 +64,12 @@ public class ReplicationProcessor : Processor
 
     void OnReplication(RemoteEvents.Replication evnt)
     {
-        GD.Print(evnt.EntityId,evnt.BlockId,evnt.FieldId,evnt.Value);
-        var entity = Game.Runtime.Entities[evnt.EntityId];
-        var block = entity.GetBlock(evnt.BlockId);
-        var replicatedField = block.ReplicatedFields.GetByKey(evnt.FieldId);
-        replicatedField.SetValue(block, evnt.Value);
+        foreach (ReplicationBox replicationBox in evnt.ReplicationBoxes)
+        {
+            var entity = Game.Runtime.Entities[replicationBox.EntityId];
+            var block = entity.GetBlock(replicationBox.BlockId);
+            var replicatedField = block.ReplicatedFields.GetByKey(replicationBox.FieldId);
+            replicatedField.SetValue(block, replicationBox.Value);
+        }
     }
 }
