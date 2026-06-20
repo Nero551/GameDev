@@ -9,7 +9,7 @@ namespace Blocks;
 public abstract class Block
 {
     public Dictionary<int, object> LastReplicatedFields = [];
-    public Dictionary<int, FieldInfo> ReplicatedFields = [];
+    public Dictionary<int, ReplicatedField> ReplicatedFields = [];
 
     public int EntityId;
 }

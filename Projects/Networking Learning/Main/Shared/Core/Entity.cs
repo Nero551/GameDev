@@ -103,7 +103,7 @@ public class Entity
         {
             if (Attribute.IsDefined(field, typeof(Replicated)))
             {
-                block.ReplicatedFields.Add(fieldId, field);
+                block.ReplicatedFields.Add(fieldId, new ReplicatedField(field,field.GetCustomAttribute<Replicated>()));
                 fieldId++;
             }
         }

@@ -8,9 +8,10 @@ namespace Processors;
 
 public class ReplicationProcessor : Processor
 {
-    double elapsed = 0;
-    readonly List<ReplicationBox> UnreliableReplicationQueue = [];
-    public List<ReplicationBox> ReliableReplicationQueue = [];
+    readonly Dictionary<ReplicationMode, List<ReplicationBox>> ReplicationQueues = new() {
+        {ReplicationMode.Reliable, []},
+        {ReplicationMode.Unreliable, []}
+    };
 
     public override void Start()
     {
@@ -19,6 +20,7 @@ public class ReplicationProcessor : Processor
         base.Start();
     }
 
+    double elapsed = 0;
     public override void Process(double delta)
     {
         if (!NetworkService.IsServer())
@@ -30,16 +32,19 @@ public class ReplicationProcessor : Processor
         elapsed = 0;
         base.Process(delta);
 
-        if (UnreliableReplicationQueue.Count != 0)
+        var unreliable = ReplicationQueues[ReplicationMode.Unreliable];
+        var reliable = ReplicationQueues[ReplicationMode.Reliable];
+        if (reliable.Count != 0)
         {
-            NetworkService.SendToAllClients<RemoteEvents.Replication.UnreliableReplication>(UnreliableReplicationQueue);
-            UnreliableReplicationQueue.Clear();
+            NetworkService.SendToAllClients<RemoteEvents.Replication.UnreliableReplication>(
+                reliable);
+            reliable.Clear();
         }
-
-        if (ReliableReplicationQueue.Count != 0)
+        if (unreliable.Count != 0)
         {
-            NetworkService.SendToAllClients<RemoteEvents.Replication.ReliableReplication>(UnreliableReplicationQueue);
-            ReliableReplicationQueue.Clear();
+            NetworkService.SendToAllClients<RemoteEvents.Replication.ReliableReplication>(
+                unreliable);
+            unreliable.Clear();
         }
     }
 
@@ -55,8 +60,8 @@ public class ReplicationProcessor : Processor
 
             foreach (var replicatedFieldId in block.ReplicatedFields.Keys)
             {
-                var field = block.ReplicatedFields[replicatedFieldId];
-                var value = field.GetValue(block);
+                var replicatedField = block.ReplicatedFields[replicatedFieldId];
+                var value = replicatedField.Field.GetValue(block);
 
                 if (!block.LastReplicatedFields.TryGetValue(replicatedFieldId, out var old)
                     || !Equals(value, old))
@@ -64,16 +69,7 @@ public class ReplicationProcessor : Processor
                     block.LastReplicatedFields[replicatedFieldId] = value;
 
                     ReplicationBox replicationBox = new(entity.Id, blockId, replicatedFieldId, value);
-                    var attribute = field.GetCustomAttribute<Replicated>();
-
-                    if (attribute.Mode == ReplicationMode.Reliable)
-                    {
-                        ReliableReplicationQueue.Add(replicationBox);
-                    }
-                    else if (attribute.Mode == ReplicationMode.Unreliable)
-                    {
-                        UnreliableReplicationQueue.Add(replicationBox);
-                    }
+                    ReplicationQueues[replicatedField.Attribute.Mode].Add(replicationBox);
                 }
             }
         }
@@ -86,7 +82,7 @@ public class ReplicationProcessor : Processor
             var entity = Game.Runtime.Entities[replicationBox.EntityId];
             var block = entity.GetBlock(replicationBox.BlockId);
             var replicatedField = block.ReplicatedFields[replicationBox.FieldId];
-            replicatedField.SetValue(block, replicationBox.Value);
+            replicatedField.Field.SetValue(block, replicationBox.Value);
         }
     }
 }
