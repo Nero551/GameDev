@@ -5,13 +5,13 @@ using Godot;
 
 public static class PlayersService
 {
-    public static Dictionary<int, Entities.Player> Players = [];
+    public static BiDictionary<int, Entities.Player> Players = new();
 
     public static Entities.Player CreatePlayer(int userId)
     {
         Entities.Player player = Entity.Create<Entities.Player>();
         player.ConnectedNode?.Name = userId.ToString();
-        Players[userId] = player;
+        Players.Add(userId, player);
 
         return player;
     }
@@ -30,8 +30,8 @@ public static class PlayersService
     {
         if (Players.ContainsKey(userId))
         {
-            Players[userId].Destroy();
-            Players.Remove(userId);
+            Players.GetByKey(userId).Destroy();
+            Players.RemoveByKey(userId);
         }
     }
 
@@ -39,8 +39,17 @@ public static class PlayersService
     {
         if (Players.ContainsKey(userId))
         {
-            return Players[userId];
+            return Players.GetByKey(userId);
         }
         return Entity.Create<Entities.Player>();
+    }
+
+    public static int GetUserId(Entities.Player player)
+    {
+        if (Players.ContainsValue(player))
+        {
+            return Players.GetByValue(player);
+        }
+        return default;
     }
 }

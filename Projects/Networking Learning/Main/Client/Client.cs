@@ -5,14 +5,10 @@ using Godot;
 
 public static class Client
 {
-    //* FOR GODOT NODES. U CAN JUST USE THE SCENE. send the filepath of the scene.
-    //* even better, u can make a scene registry to assign an id to each scene. now u just send the id
-
     public static ENetConnection Connection;
-    public static Entities.Player Player; //* the player Entity (includes camera , input, etc)
+    public static Entities.Player Player;
     public static int PeerId; //* this is the signature for the network connection ITSELF
-    public static int UserId; //* this should go to player class
-
+    public static int UserId; //* the entry to the client's data in the DB
     private static bool Running = false;
 
     public static void Start()

@@ -6,14 +6,29 @@ using Godot;
 
 public class BiDictionary<T1, T2>
 {
-    private Dictionary<T1, T2> forward = [];
-    private Dictionary<T2, T1> reverse = [];
+    private readonly Dictionary<T1, T2> forward = [];
+    private readonly Dictionary<T2, T1> reverse = [];
+
     public int Count => forward.Count;
+    public List<T1> Keys => [.. forward.Keys];
+    public List<T2> Values => [.. reverse.Keys];
 
     public void Add(T1 key, T2 value)
     {
         forward.Add(key, value);
         reverse.Add(value, key);
+    }
+
+    public void RemoveByKey(T1 key)
+    {
+        forward.Remove(key);
+        reverse.Remove(GetByKey(key));
+    }
+
+    public void RemoveByValue(T2 value)
+    {
+        reverse.Remove(value);
+        forward.Remove(GetByValue(value));
     }
 
     public T2 GetByKey(T1 key)
@@ -34,16 +49,6 @@ public class BiDictionary<T1, T2>
     public bool TryGetByValue(T2 value, out T1 key)
     {
         return reverse.TryGetValue(value, out key);
-    }
-
-    public List<T1> GetAllKeys()
-    {
-        return [.. forward.Keys];
-    }
-
-    public List<T2> GetAllValues()
-    {
-        return [.. forward.Values];
     }
 
     public bool ContainsKey(T1 key)
