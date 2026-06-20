@@ -7,16 +7,18 @@ public class ServerRuntime : Runtime
     protected override void AddProcessors()
     {
         base.AddProcessors();
-        Processor.Add<Processors.MovementProcessor>();
+        // Processor.Add<Processors.MovementProcessor>();
     }
+
+    /*
+    TODO- do this , also the new framework's name is Depths
+    *  the plan is to seperate entities from nodes. nodes will just be visual representation.
+    *   entities will contain components like Position,Velocity,Animation. we change those.
+    *   nodes just take those values and apply to themselves
+    */
 
     public override void Start()
     {
-        Server.Start();
-        AddProcessors();
-
-        Entity entity = Entity.Create();
-        entity.AddBlock<Blocks.Movement>();
 
         base.Start();
     }

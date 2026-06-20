@@ -8,11 +8,10 @@ namespace Entities { }
 public class Entity
 {
     public static int NextId = 0;
-    // The Godot object that owns this host and exposes engine data through interfaces.
 
-    // Blocks hold gameplay logic and the data created by that logic.
-    public int Id;
     private readonly List<Blocks.Block> Blocks = [];
+    public int Id;
+    public Node ConnectedNode;
 
     public static Entity Create()
     {
@@ -26,26 +25,38 @@ public class Entity
         return entity;
     }
 
-    Entity()
+    protected Entity()
     {
+        Initialize();
         Game.Runtime.Entities.Add(this);
         Id = NextId++;
     }
-    public void Destory()
+
+    protected virtual void Initialize() { }
+
+    public void Destroy()
     {
         Game.Runtime.Entities.Remove(this);
     }
 
+    public void ConnectTo<T>(T node) where T : Node
+    {
+        ConnectedNode = node;
+    }
+
+    public T GetNode<T>() where T : Node
+    {
+        return ConnectedNode as T;
+    }
+
     public T AddBlock<T>() where T : Blocks.Block, new()
     {
-        // Blocks are created by the host so they can be initialized with this owner.
-
         //Check if it already exists.
         for (int i = 0; i < Blocks.Count; i++)
         {
-            if (Blocks[i] is T typed)
+            if (Blocks[i] is T existingBlock)
             {
-                return typed;
+                return existingBlock;
             }
         }
 
@@ -57,7 +68,12 @@ public class Entity
     {
         if (HasBlock<T>())
         {
-            return Blocks.OfType<T>().FirstOrDefault();
+            for (int i = 0; i < Blocks.Count; i++)
+            {
+                if (Blocks[i] is T block)
+                    return block;
+            }
+            ;
         }
         return null;
     }
