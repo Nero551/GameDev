@@ -1,11 +1,12 @@
-using Godot;
 using System;
+using Godot;
 
 namespace Blocks;
-public  class TransformBlock : Block
+
+public class TransformBlock : Block
 {
-    [Replicated] public Basis Basis;
-	[Replicated] public Vector3 Position;
-    
+    public Basis Basis;
+    [Replicated] public Vector3 Position;
+
 
 }

@@ -22,7 +22,7 @@ public static class NetworkService
     */
 
     public static int PacketDebounce = 5; // The delay on handling packets in milliseconds
-    public static BidirectionalDictionary<int, Type> RemoteEvents = new();
+    public static BiDictionary<int, Type> RemoteEvents = new();
 
     public static void Init()
     {

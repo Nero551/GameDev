@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Blocks;
 using Godot;
 
 
@@ -9,10 +10,8 @@ namespace Entities { }
 public class Entity
 {
 
-    private readonly List<Blocks.Block> Blocks = [];
+    public readonly BiDictionary<int, Blocks.Block> Blocks = new();
 
-    public readonly Dictionary<FieldInfo, object> LastReplicatedFieldValues = [];
-    public readonly Dictionary<Type, List<FieldInfo>> ReplicatedFields = [];
     public int Id;
     public Node ConnectedNode;
 
@@ -63,62 +62,49 @@ public class Entity
         //Check if it already exists.
         for (int i = 0; i < Blocks.Count; i++)
         {
-            if (Blocks[i] is T existingBlock)
+            if (Blocks.ContainsKey(i) && Blocks.GetByKey(i) is T)
             {
-                return existingBlock;
+                return Blocks.GetByKey(i) as T;
             }
         }
-
-        var block = new T { EntityId = Id, Id = Blocks.Count - 1 };
-        Blocks.Add(block);
+        int blockId = Blocks.Count;
+        var block = new T { EntityId = Id, Id = blockId };
+        Blocks.Add(blockId, block);
 
         MarkReplicatedFields(block);
         return block;
     }
+
     public T GetBlock<T>() where T : Blocks.Block
     {
         if (HasBlock<T>())
         {
             for (int i = 0; i < Blocks.Count; i++)
             {
-                if (Blocks[i] is T block)
+                if (Blocks.ContainsKey(i) && Blocks.GetByKey(i) is T)
                 {
-                    return block;
+                    return Blocks.GetByKey(i) as T;
                 }
             }
             ;
         }
-        return null;
+        return default;
     }
 
-    public Blocks.Block GetBlock(Type blockType)
+    public Blocks.Block GetBlock(int blockId)
     {
-        for (int i = 0; i < Blocks.Count; i++)
-        {
-            if (Blocks[i].GetType() == blockType)
-            {
-                return Blocks[i];
-            }
-        }
-        throw new Exception($"Entity: {Id} Doesn't Have Block: {blockType.Name}");
-    }
-
-    public List<Blocks.Block> GetAllBlocks()
-    {
-        return Blocks;
+        return Blocks.ContainsKey(blockId) ? Blocks.GetByKey(blockId) :
+            throw new Exception($"Entity: {Id} Doesn't Have Block: {blockId}");
     }
 
     private void MarkReplicatedFields(Blocks.Block block)
     {
         int fieldId = 0;
-        ReplicatedFields[block.GetType()] = [];
         foreach (FieldInfo field in block.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
         {
             if (Attribute.IsDefined(field, typeof(Replicated)))
             {
-                block.ReplicatedFields.Add(fieldId,field);
-
-                ReplicatedFields[block.GetType()].Add(field);
+                block.ReplicatedFields.Add(fieldId, field);
                 fieldId++;
             }
         }
@@ -128,11 +114,14 @@ public class Entity
     {
         for (int i = 0; i < Blocks.Count; i++)
         {
-            if (Blocks[i] is T)
+            if (Blocks.ContainsKey(i) && Blocks.GetByKey(i) is T)
+            {
                 return true;
+            }
         }
         return false;
     }
+
     public bool HasBlock<T1, T2>() where T1 : Blocks.Block where T2 : Blocks.Block
     {
         return HasBlock<T1>() && HasBlock<T2>();

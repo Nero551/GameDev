@@ -15,14 +15,13 @@ public class ReplicationProcessor : Processor
     public override void Start(Entity entity)
     {
         base.Start(entity);
-
     }
 
     double elapsed = 0;
     public override void Process(Entity entity, double delta)
     {
         base.Process(entity, delta);
-        if (NetworkService.IsServer())
+        if (!NetworkService.IsServer())
             return;
 
         elapsed += delta;
@@ -30,26 +29,23 @@ public class ReplicationProcessor : Processor
             return;
         elapsed = 0;
 
-        foreach (KeyValuePair<Type, List<FieldInfo>> pair in entity.ReplicatedFields)
+        foreach (int blockId in entity.Blocks.GetAllKeys())
         {
-            var blockType = pair.Key;
-            var fieldList = pair.Value;
-            var block = entity.GetBlock(blockType);
+            var block = entity.GetBlock(blockId);
+            if (block == null)
+                continue;
 
-            foreach (var field in fieldList)
+            foreach (var replicatedFieldId in block.ReplicatedFields.GetAllKeys())
             {
+                var field = block.ReplicatedFields.GetByKey(replicatedFieldId);
                 var value = field.GetValue(block);
-                if (!entity.LastReplicatedFieldValues.ContainsKey(field))
-                {
-                    if (!Equals(value, entity.LastReplicatedFieldValues[field]))
-                    {
-                        //add to packet
-                        entity.LastReplicatedFieldValues[field] = value;
-                        GD.Print(field.Name);
 
-                        NetworkService.SendToAllClients<RemoteEvents.Replication>(
-                            entity.Id, block.Id, block.ReplicatedFields.GetByValue(field), value);
-                    }
+                if (!block.LastReplicatedFields.TryGetValue(replicatedFieldId, out var old)
+                    || !Equals(value, old))
+                {
+                    block.LastReplicatedFields[replicatedFieldId] = value;
+                    NetworkService.SendToAllClients<RemoteEvents.Replication>(
+                        entity.Id, block.Id, replicatedFieldId, value);
                 }
             }
         }
@@ -57,6 +53,10 @@ public class ReplicationProcessor : Processor
 
     void OnReplication(RemoteEvents.Replication evnt)
     {
-
+        GD.Print(evnt.EntityId,evnt.BlockId,evnt.FieldId,evnt.Value);
+        var entity = Game.Runtime.Entities[evnt.EntityId];
+        var block = entity.GetBlock(evnt.BlockId);
+        var replicatedField = block.ReplicatedFields.GetByKey(evnt.FieldId);
+        replicatedField.SetValue(block, evnt.Value);
     }
 }

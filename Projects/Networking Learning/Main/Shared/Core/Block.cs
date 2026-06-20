@@ -8,7 +8,8 @@ namespace Blocks;
 
 public abstract class Block
 {
-    public BidirectionalDictionary<int, FieldInfo> ReplicatedFields = new();
+    public Dictionary<int, object> LastReplicatedFields = [];
+    public BiDictionary<int, FieldInfo> ReplicatedFields = new();
 
     public int Id;
     public int EntityId;

@@ -28,7 +28,6 @@ public class MovementProcessor : Processor
         base.Process(entity, delta);
     }
 
-    double elapsed = 0;
     public override void PhysicsProcess(Entity entity, double delta)
     {
         base.PhysicsProcess(entity, delta);
@@ -52,13 +51,6 @@ public class MovementProcessor : Processor
         }
 
         transformBlock.Position += movementBlock.Velocity * (float)delta;
-
-        elapsed += delta;
-        if (elapsed >= 0.1)
-        {
-            elapsed = 0;
-            NetworkService.SendToAllClients<RemoteEvents.Position>(entity.Id, transformBlock.Position);
-        }
     }
 
     void OnMoveRequest(RemoteEvents.MoveRequest evnt)
