@@ -1,7 +1,13 @@
-using Godot;
 using System;
+using Godot;
 
-public class Replicated : Attribute
+public enum ReplicationMode
 {
-
+    Reliable,
+    Unreliable
+}
+[AttributeUsage(AttributeTargets.Field)]
+public class Replicated(ReplicationMode mode) : Attribute
+{
+    public ReplicationMode Mode => mode;
 }

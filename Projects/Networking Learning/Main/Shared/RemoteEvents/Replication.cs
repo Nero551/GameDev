@@ -4,14 +4,11 @@ using System.Reflection;
 using Godot;
 using Processors;
 
-namespace RemoteEvents;
-
+namespace RemoteEvents.Replication;
 public class Replication : RemoteEvent
 {
     private int ArrayLength;
-    public List<ReplicationBox> ReplicationBoxes = [];
-
-    public override int Flag => (int)ENetPacketPeer.FlagUnreliableFragment;
+    public List<ReplicationBox> ReplicationQueue = [];
 
     public override byte[] Encode()
     {
@@ -43,7 +40,7 @@ public class Replication : RemoteEvent
             int fieldId = ReadInt();
             int typeId = ReadInt();
             object value = ReadIdToType(typeId);
-            ReplicationBoxes.Add(new ReplicationBox(entityId, blockId, fieldId, value));
+            ReplicationQueue.Add(new ReplicationBox(entityId, blockId, fieldId, value));
         }
     }
 }

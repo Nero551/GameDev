@@ -2,17 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Godot;
+using RemoteEvents.Replication;
 
 namespace Processors;
 
 public class ReplicationProcessor : Processor
 {
     double elapsed = 0;
-    private readonly List<ReplicationBox> ReplicationBoxes = [];
+    readonly List<ReplicationBox> UnreliableReplicationQueue = [];
+    public List<ReplicationBox> ReliableReplicationQueue = [];
 
     public override void Start()
     {
-        EventService.Subscribe<RemoteEvents.Replication>(OnReplication);
+        EventService.Subscribe<RemoteEvents.Replication.UnreliableReplication>(OnReplication);
+        EventService.Subscribe<RemoteEvents.Replication.ReliableReplication>(OnReplication);
         base.Start();
     }
 
@@ -27,11 +30,16 @@ public class ReplicationProcessor : Processor
         elapsed = 0;
         base.Process(delta);
 
-        if (ReplicationBoxes.Count != 0)
+        if (UnreliableReplicationQueue.Count != 0)
         {
-            GD.Print(ReplicationBoxes);
-            NetworkService.SendToAllClients<RemoteEvents.Replication>(ReplicationBoxes);
-            ReplicationBoxes.Clear();
+            NetworkService.SendToAllClients<RemoteEvents.Replication.UnreliableReplication>(UnreliableReplicationQueue);
+            UnreliableReplicationQueue.Clear();
+        }
+
+        if (ReliableReplicationQueue.Count != 0)
+        {
+            NetworkService.SendToAllClients<RemoteEvents.Replication.ReliableReplication>(UnreliableReplicationQueue);
+            ReliableReplicationQueue.Clear();
         }
     }
 
@@ -56,15 +64,24 @@ public class ReplicationProcessor : Processor
                     block.LastReplicatedFields[replicatedFieldId] = value;
 
                     ReplicationBox replicationBox = new(entity.Id, blockId, replicatedFieldId, value);
-                    ReplicationBoxes.Add(replicationBox);
+                    var attribute = field.GetCustomAttribute<Replicated>();
+
+                    if (attribute.Mode == ReplicationMode.Reliable)
+                    {
+                        ReliableReplicationQueue.Add(replicationBox);
+                    }
+                    else if (attribute.Mode == ReplicationMode.Unreliable)
+                    {
+                        UnreliableReplicationQueue.Add(replicationBox);
+                    }
                 }
             }
         }
     }
 
-    void OnReplication(RemoteEvents.Replication evnt)
+    void OnReplication(RemoteEvents.Replication.Replication evnt)
     {
-        foreach (ReplicationBox replicationBox in evnt.ReplicationBoxes)
+        foreach (ReplicationBox replicationBox in evnt.ReplicationQueue)
         {
             var entity = Game.Runtime.Entities[replicationBox.EntityId];
             var block = entity.GetBlock(replicationBox.BlockId);
