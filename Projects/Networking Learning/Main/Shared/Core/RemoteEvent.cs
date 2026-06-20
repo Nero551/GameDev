@@ -200,12 +200,41 @@ public abstract class RemoteEvent() : Event
     //TODO- make this dynamic. no way am adding stuff here everytime i  add a new Read and Write
     protected static readonly Dictionary<Type, int> TypeToId = new()
     {
-    { typeof(int), 0 },
-    { typeof(float), 1 },
-    { typeof(bool), 2 },
-    { typeof(string), 3 },
-    { typeof(Vector2), 4 },
-    { typeof(Vector3), 5 },
-    { typeof(Basis), 6 },
+        { typeof(int), 0 },
+        { typeof(float), 1 },
+        { typeof(bool), 2 },
+        { typeof(string), 3 },
+        { typeof(Vector2), 4 },
+        { typeof(Vector3), 5 },
+        { typeof(Basis), 6 },
     };
+    protected object ReadIdToType(int typeId)
+    {
+        object value = typeId switch
+        {
+            0 => ReadInt(),
+            1 => ReadFloat(),
+            2 => ReadBool(),
+            3 => ReadString(),
+            4 => ReadVector2(),
+            5 => ReadVector3(),
+            6 => ReadBasis(),
+            _ => throw new Exception($"Unknown TypeId: {typeId}"),
+        };
+        return value;
+    }
+
+    protected void WriteObject(object value)
+    {
+        switch (value)
+        {
+            case int i: WriteInt(i); break;
+            case float f: WriteFloat(f); break;
+            case bool b: WriteBool(b); break;
+            case string s: WriteString(s); break;
+            case Vector2 v: WriteVector2(v); break;
+            case Vector3 v: WriteVector3(v); break;
+            case Basis b: WriteBasis(b); break;
+        }
+    }
 }

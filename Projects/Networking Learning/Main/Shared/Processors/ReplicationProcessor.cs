@@ -39,15 +39,15 @@ public class ReplicationProcessor : Processor
     {
         base.ProcessEntities(entity, delta);
 
-        foreach (int blockId in entity.Blocks.GetAllKeys())
+        foreach (int blockId in entity.Blocks.Keys)
         {
             var block = entity.GetBlock(blockId);
             if (block == null)
                 continue;
 
-            foreach (var replicatedFieldId in block.ReplicatedFields.GetAllKeys())
+            foreach (var replicatedFieldId in block.ReplicatedFields.Keys)
             {
-                var field = block.ReplicatedFields.GetByKey(replicatedFieldId);
+                var field = block.ReplicatedFields[replicatedFieldId];
                 var value = field.GetValue(block);
 
                 if (!block.LastReplicatedFields.TryGetValue(replicatedFieldId, out var old)
@@ -68,7 +68,7 @@ public class ReplicationProcessor : Processor
         {
             var entity = Game.Runtime.Entities[replicationBox.EntityId];
             var block = entity.GetBlock(replicationBox.BlockId);
-            var replicatedField = block.ReplicatedFields.GetByKey(replicationBox.FieldId);
+            var replicatedField = block.ReplicatedFields[replicationBox.FieldId];
             replicatedField.SetValue(block, replicationBox.Value);
         }
     }

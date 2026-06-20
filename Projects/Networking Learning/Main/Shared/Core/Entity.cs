@@ -9,8 +9,7 @@ using Godot;
 namespace Entities { }
 public class Entity
 {
-
-    public readonly BiDictionary<int, Blocks.Block> Blocks = new();
+    public readonly Dictionary<int, Blocks.Block> Blocks = [];
 
     public int Id;
     public Node ConnectedNode;
@@ -60,9 +59,9 @@ public class Entity
     public T AddBlock<T>() where T : Blocks.Block, new()
     {
         //Check if it already exists.
-        foreach (int key in Blocks.GetAllKeys())
+        foreach (int key in Blocks.Keys)
         {
-            if (Blocks.TryGetByKey(key, out Blocks.Block existingBlock) && existingBlock is T)
+            if (Blocks.TryGetValue(key, out Blocks.Block existingBlock) && existingBlock is T)
             {
                 return existingBlock as T;
             }
@@ -79,9 +78,9 @@ public class Entity
     {
         if (HasBlock<T>())
         {
-            foreach (int key in Blocks.GetAllKeys())
+            foreach (int key in Blocks.Keys)
             {
-                if (Blocks.TryGetByKey(key, out Blocks.Block block) && block is T)
+                if (Blocks.TryGetValue(key, out Blocks.Block block) && block is T)
                 {
                     return block as T;
                 }
@@ -93,7 +92,7 @@ public class Entity
 
     public Blocks.Block GetBlock(int blockId)
     {
-        return Blocks.ContainsKey(blockId) ? Blocks.GetByKey(blockId) :
+        return Blocks.ContainsKey(blockId) ? Blocks[blockId] :
             throw new Exception($"Entity: {Id} Doesn't Have Block: {blockId}");
     }
 
@@ -112,9 +111,9 @@ public class Entity
 
     public bool HasBlock<T>() where T : Blocks.Block
     {
-        foreach (int key in Blocks.GetAllKeys())
+        foreach (int key in Blocks.Keys)
         {
-            if (Blocks.TryGetByKey(key, out Blocks.Block block) && block is T)
+            if (Blocks.TryGetValue(key, out Blocks.Block block) && block is T)
             {
                 return true;
             }
