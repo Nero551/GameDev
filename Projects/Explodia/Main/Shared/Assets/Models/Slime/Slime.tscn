@@ -1,9 +1,9 @@
 [gd_scene format=4 uid="uid://cyrsxgrusxml0"]
 
-[ext_resource type="Script" uid="uid://dvr5vpxnt2r5i" path="res://Main/Client/Entities/Enemy.cs" id="1_66hi5"]
+[ext_resource type="Script" uid="uid://dvr5vpxnt2r5i" path="res://Main2/Client/Entities/Enemy.cs" id="1_66hi5"]
 [ext_resource type="Shader" uid="uid://1uy2765hykt8" path="res://Main/Shared/Assets/Shaders/Slime.gdshader" id="2_fbgq7"]
 [ext_resource type="Texture2D" uid="uid://djnpup8jqkpff" path="res://Main/Shared/Assets/Models/Slime/Slime_UV.png" id="3_am4uu"]
-[ext_resource type="Script" uid="uid://k18bkebrwtno" path="res://Main/Shared/Entities/Attachment3D.cs" id="4_8503g"]
+[ext_resource type="Script" uid="uid://k18bkebrwtno" path="res://Main2/Shared/Entities/Attachment3D.cs" id="4_8503g"]
 
 [sub_resource type="Animation" id="Animation_toj6g"]
 resource_name = "OuterAction"
@@ -21,7 +21,6 @@ radius = 0.35498047
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5h4my"]
 render_priority = 0
 shader = ExtResource("2_fbgq7")
-shader_parameter/color = Vector3(0.365, 0.61, 5)
 shader_parameter/alpha = 0.7
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ud6km"]

@@ -1,6 +1,6 @@
 using Godot;
 
-public class AudioService : Service
+public static class AudioService
 {
     public static void PlaySound(string filepath, Node parent)
     {

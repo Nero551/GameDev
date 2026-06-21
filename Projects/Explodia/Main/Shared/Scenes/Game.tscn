@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://c8251d0yp4rkx"]
+
+[ext_resource type="Script" uid="uid://ctwmhkgd72w16" path="res://Main/Shared/Core/Game.cs" id="1_w7t5r"]
+[ext_resource type="Script" uid="uid://djxr0vyaoyb2i" path="res://Main/Shared/Core/Label.cs" id="2_flu5e"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_0xm2m"]
+sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
+
+[sub_resource type="Environment" id="Environment_h2yge"]
+background_mode = 2
+sky = SubResource("Sky_0xm2m")
+ssao_enabled = true
+sdfgi_enabled = true
+glow_enabled = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_qesgf"]
+
+[node name="Game" type="Node3D" unique_id=602571514]
+script = ExtResource("1_w7t5r")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1586411953]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0.46355385, -2.879765)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1485429500]
+environment = SubResource("Environment_h2yge")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=896338953]
+transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, 1, 0, -1, 1.1924881e-08, 0, 5, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1416458648]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=602138916]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=464635798]
+layout_mode = 0
+offset_right = 101.0
+offset_bottom = 49.0
+text = "Hello"
+label_settings = SubResource("LabelSettings_qesgf")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+script = ExtResource("2_flu5e")

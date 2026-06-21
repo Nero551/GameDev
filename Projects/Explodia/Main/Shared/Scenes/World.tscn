@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://bmylc7ipavhs5"]
+
+[ext_resource type="Script" uid="uid://wm74fyw2ougo" path="res://Main/Shared/Core/World.cs" id="1_ffghn"]
+[ext_resource type="Texture2D" uid="uid://bf3w1bajov4kr" path="res://Main/Shared/Assets/Textures/PrototypeFloor.png" id="1_yypiu"]
+[ext_resource type="PackedScene" uid="uid://cy1ey0lofpjac" path="res://Main/Shared/Assets/VFX/HitImpact/HitImpact.tscn" id="2_ffghn"]
+[ext_resource type="PackedScene" uid="uid://cfbs7n6wipav8" path="res://Main/Shared/Scenes/Enemy.tscn" id="3_jmnvk"]
+[ext_resource type="PackedScene" uid="uid://cyrsxgrusxml0" path="res://Main/Shared/Assets/Models/Slime/Slime.tscn" id="4_siabp"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dcvoh"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_curve = 0.12553373
+sun_angle_max = 60.0
+
+[sub_resource type="Sky" id="Sky_5awyl"]
+sky_material = SubResource("ProceduralSkyMaterial_dcvoh")
+
+[sub_resource type="Environment" id="Environment_b0028"]
+background_mode = 2
+background_energy_multiplier = 0.4
+sky = SubResource("Sky_5awyl")
+glow_enabled = true
+glow_intensity = 0.1
+glow_bloom = 0.3
+adjustment_enabled = true
+adjustment_brightness = 1.1
+adjustment_contrast = 1.25
+adjustment_saturation = 0.83
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_slsv0"]
+size = Vector3(100, 0.001, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tlloq"]
+albedo_color = Color(0.31, 0.31, 0.31, 1)
+albedo_texture = ExtResource("1_yypiu")
+uv1_scale = Vector3(24.225, 24.225, 24.225)
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jcsno"]
+
+[node name="World" type="Node" unique_id=544823519]
+script = ExtResource("1_ffghn")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=337476067]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1129582082]
+environment = SubResource("Environment_b0028")
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=981684895]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3695148, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1102543340]
+shape = SubResource("BoxShape3D_slsv0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=892373140]
+transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, -0.03439176, 0.023960352, -0.04288745)
+material_override = SubResource("StandardMaterial3D_tlloq")
+mesh = SubResource("PlaneMesh_jcsno")
+
+[node name="EOSLogin" type="Control" parent="." unique_id=717769341]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Players" type="Node" parent="." unique_id=639295401]
+
+[node name="Hitboxes" type="Node" parent="." unique_id=812877320]
+
+[node name="Characters" type="Node" parent="." unique_id=208885954]
+
+[node name="HitImpact" parent="." unique_id=1725906742 instance=ExtResource("2_ffghn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.389043, 0.613271, -1.2927873)
+
+[node name="Enemy" parent="." unique_id=473999008 instance=ExtResource("3_jmnvk")]
+
+[node name="Slime" parent="." unique_id=1437722623 instance=ExtResource("4_siabp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.7386284)

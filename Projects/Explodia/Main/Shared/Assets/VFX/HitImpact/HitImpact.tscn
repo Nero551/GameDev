@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cy1ey0lofpjac"]
 
-[ext_resource type="Script" uid="uid://clo8t2plxeb1n" path="res://Main/Shared/Entities/VisualEffect.cs" id="1_dlyp7"]
+[ext_resource type="Script" uid="uid://clo8t2plxeb1n" path="res://Main2/Shared/Entities/VisualEffect.cs" id="1_dlyp7"]
 [ext_resource type="Texture2D" uid="uid://buesljsxjij8g" path="res://Main/Shared/Assets/VFX/HitImpact/SunStar.png" id="1_yq1dp"]
 [ext_resource type="Texture2D" uid="uid://b3w3i2yl75dqc" path="res://Main/Shared/Assets/VFX/HitImpact/flare.png" id="2_dlyp7"]
 [ext_resource type="Texture2D" uid="uid://ewroscqmfmov" path="res://Main/Shared/Assets/VFX/HitImpact/dust.png" id="3_lqup4"]
@@ -175,7 +175,6 @@ hue_variation_max = 0.049999975
 
 [node name="HitImpact" type="Node3D" unique_id=1725906742]
 script = ExtResource("1_dlyp7")
-LoopPlay = true
 Delay = 1.0
 
 [node name="Flash" type="GPUParticles3D" parent="." unique_id=1806378446]

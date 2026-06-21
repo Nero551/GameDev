@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://ca5ivjqvgcvon"]
+
+[ext_resource type="Script" uid="uid://wm74fyw2ougo" path="res://Main/Shared/Core/World.cs" id="1_vklr1"]
+[ext_resource type="PackedScene" uid="uid://bmylc7ipavhs5" path="res://Main/Shared/Scenes/World.tscn" id="2_8681v"]
+
+[node name="Game" type="Node" unique_id=596900149]
+script = ExtResource("1_vklr1")
+
+[node name="World" parent="." unique_id=544823519 instance=ExtResource("2_8681v")]
