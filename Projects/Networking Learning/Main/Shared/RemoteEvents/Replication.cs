@@ -21,7 +21,6 @@ public class Replication : RemoteEvent
             WriteInt(replicationBox.EntityId);
             WriteInt(replicationBox.BlockId);
             WriteInt(replicationBox.FieldId);
-            WriteInt(TypeToId[replicationBox.Value.GetType()]);
             WriteObject(replicationBox.Value);
         }
         return CreateBytesArray();
@@ -38,8 +37,7 @@ public class Replication : RemoteEvent
             int entityId = ReadInt();
             int blockId = ReadInt();
             int fieldId = ReadInt();
-            int typeId = ReadInt();
-            object value = ReadIdToType(typeId);
+            object value = ReadObject();
             ReplicationQueue.Add(new ReplicationBox(entityId, blockId, fieldId, value));
         }
     }

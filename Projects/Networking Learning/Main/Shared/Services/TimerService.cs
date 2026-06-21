@@ -7,9 +7,9 @@ public partial class TimerService
 {
     private static readonly Dictionary<Timer, Action> Timers = [];
 
-    public static Timer CreateTimer(float duration, bool repeat, Action callback)
+    public static Timer CreateTimer(float durationInSeconds, bool repeat, Action callback)
     {
-        Timer timer = new() { Duration = duration, Remaining = duration, Repeat = repeat };
+        Timer timer = new() { Duration = durationInSeconds, Remaining = durationInSeconds, Repeat = repeat };
         Timers.Add(timer, callback);
 
         return timer;

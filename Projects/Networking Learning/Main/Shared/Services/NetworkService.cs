@@ -28,6 +28,7 @@ public static class NetworkService
     public static void Start()
     {
         RegisterRemoteEvents();
+        RemoteEvent.RegisterEnDecoding();
         EventService.Subscribe<Events.Network.RecievedPacket>(OnRecievedPacket);
     }
 

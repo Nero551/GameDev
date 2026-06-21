@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Blocks;
 using Godot;
@@ -15,7 +16,7 @@ public abstract class RemoteEvent() : Event
     protected object[] DecodedData;
 
     protected object[] Data;
-    private List<byte> BufferList = [];
+    private readonly List<byte> BufferList = [];
     protected byte[] BufferArray = [];
     private int ReadPos = 0;
 
@@ -65,24 +66,32 @@ public abstract class RemoteEvent() : Event
     {
         BufferList.AddRange(bytes);
     }
+    [Encode(typeof(int))]
     protected void WriteInt(int value)
     {
         BufferList.AddRange(BitConverter.GetBytes(value));
     }
+
+    [Encode(typeof(float))]
     protected void WriteFloat(float value)
     {
         BufferList.AddRange(BitConverter.GetBytes(value));
     }
+
+    [Encode(typeof(bool))]
     protected void WriteBool(bool value)
     {
         BufferList.AddRange(BitConverter.GetBytes(value));
     }
+
+    [Encode(typeof(string))]
     protected void WriteString(string value)
     {
         WriteInt(value.Length);
         BufferList.AddRange(Encoding.ASCII.GetBytes(value));
     }
 
+    [Encode(typeof(Vector3))]
     protected void WriteVector3(Vector3 vec3)
     {
         WriteFloat(vec3.X);
@@ -90,21 +99,22 @@ public abstract class RemoteEvent() : Event
         WriteFloat(vec3.Z);
     }
 
+    [Encode(typeof(Vector2))]
     protected void WriteVector2(Vector2 vec2)
     {
         WriteFloat(vec2.X);
         WriteFloat(vec2.Y);
     }
 
+    [Encode(typeof(int[]))]
     protected void WriteIntArray(int[] intArray)
     {
         WriteInt(intArray.Length);
         foreach (int i in intArray)
-        {
             WriteInt(i);
-        }
     }
 
+    [Encode(typeof(Basis))]
     protected void WriteBasis(Basis basis)
     {
         WriteVector3(basis.Column0);
@@ -119,6 +129,8 @@ public abstract class RemoteEvent() : Event
     }
 
     //* Reading
+
+    [Decode(typeof(int))]
     protected int ReadInt()
     {
         EnsureBytes(4);
@@ -126,6 +138,8 @@ public abstract class RemoteEvent() : Event
         ReadPos += 4;
         return value;
     }
+
+    [Decode(typeof(float))]
     protected float ReadFloat()
     {
         EnsureBytes(4);
@@ -133,57 +147,62 @@ public abstract class RemoteEvent() : Event
         ReadPos += 4;
         return value;
     }
+
+    [Decode(typeof(bool))]
     protected bool ReadBool()
     {
         EnsureBytes(1);
         bool value = BitConverter.ToBoolean(BufferArray, ReadPos);
-        ReadPos++;
+        ReadPos += 1;
         return value;
     }
+
+    [Decode(typeof(string))]
     protected string ReadString()
     {
         int length = ReadInt();
-        if (length > 0)
-        {
-            EnsureBytes(length);
-            string value = Encoding.ASCII.GetString(BufferArray, ReadPos, length);
-            ReadPos += length;
-            return value;
-        }
-        return string.Empty;
+
+        if (length <= 0)
+            return string.Empty;
+
+        EnsureBytes(length);
+        string value = Encoding.ASCII.GetString(BufferArray, ReadPos, length);
+        ReadPos += length;
+        return value;
     }
 
+    [Decode(typeof(Vector3))]
     protected Vector3 ReadVector3()
     {
-        EnsureBytes(12);
         return new Vector3(ReadFloat(), ReadFloat(), ReadFloat());
     }
 
+    [Decode(typeof(Vector2))]
     protected Vector2 ReadVector2()
     {
-        EnsureBytes(8);
         return new Vector2(ReadFloat(), ReadFloat());
     }
 
+    [Decode(typeof(int[]))]
     protected int[] ReadIntArray()
     {
         int length = ReadInt();
-        if (length > 0)
-        {
-            EnsureBytes(length);
-            int[] intArray = new int[length];
-            for (int i = 0; i < length; i++)
-            {
-                intArray[i] = ReadInt();
-            }
-            return intArray;
-        }
-        return [];
+
+        if (length <= 0)
+            return [];
+
+        int[] arr = new int[length];
+
+        for (int i = 0; i < length; i++)
+            arr[i] = ReadInt();
+
+        return arr;
     }
 
+    [Decode(typeof(Basis))]
     protected Basis ReadBasis()
     {
-        return new Basis()
+        return new Basis
         {
             Column0 = ReadVector3(),
             Column1 = ReadVector3(),
@@ -197,44 +216,64 @@ public abstract class RemoteEvent() : Event
         };
     }
 
-    //TODO- make this dynamic. no way am adding stuff here everytime i  add a new Read and Write
-    protected static readonly Dictionary<Type, int> TypeToId = new()
-    {
-        { typeof(int), 0 },
-        { typeof(float), 1 },
-        { typeof(bool), 2 },
-        { typeof(string), 3 },
-        { typeof(Vector2), 4 },
-        { typeof(Vector3), 5 },
-        { typeof(Basis), 6 },
-    };
-    protected object ReadIdToType(int typeId)
-    {
-        object value = typeId switch
-        {
-            0 => ReadInt(),
-            1 => ReadFloat(),
-            2 => ReadBool(),
-            3 => ReadString(),
-            4 => ReadVector2(),
-            5 => ReadVector3(),
-            6 => ReadBasis(),
-            _ => throw new Exception($"Unknown TypeId: {typeId}"),
-        };
-        return value;
-    }
-
     protected void WriteObject(object value)
     {
-        switch (value)
+        int typeId = TypeToId[value.GetType()];
+        WriteInt(typeId);
+        IdToCoder[typeId].Encode.Invoke(this, [value]);
+    }
+
+    protected object ReadObject()
+    {
+        int typeId = ReadInt();
+        return IdToCoder[typeId].Decode.Invoke(this, null);
+    }
+
+    public static void RegisterEnDecoding()
+    {
+        int nextTypeId = 0;
+        foreach (MethodInfo method in typeof(RemoteEvent).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).OrderBy(m => m.Name))
         {
-            case int i: WriteInt(i); break;
-            case float f: WriteFloat(f); break;
-            case bool b: WriteBool(b); break;
-            case string s: WriteString(s); break;
-            case Vector2 v: WriteVector2(v); break;
-            case Vector3 v: WriteVector3(v); break;
-            case Basis b: WriteBasis(b); break;
+            if (Attribute.IsDefined(method, typeof(Encode)) || Attribute.IsDefined(method, typeof(Decode)))
+            {
+                int typeId;
+                Coder coder;
+                Type valueType = Attribute.IsDefined(method, typeof(Encode)) ?
+                    method.GetCustomAttribute<Encode>().ValueType : valueType = method.GetCustomAttribute<Decode>().ValueType;
+
+                if (TypeToId.ContainsKey(valueType))
+                {
+                    typeId = TypeToId[valueType];
+                    coder = IdToCoder[typeId];
+                }
+                else
+                {
+                    typeId = nextTypeId;
+                    nextTypeId++;
+                    TypeToId.Add(valueType, typeId);
+
+                    coder = new();
+                    IdToCoder.Add(typeId, coder);
+                }
+
+                if (Attribute.IsDefined(method, typeof(Encode)))
+                {
+                    coder.Encode = method;
+                }
+                if (Attribute.IsDefined(method, typeof(Decode)))
+                {
+                    coder.Decode = method;
+                }
+            }
         }
     }
+
+    protected class Coder
+    {
+        public MethodInfo Encode;
+        public MethodInfo Decode;
+    }
+
+    protected static readonly Dictionary<int, Coder> IdToCoder = [];
+    protected static readonly Dictionary<Type, int> TypeToId = [];
 }
