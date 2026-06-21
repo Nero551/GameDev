@@ -15,7 +15,6 @@ public partial class Game : Node3D
     public override void _EnterTree()
     {
         World = this;
-        NetworkService.Init();
         Runtime = NetworkService.IsServer() ? new ServerRuntime() : new ClientRuntime();
         Runtime.Start();
     }

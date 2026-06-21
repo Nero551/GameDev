@@ -27,7 +27,7 @@ public class InputProcessor : Processor
         {
             return;
         }
-        
+
         base.ProcessEntities(entity, delta);
         var movementBlock = entity.GetBlock<Blocks.MovementBlock>();
         movementBlock.MoveDirection = Input.GetVector("Left", "Right", "Back", "Forward");

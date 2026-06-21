@@ -10,6 +10,7 @@ public class ServerRuntime : Runtime
         Processor.Add<Processors.MovementProcessor>();
     }
 
+    //TODO- i need a timerService instead of spamming elapsed and checks everywhere
     public override void Start()
     {
         Server.Start();
@@ -19,6 +20,8 @@ public class ServerRuntime : Runtime
 
     public override void Process(double delta)
     {
+        Server.Process(delta);
+        
         base.Process(delta);
     }
 

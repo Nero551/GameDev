@@ -9,7 +9,6 @@ public static class Client
     public static Entities.Player Player;
     public static int PeerId; //* this is the signature for the network connection ITSELF
     public static int UserId; //* the entry to the client's data in the DB
-    private static bool Running = false;
 
     public static void Start()
     {
@@ -35,19 +34,13 @@ public static class Client
                 return;
             }
             Connection.ConnectToHost(Server.IP, Server.Port);
-            Running = true;
             GD.Print("Client Started");
-            Update();
         }
     }
 
-    public static async void Update()
+    public static void Process(double delta)
     {
-        while (Running)
-        {
-            HandlePackets();
-            await Task.Delay(NetworkService.PacketDebounce);
-        }
+        HandlePackets();
     }
 
     static void HandlePackets()

@@ -13,18 +13,8 @@ using Godot;
 /// 
 public static class EventService
 {
-    /// <summary>
-    /// Maps event types to their subscribed callbacks.
-    /// </summary>
-    /// 
     private static readonly Dictionary<Type, Delegate> Events = [];
 
-    /// <summary>
-    /// Fires an event and invokes all subscribed callbacks.
-    /// </summary>
-    /// <typeparam name="T">The event type.</typeparam>
-    /// <param name="evnt">The event instance to dispatch.</param>
-    /// 
     public static void Fire<T>(T evnt) where T : Event
     {
         if (Events.TryGetValue(typeof(T), out Delegate callback))
@@ -33,12 +23,6 @@ public static class EventService
         }
     }
 
-    /// <summary>
-    /// Subscribes one or more callbacks to an event type.
-    /// </summary>
-    /// <typeparam name="T">The event type.</typeparam>
-    /// <param name="callbacks">Methods to invoke when the event is fired.</param>
-    /// 
     public static void Subscribe<T>(params Action<T>[] callbacks) where T : Event
     {
         Type evnt = typeof(T);
@@ -61,12 +45,6 @@ public static class EventService
         }
     }
 
-    /// <summary>
-    /// Unsubscribes one or more callbacks from an event type.
-    /// </summary>
-    /// <typeparam name="T">The event type.</typeparam>
-    /// <param name="callbacks">Methods to remove from the event.</param>
-    /// 
     public static void Unsubscribe<T>(params Action<T>[] callbacks) where T : Event
     {
         Type evnt = typeof(T);

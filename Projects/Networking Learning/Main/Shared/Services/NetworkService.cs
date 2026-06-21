@@ -20,36 +20,17 @@ using Godot;
 /// </remarks>
 /// 
 public static class NetworkService
-{
-    /// <summary>
-    /// Delay in milliseconds between packet processing operations.
-    /// </summary>
-    /// 
+{ 
     public static int PacketDebounce = 5;
 
-    /// <summary>
-    /// Maps registered RemoteEvent types to their network IDs.
-    /// </summary>
-    /// 
     public static BiDictionary<int, Type> RemoteEvents = new();
 
-    /// <summary>
-    /// Initializes the networking layer and registers all RemoteEvents.
-    /// </summary>
-    /// 
-    public static void Init()
+    public static void Start()
     {
         RegisterRemoteEvents();
         EventService.Subscribe<Events.Network.RecievedPacket>(OnRecievedPacket);
     }
 
-    /// <summary>
-    /// Determines whether the current process is running as a server.
-    /// </summary>
-    /// <returns>
-    /// True if launched with the "Server" command line argument.
-    /// </returns>
-    /// 
     public static bool IsServer()
     {
         var args = OS.GetCmdlineArgs();
@@ -60,13 +41,6 @@ public static class NetworkService
         return false;
     }
 
-    /// <summary>
-    /// Determines whether the current process is running as a client.
-    /// </summary>
-    /// <returns>
-    /// True if not launched as a server.
-    /// </returns>
-    /// 
     public static bool IsClient()
     {
         var args = OS.GetCmdlineArgs();
@@ -77,14 +51,6 @@ public static class NetworkService
         return true;
     }
 
-    /// <summary>
-    /// Sends a RemoteEvent from the local client to the server.
-    /// </summary>
-    /// <typeparam name="T">The RemoteEvent type.</typeparam>
-    /// <param name="data">
-    /// Arguments used to construct the RemoteEvent.
-    /// </param>
-    /// 
     public static void SendToServer<T>(params object[] data)
         where T : RemoteEvent, new()
     {
@@ -95,15 +61,6 @@ public static class NetworkService
         }
     }
 
-    /// <summary>
-    /// Sends a RemoteEvent from the server to a specific client.
-    /// </summary>
-    /// <typeparam name="T">The RemoteEvent type.</typeparam>
-    /// <param name="peerId">Target peer ID.</param>
-    /// <param name="data">
-    /// Arguments used to construct the RemoteEvent.
-    /// </param>
-    /// 
     public static void SendToClient<T>(int peerId, params object[] data)
         where T : RemoteEvent, new()
     {
@@ -120,14 +77,6 @@ public static class NetworkService
         }
     }
 
-    /// <summary>
-    /// Sends a RemoteEvent from the server to all connected clients.
-    /// </summary>
-    /// <typeparam name="T">The RemoteEvent type.</typeparam>
-    /// <param name="data">
-    /// Arguments used to construct the RemoteEvent.
-    /// </param>
-    /// 
     public static void SendToAllClients<T>(params object[] data)
         where T : RemoteEvent, new()
     {
@@ -141,11 +90,6 @@ public static class NetworkService
         }
     }
 
-    /// <summary>
-    /// Decodes incoming packets and fires their RemoteEvents.
-    /// </summary>
-    /// <param name="evnt">Packet reception event.</param>
-    /// 
     static void OnRecievedPacket(Events.Network.RecievedPacket evnt)
     {
         int senderPeerId = evnt.SenderPeerId;
@@ -164,10 +108,6 @@ public static class NetworkService
         remoteEvent.Fire();
     }
 
-    /// <summary>
-    /// Automatically discovers and registers all non-abstract RemoteEvent types.
-    /// </summary>
-    /// 
     static void RegisterRemoteEvents()
     {
         int currentId = 1;

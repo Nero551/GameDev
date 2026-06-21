@@ -21,7 +21,6 @@ public static partial class Server
     public static Dictionary<int, ClientInfo> ClientInfos = [];
     public static ENetConnection Connection;
 
-    private static bool Running = false;
     private static readonly int MaxClients = 12;
     private static readonly List<int> AvailableIds = [.. System.Linq.Enumerable.Range(1, 12).Reverse()];
 
@@ -37,19 +36,13 @@ public static partial class Server
                 Connection = null;
                 return;
             }
-            Running = true;
             GD.Print("Server Started");
-            Update();
         }
     }
 
-    public static async void Update()
+    public static void Process(double delta)
     {
-        while (Running)
-        {
             HandlePackets();
-            await Task.Delay(NetworkService.PacketDebounce);
-        }
     }
 
     private static void HandlePackets()
